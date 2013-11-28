@@ -1,0 +1,12 @@
+*~
+*.db
+*.cache
+*.phar
+
+app/cache/*
+app/logs/*
+app/config/parameters.yml
+app/tmp/*
+
+web/bundles/*
+web/.htaccess
