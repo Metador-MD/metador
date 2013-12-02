@@ -1,5 +1,5 @@
 <?php
-namespace WhereGroup\BaseBundle\Twig\Extension;
+namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

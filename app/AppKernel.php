@@ -12,14 +12,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
-            // new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             /******************************************************************
              * WhereGroup Bundle's
              ******************************************************************/
-            new WhereGroup\BaseBundle\WhereGroupBaseBundle(),
+            new WhereGroup\CoreBundle\WhereGroupCoreBundle(),
             new WhereGroup\UserBundle\WhereGroupUserBundle(),
             new WhereGroup\MetadorBundle\WhereGroupMetadorBundle(),
             new WhereGroup\ExportBundle\WhereGroupExportBundle(),

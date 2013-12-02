@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\BaseBundle\Twig\Extension;
+namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
