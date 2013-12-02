@@ -1,0 +1,29 @@
+.icon {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 16px;
+
+    &.mandatory     {@include icons-sprite(bulletRed);}
+    &.optional      {@include icons-sprite(bulletGreen);}
+    &.conditional   {@include icons-sprite(bulletOrange);}
+    &.help          {@include icons-sprite(help);}
+    &:hover.help    {@include icons-sprite(help_hover);}
+    &.wizard        {@include icons-sprite(wizard);}
+    &.error         {@include icons-sprite(danger);}
+    &.success       {@include icons-sprite(success);}
+    &.pencil        {@include icons-sprite(pencil);}
+    &.appedit       {@include icons-sprite(application_edit);}
+    &.pagecode      {@include icons-sprite(page_white_code);}
+    &.add           {@include icons-sprite(add);}
+    &.world         {@include icons-sprite(world);}
+    &.delete        {@include icons-sprite(delete);}
+    &:hover.delete  {@include icons-sprite(delete_hover);}
+}
+
+.icon32 {
+    display: block;
+    float: left;
+    width: 32px;
+    height: 32px;
+}

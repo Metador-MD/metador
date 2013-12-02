@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}MeTaDor{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregroupmetador/css/screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregroupmetador/css/datepicker/zebra_datepicker_metallic.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="page">
+    <div class="top">
+        <a href="{{ path('wheregroup_metador_default_index') }}">
+            <img src="{{ asset('bundles/wheregroupmetador/img/logo3.png') }}" class="logo" />
+        </a>
+        <span class="version">Version: {{ version }}</span>
+        <h1 class="demoTitle">Metadatenerfassung für Alle.</h1>
+    </div>
+    <div class="center">
+        <div class="content demo">
+            <div class="left">
+                <a href="http://www.wheregroup.com">
+                    <img src="{{ asset('bundles/wheregroupmetador/img/Wheregroup_logo_418x110.png') }}" />
+                </a>
+                <h2>Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste.</h2>
+                <p>Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden.</p>
+                <p>Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen.</p>
+            </div>
+            <div class="right">
+                <form action="{{ path('login_check') }}" method="post" class="demoLoginForm">
+                    <p>Demo Benutzer: <b>metador</b>, Kennwort: <b>test</b>.</p>
+                    <hr/>
+                    <label for="username">Benutzer:</label>
+                    <input type="text" id="username" name="_username" value="metador" />
+                    <br/>
+                    <label for="password">Kennwort:</label>
+                    <input type="password" id="password" name="_password" value="test" />
+                    <input type="hidden" name="_target_path" value="/" />
+                    <br/><br/>
+                    <input type="submit" name="login" value="login" />
+                </form>
+            </div>
+
+            <div class="center">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+{% endblock %}

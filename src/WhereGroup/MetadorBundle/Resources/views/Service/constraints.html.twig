@@ -1,0 +1,111 @@
+<h1>Beschränkungen</h1>
+
+{#
+    USE LIMITATION
+#}
+{% set id = 'p[uselimitation][]' %}
+
+<div class="twoColBox">
+    <label class="displayLeft">
+        <div class="icon mandatory"></div>{{'Bedingungen für den Zugang und die Nutzung'|trans}}:
+    </label>
+    
+    <div class="clear"></div>
+
+    <div class="left">
+        <label for="{{ id|md_id }}_a">
+            <div class="icon"></div>{{'Freitext'|trans}}:
+        </label>
+        <input type="text" name="uselimitation_a" id="source_{{ id|md_id }}" class="twoCol2  no-value" />
+        <div class="btn-group">
+            <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon add"></div></div>
+            <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
+                <div class="icon help"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right">
+        <label for="{{ id|md_id }}_b">
+            <div class="icon"></div>{{'Auswahl'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group">
+                <div class="last showHelp"  data-obj-id="{{ id|md_id }}_b">
+                    <div class="icon help"></div>
+                </div>
+            </div>
+            <select name="uselimitation_b" id="{{ id|md_id }}_b" class="twoCol1  no-value">
+                <option value=""></option>
+                <option value="geossUserRegistration">geossUserRegistration</option>
+                <option value="geossAttribution">geossAttribution</option>
+                <option value="geossMonetaryCharge">geossMonetaryCharge</option>
+                <option value="geossNoMonetaryCharge">geossNoMonetaryCharge</option>
+                <option value="geossMarginalCost">geossMarginalCost</option>
+                <option value="geossDataCore">geossDataCore</option>
+                <option value="geossNonCommercial">geossNonCommercial</option>
+                <option value="geossOther">geossOther</option>
+                <option value="geossNonCommercial">geossNonCommercial</option>
+                <option value="Es gelten keine Bedingungen">Es gelten keine Bedingungen</option>
+                <option value="Bedingungen unbekannt">Bedingungen unbekannt</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="singleResult" id="result_{{ id|md_id }}">
+        {% if p['uselimitation'] is defined %}
+        {% for value in p['uselimitation'] %}
+        <div>
+            <input type="hidden" name="{{ id }}" value="{{ value }}" />
+            <label>{{ value }}</label>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon delete"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
+
+{#
+    OTHER CONSTRAINTS
+#}
+{% set id = 'p[otherconstraints][]' %}
+
+<div class="oneColBox">
+    <label for="{{ id|md_id }}">
+        <div class="icon mandatory"></div>{{'Beschränkungen des öffentlichen Zugangs'|trans}}:
+    </label>
+    <input type="text" id="source_{{ id|md_id }}" class="oneCol3  no-value" />
+    <div class="btn-group">
+        <div id="wizard_{{ id|md_id }}"><div class="icon wizard"></div></div>
+        <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon add"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="singleResult" id="result_{{ id|md_id }}">
+        {% if p['otherconstraints'] is defined %}
+        {% for value in p['otherconstraints'] %}
+        <div>
+            <input type="hidden" name="{{ id }}" value="{{ value }}" />
+            <label>{{ value }}</label>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon delete"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div id="wizard_values_{{ id|md_id }}" class="hidden">
+    {% for constraint in examples['otherconstraints'] %}
+    <p class="wizard-content-value">{{ constraint }}</p>
+    {% endfor %}
+</div>

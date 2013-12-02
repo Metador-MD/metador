@@ -1,0 +1,39 @@
+{% extends ':Design:withMenu.html.twig' %}
+
+{% block pageMenu %}
+    {% include 'WhereGroupUserBundle::menu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<h1>Benutzer</h1>
+
+<div class="tableBorder">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Isactive</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+                        {{ entity.username }}</td>
+                    </a>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.isActive }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br/>
+<div class="btn">
+    <a href="{{ path('user_new') }}">
+        <div class="icon add"></div> Neu
+    </a>
+</div>
+{% endblock %}

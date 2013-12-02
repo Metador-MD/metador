@@ -1,0 +1,72 @@
+{% extends 'WhereGroupMetadorBundle:Design:withMenu.html.twig' %}
+
+{% block title %}MeTaDor - Daten{% endblock %}
+
+{% block contentMenu %}
+    {% include 'WhereGroupMetadorBundle:Data:contentMenu.html.twig' %}
+{% endblock %}
+
+{% block pageMenu %}
+    <ul class="secondMenu">
+        <li data-tab="metadata" class="act">Metadatensatz</li>
+        <li data-tab="identification">Identifikation</li>
+        <li data-tab="classification">Klassifizierung</li>
+        <li data-tab="keyword">Schlüsselwort</li>
+        <li data-tab="geographic">Geografischer Standort</li>
+        <li data-tab="temporal">Zeitbezug</li>
+        <li data-tab="quality">Qualität</li>
+        <li data-tab="conformity">Übereinstimmung</li>
+        <li data-tab="constraints">Beschränkungen</li>
+        <li data-tab="responsibleparty">Zuständige Stelle</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% if controller_action() == 'edit' %}
+<form action="{{ path('wheregroup_metador_data_edit', {'id': id}) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+    <input type="hidden" name="id" value="{{ id }}" />
+{% else %}
+<form action="{{ path('wheregroup_metador_data_new') }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{% endif %}
+    
+    {% if id is defined %}<input type="hidden" name="id" value="{{ id }}" />{% endif %}
+    {#
+        DATE STAMP
+    #}
+    <input type="hidden" name="p[dateStamp]" value="{% if p['dateStamp'] is defined %}{{ p['dateStamp'] }}{% endif %}" />
+
+    <div class="metadataFormPages">
+        <div id="metadata" class="act">
+            {% include 'WhereGroupMetadorBundle:Data:metadata.html.twig' %}
+        </div>
+        <div id="identification">
+            {% include 'WhereGroupMetadorBundle:Data:identification.html.twig' %}
+        </div>
+        <div id="classification">
+            {% include 'WhereGroupMetadorBundle:Data:classification.html.twig' %}
+        </div>
+        <div id="keyword">
+            {% include 'WhereGroupMetadorBundle:Data:keyword.html.twig' %}
+        </div>
+        <div id="geographic">
+            {% include 'WhereGroupMetadorBundle:Data:geographic.html.twig' %}
+        </div>
+        <div id="temporal">
+            {% include 'WhereGroupMetadorBundle:Data:temporal.html.twig' %}
+        </div>
+        <div id="quality">
+            {% include 'WhereGroupMetadorBundle:Data:quality.html.twig' %}
+        </div>
+        <div id="conformity">
+            {% include 'WhereGroupMetadorBundle:Data:conformity.html.twig' %}
+        </div>
+        <div id="constraints">
+            {% include 'WhereGroupMetadorBundle:Data:constraints.html.twig' %}
+        </div>
+        <div id="responsibleparty">
+            {% include 'WhereGroupMetadorBundle:Data:responsibleparty.html.twig' %}
+        </div>
+    </div>
+</form>
+{% endblock %}

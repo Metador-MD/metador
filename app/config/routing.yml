@@ -1,0 +1,13 @@
+_metador:
+    pattern:   /
+    defaults:  { _controller: WhereGroupMetadorBundle:Default:index }
+
+where_group_user:
+    resource: "@WhereGroupUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+where_group_metador:
+    resource: "@WhereGroupMetadorBundle/Controller/"
+    type:     annotation
+    prefix:   /

@@ -1,0 +1,71 @@
+{% extends 'WhereGroupMetadorBundle:Design:withMenu.html.twig' %}
+
+{% block title %}MeTaDor - Dienste{% endblock %}
+
+{% block contentMenu %}
+    {% include 'WhereGroupMetadorBundle:Service:contentMenu.html.twig' %}
+{% endblock %}
+
+{% block pageMenu %}
+    <ul class="secondMenu">
+        <li data-tab="metadata" class="act">Metadatensatz</li>
+        <li data-tab="identification">Identifikation</li>
+        <li data-tab="classification">Klassifizierung</li>
+        <li data-tab="keyword">Schlüsselwort</li>
+        <li data-tab="geographic">Geografischer Standort</li>
+        <li data-tab="temporal">Zeitbezug</li>
+        <li data-tab="conformity">Übereinstimmung</li>
+        <li data-tab="constraints">Beschränkungen</li>
+        <li data-tab="responsibleparty">Zuständige Stelle</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% if controller_action() == 'edit' %}
+<form action="{{ path('wheregroup_metador_service_edit', {'id': id}) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+    <input type="hidden" name="id" value="{{ id }}" />
+{% else %}
+<form action="{{ path('wheregroup_metador_service_new') }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{% endif %}
+
+    {#
+        DATE STAMP
+    #}
+    <input type="hidden" name="p[dateStamp]" value="{% if p['dateStamp'] is defined %}{{ p['dateStamp'] }}{% endif %}" />
+    {#
+        HIERARCHY LEVEL
+    #}
+    <input type="hidden" name="p[hierarchyLevel]" value="service" />
+
+    <div class="metadataFormPages">
+        <div id="metadata" class="act">
+            {% include 'WhereGroupMetadorBundle:Service:metadata.html.twig' %}
+        </div>
+        <div id="identification">
+            {% include 'WhereGroupMetadorBundle:Service:identification.html.twig' %}
+        </div>
+        <div id="classification">
+            {% include 'WhereGroupMetadorBundle:Service:classification.html.twig' %}
+        </div>
+        <div id="keyword">
+            {% include 'WhereGroupMetadorBundle:Service:keyword.html.twig' %}
+        </div>
+        <div id="geographic">
+            {% include 'WhereGroupMetadorBundle:Service:geographic.html.twig' %}
+        </div>
+        <div id="temporal">
+            {% include 'WhereGroupMetadorBundle:Service:temporal.html.twig' %}
+        </div>
+        <div id="conformity">
+            {% include 'WhereGroupMetadorBundle:Service:conformity.html.twig' %}
+        </div>
+        <div id="constraints">
+            {% include 'WhereGroupMetadorBundle:Service:constraints.html.twig' %}
+        </div>
+        <div id="responsibleparty">
+            {% include 'WhereGroupMetadorBundle:Service:responsibleparty.html.twig' %}
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,61 @@
+.tableBorder {
+    border: 1px solid #DDD;
+    @include border-radius(5px);
+}
+
+.table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    width: 100%;
+    //border: 1px solid #DDD;
+
+    & > thead {
+        display: table-header-group;
+
+        & th {
+            padding: 2px 5px;
+            font-weight: bold;
+            border-right: 1px solid #DDD;
+            background-color: #EEE;
+            color: lighten($fontColor, 10%);
+
+            &.right {
+                text-align: right;
+                & .icon {
+                    float: right;
+                }
+            }
+        }
+    }
+
+    & > tbody {
+        display: table-row-group;
+
+        & tr {
+            background-color: #f6f6f6;
+            display: table-row;
+
+            &:hover {
+                border-top-color: #FFF;
+                border-bottom-color: #FFF;
+                background-color: #f6f6f6;
+            }
+        }
+
+        & td {
+            padding: 2px 5px;
+            border-top: 1px solid #DDD;
+            border-right: 1px solid #DDD;
+            color: lighten($fontColor, 10%);
+
+            &.right {
+                text-align: right;
+                & .icon {
+                    float: right;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="{{ asset('bundles/wheregroupmetador/img/favicon.png') }}" type="image/png" />
+        {% block css %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascript %}
+            <script type="text/javascript">
+            {% if app.environment == 'dev' %}
+                var BASEDIR = '{{ app.request.basepath }}/app_dev.php/';
+            {% else %}
+                var BASEDIR = '{{ app.request.basepath }}/app.php/';
+            {% endif %}
+            </script>
+            <script src="{{ asset('bundles/wheregroupmetador/js/jquery-1.8.3.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

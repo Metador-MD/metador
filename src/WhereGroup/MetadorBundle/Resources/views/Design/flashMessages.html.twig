@@ -1,0 +1,7 @@
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="notify success">{{ flashMessage }}</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="notify error">{{ flashMessage }}</div>
+{% endfor %}

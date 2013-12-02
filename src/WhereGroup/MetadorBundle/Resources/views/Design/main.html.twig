@@ -1,0 +1,59 @@
+{% set conf = getParameter('metador') %}
+
+{% extends '::base.html.twig' %}
+
+{% block title %}MeTaDor{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregroupmetador/css/screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregroupmetador/css/datepicker/zebra_datepicker_metallic.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="page">
+    <div class="top">
+        <a href="{{ path('wheregroup_metador_default_index') }}">
+            <img src="{{ asset('bundles/wheregroupmetador/img/logo3.png') }}" class="logo" />
+        </a>
+        <span class="version">{{ app.user.username }} / {{ version }}</span>
+        <div class="globalMenu">
+            {% block globalMenu %}
+            <ul>
+                <li>
+                    <a href="{{ path('logout') }}" title="logout">X</a>
+                </li> 
+                <li {% if controller_name() == 'service' %}class="act"{% endif %}>
+                    <a href="{{ path('wheregroup_metador_service_index') }}">Geodatendienste</a>
+                </li>
+                <li {% if controller_name() == 'data' %}class="act"{% endif %}>
+                    <a href="{{ path('wheregroup_metador_data_index') }}">Geodaten</a>
+                </li>
+                {% if is_granted('ROLE_SUPERUSER') %}
+                    <li {% if controller_name() == 'group' or controller_name() == 'user' %}class="act"{% endif %}>
+                        <a href="{{ path('user') }}">Administration</a>
+                    </li>
+                {% endif %}
+
+                {% block globalMenuElement %}
+                {% endblock %}
+            </ul>
+            {% endblock %}
+        </div>
+        <div class="contentMenu">
+            {% block contentMenu %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="center">
+        {% block center %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregroupmetador/js/metador.js') }}"></script>
+    <script src="{{ asset('bundles/wheregroupmetador/js/ui.js') }}"></script>
+    <script src="{{ asset('bundles/wheregroupmetador/js/datepicker/zebra_datepicker.js') }}"></script>
+{% endblock %}

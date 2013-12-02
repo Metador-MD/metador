@@ -1,0 +1,168 @@
+<h1>Identifizierung</h1>
+
+{#
+    IDENTIFIER
+#}
+{% set id = 'p[identifier]' %}
+
+{% if p['identifier'] is not defined %}
+    {% set p = p|merge({'identifier': [{'code':'','codespace':''}]}) %}
+{% endif %}
+{% set length = p['identifier']|length -1 %}
+
+<h2>Bezeichner</h2>
+<div class="duplicatable" data-count="{{ length }}">
+    <ul>
+        {% for key,value in p['identifier'] %}
+        <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
+        {% endfor %}        
+        <li class="duplicate"><div class="icon add"></div></li>
+        <li class="menu delete"><div class="icon delete"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
+    </ul>
+    <div class="content">
+        {% for key,value in p['identifier'] %}
+
+        <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
+            <div class="twoColBox">
+                {% set id = 'p[identifier][' ~ key ~ '][code]' %}
+                {% set val = value['code'] is defined ? value['code'] : '' %}
+
+                <div class="left">
+                    <label for="{{ id|md_id }}">
+                        <div class="icon mandatory"></div>{{'Code'|trans}}:
+                    </label>
+                    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol2"/>
+                    <div class="btn-group">
+                        <div class="wizard_p_fileidentifier" data-obj-id="{{ id|md_id }}"><div class="icon wizard"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                    </div> 
+                </div>
+
+                {% set id = 'p[identifier][' ~ key ~ '][codespace]' %}
+                {% set val = value['codespace'] is defined ? value['codespace'] : '' %}
+
+                <div class="right">
+                    <label for="{{ id|md_id }}">
+                        <div class="icon optional"></div>{{'Namensraum'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        </div>
+                        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{#
+    TITLE
+#}
+{% set id = 'p[title]' %}
+{% set val = p['title'] is defined ? p['title'] : '' %}
+
+<div class="oneColBox">
+    <label for="{{ id|md_id }}">
+        <div class="icon mandatory"></div>{{'Titel'|trans}}:
+    </label>
+    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
+    <div class="btn-group">
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{#
+    ABSTRACT
+#}
+{% set id = 'p[abstract]' %}
+{% set val = p['abstract'] is defined ? p['abstract'] : '' %}
+<div class="oneColBox">
+    <label class="displayLeft" for="{{ id|md_id }}">
+        <div class="icon mandatory"></div>{{'Kurzbeschreibung'|trans}}:
+    </label>
+    <div class="btn-group displayRight">
+        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+    </div>
+    <textarea name="{{ id }}" id="{{ id|md_id }}" class="oneCol0">{{ val }}</textarea>
+    <div class="clear"></div>
+</div>
+
+{#
+    ONLINE RESOURCE
+#}
+{% set id = 'p[onlineResource][]' %}
+
+<div class="oneColBox">
+    <label>
+        <div class="icon mandatory"></div>{{'Ressourcenverweis'|trans}}:
+    </label>
+    <input name="onlineResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol2 no-value" value="" />
+    <div class="btn-group">
+        <div class="cmdAddSingleValue" {{ id|md_data_obj }} data-name="{{ id }}">
+            <div class="icon add"></div>
+        </div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+    </div>
+    
+    <div class="clear"></div>
+
+    <div class="singleResult" id="result_{{ id|md_obj_id }}">
+        {% if p['onlineResource'] is defined %}
+        {% for value in p['onlineResource'] %}
+        <div>
+            <input type="hidden" name="{{ id }}" value="{{ value }}" />
+            <label>{{ value }}</label>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon delete"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
+
+{#
+    COUPLED RESOURCE
+#}
+{% set id = 'p[coupledResource][]' %}
+
+<div class="oneColBox">
+    <label>
+        <div class="icon optional"></div>{{'Gekoppelte Ressource'|trans}}:
+    </label>
+    <input name="coupledResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol3 no-value" value="" />
+    <div class="btn-group">
+        <div id="wizard_{{ id|md_obj_id }}">
+            <div class="icon wizard"></div>
+        </div>
+        <div class="cmdAddSingleValue" {{ id|md_data_obj }} data-name="{{ id }}">
+            <div class="icon add"></div>
+        </div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+    </div>
+    <div class="clear"></div>
+    <div class="singleResult" id="result_{{ id|md_obj_id }}">
+        {% if p['coupledResource'] is defined %}
+        {% for value in p['coupledResource'] %}
+        <div>
+            <input type="hidden" name="{{ id }}" value="{{ value }}" />
+            <label>{{ value }}</label>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon delete"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>

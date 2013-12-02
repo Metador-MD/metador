@@ -1,0 +1,17 @@
+{% extends 'WhereGroupMetadorBundle:Design:main.html.twig' %}
+
+{% block center %}
+    <div class="left">
+        <div class="pageMenu">
+            {% block pageMenu %}
+            {% endblock %}
+        </div>
+        {% block contentLeft %}
+        {% endblock %}
+    </div>
+    <div class="right">
+        {% include 'WhereGroupMetadorBundle:Design:flashMessages.html.twig' %}
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}

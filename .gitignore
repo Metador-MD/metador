@@ -2,11 +2,18 @@
 *.db
 *.cache
 *.phar
+*.TODO
+*.lock
 
-app/cache/*
-app/logs/*
+app/cache
+app/logs
 app/config/parameters.yml
-app/tmp/*
+app/tmp
 
-web/bundles/*
+web/bundles
 web/.htaccess
+
+bin
+vendor
+
+.sass-cache

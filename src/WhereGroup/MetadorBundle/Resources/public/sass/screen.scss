@@ -1,0 +1,15 @@
+$fontColor: #333;
+
+
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+
+$icons-layout:smart;
+@import "icons/*.png";
+
+@import "extra/normalize";
+@import "extra/main";
+
+@import "mixins";
+@import "ui/base";
+@import "project/base";
