@@ -5,15 +5,14 @@
 *.TODO
 *.lock
 
-app/cache
-app/logs
-app/config/parameters.yml
-app/tmp
-
-web/bundles
-web/.htaccess
-
-bin
-vendor
+/app/cache
+/app/logs
+/app/config/parameters.yml
+/app/tmp
+/bin
+/src/User
+/vendor
+/web/bundles
+/web/.htaccess
 
 .sass-cache
