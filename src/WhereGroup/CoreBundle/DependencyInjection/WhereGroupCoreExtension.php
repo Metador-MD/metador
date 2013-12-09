@@ -1,13 +1,13 @@
 <?php
 
-namespace WhereGroup\BaseBundle\DependencyInjection;
+namespace WhereGroup\CoreBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class WhereGroupBaseExtension extends Extension
+class WhereGroupCoreExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -17,6 +17,6 @@ class WhereGroupBaseExtension extends Extension
 
     public function getAlias()
     {
-        return 'where_group_base';
+        return 'where_group_core';
     }
 }

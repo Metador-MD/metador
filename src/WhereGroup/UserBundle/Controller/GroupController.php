@@ -91,13 +91,13 @@ class GroupController extends Controller
             if(!$roleExists) {
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->setFlash('success', 'Gruppe erfolgreich hinzugefügt.');
+                $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->get('session')->setFlash('notice', 'Gruppe existiert bereits.');
+                $this->get('session')->getFlashBag()->set('notice', 'Gruppe existiert bereits.');
             }
 
         } else {
-            $this->get('session')->setFlash('warning', 'Gruppe konnte nicht hinzugefügt werden!');
+            $this->get('session')->getFlashBag()->set('warning', 'Gruppe konnte nicht hinzugefügt werden!');
         }
 
         return $this->redirect($this->generateUrl('group'));
@@ -184,7 +184,7 @@ class GroupController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $this->get('session')->setFlash('success', 'Gruppe erfolgreich gelöscht.');
+            $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich gelöscht.');
         }
 
         return $this->redirect($this->generateUrl('group'));

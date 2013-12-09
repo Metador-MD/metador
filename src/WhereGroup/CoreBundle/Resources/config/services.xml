@@ -4,9 +4,9 @@
     xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
     <parameters>
-        <parameter key="wheregroup.controllerinfo.class">WhereGroup\BaseBundle\Twig\Extension\ControllerInfoExtension</parameter>
-        <parameter key="wheregroup.getparameter.class">WhereGroup\BaseBundle\Twig\Extension\GetParameterExtension</parameter>
-        <parameter key="wheregroup.debug.class">WhereGroup\BaseBundle\Twig\Extension\DebugExtension</parameter>
+        <parameter key="wheregroup.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
+        <parameter key="wheregroup.getparameter.class">WhereGroup\CoreBundle\Twig\Extension\GetParameterExtension</parameter>
+        <parameter key="wheregroup.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
      </parameters>
 
     <services>
