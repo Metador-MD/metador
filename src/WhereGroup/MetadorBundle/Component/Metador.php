@@ -97,7 +97,8 @@ class Metador extends Controller
             $metadata = new Metadata();
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($now->getTimestamp());
-
+            $metadata->setPublic(false);
+            
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['identifier'][0]['code']);
             if($uuid) {
@@ -120,7 +121,6 @@ class Metador extends Controller
         $metadata->setAbstract(@$p['abstract']);
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setMetadata(serialize($p));
-        $metadata->setPublic(false);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setSearchfield(trim(
             @$p['title'] . ' ' . @$p['abstract']
