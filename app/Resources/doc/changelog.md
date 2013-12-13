@@ -2,6 +2,7 @@
 
 ## 2.0.3.0
 * Moved BBOX config from parameters.yml to MetadorBundle/data folder.
+* Added Alternate Title to dataset and service forms.
 
 ## 2.0.2.1
 
