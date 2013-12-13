@@ -4,11 +4,6 @@
 *.phar
 *.TODO
 *.lock
-
-/app/cache
-/app/logs
-!/app/cache/.git*
-!/app/logs/.git*
 /app/config/parameters.yml
 /app/tmp
 /bin
@@ -16,5 +11,4 @@
 /vendor
 /web/bundles
 /web/.htaccess
-
 .sass-cache
