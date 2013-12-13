@@ -41,7 +41,8 @@ class Metador extends Controller
         return array(
             'keywords' => $keywords,
             'conformity' => (array)json_decode(file_get_contents($this->path . '/conformity.json')),
-            'otherconstraints' => json_decode(file_get_contents($this->path . '/otherconstraints.json'))
+            'otherconstraints' => json_decode(file_get_contents($this->path . '/otherconstraints.json')),
+            'bbox' => json_decode(file_get_contents($this->path . '/bbox.json')),
         );
     }
 

@@ -7,7 +7,7 @@ parameters:
     database_user:     root
     database_password: ~
     
-    locale:            en
+    locale:            de
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     metador:

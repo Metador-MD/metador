@@ -9,7 +9,7 @@
         </label>
         <select id="bboxSelect" class="twoCol1 no-value">
             <option value="" selected="selected"></option>
-            {% for name, value in conf['bbox'] %}
+            {% for name, value in examples['bbox']|cast_to_array %}
             <option value="{{ value }}">{{ name }}</option>
             {% endfor %}
         </select>
@@ -19,8 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="right">
-    </div>
+    <div class="right"></div>
     <div class="clear"></div>
 
     <div class="left">
