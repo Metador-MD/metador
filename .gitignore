@@ -4,6 +4,7 @@
 *.phar
 *.TODO
 *.lock
+*Test*
 /app/config/parameters.yml
 /app/tmp
 /bin
