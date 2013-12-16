@@ -1,10 +1,8 @@
 parameters:
     metador.logo: "bundles/wheregroupmetador/img/logo3.png"
     
-    metador.templates.dataset: "WhereGroupMetadorBundle:Data:form.html.twig"
-    metador.templates.service: "WhereGroupMetadorBundle:Service:form.html.twig"
-    metador.templates.dataset.xml: "WhereGroupMetadorBundle:Xml:dataset.xml.twig"
-    metador.templates.service.xml: "WhereGroupMetadorBundle:Xml:service.xml.twig"
+    metador.templates.form: "WhereGroupMetadorBundle"
+    metador.templates.xml: "WhereGroupMetadorBundle"
 
     metador.gdi.de.url: "http://testsuite.gdi-de.org:80/gdi/download?id=wsdl"
     metador.gdi.de.user: ~

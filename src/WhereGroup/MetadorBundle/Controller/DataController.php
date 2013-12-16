@@ -72,7 +72,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -95,7 +95,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -125,7 +125,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'id' => $id,
                 'p' => $p,

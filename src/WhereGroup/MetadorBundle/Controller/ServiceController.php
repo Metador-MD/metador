@@ -66,7 +66,7 @@ class ServiceController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['service'],
+            $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('service')
@@ -89,7 +89,7 @@ class ServiceController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['service'],
+            $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('service')
@@ -120,7 +120,7 @@ class ServiceController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['service'],
+            $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'id' => $id,
                 'p' => $p,

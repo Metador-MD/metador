@@ -7,10 +7,8 @@ parameters:
         logo: %metador.logo%
 
         templates:
-            dataset: %metador.templates.dataset%
-            service: %metador.templates.service%
-            dataset_xml: %metador.templates.dataset.xml%
-            service_xml: %metador.templates.service.xml%
+            form: %metador.templates.form%
+            xml: %metador.templates.xml%
 
         gdi_de:
             url: %metador.gdi.de.url%

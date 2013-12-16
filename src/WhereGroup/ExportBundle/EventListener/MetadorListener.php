@@ -36,9 +36,9 @@ class MetadorListener
             $conf = $this->container->getParameter('metador');
 
             if($metadata->getHierarchyLevel() == 'service') {
-                $template = $conf['templates']['service_xml'];
+                $template = $conf['templates']['xml'] . ':Xml:service.xml.twig';
             } else {
-                $template = $conf['templates']['dataset_xml'];
+                $template = $conf['templates']['xml'] . ':Xml:dataset.xml.twig';
             }
 
             $filename .= '/' . md5($metadata->getUuid()) . '.xml';
