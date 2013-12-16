@@ -12,13 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Address;
-use WhereGroup\MetadorBundle\Component\Metador;
+use WhereGroup\MetadorBundle\Component\MetadorController;
 use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * @Route("/metador/service")
  */
-class ServiceController extends Metador
+class ServiceController extends MetadorController
 {
     /**
      * @Route("/")
