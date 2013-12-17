@@ -18,6 +18,7 @@ p[identifier]
 > p[identifier][0][codespace]
 
 p[title]  
+p[alternateTitle]
 p[abstract]  
 p[onlineResource][]  
 p[coupledResource][]

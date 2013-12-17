@@ -12,13 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Address;
-use WhereGroup\MetadorBundle\Component\Metador;
+use WhereGroup\MetadorBundle\Component\MetadorController;
 use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * @Route("/metador/data")
  */
-class DataController extends Metador
+class DataController extends MetadorController
 {
     /**
      * @Route("/")
@@ -72,7 +72,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -95,7 +95,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -125,7 +125,7 @@ class DataController extends Metador
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['dataset'],
+            $conf['templates']['form'] . ':Data:form.html.twig',
             array(
                 'id' => $id,
                 'p' => $p,

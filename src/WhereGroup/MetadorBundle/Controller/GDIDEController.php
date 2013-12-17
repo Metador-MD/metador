@@ -99,11 +99,11 @@ class GDIDEController extends Controller
 
         switch($p['hierarchyLevel']) {
             case 'service' : 
-                $template = $conf['templates']['service_xml'];
+                $template = $conf['templates']['xml'] . ':Xml:service.xml.twig';
                 break;
             case 'dataset' :
             case 'series' :
-                $template = $conf['templates']['dataset_xml'];
+                $template = $conf['templates']['xml'] . ':Xml:dataset.xml.twig';
                 break;
             default :
                 $template = "WhereGroupMetadorBundle:Xml:exception.xml.twig";

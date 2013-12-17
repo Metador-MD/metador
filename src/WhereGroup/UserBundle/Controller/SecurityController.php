@@ -42,7 +42,6 @@ class SecurityController extends Controller
     /**
      *
      * @Route("/login", name="login")
-     * @Template(":Design:login.html.twig")
      * @Method("GET")
      */
     public function loginAction()
@@ -60,9 +59,15 @@ class SecurityController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return array(
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
+        // Load Template.
+        $conf = $this->container->getParameter('metador');
+        
+        return $this->render(
+            $conf['templates']['login'],
+            array(
+                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                'error'         => $error,
+            )
         );
     }
 

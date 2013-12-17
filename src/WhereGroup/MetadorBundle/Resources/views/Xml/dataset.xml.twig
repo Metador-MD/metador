@@ -5,7 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:gml="http://www.opengis.net/gml" 
     xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
+    xsi:schemaLocation="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/gmd.xsd">
 
 {% if p['fileIdentifier'] is defined %}
     <gmd:fileIdentifier>
@@ -130,6 +130,12 @@
                     <gmd:title>
                         <gco:CharacterString>{{ p['title'] }}</gco:CharacterString>
                     </gmd:title>
+{% endif %}
+
+{% if p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}
+                    <gmd:alternateTitle>
+                        <gco:CharacterString>{{ p['alternateTitle'] }}</gco:CharacterString>
+                    </gmd:alternateTitle>
 {% endif %}
 
 {% if p['creationDate'] is defined and p['creationDate'] is not empty %}
@@ -349,7 +355,8 @@
 {% endif %}
                 </gmd:MD_LegalConstraints>
             </gmd:resourceConstraints>
-{% if resolution['denominator'] is defined and resolution['denominator'] is not empty %}
+
+{% if p['resolution'] is defined and p['resolution'] is not empty %}
 {% for resolution in p['resolution'] %}
             <gmd:spatialResolution>
                 <gmd:MD_Resolution>

@@ -1,4 +1,5 @@
-{% extends 'WhereGroupMetadorBundle:Design:main.html.twig' %}
+{% set conf = getParameter('metador') %}
+{% extends conf['templates']['main'] %}
 
 {% block center %}
     <div class="left">

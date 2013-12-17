@@ -7,28 +7,5 @@ parameters:
     database_user:     root
     database_password: ~
     
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
-
-    metador:
-        templates:
-            dataset: WhereGroupMetadorBundle:Data:form.html.twig
-            service: WhereGroupMetadorBundle:Service:form.html.twig
-            dataset_xml: WhereGroupMetadorBundle:Xml:dataset.xml.twig
-            service_xml: WhereGroupMetadorBundle:Xml:service.xml.twig
-
-        bbox:
-            #Label: N E S W
-            Deutschland: 55.06 15.04 47.27 5.87
-
-        gdi_de:
-            url: http://testsuite.gdi-de.org:80/gdi/download?id=wsdl
-            user: ~
-            password: ~
-
-        proxy:
-            host: ~
-            port: ~
-
-        export:
-            path: ~
+    locale: de
+    secret: ThisTokenIsNotSoSecretChangeIt

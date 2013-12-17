@@ -2,6 +2,30 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+parameters:
+    metador:
+        logo: %metador.logo%
+        favicon: %metador.favicon%
+
+        templates:
+            form: %metador.templates.form%
+            xml: %metador.templates.xml%
+            base: %metador.templates.base%
+            main: %metador.templates.main%
+            login: %metador.templates.login%
+
+        gdi_de:
+            url: %metador.gdi.de.url%
+            user: %metador.gdi.de.user%
+            password: %metador.gdi.de.password%
+
+        proxy:
+            host: %metador.proxy.host%
+            port: %metador.proxy.port%
+
+        export:
+            path: %metador.export.path%
+
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
@@ -26,7 +50,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.2.0
+        version: 2.0.3.0
 
 # Assetic Configuration
 assetic:

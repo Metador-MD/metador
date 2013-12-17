@@ -88,11 +88,11 @@ class DefaultController extends Controller
 
             switch($p['hierarchyLevel']) {
                 case 'service' : 
-                    $template = $conf['templates']['service_xml'];
+                    $template = $conf['templates']['xml'] . ':Xml:service.xml.twig';
                     break;
                 case 'dataset' :
                 case 'series' :
-                    $template = $conf['templates']['dataset_xml'];
+                    $template = $conf['templates']['xml'] . ':Xml:dataset.xml.twig';
                     break;
                 default :
                     $template = "WhereGroupMetadorBundle:Xml:exception.xml.twig";
@@ -114,6 +114,31 @@ class DefaultController extends Controller
         return $response;
     }
 
+    /**
+     * @Route("/obj/{id}")
+     */
+    public function objAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
+        
+        if($metadata) {
+            $p = unserialize($metadata->getMetadata());
+
+            die('<pre>' . print_r($p, 1) . '</pre>');
+
+        } else {
+            $xml = $this->render("WhereGroupMetadorBundle:Xml:exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
+            ));
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        $response->setContent($xml->getContent());
+        
+        return $response;
+    }
     /**
      * @Route("/help/get")
      * @Method({"POST", "GET"})
