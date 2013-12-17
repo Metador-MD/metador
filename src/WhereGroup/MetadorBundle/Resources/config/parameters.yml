@@ -1,8 +1,12 @@
 parameters:
     metador.logo: "bundles/wheregroupmetador/img/logo3.png"
+    metador.favicon: "bundles/wheregroupmetador/img/favicon.png"
     
     metador.templates.form: "WhereGroupMetadorBundle"
     metador.templates.xml: "WhereGroupMetadorBundle"
+    metador.templates.base: "::boilerplate.html.twig"
+    metador.templates.main: "WhereGroupMetadorBundle:Design:main.html.twig"
+    metador.templates.login: ":Design:login.html.twig"
 
     metador.gdi.de.url: "http://testsuite.gdi-de.org:80/gdi/download?id=wsdl"
     metador.gdi.de.user: ~

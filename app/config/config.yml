@@ -5,10 +5,14 @@ imports:
 parameters:
     metador:
         logo: %metador.logo%
+        favicon: %metador.favicon%
 
         templates:
             form: %metador.templates.form%
             xml: %metador.templates.xml%
+            base: %metador.templates.base%
+            main: %metador.templates.main%
+            login: %metador.templates.login%
 
         gdi_de:
             url: %metador.gdi.de.url%
@@ -46,7 +50,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.2.2
+        version: 2.0.3.0
 
 # Assetic Configuration
 assetic:
