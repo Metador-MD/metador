@@ -17,25 +17,7 @@
         <span class="version">{{ app.user.username }} / {{ version }}</span>
         <div class="globalMenu">
             {% block globalMenu %}
-            <ul>
-                <li>
-                    <a href="{{ path('logout') }}" title="logout">X</a>
-                </li> 
-                <li {% if controller_name() == 'service' %}class="act"{% endif %}>
-                    <a href="{{ path('wheregroup_metador_service_index') }}">Geodatendienste</a>
-                </li>
-                <li {% if controller_name() == 'data' %}class="act"{% endif %}>
-                    <a href="{{ path('wheregroup_metador_data_index') }}">Geodaten</a>
-                </li>
-                {% if is_granted('ROLE_SUPERUSER') %}
-                    <li {% if controller_name() == 'group' or controller_name() == 'user' %}class="act"{% endif %}>
-                        <a href="{{ path('user') }}">Administration</a>
-                    </li>
-                {% endif %}
-
-                {% block globalMenuElement %}
-                {% endblock %}
-            </ul>
+                {% include 'WhereGroupMetadorBundle:Design:globalMenu.html.twig' %}
             {% endblock %}
         </div>
         <div class="contentMenu">
