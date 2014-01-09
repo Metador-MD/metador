@@ -225,6 +225,7 @@ class DefaultController extends Controller
                 'organisationName' => $address->getOrganisationName(),
                 'electronicMailAddress' => $address->getElectronicMailAddress(),
                 'role' => $address->getRole(),
+                'positionName' => $address->getPositionName(),
                 'individualName' => $address->getIndividualName(),
                 'country' => $address->getCountry(),
                 'administrativeArea' => $address->getAdministrativeArea(),

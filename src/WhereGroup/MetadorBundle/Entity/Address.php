@@ -36,6 +36,12 @@ class Address
     /**
      * @ORM\Column(type="string", length=100)
      */
+    private $positionName;
+
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
     private $individualName;
 
     /**
@@ -94,6 +100,10 @@ class Address
         return $this->role;
     }
 
+    public function getPositionName() {
+        return $this->positionName;
+    }
+
     public function getIndividualName() {
         return $this->individualName;
     }
@@ -143,6 +153,11 @@ class Address
     public function setRole($role) {
         $this->role = $role;
         return $this->role;
+    }
+
+    public function setPositionName($positionName) {
+        $this->positionName = $positionName;
+        return $this->positionName;
     }
 
     public function setIndividualName($individualName) {

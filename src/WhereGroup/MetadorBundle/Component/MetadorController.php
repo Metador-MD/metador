@@ -150,7 +150,11 @@ class MetadorController extends Controller
         }
 
         // SAVE NEW ADDRESSES
-        $addresses = array_merge($p['responsiblePartyMetadata'], $p['responsibleParty']);
+        $addresses = array_merge(
+            $p['responsiblePartyMetadata'], 
+            $p['responsibleParty'],
+            $p['responsiblePartyDistributor']
+        );
 
         foreach($addresses as $row) {
             if(trim(@$row['organisationName']) == ""
