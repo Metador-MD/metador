@@ -191,6 +191,7 @@ class MetadorController extends Controller
                 $address->setVoice(@$row['voice']);
                 $address->setFacsimile(@$row['facsimile']);
                 $address->setOnlineResource(@$row['onlineResource']);
+                $address->setPositionName(@$row['positionName']);
 
                 $em->persist($address);
                 $em->flush();
