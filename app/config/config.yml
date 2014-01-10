@@ -9,7 +9,6 @@ parameters:
 
         templates:
             form: %metador.templates.form%
-            xml: %metador.templates.xml%
             base: %metador.templates.base%
             main: %metador.templates.main%
             login: %metador.templates.login%
