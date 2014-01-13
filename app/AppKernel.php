@@ -15,6 +15,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             /******************************************************************
              * WhereGroup Bundle's
              ******************************************************************/
@@ -22,9 +23,11 @@ class AppKernel extends Kernel
             new WhereGroup\UserBundle\WhereGroupUserBundle(),
             new WhereGroup\MetadorBundle\WhereGroupMetadorBundle(),
             new WhereGroup\ExportBundle\WhereGroupExportBundle(),
+
             /******************************************************************
              * User Bundle's
              ******************************************************************/
+            new User\Wolfsburg\CoreBundle\WolfsburgCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

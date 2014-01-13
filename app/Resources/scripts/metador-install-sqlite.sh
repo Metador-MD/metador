@@ -10,7 +10,7 @@ if [ ! -f "$ROOTPATH/app/config/parameters.yml" ]; then
     cp app/config/parameters.yml.dist app/config/parameters.yml
 fi
 
-app/scripts/composer-update.sh
+app/Resources/scripts/composer-update.sh
 
 echo "Create database"
 app/console doctrine:database:create

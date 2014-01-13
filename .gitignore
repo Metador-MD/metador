@@ -13,3 +13,4 @@
 /web/bundles
 /web/.htaccess
 .sass-cache
+/.project

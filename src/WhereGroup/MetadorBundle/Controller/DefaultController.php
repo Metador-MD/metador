@@ -88,21 +88,21 @@ class DefaultController extends Controller
 
             switch($p['hierarchyLevel']) {
                 case 'service' : 
-                    $template = $conf['templates']['xml'] . ':Xml:service.xml.twig';
+                    $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
                 case 'dataset' :
                 case 'series' :
-                    $template = $conf['templates']['xml'] . ':Xml:dataset.xml.twig';
+                    $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
                     break;
                 default :
-                    $template = "WhereGroupMetadorBundle:Xml:exception.xml.twig";
+                    $template = "WhereGroupMetadorBundle::exception.xml.twig";
                     $data = array('message' => 'HierarchyLevel unbekannt!');
             }
 
             $xml = $this->render($template, $data);
 
         } else {
-            $xml = $this->render("WhereGroupMetadorBundle:Xml:exception.xml.twig", array(
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden."
             ));
         }
@@ -128,7 +128,7 @@ class DefaultController extends Controller
             die('<pre>' . print_r($p, 1) . '</pre>');
 
         } else {
-            $xml = $this->render("WhereGroupMetadorBundle:Xml:exception.xml.twig", array(
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden."
             ));
         }
@@ -225,6 +225,7 @@ class DefaultController extends Controller
                 'organisationName' => $address->getOrganisationName(),
                 'electronicMailAddress' => $address->getElectronicMailAddress(),
                 'role' => $address->getRole(),
+                'positionName' => $address->getPositionName(),
                 'individualName' => $address->getIndividualName(),
                 'country' => $address->getCountry(),
                 'administrativeArea' => $address->getAdministrativeArea(),

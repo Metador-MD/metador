@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3.1
+* Added position name to address wizard
+* Refactored metadata template structure.
+
 ## 2.0.3.0
 * Moved BBOX config from parameters.yml to MetadorBundle/data folder.
 * Moved metador parameters into metador bundle.

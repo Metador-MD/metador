@@ -22,7 +22,7 @@ class DataController extends MetadorController
 {
     /**
      * @Route("/")
-     * @Template("WhereGroupMetadorBundle:Data:index.html.twig")
+     * @Template("WhereGroupMetadorBundle:Dataset:index.html.twig")
      */
     public function indexAction() {
         $limit = 100;
@@ -72,7 +72,7 @@ class DataController extends MetadorController
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['form'] . ':Data:form.html.twig',
+            $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -95,7 +95,7 @@ class DataController extends MetadorController
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['form'] . ':Data:form.html.twig',
+            $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
                 'examples' => $this->getExamples('dataset')
@@ -125,7 +125,7 @@ class DataController extends MetadorController
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['form'] . ':Data:form.html.twig',
+            $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'id' => $id,
                 'p' => $p,
