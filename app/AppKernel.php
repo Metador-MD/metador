@@ -27,7 +27,6 @@ class AppKernel extends Kernel
             /******************************************************************
              * User Bundle's
              ******************************************************************/
-            new User\Wolfsburg\CoreBundle\WolfsburgCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
