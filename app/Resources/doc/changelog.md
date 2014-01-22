@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4.0
+* Helptext import/export commands.
+* Changed metadata permissions.
+
 ## 2.0.3.3
 * Minor bugfixes.
 

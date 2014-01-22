@@ -87,6 +87,11 @@ class Metadata
     private $public;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $groups;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -387,6 +392,26 @@ class Metadata
      */
     public function setHierarchyLevel($hierarchyLevel) {
         $this->hierarchyLevel = $hierarchyLevel;
+        return $this;
+    }
+    
+    /**
+     * Get groups
+     *
+     * @return array
+     */
+    public function getGroups() {
+        return array_filter(explode(',', $this->groups));
+    }
+
+    /**
+     * Set groups
+     *
+     * @param array $groups
+     * @return Metadata
+     */
+    public function setGroups($groups) {
+        $this->groups = implode(',', array_filter($groups));
         return $this;
     }
 }

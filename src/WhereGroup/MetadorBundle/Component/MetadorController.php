@@ -46,6 +46,13 @@ class MetadorController extends Controller
         );
     }
 
+    public function getMetadata($id) {
+        return $this->getDoctrine()
+            ->getManager()
+            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->findOneById($id);
+    }
+
     public function loadMetadata($id) {
         $metadata = $this->getDoctrine()
             ->getManager()
@@ -93,6 +100,17 @@ class MetadorController extends Controller
         if($id) {
             $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
 
+            $hasAccess = false;
+            foreach ($user->getRoles() as $userRole)
+                foreach ($metadata->getGroups() as $group)
+                    if($userRole === $group)
+                        $hasAccess = true;
+
+            if(!$hasAccess) {
+                $this->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
+                return false;
+            }
+
         // INSERT
         } else {
             $metadata = new Metadata();
@@ -126,6 +144,7 @@ class MetadorController extends Controller
         $metadata->setSearchfield(trim(
             @$p['title'] . ' ' . @$p['abstract']
         ));
+        $metadata->setGroups($user->getRoles());
 
         $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
 
@@ -151,12 +170,9 @@ class MetadorController extends Controller
 
         // SAVE NEW ADDRESSES
         $addresses = array_merge(
-            isset($p['responsiblePartyMetadata'])
-                ? $p['responsiblePartyMetadata'] : array(), 
-            isset($p['responsibleParty'])
-                ? $p['responsibleParty'] : array(),
-            isset($p['responsiblePartyDistributor']) 
-                ? $p['responsiblePartyDistributor'] : array()
+            $p['responsiblePartyMetadata'], 
+            $p['responsibleParty'],
+            $p['responsiblePartyDistributor']
         );
 
         foreach($addresses as $row) {
