@@ -81,9 +81,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @inheritDoc
      */
     public function getRoles() {
-        $roles = $this->groups->toArray();
+        foreach($this->groups->toArray() as $group)
+            $roles[] = $group->getRole();    
+
         $roles[] = "ROLE_USER";
-        
+
         return $roles;
     }
 
