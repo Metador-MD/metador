@@ -11,8 +11,6 @@
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
-        <service id="metadata_import" class="%metador_metadata_import.class%">
-            <!-- <argument id="session" type="service"/> -->
-        </service>
+        <service id="metadata_import" class="%metador_metadata_import.class%" />
     </services>
 </container>

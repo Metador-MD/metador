@@ -1,17 +1,15 @@
 parameters:
     metador.logo: "bundles/wheregroupmetador/img/logo3.png"
     metador.favicon: "bundles/wheregroupmetador/img/favicon.png"
-    
     metador.templates.form: "WhereGroupMetadorBundle"
     metador.templates.base: "::boilerplate.html.twig"
     metador.templates.main: "WhereGroupMetadorBundle:Design:main.html.twig"
     metador.templates.login: ":Design:login.html.twig"
-
     metador.gdi.de.url: "http://testsuite.gdi-de.org:80/gdi/download?id=wsdl"
     metador.gdi.de.user: ~
     metador.gdi.de.password: ~
-
     metador.proxy.host: ~
     metador.proxy.port: ~
-
     metador.export.path: ~
+    metador.xmlimport.schema:
+        - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Data/xmlimport.json"

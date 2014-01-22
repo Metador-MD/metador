@@ -1,0 +1,22 @@
+{
+    "cmd": {
+        "addNamespaces": {
+            "gmd": "http://www.isotc211.org/2005/gmd",
+            "gco": "http://www.isotc211.org/2005/gco",
+            "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+            "gml": "http://www.opengis.net/gml"
+        },
+
+        "removeEmptyValues" : true,
+        "sortResult" : true
+    },
+    
+    "p": {
+        "path": "/*",
+        "data": {
+            "dateStamp": "gmd:dateStamp/gco:Date/text()",
+            "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
+            "metadataLanguage": "gmd:language/gmd:LanguageCode/@codeListValue"
+        }
+    }
+}

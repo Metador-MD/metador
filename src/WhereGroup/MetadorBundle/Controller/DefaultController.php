@@ -14,11 +14,13 @@ use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Helptext;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
+use WhereGroup\MetadorBundle\Component\MetadorController;
+use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * @Route("/metador")
  */
-class DefaultController extends Controller
+class DefaultController extends MetadorController
 {
     /**
      * @Route("/")
@@ -124,7 +126,7 @@ class DefaultController extends Controller
         
         if($metadata) {
             $p = unserialize($metadata->getMetadata());
-
+            ksort($p);
             die('<pre>' . print_r($p, 1) . '</pre>');
 
         } else {
@@ -139,6 +141,60 @@ class DefaultController extends Controller
         
         return $response;
     }
+
+    /**
+     * @Route("/xmlimport/{id}")
+     */
+    public function xmlimportAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
+        
+        if($metadata) {
+            $p = unserialize($metadata->getMetadata());
+
+            $data = array('p' => $p);
+
+            $conf = $this->container->getParameter('metador');
+
+            switch($p['hierarchyLevel']) {
+                case 'service' : 
+                    $template = $conf['templates']['form'] . ':Service:service.xml.twig';
+                    break;
+                case 'dataset' :
+                case 'series' :
+                    $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
+                    break;
+                default :
+                    $template = "WhereGroupMetadorBundle::exception.xml.twig";
+                    $data = array('message' => 'HierarchyLevel unbekannt!');
+            }
+
+            $xml = $this->render($template, $data);
+            $import = $this->get('metadata_import');
+
+            $array = $import->load(
+                $xml->getContent(), 
+                $this->container->getParameter('metador')
+            );
+
+            die('<pre>' . print_r($array, 1) . '</pre>');
+
+
+            die;
+        } else {
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
+            ));
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        $response->setContent($xml->getContent());
+        
+        return $response;
+    }
+
     /**
      * @Route("/help/get")
      * @Method({"POST", "GET"})
