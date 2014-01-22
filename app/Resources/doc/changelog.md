@@ -1,10 +1,10 @@
 # Changelog
 
-## 2.0.4.0
-* Helptext import/export commands.
+## 2.0.3.3
+* Minor bugfixes.
 
 ## 2.0.3.1
-* Added position name to address wizard
+* Added position name to address wizard.
 * Refactored metadata template structure.
 
 ## 2.0.3.0
