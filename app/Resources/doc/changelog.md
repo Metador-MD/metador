@@ -2,6 +2,7 @@
 
 ## 2.0.4.0
 * Helptext import/export commands.
+* Added Searchbundle.
 
 ## 2.0.3.1
 * Added position name to address wizard

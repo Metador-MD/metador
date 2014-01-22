@@ -11,3 +11,8 @@ where_group_metador:
     resource: "@WhereGroupMetadorBundle/Controller/"
     type:     annotation
     prefix:   /
+
+where_group_search:
+    resource: "@WhereGroupSearchBundle/Controller/"
+    type:     annotation
+    prefix:   /
