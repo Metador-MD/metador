@@ -13,7 +13,6 @@ use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Component\MetadorController;
-use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * @Route("/metador/service")
@@ -103,9 +102,11 @@ class ServiceController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function editAction($id) {
+        $metadata = $this->loadMetadata($id);
+        
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
-            if(($p = $this->loadMetadata($id))) {
+            if(($p = $metadata->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
 
@@ -124,7 +125,8 @@ class ServiceController extends MetadorController
             array(
                 'id' => $id,
                 'p' => $p,
-                'examples' => $this->getExamples('service')
+                'examples' => $this->getExamples('service'),
+                'hasAccess' => $this->userHasAccsess()
             )
         );
     }
@@ -135,12 +137,8 @@ class ServiceController extends MetadorController
      * @Method("POST")
      */
     public function deleteAction($id) {
-        if($this->deleteMetadata($id)) {
-            $this->get('session')->getFlashBag()->add('success', 'Datensatz gelöscht.');
-        } else {
-            $this->get('session')->getFlashBag()->add('error', 'Datensatz nicht gefunden.');
-        }
-
+        $this->deleteMetadata($id);
+        
         return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
     }
 

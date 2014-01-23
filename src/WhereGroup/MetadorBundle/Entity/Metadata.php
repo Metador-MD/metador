@@ -79,7 +79,7 @@ class Metadata
     /**
      * @ORM\Column(type="text")
      */
-    private $metadata;
+    private $object;
 
     /**
      * @ORM\Column(type="boolean")
@@ -90,6 +90,12 @@ class Metadata
      * @ORM\Column(type="text")
      */
     private $groups;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $readonly; 
 
     /**
      * Get id
@@ -336,9 +342,9 @@ class Metadata
      *
      * @return string 
      */
-    public function getMetadata()
+    public function getObject()
     {
-        return $this->metadata;
+        return unserialize($this->object);
     }
 
     /**
@@ -347,9 +353,9 @@ class Metadata
      * @param string $metadata
      * @return Metadata
      */
-    public function setMetadata($metadata)
+    public function setObject($object) 
     {
-        $this->metadata = $metadata;
+        $this->object = serialize($object);
         return $this;
     }
 
@@ -414,4 +420,26 @@ class Metadata
         $this->groups = implode(',', array_filter($groups));
         return $this;
     }
+
+    
+    /**
+     * Get readonly status.
+     *
+     * @return boolean
+     */
+    public function getReadonly() {
+        return $this->readonly;
+    }
+
+    /**
+     * Set readonly status
+     *
+     * @param boolean $readonly
+     * @return Metadata
+     */
+    public function setReadonly($readonly) {
+        $this->readonly = (boolean)$readonly;
+        return $this;
+    }
+
 }
