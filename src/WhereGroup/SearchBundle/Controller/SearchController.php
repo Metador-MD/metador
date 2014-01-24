@@ -26,17 +26,22 @@ class SearchController extends Controller
      * Template()
      */
     public function indexAction() {
+
+        
+
+
+
         // if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN'))
         //     throw new AccessDeniedException();
-        $user = $this->get('security.context')->getToken()->getUser();
+        // $user = $this->get('security.context')->getToken()->getUser();
 
-        echo get_class($user);
+        // echo get_class($user);
 
-        if(is_object($user)) {
-            $roles = $user->getRoles();
-        } else {
+        // if(is_object($user)) {
+        //     $roles = $user->getRoles();
+        // } else {
 
-        }
+        // }
 
         die;
         return array();       
