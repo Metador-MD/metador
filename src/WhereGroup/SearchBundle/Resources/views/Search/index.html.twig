@@ -1,0 +1,16 @@
+<form method="get" action="">
+    <input type="text" name="find" value="{{ find }}" />
+    <button>ok</button>
+</form>
+
+{% for metadata in result %}
+<table>
+    <tr>
+        <td>{{ metadata.title }}</td>
+    </tr>
+    <tr>
+        <td>{{ metadata.abstract }}</td>
+    </tr>
+</table>
+{% endfor %}
+
