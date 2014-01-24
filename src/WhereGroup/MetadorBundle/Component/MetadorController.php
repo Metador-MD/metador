@@ -11,12 +11,104 @@ use WhereGroup\MetadorBundle\Component\MetadorDocument;
 /**
  * Klasse zum bearbeiten von Metadaten.
  */
-class MetadorController extends Controller
-{
+class MetadorController extends Controller {
     private $path = null;
 
     public function __construct() {
         $this->path = __DIR__ . "/../Data/";
+    }
+
+    public function userHasAccess($metadata, $user = null, $ignore = null) {
+        if (is_null($user))
+            $user   = $this->get('security.context')->getToken()->getUser();
+
+        // OWNER HAS ACCESS
+        if($metadata->getInsertUser()->getId() === $user->getId())
+            return true;
+
+        if (is_null($ignore))
+            $ignore = array(
+                'ROLE_USER', 
+                'ROLE_SUPERUSER', 
+                'ROLE_ADMIN',
+                'ROLE_METADOR_ADMIN');
+
+        $hasAccess = false;
+
+        foreach ($user->getRoles() as $userRole)
+            foreach ($metadata->getGroups() as $group)
+                if($userRole === $group && !in_array($group, $ignore))
+                    $hasAccess = true;
+
+        return $hasAccess;
+    }
+
+    public function getDataset($limit, $offset) {
+        $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+
+        $result = $this->container
+                ->get('doctrine')
+                ->getRepository('WhereGroupMetadorBundle:Metadata')
+                ->createQueryBuilder('m')
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
+                    $qb->expr()->eq('m.hierarchyLevel', '?2')
+                ))
+                ->orderBy('m.updateTime', 'DESC')
+                ->setFirstResult( $offset )
+                ->setMaxResults( $limit )
+                ->setParameters(array(
+                    1 => 'dataset',
+                    2 => 'series',
+                ))
+                ->getQuery()
+                ->getResult();
+
+        for($i=0,$iL=count($result); $i<$iL; $i++)
+            $result[$i]->setReadonly(
+                $this->userHasAccess($result[$i]) ? 0 : 1
+            );
+
+        return $result;
+    }
+
+    public function getService($limit, $offset) {
+        $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+
+        $result = $this->container
+                ->get('doctrine')
+                ->getRepository('WhereGroupMetadorBundle:Metadata')
+                ->createQueryBuilder('m')
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1')
+                ))
+                ->orderBy('m.updateTime', 'DESC')
+                ->setFirstResult( $offset )
+                ->setMaxResults( $limit )
+                ->setParameters(array(1 => 'service'))
+                ->getQuery()
+                ->getResult();
+
+        for($i=0,$iL=count($result); $i<$iL; $i++)
+            $result[$i]->setReadonly(
+                $this->userHasAccess($result[$i]) ? 0 : 1
+            );
+
+        return $result;
+    }
+
+    public function getAddress() {
+        $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+
+        $address = $this->get('doctrine')
+                ->getManager()
+                ->createQueryBuilder('y')
+                ->select('y.id, y.individualName')
+                ->from('WhereGroupMetadorBundle:Address','y')
+                ->getQuery()
+                ->getResult();
+
+        return $address;
     }
 
     public function getExamples($hierarchyLevel) {
@@ -52,16 +144,21 @@ class MetadorController extends Controller
             ->getRepository('WhereGroupMetadorBundle:Metadata')
             ->findOneById($id);
 
-        if($metadata) {
-            return unserialize($metadata->getMetadata());    
-        }
+        $metadata->setReadonly(
+            $this->userHasAccess($metadata) ? 0 : 1
+        );
 
-        return false;
+        return $metadata;
     }
 
     public function deleteMetadata($id) {
         $em = $this->getDoctrine()->getManager();
-        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
+        $metadata = $this->loadMetadata($id);
+
+        if ($metadata->getReadonly()) {
+            $this->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
+            return false;
+        }
 
         try {
             if($metadata) {
@@ -91,7 +188,15 @@ class MetadorController extends Controller
 
         // UPDATE
         if($id) {
-            $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
+            $metadata = $this->loadMetadata($id);
+
+            if($metadata->getReadonly()) {
+                $this->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
+                return false;
+            }
+
+            if($metadata->getInsertUser()->getId() === $user->getId())
+                $metadata->setGroups($user->getRoles());
 
         // INSERT
         } else {
@@ -99,6 +204,7 @@ class MetadorController extends Controller
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($now->getTimestamp());
             $metadata->setPublic(false);
+            $metadata->setGroups($user->getRoles());
             
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['identifier'][0]['code']);
@@ -121,11 +227,12 @@ class MetadorController extends Controller
         $metadata->setTitle(@$p['title']);
         $metadata->setAbstract(@$p['abstract']);
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
-        $metadata->setMetadata(serialize($p));
+        $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setSearchfield(trim(
             @$p['title'] . ' ' . @$p['abstract']
         ));
+        $metadata->setReadonly(false);
 
         $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
 
@@ -149,6 +256,7 @@ class MetadorController extends Controller
             return false;
         }
 
+        // TODO: bind on event!
         // SAVE NEW ADDRESSES
         $addresses = array_merge(
             isset($p['responsiblePartyMetadata'])
