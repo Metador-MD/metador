@@ -4,8 +4,11 @@
 * Helptext import/export commands.
 * Added Searchbundle.
 
+## 2.0.3.3
+* Minor bugfixes.
+
 ## 2.0.3.1
-* Added position name to address wizard
+* Added position name to address wizard.
 * Refactored metadata template structure.
 
 ## 2.0.3.0
@@ -17,6 +20,5 @@
 
 ## 2.0.2.1
 * Upgrade Symfony version (2.3.7).
-
 
 <a href="../../../README.md">&laquo; back</a>
