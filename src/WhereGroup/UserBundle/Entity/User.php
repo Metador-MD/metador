@@ -86,6 +86,8 @@ class User implements AdvancedUserInterface, \Serializable
 
         $roles[] = "ROLE_USER";
 
+        sort($roles);
+        
         return $roles;
     }
 

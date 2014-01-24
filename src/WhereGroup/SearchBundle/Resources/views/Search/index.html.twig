@@ -1,16 +1,43 @@
-<form method="get" action="">
-    <input type="text" name="find" value="{{ find }}" />
-    <button>ok</button>
-</form>
+{% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
 
-{% for metadata in result %}
-<table>
-    <tr>
-        <td>{{ metadata.title }}</td>
-    </tr>
-    <tr>
-        <td>{{ metadata.abstract }}</td>
-    </tr>
-</table>
-{% endfor %}
+{% block content %}
+    <form method="get" action="{{ path('search') }}">
+        <label for="search_find">Suche:</label>
+        <input type="text" id="search_find" name="find" value="{{ find }}" />
+        <button>ok</button>
+    </form>
+    <hr/>
 
+    {% for metadata in result %}
+    <table style="margin-top: 20px; width:100%;">
+        <tr>
+            <td rowspan="3" style="width:100px;">
+            {% if metadata.object.browserGraphic is defined %}
+            <img src="{{ metadata.object.browserGraphic }}" style="width: 100px; height:100px;" />
+            {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="float:left;">
+                    <strong>{{ metadata.title }}</strong>
+                </div>
+                <div style="float:right; font-size: 12px;">
+{% if app.user.username is defined %}
+                    {% if metadata.readonly == 0 %}
+                    <a href="{{ path('wheregroup_metador_data_edit', {id: metadata.id }) }}">bearbeiten</a> | 
+                    {% endif %}
+
+                    <a href="{{ path('wheregroup_metador_default_xml', {id: metadata.id }) }}" target="_BLANK">XML</a>
+{% endif %}
+                </div>
+                <div style="clear:both;" />
+            </td>
+        </tr>
+        <tr>
+            <td>{{ metadata.abstract }}</td>
+        </tr>
+    </table>
+    <hr/>
+    {% endfor %}
+{% endblock %}

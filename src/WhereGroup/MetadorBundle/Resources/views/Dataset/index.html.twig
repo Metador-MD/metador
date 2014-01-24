@@ -38,7 +38,11 @@
             %}
             <td class="testsuite"><a href="{{ path('wheregroup_metador_gdide_show', {'id':row.id}) }}" target="_BLANK">Testsuite</a></td>
             {% endif %}
-            <td><input type="checkbox" name="{{ row.id }}" class="shareMetadata" {% if row.public == 1 %}checked="checked"{% endif %} /></td>
+            <td>
+{% if row.readonly == 0 %}
+                <input type="checkbox" name="{{ row.id }}" class="shareMetadata" {% if row.public == 1 %}checked="checked"{% endif %} />
+{% endif %}
+            </td>
             <td class="right last-1">
 {% if row.readonly == 0 %}
                 <form action="{{ path('wheregroup_metador_data_delete', {'id':row.id}) }}" method="post">

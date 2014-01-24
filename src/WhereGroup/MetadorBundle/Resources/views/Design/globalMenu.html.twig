@@ -1,3 +1,4 @@
+{% if app.user.username is defined %}
 <ul>
     <li>
         <a href="{{ path('logout') }}" title="logout">X</a>
@@ -16,3 +17,4 @@
 
     {% block globalMenuElement %}{% endblock %}
 </ul>
+{% endif %}

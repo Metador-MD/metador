@@ -407,7 +407,7 @@ class Metadata
      * @return array
      */
     public function getGroups() {
-        return array_filter(explode(',', $this->groups));
+        return explode(',', $this->groups);
     }
 
     /**
@@ -417,7 +417,10 @@ class Metadata
      * @return Metadata
      */
     public function setGroups($groups) {
-        $this->groups = implode(',', array_filter($groups));
+        $array = array_filter($groups);
+        sort($array);
+        
+        $this->groups = implode(',', $array);
         return $this;
     }
 

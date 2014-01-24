@@ -21,6 +21,9 @@ class MetadorController extends Controller {
     public function userHasAccess($metadata, $user = null, $ignore = null) {
         if (is_null($user))
             $user   = $this->get('security.context')->getToken()->getUser();
+        
+        if (!is_object($user))
+            return false;
 
         // OWNER HAS ACCESS
         if($metadata->getInsertUser()->getId() === $user->getId())

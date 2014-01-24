@@ -10,19 +10,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-// use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata;
-// use WhereGroup\MetadorBundle\Entity\Address;
-// use WhereGroup\MetadorBundle\Component\MetadorController;
-// use WhereGroup\MetadorBundle\Component\MetadorDocument;
+use WhereGroup\MetadorBundle\Component\MetadorController;
+
 
 /**
  * @Route("/search")
  */
-class SearchController extends Controller
+class SearchController extends MetadorController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="search")
      * @Template()
      */
     public function indexAction() {
@@ -52,6 +50,16 @@ class SearchController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         if(is_object($user)) {
             $roles = $user->getRoles();
+
+            // TODO: more than one group?
+            $search->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('m.groups', ':roles'),
+                $qb->expr()->eq('m.public', '1')
+            ))->setParameter('roles', implode(',', $roles));
+
+            // Ugly fix if you have more than one group.
+            // $qb->expr()->like('m.groups', 
+            //     $qb->expr()->literal('%' . implode(',', $roles) . '%')),     
         } else {
             $search->andWhere(
                 $qb->expr()->eq('m.public', '1')
@@ -61,6 +69,11 @@ class SearchController extends Controller
         $result = $search
                 ->getQuery()
                 ->getResult();
+
+        for($i=0,$iL=count($result); $i<$iL; $i++)
+            $result[$i]->setReadonly(
+                $this->userHasAccess($result[$i]) ? 0 : 1
+            );
 
         // die('<pre>' . print_r(count($result), 1) . '</pre>');
         // if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN'))

@@ -68,7 +68,8 @@ class ServiceController extends MetadorController
             $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('service')
+                'examples' => $this->getExamples('service'),
+                'hasAccess' => true
             )
         );
     }
@@ -91,7 +92,8 @@ class ServiceController extends MetadorController
             $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('service')
+                'examples' => $this->getExamples('service'),
+                'hasAccess' => true
             )
         );
     }
@@ -126,7 +128,7 @@ class ServiceController extends MetadorController
                 'id' => $id,
                 'p' => $p,
                 'examples' => $this->getExamples('service'),
-                'hasAccess' => $this->userHasAccsess()
+                'hasAccess' => $metadata->getReadonly() ? 0 : 1
             )
         );
     }
