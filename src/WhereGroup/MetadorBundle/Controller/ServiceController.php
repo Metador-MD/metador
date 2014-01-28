@@ -80,7 +80,9 @@ class ServiceController extends MetadorController
      * @Method({"GET"})
      */
     public function useAction($id) {
-        if(($p = $this->loadMetadata($id))) {
+        $metadata = $this->loadMetadata($id);
+        
+        if(($p = $metadata->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
@@ -105,7 +107,7 @@ class ServiceController extends MetadorController
      */
     public function editAction($id) {
         $metadata = $this->loadMetadata($id);
-        
+
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
             if(($p = $metadata->getObject())) {

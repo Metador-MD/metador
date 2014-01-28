@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Component\MetadorController;
-
+use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * @Route("/search")
@@ -25,10 +25,16 @@ class SearchController extends MetadorController
      */
     public function indexAction() {
         $page = $this->get('request')->get('page', 1);
-        $limit = $this->get('request')->get('limit', 20);
+        $limit = $this->get('request')->get('limit', 4);
         $searchterms = $this->get('request')->get('find', '');
 
         $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+
+       $searchCount = $this->container
+                ->get('doctrine')
+                ->getRepository('WhereGroupMetadorBundle:Metadata')
+                ->createQueryBuilder('m')
+                ->select('count(m.id)');
 
         $search = $this->container
                 ->get('doctrine')
@@ -38,21 +44,34 @@ class SearchController extends MetadorController
                 ->setMaxResults($limit);
  
         // prepair searchterms
-        foreach (array_filter(explode(' ' , $searchterms)) as $term)
+        foreach (array_filter(explode(' ' , $searchterms)) as $term) {
             $search->andWhere(
                 $qb->expr()->like(
                     'm.searchfield', 
                     $qb->expr()->literal('%' . $term . '%')
                 )
             );
-        
+
+            $searchCount->andWhere(
+                $qb->expr()->like(
+                    'm.searchfield', 
+                    $qb->expr()->literal('%' . $term . '%')
+                )
+            );
+        }
         // prepair permissions
         $user = $this->get('security.context')->getToken()->getUser();
+
         if(is_object($user)) {
             $roles = $user->getRoles();
 
             // TODO: more than one group?
             $search->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('m.groups', ':roles'),
+                $qb->expr()->eq('m.public', '1')
+            ))->setParameter('roles', implode(',', $roles));
+
+            $searchCount->andWhere($qb->expr()->orX(
                 $qb->expr()->eq('m.groups', ':roles'),
                 $qb->expr()->eq('m.public', '1')
             ))->setParameter('roles', implode(',', $roles));
@@ -64,35 +83,34 @@ class SearchController extends MetadorController
             $search->andWhere(
                 $qb->expr()->eq('m.public', '1')
             );
+
+            $searchCount->andWhere(
+                $qb->expr()->eq('m.public', '1')
+            );
         }
 
         $result = $search
-                ->getQuery()
-                ->getResult();
+            ->getQuery()
+            ->getResult();
+
+        $count = (int)$searchCount
+            ->getQuery()
+            ->getSingleScalarResult();
+
 
         for($i=0,$iL=count($result); $i<$iL; $i++)
             $result[$i]->setReadonly(
                 $this->userHasAccess($result[$i]) ? 0 : 1
             );
 
-        // die('<pre>' . print_r(count($result), 1) . '</pre>');
-        // if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN'))
-        //     throw new AccessDeniedException();
-        // $user = $this->get('security.context')->getToken()->getUser();
-
-        // echo get_class($user);
-
-        // if(is_object($user)) {
-        //     $roles = $user->getRoles();
-        // } else {
-
-        // }
+        $paging = new Paging($count, $limit, $page);
 
         return array(
             'find' => $searchterms,
             'page' => $page,
             'limit' => $limit,
-            'result' => $result
+            'result' => $result,
+            'paging' => $paging->calculate()
         );       
     }
 }

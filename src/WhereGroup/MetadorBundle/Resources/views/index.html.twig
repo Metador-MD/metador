@@ -47,7 +47,7 @@
                         <a href="{{ path('wheregroup_metador_service_edit', {'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
                     </td>
                     <td class="last-1">
-{% if row.readonly == 1 %}
+{% if row.readonly == 0 %}
                         <form action="{{ path('wheregroup_metador_service_delete', {'id':row.id}) }}" method="post">
                             <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
                                 <div class="icon delete"></div>
