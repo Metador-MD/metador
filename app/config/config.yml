@@ -69,23 +69,23 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver:   %database.driver%
-                host:     %database.host%
-                port:     %database.port%
-                dbname:   %database.name%
-                path:     %database.path%
-                user:     %database.user%
-                password: %database.password%
-                charset:  %database.charset%
+                driver:   %database_driver%
+                host:     %database_host%
+                port:     %database_port%
+                dbname:   %database_name%
+                path:     %database_path%
+                user:     %database_user%
+                password: %database_password%
+                charset:  %database_charset%
             external:
-                driver:   %external.database.driver%
-                host:     %external.database.host%
-                port:     %external.database.port%
-                dbname:   %external.database.name%
-                path:     %external.database.path%
-                user:     %external.database.user%
-                password: %external.database.password%
-                charset:  %external.database.charset%
+                driver:   %external_database_driver%
+                host:     %external_database_host%
+                port:     %external_database_port%
+                dbname:   %external_database_name%
+                path:     %external_database_path%
+                user:     %external_database_user%
+                password: %external_database_password%
+                charset:  %external_database_charset%
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
