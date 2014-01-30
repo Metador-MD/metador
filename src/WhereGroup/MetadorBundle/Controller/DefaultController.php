@@ -92,6 +92,7 @@ class DefaultController extends MetadorController
         if($metadata) {
             
             $p = $metadata->getObject();
+            
             ksort($p);
 
             die('<pre>' . print_r($p, 1) . '</pre>');
@@ -118,7 +119,7 @@ class DefaultController extends MetadorController
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
-            $p = unserialize($metadata->getMetadata());
+            $p = $metadata->getObject();
 
             $data = array('p' => $p);
 
@@ -145,10 +146,10 @@ class DefaultController extends MetadorController
                 $this->container->getParameter('metador')
             );
 
+            ksort($array);
+
             die('<pre>' . print_r($array, 1) . '</pre>');
 
-
-            die;
         } else {
             $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden."

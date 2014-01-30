@@ -137,12 +137,14 @@ class XmlParser  {
                         $tmp = $this->parseRecursive($val, $key, $context, $path, $recursive);
                     } else if(is_array($val) && count($val) >= 2) {
                         $tmp = $this->getValue($path . $val[0], $context);
-                        $this->functions->get($val[1], $tmp, array_slice($val, 2));
+                        $tmp = $this->functions->get($val[1], $tmp, array_slice($val, 2));
                     } else {
                         $tmp = $this->getValue($path.$val, $context); 
                     }
-                    
-                    if($this->removeEmptyValues && ($tmp === "" || $tmp === array())) {
+
+                    if($this->removeEmptyValues 
+                        && ($tmp === "" || $tmp === array())
+                        && (is_array($val) && isset($val[1]) && $val[1] !== 'asArray')) {
                         continue;
                     }
                     

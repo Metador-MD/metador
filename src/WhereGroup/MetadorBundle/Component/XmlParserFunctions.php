@@ -4,11 +4,14 @@ namespace WhereGroup\MetadorBundle\Component;
 class XmlParserFunctions  {
 
     public function get($method, $data, $args = null) {
-                        
-        // functions einbauen
-        // if(is_callable('$this->' . $val[1])) {
-        //     $tmp = call_user_func('$this->' . $val[1], $tmp, array_slice($val, 2));
-        // }
+        if(method_exists($this, $method))
+            $data = call_user_func('self::' . $method, $data, $args);
+        
+        return $data;
+    }
+
+    protected function asArray($data, $args = null) {
+       return is_array($data) ? $data : array($data);
     }
 
     protected static function commaSeparated($data, $args = null) {

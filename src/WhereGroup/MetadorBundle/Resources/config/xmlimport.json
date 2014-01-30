@@ -17,6 +17,7 @@
             "abstract": "gmd:identificationInfo[1]/*/gmd:abstract/gco:CharacterString/text()",
             "alternateTitle": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:alternateTitle/gco:CharacterString/text()",
             "bbox": {
+                "asArray": true,
                 "path": "gmd:identificationInfo[1]/*/*[local-name()='extent']/*/gmd:geographicElement/*",
                 "data": {
                     "nLatitude": "gmd:northBoundLatitude/gco:Decimal/text()",
@@ -29,6 +30,7 @@
             "creationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
 
             "dataquality": {
+                "asArray": true,
                 "path": "gmd:dataQualityInfo[1]/*/gmd:report/gmd:DQ_DomainConsistency/*/*",
                 "data": {
                     "title": "gmd:specification/*/gmd:title/gco:CharacterString/text()",
@@ -42,6 +44,7 @@
             "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
             "hierarchyLevel": "gmd:hierarchyLevel/gmd:MD_ScopeCode/text()",
             "identifier":{
+                "asArray": true,
                 "path":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*",
                 "data": {
                     "code": "gmd:code/gco:CharacterString/text()",
@@ -66,25 +69,25 @@
                 }
             },
 
-            "language": "gmd:identificationInfo[1]/*/gmd:language/gmd:LanguageCode/text()",
+            "language": ["gmd:identificationInfo[1]/*/gmd:language/gmd:LanguageCode/text()", "asArray"],
             "lineage": "gmd:dataQualityInfo[1]/*/gmd:lineage/*/*/gco:CharacterString/text()",
             "metadataLanguage": "gmd:language/gmd:LanguageCode/text()",
             "metaStandardName": "gmd:metadataStandardName/gco:CharacterString/text()",
             "metadataStandardVersion":"gmd:metadataStandardVersion/gco:CharacterString/text()",
-            "onlineResource":"gmd:distributionInfo[1]/*/gmd:transferOptions/*/gmd:onLine/*/*/*/text()",
-            "otherconstraints" : "gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString/text()",
+            "onlineResource":["gmd:distributionInfo[1]/*/gmd:transferOptions/*/gmd:onLine/*/*/*/text()", "asArray"],
+            "otherconstraints" : ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString/text()", "asArray"],
             "publicationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication' or ./*/gmd:dateType/*/text()='publication']/*/*/gco:Date/text()",
             
             "resolution" : {
+                "asArray": true,
                 "path": "gmd:identificationInfo[1]/*/gmd:spatialResolution/*",
                 "data": {
-                    "denominator":"gmd:equivalentScale/*/*/*/text()",
-                    "distance":"gmd:distance/*/text()",
-                    "uom": "gmd:distance/gco:Distance/@uom"
+                    "denominator":"gmd:equivalentScale/*/*/*/text()"
                 }
             },
 
             "responsibleParty":{
+                "asArray": true,
                 "path": "gmd:identificationInfo[1]/*/gmd:pointOfContact/*",
                 "data":{
                     "organisationName":"gmd:organisationName/*/text()",
@@ -102,27 +105,8 @@
                     "onlineResource":"gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()"
                 }
             },
-            "responsiblePartyDistributor":{
-                "path":"gmd:distributionInfo[1]/*/gmd:distributor/*/gmd:distributorContact/*",
-                "data":{
-                    "organisationName":"gmd:organisationName/*/text()",
-                    "electronicMailAddress":"gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()",
-                    "individualName":"gmd:individualName/*/text()",
-                    "role":"gmd:role/*/text()",
-                    "positionName":"gmd:positionName/*/text()",
-                    "deliveryPoint":"gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
-                    "city":"gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
-                    "postalCode":"gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
-                    "voice":"gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
-                    "facsimile": "gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
-                    "onlineResource": "gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()",
-                    "country": "gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
-                    "administrativeArea":"gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()"
-
-                }
-            },
-
-            "responsiblePartyMetadata":{
+            "responsiblePartyMetadata": {
+                "asArray": true,
                 "path": "gmd:contact/*",
                 "data":{
                     "organisationName":"gmd:organisationName/*/text()",
@@ -142,6 +126,7 @@
             },
             "revisionDate":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()",
             "temporalExtent":{
+                "asArray": true,
                 "path":"gmd:identificationInfo[1]/*/gmd:extent/*/gmd:temporalElement/*/*/*",
                 "data":{
                     "begin": "gml:beginPosition/text()",
@@ -150,7 +135,7 @@
             },
             "title":"gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()",
             "topicCategory":"gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()",
-            "uselimitation": "gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()"
+            "uselimitation": ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()", "asArray"]
         }
     }
 }
