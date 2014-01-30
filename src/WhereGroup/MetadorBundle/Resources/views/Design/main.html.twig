@@ -14,7 +14,13 @@
         <a href="{{ path('wheregroup_metador_default_index') }}">
             <img src="{{ asset(conf['logo']) }}" class="logo" />
         </a>
-        <span class="version">{{ app.user.username }} / {{ version }}</span>
+        <span class="version">
+            {% if app.user.username is defined %}
+                {{ app.user.username }}
+            {% else %}
+                <a href="{{ path('login') }}">login</a>
+            {% endif %} / {{ version }}
+        </span>
         <div class="globalMenu">
             {% block globalMenu %}
                 {% include 'WhereGroupMetadorBundle:Design:globalMenu.html.twig' %}

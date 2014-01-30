@@ -82,7 +82,7 @@
                             <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
                         </div>
                         <select name="{{ id }}" class="twoCol1">
-                            <option value="{{ md_select(val, '') }}"></option>
+                            <option value="" {{ md_select(val, '') }}></option>
                             <option value="pointOfContact" {{ md_select(val, 'pointOfContact') }}>Ansprechpartner</option>
                             <option value="author" {{ md_select(val, 'author') }}>Autor</option>
                             <option value="processor" {{ md_select(val, 'processor') }}>Bearbeiter</option>
