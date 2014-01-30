@@ -14,9 +14,143 @@
     "p": {
         "path": "/*",
         "data": {
+            "abstract": "gmd:identificationInfo[1]/*/gmd:abstract/gco:CharacterString/text()",
+            "alternateTitle": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:alternateTitle/gco:CharacterString/text()",
+            "bbox": {
+                "path": "gmd:identificationInfo[1]/*/*[local-name()='extent']/*/gmd:geographicElement/*",
+                "data": {
+                    "nLatitude": "gmd:northBoundLatitude/gco:Decimal/text()",
+                    "eLongitude": "gmd:eastBoundLongitude/gco:Decimal/text()",
+                    "sLatitude": "gmd:southBoundLatitude/gco:Decimal/text()",
+                    "wLongitude": "gmd:westBoundLongitude/gco:Decimal/text()"
+                }
+            },
+            "browserGraphic": "gmd:identificationInfo[1]/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString/text()",
+            "creationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
+
+            "dataquality": {
+                "path": "gmd:dataQualityInfo[1]/*/gmd:report/gmd:DQ_DomainConsistency/*/*",
+                "data": {
+                    "title": "gmd:specification/*/gmd:title/gco:CharacterString/text()",
+                    "date": "gmd:specification/*/gmd:date/*/gmd:date/gco:Date/text()",
+                    "type": "gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/text()",
+                    "result": "gmd:pass/gco:Boolean/text()"
+                }      
+            },
+
             "dateStamp": "gmd:dateStamp/gco:Date/text()",
             "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
-            "metadataLanguage": "gmd:language/gmd:LanguageCode/@codeListValue"
+            "hierarchyLevel": "gmd:hierarchyLevelName/gco:CharacterString/text()",
+            "identifier":{
+                "path":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*",
+                "data": {
+                    "code": "gmd:code/gco:CharacterString/text()",
+                    "codespace": "gmd:codeSpace/gco:CharacterString/text()"
+                } 
+                
+            },
+
+            "keyword":{
+                "path":"gmd:identificationInfo[1]/*",
+                "data":{
+                    "Test":{
+                        "path":"gmd:descriptiveKeywords/*",
+                        "data":{
+                            "date":"gmd:thesaurusName/*/*/*/gmd:date/*/text()",
+                            "type": "gmd:thesaurusName/*/*/*/gmd:dateType/*/text()",
+                            "value": "gmd:keyword/*/text()"
+                        }
+
+                    }
+                    
+                }
+            },
+
+            "language": "gmd:identificationInfo[1]/*/gmd:language/gmd:LanguageCode/text()",
+            "lineage": "gmd:dataQualityInfo[1]/*/gmd:lineage/*/*/gco:CharacterString/text()",
+            "metadataLanguage": "gmd:language/gmd:LanguageCode/text()",
+            "metaStandardName": "gmd:metadataStandardName/gco:CharacterString/text()",
+            "metadataStandardVersion":"gmd:metadataStandardVersion/gco:CharacterString/text()",
+            "onlineResource":"gmd:distributionInfo[1]/*/gmd:transferOptions/*/gmd:onLine/*/*/*/text()",
+            "otherconstraints" : "gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString/text()",
+            "publicationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication' or ./*/gmd:dateType/*/text()='publication']/*/*/gco:Date/text()",
+            
+            "resolution" : {
+                "path": "gmd:identificationInfo[1]/*/gmd:spatialResolution/*",
+                "data": {
+                    "denominator":"gmd:equivalentScale/*/*/*/text()",
+                    "distance":"gmd:distance/*/text()",
+                    "uom": "gmd:distance/gco:Distance/@uom"
+                }
+            },
+
+            "responsibleParty":{
+                "path": "gmd:identificationInfo[1]/*/gmd:pointOfContact/*",
+                "data":{
+                    "organisationName":"gmd:organisationName/*/text()",
+                    "electronicMailAddress":"gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()",
+                    "individualName":"gmd:individualName/*/text()",
+                    "role":"gmd:role/*/text()",
+                    "positionName":"gmd:positionName/*/text()",
+                    "country": "gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
+                    "administrativeArea":"gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()",
+                    "deliveryPoint":"gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
+                    "city":"gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
+                    "postalCode":"gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
+                    "voice":"gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
+                    "facsimile":"gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
+                    "onlineResource":"gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()"
+                }
+            },
+            "responsiblePartyDistributor":{
+                "path":"gmd:distributionInfo[1]/*/gmd:distributor/*/gmd:distributorContact/*",
+                "data":{
+                    "organisationName":"gmd:organisationName/*/text()",
+                    "electronicMailAddress":"gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()",
+                    "individualName":"gmd:individualName/*/text()",
+                    "role":"gmd:role/*/text()",
+                    "positionName":"gmd:positionName/*/text()",
+                    "deliveryPoint":"gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
+                    "city":"gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
+                    "postalCode":"gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
+                    "voice":"gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
+                    "facsimile": "gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
+                    "onlineResource": "gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()",
+                    "country": "gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
+                    "administrativeArea":"gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()"
+
+                }
+            },
+
+            "responsiblePartyMetadata":{
+                "path": "gmd:contact/*",
+                "data":{
+                    "organisationName":"gmd:organisationName/*/text()",
+                    "electronicMailAddress": "gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()",
+                    "individualName":"gmd:individualName/*/text()",
+                    "role":"gmd:role/*/text()",
+                    "country":"gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
+                    "administrativeArea":"gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()",
+                    "deliveryPoint":"gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
+                    "city":"gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
+                    "postalCode":"gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
+                    "voice": "gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
+                    "facsimile": "gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
+                    "onlineResource": "gmd:contactInfo/*/gmd:onlineResource/*/*/*/text()"
+                }
+
+            },
+            "revisionDate":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()",
+            "temporalExtent":{
+                "path":"gmd:identificationInfo[1]/*/gmd:extent/*/gmd:temporalElement/*/*/*",
+                "data":{
+                    "begin": "gml:beginPosition/text()",
+                    "end" : "gml:endPosition/text()"
+                }
+            },
+            "title":"gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()",
+            "topicCategory":"gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()",
+            "uselimitation": "gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()"
         }
     }
 }
