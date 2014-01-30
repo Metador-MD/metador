@@ -90,13 +90,10 @@ class DefaultController extends MetadorController
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
-<<<<<<< HEAD
-            $p = unserialize($metadata->getMetadata());
-            ksort($p);
-=======
+            
             $p = $metadata->getObject();
+            ksort($p);
 
->>>>>>> feature/search
             die('<pre>' . print_r($p, 1) . '</pre>');
 
         } else {
