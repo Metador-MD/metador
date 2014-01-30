@@ -26,6 +26,7 @@ security:
                 target: /
 
     access_control:
+        - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user, roles: ROLE_SUPERUSER }
         - { path: ^/group, roles: ROLE_SUPERUSER }
@@ -34,9 +35,3 @@ security:
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPERUSER: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
-
-
-
-
-

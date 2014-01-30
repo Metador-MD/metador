@@ -55,7 +55,6 @@ twig:
     globals:
         version: 2.0.4.0
 
-
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%

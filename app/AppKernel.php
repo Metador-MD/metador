@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new WhereGroup\UserBundle\WhereGroupUserBundle(),
             new WhereGroup\MetadorBundle\WhereGroupMetadorBundle(),
             new WhereGroup\ExportBundle\WhereGroupExportBundle(),
+            new WhereGroup\SearchBundle\WhereGroupSearchBundle(),
 
             /******************************************************************
              * User Bundle's

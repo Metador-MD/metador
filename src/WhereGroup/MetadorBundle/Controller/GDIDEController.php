@@ -29,8 +29,8 @@ class GDIDEController extends Controller
         $p = array();
         $metadataClasses = array();
 
-        if(($metadata = $this->getMetadata($id))) {
-            $p = unserialize($metadata->getMetadata());
+        if(($metadata = $this->loadMetadata($id))) {
+            $p = $metadata->getObject();
             
             $doc = new TestsuiteDocument(
                 $config['gdi_de']['url'], 
@@ -85,7 +85,7 @@ class GDIDEController extends Controller
         );
     }
 
-    private function getMetadata($id) {
+    private function loadMetadata($id) {
         return $this->getDoctrine()
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')

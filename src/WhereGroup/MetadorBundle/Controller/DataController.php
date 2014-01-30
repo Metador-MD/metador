@@ -13,7 +13,6 @@ use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Component\MetadorController;
-use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * @Route("/metador/data")
@@ -28,26 +27,9 @@ class DataController extends MetadorController
         $limit = 100;
         $offset = 0;
 
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-
-        $result = $em->createQueryBuilder('m')->select('m')
-                ->from('WhereGroupMetadorBundle:Metadata','m')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
-                    $qb->expr()->eq('m.hierarchyLevel', '?2')
-                ))
-                ->orderBy('m.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameters(array(
-                    1 => 'dataset',
-                    2 => 'series',
-                ))
-                ->getQuery()
-                ->getResult();
-
-        return array('rows' => $result);       
+        return array(
+            'rows' => $this->getDataset($limit, $offset)
+        );
     }
 
 
@@ -57,16 +39,13 @@ class DataController extends MetadorController
      */
     public function newAction() {
         // LOAD
-        if ($this->get('request')->getMethod() == 'GET') {
+        if ($this->get('request')->getMethod() == 'GET')
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
-        } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p)) {
+        else
+            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p))
                 return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
-            }
-        }
-
 
         // Load Template.
         $conf = $this->container->getParameter('metador');
@@ -75,7 +54,8 @@ class DataController extends MetadorController
             $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('dataset')
+                'examples' => $this->getExamples('dataset'),
+                'hasAccess' => true
             )
         );
     }
@@ -86,7 +66,9 @@ class DataController extends MetadorController
      * @Method({"GET"})
      */
     public function useAction($id) {
-        if(($p = $this->loadMetadata($id))) {
+        $metadata = $this->loadMetadata($id);
+        
+        if(($p = $metadata->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
@@ -98,7 +80,8 @@ class DataController extends MetadorController
             $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('dataset')
+                'examples' => $this->getExamples('dataset'),
+                'hasAccess' => true
             )
         );
     }
@@ -108,9 +91,11 @@ class DataController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function editAction($id) {
+        $metadata = $this->loadMetadata($id);
+
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
-            if(($p = $this->loadMetadata($id))) {
+            if(($p = $metadata->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
 
@@ -129,7 +114,8 @@ class DataController extends MetadorController
             array(
                 'id' => $id,
                 'p' => $p,
-                'examples' => $this->getExamples('dataset')
+                'examples' => $this->getExamples('dataset'),
+                'hasAccess' => $metadata->getReadonly() ? 0 : 1
             )
         );
     }
@@ -139,11 +125,7 @@ class DataController extends MetadorController
      * @Method("POST")
      */
     public function deleteAction($id) {
-        if($this->deleteMetadata($id)) {
-            $this->get('session')->getFlashBag()->add('success', 'Datensatz gelöscht.');
-        } else {
-            $this->get('session')->getFlashBag()->add('error', 'Datensatz nicht gefunden.');
-        }
+        $this->deleteMetadata($id);
 
         return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
     }

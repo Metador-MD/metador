@@ -1,6 +1,13 @@
 {% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
 
 {% block content %}
+    <div>
+        <form method="get" action="{{ path('search') }}">
+            <label for="search_find">Suche:</label>
+            <input type="text" id="search_find" name="find" value="" />
+            <button>ok</button>
+        </form>
+    </div>
     <div class="preview">
         <div class="head">
             <a href="{{ path('wheregroup_metador_data_index') }}">Daten</a>
@@ -14,12 +21,14 @@
                         <a href="{{ path('wheregroup_metador_data_edit', {'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
                     </td>
                     <td class="last-1">
+{% if row.readonly == 0 %}
                         <form action="{{ path('wheregroup_metador_data_delete', {'id':row.id}) }}" method="post">
                             <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
                                 <div class="icon delete"></div>
                             </button>
                         </form>
-                    </td>                    
+{% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
@@ -38,11 +47,13 @@
                         <a href="{{ path('wheregroup_metador_service_edit', {'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
                     </td>
                     <td class="last-1">
+{% if row.readonly == 0 %}
                         <form action="{{ path('wheregroup_metador_service_delete', {'id':row.id}) }}" method="post">
                             <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
                                 <div class="icon delete"></div>
                             </button>
                         </form>
+{% endif %}
                     </td>                    
                 </tr>
                 {% endfor %}

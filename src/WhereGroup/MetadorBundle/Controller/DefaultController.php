@@ -17,6 +17,7 @@ use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Component\MetadorController;
 use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
+
 /**
  * @Route("/metador")
  */
@@ -29,47 +30,11 @@ class DefaultController extends MetadorController
     public function indexAction() {
         $limit = 30;
         $offset = 0;
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-
-        $service = $em->createQueryBuilder('m')->select('m.id, m.title')
-                ->from('WhereGroupMetadorBundle:Metadata','m')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1')
-                ))
-                ->orderBy('m.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameters(array(1 => 'service'))
-                ->getQuery()
-                ->getResult();
-
-
-        $dataset = $em->createQueryBuilder('x')->select('x.id, x.title')
-                ->from('WhereGroupMetadorBundle:Metadata','x')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('x.hierarchyLevel', '?1'),
-                    $qb->expr()->eq('x.hierarchyLevel', '?2')
-                ))
-                ->orderBy('x.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameters(array(
-                    1 => 'dataset',
-                    2 => 'series',
-                ))
-                ->getQuery()
-                ->getResult();
-
-        $address = $em->createQueryBuilder('y')->select('y.id, y.individualName')
-                ->from('WhereGroupMetadorBundle:Address','y')
-                ->getQuery()
-                ->getResult();
 
         return array(
-            'service' => $service,
-            'dataset' => $dataset,
-            'address' => $address
+            'service' => $this->getService($limit, $offset),
+            'dataset' => $this->getDataset($limit, $offset),
+            'address' => $this->getAddress()
         );
     }
 
@@ -82,7 +47,7 @@ class DefaultController extends MetadorController
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
-            $p = unserialize($metadata->getMetadata());
+            $p = $metadata->getObject();
 
             $data = array('p' => $p);
 
@@ -125,8 +90,13 @@ class DefaultController extends MetadorController
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
+<<<<<<< HEAD
             $p = unserialize($metadata->getMetadata());
             ksort($p);
+=======
+            $p = $metadata->getObject();
+
+>>>>>>> feature/search
             die('<pre>' . print_r($p, 1) . '</pre>');
 
         } else {

@@ -49,7 +49,7 @@ class MetadorListener
                 }
             } else {
                 $xml = $templating->render($template, array(
-                    'p' => unserialize($metadata->getMetadata())
+                    'p' => $metadata->getObject()
                 ));
 
                 file_put_contents($filename, $xml);

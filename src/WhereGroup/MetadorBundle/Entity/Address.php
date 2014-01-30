@@ -156,7 +156,9 @@ class Address
     }
 
     public function setPositionName($positionName) {
-        $this->positionName = $positionName;
+        $this->positionName = is_null($positionName)
+            ? '' : $positionName;
+
         return $this->positionName;
     }
 

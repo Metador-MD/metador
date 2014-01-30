@@ -79,12 +79,23 @@ class Metadata
     /**
      * @ORM\Column(type="text")
      */
-    private $metadata;
+    private $object;
 
     /**
      * @ORM\Column(type="boolean")
      */
     private $public;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $groups;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $readonly; 
 
     /**
      * Get id
@@ -331,9 +342,9 @@ class Metadata
      *
      * @return string 
      */
-    public function getMetadata()
+    public function getObject()
     {
-        return $this->metadata;
+        return unserialize($this->object);
     }
 
     /**
@@ -342,9 +353,9 @@ class Metadata
      * @param string $metadata
      * @return Metadata
      */
-    public function setMetadata($metadata)
+    public function setObject($object) 
     {
-        $this->metadata = $metadata;
+        $this->object = serialize($object);
         return $this;
     }
 
@@ -389,4 +400,49 @@ class Metadata
         $this->hierarchyLevel = $hierarchyLevel;
         return $this;
     }
+    
+    /**
+     * Get groups
+     *
+     * @return array
+     */
+    public function getGroups() {
+        return explode(',', $this->groups);
+    }
+
+    /**
+     * Set groups
+     *
+     * @param array $groups
+     * @return Metadata
+     */
+    public function setGroups($groups) {
+        $array = array_filter($groups);
+        sort($array);
+        
+        $this->groups = implode(',', $array);
+        return $this;
+    }
+
+    
+    /**
+     * Get readonly status.
+     *
+     * @return boolean
+     */
+    public function getReadonly() {
+        return $this->readonly;
+    }
+
+    /**
+     * Set readonly status
+     *
+     * @param boolean $readonly
+     * @return Metadata
+     */
+    public function setReadonly($readonly) {
+        $this->readonly = (boolean)$readonly;
+        return $this;
+    }
+
 }
