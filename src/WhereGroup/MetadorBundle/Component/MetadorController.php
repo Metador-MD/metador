@@ -210,7 +210,7 @@ class MetadorController extends Controller {
             $metadata->setGroups($user->getRoles());
             
             // FIND UUID IN DATABASE
-            $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['identifier'][0]['code']);
+            $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['fileIdentifier']);
             if($uuid) {
                 $this->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
                 return false;
@@ -218,17 +218,17 @@ class MetadorController extends Controller {
         }
 
         // CHECK FOR UUID
-        if(!isset($p['identifier'][0]['code']) || empty($p['identifier'][0]['code'])) {
+        if(!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
             $this->get('session')->getFlashBag()->add('error', "'Identifikation > Bezeichner > Code' darf nicht leer sein!");
             return false;
         }
 
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
-        $metadata->setUuid(@$p['identifier'][0]['code']);
-        $metadata->setCodespace(@$p['identifier'][0]['codespace']);
-        $metadata->setTitle(@$p['title']);
-        $metadata->setAbstract(@$p['abstract']);
+        $metadata->setUuid($p['fileIdentifier']);
+        $metadata->setCodespace(isset($p['identifier'][0]['codespace']) ? $p['identifier'][0]['codespace'] : '');
+        $metadata->setTitle(isset($p['title']) ? $p['title'] : '');
+        $metadata->setAbstract(isset($p['abstract']) ? $p['abstract'] : '');
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);

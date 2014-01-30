@@ -12,4 +12,4 @@ parameters:
     metador.proxy.port: ~
     metador.export.path: ~
     metador.xmlimport.schema:
-        - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Data/xmlimport.json"
+        - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Resources/config/xmlimport.json"

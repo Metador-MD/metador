@@ -29,6 +29,7 @@
     </gmd:hierarchyLevelName>
 {% endif %}
 {% for contact in p['responsiblePartyMetadata'] %}
+{% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
 {% if contact['individualName'] is defined and contact['individualName'] is not empty %} 
@@ -110,7 +111,9 @@
             </gmd:role>
         </gmd:CI_ResponsibleParty>
     </gmd:contact>
+{% endif %}
 {% endfor%}
+
 {% if p['dateStamp'] is defined %}
     <gmd:dateStamp>
         <gco:Date>{{ p['dateStamp'] }}</gco:Date>
@@ -199,6 +202,7 @@
             </gmd:abstract>
 {% endif %}
 {% for contact in p['responsibleParty'] %}
+{% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
             <gmd:pointOfContact>
                 <gmd:CI_ResponsibleParty>
 {% if contact['individualName'] is defined and contact['individualName'] is not empty %} 
@@ -280,7 +284,9 @@
                     </gmd:role>
                 </gmd:CI_ResponsibleParty>
             </gmd:pointOfContact>
+{% endif %}
 {% endfor%}
+
 {% if p['browserGraphic'] is defined %}
             <gmd:graphicOverview>
                 <gmd:MD_BrowseGraphic>

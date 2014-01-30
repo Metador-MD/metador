@@ -1,13 +1,25 @@
 {% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
 
 {% block content %}
-    <div>
-        <form method="get" action="{{ path('search') }}">
-            <label for="search_find">Suche:</label>
-            <input type="text" id="search_find" name="find" value="" />
-            <button>ok</button>
-        </form>
+    <div style="font-size: 12px;">
+        <div style="float:left;">
+            <form method="get" action="{{ path('search') }}">
+                <label for="search_find">Suche:</label>
+                <input type="text" id="search_find" name="find" value="" />
+                <button>ok</button>
+            </form>
+        </div>
+        <div style="float:right;">
+            <form action="{{ path('xml_upload') }}" method="post" enctype="multipart/form-data">
+                <label for="search_find">Import:</label>
+                <input name="Datei" type="file" size="50" maxlength="100000" accept="text/*" name="xml" />
+                <button>ok</button>
+            </form>
+        </div>
+        <div style="clear:both;" />
     </div>
+    <hr/>
+
     <div class="preview">
         <div class="head">
             <a href="{{ path('wheregroup_metador_data_index') }}">Daten</a>

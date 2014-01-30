@@ -40,7 +40,7 @@
 
             "dateStamp": "gmd:dateStamp/gco:Date/text()",
             "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
-            "hierarchyLevel": "gmd:hierarchyLevelName/gco:CharacterString/text()",
+            "hierarchyLevel": "gmd:hierarchyLevel/gmd:MD_ScopeCode/text()",
             "identifier":{
                 "path":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*",
                 "data": {

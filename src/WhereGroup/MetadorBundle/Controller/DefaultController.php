@@ -190,6 +190,40 @@ class DefaultController extends MetadorController
         return $response;
     }
 
+
+    /**
+     * @Route("/xml_import", name="xml_upload")
+     * @Method("POST")
+     */
+    public function xmlUploadAction() {
+
+        
+        foreach($this->getRequest()->files as $file) {
+            $path = $file->getPath() . '/' . $file->getClientOriginalName();
+
+            $file->move(
+                $file->getPath(), $file->getClientOriginalName()
+            );
+
+            if ($file->getClientOriginalExtension() === 'xml') {
+                $xml = file_get_contents($path);
+
+                $import = $this->get('metadata_import');
+
+                $p = $import->load(
+                    $xml, $this->container->getParameter('metador')
+                );
+
+                $this->saveMetadata($p);
+
+                $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+
+    }
+
     /**
      * @Route("/help/set")
      * @Method("POST")
