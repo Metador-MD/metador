@@ -106,35 +106,37 @@ class XmlParser  {
      * @param boolean $asArray
      * @return array
      */
-    private function parseRecursive($object, $name = "", $context = null, $path = "", $recursive = false, $asArray = false) {
+    private function parseRecursive($object, $name = "", $context = null, $path = "", $commands = array()) {
         $result = array();
+
+        $commands['recursive'] = isset($commands['recursive']) ? $commands['recursive'] : false;
+        $commands['asArray']   = isset($commands['asArray']) ? $commands['asArray'] : false;
+        $commands['function']  = isset($commands['function']) ? $commands['function'] : null;
 
         foreach($object as $key => $val) {
             switch($key) {
-                case "cmd" : 
-                    break;
-                case "path" : 
-                    $path .= $val;
-                    break;
-                case "asArray" : 
-                    $asArray = $val;
-                    break;
-                case "recursive":
-                    $recursive = $val;
-                    break;
-                case "data" :
+                case "cmd": break;
+                case "path": $path .= $val; break;
+                case "asArray": $commands['asArray'] = $val; break;
+                case "recursive": $commands['recursive'] = $val; break;
+                case "function": $commands['function'] = $val; break;
+                case "data":
                     if(is_string($val) && isset($this->cache[$val])) {
-                        $result = $this->parseData($this->cache[$val], $name, $path, $context, $recursive, $asArray);
+                        $result = $this->parseData($this->cache[$val], $name, $path, $context, $commands);
                     } else {
                         if(!isset($this->cache[$name])) {
                             $this->cache[$name] = $val;
                         }
-                        $result = $this->parseData($val, $name, $path, $context, $recursive, $asArray);
+                        $result = $this->parseData($val, $name, $path, $context, $commands);
                     }
+
+                    if (!is_null($commands['function']))
+                        $result = $this->functions->get($commands['function'], $result);
+
                     break;
                 default :
                     if(is_object($val)) {
-                        $tmp = $this->parseRecursive($val, $key, $context, $path, $recursive);
+                        $tmp = $this->parseRecursive($val, $key, $context, $path, $commands);
                     } else if(is_array($val) && count($val) >= 2) {
                         $tmp = $this->getValue($path . $val[0], $context);
                         $tmp = $this->functions->get($val[1], $tmp, array_slice($val, 2));
@@ -165,7 +167,7 @@ class XmlParser  {
      * @param boolean $asArray
      * @return mixed
      */
-    private function parseData($data, $name, $path, $context, $recursive, $asArray = false) {
+    private function parseData($data, $name, $path, $context, $commands) {
         if(!is_object($data)) return array();
         $tmp = array();
         
@@ -179,8 +181,8 @@ class XmlParser  {
             foreach($nodes as $node) {
                 $dataRecTmp = array();
                 
-                if($recursive) {
-                    $dataRecTmp = $this->parseData($data, $name, $path, $node, $recursive);
+                if($commands['recursive']) {
+                    $dataRecTmp = $this->parseData($data, $name, $path, $node, $commands);
                 }
                 
                 $dataTmp = $this->parseRecursive($data, $name, $node);
@@ -192,8 +194,7 @@ class XmlParser  {
             }
         }
 
-        return $asArray ? $tmp : $this->getCleanArray($tmp);
-
+        return $commands['asArray'] ? $tmp : $this->getCleanArray($tmp);
     }
     
     /**

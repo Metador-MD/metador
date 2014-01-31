@@ -10,15 +10,39 @@ class XmlParserFunctions  {
         return $data;
     }
 
+    protected function replaceKey($data, $args = null) {
+        $array = array();
+
+        foreach ($data as $key => $val) {
+            if($key === '#KEY#')
+                return $val;
+
+            if (is_array($val)) {
+                $newKey = $this->replaceKey($val);
+
+                if ($newKey && !is_array($newKey)) {
+                    unset($val['#KEY#']);
+                    $array[$newKey] = $val;
+                }
+            }
+        }
+        
+        return $array;
+    }
+
+    protected function asText($data, $args = null) {
+        return is_array($data) ? trim(implode(" ", $data)) : $data;
+    }
+
     protected function asArray($data, $args = null) {
        return is_array($data) ? $data : array($data);
     }
 
-    protected static function commaSeparated($data, $args = null) {
+    protected function commaSeparated($data, $args = null) {
         return is_array($data) ? implode(", ", $data) : $data;
     }
     
-    protected static function replace($data, $args = null) {
+    protected function replace($data, $args = null) {
         return str_replace($args[0], $args[1], $data);
     }
 }

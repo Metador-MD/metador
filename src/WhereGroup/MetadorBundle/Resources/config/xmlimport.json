@@ -36,7 +36,7 @@
                     "title": "gmd:specification/*/gmd:title/gco:CharacterString/text()",
                     "date": "gmd:specification/*/gmd:date/*/gmd:date/gco:Date/text()",
                     "type": "gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/text()",
-                    "result": "gmd:pass/gco:Boolean/text()"
+                    "result": ["gmd:pass/gco:Boolean/text()", "asText"]
                 }      
             },
 
@@ -54,18 +54,13 @@
             },
 
             "keyword":{
-                "path":"gmd:identificationInfo[1]/*",
+                "path":"gmd:identificationInfo[1]/*/gmd:descriptiveKeywords/*",
+                "function": "replaceKey",
                 "data":{
-                    "Test":{
-                        "path":"gmd:descriptiveKeywords/*",
-                        "data":{
-                            "date":"gmd:thesaurusName/*/*/*/gmd:date/*/text()",
-                            "type": "gmd:thesaurusName/*/*/*/gmd:dateType/*/text()",
-                            "value": "gmd:keyword/*/text()"
-                        }
-
-                    }
-                    
+                    "#KEY#": "gmd:thesaurusName/*/gmd:title/*/text()",
+                    "date":"gmd:thesaurusName/*/*/*/gmd:date/*/text()",
+                    "type": "gmd:thesaurusName/*/*/*/gmd:dateType/*/text()",
+                    "value": ["gmd:keyword/*/text()", "asArray"]
                 }
             },
 
