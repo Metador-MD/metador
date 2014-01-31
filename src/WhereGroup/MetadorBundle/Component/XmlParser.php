@@ -222,7 +222,9 @@ class XmlParser  {
             }
         }
 
-        return $this->getCleanArray($result);
+        return empty($result) 
+            ? '' 
+            : $this->getCleanArray($result);
     }
     
     /**

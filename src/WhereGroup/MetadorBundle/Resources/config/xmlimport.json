@@ -6,8 +6,7 @@
             "xsi": "http://www.w3.org/2001/XMLSchema-instance",
             "gml": "http://www.opengis.net/gml"
         },
-
-        "removeEmptyValues" : true,
+        "removeEmptyValues" : false,
         "sortResult" : true
     },
     
@@ -36,7 +35,7 @@
                     "title": "gmd:specification/*/gmd:title/gco:CharacterString/text()",
                     "date": "gmd:specification/*/gmd:date/*/gmd:date/gco:Date/text()",
                     "type": "gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/text()",
-                    "result": ["gmd:pass/gco:Boolean/text()", "asText"]
+                    "result": "gmd:pass/gco:Boolean/text()"
                 }      
             },
 
@@ -67,7 +66,7 @@
             "language": ["gmd:identificationInfo[1]/*/gmd:language/gmd:LanguageCode/text()", "asArray"],
             "lineage": "gmd:dataQualityInfo[1]/*/gmd:lineage/*/*/gco:CharacterString/text()",
             "metadataLanguage": "gmd:language/gmd:LanguageCode/text()",
-            "metaStandardName": "gmd:metadataStandardName/gco:CharacterString/text()",
+            "metadataStandardName": "gmd:metadataStandardName/gco:CharacterString/text()",
             "metadataStandardVersion":"gmd:metadataStandardVersion/gco:CharacterString/text()",
             "onlineResource":["gmd:distributionInfo[1]/*/gmd:transferOptions/*/gmd:onLine/*/*/*/text()", "asArray"],
             "otherconstraints" : ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString/text()", "asArray"],
@@ -100,25 +99,13 @@
                     "onlineResource":"gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()"
                 }
             },
+
             "responsiblePartyMetadata": {
                 "asArray": true,
                 "path": "gmd:contact/*",
-                "data":{
-                    "organisationName":"gmd:organisationName/*/text()",
-                    "electronicMailAddress": "gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()",
-                    "individualName":"gmd:individualName/*/text()",
-                    "role":"gmd:role/*/text()",
-                    "country":"gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
-                    "administrativeArea":"gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()",
-                    "deliveryPoint":"gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
-                    "city":"gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
-                    "postalCode":"gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
-                    "voice": "gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
-                    "facsimile": "gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
-                    "onlineResource": "gmd:contactInfo/*/gmd:onlineResource/*/*/*/text()"
-                }
-
+                "data": "responsibleParty"
             },
+            
             "revisionDate":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()",
             "temporalExtent":{
                 "asArray": true,
