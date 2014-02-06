@@ -40,16 +40,24 @@ class ApiController extends MetadorController
     }
 
     /**
-     * @Route("/update/{id}")
+     * @Route("/update/{uuid}")
      * @Method("POST")
      */
-    public function updateAction($id) {
+    public function updateAction($uuid) {
         $content = $this->get("request")->getContent();
 
         if (empty($content) || ($p = json_decode($content)) === null)
             throw new \RuntimeException('Error');
 
-        $this->saveMetadata((array)$p, $id);
+        $metadata = $this->get('doctrine')
+            ->getManager()
+            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->findByUuid($uuid);
+
+        if (!isset($metadata[0]) && !($metadata[0] instanceof Metadata))
+            throw new \RuntimeException('Metadata not found.');
+        
+        $this->saveMetadata((array)$p, $metadata[0]->getId());
 
         $response = new Response();
         $response->headers->set('ContentType', 'application/json');
@@ -61,11 +69,20 @@ class ApiController extends MetadorController
     }
 
     /**
-     * @Route("/delete/{id}")
+     * @Route("/delete/{uuid}")
      * @Method("POST")
      */
-    public function deleteAction($id) {
-        $this->deleteMetadata($id);
+    public function deleteAction($uuid) {
+        $metadata = $this->get('doctrine')
+            ->getManager()
+            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->findByUuid($uuid);
+
+        if (!isset($metadata[0]) && !($metadata[0] instanceof Metadata))
+            throw new \RuntimeException('Metadata not found.');
+
+
+        $this->deleteMetadata($metadata[0]->getId());
 
         $response = new Response();
         $response->headers->set('ContentType', 'application/json');
@@ -77,29 +94,10 @@ class ApiController extends MetadorController
     }
 
     /**
-     * @Route("/get/{id}")
+     * @Route("/get/{uuid}")
      * @Method("GET")
      */
-    public function getAction($id) {
-        $metadata = $this->loadMetadata($id);
-
-        $response = new Response();
-        $response->headers->set('ContentType', 'application/json');
-        $response->setContent(json_encode(array(
-            'id' => $metadata->getId(),
-            'object' => $metadata->getObject(),
-            'status' => 'ok'
-        )));
-
-        return $response;
-    }
-
-
-    /**
-     * @Route("/getbyuuid/{uuid}")
-     * @Method("GET")
-     */
-    public function getByUuidAction($uuid) {
+    public function getAction($uuid) {
         $metadata = $this->get('doctrine')
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
