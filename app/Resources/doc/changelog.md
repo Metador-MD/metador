@@ -4,6 +4,7 @@
 * Helptext import/export commands.
 * Added Searchbundle.
 * Changed metadata permissions.
+* Metadata import/update/delete API.
 
 ## 2.0.3.3
 * Minor bugfixes.
