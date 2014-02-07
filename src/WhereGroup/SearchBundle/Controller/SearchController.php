@@ -105,12 +105,17 @@ class SearchController extends MetadorController
 
         $paging = new Paging($count, $limit, $page);
 
-        return array(
-            'find' => $searchterms,
-            'page' => $page,
-            'limit' => $limit,
-            'result' => $result,
-            'paging' => $paging->calculate()
-        );       
+        $conf = $this->container->getParameter('metador');
+
+        return $this->render(
+            $conf['templates']['search'],
+            array(
+                'find' => $searchterms,
+                'page' => $page,
+                'limit' => $limit,
+                'result' => $result,
+                'paging' => $paging->calculate()
+            )
+        );      
     }
 }

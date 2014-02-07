@@ -12,6 +12,7 @@ parameters:
             base: %metador.templates.base%
             main: %metador.templates.main%
             login: %metador.templates.login%
+            search: %metador.templates.search%
 
         gdi_de:
             url: %metador.gdi.de.url%

@@ -651,4 +651,8 @@ $(document).ready(function() {
         dialog.modalDialog('open');
     });
 
+    $('#toggle_extended_search').click(function() {
+        $('#extended_search').toggle();
+    });
+
 });

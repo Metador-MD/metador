@@ -1,24 +1,30 @@
 {% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
 
 {% block content %}
-    <form method="get" action="{{ path('search') }}">
-        <label for="search_find">Suche:</label>
-        <input type="text" id="search_find" name="find" value="{{ find }}" />
-        <button>ok</button>
-    </form>
+<div>
+    <div class="search-menu left">
+    {% if paging.count > 0 %}
+        {{ paging.currentPage }} / {{ paging.pages }}
+    {% endif %}
+    </div>
+    <div class="search-menu center">
+        <form method="get" action="{{ path('search') }}">
+            <input type="text" id="search_find" name="find" value="{{ find }}" />
+            <button>ok</button>
+        </form>
+    </div>
+    <div class="search-menu right">
+        <span class="more" id="toggle_extended_search">erweitert</span>
+    </div>
+</div>
+<div class="clear" />
 
-    <hr/>
+<div class="extended-search" id="extended_search">
+    abc
+</div>
 
 <div>
 {% if paging.count > 0 %}
-
-<div style="width:150px; text-align:center; margin:0 auto;">
-    {% if paging.pages == 1 %}
-        Seite {{ paging.currentPage }}
-    {% else %}
-        Seite {{ paging.currentPage }} von {{ paging.pages }}.
-    {% endif%}
-</div>
 <div>
     <div style="float:left;">
         {% if paging.prevPage is defined %}
@@ -43,10 +49,10 @@
 </div>
 <div style="clear:both;"/>
 {% endif %}
+
+
 </div>
-
     <hr/>
-
     {% for metadata in result %}
     <table style="margin-top: 20px; width:100%;">
         <tr>

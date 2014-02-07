@@ -5,6 +5,7 @@ parameters:
     metador.templates.base: "::boilerplate.html.twig"
     metador.templates.main: "WhereGroupMetadorBundle:Design:main.html.twig"
     metador.templates.login: ":Design:login.html.twig"
+    metador.templates.search: "WhereGroupSearchBundle:Search:index.html.twig"
     metador.gdi.de.url: "http://testsuite.gdi-de.org:80/gdi/download?id=wsdl"
     metador.gdi.de.user: ~
     metador.gdi.de.password: ~

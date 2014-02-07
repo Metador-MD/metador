@@ -24,6 +24,13 @@
     @include pos(50%, '', '', 50%);
 }
 
+@mixin userSelect($select){
+    -webkit-user-select: $select;
+    -moz-user-select: $select;
+    -ms-user-select: $select;
+    user-select: $select;
+}
+
 %inlineBlock {
     display: inline-block;
     zoom: 1;  *display: inline;  /* IE7 Hack */

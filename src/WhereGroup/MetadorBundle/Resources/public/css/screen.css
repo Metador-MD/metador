@@ -2,7 +2,7 @@
   background: url('../img/icons-s11cc728681.png') no-repeat;
 }
 
-/* normalize.css v1.0.2 | MIT License | git.io/normalize */
+/*! normalize.css v1.0.2 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
    ========================================================================== */
@@ -1057,6 +1057,13 @@ textarea {
   margin-left: 10px;
 }
 
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1961,4 +1968,52 @@ body {
 
 .de-yellow {
   color: #fece00;
+}
+
+.search-menu {
+  border: 0;
+  border-bottom: 1px solid #b4b4b4;
+  float: left;
+  height: 30px;
+}
+.search-menu.left, .search-menu.right {
+  width: 151px;
+  padding: 4px;
+  font-size: 13px;
+}
+.search-menu.center {
+  width: 601px;
+  text-align: right;
+}
+.search-menu.center #search_find {
+  width: 556px;
+  border: 1px solid #e7e7e7;
+  padding: 2px 4px;
+}
+.search-menu.center #search_find:focus {
+  border: 1px solid #292929;
+}
+.search-menu.right {
+  text-align: right;
+}
+.search-menu.right .more {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+.extended-search {
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  height: 250px;
+  background-color: white;
+  padding: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: none;
 }
