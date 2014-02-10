@@ -1,26 +1,36 @@
 <?php
-namespace WhereGroup\MetadorBundle\Component;
 
-class MetadorDocument
-{
+namespace WhereGroup\MetadorBundle\EventListener;
 
-    public static function normalize($data) {
-        $data = self::rebuildArrayKeys($data);
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 
-        $type = strtolower($data['hierarchyLevel']);
 
-        if($type === 'service') {
-            $data = self::prepairService($data);
+class MetadorListener {
+    protected $container;
+
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function onPreSave(MetadataChangeEvent $event) {
+        $metadata = $event->getDataset();
+        $p = $metadata->getObject();
+
+        $p = $this->rebuildArrayKeys($p);
+
+        if(strtolower($p['hierarchyLevel']) === 'service') {
+            $p = $this->prepairService($p);
         }
 
-        return $data;
+        $metadata->setObject($p);
     }
 
     /**
      * Renumber the array key's.
      * @return array Metadata array
      */
-    private static function rebuildArrayKeys($data) {
+    private function rebuildArrayKeys($data) {
         $keys = array(
             'responsiblePartyMetadata',
             'identifier',
@@ -32,6 +42,10 @@ class MetadorDocument
         );
 
         foreach($keys as $key) {
+            if(empty($data[$key]))
+                unset($data[$key]);
+            
+
             if(isset($data[$key])) {
                 $array = array();
 
@@ -49,7 +63,7 @@ class MetadorDocument
      * Adds german service name to the metadata array.
      * @return array Metadata array
      */
-    private static function prepairService($data) {
+    private function prepairService($data) {
         // Set german hierarchy level name based on service local name
         if(!empty($data['serviceType'])) {
             $hierarchyLevelNames = array(
@@ -66,5 +80,4 @@ class MetadorDocument
         
         return $data;
     }
-
 }

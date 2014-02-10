@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
-use WhereGroup\MetadorBundle\Component\MetadorDocument;
 
 /**
  * Klasse zum bearbeiten von Metadaten.
@@ -151,6 +150,10 @@ class MetadorController extends Controller {
             $this->userHasAccess($metadata) ? 0 : 1
         );
 
+        // EVENT ON LOAD
+        $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+        $this->get('event_dispatcher')->dispatch('metador.on_load', $event);
+
         return $metadata;
     }
 
@@ -182,8 +185,6 @@ class MetadorController extends Controller {
     }
 
     public function saveMetadata($p, $id = false) {
-        $p = MetadorDocument::normalize($p);
-
         $user   = $this->get('security.context')->getToken()->getUser();
         $now    = new \DateTime();
         $em     = $this->getDoctrine()->getManager();
