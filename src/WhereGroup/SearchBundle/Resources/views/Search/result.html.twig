@@ -1,0 +1,66 @@
+<div>
+{% if paging.count > 0 %}
+<div>
+    <div style="float:left;">
+        {% if paging.prevPage is defined %}
+            <a href="{{ path('search', {
+                'find': find,
+                'page': paging.prevPage
+            }) }}">zurück</a>
+        {% else %}
+            <span>zurück</span>
+        {% endif %}
+    </div>
+    <div style="float:right;">    
+        {% if paging.nextPage is defined %}
+            <a href="{{ path('search', {
+                'find': find,
+                'page': paging.nextPage
+            }) }}">weiter</a>
+        {% else %}
+            <span>weiter</span>
+        {% endif %}
+    </div>
+</div>
+<div style="clear:both;"/>
+{% endif %}
+</div>
+
+<hr/>
+{% for metadata in result %}
+<table style="margin-top: 20px; width:100%;">
+    <tr>
+        <td rowspan="3" style="width:90px;vertical-align:top;">
+        {% if metadata.object.browserGraphic is defined %}
+        <img src="{{ metadata.object.browserGraphic }}" style="width: 80px; height: 80px;" />
+        {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="float:left;">
+                <strong>{{ metadata.title }}</strong>
+            </div>
+            <div style="float:right; font-size: 12px;">
+            </div>
+            <div style="clear:both;" />
+        </td>
+    </tr>
+    <tr>
+        <td style="font-size: 14px;vertical-align: top; color: #555">{{ metadata.abstract }}</td>
+    </tr>
+</table>
+<div style="text-align:right; font-size: 12px;">
+{% if app.user.username is defined %}
+{% if metadata.readonly == 0 %}
+        {% if metadata.hierarchyLevel == 'serive' %}
+        <a href="{{ path('wheregroup_metador_service_edit', {id: metadata.id }) }}">bearbeiten</a> | 
+        {% else %}
+        <a href="{{ path('wheregroup_metador_data_edit', {id: metadata.id }) }}">bearbeiten</a> | 
+        {% endif %}
+{% endif %}
+        <a href="{{ path('wheregroup_metador_default_xml', {id: metadata.id }) }}" target="_BLANK">XML</a>
+{% endif %}
+</div>
+<hr/>
+{% endfor %}
