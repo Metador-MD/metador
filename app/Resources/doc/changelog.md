@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4.0
+* Helptext import/export commands.
+* Added Searchbundle.
+* Changed metadata permissions.
+* Metadata import/update/delete API.
+
 ## 2.0.3.3
 * Minor bugfixes.
 
@@ -16,6 +22,5 @@
 
 ## 2.0.2.1
 * Upgrade Symfony version (2.3.7).
-
 
 <a href="../../../README.md">&laquo; back</a>

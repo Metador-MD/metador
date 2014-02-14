@@ -14,11 +14,14 @@ use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Helptext;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
+use WhereGroup\MetadorBundle\Component\MetadorController;
+use WhereGroup\MetadorBundle\Component\MetadorDocument;
+
 
 /**
  * @Route("/metador")
  */
-class DefaultController extends Controller
+class DefaultController extends MetadorController
 {
     /**
      * @Route("/")
@@ -27,47 +30,11 @@ class DefaultController extends Controller
     public function indexAction() {
         $limit = 30;
         $offset = 0;
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-
-        $service = $em->createQueryBuilder('m')->select('m.id, m.title')
-                ->from('WhereGroupMetadorBundle:Metadata','m')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1')
-                ))
-                ->orderBy('m.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameters(array(1 => 'service'))
-                ->getQuery()
-                ->getResult();
-
-
-        $dataset = $em->createQueryBuilder('x')->select('x.id, x.title')
-                ->from('WhereGroupMetadorBundle:Metadata','x')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('x.hierarchyLevel', '?1'),
-                    $qb->expr()->eq('x.hierarchyLevel', '?2')
-                ))
-                ->orderBy('x.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameters(array(
-                    1 => 'dataset',
-                    2 => 'series',
-                ))
-                ->getQuery()
-                ->getResult();
-
-        $address = $em->createQueryBuilder('y')->select('y.id, y.individualName')
-                ->from('WhereGroupMetadorBundle:Address','y')
-                ->getQuery()
-                ->getResult();
 
         return array(
-            'service' => $service,
-            'dataset' => $dataset,
-            'address' => $address
+            'service' => $this->getService($limit, $offset),
+            'dataset' => $this->getDataset($limit, $offset),
+            'address' => $this->getAddress()
         );
     }
 
@@ -80,7 +47,7 @@ class DefaultController extends Controller
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
-            $p = unserialize($metadata->getMetadata());
+            $p = $metadata->getObject();
 
             $data = array('p' => $p);
 
@@ -123,7 +90,10 @@ class DefaultController extends Controller
         $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
         
         if($metadata) {
-            $p = unserialize($metadata->getMetadata());
+            
+            $p = $metadata->getObject();
+            
+            ksort($p);
 
             die('<pre>' . print_r($p, 1) . '</pre>');
 
@@ -139,6 +109,60 @@ class DefaultController extends Controller
         
         return $response;
     }
+
+    /**
+     * @Route("/xmlimport/{id}")
+     */
+    public function xmlimportAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
+        
+        if($metadata) {
+            $p = $metadata->getObject();
+
+            $data = array('p' => $p);
+
+            $conf = $this->container->getParameter('metador');
+
+            switch($p['hierarchyLevel']) {
+                case 'service' : 
+                    $template = $conf['templates']['form'] . ':Service:service.xml.twig';
+                    break;
+                case 'dataset' :
+                case 'series' :
+                    $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
+                    break;
+                default :
+                    $template = "WhereGroupMetadorBundle::exception.xml.twig";
+                    $data = array('message' => 'HierarchyLevel unbekannt!');
+            }
+
+            $xml = $this->render($template, $data);
+            $import = $this->get('metadata_import');
+
+            $array = $import->load(
+                $xml->getContent(), 
+                $this->container->getParameter('metador')
+            );
+
+            ksort($array);
+
+            die('<pre>' . print_r($array, 1) . '</pre>');
+
+        } else {
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
+            ));
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        $response->setContent($xml->getContent());
+        
+        return $response;
+    }
+
     /**
      * @Route("/help/get")
      * @Method({"POST", "GET"})
@@ -165,6 +189,40 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($html->getContent());
         return $response;
+    }
+
+
+    /**
+     * @Route("/xml_import", name="xml_upload")
+     * @Method("POST")
+     */
+    public function xmlUploadAction() {
+
+        
+        foreach($this->getRequest()->files as $file) {
+            $path = $file->getPath() . '/' . $file->getClientOriginalName();
+
+            $file->move(
+                $file->getPath(), $file->getClientOriginalName()
+            );
+
+            if ($file->getClientOriginalExtension() === 'xml') {
+                $xml = file_get_contents($path);
+
+                $import = $this->get('metadata_import');
+
+                $p = $import->load(
+                    $xml, $this->container->getParameter('metador')
+                );
+
+                $this->saveMetadata($p);
+
+                $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+
     }
 
     /**

@@ -29,7 +29,9 @@
     <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
   </gmd:hierarchyLevelName>
 {% endif %}
+
 {% for contact in p['responsiblePartyMetadata'] %}
+{% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
 {% if contact['individualName'] is defined and contact['individualName'] is not empty %} 
@@ -111,6 +113,7 @@
             </gmd:role>
         </gmd:CI_ResponsibleParty>
     </gmd:contact>
+{% endif %}
 {% endfor%}
 
 {% if p['dateStamp'] is defined %}
@@ -149,7 +152,7 @@
                                 <gco:Date>{{ p['creationDate'] }}</gco:Date>
                             </gmd:date>
                             <gmd:dateType>
-                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">creation</gmd:CI_DateTypeCode>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>
@@ -175,7 +178,7 @@
                                 <gco:Date>{{ p['revisionDate'] }}</gco:Date>
                             </gmd:date>
                             <gmd:dateType>
-                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">revision</gmd:CI_DateTypeCode>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>
@@ -207,6 +210,7 @@
 {% endif %}
 
 {% for contact in p['responsibleParty'] %}
+{% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
             <gmd:pointOfContact>
                 <gmd:CI_ResponsibleParty>
 {% if contact['individualName'] is defined and contact['individualName'] is not empty %} 
@@ -288,6 +292,7 @@
                     </gmd:role>
                 </gmd:CI_ResponsibleParty>
             </gmd:pointOfContact>
+{% endif %}
 {% endfor%}
 
 {% if p['browserGraphic'] is defined %}
@@ -487,16 +492,6 @@
 
             <gmd:transferOptions>
                 <gmd:MD_DigitalTransferOptions>
-
-{% if p['containsOperationsURL'] is defined %}
-                    <gmd:onLine>
-                        <gmd:CI_OnlineResource>
-                            <gmd:linkage>
-                                <gmd:URL>{{ p['containsOperationsURL'] }}</gmd:URL>
-                            </gmd:linkage>
-                        </gmd:CI_OnlineResource>
-                    </gmd:onLine>
-{% endif %}
 {% if p['onlineResource'] is defined %}
 {% for onlineResource in p['onlineResource'] %}
                     <gmd:onLine>

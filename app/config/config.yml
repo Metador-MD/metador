@@ -25,6 +25,9 @@ parameters:
         export:
             path: %metador.export.path%
 
+        xmlimport:
+            schema: %metador.xmlimport.schema%
+
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
@@ -40,7 +43,8 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         ~
+    session:
+        cookie_path: "%cookie_path%"
     fragments:       ~
     http_method_override: true
 
@@ -49,8 +53,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.3.3
-
+        version: 2.0.4.0
 
 # Assetic Configuration
 assetic:
@@ -60,19 +63,35 @@ assetic:
     filters:
         cssrewrite: ~
 
-
-# Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
-        charset:  UTF8
-        path:     %database_path%
+        default_connection: default
+        connections:
+            default:
+                driver:   %database_driver%
+                host:     %database_host%
+                port:     %database_port%
+                dbname:   %database_name%
+                path:     %database_path%
+                user:     %database_user%
+                password: %database_password%
+                charset:  %database_charset%
+            external:
+                driver:   %external_database_driver%
+                host:     %external_database_host%
+                port:     %external_database_port%
+                dbname:   %external_database_name%
+                path:     %external_database_path%
+                user:     %external_database_user%
+                password: %external_database_password%
+                charset:  %external_database_charset%
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    WhereGroupMetadorBundle: ~
+                    WhereGroupUserBundle: ~
