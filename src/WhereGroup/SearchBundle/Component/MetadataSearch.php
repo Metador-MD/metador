@@ -2,10 +2,12 @@
 
 namespace WhereGroup\SearchBundle\Component;
 
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+
 class MetadataSearch {
     private $container;
 
-    public function __construct($container) {
+    public function __construct(Container $container) {
         $this->container = $container;
     }
 

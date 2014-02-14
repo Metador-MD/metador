@@ -36,7 +36,7 @@ class SearchController extends MetadorController
     public function getAction() {
         $conf = $this->container->getParameter('metador');
 
-        $search = new MetadataSearch($this->container);
+        $search = $this->container->get('metadata_search');
 
         $result = $search->find(array(
             'page' => $this->get('request')->get('page', 1),
