@@ -492,16 +492,6 @@
 
             <gmd:transferOptions>
                 <gmd:MD_DigitalTransferOptions>
-
-{% if p['containsOperationsURL'] is defined %}
-                    <gmd:onLine>
-                        <gmd:CI_OnlineResource>
-                            <gmd:linkage>
-                                <gmd:URL>{{ p['containsOperationsURL'] }}</gmd:URL>
-                            </gmd:linkage>
-                        </gmd:CI_OnlineResource>
-                    </gmd:onLine>
-{% endif %}
 {% if p['onlineResource'] is defined %}
 {% for onlineResource in p['onlineResource'] %}
                     <gmd:onLine>

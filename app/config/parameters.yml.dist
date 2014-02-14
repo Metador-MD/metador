@@ -3,20 +3,20 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     cookie_path: ~
 
-    database.driver: pdo_sqlite
-    database.host: localhost
-    database.port: ~
-    database.name: ~
-    database.path: "%kernel.root_dir%/../metador.db"
-    database.user: root
-    database.password: ~
-    database.charset: UTF8
+    database_driver: pdo_sqlite
+    database_host: localhost
+    database_port: ~
+    database_name: ~
+    database_path: "%kernel.root_dir%/../metador.db"
+    database_user: root
+    database_password: ~
+    database_charset: UTF8
 
-    external.database.driver: pdo_pgsql
-    external.database.host: localhost
-    external.database.port: ~
-    external.database.name: ~
-    external.database.path: ~
-    external.database.user: ~
-    external.database.password: ~
-    external.database.charset: UTF8
+    external_database_driver: pdo_pgsql
+    external_database_host: localhost
+    external_database_port: ~
+    external_database_name: ~
+    external_database_path: ~
+    external_database_user: ~
+    external_database_password: ~
+    external_database_charset: UTF8

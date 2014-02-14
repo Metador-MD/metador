@@ -95,7 +95,3 @@ doctrine:
                 mappings:
                     WhereGroupMetadorBundle: ~
                     WhereGroupUserBundle: ~
-            # external:
-            #     connection: external
-            #     mappings: 
-            #         WhereGroupMapbender3Bundle: ~

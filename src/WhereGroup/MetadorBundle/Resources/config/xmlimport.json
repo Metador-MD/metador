@@ -31,7 +31,7 @@
             "containsOperationsName":"gmd:identificationInfo[1]/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/*/text()",
             "creationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
             "containsOperationsURL": "gmd:identificationInfo[1]/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/*/*/*/text()",
-            "coupledResource": "gmd:identificationInfo[1]/*/srv:operatesOn/@xlink:href",
+            "coupledResource": ["gmd:identificationInfo[1]/*/srv:operatesOn/@xlink:href", "asArray"],
             "creationDate":"gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
             "dataquality": {
                 "asArray": true,
@@ -54,11 +54,10 @@
                 "data": {
                     "code": "gmd:code/gco:CharacterString/text()",
                     "codespace": "gmd:codeSpace/gco:CharacterString/text()"
-                } 
-                
+                }
             },
-
             "keyword":{
+                "asArray": true,
                 "path":"gmd:identificationInfo[1]/*/gmd:descriptiveKeywords/*",
                 "function": "replaceKey",
                 "data":{
@@ -68,7 +67,7 @@
                     "value": ["gmd:keyword/*/text()", "asArray"]
                 }
             },
-            "language":"gmd:identificationInfo[1]/*/gmd:language/*/text()",          
+            "language":["gmd:identificationInfo[1]/*/gmd:language/*/text()", "asArray"],          
             "lineage":"gmd:dataQualityInfo/*/gmd:lineage/*/*/*/text()", 
             "metadataLanguage": "gmd:language/gmd:LanguageCode/text()",
             "metadataStandardName": "gmd:metadataStandardName/gco:CharacterString/text()",
@@ -77,6 +76,7 @@
             "otherconstraints" : ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString/text()", "asArray"],
             "publicationDate": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication' or ./*/gmd:dateType/*/text()='publication']/*/*/gco:Date/text()",
             "resolution" : {
+                "asArray": true,
                 "path": "gmd:identificationInfo[1]/*/gmd:spatialResolution/*",
                 "data": {
                     "denominator":"gmd:equivalentScale/*/*/*/text()",
@@ -122,7 +122,7 @@
                 }
             },
             "title":"gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()",
-            "topicCategory":"gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()",
+            "topicCategory":["gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()", "asArray"],
             "uselimitation": ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()", "asArray"]
         }
     }
