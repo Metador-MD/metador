@@ -10,14 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Component\MetadorController;
 use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * @Route("/search")
  */
-class SearchController extends MetadorController
+class SearchController extends Controller
 {
     /**
      * @Route("/", name="search")
@@ -27,10 +25,10 @@ class SearchController extends MetadorController
         $page = $this->get('request')->get('page', 1);
         $limit = $this->get('request')->get('limit', 4);
         $searchterms = $this->get('request')->get('find', '');
-
+        $metadorUser = $this->get('metador_user');
         $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
 
-       $searchCount = $this->container
+        $searchCount = $this->container
                 ->get('doctrine')
                 ->getRepository('WhereGroupMetadorBundle:Metadata')
                 ->createQueryBuilder('m')
@@ -60,7 +58,7 @@ class SearchController extends MetadorController
             );
         }
         // prepair permissions
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $metadorUser->getUser();
 
         if(is_object($user)) {
             $roles = $user->getRoles();
@@ -97,11 +95,8 @@ class SearchController extends MetadorController
             ->getQuery()
             ->getSingleScalarResult();
 
-
         for($i=0,$iL=count($result); $i<$iL; $i++)
-            $result[$i]->setReadonly(
-                $this->userHasAccess($result[$i]) ? 0 : 1
-            );
+            $result[$i]->setReadonly(!$metadorUser->checkMetadataAccess($result[$i]));
 
         $paging = new Paging($count, $limit, $page);
 
