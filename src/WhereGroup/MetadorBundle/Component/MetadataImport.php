@@ -8,8 +8,7 @@ class MetadataImport {
         $this->parser = new XmlParser($xml, new XmlParserFunctions());
 
         foreach($conf['xmlimport']['schema'] as $filename)
-            $this->parser->loadSchema(
-                file_get_contents($filename));
+            $this->parser->loadSchema(file_get_contents($filename));
 
         $array = $this->parser->parse();
 

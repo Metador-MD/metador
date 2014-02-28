@@ -9,16 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Entity\Address;
-use WhereGroup\MetadorBundle\Component\MetadorController;
-
 /**
  * @Route("/metador/data")
  */
-class DataController extends MetadorController
-{
+class DataController extends Controller {
     /**
      * @Route("/")
      * @Template("WhereGroupMetadorBundle:Dataset:index.html.twig")
@@ -27,8 +21,10 @@ class DataController extends MetadorController
         $limit = 100;
         $offset = 0;
 
+        $metadata = $this->get('metador_metadata');
+
         return array(
-            'rows' => $this->getDataset($limit, $offset)
+            'rows' => $metadata->getDataset($limit, $offset)
         );
     }
 
@@ -38,13 +34,15 @@ class DataController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function newAction() {
+        $metadata = $this->get('metador_metadata');
+        
         // LOAD
         if ($this->get('request')->getMethod() == 'GET')
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
         else
-            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p))
+            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p))
                 return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
 
         // Load Template.
@@ -54,7 +52,7 @@ class DataController extends MetadorController
             $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('dataset'),
+                'examples' => $this->getExample(),
                 'hasAccess' => true
             )
         );
@@ -66,21 +64,23 @@ class DataController extends MetadorController
      * @Method({"GET"})
      */
     public function useAction($id) {
-        $metadata = $this->loadMetadata($id);
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
         
-        if(($p = $metadata->getObject())) {
+        if(($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
         
         // Load Template.
         $conf = $this->container->getParameter('metador');
+        
 
         return $this->render(
             $conf['templates']['form'] . ':Dataset:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('dataset'),
+                'examples' => $this->getExample(),
                 'hasAccess' => true
             )
         );
@@ -91,17 +91,18 @@ class DataController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function editAction($id) {
-        $metadata = $this->loadMetadata($id);
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
 
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
-            if(($p = $metadata->getObject())) {
+            if(($p = $data->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
 
         // SAVE
         } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p, $id)) {
+            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
                 return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
             }
         }
@@ -114,8 +115,8 @@ class DataController extends MetadorController
             array(
                 'id' => $id,
                 'p' => $p,
-                'examples' => $this->getExamples('dataset'),
-                'hasAccess' => $metadata->getReadonly() ? 0 : 1
+                'examples' => $this->getExample(),
+                'hasAccess' => !$data->getReadonly()
             )
         );
     }
@@ -125,9 +126,16 @@ class DataController extends MetadorController
      * @Method("POST")
      */
     public function deleteAction($id) {
-        $this->deleteMetadata($id);
+        $metadata = $this->get('metador_metadata');
+        $metadata->deleteById($id);
 
         return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+    }
+
+    private function getExample() {
+        $wizard = $this->container->get('metador_wizard');
+
+        return $wizard->getExamples('dataset');
     }
 
 }

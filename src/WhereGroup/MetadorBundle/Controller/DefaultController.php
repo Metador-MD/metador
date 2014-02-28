@@ -14,14 +14,13 @@ use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Helptext;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
-use WhereGroup\MetadorBundle\Component\MetadorController;
-use WhereGroup\MetadorBundle\Component\MetadorDocument;
+
 
 
 /**
  * @Route("/metador")
  */
-class DefaultController extends MetadorController
+class DefaultController extends Controller
 {
     /**
      * @Route("/")
@@ -31,10 +30,13 @@ class DefaultController extends MetadorController
         $limit = 30;
         $offset = 0;
 
+        $metadata = $this->get('metador_metadata');
+        $address = $this->get('metador_address');
+
         return array(
-            'service' => $this->getService($limit, $offset),
-            'dataset' => $this->getDataset($limit, $offset),
-            'address' => $this->getAddress()
+            'service' => $metadata->getService($limit, $offset),
+            'dataset' => $metadata->getDataset($limit, $offset),
+            'address' => $address->get()
         );
     }
 
@@ -44,10 +46,11 @@ class DefaultController extends MetadorController
     public function xmlAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
-        
-        if($metadata) {
-            $p = $metadata->getObject();
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
+
+        if($data) {
+            $p = $data->getObject();
 
             $data = array('p' => $p);
 
@@ -87,11 +90,12 @@ class DefaultController extends MetadorController
     public function objAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
-        
-        if($metadata) {
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
+
+        if($data) {
             
-            $p = $metadata->getObject();
+            $p = $data->getObject();
             
             ksort($p);
 
@@ -116,10 +120,11 @@ class DefaultController extends MetadorController
     public function xmlimportAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
-        
-        if($metadata) {
-            $p = $metadata->getObject();
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
+
+        if($data) {
+            $p = $data->getObject();
 
             $data = array('p' => $p);
 
@@ -197,8 +202,6 @@ class DefaultController extends MetadorController
      * @Method("POST")
      */
     public function xmlUploadAction() {
-
-        
         foreach($this->getRequest()->files as $file) {
             $path = $file->getPath() . '/' . $file->getClientOriginalName();
 
@@ -215,14 +218,14 @@ class DefaultController extends MetadorController
                     $xml, $this->container->getParameter('metador')
                 );
 
-                $this->saveMetadata($p);
+                $metadata = $this->get('metador_metadata');
+                $metadata->saveObject($p);
 
                 $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
             }
         }
 
         return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
-
     }
 
     /**
@@ -337,15 +340,17 @@ class DefaultController extends MetadorController
         $id = $this->getRequest()->get('id', null);
 
         $em = $this->getDoctrine()->getManager();
-        $metadata = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findOneById($id);
 
-        if($metadata) {
-            $metadata->setPublic($public);
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
 
-            $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+        if($data) {
+            $data->setPublic($public);
+
+            $event  = new MetadataChangeEvent($data, $this->container->getParameter('metador'));
 
             $this->get('event_dispatcher')->dispatch('metador.pre_save', $event);
-            $em->persist($metadata);
+            $em->persist($data);
             $em->flush();
             $this->get('event_dispatcher')->dispatch('metador.post_save', $event);
 

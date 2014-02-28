@@ -9,15 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Entity\Address;
-use WhereGroup\MetadorBundle\Component\MetadorController;
-
 /**
  * @Route("/metador/service")
  */
-class ServiceController extends MetadorController
+class ServiceController extends Controller
 {
     /**
      * @Route("/")
@@ -27,22 +22,11 @@ class ServiceController extends MetadorController
         $limit = 100;
         $offset = 0;
 
-        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $metadata = $this->get('metador_metadata');
 
-        $result = 
-            $qb->select('m')
-                ->from('WhereGroupMetadorBundle:Metadata','m')
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', ':hierarchyLevel')
-                ))
-                ->orderBy('m.updateTime', 'DESC')
-                ->setFirstResult( $offset )
-                ->setMaxResults( $limit )
-                ->setParameter('hierarchyLevel', 'service')
-                ->getQuery()
-                ->getResult();
-        
-        return array('rows' => $result);
+        return array(
+            'rows' => $metadata->getService($limit, $offset)
+        );
     }
 
     /**
@@ -50,13 +34,15 @@ class ServiceController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function newAction() {
+        $metadata = $this->get('metador_metadata');
+
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
         } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p)) {
+            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
                 return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
             }
         }
@@ -68,7 +54,7 @@ class ServiceController extends MetadorController
             $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('service'),
+                'examples' => $this->getExample(),
                 'hasAccess' => true
             )
         );
@@ -80,9 +66,10 @@ class ServiceController extends MetadorController
      * @Method({"GET"})
      */
     public function useAction($id) {
-        $metadata = $this->loadMetadata($id);
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
         
-        if(($p = $metadata->getObject())) {
+        if(($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
@@ -94,7 +81,7 @@ class ServiceController extends MetadorController
             $conf['templates']['form'] . ':Service:form.html.twig',
             array(
                 'p' => $p,
-                'examples' => $this->getExamples('service'),
+                'examples' => $this->getExample(),
                 'hasAccess' => true
             )
         );
@@ -106,17 +93,18 @@ class ServiceController extends MetadorController
      * @Method({"GET", "POST"})
      */
     public function editAction($id) {
-        $metadata = $this->loadMetadata($id);
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
 
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
-            if(($p = $metadata->getObject())) {
+            if(($p = $data->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
 
         // SAVE
         } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $this->saveMetadata($p, $id)) {
+            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
                 return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
             }
         }
@@ -129,8 +117,8 @@ class ServiceController extends MetadorController
             array(
                 'id' => $id,
                 'p' => $p,
-                'examples' => $this->getExamples('service'),
-                'hasAccess' => $metadata->getReadonly() ? 0 : 1
+                'examples' => $this->getExample(),
+                'hasAccess' => !$data->getReadonly()
             )
         );
     }
@@ -141,8 +129,9 @@ class ServiceController extends MetadorController
      * @Method("POST")
      */
     public function deleteAction($id) {
-        $this->deleteMetadata($id);
-        
+        $metadata = $this->get('metador_metadata');
+        $metadata->deleteById($id);
+
         return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
     }
 
@@ -186,4 +175,9 @@ class ServiceController extends MetadorController
         return $response;
     }
 
+    private function getExample() {
+        $wizard = $this->container->get('metador_wizard');
+
+        return $wizard->getExamples('service');
+    }
 }

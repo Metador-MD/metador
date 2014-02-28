@@ -30,6 +30,10 @@ class XmlParserFunctions  {
         return $array;
     }
 
+    protected function boolean($data, $args = null) {
+        return empty($data) ? false : true;
+    }
+
     protected function asText($data, $args = null) {
         return is_array($data) ? trim(implode(" ", $data)) : $data;
     }

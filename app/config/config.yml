@@ -54,7 +54,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.4.0
+        version: 2.0.4.1
 
 # Assetic Configuration
 assetic:
@@ -96,7 +96,3 @@ doctrine:
                 mappings:
                     WhereGroupMetadorBundle: ~
                     WhereGroupUserBundle: ~
-            # external:
-            #     connection: external
-            #     mappings: 
-            #         WhereGroupMapbender3Bundle: ~

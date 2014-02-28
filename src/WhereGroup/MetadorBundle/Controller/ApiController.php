@@ -9,14 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Component\MetadorController;
-
-
 /**
  * @Route("/api")
  */
-class ApiController extends MetadorController
+class ApiController extends Controller
 {
     /**
      * @Route("/insert")
@@ -24,11 +20,12 @@ class ApiController extends MetadorController
      */
     public function insertAction() {
         $content = $this->get("request")->getContent();
-        
-        if (empty($content) || ($p = json_decode($content)) === null)
+        $metadata = $this->get('metador_metadata');
+
+        if (empty($content) || ($p = json_decode($content, true)) === null)
             throw new \RuntimeException('Error');
 
-        $this->saveMetadata((array)$p);
+        $metadata->saveObject($p);
 
         $response = new Response();
         $response->headers->set('ContentType', 'application/json');
@@ -46,18 +43,19 @@ class ApiController extends MetadorController
     public function updateAction($uuid) {
         $content = $this->get("request")->getContent();
 
-        if (empty($content) || ($p = json_decode($content)) === null)
+        if (empty($content) || ($p = json_decode($content, true)) === null)
             throw new \RuntimeException('Error');
 
-        $metadata = $this->get('doctrine')
+        $data = $this->get('doctrine')
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
             ->findByUuid($uuid);
 
-        if (!isset($metadata[0]) && !($metadata[0] instanceof Metadata))
+        if (!isset($data[0]) && !($data[0] instanceof Metadata))
             throw new \RuntimeException('Metadata not found.');
         
-        $this->saveMetadata((array)$p, $metadata[0]->getId());
+        $metadata = $this->get('metador_metadata');
+        $metadata->saveObject($p, $data[0]->getId());
 
         $response = new Response();
         $response->headers->set('ContentType', 'application/json');
@@ -73,16 +71,16 @@ class ApiController extends MetadorController
      * @Method("POST")
      */
     public function deleteAction($uuid) {
-        $metadata = $this->get('doctrine')
+        $data = $this->get('doctrine')
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
             ->findByUuid($uuid);
 
-        if (!isset($metadata[0]) && !($metadata[0] instanceof Metadata))
+        if (!isset($data[0]) && !($data[0] instanceof Metadata))
             throw new \RuntimeException('Metadata not found.');
 
-
-        $this->deleteMetadata($metadata[0]->getId());
+        $metadata = $this->get('metador_metadata');
+        $metadata->deleteById($data[0]->getId());
 
         $response = new Response();
         $response->headers->set('ContentType', 'application/json');

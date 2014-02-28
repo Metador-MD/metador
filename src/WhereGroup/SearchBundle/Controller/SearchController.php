@@ -13,16 +13,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Component\MetadorController;
 use WhereGroup\SearchBundle\Component\MetadataSearch;
+use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * @Route("/search")
  */
-class SearchController extends MetadorController
+class SearchController extends Controller
 {
     /**
-     * @Route("/", name="search")
+     * @Route("/", name="search_index")
      */
     public function indexAction() {
+        $conf = $this->container->getParameter('metador');
 
         return $this->render(
             $conf['templates']['search'] . ':Search:index.html.twig',
@@ -31,32 +33,34 @@ class SearchController extends MetadorController
     }
 
     /**
-     * @Route("/get/", name="search")
+     * @Route("/get/", name="search_get")
      */
     public function getAction() {
         $conf = $this->container->getParameter('metador');
-
         $search = $this->container->get('metadata_search');
 
+        $page = $this->container->get('request')->get('page', 1);
+
         $result = $search->find(array(
-            'page' => $this->get('request')->get('page', 1),
-            'limit' => $this->get('request')->get('limit', 4),
-            'searchterm' => $this->get('request')->get('find', '')
+            'page'          => $this->container->get('request')->get('page', 1),
+            'limit'         => $this->container->get('request')->get('limit', 5),
+            'searchterm'    => $this->container->get('request')->get('searchterm', ''),
+            'filter-dataset'=> $this->container->get('request')->get('filter-dataset', 1),
+            'filter-service'=> $this->container->get('request')->get('filter-service', 1),
+            'filter-series' => $this->container->get('request')->get('filter-series', 1)
         ));
 
-       for($i=0,$iL=count($result['result']); $i<$iL; $i++)
-            $result['result'][$i]->setReadonly(
-                $this->userHasAccess($result['result'][$i]) ? 0 : 1
-            );
-        
-        return $this->render(
-            $conf['templates']['search'] . ':Search:result.html.twig',
-            array(
-                'find' => $result['find'],
-                'limit' => $result['limit'],
-                'result' => $result['result'],
-                'paging' => $result['paging']
-            )
+        $html = $this->render(
+            $conf['templates']['search'] . ':Search:result.html.twig', $result
         );
+
+        $response = new Response();
+        $response->headers->set('ContentType', 'application/json');
+        $response->setContent(json_encode(array(
+            'paging' => $result['paging'],
+            'html' => $html->getContent()
+        )));
+
+        return $response;
     }
 }

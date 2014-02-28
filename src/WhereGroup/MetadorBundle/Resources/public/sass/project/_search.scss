@@ -1,51 +1,299 @@
-$search-menu-outer: $pageWidth / 3 - 162px;
-$search-menu-inner: $pageWidth / 3 + 281px;
 
-.search-menu {
-    border: 0;
-    border-bottom: 1px solid darken($bright, 20%);
-    float: left;
+/*
+ * INDEX
+ ******************************************************************************/
+ 
+$paging-tab-length: 40px;
+$extended-search-height: 200px;
+
+.metador-search {
+    min-height: 200px;
+    @include pos(0,0,0,0);
+
+    &.extended {
+        .search-extended { display: block; }
+        .search-content { top: $extended-search-height; }
+        .search-center-form { display: none; }
+        .search-center-content { top: 0; }
+    }
+}
+
+.search-input, .search-button {
     height: 30px;
-    
+    border-style: solid;
+    border-color: silver;
+    background-color: lighten($bright, 10%);
 
-    &.left, &.right {
-        width: $search-menu-outer;
-        padding: 4px;
-        font-size: 13px;
+    &:focus {
+        border-style: solid;
+        border-color: silver;
+    }
+}
+
+.search-input {
+    padding: 0 5px;
+    border-width: 1px 0 1px 1px;
+    @include border-left-radius(4px);
+}
+
+.search-button {
+    width: 50px;
+    border-width: 1px 1px 1px 0;
+    @include border-right-radius(4px);
+}
+
+.search-extended {
+    height: $extended-search-height;
+    background-color: lighten($bright, 2%);
+    padding: 20px;
+    display: none;
+    @include pos(0,0,'',0);
+}
+
+.search-extended-close {
+    border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+    height: 30px;
+    @include pos('',0,0,0);
+
+    & > .page-arrow {
+        width: 20px;
+        height: 20px;
+        background-image: url(../img/arrow-top-d.png);
+        @include pos(5px,50%,'','');
     }
 
-    &.center {
-        width: $search-menu-inner;
-        text-align: right;
+    &:hover {
+        background-color: darken($bright, 5%);
 
-        #search_find {
-            width: $search-menu-inner - 45px;
-            border: 1px solid $bright;
-            padding: 2px 4px;
-            &:focus {
-                border: 1px solid $dark;
-            }
+        & > .page-arrow {
+            background-image: url(../img/arrow-top-l.png);
+        }
+    }
+}
+.search_extended_toggle {
+    cursor: pointer;
+}
+
+.search-content {
+    @include pos(0,0,0,0);
+}
+
+.search-center {
+    @include pos(0,$paging-tab-length,0,$paging-tab-length);
+}
+
+.search-center-form {
+    margin-top: 20px;
+}
+
+.search-center-form-left {
+    float: left;
+    width: 20%;
+    padding: 10px;
+}
+
+.search-center-form-center {
+    float: left;
+    width: 60%;
+    position: relative;
+    padding: 5px 0;
+
+    & > input {
+        width: 100%;
+    }
+}
+
+.search-center-form-right {
+    float: right;
+    width: 20%;
+    padding: 5px 5px 5px 0;
+    position: relative;
+
+    & > span {
+        color: gray;
+        text-decoration: underline;
+        font-size: 12px;
+        @include pos(10px,20px,'','');
+    }
+}
+
+.search-center-content {
+    clear: both;
+    overflow: auto;
+    @include pos(80px,20px,0,20px);
+}
+
+.search-prev, .search-next {
+    cursor: pointer;
+    width: $paging-tab-length;
+    background-color: lighten($bright, 2%);
+
+    & > .page-arrow {
+        width: 20px;
+        height: 20px;
+        @include pos(50%,$paging-tab-length / 2 - 10,'','');
+    }
+
+    &.disabled, &.disabled:hover {
+        background-color: lighten($bright, 5%);
+        border-color: $bright;
+        cursor: auto;
+
+        & > .page-arrow {
+            background-image: none;
+        }             
+    }
+
+    &:hover {
+        background-color: darken($bright, 5%);          
+    }
+}
+
+.search-prev {
+    border-right: 1px solid darken($bright, 10%);
+
+    & > .page-arrow {
+        background-image: url(../img/arrow-left-d.png);
+    }
+    
+    &:hover {
+        & > .page-arrow {
+            background-image: url(../img/arrow-left-l.png);
         }
     }
 
-    &.right {
-        text-align: right;
+    @include pos(0,'',0,0);
+}
 
-        & .more {
+.search-next {
+    border-left: 1px solid darken($bright, 10%);
+
+    & > .page-arrow {
+        background-image: url(../img/arrow-right-d.png);
+    }
+
+    &:hover {
+        & > .page-arrow {
+            background-image: url(../img/arrow-right-l.png);
+        }
+    }
+
+    @include pos(0,0,0,'');
+}
+
+/*
+ * RESULT
+ ******************************************************************************/
+.search-metadata {
+    padding: 5px;
+    margin: 10px;
+
+    &.extended {
+        .metadata-extended {
+            display: block;
+        }
+
+        border: 1px solid darken($bright, 15%);
+        background-color: lighten($bright, 5%);
+        @include border-radius(4px);
+    }
+}
+
+.metadata-header-image {
+    float: left;
+    width: 40px;
+    height: 40px;
+
+    & > img {
+        width: 40px;
+        height: 40px;
+    }
+ }
+
+.metadata-header-title {
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+    line-height: 40px;
+    margin-left: 20px;
+}
+
+.metadata-header-url {
+    float: right;
+}
+
+.metadata-abstract {
+    padding: 5px;
+}
+
+.metadata-menu {
+    text-align: right;
+
+    & > * {
+        font-size: 12px;
+        color: blue;
+    }
+}
+
+.metadata-extended {
+    padding: 10px;
+    min-height: 100px;
+    border: 1px dashed darken($bright, 15%);
+    background-color: lighten($bright, 8%);
+    display: none;
+    @include border-radius(4px);
+}
+
+.metadata-extended-toggle {
+    cursor: pointer;
+}
+
+.metadata-extended-menu {
+    list-style: none;
+    display: block;
+    padding: 0;
+    height: 20px;
+    margin: 0;
+    border-bottom: 1px solid $bright;
+
+    & > li {
+        float: left;
+        padding: 0;
+        margin-right: 10px;
+        cursor: pointer;
+        color: #375e7f;
+
+        &.act {
             text-decoration: underline;
-            color: blue;
-            cursor: pointer;
+            color: #193153;
         }
     }
 }
 
-.extended-search {
-    border-width: 0 1px 1px 1px;
-    border-style: solid;
-    border-color: darken($bright, 20%);
-    height: 250px;
-    background-color: white;
-    padding: 10px;
-    @include border-bottom-radius(10px);
+.metadata-extended-content {
+    margin-top: 10px;
     display: none;
+    color: #666;
+    font-size: 14px;
+
+    &.act {
+        display: block;
+    }
+}
+
+.metadata-extended-content-table {
+    width: 100%;
+}
+
+.metadata-extended-content-table-td {
+    vertical-align: top;
+}
+
+.metadata-label {
+    display: block;
+    float: left;
+    width: 200px;
+    font-weight: bold;
 }
