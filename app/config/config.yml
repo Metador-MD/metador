@@ -28,6 +28,8 @@ parameters:
 
         xmlimport:
             schema: %metador.xmlimport.schema%
+            
+        user: ~
 
 framework:
     #esi:             ~
