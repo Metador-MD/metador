@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use WhereGroup\MetadorBundle\Entity\Metadata;
+use WhereGroup\MetadorBundle\Component\MetadorController;
+use WhereGroup\SearchBundle\Component\MetadataSearch;
 use WhereGroup\SearchBundle\Component\Paging;
 
 /**
@@ -18,94 +21,46 @@ use WhereGroup\SearchBundle\Component\Paging;
 class SearchController extends Controller
 {
     /**
-     * @Route("/", name="search")
-     * @Template()
+     * @Route("/", name="search_index")
      */
     public function indexAction() {
-        $page = $this->get('request')->get('page', 1);
-        $limit = $this->get('request')->get('limit', 4);
-        $searchterms = $this->get('request')->get('find', '');
-        $metadorUser = $this->get('metador_user');
-        $qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+        $conf = $this->container->getParameter('metador');
 
-        $searchCount = $this->container
-                ->get('doctrine')
-                ->getRepository('WhereGroupMetadorBundle:Metadata')
-                ->createQueryBuilder('m')
-                ->select('count(m.id)');
+        return $this->render(
+            $conf['templates']['search'] . ':Search:index.html.twig',
+            array()
+        );      
+    }
 
-        $search = $this->container
-                ->get('doctrine')
-                ->getRepository('WhereGroupMetadorBundle:Metadata')
-                ->createQueryBuilder('m')
-                ->setFirstResult(($page * $limit) - $limit)
-                ->setMaxResults($limit);
- 
-        // prepair searchterms
-        foreach (array_filter(explode(' ' , $searchterms)) as $term) {
-            $search->andWhere(
-                $qb->expr()->like(
-                    'm.searchfield', 
-                    $qb->expr()->literal('%' . $term . '%')
-                )
-            );
+    /**
+     * @Route("/get/", name="search_get")
+     */
+    public function getAction() {
+        $conf = $this->container->getParameter('metador');
+        $search = $this->container->get('metadata_search');
 
-            $searchCount->andWhere(
-                $qb->expr()->like(
-                    'm.searchfield', 
-                    $qb->expr()->literal('%' . $term . '%')
-                )
-            );
-        }
-        // prepair permissions
-        $user = $metadorUser->getUser();
+        $page = $this->container->get('request')->get('page', 1);
 
-        if(is_object($user)) {
-            $roles = $user->getRoles();
+        $result = $search->find(array(
+            'page'          => $this->container->get('request')->get('page', 1),
+            'limit'         => $this->container->get('request')->get('limit', 5),
+            'searchterm'    => $this->container->get('request')->get('searchterm', ''),
+            'filter-dataset'=> $this->container->get('request')->get('filter-dataset', 1),
+            'filter-service'=> $this->container->get('request')->get('filter-service', 1),
+            'filter-series' => $this->container->get('request')->get('filter-series', 1)
+        ));
 
-            // TODO: more than one group?
-            $search->andWhere($qb->expr()->orX(
-                $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', '1')
-            ))->setParameter('roles', implode(',', $roles));
+        $html = $this->render(
+            $conf['templates']['search'] . ':Search:result.html.twig', $result
+        );
 
-            $searchCount->andWhere($qb->expr()->orX(
-                $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', '1')
-            ))->setParameter('roles', implode(',', $roles));
+        $response = new Response();
+        $response->headers->set('ContentType', 'application/json');
+        $response->setContent(json_encode(array(
+            'paging' => $result['paging'],
+            'html' => $html->getContent()
+        )));
 
-            // Ugly fix if you have more than one group.
-            // $qb->expr()->like('m.groups', 
-            //     $qb->expr()->literal('%' . implode(',', $roles) . '%')),     
-        } else {
-            $search->andWhere(
-                $qb->expr()->eq('m.public', '1')
-            );
-
-            $searchCount->andWhere(
-                $qb->expr()->eq('m.public', '1')
-            );
-        }
-
-        $result = $search
-            ->getQuery()
-            ->getResult();
-
-        $count = (int)$searchCount
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        for($i=0,$iL=count($result); $i<$iL; $i++)
-            $result[$i]->setReadonly(!$metadorUser->checkMetadataAccess($result[$i]));
-
-        $paging = new Paging($count, $limit, $page);
-
-        return array(
-            'find' => $searchterms,
-            'page' => $page,
-            'limit' => $limit,
-            'result' => $result,
-            'paging' => $paging->calculate()
-        );       
+        return $response;
     }
 }

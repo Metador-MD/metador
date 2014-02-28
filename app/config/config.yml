@@ -12,6 +12,7 @@ parameters:
             base: %metador.templates.base%
             main: %metador.templates.main%
             login: %metador.templates.login%
+            search: %metador.templates.search%
 
         gdi_de:
             url: %metador.gdi.de.url%
@@ -53,7 +54,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.4.0
+        version: 2.0.4.1
 
 # Assetic Configuration
 assetic:
