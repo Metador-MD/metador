@@ -29,7 +29,7 @@ parameters:
         xmlimport:
             schema: %metador.xmlimport.schema%
             
-        user: ~
+        user: %metador.user%
 
 framework:
     #esi:             ~
