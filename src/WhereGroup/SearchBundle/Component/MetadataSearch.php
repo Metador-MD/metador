@@ -16,7 +16,16 @@ class MetadataSearch {
         $this->metadorUser = $metadorUser;
     }
 
-    public function find(array $params) {
+    public function find() {
+        $params = array(
+            'page'          => $this->container->get('request')->get('page', 1),
+            'limit'         => $this->container->get('request')->get('limit', 5),
+            'searchterm'    => $this->container->get('request')->get('searchterm', ''),
+            'filter-dataset'=> $this->container->get('request')->get('filter-dataset', 1),
+            'filter-service'=> $this->container->get('request')->get('filter-service', 1),
+            'filter-series' => $this->container->get('request')->get('filter-series', 1)
+        );
+
         $params['limit'] = $params['limit'] > 0 ? $params['limit'] : 1;
         $params['page'] = $params['page'] > 0 ? $params['page'] : 1;
 
@@ -78,44 +87,6 @@ class MetadataSearch {
         $search->andWhere($orx);
         $searchCount->andWhere($orx);
 
-/*
-        // TODO: fertig machen.
-        if (!empty($params['filter-dataset']) && empty($params['filter-service'])) {
-            $search
-                ->andWhere($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel1'),
-                    $qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel2')
-                ))->setParameters(array(
-                    'hierarchylevel1' => 'dataset',
-                    'hierarchylevel2' => 'series',
-                ));
-
-            $searchCount
-                ->andWhere($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel1'),
-                    $qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel2')
-                ))->setParameters(array(
-                    'hierarchylevel1' => 'dataset',
-                    'hierarchylevel2' => 'series',
-                ));
-
-        } else if (!empty($params['filter-service']) && empty($params['filter-dataset'])) {
-            $search
-                ->andWhere($qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel'))
-                ->setParameters(array('hierarchylevel' => 'service'));
-            $searchCount
-                ->andWhere($qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel'))
-                ->setParameters(array('hierarchylevel' => 'service'));            
-        } else if (empty($params['filter-service']) && empty($params['filter-dataset'])) {
-            $search
-                ->andWhere($qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel'))
-                ->setParameters(array('hierarchylevel' => 'series'));
-            $searchCount
-                ->andWhere($qb->expr()->eq('m.hierarchyLevel', ':hierarchylevel'))
-                ->setParameters(array('hierarchylevel' => 'series'));            
-        }
-
-*/
         // prepair permissions
         $user = $this->container->get('security.context')->getToken()->getUser();
 

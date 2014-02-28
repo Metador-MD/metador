@@ -41,14 +41,7 @@ class SearchController extends Controller
 
         $page = $this->container->get('request')->get('page', 1);
 
-        $result = $search->find(array(
-            'page'          => $this->container->get('request')->get('page', 1),
-            'limit'         => $this->container->get('request')->get('limit', 5),
-            'searchterm'    => $this->container->get('request')->get('searchterm', ''),
-            'filter-dataset'=> $this->container->get('request')->get('filter-dataset', 1),
-            'filter-service'=> $this->container->get('request')->get('filter-service', 1),
-            'filter-series' => $this->container->get('request')->get('filter-series', 1)
-        ));
+        $result = $search->find();
 
         $html = $this->render(
             $conf['templates']['search'] . ':Search:result.html.twig', $result
