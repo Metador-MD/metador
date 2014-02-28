@@ -58,12 +58,14 @@
                 <label class="metadata-label">Datum der Überarbeitung: </label>{{ metadata.object.revisionDate }}
             </div>
 {% endif %}
-{% if metadata.object.temporalExtent is defined and metadata.object.temporalExtent is not empty %}
+{% if metadata.object.temporalExtent[0].begin is defined and metadata.object.temporalExtent[0].begin is not empty %}
             <br/><strong>Zeitliche Ausdehnung:</strong>
 {% for time in metadata.object.temporalExtent %}
+{% if time.begin is not empty %}
             <div>
                 <label class="metadata-label">zwischen</label>{{ time.begin }} und {{ time.end }}
             </div>
+{% endif %}
 {% endfor %}
 {% endif %}
 

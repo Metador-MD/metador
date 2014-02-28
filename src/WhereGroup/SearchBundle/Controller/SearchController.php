@@ -39,8 +39,6 @@ class SearchController extends Controller
         $conf = $this->container->getParameter('metador');
         $search = $this->container->get('metadata_search');
 
-        $page = $this->container->get('request')->get('page', 1);
-
         $result = $search->find();
 
         $html = $this->render(

@@ -122,6 +122,11 @@ class Metadata {
             return false;
         }
 
+
+        $date = !empty($p['revisionDate']) ? $p['revisionDate'] : $p['publicationDate'];
+        if (empty($date))
+            $date = !empty($p['creationDate']) ? $p['creationDate'] : $p['dateStamp'];
+
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
         $metadata->setUuid($p['fileIdentifier']);
@@ -135,6 +140,14 @@ class Metadata {
             @$p['title'] . ' ' . @$p['abstract']
         ));
         $metadata->setReadonly(false);
+        $metadata->setDate(new \DateTime($date));
+
+        if (!empty($p['bbox'][0]['nLatitude'])) {
+            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe($p['bbox'][0]['eLatitude']);
+            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw($p['bbox'][0]['wLatitude']);
+        }
 
         $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
 

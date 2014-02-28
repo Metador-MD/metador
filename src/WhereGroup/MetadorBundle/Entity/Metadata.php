@@ -98,6 +98,31 @@ class Metadata
     private $readonly; 
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $bboxn;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $bboxe;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $bboxs;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $bboxw;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -445,4 +470,48 @@ class Metadata
         return $this;
     }
 
+    public function getDate() {
+        return $this->date;
+    }
+
+    public function getBboxn() {
+        return $this->bboxn;
+    }
+
+    public function getBboxw() {
+        return $this->bboxw;
+    }
+
+    public function getBboxs() {
+        return $this->bboxs;
+    }
+
+    public function getBboxe() {
+        return $this->bboxe;
+    }
+
+    public function setDate($date) {
+        $this->date = $date;
+        return $this;
+    }
+
+    public function setBboxn($bboxn) {
+        $this->bboxn = $bboxn;
+        return $this;
+    }
+
+    public function setBboxw($bboxw) {
+        $this->bboxw = $bboxw;
+        return $this;
+    }
+
+    public function setBboxs($bboxs) {
+        $this->bboxs = $bboxs;
+        return $this;
+    }
+
+    public function setBboxe($bboxe) {
+        $this->bboxe = $bboxe;
+        return $this;
+    }
 }
