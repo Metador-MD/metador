@@ -1,7 +1,27 @@
 <script src="{{ asset('bundles/wolfsburgcore/js/OpenLayers/OpenLayers.js') }}"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    var callerParams;
+    function receiveMessage(event) {
+        // if(event.origin !== "http://localhost")
+        //     return;
+        callerParams = JSON.parse(event.data);
+        callerParams['event'] = event;
+    }
 
+    function postMyMessage(element) {
+        var param = "token";
+        var results = new RegExp('[\\?&]' + param + '=([^&#]*)').exec(window.location.href);
+        var props = {
+            token: results !== null && results.length === 2 ? results[1] : 'undefined',
+            load: {
+                wms: $(element).attr('data-url')
+            }
+        };
+        parent.postMessage(JSON.stringify(props), window.location.href);
+    }
+    window.addEventListener("message", receiveMessage, false);
+        
+    $(document).ready(function() {
         function search(firstPage) {
             if (typeof firstPage !== 'undefined') {
                 $('#search_page').val(1);

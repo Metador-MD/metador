@@ -11,7 +11,11 @@
             {{ metadata.title }}
         </div>
         <div class="metadata-header-url">
-            {# SHOW IN MAP #}
+            {% if metadata.object.containsOperationsDCP is defined and metadata.object.containsOperationsDCP == 'WebService'  %}
+            {% if metadata.object.containsOperationsURL is defined %}
+                <span onclick="postMyMessage(this)" data-url="{{ metadata.object.containsOperationsURL }}">In Karte anzeigen</span>
+            {% endif %}
+            {% endif %}
         </div>
         <div class="clear"></div>
     </div>
