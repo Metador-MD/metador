@@ -1,0 +1,40 @@
+<div class="metador-search" id="metador_search">
+    {# HIDDEN SEARCH FIELDS #}
+    <input type="hidden" name="page" id="search_page" value="1" />
+    <input type="hidden" name="filter-dataset" id="filter-dataset" value="1" />
+    <input type="hidden" name="filter-service" id="filter-service" value="1" />
+    <input type="hidden" name="filter-series" id="filter-series" value="1" />
+
+    <div class="search-extended">
+        <input type="checkbox" name="filter-dataset" data-key="filter-dataset" class="search-filter-checkbox" checked="checked" /> Datensatz<br/>
+        <input type="checkbox" name="filter-series" data-key="filter-series" class="search-filter-checkbox" checked="checked" /> Datensatzreihe<br/>
+        <input type="checkbox" name="filter-service" data-key="filter-service" class="search-filter-checkbox" checked="checked" /> Dienst
+        <div class="search-extended-close search_extended_toggle">
+            <div class="page-arrow"></div>
+        </div>
+    </div>
+    <div class="search-content">
+        <div class="search-prev disabled" id="search_prev" data-page="">
+            <div class="page-arrow"></div>
+        </div>
+        <div class="search-center">
+            <div class="search-center-form">
+                <div class="search-center-form-left" id="search_pageinfo">&nbsp;</div>
+                <div class="search-center-form-center">
+                    <input type="text" id="search_find" class="search-input" name="find" value="" />
+                </div>
+                <div class="search-center-form-right">
+                    <button id="search_find_submit" class="search-button">ok</button>
+                    {#
+                    <span class="search_extended_toggle">erweitert</span>
+                    #}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="search-center-content" id="search_content"></div>
+        </div>
+        <div class="search-next disabled" id="search_next" data-page="">
+            <div class="page-arrow"></div>
+        </div>
+    </div>
+</div>
