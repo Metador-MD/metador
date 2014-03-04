@@ -144,9 +144,9 @@ class Metadata {
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
             $metadata->setBboxn($p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe($p['bbox'][0]['eLatitude']);
+            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
             $metadata->setBboxs($p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw($p['bbox'][0]['wLatitude']);
+            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
 
         $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
