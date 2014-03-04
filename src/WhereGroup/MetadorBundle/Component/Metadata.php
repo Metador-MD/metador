@@ -122,10 +122,17 @@ class Metadata {
             return false;
         }
 
-
-        $date = !empty($p['revisionDate']) ? $p['revisionDate'] : $p['publicationDate'];
-        if (empty($date))
-            $date = !empty($p['creationDate']) ? $p['creationDate'] : $p['dateStamp'];
+        if (empty($p['revisionDate'])) {
+            if (empty($p['publicationDate'])) {
+                if (empty($p['creationDate']))
+                    $date = $p['dateStamp'];
+                else 
+                    $date = $p['creationDate'];
+            } else 
+                $date = $p['publicationDate'];
+        } else
+            $date = $p['revisionDate'];
+        
 
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
