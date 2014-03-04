@@ -33,6 +33,18 @@ class SearchController extends Controller
     }
 
     /**
+     * @Route("/raw/", name="search_index_raw")
+     */
+    public function indexRawAction() {
+        $conf = $this->container->getParameter('metador');
+
+        return $this->render(
+            $conf['templates']['search'] . ':Search:indexRaw.html.twig',
+            array()
+        );      
+    }
+
+    /**
      * @Route("/get/", name="search_get")
      */
     public function getAction() {
