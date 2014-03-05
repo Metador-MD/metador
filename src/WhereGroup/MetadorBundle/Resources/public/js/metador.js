@@ -110,12 +110,16 @@ $(document).ready(function() {
     // DATEPICKER
     // TODO: add german months and days
     $('.datepicker').live('mousedown', function() {
-        $(this).Zebra_DatePicker({
+        var self = this;
+        $(self).Zebra_DatePicker({
             show_icon: false,
-            offset:[-177,120]
+            offset:[-177,120],
+            onSelect: function() {
+                $(self).change();
+            }
             //months: ['','']
             //days: ['','']
-        })
+        });
     });
 
     $('#bboxSelect').change(function() {
