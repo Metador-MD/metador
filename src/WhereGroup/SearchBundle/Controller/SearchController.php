@@ -28,7 +28,9 @@ class SearchController extends Controller
 
         return $this->render(
             $conf['search']['template'] . ':Search:index.html.twig',
-            array()
+            array(
+                'find' => $this->container->get('request')->get('find', '')
+            )
         );      
     }
 
@@ -40,7 +42,9 @@ class SearchController extends Controller
 
         return $this->render(
             $conf['search']['template'] . ':Search:indexRaw.html.twig',
-            array()
+            array(
+                'find' => $this->container->get('request')->get('find', '')
+            )
         );      
     }
 

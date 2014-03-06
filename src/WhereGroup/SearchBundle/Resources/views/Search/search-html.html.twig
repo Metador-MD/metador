@@ -21,7 +21,7 @@
             <div class="search-center-form">
                 <div class="search-center-form-left" id="search_pageinfo">&nbsp;</div>
                 <div class="search-center-form-center">
-                    <input type="text" id="search_find" class="search-input" name="find" value="" />
+                    <input type="text" id="search_find" class="search-input" name="find" value="{% if find is defined %}{{ find }}{% endif %}" />
                 </div>
                 <div class="search-center-form-right">
                     <button id="search_find_submit" class="search-button">ok</button>
