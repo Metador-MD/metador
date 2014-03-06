@@ -4,7 +4,7 @@
 <div class="search-metadata">
     <div class="metadata-header">
         <div class="metadata-header-image">
-{% if metadata.object.browserGraphic is defined %}
+{% if metadata.object.browserGraphic is defined and metadata.object.browserGraphic is not empty %}
             <img src="{{ metadata.object.browserGraphic }}" />
 {% endif %}
         </div>
