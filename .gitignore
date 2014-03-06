@@ -11,6 +11,5 @@
 /src/User
 /vendor
 /web/bundles
-/web/.htaccess
 .sass-cache
 /.project
