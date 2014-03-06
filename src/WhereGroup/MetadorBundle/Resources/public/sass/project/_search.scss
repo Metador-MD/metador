@@ -2,9 +2,8 @@
 /*
  * INDEX
  ******************************************************************************/
- 
 $paging-tab-length: 40px;
-$extended-search-height: 200px;
+$extended-search-height: 250px;
 
 .metador-search {
     min-height: 200px;
@@ -45,7 +44,6 @@ $extended-search-height: 200px;
 .search-extended {
     height: $extended-search-height;
     background-color: lighten($bright, 2%);
-    padding: 20px;
     display: none;
     @include pos(0,0,'',0);
 }
@@ -71,7 +69,14 @@ $extended-search-height: 200px;
         }
     }
 }
-.search_extended_toggle {
+.search-extended-block {
+    width: 32%;
+    float: left;
+    vertical-align: top;
+    position: relative;
+}
+
+.search-extended-toggle {
     cursor: pointer;
 }
 
@@ -111,7 +116,7 @@ $extended-search-height: 200px;
     position: relative;
 
     & > span {
-        color: gray;
+        color: lighten($dark, 20%);
         text-decoration: underline;
         font-size: 12px;
         @include pos(10px,20px,'','');
@@ -182,12 +187,24 @@ $extended-search-height: 200px;
     @include pos(0,0,0,'');
 }
 
+.search-extended-label {
+    display: block;
+    width: 50px;
+    float: left;
+}
+.search-extended-input {
+    width: 150px;
+}
+
 /*
  * RESULT
  ******************************************************************************/
 .search-metadata {
     padding: 5px;
     margin: 10px;
+    border: 1px solid darken($bright, 5%);
+    background-color: lighten($bright, 5%);
+    @include border-radius(4px);
 
     &.extended {
         .metadata-extended {
@@ -195,8 +212,6 @@ $extended-search-height: 200px;
         }
 
         border: 1px solid darken($bright, 15%);
-        background-color: lighten($bright, 5%);
-        @include border-radius(4px);
     }
 }
 
@@ -222,6 +237,11 @@ $extended-search-height: 200px;
 
 .metadata-header-url {
     float: right;
+
+    & > span {
+        @extend .btn;
+        font-size: 14px;
+    }
 }
 
 .metadata-abstract {
@@ -233,7 +253,7 @@ $extended-search-height: 200px;
 
     & > * {
         font-size: 12px;
-        color: blue;
+        color: lighten($dark, 10%);
     }
 }
 

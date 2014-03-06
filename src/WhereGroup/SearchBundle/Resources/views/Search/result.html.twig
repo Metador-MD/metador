@@ -24,6 +24,7 @@
     </div>
     <div class="metadata-abstract">{{ metadata.abstract }}</div>
     <div class="metadata-menu">
+{% if not conf['search']['show_in_map'] %}
 {% if app.user.username is defined %}
 {% if metadata.readonly == 0 %}
         {% if metadata.hierarchyLevel == 'service' %}
@@ -33,6 +34,7 @@
         {% endif %}
 {% endif %}
         <a href="{{ path('wheregroup_metador_default_xml', {id: metadata.id }) }}" target="_BLANK">XML</a> <span>|</span>
+{% endif %}
 {% endif %}
         <span class="metadata-extended-toggle">erweitert</span>
     </div>
