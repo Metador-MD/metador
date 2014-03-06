@@ -1,3 +1,5 @@
+{% set conf = getParameter('metador') %}
+
 {% for metadata in result %}
 <div class="search-metadata">
     <div class="metadata-header">
@@ -10,11 +12,13 @@
             {{ metadata.title }}
         </div>
         <div class="metadata-header-url">
+{% if conf['search']['show_in_map'] %}
             {% if metadata.object.containsOperationsDCP is defined and metadata.object.containsOperationsDCP == 'WebService'  %}
             {% if metadata.object.containsOperationsURL is defined %}
                 <span onclick="postMyMessage(this)" data-url="{{ metadata.object.containsOperationsURL }}">In Karte anzeigen</span>
             {% endif %}
             {% endif %}
+{% endif %}
         </div>
         <div class="clear"></div>
     </div>
@@ -38,7 +42,9 @@
     <div class="metadata-extended">
         <ul class="metadata-extended-menu">
             <li data-id="metadata" class="act">Metadatensatz</li>
+{% if metadata.object.responsiblePartyMetadata[0].individualName is defined and metadata.object.responsiblePartyMetadata[0].individualName is not empty or metadata.object.responsibleParty[0].individualName is defined and metadata.object.responsibleParty[0].individualName is not empty %}
             <li data-id="contact">Kontakt</li>
+{% endif %}
         </ul>  
         <div class="clear" />
         <div class="metadata-extended-content act" data-id="metadata">
@@ -74,6 +80,7 @@
 
         </div>
         <div class="metadata-extended-content" data-id="contact">
+{% if metadata.object.responsiblePartyMetadata[0].individualName is defined and metadata.object.responsiblePartyMetadata[0].individualName is not empty or metadata.object.responsibleParty[0].individualName is defined and metadata.object.responsibleParty[0].individualName is not empty %}
             <table class="metadata-extended-content-table">
                 <thead>
                     <tr>
@@ -122,6 +129,7 @@
                     </tr>
                 </tbody>
             </table>
+{% endif %}
         </div>
     </div>
 </div>
