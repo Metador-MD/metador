@@ -203,6 +203,12 @@ class DefaultController extends Controller
      */
     public function xmlUploadAction() {
         foreach($this->getRequest()->files as $file) {
+
+            if (!is_object($file)) {
+                $this->get('session')->getFlashBag()->add('error', 'Bitte XML-Datei angeben.');
+                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+            }
+
             $path = $file->getPath() . '/' . $file->getClientOriginalName();
 
             $file->move(
