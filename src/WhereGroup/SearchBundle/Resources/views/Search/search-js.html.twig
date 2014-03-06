@@ -117,6 +117,13 @@
             ).addClass('act');
         });
 
+        $(document).on('keypress', '#search_find', function(event) {
+            if (event.which == 13) {
+                search(true);
+                event.preventDefault();
+            }
+        })
+
         search(true);
     });
 </script>
