@@ -26,7 +26,7 @@
     <div class="metadata-menu">
 {% if app.user.username is defined %}
 {% if metadata.readonly == 0 %}
-        {% if metadata.hierarchyLevel == 'serive' %}
+        {% if metadata.hierarchyLevel == 'service' %}
         <a href="{{ path('wheregroup_metador_service_edit', {id: metadata.id }) }}">bearbeiten</a> <span>|</span> 
         {% else %}
         <a href="{{ path('wheregroup_metador_data_edit', {id: metadata.id }) }}">bearbeiten</a> <span>|</span> 
