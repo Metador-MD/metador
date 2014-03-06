@@ -12,7 +12,10 @@ parameters:
             base: %metador.templates.base%
             main: %metador.templates.main%
             login: %metador.templates.login%
-            search: %metador.templates.search%
+
+        search:
+            template: %metador.search.templates%
+            show_in_map: %metador.search.show_in_map%
 
         gdi_de:
             url: %metador.gdi.de.url%
@@ -46,8 +49,7 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:
-        cookie_path: "%cookie_path%"
+    session: ~
     fragments:       ~
     http_method_override: true
 

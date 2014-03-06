@@ -27,7 +27,7 @@ class SearchController extends Controller
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['search'] . ':Search:index.html.twig',
+            $conf['search']['template'] . ':Search:index.html.twig',
             array()
         );      
     }
@@ -39,7 +39,7 @@ class SearchController extends Controller
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
-            $conf['templates']['search'] . ':Search:indexRaw.html.twig',
+            $conf['search']['template'] . ':Search:indexRaw.html.twig',
             array()
         );      
     }
@@ -54,7 +54,7 @@ class SearchController extends Controller
         $result = $search->find();
 
         $html = $this->render(
-            $conf['templates']['search'] . ':Search:result.html.twig', $result
+            $conf['search']['template'] . ':Search:result.html.twig', $result
         );
 
         $response = new Response();
