@@ -329,7 +329,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/share")
+     * @Route("/share/")
      * @Method("POST")
      */
     public function shareAction() {
@@ -346,14 +346,11 @@ class DefaultController extends Controller
 
         if($data) {
             $data->setPublic($public);
-
             $event  = new MetadataChangeEvent($data, $this->container->getParameter('metador'));
-
             $this->get('event_dispatcher')->dispatch('metador.pre_save', $event);
             $em->persist($data);
             $em->flush();
             $this->get('event_dispatcher')->dispatch('metador.post_save', $event);
-
         }
         
         return new Response();

@@ -586,8 +586,8 @@ $(document).ready(function() {
 
     $('.shareMetadata').click(function() {
         $.ajax({
-            url: BASEDIR + "metador/share",
-            type: "post",
+            url: BASEDIR + "metador/share/",
+            type: "POST",
             data: {
                 'id': $(this).attr('name'),
                 'public': $(this).is(':checked') ? 1 : 0
