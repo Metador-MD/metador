@@ -1,0 +1,138 @@
+{% set conf = getParameter('metador') %}
+
+{% for metadata in result %}
+<div class="search-metadata">
+    <div class="metadata-header">
+        <div class="metadata-header-image">
+{% if metadata.object.browserGraphic is defined and metadata.object.browserGraphic is not empty %}
+            <img src="{{ metadata.object.browserGraphic }}" />
+{% endif %}
+        </div>
+        <div class="metadata-header-title">
+            {{ metadata.title }}
+        </div>
+        <div class="metadata-header-url">
+{% if conf['search']['show_in_map'] %}
+            {% if metadata.object.containsOperationsDCP is defined and metadata.object.containsOperationsDCP == 'WebService'  %}
+            {% if metadata.object.containsOperationsURL is defined %}
+                <span onclick="postMyMessage(this)" data-url="{{ metadata.object.containsOperationsURL }}">In Karte anzeigen</span>
+            {% endif %}
+            {% endif %}
+{% endif %}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="metadata-abstract">{{ metadata.abstract }}</div>
+    <div class="metadata-menu">
+{% if not conf['search']['show_in_map'] %}
+{% if app.user.username is defined %}
+{% if metadata.readonly == 0 %}
+        {% if metadata.hierarchyLevel == 'service' %}
+        <a href="{{ path('wheregroup_metador_service_edit', {id: metadata.id }) }}">bearbeiten</a> <span>|</span> 
+        {% else %}
+        <a href="{{ path('wheregroup_metador_data_edit', {id: metadata.id }) }}">bearbeiten</a> <span>|</span> 
+        {% endif %}
+{% endif %}
+        <a href="{{ path('wheregroup_metador_default_xml', {id: metadata.id }) }}" target="_BLANK">XML</a> <span>|</span>
+{% endif %}
+{% endif %}
+        <span class="metadata-extended-toggle">erweitert</span>
+    </div>
+
+    {# EXTENDED #}
+    
+    <div class="metadata-extended">
+        <ul class="metadata-extended-menu">
+            <li data-id="metadata" class="act">Metadatensatz</li>
+{% if metadata.object.responsiblePartyMetadata[0].individualName is defined and metadata.object.responsiblePartyMetadata[0].individualName is not empty or metadata.object.responsibleParty[0].individualName is defined and metadata.object.responsibleParty[0].individualName is not empty %}
+            <li data-id="contact">Kontakt</li>
+{% endif %}
+        </ul>  
+        <div class="clear" />
+        <div class="metadata-extended-content act" data-id="metadata">
+            <div>
+                <label class="metadata-label">Identifikator: </label>{{ metadata.object.fileIdentifier }}
+            </div>
+            <br/>
+{% if metadata.object.creationDate is defined and metadata.object.creationDate is not empty %}
+            <div>
+                <label class="metadata-label">Datum der Erstellung: </label>{{ metadata.object.creationDate }}
+            </div>
+{% endif %}
+{% if metadata.object.publicationDate is defined and metadata.object.publicationDate is not empty %}
+            <div>
+                <label class="metadata-label">Datum der Veröffentlichung: </label>{{ metadata.object.publicationDate }}
+            </div>
+{% endif %}
+{% if metadata.object.revisionDate is defined and metadata.object.revisionDate is not empty %}
+            <div>
+                <label class="metadata-label">Datum der Überarbeitung: </label>{{ metadata.object.revisionDate }}
+            </div>
+{% endif %}
+{% if metadata.object.temporalExtent[0].begin is defined and metadata.object.temporalExtent[0].begin is not empty %}
+            <br/><strong>Zeitliche Ausdehnung:</strong>
+{% for time in metadata.object.temporalExtent %}
+{% if time.begin is not empty %}
+            <div>
+                <label class="metadata-label">zwischen</label>{{ time.begin }} und {{ time.end }}
+            </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+        </div>
+        <div class="metadata-extended-content" data-id="contact">
+{% if metadata.object.responsiblePartyMetadata[0].individualName is defined and metadata.object.responsiblePartyMetadata[0].individualName is not empty or metadata.object.responsibleParty[0].individualName is defined and metadata.object.responsibleParty[0].individualName is not empty %}
+            <table class="metadata-extended-content-table">
+                <thead>
+                    <tr>
+                        <th>Für Metadaten verantwortliche Stelle</th>
+                        <th>Verantwortliche Stelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metadata-extended-content-table-td">
+{% if metadata.object.responsiblePartyMetadata is defined %}
+{% for address in metadata.object.responsiblePartyMetadata %}
+    {% if address.organisationName is defined %}{{ address.organisationName }}{% endif %}
+    {% if address.individualName is defined and address.individualName is not empty %}<br/>{{ address.individualName }}{% endif %}
+    {% if address.role is defined and address.role is not empty %} ({{ address.role }}){% endif %}
+    {% if address.country is defined and address.country is not empty %}<br/>{{ address.country }}{% endif %}
+    {% if address.administrativeArea is defined and address.administrativeArea is not empty %} ({{ address.administrativeArea }}){% endif %}
+    {% if address.deliveryPoint is defined and address.deliveryPoint is not empty %}<br/>{{ address.deliveryPoint }}{% endif %}
+    {% if address.city is defined and address.city is not empty %}<br/>{{ address.city }}{% endif %}
+    {% if address.postalCode is defined and address.postalCode is not empty %}{{ address.postalCode }}{% endif %}
+    {% if address.voice is defined and address.voice is not empty %}<br/>Tel: {{ address.voice }}{% endif %}
+    {% if address.facsimile is defined and address.facsimile is not empty %}<br/>Fax: {{ address.facsimile }}{% endif %}
+    {% if address.onlineResource is defined and address.onlineResource is not empty %}<br/>URL: <a href="{{ address.onlineResource }}">{{ address.onlineResource }}</a>{% endif %}
+{% if not loop.last %}<hr/>{% endif %}
+{% endfor %}
+{% endif %}
+                        </td>
+                        <td class="metadata-extended-content-table-td">
+{% if metadata.object.responsibleParty is defined %}
+{% for address in metadata.object.responsibleParty %}
+    {% if address.organisationName is defined %}{{ address.organisationName }}{% endif %}
+    {% if address.individualName is defined and address.individualName is not empty %}<br/>{{ address.individualName }}{% endif %}
+    {% if address.role is defined and address.role is not empty %} ({{ address.role }}){% endif %}
+    {% if address.country is defined and address.country is not empty %}<br/>{{ address.country }}{% endif %}
+    {% if address.administrativeArea is defined and address.administrativeArea is not empty %} ({{ address.administrativeArea }}){% endif %}
+    {% if address.deliveryPoint is defined and address.deliveryPoint is not empty %}<br/>{{ address.deliveryPoint }}{% endif %}
+    {% if address.city is defined and address.city is not empty %}<br/>{{ address.city }}{% endif %}
+    {% if address.postalCode is defined and address.postalCode is not empty %}{{ address.postalCode }}{% endif %}
+    {% if address.voice is defined and address.voice is not empty %}<br/>Tel: {{ address.voice }}{% endif %}
+    {% if address.facsimile is defined and address.facsimile is not empty %}<br/>Fax: {{ address.facsimile }}{% endif %}
+    {% if address.onlineResource is defined and address.onlineResource is not empty %}<br/>URL: <a href="{{ address.onlineResource }}">{{ address.onlineResource }}</a>{% endif %}
+{% if not loop.last %}<hr/>{% endif %}
+{% endfor %}
+{% endif %} 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+{% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}

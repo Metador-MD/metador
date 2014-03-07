@@ -1,21 +1,44 @@
 <?xml version="1.0" ?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
     <parameters>
-        <parameter key="metador_twig.class">WhereGroup\MetadorBundle\Twig\Extension\MetadorExtension</parameter>
-        <parameter key="metador_metadata_import.class">WhereGroup\MetadorBundle\Component\MetadataImport</parameter>
-        <parameter key="metador.metador_listener.class">WhereGroup\MetadorBundle\EventListener\MetadorListener</parameter>
+        <parameter key="metador.twig.class">WhereGroup\MetadorBundle\Twig\Extension\MetadorExtension</parameter>
+        <parameter key="metador.metadata_import.class">WhereGroup\MetadorBundle\Component\MetadataImport</parameter>
+        <parameter key="metador.listener.class">WhereGroup\MetadorBundle\EventListener\MetadorListener</parameter>
+        <parameter key="metador.user.class">WhereGroup\MetadorBundle\Component\MetadorUser</parameter>
+        <parameter key="metador.metadata.class">WhereGroup\MetadorBundle\Component\Metadata</parameter>
+        <parameter key="metador.address.class">WhereGroup\MetadorBundle\Component\Address</parameter>
+        <parameter key="metador.wizard.class">WhereGroup\MetadorBundle\Component\Wizard</parameter>
     </parameters>
 
     <services>
-        <service id="metador.twig_extension" class="%metador_twig.class%">
+        <service id="metador.twig_extension" class="%metador.twig.class%">
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
-        <service id="metadata_import" class="%metador_metadata_import.class%" />
-        <service id="metador.metador_listener" class="%metador.metador_listener.class%">
+
+        <service id="metadata_import" class="%metador.metadata_import.class%" />
+        
+        <service id="metador.listener" class="%metador.listener.class%">
             <tag name="kernel.event_listener" event="metador.pre_save" method="onPreSave" />
             <argument type="service" id="service_container" />
+        </service>
+
+        <service id="metador_user" class="%metador.user.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="metador_wizard" class="%metador.wizard.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="metador_address" class="%metador.address.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="metador_metadata" class="%metador.metadata.class%">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="metador_user" />
+            <argument type="service" id="metador_address" />
         </service>
     </services>
 </container>

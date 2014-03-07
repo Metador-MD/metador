@@ -13,6 +13,10 @@ parameters:
             main: %metador.templates.main%
             login: %metador.templates.login%
 
+        search:
+            template: %metador.search.templates%
+            show_in_map: %metador.search.show_in_map%
+
         gdi_de:
             url: %metador.gdi.de.url%
             user: %metador.gdi.de.user%
@@ -27,6 +31,8 @@ parameters:
 
         xmlimport:
             schema: %metador.xmlimport.schema%
+            
+        user: %metador.user%
 
 framework:
     #esi:             ~
@@ -43,8 +49,7 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:
-        cookie_path: "%cookie_path%"
+    session: ~
     fragments:       ~
     http_method_override: true
 
@@ -53,7 +58,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.4.0
+        version: 2.0.4.1
 
 # Assetic Configuration
 assetic:

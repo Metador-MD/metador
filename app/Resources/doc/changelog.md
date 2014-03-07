@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.4.1
+* Refactored dataset and service controllers.
+* Minor changes on search bundle.
+* Added date and BBOX fields to metadata entity.
+
 ## 2.0.4.0
 * Helptext import/export commands.
 * Added Searchbundle.

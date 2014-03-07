@@ -6,11 +6,11 @@ cd /srv
 git clone https://github.com/WhereGroup/metador2.git
 
 # Create and edit configuration.
+cd metador2
 cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Get vendors.
-cd metador2
-app/scripts/composer-update.sh
+app/Resources/scripts/composer-update.sh
 
 # Create database
 app/console doctrine:database:create

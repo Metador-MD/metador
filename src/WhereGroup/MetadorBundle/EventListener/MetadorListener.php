@@ -37,7 +37,7 @@ class MetadorListener {
             'bbox',
             'temporalExtent',
             'dataquality',
-            'responsiblePart',
+            'responsibleParty',
             'resolution'
         );
 
@@ -55,7 +55,6 @@ class MetadorListener {
                 $data[$key] = $array;
             }
         }
-        
         return $data;
     }
 

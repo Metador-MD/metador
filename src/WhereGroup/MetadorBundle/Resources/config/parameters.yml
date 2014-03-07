@@ -1,4 +1,5 @@
 parameters:
+    metador.user: ~
     metador.logo: "bundles/wheregroupmetador/img/logo3.png"
     metador.favicon: "bundles/wheregroupmetador/img/favicon.png"
     metador.templates.form: "WhereGroupMetadorBundle"
@@ -13,3 +14,5 @@ parameters:
     metador.export.path: ~
     metador.xmlimport.schema:
         - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Resources/config/xmlimport.json"
+    metador.search.templates: "WhereGroupSearchBundle"
+    metador.search.show_in_map: false

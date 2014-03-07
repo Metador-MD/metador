@@ -110,12 +110,16 @@ $(document).ready(function() {
     // DATEPICKER
     // TODO: add german months and days
     $('.datepicker').live('mousedown', function() {
-        $(this).Zebra_DatePicker({
+        var self = this;
+        $(self).Zebra_DatePicker({
             show_icon: false,
-            offset:[-177,120]
+            offset:[-177,120],
+            onSelect: function() {
+                $(self).change();
+            }
             //months: ['','']
             //days: ['','']
-        })
+        });
     });
 
     $('#bboxSelect').change(function() {
@@ -582,8 +586,8 @@ $(document).ready(function() {
 
     $('.shareMetadata').click(function() {
         $.ajax({
-            url: BASEDIR + "metador/share",
-            type: "post",
+            url: BASEDIR + "metador/share/",
+            type: "POST",
             data: {
                 'id': $(this).attr('name'),
                 'public': $(this).is(':checked') ? 1 : 0
@@ -649,6 +653,10 @@ $(document).ready(function() {
         });
 
         dialog.modalDialog('open');
+    });
+
+    $('#toggle_extended_search').click(function() {
+        $('#extended_search').toggle();
     });
 
 });

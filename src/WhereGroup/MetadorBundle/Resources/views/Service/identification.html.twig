@@ -134,6 +134,7 @@
     <div class="singleResult" id="result_{{ id|md_obj_id }}">
         {% if p['onlineResource'] is defined %}
         {% for value in p['onlineResource'] %}
+        {% if value is not empty %}
         <div>
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
@@ -141,6 +142,7 @@
                 <div class="icon delete"></div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
         {% endif %}
         <div class="clear"></div>
@@ -170,6 +172,7 @@
     <div class="singleResult" id="result_{{ id|md_obj_id }}">
         {% if p['coupledResource'] is defined %}
         {% for value in p['coupledResource'] %}
+        {% if value is not empty %}
         <div>
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
@@ -177,9 +180,8 @@
                 <div class="icon delete"></div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
-        {% else %}
-        
         {% endif %}
         <div class="clear"></div>
     </div>

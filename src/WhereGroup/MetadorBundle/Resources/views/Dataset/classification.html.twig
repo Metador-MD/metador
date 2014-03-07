@@ -41,6 +41,7 @@
     <div class="singleResult" id="result_{{ id|md_id }}">
         {% if p['topicCategory'] is defined %}
         {% for value in p['topicCategory'] %}
+        {% if value is not empty %}
         <div>
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
@@ -48,6 +49,7 @@
                 <div class="icon delete"></div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
         {% endif %}
         <div class="clear"></div>
