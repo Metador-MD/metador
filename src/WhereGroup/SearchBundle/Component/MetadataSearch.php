@@ -96,25 +96,29 @@ class MetadataSearch {
             // TODO: more than one group?
             $search->andWhere($qb->expr()->orX(
                 $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', '1')
-            ))->setParameter('roles', implode(',', $roles));
+                $qb->expr()->eq('m.public', ':public')
+            ))
+            ->setParameter('roles', implode(',', $roles))
+            ->setParameter('public', true);
 
             $searchCount->andWhere($qb->expr()->orX(
                 $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', '1')
-            ))->setParameter('roles', implode(',', $roles));
+                $qb->expr()->eq('m.public', ':public')
+            ))
+            ->setParameter('roles', implode(',', $roles))
+            ->setParameter('public', true);
 
             // Ugly fix if you have more than one group.
             // $qb->expr()->like('m.groups', 
             //     $qb->expr()->literal('%' . implode(',', $roles) . '%')),     
         } else {
             $search->andWhere(
-                $qb->expr()->eq('m.public', '1')
-            );
+                $qb->expr()->eq('m.public', ':public')
+            )->setParameter('public', true);
 
             $searchCount->andWhere(
-                $qb->expr()->eq('m.public', '1')
-            );
+                $qb->expr()->eq('m.public', ':public')
+            )->setParameter('public', true);
         }
 
         $result = $search
