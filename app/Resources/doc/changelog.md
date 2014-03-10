@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4.2
+* Metadata entity date now nullable.
+* Minor bugfixes in search bundle.
+
 ## 2.0.4.1
 * Refactored dataset and service controllers.
 * Minor changes on search bundle.
