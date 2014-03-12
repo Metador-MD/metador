@@ -15,7 +15,6 @@ parameters:
 
         search:
             template: %metador.search.templates%
-            show_in_map: %metador.search.show_in_map%
 
         gdi_de:
             url: %metador.gdi.de.url%
