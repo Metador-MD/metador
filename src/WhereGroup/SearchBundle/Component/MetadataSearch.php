@@ -49,6 +49,8 @@ class MetadataSearch {
  
         // prepair searchterms
         foreach (array_filter(explode(' ' , $params['searchterm'])) as $term) {
+            $term = trim(strtolower($term));
+            
             $search->andWhere(
                 $qb->expr()->like(
                     'm.searchfield', 

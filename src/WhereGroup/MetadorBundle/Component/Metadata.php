@@ -134,6 +134,16 @@ class Metadata {
             $date = $p['revisionDate'];
         
 
+        $searchfield = @$p['_searchfield'] .
+            ' ' . strtolower(@$p['title']) . 
+            ' ' . strtolower(@$p['abstract']);
+
+        if (isset($p['keyword']))
+            foreach ($p['keyword'] as $value)
+                if (isset($value['value']))
+                    foreach ($value['value'] as $keyword)
+                        $searchfield .= '<br/>' . strtolower($keyword);
+
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
         $metadata->setUuid($p['fileIdentifier']);
@@ -143,9 +153,7 @@ class Metadata {
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
-        $metadata->setSearchfield(trim(
-            @$p['title'] . ' ' . @$p['abstract']
-        ));
+        $metadata->setSearchfield(trim($searchfield));
         $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($date));
 
