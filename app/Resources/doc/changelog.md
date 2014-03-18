@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4.3
+* Added keywords to searchfield.
+
 ## 2.0.4.2
 * Metadata entity date now nullable.
 * Minor bugfixes in search bundle.
