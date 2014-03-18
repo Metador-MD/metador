@@ -95,24 +95,24 @@ class MetadataSearch {
         if(is_object($user)) {
             $roles = $user->getRoles();
 
-            // TODO: more than one group?
-            $search->andWhere($qb->expr()->orX(
-                $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', ':public')
-            ))
-            ->setParameter('roles', implode(',', $roles))
-            ->setParameter('public', true);
+            $orx = $qb->expr()->orX();
+            
+            foreach ($roles as $role) {
+                if ($role === 'ROLE_USER') continue;
+                $orx->add($qb->expr()->like('m.groups', $qb->expr()->literal('%' . $role . '%')));
+            }
+            
+            $orx->add($qb->expr()->eq('m.public', ':public'));
 
-            $searchCount->andWhere($qb->expr()->orX(
-                $qb->expr()->eq('m.groups', ':roles'),
-                $qb->expr()->eq('m.public', ':public')
-            ))
-            ->setParameter('roles', implode(',', $roles))
-            ->setParameter('public', true);
+            $search
+                ->andWhere($orx)
+                ->setParameter('public', true);
 
-            // Ugly fix if you have more than one group.
-            // $qb->expr()->like('m.groups', 
-            //     $qb->expr()->literal('%' . implode(',', $roles) . '%')),     
+            $searchCount
+                ->andWhere($orx)
+                ->setParameter('public', true);
+
+            unset($orx);      
         } else {
             $search->andWhere(
                 $qb->expr()->eq('m.public', ':public')

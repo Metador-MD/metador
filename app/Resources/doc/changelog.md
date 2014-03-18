@@ -2,6 +2,7 @@
 
 ## 2.0.4.3
 * Added keywords to searchfield.
+* Matching all groups in MetadataSearch service.
 
 ## 2.0.4.2
 * Metadata entity date now nullable.
