@@ -57,7 +57,7 @@ class DefaultController extends Controller
             $conf = $this->container->getParameter('metador');
 
             switch($p['hierarchyLevel']) {
-                case 'service' : 
+                case 'service' :
                     $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
                 case 'dataset' :
@@ -80,7 +80,7 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
         return $response;
     }
 
@@ -94,9 +94,9 @@ class DefaultController extends Controller
         $data = $metadata->getById($id);
 
         if($data) {
-            
+
             $p = $data->getObject();
-            
+
             ksort($p);
 
             die('<pre>' . print_r($p, 1) . '</pre>');
@@ -110,7 +110,39 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
+        return $response;
+    }
+
+    /**
+     * @Route("/pdf/{id}")
+     */
+    public function pdfAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $conf = $this->container->getParameter('metador');
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
+
+        if($data) {
+
+            $p = $data->getObject();
+
+            ksort($p);
+
+            $html = $this->render($conf['templates']['form'] . '::pdf.html.twig', array(
+                "p" => $p
+            ));
+
+        } else {
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
+            ));
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($html->getContent());
+
         return $response;
     }
 
@@ -131,7 +163,7 @@ class DefaultController extends Controller
             $conf = $this->container->getParameter('metador');
 
             switch($p['hierarchyLevel']) {
-                case 'service' : 
+                case 'service' :
                     $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
                 case 'dataset' :
@@ -147,7 +179,7 @@ class DefaultController extends Controller
             $import = $this->get('metadata_import');
 
             $array = $import->load(
-                $xml->getContent(), 
+                $xml->getContent(),
                 $this->container->getParameter('metador')
             );
 
@@ -164,7 +196,7 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
         return $response;
     }
 
@@ -252,8 +284,8 @@ class DefaultController extends Controller
 
             $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
             $html = str_replace(
-                array('<div>','</div>'), 
-                array('',''), 
+                array('<div>','</div>'),
+                array('',''),
                 $html)
             ;
 
@@ -286,7 +318,7 @@ class DefaultController extends Controller
         $array = array();
         $em = $this->getDoctrine()->getManager();
         $addresses = $em->getRepository('WhereGroupMetadorBundle:Address')->findAll();
-        
+
         foreach($addresses as $address) {
             $array[] = array(
                 'organisationName' => $address->getOrganisationName(),
@@ -358,7 +390,7 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('event_dispatcher')->dispatch('metador.post_save', $event);
         }
-        
+
         return new Response();
     }
 }

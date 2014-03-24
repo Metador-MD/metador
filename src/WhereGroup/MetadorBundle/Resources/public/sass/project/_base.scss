@@ -17,7 +17,7 @@ $logoHeight: 122px;
 $logoWidth: 132px;
 
 body {
-    @include userSelect(none);
+    //@include userSelect(none);
 }
 
 @import "page";
