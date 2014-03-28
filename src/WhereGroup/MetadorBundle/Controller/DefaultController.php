@@ -133,6 +133,26 @@ class DefaultController extends Controller
                 "p" => $p
             ));
 
+
+            $this->generateMapPdf();
+
+            $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
+            $pdf->SetCreator(PDF_CREATOR);
+            // $pdf->SetAuthor('WerraEnergie');
+            // $pdf->SetTitle('Schachtscheine');
+            $pdf->SetSubject('Metadaten');
+            $pdf->SetFont('helvetica', '', 10);
+            $pdf->SetMargins(20, 40, 15);
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
+            $pdf->setAutoPageBreak(false, 20);
+
+
+            // original page
+            $pdf->AddPage();
+            $pdf->writeHTML($html->getContent(), true, true, false, false, '');
+            $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+
         } else {
             $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden."
