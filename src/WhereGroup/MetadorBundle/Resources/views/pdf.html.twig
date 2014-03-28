@@ -4,7 +4,7 @@
     .last{height: 20px;}
 </style>
 
-<h1>Metadaten</h1>
+<h1>Metadatenasasa</h1>
 <table>
     <tr>
         <td class="label">Identifikator des Metadatensatzes:</td>
@@ -255,27 +255,31 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
     <p></p>
     {% endif %}
 {% endif %}
-{% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'] is defined and p['resolution'] is not empty) %}
+{% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty) %}
     <h1>Qualität und Gültigkeit</h1>
-    <table>
-        <tr>
-            <td class="label">Herkunft</td>
-            <td>{{p['lineage']}}</td>
-        </tr>
-    </table>
-    <p></p>
-    <h3>Räumliche Auflösung</h3>
-    <table>
-        <tr>
-            <td class="label">Äquivalenter Maßstab:</td>
-            <td>
-                {% for resolution in p['resolution']%}
-                    {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
-                {% endfor %}
-            </td>
-        </tr>
-    </table>
-    <p></p>
+        {% if p['lineage'] is defined and p['lineage'] is not empty%}
+            <table>
+                <tr>
+                    <td class="label">Herkunft</td>
+                    <td>{{p['lineage']}}</td>
+                </tr>
+            </table>
+            <p></p>
+        {% endif %}
+    {% if p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty %}    
+        <h3>Räumliche Auflösung</h3>
+        <table>
+            <tr>
+                <td class="label">Äquivalenter Maßstab:</td>
+                <td>
+                    {% for resolution in p['resolution']%}
+                        {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+        <p></p>
+    {% endif %}
 {% endif %}
 {% if p['dataquality'][0]['date'] is defined and p['dataquality'][0]['date'] is not empty %}
     <h1>Übereinstimmung</h1>
