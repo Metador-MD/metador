@@ -1,6 +1,7 @@
 <style type="text/css">
     table {width: 100%; border: 1px solid silver;}
     .label {font-weight: bold; width:50%;}
+    .bbox-label{font-weight: bold; }
     .last{height: 20px;}
 </style>
 
@@ -147,7 +148,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         </tr>
     {% endif %}
 </table>
-<p></p>
 {% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
     <h1>Klassifizierung</h1>
     <table>
@@ -160,7 +160,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             </td>
         </tr>
     </table>
-    <p></p>
 {% endif %}
 {% if p['keyword'] is defined and p['keyword'] is not empty %}
     <h1>Schlüsselwort</h1>
@@ -186,14 +185,19 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                     {% endfor %}
                 </td>
             </tr>
-
         {% endfor %}
     </table>
-    <p></p>
 {% endif %}
 {% if p['bbox'] is defined and p['bbox'] is not empty %}
     <h1>Geografischer Standort</h1>
     <table>
+        <tr>
+            <td class="bbox-label">N Breitengrad</td>
+            <td class="bbox-label">E Längengrad</td>
+            <td class="bbox-label">S Breitengrad</td>
+            <td class="bbox-label">W Längengrad</td>
+
+        </tr>
         {% for bbox in p['bbox'] %}
         <tr>
             <td>{{bbox['nLatitude']}}</td>
@@ -203,36 +207,23 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         </tr>
         {% endfor %}
     </table>
-    <p></p>
 {% endif %}
-{% if (p['creationDate'] is defined and p['creationDate'] is not empty) 
-    or (p['publicationDate'] is defined and p['publicationDate'] is not empty) 
-    or (p['revisionDate'] is defined and p['revisionDate'] is not empty)
-    or (temporalExtent['begin'] is defined and temporalExtent['begin'] is not empty)
-    or (temporalExtent['end'] is defined and temporalExtent['end'] is not empty) 
-%}
-<h1>Zeitbezug</h1>
-    {% if (p['creationDate'] is defined and p['creationDate'] is not empty) 
-        and (p['publicationDate'] is defined and p['publicationDate'] is not empty) 
-        and (p['revisionDate'] is defined and p['revisionDate'] is not empty)%}
-            <table>
-                <tr>
-                    <td class="label">Erstellungsdatum:</td>
-                    <td>{{p['creationDate']}}</td>
-                </tr>
-                <tr>
-                    <td class="label">Veröffentlichung:</td>
-                    <td>{{p['publicationDate']}}</td>
-                </tr>
-                <tr>
-                    <td class="label">Überarbeitung</td>
-                    <td>{{p['revisionDate']}}</td>
-                </tr>
-            </table>
-            <p></p>
-    {% endif %}
-    {% if (temporalExtent['begin'] is defined and temporalExtent['begin'] is not empty)
-        or (temporalExtent['end'] is defined and temporalExtent['end'] is not empty) %}
+{% if p['creationDate'] is defined and p['creationDate'] is not empty %}
+    <h1>Zeitbezug</h1>
+    <table>
+        <tr>
+            <td class="label">Erstellungsdatum:</td>
+            <td>{{p['creationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Veröffentlichung:</td>
+            <td>{{p['publicationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Überarbeitung</td>
+            <td>{{p['revisionDate']}}</td>
+        </tr>
+    </table>
     <h3>Zeitliche Ausdehnung</h3>
     <table>
         {% for temporalExtent in p['temporalExtent'] %}
@@ -252,8 +243,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             {% endif %}
         {% endfor %}
     </table>
-    <p></p>
-    {% endif %}
 {% endif %}
 {% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty) %}
     <h1>Qualität und Gültigkeit</h1>
@@ -264,7 +253,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                     <td>{{p['lineage']}}</td>
                 </tr>
             </table>
-            <p></p>
         {% endif %}
     {% if p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty %}    
         <h3>Räumliche Auflösung</h3>
@@ -278,7 +266,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 </td>
             </tr>
         </table>
-        <p></p>
     {% endif %}
 {% endif %}
 {% if p['dataquality'][0]['date'] is defined and p['dataquality'][0]['date'] is not empty %}
@@ -309,7 +296,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             {% endif %}
         {% endfor %}
     </table>
-    <p></p>
 {% endif %}
 {% if (p['uselimitation'] is defined and p['uselimitation'] is not empty) or (p['otherconstraints'] is defined and p['otherconstraints'] is not empty)%}
     <h1>Beschränkungen</h1>
@@ -323,7 +309,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             </tr>
         {% endfor %}
     </table>
-    <p></p>
 {% endif %}
 {% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
     <h3>Beschränkungen des öffentlichen Zugangs:</h3>
@@ -334,7 +319,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             </tr>
         {% endfor %}
     </table>
-    <p></p>
 {% endif %}
 {%
     if p['responsibleParty'][0]['organisationName'] is defined

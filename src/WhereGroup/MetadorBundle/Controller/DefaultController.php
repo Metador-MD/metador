@@ -140,7 +140,7 @@ class DefaultController extends Controller
             $pdf->SetTitle($p['title']);
             $pdf->SetSubject('Metadaten');
             $pdf->SetFont('helvetica', '', 10);
-            $pdf->SetMargins(20, 40, 15);
+            $pdf->SetMargins(20, 20, 15);
             $pdf->setPrintHeader(false);
             $pdf->setPrintFooter(false);
             $pdf->setAutoPageBreak(true, 20);
