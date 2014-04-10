@@ -3,6 +3,9 @@
 ## 2.0.4.3
 * Added keywords to searchfield.
 * Matching all groups in MetadataSearch service.
+* Added some filter columns to metadata entity.
+* Set role string length to 255.
+* Tag metadata as system change befor update public state.
 
 ## 2.0.4.2
 * Metadata entity date now nullable.
