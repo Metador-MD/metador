@@ -132,7 +132,7 @@ class DefaultController extends Controller
             $html = $this->render($conf['templates']['form'] . '::pdf.html.twig', array(
                 "p" => $p
             ));
-            
+
             error_reporting(E_ERROR);
             $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
             $pdf->SetCreator(PDF_CREATOR);
@@ -399,9 +399,22 @@ class DefaultController extends Controller
         $data = $metadata->getById($id);
 
         if($data) {
+            // SYSTEM CHANGE
+            $p = $data->getObject();
+            $p['_SYSTEM'] = 1;
+            $data->setObject($p);
+
+
             $data->setPublic($public);
             $event  = new MetadataChangeEvent($data, $this->container->getParameter('metador'));
             $this->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+
+            // REMOVE SYSTEM CHANGE
+            $p = $data->getObject();
+            if (isset($p['_SYSTEM']))
+                unset($p['_SYSTEM']);
+            $data->setObject($p);
+
             $em->persist($data);
             $em->flush();
             $this->get('event_dispatcher')->dispatch('metador.post_save', $event);
