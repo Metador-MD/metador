@@ -273,10 +273,10 @@ $(document).ready(function() {
 
     $('#add_p_bbox').click(function() {
         addBBOX(
-            $('#bboxn').val(),
-            $('#bboxe').val(),
+            $('#bboxw').val(),
             $('#bboxs').val(),
-            $('#bboxw').val()
+            $('#bboxe').val(),
+            $('#bboxn').val()
         );
 
         $('#bboxSelect').val('');
