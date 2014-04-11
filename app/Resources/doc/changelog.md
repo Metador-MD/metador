@@ -6,6 +6,7 @@
 * Added some filter columns to metadata entity.
 * Set role string length to 255.
 * Tag metadata as system change befor update public state.
+* Changed BBOX Label from "N O S W" to "W S O N".
 
 ## 2.0.4.2
 * Metadata entity date now nullable.

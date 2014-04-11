@@ -23,11 +23,11 @@
     <div class="clear"></div>
 
     <div class="left">
-        {% set id = 'p[bbox][nLatitude]' %}
+        {% set id = 'p[bbox][wLongitude]' %}
         <label>
-            <div class="icon mandatory"></div>{{'N Breitengrad'|trans}}:
+            <div class="icon mandatory"></div>{{'W Längengrad'|trans}}:
         </label>
-        <input id="bboxn" type="text" value="" class="twoCol1 no-value"/>
+        <input id="bboxw" type="text" value="" class="twoCol1 no-value"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
                 <div class="icon help"></div>
@@ -35,9 +35,9 @@
         </div>
     </div>
     <div class="right">
-        {% set id = 'p[bbox][eLongitude]' %}
+        {% set id = 'p[bbox][sLatitude]' %}
         <label>
-            <div class="icon mandatory"></div>{{'E Längengrad'|trans}}:
+            <div class="icon mandatory"></div>{{'S Breitengrad'|trans}}:
         </label>
         <div class="fr">
             <div class="btn-group">
@@ -45,17 +45,17 @@
                     <div class="icon help"></div>
                 </div>
             </div>
-            <input id="bboxe" type="text" value="" class="twoCol1 no-value"/>
+            <input id="bboxs" type="text" value="" class="twoCol1 no-value"/>
         </div>
     </div>
     <div class="clear"></div>
 
     <div class="left">
-        {% set id = 'p[bbox][sLatitude]' %}
+        {% set id = 'p[bbox][eLongitude]' %}
         <label>
-            <div class="icon mandatory"></div>{{'S Breitengrad'|trans}}:
+            <div class="icon mandatory"></div>{{'E Längengrad'|trans}}:
         </label>
-        <input id="bboxs" type="text" value="" class="twoCol1 no-value"/>
+        <input id="bboxe" type="text" value="" class="twoCol1 no-value"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
                 <div class="icon help"></div>
@@ -63,9 +63,9 @@
         </div>
     </div>
     <div class="right">
-        {% set id = 'p[bbox][wLongitude]' %}
+        {% set id = 'p[bbox][nLatitude]' %}
         <label>
-            <div class="icon mandatory"></div>{{'W Längengrad'|trans}}:
+            <div class="icon mandatory"></div>{{'N Breitengrad'|trans}}:
         </label>
         <div class="fr">
             <div class="btn-group">
@@ -73,8 +73,9 @@
                     <div class="icon help"></div>
                 </div>
             </div>
-            <input id="bboxw" type="text" value="" class="twoCol1 no-value"/>
+            <input id="bboxn" type="text" value="" class="twoCol1 no-value"/>
         </div>
+
     </div>
     <div class="clear"></div>
 
@@ -104,10 +105,10 @@
             <input type="hidden" name="p[bbox][{{ key }}][wLongitude]" value="{{ value['wLongitude'] }}" />
             <table>
                 <tr>
-                    <td>{{ value['nLatitude'] }}</td>
-                    <td>{{ value['eLongitude'] }}</td>
-                    <td>{{ value['sLatitude'] }}</td>
                     <td>{{ value['wLongitude'] }}</td>
+                    <td>{{ value['sLatitude'] }}</td>
+                    <td>{{ value['eLongitude'] }}</td>
+                    <td>{{ value['nLatitude'] }}</td>
                 </tr>
             </table>
             <div class="btn cmdDeleteSingleValue">
