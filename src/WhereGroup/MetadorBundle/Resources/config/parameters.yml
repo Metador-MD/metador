@@ -15,4 +15,3 @@ parameters:
     metador.xmlimport.schema:
         - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Resources/config/xmlimport.json"
     metador.search.templates: "WhereGroupSearchBundle"
-    metador.search.show_in_map: false

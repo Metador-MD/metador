@@ -5,3 +5,4 @@ Metadata Editor for creating metadata according to the INSPIRE and GDI-DE implem
 [Required](app/Resources/doc/required.md)  
 [Installation](app/Resources/doc/installation.md)  
 [Changelog](app/Resources/doc/changelog.md)  
+[Update](app/Resources/doc/update.md)  

@@ -57,7 +57,7 @@ class DefaultController extends Controller
             $conf = $this->container->getParameter('metador');
 
             switch($p['hierarchyLevel']) {
-                case 'service' : 
+                case 'service' :
                     $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
                 case 'dataset' :
@@ -80,7 +80,7 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
         return $response;
     }
 
@@ -94,9 +94,9 @@ class DefaultController extends Controller
         $data = $metadata->getById($id);
 
         if($data) {
-            
+
             $p = $data->getObject();
-            
+
             ksort($p);
 
             die('<pre>' . print_r($p, 1) . '</pre>');
@@ -110,7 +110,55 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
+        return $response;
+    }
+
+    /**
+     * @Route("/pdf/{id}")
+     */
+    public function pdfAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $conf = $this->container->getParameter('metador');
+        $metadata = $this->get('metador_metadata');
+        $data = $metadata->getById($id);
+
+        if($data) {
+
+            $p = $data->getObject();
+
+            ksort($p);
+
+            $html = $this->render($conf['templates']['form'] . '::pdf.html.twig', array(
+                "p" => $p
+            ));
+
+            error_reporting(E_ERROR);
+            $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
+            $pdf->SetCreator(PDF_CREATOR);
+            $pdf->SetAuthor('Metador');
+            $pdf->SetTitle($p['title']);
+            $pdf->SetSubject('Metadaten');
+            $pdf->SetFont('helvetica', '', 10);
+            $pdf->SetMargins(20, 20, 15);
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
+            $pdf->setAutoPageBreak(true, 20);
+            $pdf->AddPage();
+            $pdf->writeHTML($html->getContent(), true, true, false, false, '');
+            $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+
+        } else {
+            // TODO: add error handling
+            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
+            ));
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        $response->setContent($xml->getContent());
+
         return $response;
     }
 
@@ -131,7 +179,7 @@ class DefaultController extends Controller
             $conf = $this->container->getParameter('metador');
 
             switch($p['hierarchyLevel']) {
-                case 'service' : 
+                case 'service' :
                     $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
                 case 'dataset' :
@@ -147,7 +195,7 @@ class DefaultController extends Controller
             $import = $this->get('metadata_import');
 
             $array = $import->load(
-                $xml->getContent(), 
+                $xml->getContent(),
                 $this->container->getParameter('metador')
             );
 
@@ -164,7 +212,7 @@ class DefaultController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent($xml->getContent());
-        
+
         return $response;
     }
 
@@ -252,8 +300,8 @@ class DefaultController extends Controller
 
             $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
             $html = str_replace(
-                array('<div>','</div>'), 
-                array('',''), 
+                array('<div>','</div>'),
+                array('',''),
                 $html)
             ;
 
@@ -286,7 +334,7 @@ class DefaultController extends Controller
         $array = array();
         $em = $this->getDoctrine()->getManager();
         $addresses = $em->getRepository('WhereGroupMetadorBundle:Address')->findAll();
-        
+
         foreach($addresses as $address) {
             $array[] = array(
                 'organisationName' => $address->getOrganisationName(),
@@ -351,14 +399,27 @@ class DefaultController extends Controller
         $data = $metadata->getById($id);
 
         if($data) {
+            // SYSTEM CHANGE
+            $p = $data->getObject();
+            $p['_SYSTEM'] = 1;
+            $data->setObject($p);
+
+
             $data->setPublic($public);
             $event  = new MetadataChangeEvent($data, $this->container->getParameter('metador'));
             $this->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+
+            // REMOVE SYSTEM CHANGE
+            $p = $data->getObject();
+            if (isset($p['_SYSTEM']))
+                unset($p['_SYSTEM']);
+            $data->setObject($p);
+
             $em->persist($data);
             $em->flush();
             $this->get('event_dispatcher')->dispatch('metador.post_save', $event);
         }
-        
+
         return new Response();
     }
 }

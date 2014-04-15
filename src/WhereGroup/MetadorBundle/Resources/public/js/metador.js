@@ -39,7 +39,7 @@ function changeNames(clone, count) {
     });
 }
 
-function addBBOX(n, e, s , w) {
+function addBBOX(w, s, e, n) {
     var result = $('#result_p_bbox');
     var count = result.attr('data-count');
 
@@ -51,10 +51,10 @@ function addBBOX(n, e, s , w) {
             $('<input/>').attr("type", "hidden").attr("name", "p[bbox][" + count + "][wLongitude]").val(w),
             $('<table></table>').append(
                 $('<tr></tr>').append(
-                    $('<td></td>').html(n),
-                    $('<td></td>').html(e),
+                    $('<td></td>').html(w),
                     $('<td></td>').html(s),
-                    $('<td></td>').html(w)
+                    $('<td></td>').html(e),
+                    $('<td></td>').html(n)
                 )
             ),
             $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon delete'))
@@ -124,7 +124,7 @@ $(document).ready(function() {
 
     $('#bboxSelect').change(function() {
         var bbox = $(this).val().split(' ');
-        
+
         if(bbox.length === 4) {
             addBBOX(bbox[0], bbox[1], bbox[2], bbox[3]);
             $('#bboxSelect').val('');
@@ -205,7 +205,7 @@ $(document).ready(function() {
             element.find('div.content div').eq(0).addClass("act");
         } else {
             alert("Das erste Element kann nicht gelöscht werden.");
-        }  
+        }
     });
 
     $('.duplicatable ul li.tab').live('click', function() {
@@ -273,10 +273,10 @@ $(document).ready(function() {
 
     $('#add_p_bbox').click(function() {
         addBBOX(
-            $('#bboxn').val(), 
-            $('#bboxe').val(), 
-            $('#bboxs').val(), 
-            $('#bboxw').val()
+            $('#bboxw').val(),
+            $('#bboxs').val(),
+            $('#bboxe').val(),
+            $('#bboxn').val()
         );
 
         $('#bboxSelect').val('');
@@ -311,7 +311,7 @@ $(document).ready(function() {
             data: {"id" : id},
             type: "post",
             dataType: "html",
-            success:  function(data) { 
+            success:  function(data) {
                 dialog.modalDialog({
                     title: 'Hilfetext',
                     height: 300,
@@ -465,7 +465,7 @@ $(document).ready(function() {
         if(typeof target != 'undefined') {
             link.attr('target', target);
         }
-        
+
         $('.contentMenu').find('ul').append(
             $('<li></li>').append(link)
         );

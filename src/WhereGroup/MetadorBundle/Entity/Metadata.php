@@ -26,7 +26,7 @@ class Metadata
 
     /**
      * @ORM\Column(type="integer")
-     */    
+     */
     private $updateTime;
 
     /**
@@ -60,7 +60,7 @@ class Metadata
      * @ORM\Column(type="text")
      */
     private $title;
-    
+
     /**
      * @ORM\Column(type="text")
      */
@@ -91,11 +91,10 @@ class Metadata
      */
     private $groups;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
-    private $readonly; 
+    private $readonly;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -121,11 +120,61 @@ class Metadata
      * @ORM\Column(type="float", nullable=true)
      */
     private $bboxw;
-    
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter0;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter3;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter4;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter5;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter6;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter7;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter8;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filter9;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -141,14 +190,14 @@ class Metadata
     public function setInsertTime($insertTime)
     {
         $this->insertTime = $insertTime;
-    
+
         return $this;
     }
 
     /**
      * Get insertTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getInsertTime()
     {
@@ -164,14 +213,14 @@ class Metadata
     public function setUpdateTime($updateTime)
     {
         $this->updateTime = $updateTime;
-    
+
         return $this;
     }
 
     /**
      * Get updateTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getUpdateTime()
     {
@@ -187,14 +236,14 @@ class Metadata
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
-    
+
         return $this;
     }
 
     /**
      * Get uuid
      *
-     * @return string 
+     * @return string
      */
     public function getUuid()
     {
@@ -210,14 +259,14 @@ class Metadata
     public function setCodespace($codespace)
     {
         $this->codespace = $codespace;
-    
+
         return $this;
     }
 
     /**
      * Get codespace
      *
-     * @return string 
+     * @return string
      */
     public function getCodespace()
     {
@@ -233,14 +282,14 @@ class Metadata
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -256,14 +305,14 @@ class Metadata
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
-    
+
         return $this;
     }
 
     /**
      * Get abstract
      *
-     * @return string 
+     * @return string
      */
     public function getAbstract()
     {
@@ -279,14 +328,14 @@ class Metadata
     public function setSearchfield($searchfield)
     {
         $this->searchfield = $searchfield;
-    
+
         return $this;
     }
 
     /**
      * Get searchfield
      *
-     * @return string 
+     * @return string
      */
     public function getSearchfield()
     {
@@ -302,14 +351,14 @@ class Metadata
     public function setBrowserGraphic($browserGraphic)
     {
         $this->browserGraphic = $browserGraphic;
-    
+
         return $this;
     }
 
     /**
      * Get browserGraphic
      *
-     * @return string 
+     * @return string
      */
     public function getBrowserGraphic()
     {
@@ -325,7 +374,7 @@ class Metadata
     public function setInsertUser(User $insertUser = null)
     {
         $this->insertUser = $insertUser;
-    
+
         return $this;
     }
 
@@ -348,7 +397,7 @@ class Metadata
     public function setUpdateUser(User $updateUser = null)
     {
         $this->updateUser = $updateUser;
-    
+
         return $this;
     }
 
@@ -365,7 +414,7 @@ class Metadata
     /**
      * Get metadata
      *
-     * @return string 
+     * @return string
      */
     public function getObject()
     {
@@ -378,7 +427,7 @@ class Metadata
      * @param string $metadata
      * @return Metadata
      */
-    public function setObject($object) 
+    public function setObject($object)
     {
         $this->object = serialize($object);
         return $this;
@@ -405,7 +454,7 @@ class Metadata
         $this->public = $public;
         return $this;
     }
-    
+
     /**
      * Get hierarchyLevel
      *
@@ -425,7 +474,7 @@ class Metadata
         $this->hierarchyLevel = $hierarchyLevel;
         return $this;
     }
-    
+
     /**
      * Get groups
      *
@@ -444,12 +493,12 @@ class Metadata
     public function setGroups($groups) {
         $array = array_filter($groups);
         sort($array);
-        
+
         $this->groups = implode(',', $array);
         return $this;
     }
 
-    
+
     /**
      * Get readonly status.
      *
@@ -512,6 +561,246 @@ class Metadata
 
     public function setBboxe($bboxe) {
         $this->bboxe = $bboxe;
+        return $this;
+    }
+
+/**
+     * Gets the value of filter0.
+     *
+     * @return mixed
+     */
+    public function getFilter0()
+    {
+        return $this->filter0;
+    }
+
+    /**
+     * Sets the value of filter0.
+     *
+     * @param mixed $filter0 the filter0
+     *
+     * @return self
+     */
+    public function setFilter0($filter0)
+    {
+        $this->filter0 = $filter0;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter1.
+     *
+     * @return mixed
+     */
+    public function getFilter1()
+    {
+        return $this->filter1;
+    }
+
+    /**
+     * Sets the value of filter1.
+     *
+     * @param mixed $filter1 the filter1
+     *
+     * @return self
+     */
+    public function setFilter1($filter1)
+    {
+        $this->filter1 = $filter1;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter2.
+     *
+     * @return mixed
+     */
+    public function getFilter2()
+    {
+        return $this->filter2;
+    }
+
+    /**
+     * Sets the value of filter2.
+     *
+     * @param mixed $filter2 the filter2
+     *
+     * @return self
+     */
+    public function setFilter2($filter2)
+    {
+        $this->filter2 = $filter2;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter3.
+     *
+     * @return mixed
+     */
+    public function getFilter3()
+    {
+        return $this->filter3;
+    }
+
+    /**
+     * Sets the value of filter3.
+     *
+     * @param mixed $filter3 the filter3
+     *
+     * @return self
+     */
+    public function setFilter3($filter3)
+    {
+        $this->filter3 = $filter3;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter4.
+     *
+     * @return mixed
+     */
+    public function getFilter4()
+    {
+        return $this->filter4;
+    }
+
+    /**
+     * Sets the value of filter4.
+     *
+     * @param mixed $filter4 the filter4
+     *
+     * @return self
+     */
+    public function setFilter4($filter4)
+    {
+        $this->filter4 = $filter4;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter5.
+     *
+     * @return mixed
+     */
+    public function getFilter5()
+    {
+        return $this->filter5;
+    }
+
+    /**
+     * Sets the value of filter5.
+     *
+     * @param mixed $filter5 the filter5
+     *
+     * @return self
+     */
+    public function setFilter5($filter5)
+    {
+        $this->filter5 = $filter5;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter6.
+     *
+     * @return mixed
+     */
+    public function getFilter6()
+    {
+        return $this->filter6;
+    }
+
+    /**
+     * Sets the value of filter6.
+     *
+     * @param mixed $filter6 the filter6
+     *
+     * @return self
+     */
+    public function setFilter6($filter6)
+    {
+        $this->filter6 = $filter6;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter7.
+     *
+     * @return mixed
+     */
+    public function getFilter7()
+    {
+        return $this->filter7;
+    }
+
+    /**
+     * Sets the value of filter7.
+     *
+     * @param mixed $filter7 the filter7
+     *
+     * @return self
+     */
+    public function setFilter7($filter7)
+    {
+        $this->filter7 = $filter7;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter8.
+     *
+     * @return mixed
+     */
+    public function getFilter8()
+    {
+        return $this->filter8;
+    }
+
+    /**
+     * Sets the value of filter8.
+     *
+     * @param mixed $filter8 the filter8
+     *
+     * @return self
+     */
+    public function setFilter8($filter8)
+    {
+        $this->filter8 = $filter8;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of filter9.
+     *
+     * @return mixed
+     */
+    public function getFilter9()
+    {
+        return $this->filter9;
+    }
+
+    /**
+     * Sets the value of filter9.
+     *
+     * @param mixed $filter9 the filter9
+     *
+     * @return self
+     */
+    public function setFilter9($filter9)
+    {
+        $this->filter9 = $filter9;
+
         return $this;
     }
 }

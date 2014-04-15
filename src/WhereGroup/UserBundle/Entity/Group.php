@@ -19,7 +19,7 @@ class Group implements RoleInterface {
     private $id;
 
     /**
-     * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @ORM\Column(name="role", type="string", length=255, unique=true)
      */
     private $role;
 

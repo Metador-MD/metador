@@ -11,20 +11,11 @@
         <div class="metadata-header-title">
             {{ metadata.title }}
         </div>
-        <div class="metadata-header-url">
-{% if conf['search']['show_in_map'] %}
-            {% if metadata.object.containsOperationsDCP is defined and metadata.object.containsOperationsDCP == 'WebService'  %}
-            {% if metadata.object.containsOperationsURL is defined %}
-                <span onclick="postMyMessage(this)" data-url="{{ metadata.object.containsOperationsURL }}">In Karte anzeigen</span>
-            {% endif %}
-            {% endif %}
-{% endif %}
-        </div>
+        <div class="metadata-header-url">{# IN KARTE ANZEIGEN#}</div>
         <div class="clear"></div>
     </div>
     <div class="metadata-abstract">{{ metadata.abstract }}</div>
     <div class="metadata-menu">
-{% if not conf['search']['show_in_map'] %}
 {% if app.user.username is defined %}
 {% if metadata.readonly == 0 %}
         {% if metadata.hierarchyLevel == 'service' %}
@@ -34,7 +25,6 @@
         {% endif %}
 {% endif %}
         <a href="{{ path('wheregroup_metador_default_xml', {id: metadata.id }) }}" target="_BLANK">XML</a> <span>|</span>
-{% endif %}
 {% endif %}
         <span class="metadata-extended-toggle">erweitert</span>
     </div>
