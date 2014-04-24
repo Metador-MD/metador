@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4.4
+* require_once tcpdf
+
 ## 2.0.4.3
 * Added keywords to searchfield.
 * Matching all groups in MetadataSearch service.
