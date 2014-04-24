@@ -30,7 +30,7 @@ parameters:
 
         xmlimport:
             schema: %metador.xmlimport.schema%
-            
+
         user: %metador.user%
 
 framework:
@@ -57,7 +57,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        version: 2.0.4.3
+        version: 2.0.4.4
 
 # Assetic Configuration
 assetic:
