@@ -18,14 +18,14 @@ class Helptext
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $text;
 
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {

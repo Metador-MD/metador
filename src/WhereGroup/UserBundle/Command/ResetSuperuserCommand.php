@@ -54,18 +54,18 @@ class ResetSuperuserCommand extends ContainerAwareCommand {
             if(!$group) {
                 $group = new Group();
                 $group->setRole("ROLE_SUPERUSER");
-                $em = $doctrine->getEntityManager();
+                $em = $doctrine->getManager();
                 $em->persist($group);
                 $em->flush();
                 unset($em);
             }
-            
+
             $user->addGroup($group);
             $output->writeln('Benutzer ' . $username . ' eingetragen.');
         }
 
         if(is_object($user)) {
-            $em = $doctrine->getEntityManager();
+            $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();
         }
