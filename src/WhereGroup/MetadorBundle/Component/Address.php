@@ -28,10 +28,10 @@ class Address implements AddressInterface {
         // SAVE NEW ADDRESSES
         $addresses = array_merge(
             isset($metadataObject['responsiblePartyMetadata'])
-                ? $metadataObject['responsiblePartyMetadata'] : array(), 
+                ? $metadataObject['responsiblePartyMetadata'] : array(),
             isset($metadataObject['responsibleParty'])
                 ? $metadataObject['responsibleParty'] : array(),
-            isset($metadataObject['responsiblePartyDistributor']) 
+            isset($metadataObject['responsiblePartyDistributor'])
                 ? $metadataObject['responsiblePartyDistributor'] : array()
         );
 
@@ -41,7 +41,7 @@ class Address implements AddressInterface {
                 || trim(@$row['electronicMailAddress']) == ""
             ) continue;
 
-            $qb = $this->container->get('doctrine')->getEntityManager()->createQueryBuilder();
+            $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
             $em = $this->container->get('doctrine')->getManager();
 
             $result = $qb
@@ -52,7 +52,7 @@ class Address implements AddressInterface {
                     $qb->expr()->eq('u.individualName', '?2'),
                     $qb->expr()->eq('u.electronicMailAddress', '?3')
                 ))->setParameters(array(
-                    1 => $row['organisationName'], 
+                    1 => $row['organisationName'],
                     2 => $row['individualName'],
                     3 => $row['electronicMailAddress']
                 ))->getQuery()->getSingleScalarResult();

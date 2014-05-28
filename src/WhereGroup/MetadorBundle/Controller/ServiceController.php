@@ -68,12 +68,12 @@ class ServiceController extends Controller
     public function useAction($id) {
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
-        
+
         if(($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
-        
+
         // Load Template.
         $conf = $this->container->getParameter('metador');
 
@@ -141,7 +141,7 @@ class ServiceController extends Controller
      * @Method("GET")
      */
     public function coupledAction() {
-        $qb = $this->getDoctrine()->getEntityManager()->createQueryBuilder();
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
         $term = $this->getRequest()->get('find', '');
         $return = array();
 
@@ -153,9 +153,9 @@ class ServiceController extends Controller
                     $qb->expr()->eq('u.hierarchyLevel', '?1'),
                     $qb->expr()->eq('u.hierarchyLevel', '?2')
                 )
-                ,$qb->expr()->like('u.title', $qb->expr()->literal('%' . $term . '%')) // 
+                ,$qb->expr()->like('u.title', $qb->expr()->literal('%' . $term . '%')) //
             ))->setParameters(array(
-                1 => 'dataset', 
+                1 => 'dataset',
                 2 => 'series'
             ))->getQuery()->getResult();
 
@@ -164,7 +164,7 @@ class ServiceController extends Controller
             $return[] = array(
                 'label' => $obj->getTitle(),
                 'value' => ($obj->getCodespace() != "")
-                    ? $obj->getCodespace() . '#' . $obj->getUuid() 
+                    ? $obj->getCodespace() . '#' . $obj->getUuid()
                     : $obj->getUuid()
             );
         }
