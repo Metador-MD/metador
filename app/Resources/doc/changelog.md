@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4.5
+* Removed deprecated methods.
+* Changed table columns for oracle.
+
 ## 2.0.4.4
 * require_once tcpdf
 
