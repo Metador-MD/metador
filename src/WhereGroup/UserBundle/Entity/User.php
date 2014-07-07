@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class User implements AdvancedUserInterface, \Serializable 
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -81,13 +81,16 @@ class User implements AdvancedUserInterface, \Serializable
      * @inheritDoc
      */
     public function getRoles() {
-        foreach($this->groups->toArray() as $group)
-            $roles[] = $group->getRole();    
+        foreach($this->groups->toArray() as $group) {
+            $roles[] = $group->getRole();
+        }
 
-        $roles[] = "ROLE_USER";
+        if (!in_array("ROLE_USER", $roles)) {
+            $roles[] = "ROLE_USER";
+        }
 
         sort($roles);
-        
+
         return $roles;
     }
 
