@@ -94,7 +94,14 @@
     {% endif %}
 
     <div class="clear"></div>
-    
+        <table class="bbox-label">
+        <tr>
+            <td>{{'W Längengrad'|trans}}</td>
+            <td>{{'S Breitengrad'|trans}}</td>
+            <td>{{'E Längengrad'|trans}}</td>
+            <td>{{'N Breitengrad'|trans}}</td>
+        </tr>
+    </table>
     <div class="singleResult" id="result_{{ id|md_id }}" data-count="{{ length }}">
         {% if p['bbox'] is defined %}
         {% for key, value in p['bbox'] %}
