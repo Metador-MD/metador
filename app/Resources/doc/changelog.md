@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4.7
+* Added bbox label.
+
 ## 2.0.4.6
 * Allow äöüßÄÖÜ in group name.
 

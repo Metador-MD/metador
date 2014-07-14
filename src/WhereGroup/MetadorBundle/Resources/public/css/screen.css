@@ -1876,6 +1876,16 @@ body {
   vertical-align: middle;
 }
 
+.bbox-label {
+  width: 100%;
+  font-size: 10px;
+  width: 620px;
+  margin-left: 5px;
+}
+.bbox-label td {
+  width: 25%;
+}
+
 .line, .xxx label, .xxx input, .xxx .btn-group, .yyy .left label, .yyy .left input, .yyy input {
   display: block;
   padding: 0;
