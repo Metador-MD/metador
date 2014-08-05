@@ -16,16 +16,24 @@ class ServiceController extends Controller
 {
     /**
      * @Route("/")
-     * @Template("WhereGroupMetadorBundle:Service:index.html.twig")
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $limit = 100;
         $offset = 0;
 
         $metadata = $this->get('metador_metadata');
 
-        return array(
-            'rows' => $metadata->getService($limit, $offset)
+        // Load Template.
+        $conf = $this->container->getParameter('metador');
+
+        $tmp = $metadata->getService($limit, $offset);
+
+        return $this->render(
+            $conf['templates']['form'] . ':Service:index.html.twig',
+            array(
+                'rows' => $metadata->getService($limit, $offset)
+            )
         );
     }
 
@@ -33,7 +41,8 @@ class ServiceController extends Controller
      * @Route("/new")
      * @Method({"GET", "POST"})
      */
-    public function newAction() {
+    public function newAction()
+    {
         $metadata = $this->get('metador_metadata');
 
         // LOAD
@@ -41,10 +50,8 @@ class ServiceController extends Controller
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
-        } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
-                return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
-            }
+        } elseif (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
+            return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
         }
 
         // Load Template.
@@ -65,11 +72,12 @@ class ServiceController extends Controller
      * @Route("/use/{id}")
      * @Method({"GET"})
      */
-    public function useAction($id) {
+    public function useAction($id)
+    {
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
-        if(($p = $data->getObject())) {
+        if (($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
             unset($p['fileIdentifier'], $p['identifier']);
         }
@@ -92,21 +100,19 @@ class ServiceController extends Controller
      * @Route("/edit/{id}")
      * @Method({"GET", "POST"})
      */
-    public function editAction($id) {
+    public function editAction($id)
+    {
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
         // LOAD
-        if ($this->get('request')->getMethod() == 'GET') {
-            if(($p = $data->getObject())) {
-                $p['dateStamp'] = date("Y-m-d");
-            }
+        if ($this->get('request')->getMethod() == 'GET' && ($p = $data->getObject())) {
+            $p['dateStamp'] = date("Y-m-d");
 
         // SAVE
-        } else {
-            if(($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
-                return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
-            }
+        } elseif (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
+            return $this->redirect($this->generateUrl('wheregroup_metador_service_index'));
+
         }
 
         // Load Template.
@@ -128,7 +134,8 @@ class ServiceController extends Controller
      * @Route("/delete/{id}")
      * @Method("POST")
      */
-    public function deleteAction($id) {
+    public function deleteAction($id)
+    {
         $metadata = $this->get('metador_metadata');
         $metadata->deleteById($id);
 
@@ -140,7 +147,8 @@ class ServiceController extends Controller
      * @Route("/coupled")
      * @Method("GET")
      */
-    public function coupledAction() {
+    public function coupledAction()
+    {
         $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
         $term = $this->getRequest()->get('find', '');
         $return = array();
@@ -152,8 +160,8 @@ class ServiceController extends Controller
                 $qb->expr()->orx(
                     $qb->expr()->eq('u.hierarchyLevel', '?1'),
                     $qb->expr()->eq('u.hierarchyLevel', '?2')
-                )
-                ,$qb->expr()->like('u.title', $qb->expr()->literal('%' . $term . '%')) //
+                ),
+                $qb->expr()->like('u.title', $qb->expr()->literal('%' . $term . '%')) //
             ))->setParameters(array(
                 1 => 'dataset',
                 2 => 'series'
@@ -175,7 +183,8 @@ class ServiceController extends Controller
         return $response;
     }
 
-    private function getExample() {
+    private function getExample()
+    {
         $wizard = $this->container->get('metador_wizard');
 
         return $wizard->getExamples('service');
