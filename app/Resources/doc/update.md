@@ -1,5 +1,9 @@
 # Update
 
+## 2.0.4.7
+app/console assets:install  
+rm -rf app/cache/*  
+
 ## 2.0.4.5
 app/console doctrine:schema:update --force  
 app/console assets:install  
