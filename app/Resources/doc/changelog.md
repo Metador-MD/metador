@@ -2,6 +2,7 @@
 
 ## 2.0.4.7
 * Added bbox label.
+* Load template from config for service and dataset index page.
 
 ## 2.0.4.6
 * Allow äöüßÄÖÜ in group name.
