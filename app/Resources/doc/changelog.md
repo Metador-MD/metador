@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.4.7
+* Added bbox label.
+* Load template from config for service and dataset index page.
+
+## 2.0.4.6
+* Allow äöüßÄÖÜ in group name.
+
 ## 2.0.4.5
 * Removed deprecated methods.
 * Changed table columns for oracle.

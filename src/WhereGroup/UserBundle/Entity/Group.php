@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="groups")
  * @ORM\Entity()
  */
-class Group implements RoleInterface {
+class Group implements RoleInterface
+{
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
@@ -60,11 +61,11 @@ class Group implements RoleInterface {
      */
     public function setRole($role)
     {
-        $role = preg_replace("/\W/", "_", strtoupper($role));
+        $role = preg_replace("/[^äöüßÄÖÜa-z0-9]/i", "_", mb_strtoupper($role));
         $role = preg_replace("/[_]+/", "_", $role);
-        $role = rtrim(ltrim($role,"_"),"_");
+        $role = rtrim(ltrim($role, "_"), "_");
 
-        if(substr($role, 0, strlen("ROLE_")) !== "ROLE_") {
+        if (substr($role, 0, strlen("ROLE_")) !== "ROLE_") {
             $role = "ROLE_" . $role;
         }
 
@@ -107,7 +108,8 @@ class Group implements RoleInterface {
     }
 
 
-    public function __toString() {
+    public function __toString()
+    {
         return (string)$this->getId();
     }
 }

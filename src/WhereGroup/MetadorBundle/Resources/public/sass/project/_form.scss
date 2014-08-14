@@ -38,8 +38,8 @@ $padding: 6px;
         width: $buttonWidth;
     }
 
-    & input[type='text'], & input[type='password'], 
-    & select, 
+    & input[type='text'], & input[type='password'],
+    & select,
     & textarea  {
         @extend %input;
 
@@ -282,8 +282,8 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
             margin-top: 10px;
         }
 
-        & input[type='text'], & input[type='password'], 
-        & select, 
+        & input[type='text'], & input[type='password'],
+        & select,
         & textarea  {
             @extend %input;
         }
@@ -345,4 +345,16 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     border: 0;
     background-color: transparent;
     vertical-align: middle;
+}
+
+
+.bbox-label {
+    width:100%;
+    font-size: 10px;
+    width:620px;
+    margin-left: 5px;
+
+    & td {
+        width: 25%;
+    }
 }
