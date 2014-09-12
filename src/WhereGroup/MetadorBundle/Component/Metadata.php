@@ -107,7 +107,7 @@ class Metadata {
             $metadata->setInsertTime($now->getTimestamp());
             $metadata->setPublic(false);
             $metadata->setGroups($user->getRoles());
-            
+
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['fileIdentifier']);
             if($uuid) {
@@ -126,16 +126,16 @@ class Metadata {
             if (empty($p['publicationDate'])) {
                 if (empty($p['creationDate']))
                     $date = $p['dateStamp'];
-                else 
+                else
                     $date = $p['creationDate'];
-            } else 
+            } else
                 $date = $p['publicationDate'];
         } else
             $date = $p['revisionDate'];
-        
+
 
         $searchfield = @$p['_searchfield'] .
-            ' ' . strtolower(@$p['title']) . 
+            ' ' . strtolower(@$p['title']) .
             ' ' . strtolower(@$p['abstract']);
 
         if (isset($p['keyword']))
@@ -189,7 +189,7 @@ class Metadata {
         $this->address->set($metadata->getObject());
 
         // SET FLASH
-        $this->container->get('session')->getFlashBag()->add('success', 'Datensatz erfolgreich eingegtragen.');
+        $this->container->get('session')->getFlashBag()->add('success', 'Datensatz erfolgreich eingetragen.');
         return true;
     }
 
@@ -208,7 +208,7 @@ class Metadata {
                 $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
                 $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
 
-                 // DELETE 
+                 // DELETE
                 $em->remove($metadata);
                 $em->flush();
             }
