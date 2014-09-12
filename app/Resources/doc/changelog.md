@@ -1,4 +1,7 @@
 # Changelog
+## 2.0.4.8
+* Public is now nullable, filters changed from string to text
+* Minor changes
 
 ## 2.0.4.7
 * Added bbox label.

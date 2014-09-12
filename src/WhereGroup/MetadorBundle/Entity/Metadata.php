@@ -82,7 +82,7 @@ class Metadata
     private $object;
 
     /**
-     * @ORM\Column(type="boolean", name="`public`")
+     * @ORM\Column(type="boolean", name="`public`", nullable=true)
      */
     private $public;
 
@@ -122,52 +122,52 @@ class Metadata
     private $bboxw;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter1;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter2;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter3;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter4;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter5;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter6;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter7;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter8;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $filter9;
 
