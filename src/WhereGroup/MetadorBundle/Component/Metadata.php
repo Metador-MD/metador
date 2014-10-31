@@ -7,7 +7,8 @@ use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\MetadorBundle\Entity\Address;
 
-class Metadata {
+class Metadata
+{
     protected $container;
     protected $metadorUser;
     protected $address;
@@ -15,13 +16,15 @@ class Metadata {
     public function __construct(
         ContainerInterface $container,
         MetadorUserInterface $metadorUser,
-        AddressInterface $address) {
+        AddressInterface $address
+    ) {
         $this->container = $container;
         $this->metadorUser = $metadorUser;
         $this->address = $address;
     }
 
-    public function getById($id) {
+    public function getById($id)
+    {
         $metadata = $this->container->get('doctrine')
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
@@ -36,7 +39,8 @@ class Metadata {
         return $metadata;
     }
 
-    public function getMetadata($limit, $offset, $type = null) {
+    public function getMetadata($limit, $offset, $type = null)
+    {
         $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
 
         $queryBuilder = $this->container
@@ -44,8 +48,8 @@ class Metadata {
             ->getRepository('WhereGroupMetadorBundle:Metadata')
             ->createQueryBuilder('m')
             ->orderBy('m.updateTime', 'DESC')
-            ->setFirstResult( $offset )
-            ->setMaxResults( $limit );
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
 
         if (strtolower($type) === 'dataset') {
             $queryBuilder
@@ -57,7 +61,7 @@ class Metadata {
                     1 => 'dataset',
                     2 => 'series',
                 ));
-        } else if (strtolower($type) === 'service'){
+        } elseif (strtolower($type) === 'service'){
             $queryBuilder
                 ->where($qb->expr()->orx(
                     $qb->expr()->eq('m.hierarchyLevel', '?1')
@@ -69,36 +73,46 @@ class Metadata {
             ->getQuery()
             ->getResult();
 
-        for($i=0,$iL=count($result); $i<$iL; $i++)
+        for($i=0,$iL=count($result); $i<$iL; $i++) {
             $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
+        }
 
         return $result;
     }
 
-    public function getDataset($limit, $offset) {
+    public function getDataset($limit, $offset)
+    {
         return $this->getMetadata($limit, $offset, 'dataset');
     }
 
-    public function getService($limit, $offset) {
+    public function getService($limit, $offset)
+    {
         return $this->getMetadata($limit, $offset, 'service');
     }
 
-    public function saveObject($p, $id = false) {
-        $user = $this->metadorUser->getUser();
+    public function saveObject($p, $id = false, $username = null)
+    {
+        if (is_null($username)) {
+            $user = $this->metadorUser->getUser();
+        } else {
+            $user = $this->metadorUser->getUserByUsername($username);
+        }
+
         $now  = new \DateTime();
         $em   = $this->container->get('doctrine')->getManager();
 
         // UPDATE
-        if($id) {
+        if ($id) {
             $metadata = $this->getById($id);
 
-            if($metadata->getReadonly()) {
+            if ($metadata->getReadonly()) {
                 $this->container->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
                 return false;
             }
 
-            if($metadata->getInsertUser()->getId() === $user->getId())
+            if ($metadata->getInsertUser()->getId() === $user->getId()) {
                 $metadata->setGroups($user->getRoles());
+            }
 
         // INSERT
         } else {
@@ -110,39 +124,47 @@ class Metadata {
 
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['fileIdentifier']);
-            if($uuid) {
+
+            if ($uuid) {
                 $this->container->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
                 return false;
             }
         }
 
         // CHECK FOR UUID
-        if(!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
+        if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
             $this->container->get('session')->getFlashBag()->add('error', "'Identifikation > Bezeichner > Code' darf nicht leer sein!");
             return false;
         }
 
         if (empty($p['revisionDate'])) {
             if (empty($p['publicationDate'])) {
-                if (empty($p['creationDate']))
+                if (empty($p['creationDate'])) {
                     $date = $p['dateStamp'];
-                else
+                } else {
                     $date = $p['creationDate'];
-            } else
+                }
+            } else {
                 $date = $p['publicationDate'];
-        } else
+            }
+        } else {
             $date = $p['revisionDate'];
+        }
 
 
         $searchfield = @$p['_searchfield'] .
             ' ' . strtolower(@$p['title']) .
             ' ' . strtolower(@$p['abstract']);
 
-        if (isset($p['keyword']))
-            foreach ($p['keyword'] as $value)
-                if (isset($value['value']))
-                    foreach ($value['value'] as $keyword)
+        if (isset($p['keyword'])) {
+            foreach ($p['keyword'] as $value) {
+                if (isset($value['value'])) {
+                    foreach ($value['value'] as $keyword) {
                         $searchfield .= '<br/>' . strtolower($keyword);
+                    }
+                }
+            }
+        }
 
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
@@ -193,7 +215,8 @@ class Metadata {
         return true;
     }
 
-    public function deleteById($id) {
+    public function deleteById($id)
+    {
         $em = $this->container->get('doctrine')->getManager();
         $metadata = $this->getById($id);
 
@@ -203,7 +226,7 @@ class Metadata {
         }
 
         try {
-            if($metadata) {
+            if ($metadata) {
                 // EVENT PRE DELETE
                 $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
                 $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
