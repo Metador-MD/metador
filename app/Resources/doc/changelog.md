@@ -1,7 +1,8 @@
 # Changelog
 
 ## 2.0.4.9
-* Added heltext dump.
+* Build parameters after composer update.
+* Added helptext dump.
 * Bugfix: UTF-8 chars in groupnames now in uppercase
 
 
