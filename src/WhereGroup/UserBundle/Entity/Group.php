@@ -39,7 +39,7 @@ class Group implements RoleInterface
      */
     public function getRole()
     {
-        return $this->role;
+        return mb_strtoupper($this->role, 'UTF-8');
     }
 
 
@@ -61,7 +61,7 @@ class Group implements RoleInterface
      */
     public function setRole($role)
     {
-        $role = preg_replace("/[^äöüßÄÖÜa-z0-9]/i", "_", mb_strtoupper($role));
+        $role = preg_replace("/[^äöüßÄÖÜa-z0-9]/i", "_", mb_strtoupper($role, 'UTF-8'));
         $role = preg_replace("/[_]+/", "_", $role);
         $role = rtrim(ltrim($role, "_"), "_");
 

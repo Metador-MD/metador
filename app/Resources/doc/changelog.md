@@ -1,4 +1,11 @@
 # Changelog
+
+## 2.0.4.9
+* Build parameters after composer update.
+* Added helptext dump.
+* Bugfix: UTF-8 chars in groupnames now in uppercase
+
+
 ## 2.0.4.8
 * Public is now nullable, filters changed from string to text
 * Minor changes

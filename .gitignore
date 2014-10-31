@@ -5,11 +5,14 @@
 *.TODO
 *.lock
 *Test*
+
+.sass-cache
+.idea
+.project
+
 /app/config/parameters.yml
 /app/tmp
 /bin
 /src/User
 /vendor
 /web/bundles
-.sass-cache
-/.project
