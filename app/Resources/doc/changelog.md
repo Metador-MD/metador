@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4.11
+* auto_public for saveObject
+
 ## 2.0.4.10
 * Set username for metadata save object method.
 
