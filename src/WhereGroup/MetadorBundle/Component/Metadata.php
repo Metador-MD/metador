@@ -90,7 +90,7 @@ class Metadata
         return $this->getMetadata($limit, $offset, 'service');
     }
 
-    public function saveObject($p, $id = false, $username = null)
+    public function saveObject($p, $id = false, $username = null, $public = false)
     {
         if (is_null($username)) {
             $user = $this->metadorUser->getUser();
@@ -119,7 +119,7 @@ class Metadata
             $metadata = new EntityMetadata();
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($now->getTimestamp());
-            $metadata->setPublic(false);
+            $metadata->setPublic($public);
             $metadata->setGroups($user->getRoles());
 
             // FIND UUID IN DATABASE
