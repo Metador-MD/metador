@@ -2,17 +2,28 @@
 
 namespace WhereGroup\MetadorBundle\Component;
 
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 use WhereGroup\MetadorBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\MetadorBundle\Entity\Address;
 
+/**
+ * Class Metadata
+ * @package WhereGroup\MetadorBundle\Component
+ * @author A. R. Pour
+ */
 class Metadata
 {
     protected $container;
     protected $metadorUser;
     protected $address;
 
+    /**
+     * @param ContainerInterface $container
+     * @param MetadorUserInterface $metadorUser
+     * @param AddressInterface $address
+     */
     public function __construct(
         ContainerInterface $container,
         MetadorUserInterface $metadorUser,
@@ -23,8 +34,13 @@ class Metadata
         $this->address = $address;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getById($id)
     {
+        /** @var \WhereGroup\MetadorBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
@@ -39,10 +55,18 @@ class Metadata
         return $metadata;
     }
 
+    /**
+     * @param $limit
+     * @param $offset
+     * @param null $type
+     * @return mixed
+     */
     public function getMetadata($limit, $offset, $type = null)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
 
+        /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->container
             ->get('doctrine')
             ->getRepository('WhereGroupMetadorBundle:Metadata')
@@ -61,7 +85,7 @@ class Metadata
                     1 => 'dataset',
                     2 => 'series',
                 ));
-        } elseif (strtolower($type) === 'service'){
+        } elseif (strtolower($type) === 'service') {
             $queryBuilder
                 ->where($qb->expr()->orx(
                     $qb->expr()->eq('m.hierarchyLevel', '?1')
@@ -69,27 +93,45 @@ class Metadata
                 ->setParameters(array(1 => 'service'));
         }
 
+        /** @var \WhereGroup\MetadorBundle\Entity\Metadata[] $result */
         $result = $queryBuilder
             ->getQuery()
             ->getResult();
 
-        for($i=0,$iL=count($result); $i<$iL; $i++) {
+        for ($i=0,$iL=count($result); $i<$iL; $i++) {
             $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
         }
 
         return $result;
     }
 
+    /**
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
     public function getDataset($limit, $offset)
     {
         return $this->getMetadata($limit, $offset, 'dataset');
     }
 
+    /**
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
     public function getService($limit, $offset)
     {
         return $this->getMetadata($limit, $offset, 'service');
     }
 
+    /**
+     * @param $p
+     * @param bool $id
+     * @param null $username
+     * @param bool $public
+     * @return bool
+     */
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
         if (is_null($username)) {
@@ -133,7 +175,11 @@ class Metadata
 
         // CHECK FOR UUID
         if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
-            $this->container->get('session')->getFlashBag()->add('error', "'Identifikation > Bezeichner > Code' darf nicht leer sein!");
+            $this->container->get('session')->getFlashBag()->add(
+                'error',
+                "'Identifikation > Bezeichner > Code' darf nicht leer sein!"
+            );
+
             return false;
         }
 
@@ -191,7 +237,7 @@ class Metadata
         // EVENT PRE SAVE
         try {
             $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
@@ -203,7 +249,7 @@ class Metadata
         // EVENT POST SAVE
         try {
             $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
@@ -215,6 +261,10 @@ class Metadata
         return true;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function deleteById($id)
     {
         $em = $this->container->get('doctrine')->getManager();
@@ -235,7 +285,7 @@ class Metadata
                 $em->remove($metadata);
                 $em->flush();
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }

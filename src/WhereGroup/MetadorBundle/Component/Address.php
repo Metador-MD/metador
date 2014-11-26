@@ -2,45 +2,67 @@
 
 namespace WhereGroup\MetadorBundle\Component;
 
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\MetadorBundle\Entity\Address as EntityAddress;
 
-class Address implements AddressInterface {
+/**
+ * Class Address
+ * @package WhereGroup\MetadorBundle\Component
+ * @author A. R. Pour
+ */
+class Address implements AddressInterface
+{
     protected $container;
 
-    public function __construct(ContainerInterface $container) {
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
     }
 
-    public function get() {
+    /**
+     * @return mixed
+     */
+    public function get()
+    {
         $address = $this->container->get('doctrine')
             ->getManager()
             ->createQueryBuilder('y')
             ->select('y.id, y.individualName')
-            ->from('WhereGroupMetadorBundle:Address','y')
+            ->from('WhereGroupMetadorBundle:Address', 'y')
             ->getQuery()
             ->getResult();
 
         return $address;
     }
 
-    public function set($metadataObject) {
+    /**
+     * @param $metadataObject
+     */
+    public function set($metadataObject)
+    {
         // SAVE NEW ADDRESSES
         $addresses = array_merge(
             isset($metadataObject['responsiblePartyMetadata'])
-                ? $metadataObject['responsiblePartyMetadata'] : array(),
+            ? $metadataObject['responsiblePartyMetadata'] : array(),
             isset($metadataObject['responsibleParty'])
-                ? $metadataObject['responsibleParty'] : array(),
+            ? $metadataObject['responsibleParty'] : array(),
             isset($metadataObject['responsiblePartyDistributor'])
-                ? $metadataObject['responsiblePartyDistributor'] : array()
+            ? $metadataObject['responsiblePartyDistributor'] : array()
         );
 
-        foreach($addresses as $row) {
-            if(trim(@$row['organisationName']) == ""
+        foreach ($addresses as $row) {
+            if (trim(@$row['organisationName']) == ""
                 || trim(@$row['individualName']) == ""
                 || trim(@$row['electronicMailAddress']) == ""
-            ) continue;
+            ) {
+                continue;
+            }
 
+            /** @var QueryBuilder $qb */
             $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
             $em = $this->container->get('doctrine')->getManager();
 
@@ -57,7 +79,7 @@ class Address implements AddressInterface {
                     3 => $row['electronicMailAddress']
                 ))->getQuery()->getSingleScalarResult();
 
-            if($result == 0) {
+            if ($result == 0) {
                 $address = new EntityAddress();
                 $address->setOrganisationName(@$row['organisationName']);
                 $address->setElectronicMailAddress(@$row['electronicMailAddress']);
