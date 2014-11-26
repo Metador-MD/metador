@@ -19,6 +19,7 @@ parameters:
         gdi_de:
             url: %metador.gdi.de.url%
             user: %metador.gdi.de.user%
+            testlevel: %metador.gdi.de.testlevel%
             password: %metador.gdi.de.password%
 
         proxy:

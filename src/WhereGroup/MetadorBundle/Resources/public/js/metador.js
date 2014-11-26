@@ -65,17 +65,12 @@ function addBBOX(w, s, e, n) {
 }
 
 function disable_GDIDE_Button(element) {
+    $('.gdi-de-button').attr('disabled','disabled');
+
     $(element)
         .text('bitte warten')
-        .attr('disabled','disabled')
         .closest('form')
         .submit();
-}
-
-function enable_GDIDE_Button() {
-    $('.gdi-de-button')
-        .text('Download Testbericht (pdf)')
-        .removeAttr('disabled');
 }
 
 $(document).ready(function() {
@@ -94,10 +89,8 @@ $(document).ready(function() {
         $('form[name="metadataForm"]').submit();
     });
 
-
     $('.gdi-de-button').click(function() {
         disable_GDIDE_Button(this);
-        setTimeout("enable_GDIDE_Button()", 10000);
         return true;
     });
 

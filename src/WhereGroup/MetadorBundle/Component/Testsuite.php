@@ -26,8 +26,10 @@ class Testsuite
 
         if (!is_null($proxy_host) && !is_null($proxy_port)) {
             $conf = array(
-                'proxy_host' => $proxy_host,
-                'proxy_port' => $proxy_port
+                'proxy_host'         => $proxy_host,
+                'proxy_port'         => $proxy_port,
+                // 'connection_timeout' => 5,
+                // 'trace'              => true
             );
         }
 

@@ -9,6 +9,10 @@ parameters:
     metador.gdi.de.url: "https://testsuite.gdi-de.org/gdi/download?id=wsdl"
     metador.gdi.de.user: ~
     metador.gdi.de.password: ~
+    metador.gdi.de.testlevel:
+        # - PASS
+        # - INHERITED_FAILURE
+        - FAIL
     metador.proxy.host: ~
     metador.proxy.port: ~
     metador.export.path: ~

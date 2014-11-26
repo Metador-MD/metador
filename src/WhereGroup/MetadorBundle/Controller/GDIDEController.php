@@ -19,33 +19,35 @@ class GDIDEController extends Controller
 {
     /**
      * @Route("/show/{id}")
-     * @Template("WhereGroupMetadorBundle::gdide.html.twig")
+     * @Template()
      */
-    public function showAction($id) {
+    public function showAction($id)
+    {
         $config = $this->container->getParameter('metador');
 
-        if(!isset($config['gdi_de'])) return array();
+        if (!isset($config['gdi_de'])) {
+            return array();
+        }
 
         $p = array();
         $metadataClasses = array();
 
-        if(($metadata = $this->loadMetadata($id))) {
+        if (($metadata = $this->loadMetadata($id))) {
             $p = $metadata->getObject();
-            
+
             $doc = new TestsuiteDocument(
-                $config['gdi_de']['url'], 
-                $config['gdi_de']['user'], 
+                $config['gdi_de']['url'],
+                $config['gdi_de']['user'],
                 $config['gdi_de']['password'],
                 isset($config['proxy']['host']) ? $config['proxy']['host'] : null,
                 isset($config['proxy']['port']) ? $config['proxy']['port'] : null
             );
 
             // POST
-            if(($conformity = $this->getRequest()->request->get('conformity', false))) {
+            if (($conformity = $this->getRequest()->request->get('conformity', false))) {
 
-                if(($xml = $this->renderXml($p))) {
+                if (($xml = $this->renderXml($p))) {
 
-                    
                     $doc->setTestById($conformity);
                     $doc->setTkId($this->getRequest()->request->get('tkid'));
                     $doc->setXml($xml, $id . '.xml');
@@ -54,17 +56,23 @@ class GDIDEController extends Controller
                     $doc->addDocument();
                     $doc->testDocument();
 
-                    for($i=0; $i<20; $i++) {
+                    for ($i=0; $i<20; $i++) {
                         $status = $doc->getDocumentStatus();
                         sleep(2);
-                        
-                        if($status === "Finish") {
-                            $pdf = $doc->getTestReportPDF($doc->getReportId(), 'test_' . $id);
-                            $doc->deleteDocument();
-                            header('Content-disposition: attachment; filename=test'.$id.'.pdf');
-                            header('Content-type: application/pdf');
-                            print $pdf;
-                            die;
+
+                        if ($status === "Finish") {
+                            $result = $doc->getTestReport($doc->getReportId());
+
+                            // TODO: delete test reports
+                            // $doc->deleteAllTestReport();
+
+                            return $this->get('templating')->renderResponse(
+                                'WhereGroupMetadorBundle:GDIDE:result.html.twig',
+                                array(
+                                    'id' => $id,
+                                    'result' => $result
+                                )
+                            );
                         }
                     }
                 }
@@ -72,40 +80,71 @@ class GDIDEController extends Controller
 
             $classes = $doc->getTestClasses();
 
-            foreach($classes->item as $item) {
-                if(substr($item->Name, 0, strlen('Metadaten')) == 'Metadaten') {
+            foreach ($classes->item as $item) {
+                if (substr($item->Name, 0, strlen('Metadaten')) == 'Metadaten') {
                     $metadataClasses[] = $item;
                 }
             }
         }
 
-        return array(
-            'p' => $p,
-            'classes' => $metadataClasses
+        return $this->get('templating')->renderResponse(
+            'WhereGroupMetadorBundle:GDIDE:show.html.twig',
+            array(
+                'p' => $p,
+                'classes' => $metadataClasses
+            )
         );
     }
+    /**
+     * Route("/test")
+     */
+    // public function testAction()
+    // {
+    //     $config = $this->container->getParameter('metador');
 
-    private function loadMetadata($id) {
+    //     // ini_set('default_socket_timeout', 600);
+    //     // var_dump(ini_get('default_socket_timeout'));
+
+    //     $doc = new TestsuiteDocument(
+    //         $config['gdi_de']['url'],
+    //         $config['gdi_de']['user'],
+    //         $config['gdi_de']['password'],
+    //         isset($config['proxy']['host']) ? $config['proxy']['host'] : null,
+    //         isset($config['proxy']['port']) ? $config['proxy']['port'] : null
+    //     );
+
+    //     try {
+    //         $doc->deleteAllTestReport();
+    //     } catch (\SoapFault $fault) {
+    //         var_dump($fault);
+    //     }
+
+    //     die('done');
+    // }
+
+    private function loadMetadata($id)
+    {
         return $this->getDoctrine()
             ->getManager()
             ->getRepository('WhereGroupMetadorBundle:Metadata')
             ->findOneById($id);
     }
 
-    private function renderXml($p) {
+    private function renderXml($p)
+    {
         $data = array('p' => $p);
-        
+
         $conf = $this->container->getParameter('metador');
 
         switch($p['hierarchyLevel']) {
-            case 'service' : 
+            case 'service':
                 $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                 break;
-            case 'dataset' :
-            case 'series' :
+            case 'dataset':
+            case 'series':
                 $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
                 break;
-            default :
+            default:
                 $template = "WhereGroupMetadorBundle::exception.xml.twig";
                 $data = array('message' => 'HierarchyLevel unbekannt!');
         }
@@ -113,5 +152,4 @@ class GDIDEController extends Controller
         $xml = $this->render($template, $data);
         return $xml->getContent();
     }
-
 }
