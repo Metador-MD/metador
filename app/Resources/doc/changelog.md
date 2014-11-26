@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.5.0
+* XML-Import command.
+* Added build script.
+* Cleaned some code.
+* Changed GDI-DE Testsuite results from PDF to HTML
+
 ## 2.0.4.11
 * auto_public for saveObject
 
