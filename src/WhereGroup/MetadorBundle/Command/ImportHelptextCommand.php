@@ -12,27 +12,57 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-class ImportHelptextCommand extends ContainerAwareCommand {
-    protected function configure() {
-        $this->setDefinition(array(
-            new InputOption('file', 'f', InputOption::VALUE_REQUIRED, 
-                "Path to filename."
-            ))
+/**
+ * Class ImportHelptextCommand
+ * @package WhereGroup\MetadorBundle\Command
+ * @author A. R. Pour
+ */
+class ImportHelptextCommand extends ContainerAwareCommand
+{
+    protected function configure()
+    {
+        $this->setDefinition(
+            array(
+                new InputOption(
+                    'file',
+                    'f',
+                    InputOption::VALUE_REQUIRED,
+                    "Path to filename."
+                )
+            )
         )
-        ->setDescription('Export helptext.')
-        ->setHelp('Export helptext.')
+        ->setDescription('Import helptext.')
+        ->setHelp('Import helptext.')
         ->setName('metador:import:helptext');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    /**
+     * Executes the current command.
+     *
+     * This method is not abstract because you can use this class
+     * as a concrete class. In this case, instead of defining the
+     * execute() method, you set the code to execute by passing
+     * a Closure to the setCode() method.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return null|int     null or 0 if everything went fine, or an error code
+     *
+     * @throws \LogicException When this abstract method is not implemented
+     * @see    setCode()
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $filename = $input->getOption('file');
 
-        if(empty($filename))
+        if (empty($filename)) {
             throw new \RuntimeException("File wurde nicht angegeben!");
+        }
 
         // TODO: file_exists readable etc.
         $serializer = new Serializer(
-            array(new GetSetMethodNormalizer()), 
+            array(new GetSetMethodNormalizer()),
             array(new JsonEncoder())
         );
 
@@ -42,10 +72,12 @@ class ImportHelptextCommand extends ContainerAwareCommand {
             ->getContainer()
             ->get('doctrine')
             ->getManager();
-        
-        foreach($helptexts as $helptext) {
+
+        foreach ($helptexts as $helptext) {
             $newHelptext = $serializer->deserialize(
-                $helptext, 'WhereGroup\MetadorBundle\Entity\Helptext', 'json'
+                $helptext,
+                'WhereGroup\MetadorBundle\Entity\Helptext',
+                'json'
             );
 
             $existingHelptext = $this
@@ -56,7 +88,7 @@ class ImportHelptextCommand extends ContainerAwareCommand {
                     $newHelptext->getId()
                 );
 
-            if($existingHelptext) {
+            if ($existingHelptext) {
                 $existingHelptext[0]->setText(
                     $newHelptext->getText()
                 );
@@ -69,5 +101,7 @@ class ImportHelptextCommand extends ContainerAwareCommand {
         $em->flush();
 
         $output->writeln('Import done.');
+
+        return 0;
     }
 }

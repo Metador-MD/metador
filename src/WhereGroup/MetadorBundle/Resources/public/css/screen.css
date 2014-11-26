@@ -1973,6 +1973,29 @@ body {
   color: #fece00;
 }
 
+.gdide-test-title {
+  margin: 20px 0;
+}
+
+.gdide-test-name {
+  margin: 10px 0px;
+  padding: 5px;
+  background-color: #eee;
+  border-bottom: 2px solid silver;
+}
+
+.gdide-test-assertion {
+  margin: 5px 20px;
+  padding: 10px 20px;
+  border-left: 4px solid orange;
+}
+
+.gdide-test-messages {
+  margin: 5px 20px;
+  padding: 10px 20px;
+  border-left: 4px solid red;
+}
+
 /*
  * INDEX
  ******************************************************************************/

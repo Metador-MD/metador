@@ -1,0 +1,37 @@
+<div class="gdide-test-title">
+{% if item.Result == 'PASS' %}
+    <img src="{{ asset('bundles/wheregroupmetador/img/icons/success.png') }}" />
+{% elseif item.Result == 'FAIL' %}
+    <img src="{{ asset('bundles/wheregroupmetador/img/icons/danger.png') }}" />
+{% elseif item.Result == 'INHERITED_FAILURE' %}
+    <img src="{{ asset('bundles/wheregroupmetador/img/icons/warning.png') }}" />
+{% endif %}
+<strong>{{ item.Name }}</strong>
+</div>
+
+{% for test in item.singleTests if test.result in conf['gdi_de']['testlevel'] %}
+    <div class="gdide-test-name">
+        {% if test.result == 'PASS' %}
+            <img src="{{ asset('bundles/wheregroupmetador/img/icons/success.png') }}" />
+        {% elseif test.result == 'FAIL' %}
+            <img src="{{ asset('bundles/wheregroupmetador/img/icons/danger.png') }}" />
+        {% elseif test.result == 'INHERITED_FAILURE' %}
+            <img src="{{ asset('bundles/wheregroupmetador/img/icons/warning.png') }}" />
+        {% endif %}
+        {{ test.Name }}
+    </div>
+    <div class="gdide-test-assertion">
+        {{ test.assertion|raw }}
+    </div>
+    {% if test.messages is defined %}
+    <div class="gdide-test-messages">
+        {% if test.messages is iterable %}
+            {% for message in test.messages %}
+                <br/>{{ message|raw }}
+            {% endfor %}
+        {% else %}
+            {{ test.messages|raw }}
+        {% endif %}
+    </div>
+    {% endif %}
+{% endfor %}

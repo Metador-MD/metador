@@ -1,0 +1,17 @@
+{% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
+
+{% block content %}
+    <a href="{{ path("wheregroup_metador_gdide_show", {'id': id}) }}">Zurück</a>
+    <br/>
+
+    {% if result.item is defined %}
+        {% if result.item[0] is defined %}
+            {% for item in result.item %}
+                {% include "WhereGroupMetadorBundle:GDIDE:item.html.twig" %}
+            {% endfor %}
+        {% else %}
+            {% set item = result.item %}
+            {% include "WhereGroupMetadorBundle:GDIDE:item.html.twig" %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

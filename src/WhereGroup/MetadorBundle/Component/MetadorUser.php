@@ -4,10 +4,18 @@ namespace WhereGroup\MetadorBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class MetadorUser
+ * @package WhereGroup\MetadorBundle\Component
+ * @author A. R. Pour
+ */
 class MetadorUser implements MetadorUserInterface
 {
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -18,6 +26,10 @@ class MetadorUser implements MetadorUserInterface
         return $this->container->get('security.context')->getToken()->getUser();
     }
 
+    /**
+     * @param $username
+     * @return mixed
+     */
     public function getUserByUsername($username)
     {
         return $this->container
@@ -26,6 +38,12 @@ class MetadorUser implements MetadorUserInterface
             ->findOneByUsername($username);
     }
 
+    /**
+     * @param $metadata
+     * @param null $user
+     * @param null $ignoreRole
+     * @return bool
+     */
     public function checkMetadataAccess($metadata, $user = null, $ignoreRole = null)
     {
         if (is_null($user)) {
