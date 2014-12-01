@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.6.0
+* Mapbender3 search integration.
+* License changed to MIT.
+
 ## 2.0.5.0
 * XML-Import command.
 * Added build script.
