@@ -1,14 +1,47 @@
 {
     "cmd": {
-         "removeEmptyValues" : true,
+        "addNamespaces": {
+            "xlink": "http://www.w3.org/1999/xlink"
+        },
+        "removeEmptyValues" : true,
         "sortResult" : true
     },
 
     "p": {
         "path": "/*",
         "data": {
+            "responsiblePartyMetadata": {
+                "asArray": true,
+                "path": "Service/ContactInformation",
+                "data" : {
+                    "individualName": "ContactPersonPrimary/ContactPerson/text()",
+                    "organisationName": "ContactPersonPrimary/ContactOrganization/text()",
+                    "electronicMailAddress": "ContactElectronicMailAddress/text()",
+                    "deliveryPoint": "ContactAddress/Address/text()",
+                    "city": "ContactAddress/City/text()",                    
+                    "administrativeArea": "ContactAddress/StateOrProvince/text()",
+                    "postalCode": "ContactAddress/PostCode/text()",
+                    "country": "ContactAddress/Country/text()",
+                    "voice": "ContactVoiceTelephone/text()",
+                    "facsimile": "ContactFacsimileTelephone/text()"
+                }
+            },
             "title": "Service/Title/text()",
             "abstract": "Service/Abstract/text()",
+            "keyword": {
+                "asArray": true,
+                "path": "Service/KeywordList",
+                "data": {
+                    "value": "Keyword/text()"
+                }
+            },
+            "useLimitation": {
+                "asArray": true,
+                "path": "Service",
+                "data": {
+                    "value": "AccessConstraints/text()"
+                }
+            },
             "bbox": {
                 "asArray": true,
                 "path": "Capability/Layer",
@@ -19,9 +52,8 @@
                     "wLatitude": "LatLonBoundingBox/@maxy"
                 }
             },
-            "keyword": "Name/text()",
-            "containsOperationsName": "/*/Capabilites/Request/GetCapabilities",
-            "containsOperationsURL": "/*/Capabilites/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/text()"
+            "containsOperationsName": "Capability/Request/GetCapabilities/Format/text()",
+            "containsOperationsURL":  "Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href"
         }
     }
 }

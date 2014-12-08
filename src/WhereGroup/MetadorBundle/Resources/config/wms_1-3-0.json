@@ -8,7 +8,8 @@
             "gml": "http://www.opengis.net/gml",
             "sld": "http://www.opengis.net/sld",
             "xsi": "http://www.w3.org/2001/XMLSchema-instance",
-            "ms": "http://mapserver.gis.umn.edu/mapserver"
+            "ms": "http://mapserver.gis.umn.edu/mapserver",
+            "xlink": "http://www.w3.org/1999/xlink"
         },
         "removeEmptyValues" : true,
         "sortResult" : true
@@ -17,21 +18,50 @@
     "p": {
         "path": "/*",
         "data": {
-            "title": "wms:Service/wms:Title/text()",
-            "abstract": "wms:Service/wms:Abstract/text()",
-            "bbox": {
+            "responsiblePartyMetadata": {
                 "asArray": true,
-                "path": "Capability/Layer",
-                "data": {
-                    "nLatitude": "wms:LatLonBoundingBox/@minx",
-                    "eLatitude": "wms:LatLonBoundingBox/@miny",
-                    "sLatitude": "wms:LatLonBoundingBox/@maxx",
-                    "wLatitude": "wms:LatLonBoundingBox/@maxy"
+                "path": "wms:Service/wms:ContactInformation",
+                "data" : {
+                    "individualName": "wms:ContactPersonPrimary/wms:ContactPerson/text()",
+                    "organisationName": "wms:ContactPersonPrimary/wms:ContactOrganization/text()",
+                    "electronicMailAddress": "wms:ContactElectronicMailAddress/text()",
+                    "deliveryPoint": "wms:ContactAddress/wms:Address/text()",
+                    "city": "wms:ContactAddress/wms:City/text()",                    
+                    "administrativeArea": "wms:ContactAddress/wms:StateOrProvince/text()",
+                    "postalCode": "wms:ContactAddress/wms:PostCode/text()",
+                    "country": "wms:ContactAddress/wms:Country/text()",
+                    "voice": "wms:ContactVoiceTelephone/text()",
+                    "facsimile": "wms:ContactFacsimileTelephone/text()"
                 }
             },
-            "keyword": "Name/text()",
-            "containsOperationsName": "/*/Capabilites/Request/GetCapabilities",
-            "containsOperationsURL": "/*/Capabilites/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/text()"
+            "title": "wms:Service/wms:Title/text()",
+            "abstract": "wms:Service/wms:Abstract/text()",
+            "keyword": {
+                "asArray": true,
+                "path": "wms:Service/wms:KeywordList",
+                "data": {
+                    "value": "wms:Keyword/text()"
+                }
+            },
+            "useLimitation": {
+                "asArray": true,
+                "path": "wms:Service",
+                "data": {
+                    "value": "wms:AccessConstraints/text()"
+                }
+            },
+            "bbox": {
+                "asArray": true,
+                "path": "wms:Capability/wms:Layer/wms:EX_GeographicBoundingBox",
+                "data": {
+                    "nLatitude": "wms:northBoundLatitude/text()",
+                    "eLatitude": "wms:eastBoundLongitude/text()",
+                    "sLatitude": "wms:southBoundLatitude/text()",
+                    "wLatitude": "wms:westBoundLongitude/text()"
+                }
+            },
+            "containsOperationsName": "wms:Capability/wms:Request/wms:GetCapabilities/wms:Format/text()",
+            "containsOperationsURL": "wms:Capability/wms:Request/wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href"
         }
     }
 }
