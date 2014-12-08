@@ -3,6 +3,8 @@
 ## 2.0.6.0
 * Mapbender3 search integration.
 * License changed to MIT.
+* WMS GetCapabilities upload.
+* Added UUID component.
 
 ## 2.0.5.0
 * XML-Import command.
