@@ -1,0 +1,37 @@
+{
+    "cmd": {
+        "addNamespaces": {
+            "wms": "http://www.opengis.net/wms",
+            "gmd": "http://www.isotc211.org/2005/gmd",
+            "gco": "http://www.isotc211.org/2005/gco",
+            "srv": "http://www.isotc211.org/2005/srv",
+            "gml": "http://www.opengis.net/gml",
+            "sld": "http://www.opengis.net/sld",
+            "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+            "ms": "http://mapserver.gis.umn.edu/mapserver"
+        },
+        "removeEmptyValues" : true,
+        "sortResult" : true
+    },
+
+    "p": {
+        "path": "/*",
+        "data": {
+            "title": "wms:Service/wms:Title/text()",
+            "abstract": "wms:Service/wms:Abstract/text()",
+            "bbox": {
+                "asArray": true,
+                "path": "Capability/Layer",
+                "data": {
+                    "nLatitude": "wms:LatLonBoundingBox/@minx",
+                    "eLatitude": "wms:LatLonBoundingBox/@miny",
+                    "sLatitude": "wms:LatLonBoundingBox/@maxx",
+                    "wLatitude": "wms:LatLonBoundingBox/@maxy"
+                }
+            },
+            "keyword": "Name/text()",
+            "containsOperationsName": "/*/Capabilites/Request/GetCapabilities",
+            "containsOperationsURL": "/*/Capabilites/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/text()"
+        }
+    }
+}

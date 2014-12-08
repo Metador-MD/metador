@@ -33,7 +33,7 @@ parameters:
             schema: %metador.xmlimport.schema%
 
         wmsimport:
-            schema: %metador.wmsimport.schema%
+            path: %metador.wmsimport.path%
 
         user: %metador.user%
 

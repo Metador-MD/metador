@@ -83,17 +83,26 @@ class ImportController extends Controller
             $this->get('session')->getFlashBag()->add('error', 'Bitte GetCapabilities URL angeben.');
             return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
         }
-
+        
         $conf = $this->container->getParameter('metador');
         $xml = file_get_contents($url);
 
+        // auslesen der WMS Version
+        $this->parser = new XmlParser($xml, new XmlParserFunctions());
+        $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wmsversion.json'));
+        $version = $this->parser->parse();
 
         $this->parser = new XmlParser($xml, new XmlParserFunctions());
 
-        foreach ($conf['wmsimport']['schema'] as $filename) {
-            $this->parser->loadSchema(file_get_contents($filename));
+        switch($version["version"]) {
+            case "1.1.1" :
+                $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-1-1.json'));
+                break;
+            case "1.3.0" :
+                $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-3-0.json'));
+                break;
         }
-
+         
         $array = $this->parser->parse();
 
         die('<pre>' . print_r($array, 1) . '</pre>');

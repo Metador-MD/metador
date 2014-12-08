@@ -1,0 +1,27 @@
+{
+    "cmd": {
+         "removeEmptyValues" : true,
+        "sortResult" : true
+    },
+
+    "p": {
+        "path": "/*",
+        "data": {
+            "title": "Service/Title/text()",
+            "abstract": "Service/Abstract/text()",
+            "bbox": {
+                "asArray": true,
+                "path": "Capability/Layer",
+                "data": {
+                    "nLatitude": "LatLonBoundingBox/@minx",
+                    "eLatitude": "LatLonBoundingBox/@miny",
+                    "sLatitude": "LatLonBoundingBox/@maxx",
+                    "wLatitude": "LatLonBoundingBox/@maxy"
+                }
+            },
+            "keyword": "Name/text()",
+            "containsOperationsName": "/*/Capabilites/Request/GetCapabilities",
+            "containsOperationsURL": "/*/Capabilites/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/text()"
+        }
+    }
+}
