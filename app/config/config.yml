@@ -32,6 +32,9 @@ parameters:
         xmlimport:
             schema: %metador.xmlimport.schema%
 
+        wmsimport:
+            schema: %metador.wmsimport.schema%
+
         user: %metador.user%
 
 framework:

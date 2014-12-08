@@ -247,44 +247,6 @@ class DefaultController extends Controller
         return $response;
     }
 
-
-    /**
-     * @Route("/xml_import", name="xml_upload")
-     * @Method("POST")
-     */
-    public function xmlUploadAction() {
-        foreach($this->getRequest()->files as $file) {
-
-            if (!is_object($file)) {
-                $this->get('session')->getFlashBag()->add('error', 'Bitte XML-Datei angeben.');
-                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
-            }
-
-            $path = $file->getPath() . '/' . $file->getClientOriginalName();
-
-            $file->move(
-                $file->getPath(), $file->getClientOriginalName()
-            );
-
-            if ($file->getClientOriginalExtension() === 'xml') {
-                $xml = file_get_contents($path);
-
-                $import = $this->get('metadata_import');
-
-                $p = $import->load(
-                    $xml, $this->container->getParameter('metador')
-                );
-
-                $metadata = $this->get('metador_metadata');
-                $metadata->saveObject($p);
-
-                $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
-            }
-        }
-
-        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
-    }
-
     /**
      * @Route("/help/set")
      * @Method("POST")

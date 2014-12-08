@@ -66,7 +66,7 @@
     </ul>
     <div class="content">
         {% for key,value in p['responsiblePartyMetadata'] %}
-        
+
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             <div class="twoColBox">
 
@@ -114,7 +114,7 @@
                 <div class="right"></div>
                 <div class="clear"></div>
 
-     
+
                 {% set id = 'p[responsiblePartyMetadata][' ~ key ~ '][country]' %}
                 {% set val = value['country'] is defined ? value['country'] : '' %}
 
@@ -224,7 +224,7 @@
 
             {% set id = 'p[responsiblePartyMetadata][' ~ key ~ '][onlineResource]' %}
             {% set val = value['onlineResource'] is defined ? value['onlineResource'] : '' %}
-                
+
             <div class="oneColBox">
                 <label>
                     <div class="icon optional"></div>{{'Internetadresse'|trans}}:
@@ -245,11 +245,11 @@
 
 
 {#
-    METADATA STANDARD NAME AND VERSION    
+    METADATA STANDARD NAME AND VERSION
 #}
 <h2>Angaben zur Metadatenspezifikation</h2>
 <div class="twoColBox">
-    
+
     {% set id = 'p[metadataStandardName]' %}
     {% set val = p['metadataStandardName'] is defined ? p['metadataStandardName'] : 'ISO 19119' %}
 

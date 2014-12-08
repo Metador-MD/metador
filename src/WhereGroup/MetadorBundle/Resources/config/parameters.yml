@@ -18,4 +18,6 @@ parameters:
     metador.export.path: ~
     metador.xmlimport.schema:
         - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Resources/config/xmlimport.json"
+    metador.wmsimport.schema:
+        - "%kernel.root_dir%/../src/WhereGroup/MetadorBundle/Resources/config/wmsimport.json"
     metador.search.templates: "WhereGroupSearchBundle"

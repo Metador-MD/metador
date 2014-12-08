@@ -1,0 +1,25 @@
+{% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
+
+{% block title %}MeTaDor{% endblock %}
+
+{% block content %}
+
+
+<h1>Metadaten-Import</h1>
+
+
+<form action="{{ path('xml_upload') }}" name="metadataForm" method="post" enctype="multipart/form-data">
+    <label>Metadaten XML-Datei</label><br/>
+    <input name="Datei" type="file" size="50" maxlength="100000" accept="text/*" name="xml" /><br/>
+    <button type="submit">ok</button>
+</form>
+
+<hr/>
+
+<form action="{{ path('wms_url_import') }}" method="post" >
+    <label for="search_find">WMS GetCapabilities URL</label><br/>
+    <input name="url" type="text"  /><br/>
+    <button type="submit">ok</button>
+</form>
+
+{% endblock %}
