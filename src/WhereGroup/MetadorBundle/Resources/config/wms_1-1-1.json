@@ -18,12 +18,13 @@
                     "organisationName": "ContactPersonPrimary/ContactOrganization/text()",
                     "electronicMailAddress": "ContactElectronicMailAddress/text()",
                     "deliveryPoint": "ContactAddress/Address/text()",
-                    "city": "ContactAddress/City/text()",                    
+                    "city": "ContactAddress/City/text()",
                     "administrativeArea": "ContactAddress/StateOrProvince/text()",
                     "postalCode": "ContactAddress/PostCode/text()",
                     "country": "ContactAddress/Country/text()",
                     "voice": "ContactVoiceTelephone/text()",
-                    "facsimile": "ContactFacsimileTelephone/text()"
+                    "facsimile": "ContactFacsimileTelephone/text()",
+                    "onlineResource": "ContactOnlineResource/text()"
                 }
             },
             "title": "Service/Title/text()",
@@ -47,9 +48,9 @@
                 "path": "Capability/Layer",
                 "data": {
                     "nLatitude": "LatLonBoundingBox/@minx",
-                    "eLatitude": "LatLonBoundingBox/@miny",
+                    "eLongitude": "LatLonBoundingBox/@miny",
                     "sLatitude": "LatLonBoundingBox/@maxx",
-                    "wLatitude": "LatLonBoundingBox/@maxy"
+                    "wLongitude": "LatLonBoundingBox/@maxy"
                 }
             },
             "containsOperationsName": "Capability/Request/GetCapabilities/Format/text()",

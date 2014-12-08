@@ -26,12 +26,13 @@
                     "organisationName": "wms:ContactPersonPrimary/wms:ContactOrganization/text()",
                     "electronicMailAddress": "wms:ContactElectronicMailAddress/text()",
                     "deliveryPoint": "wms:ContactAddress/wms:Address/text()",
-                    "city": "wms:ContactAddress/wms:City/text()",                    
+                    "city": "wms:ContactAddress/wms:City/text()",
                     "administrativeArea": "wms:ContactAddress/wms:StateOrProvince/text()",
                     "postalCode": "wms:ContactAddress/wms:PostCode/text()",
                     "country": "wms:ContactAddress/wms:Country/text()",
                     "voice": "wms:ContactVoiceTelephone/text()",
-                    "facsimile": "wms:ContactFacsimileTelephone/text()"
+                    "facsimile": "wms:ContactFacsimileTelephone/text()",
+                    "onlineResource": "ContactOnlineResource/text()"
                 }
             },
             "title": "wms:Service/wms:Title/text()",
@@ -55,9 +56,9 @@
                 "path": "wms:Capability/wms:Layer/wms:EX_GeographicBoundingBox",
                 "data": {
                     "nLatitude": "wms:northBoundLatitude/text()",
-                    "eLatitude": "wms:eastBoundLongitude/text()",
+                    "eLongitude": "wms:eastBoundLongitude/text()",
                     "sLatitude": "wms:southBoundLatitude/text()",
-                    "wLatitude": "wms:westBoundLongitude/text()"
+                    "wLongitude": "wms:westBoundLongitude/text()"
                 }
             },
             "containsOperationsName": "wms:Capability/wms:Request/wms:GetCapabilities/wms:Format/text()",
