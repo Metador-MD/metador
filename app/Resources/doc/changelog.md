@@ -5,6 +5,7 @@
 * License changed to MIT.
 * WMS GetCapabilities upload.
 * Added UUID component.
+* Search element for mapbender.
 
 ## 2.0.5.0
 * XML-Import command.
