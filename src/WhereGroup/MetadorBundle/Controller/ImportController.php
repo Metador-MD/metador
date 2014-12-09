@@ -80,53 +80,60 @@ class ImportController extends Controller
      */
     public function wmsUrlImportAction()
     {
-        $url = $this->get('request')->request->get('url', null);
+        preg_match_all(
+            "/(htt[^\n]+)/i",
+            $this->get('request')->request->get('urls', ''),
+            $matches
+        );
 
-        if (empty($url)) {
-            $this->get('session')->getFlashBag()->add('error', 'Bitte GetCapabilities URL angeben.');
+        if (!isset($matches[1]) || empty($matches[1])) {
+            $this->get('session')->getFlashBag()->add('error', 'Bitte mindestens eine GetCapabilities URL angeben.');
             return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
         }
 
         $conf = $this->container->getParameter('metador');
-        $xml = file_get_contents($url);
+        $import = $this->get('metadata_import');
 
-        // auslesen der WMS Version
-        $this->parser = new XmlParser($xml, new XmlParserFunctions());
-        $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wmsversion.json'));
-        $version = $this->parser->parse();
-
-        $this->parser = new XmlParser($xml, new XmlParserFunctions());
-
-        switch($version["version"]) {
-            case "1.1.1":
-                $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-1-1.json'));
-                break;
-            case "1.3.0":
-                $this->parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-3-0.json'));
-                break;
-        }
-
-        $array = $this->parser->parse();
-
-        if (isset($array['p'])) {
-
-            try {
-                $array['p']['fileIdentifier'] = Uuid::uuid4()->toString();
-                $array['p']['identifier'][0]['code'] = $array['p']['fileIdentifier'];
-                $array['p']['identifier'][0]['codespace'] = "";
-
-            } catch (UnsatisfiedDependencyException $e) {
-                $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
-                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+        foreach ($matches[1] as $url) {
+            if (!(bool)parse_url(trim($url))) {
+                $this->get('session')->getFlashBag()->add('error', 'Keine gültige URL.');
+                continue;
             }
 
-            $array['p']['dateStamp'] = date('Y-m-d');
-            $array['p']['hierarchyLevel'] = 'service';
+            try {
+                $xml = @file_get_contents(trim($url));
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', 'Keine gültige URL.');
+                continue;
+            }
+
+            try {
+                $p = $import->loadWMS($xml, $conf);
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', 'URL liefert keine gültige XML.');
+                continue;
+            }
 
 
-            $metadata = $this->get('metador_metadata');
-            $metadata->saveObject($array['p']);
-            $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
+            if (empty($p)) {
+                $this->get('session')->getFlashBag()->add('error', 'GetCapabilities konnte nicht bearbeitet werden.');
+            } else {
+                try {
+                    $p['fileIdentifier'] = Uuid::uuid4()->toString();
+                    $p['identifier'][0]['code'] = $p['fileIdentifier'];
+                    $p['identifier'][0]['codespace'] = "";
+
+                    $p['dateStamp'] = date('Y-m-d');
+                    $p['hierarchyLevel'] = 'service';
+
+                    $metadata = $this->get('metador_metadata');
+                    $metadata->saveObject($p);
+
+                } catch (UnsatisfiedDependencyException $e) {
+                    $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
+                    return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+                }
+            }
         }
 
         return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));

@@ -8,27 +8,54 @@ namespace WhereGroup\MetadorBundle\Component;
  */
 class MetadataImport
 {
-    private $parser;
-
     /**
+     * Convert a XML to Metador data object.
      * @param $xml
      * @param $conf
      * @return array
      */
     public function load($xml, $conf)
     {
-        $this->parser = new XmlParser($xml, new XmlParserFunctions());
+        $parser = new XmlParser($xml, new XmlParserFunctions());
 
         foreach ($conf['xmlimport']['schema'] as $filename) {
-            $this->parser->loadSchema(file_get_contents($filename));
+            $parser->loadSchema(file_get_contents($filename));
         }
 
-        $array = $this->parser->parse();
+        $array = $parser->parse();
 
-        if (isset($array['p'])) {
-            return $array['p'];
+        return isset($array['p']) ? $array['p'] : array();
+    }
+
+
+    /**
+     * Convert a WMS GetCapabilities to Metador data object.
+     * @param $xml
+     * @param $conf
+     * @return array
+     */
+    public function loadWMS($xml, $conf)
+    {
+        // read version
+        $parser = new XmlParser($xml, new XmlParserFunctions());
+        $parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wmsversion.json'));
+        $version = $parser->parse();
+
+        unset($parser);
+
+        // read metadata
+        $parser = new XmlParser($xml, new XmlParserFunctions());
+        switch($version["version"]) {
+            case "1.1.1":
+                $parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-1-1.json'));
+                break;
+            case "1.3.0":
+                $parser->loadSchema(file_get_contents($conf['wmsimport']['path'] . 'wms_1-3-0.json'));
+                break;
         }
 
-        return array();
+        $array = $parser->parse();
+
+        return isset($array['p']) ? $array['p'] : array();
     }
 }
