@@ -96,21 +96,21 @@ class ImportController extends Controller
 
         foreach ($matches[1] as $url) {
             if (!(bool)parse_url(trim($url))) {
-                $this->get('session')->getFlashBag()->add('error', 'Keine gültige URL.');
+                $this->get('session')->getFlashBag()->add('error', $url . 'ist keine gültige URL.');
                 continue;
             }
 
             try {
                 $xml = @file_get_contents(trim($url));
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', 'Keine gültige URL.');
+                $this->get('session')->getFlashBag()->add('error', $url . 'ist keine gültige URL.');
                 continue;
             }
 
             try {
                 $p = $import->loadWMS($xml, $conf);
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', 'URL liefert keine gültige XML.');
+                $this->get('session')->getFlashBag()->add('error', $url . ' liefert keine gültige XML.');
                 continue;
             }
 
