@@ -100,4 +100,28 @@ class XmlParserFunctions
     {
         return str_replace($args[0], $args[1], $data);
     }
+
+    /**
+     * Returns first param
+     * @param  null $data
+     * @param  array $args
+     * @return string
+     */
+    protected function string($data, $args = null)
+    {
+        return $args[0];
+    }
+
+    /**
+     * @param  null $data
+     * @param  array $args
+     * @return string
+     */
+    protected function date($data, $args = null)
+    {
+        return date(
+            $args[0],
+            isset($args[1]) ? $args[1] : time()
+        );
+    }
 }
