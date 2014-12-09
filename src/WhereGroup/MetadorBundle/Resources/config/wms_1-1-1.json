@@ -57,13 +57,7 @@
                     "value": ["Keyword/text()", "asArray"]
                 }
             },
-            "useLimitation": {
-                "asArray": true,
-                "path": "Service",
-                "data": {
-                    "value": "AccessConstraints/text()"
-                }
-            },
+            "uselimitation": ["Service/AccessConstraints/text()", "asArray"],
             "bbox": {
                 "asArray": true,
                 "path": "Capability/Layer",

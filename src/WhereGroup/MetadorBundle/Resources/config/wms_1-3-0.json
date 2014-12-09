@@ -65,13 +65,7 @@
                     "value": ["wms:Keyword/text()", "asArray"]
                 }
             },
-            "useLimitation": {
-                "asArray": true,
-                "path": "wms:Service",
-                "data": {
-                    "value": "wms:AccessConstraints/text()"
-                }
-            },
+            "uselimitation": ["wms:Service/wms:AccessConstraints/text()", "asArray"],
             "bbox": {
                 "asArray": true,
                 "path": "wms:Capability/wms:Layer/wms:EX_GeographicBoundingBox",
