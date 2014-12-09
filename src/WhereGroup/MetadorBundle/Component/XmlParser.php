@@ -245,6 +245,9 @@ class XmlParser
                     case XML_TEXT_NODE:
                         $result[] = $node->wholeText;
                         break;
+                    case XML_CDATA_SECTION_NODE:
+                        $result[] = $node->textContent;
+                        break;
                     default:
                 }
             }
