@@ -31,8 +31,7 @@
                     "postalCode": "wms:ContactAddress/wms:PostCode/text()",
                     "country": "wms:ContactAddress/wms:Country/text()",
                     "voice": "wms:ContactVoiceTelephone/text()",
-                    "facsimile": "wms:ContactFacsimileTelephone/text()",
-                    "onlineResource": [null, "string", ""]
+                    "facsimile": "wms:ContactFacsimileTelephone/text()"
                 }
             },
              "responsibleParty": {
@@ -49,8 +48,7 @@
                     "postalCode": "wms:ContactAddress/wms:PostCode/text()",
                     "country": "wms:ContactAddress/wms:Country/text()",
                     "voice": "wms:ContactVoiceTelephone/text()",
-                    "facsimile": "wms:ContactFacsimileTelephone/text()",
-                    "onlineResource": [null, "string", ""]
+                    "facsimile": "wms:ContactFacsimileTelephone/text()"
                 }
             },
             "title": "wms:Service/wms:Title/text()",
