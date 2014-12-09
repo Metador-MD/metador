@@ -32,16 +32,39 @@
                     "country": "wms:ContactAddress/wms:Country/text()",
                     "voice": "wms:ContactVoiceTelephone/text()",
                     "facsimile": "wms:ContactFacsimileTelephone/text()",
-                    "onlineResource": "ContactOnlineResource/text()"
+                    "onlineResource": [null, "string", ""]
+                }
+            },
+             "responsibleParty": {
+                "asArray": true,
+                "path": "wms:Service/wms:ContactInformation",
+                "data" : {
+                    "role": [null, "string", "pointOfContact"],
+                    "individualName": "wms:ContactPersonPrimary/wms:ContactPerson/text()",
+                    "organisationName": "wms:ContactPersonPrimary/wms:ContactOrganization/text()",
+                    "electronicMailAddress": "wms:ContactElectronicMailAddress/text()",
+                    "deliveryPoint": "wms:ContactAddress/wms:Address/text()",
+                    "city": "wms:ContactAddress/wms:City/text()",
+                    "administrativeArea": "wms:ContactAddress/wms:StateOrProvince/text()",
+                    "postalCode": "wms:ContactAddress/wms:PostCode/text()",
+                    "country": "wms:ContactAddress/wms:Country/text()",
+                    "voice": "wms:ContactVoiceTelephone/text()",
+                    "facsimile": "wms:ContactFacsimileTelephone/text()",
+                    "onlineResource": [null, "string", ""]
                 }
             },
             "title": "wms:Service/wms:Title/text()",
+            "alternateTitle": "wms:Service/wms:Name/text()",
             "abstract": "wms:Service/wms:Abstract/text()",
             "keyword": {
                 "asArray": true,
                 "path": "wms:Service/wms:KeywordList",
+                "function": "replaceKey",
                 "data": {
-                    "value": "wms:Keyword/text()"
+                    "#KEY#": [null, "string", "WMS"],
+                    "date": [null, "date", "Y-m-d"],
+                    "type": [null, "string", "creation"],
+                    "value": ["wms:Keyword/text()", "asArray"]
                 }
             },
             "useLimitation": {
@@ -61,8 +84,16 @@
                     "wLongitude": "wms:westBoundLongitude/text()"
                 }
             },
-            "containsOperationsName": "wms:Capability/wms:Request/wms:GetCapabilities/wms:Format/text()",
-            "containsOperationsURL": "wms:Capability/wms:Request/wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href"
+            "onlineResource": ["wms:Service/wms:OnlineResource/@xlink:href", "asArray"],
+            "containsOperationsName": [null, "string", "GetCapabilities"],
+            "containsOperationsURL": "wms:Capability/wms:Request/wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href",
+            "metadataLanguage": [null, "string", "ger"],
+            "metadataStandardName": [null, "string", "19119"],
+            "metadataStandardVersion": [null, "string", "2005/PDAM 1"],
+            "hierarchyLevel": [null, "string", "service"],
+            "hierarchyLevelName": [null, "string", "Darstellungsdienste"],
+            "serviceType": [null, "string", "view"],
+            "serviceTypeVersion": [null, "string", "1.3.0"]
         }
     }
 }

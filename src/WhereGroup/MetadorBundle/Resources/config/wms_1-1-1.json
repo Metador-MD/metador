@@ -24,16 +24,39 @@
                     "country": "ContactAddress/Country/text()",
                     "voice": "ContactVoiceTelephone/text()",
                     "facsimile": "ContactFacsimileTelephone/text()",
-                    "onlineResource": "ContactOnlineResource/text()"
+                    "onlineResource": [null, "string", ""]
+                }
+            },
+            "responsibleParty": {
+                "asArray": true,
+                "path": "Service/ContactInformation",
+                "data" : {
+                    "role": [null, "string", "pointOfContact"],
+                    "individualName": "ContactPersonPrimary/ContactPerson/text()",
+                    "organisationName": "ContactPersonPrimary/ContactOrganization/text()",
+                    "electronicMailAddress": "ContactElectronicMailAddress/text()",
+                    "deliveryPoint": "ContactAddress/Address/text()",
+                    "city": "ContactAddress/City/text()",
+                    "administrativeArea": "ContactAddress/StateOrProvince/text()",
+                    "postalCode": "ContactAddress/PostCode/text()",
+                    "country": "ContactAddress/Country/text()",
+                    "voice": "ContactVoiceTelephone/text()",
+                    "facsimile": "ContactFacsimileTelephone/text()",
+                    "onlineResource": [null, "string", ""]
                 }
             },
             "title": "Service/Title/text()",
+            "alternateTitle": "Service/Name/text()",
             "abstract": "Service/Abstract/text()",
             "keyword": {
                 "asArray": true,
                 "path": "Service/KeywordList",
+                "function": "replaceKey",
                 "data": {
-                    "value": "Keyword/text()"
+                    "#KEY#": [null, "string", "WMS"],
+                    "date": [null, "date", "Y-m-d"],
+                    "type": [null, "string", "creation"],
+                    "value": ["Keyword/text()", "asArray"]
                 }
             },
             "useLimitation": {
@@ -53,8 +76,17 @@
                     "wLongitude": "LatLonBoundingBox/@maxy"
                 }
             },
-            "containsOperationsName": "Capability/Request/GetCapabilities/Format/text()",
-            "containsOperationsURL":  "Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href"
+            "onlineResource": ["Service/OnlineResource/@xlink:href", "asArray"],
+            "containsOperationsName": [null, "string", "GetCapabilities"],
+            "containsOperationsURL":  "Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href",
+            "metadataLanguage": [null, "string", "ger"],
+            "metadataStandardName": [null, "string", "19119"],
+            "metadataStandardVersion": [null, "string", "2005/PDAM 1"],
+            "hierarchyLevel": [null, "string", "service"],
+            "hierarchyLevelName": [null, "string", "Darstellungsdienste"],
+            "serviceType": [null, "string", "view"],
+            "serviceTypeVersion": [null, "string", "1.1.1"]
+
         }
     }
 }

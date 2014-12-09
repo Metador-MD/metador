@@ -411,6 +411,7 @@
                     </gmd:geographicElement>
 {% endfor %}
 {% endif %}
+{% if p['temporalExtent'] is defined %}
 {% for temporalExtent in p['temporalExtent'] %}
                     <gmd:temporalElement>
                         <gmd:EX_TemporalExtent>
@@ -423,6 +424,7 @@
                         </gmd:EX_TemporalExtent>
                     </gmd:temporalElement>
 {% endfor %}
+{% endif %}
 
                 </gmd:EX_Extent>
             </srv:extent>
@@ -455,12 +457,17 @@
 {% if p['containsOperationsURL'] is defined %}
             <srv:containsOperations>
                 <srv:SV_OperationMetadata>
+                    {% if p['containsOperationsName'] is defined %}
                     <srv:operationName>
                         <gco:CharacterString>{{ p['containsOperationsName'] }}</gco:CharacterString>
                     </srv:operationName>
+                    {% endif %}
+                    {% if p['containsOperationsDCP'] is defined %}
                     <srv:DCP>
                         <srv:DCPList codeList="DCPList" codeListValue="{{ p['containsOperationsDCP'] }}">{{ p['containsOperationsDCP'] }}</srv:DCPList>
                     </srv:DCP>
+                    {% endif %}
+                    {% if p['containsOperationsURL'] is defined %}
                     <srv:connectPoint>
                         <gmd:CI_OnlineResource>
                             <gmd:linkage>
@@ -468,6 +475,7 @@
                             </gmd:linkage>
                         </gmd:CI_OnlineResource>
                     </srv:connectPoint>
+                    {% endif %}
                 </srv:SV_OperationMetadata>
             </srv:containsOperations>
 {% endif %}
@@ -522,6 +530,7 @@
                 </gmd:DQ_Scope>
             </gmd:scope>
 
+{% if p['dataquality'] is defined %}
 {% for dataquality in p['dataquality'] %}
             <gmd:report>
                 <gmd:DQ_DomainConsistency xsi:type="gmd:DQ_DomainConsistency_Type">
@@ -559,7 +568,7 @@
                 </gmd:DQ_DomainConsistency>
             </gmd:report>
 {% endfor %}
-
+{% endif %}
         </gmd:DQ_DataQuality>
     </gmd:dataQualityInfo>
 </gmd:MD_Metadata>
