@@ -81,19 +81,46 @@ class Address implements AddressInterface
 
             if ($result == 0) {
                 $address = new EntityAddress();
-                $address->setOrganisationName(@$row['organisationName']);
-                $address->setElectronicMailAddress(@$row['electronicMailAddress']);
-                $address->setRole(is_null(@$row['role']) ? '' : $row['role']);
-                $address->setIndividualName(@$row['individualName']);
-                $address->setCountry(@$row['country']);
-                $address->setAdministrativeArea(@$row['administrativeArea']);
-                $address->setDeliveryPoint(@$row['deliveryPoint']);
-                $address->setCity(@$row['city']);
-                $address->setPostalCode(@$row['postalCode']);
-                $address->setVoice(@$row['voice']);
-                $address->setFacsimile(@$row['facsimile']);
-                $address->setOnlineResource(@$row['onlineResource']);
-                $address->setPositionName(@$row['positionName']);
+
+                $address->setOrganisationName(
+                    isset($row['organisationName']) && !empty($row['organisationName']) ? $row['organisationName'] : ""
+                );
+                $address->setElectronicMailAddress(
+                    isset($row['electronicMailAddress']) && !empty($row['electronicMailAddress']) ? $row['electronicMailAddress'] : ""
+                );
+                $address->setRole(
+                    isset($row['role']) && !empty($row['role']) ? $row['role'] : ""
+                );
+                $address->setIndividualName(
+                    isset($row['individualName']) && !empty($row['individualName']) ? $row['individualName'] : ""
+                );
+                $address->setCountry(
+                    isset($row['country']) && !empty($row['country']) ? $row['country'] : ""
+                );
+                $address->setAdministrativeArea(
+                    isset($row['administrativeArea']) && !empty($row['administrativeArea']) ? $row['administrativeArea'] : ""
+                );
+                $address->setDeliveryPoint(
+                    isset($row['deliveryPoint']) && !empty($row['deliveryPoint']) ? $row['deliveryPoint'] : ""
+                );
+                $address->setCity(
+                    isset($row['city']) && !empty($row['city']) ? $row['city'] : ""
+                );
+                $address->setPostalCode(
+                    isset($row['postalCode']) && !empty($row['postalCode']) ? $row['postalCode'] : ""
+                );
+                $address->setVoice(
+                    isset($row['voice']) && !empty($row['voice']) ? $row['voice'] : ""
+                );
+                $address->setFacsimile(
+                    isset($row['facsimile']) && !empty($row['facsimile']) ? $row['facsimile'] : ""
+                );
+                $address->setOnlineResource(
+                    isset($row['onlineResource']) && !empty($row['onlineResource']) ? $row['onlineResource'] : ""
+                );
+                $address->setPositionName(
+                    isset($row['positionName']) && !empty($row['positionName']) ? $row['positionName']: ""
+                );
 
                 $em->persist($address);
                 $em->flush();

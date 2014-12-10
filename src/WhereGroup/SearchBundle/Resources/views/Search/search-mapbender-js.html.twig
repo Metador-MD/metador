@@ -1,0 +1,127 @@
+<script src="{{ asset('bundles/wolfsburgcore/js/OpenLayers/OpenLayers.js') }}"></script>
+<script type="text/javascript">
+    var callerParams;
+    function receiveMessage(event) {
+        callerParams = JSON.parse(event.data);
+        callerParams['event'] = event;
+    }
+
+    function postMyMessage(element) {
+        var param = "token";
+        var results = new RegExp('[\\?&]' + param + '=([^&#]*)').exec(window.location.href);
+        var props = {
+            token: results !== null && results.length === 2 ? results[1] : 'undefined',
+            load: {
+                wms: $(element).attr('data-url')
+            }
+        };
+        parent.postMessage(JSON.stringify(props), window.location.href);
+    }
+    window.addEventListener("message", receiveMessage, false);
+
+    $(document).ready(function() {
+        function search(firstPage) {
+            if (typeof firstPage !== 'undefined') {
+                $('#search_page').val(1);
+            };
+
+            $.ajax({
+                url: BASEDIR + "search/mb3/get",
+                data: {
+                    'page': $('#search_page').val(),
+                    'searchterm': $('#search_find').val(),
+                    'filter-dataset' : $('#filter-dataset').val(),
+                    'filter-service' : $('#filter-service').val(),
+                    'filter-series'  : $('#filter-series').val()
+                },
+                type: "get",
+                dataType: "json",
+                success:  function(data) {
+
+                    if (data.paging.count !== 0) {
+                        $('#search_pageinfo').html(
+                            data.paging.currentPage + ' / ' + data.paging.pages
+                        );
+                    } else {
+                        $('#search_pageinfo').html('');
+                    };
+
+                    if (typeof data.paging.prevPage !== 'undefined') {
+                        $('#search_prev').removeClass('disabled');
+                        $('#search_prev').attr('data-page', data.paging.prevPage);
+                    } else {
+                        $('#search_prev').addClass('disabled');
+                        $('#search_prev').attr('data-page', 1);
+                    };
+
+                    if (typeof data.paging.nextPage !== 'undefined') {
+                        $('#search_next').removeClass('disabled');
+                        $('#search_next').attr('data-page', data.paging.nextPage);
+                    } else {
+                        $('#search_next').addClass('disabled');
+                        $('#search_next').attr('data-page', '');
+                    };
+
+                    $('#search_content').html(data.html);
+                }
+            });
+        }
+
+        $(document).on('click', '.search_extended_toggle', function() {
+            $('#metador_search').toggleClass('extended');
+        });
+
+        $(document).on('click', '#search_prev:not(.disabled)', function() {
+            $('#search_page').val($(this).attr('data-page'));
+            search();
+        });
+
+        $(document).on('click', '#search_next:not(.disabled)', function() {
+            $('#search_page').val($(this).attr('data-page'));
+            search();
+        });
+
+        $(document).on('click', '#search_find_submit', function() {
+            $('#search_page').val(1);
+            search();
+        });
+
+        $(document).on('click', '.metadata-extended-toggle', function() {
+            $(this).closest('.search-metadata').toggleClass('extended');
+        });
+
+        $(document).on('click', '.search-filter', function() {
+            $('#' + $(this).attr('data-key')).val($(this).val());
+            search(true);
+        });
+
+        $(document).on('click', '.search-filter-checkbox', function() {
+            var val = $(this).is(':checked') ? "1" : "0";
+
+            $('#' + $(this).attr('data-key')).val(val);
+            search(true);
+        });
+
+        $(document).on('click', '.metadata-extended-menu li', function() {
+            $(this).siblings().removeClass('act');
+            $(this).addClass('act');
+            $(this)
+                .closest('.metadata-extended')
+                .children('.metadata-extended-content')
+                .removeClass('act');
+
+            $("[data-id='" + $(this).attr('data-id') + "']",
+                $(this).closest('.metadata-extended')
+            ).addClass('act');
+        });
+
+        $(document).on('keypress', '#search_find', function(event) {
+            if (event.which == 13) {
+                search(true);
+                event.preventDefault();
+            }
+        })
+
+        search(true);
+    });
+</script>

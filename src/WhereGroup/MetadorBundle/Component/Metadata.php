@@ -105,6 +105,39 @@ class Metadata
         return $result;
     }
 
+    public function getMetadataCount($type)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+
+        /** @var QueryBuilder $queryBuilderC */
+        $queryBuilderC = $this->container
+            ->get('doctrine')
+            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->createQueryBuilder('m')
+            ->select('count(m)');
+
+        if (strtolower($type) === 'dataset') {
+            $queryBuilderC
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
+                    $qb->expr()->eq('m.hierarchyLevel', '?2')
+                ))
+                ->setParameters(array(
+                    1 => 'dataset',
+                    2 => 'series',
+                ));
+        } elseif (strtolower($type) === 'service') {
+            $queryBuilderC
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1')
+                ))
+                ->setParameters(array(1 => 'service'));
+        }
+
+        return $queryBuilderC->getQuery()->getSingleScalarResult();
+    }
+
     /**
      * @param $limit
      * @param $offset
@@ -123,6 +156,16 @@ class Metadata
     public function getService($limit, $offset)
     {
         return $this->getMetadata($limit, $offset, 'service');
+    }
+
+    public function getServiceCount()
+    {
+        return $this->getMetadataCount('service');
+    }
+
+    public function getDatasetCount()
+    {
+        return $this->getMetadataCount('dataset');
     }
 
     /**
@@ -204,7 +247,7 @@ class Metadata
 
         if (isset($p['keyword'])) {
             foreach ($p['keyword'] as $value) {
-                if (isset($value['value'])) {
+                if (isset($value['value']) && !empty($value['value'])) {
                     foreach ($value['value'] as $keyword) {
                         $searchfield .= '<br/>' . strtolower($keyword);
                     }
@@ -237,7 +280,7 @@ class Metadata
         // EVENT PRE SAVE
         try {
             $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
@@ -249,7 +292,7 @@ class Metadata
         // EVENT POST SAVE
         try {
             $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
@@ -257,7 +300,9 @@ class Metadata
         $this->address->set($metadata->getObject());
 
         // SET FLASH
-        $this->container->get('session')->getFlashBag()->add('success', 'Datensatz erfolgreich eingetragen.');
+        $title = isset($p['title']) ? $p['title'] : 'Datensatz';
+
+        $this->container->get('session')->getFlashBag()->add('success', $title . ' erfolgreich eingetragen.');
         return true;
     }
 
@@ -285,7 +330,7 @@ class Metadata
                 $em->remove($metadata);
                 $em->flush();
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }

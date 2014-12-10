@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * @Route("/metador/data")
@@ -19,18 +20,17 @@ class DataController extends Controller
      */
     public function indexAction()
     {
-        $limit = 100;
-        $offset = 0;
-
+        $page     = $this->get('request')->get('page', 1);
         $metadata = $this->get('metador_metadata');
-
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
+        $conf     = $this->container->getParameter('metador');
+        $limit    = $conf['hits'];
+        $paging   = new Paging($metadata->getDatasetCount(), $limit, $page);
 
         return $this->render(
             $conf['templates']['form'] . ':Dataset:index.html.twig',
             array(
-                'rows' => $metadata->getDataset($limit, $offset)
+                'rows' => $metadata->getDataset($limit, ($page * $limit) - $limit),
+                'paging' => $paging->calculate()
             )
         );
     }

@@ -1,5 +1,6 @@
 .tableBorder {
     border: 1px solid #DDD;
+    margin: 10px;
     @include border-radius(5px);
 }
 
@@ -8,7 +9,6 @@
     border-collapse: collapse;
     border-spacing: 2px;
     width: 100%;
-    //border: 1px solid #DDD;
 
     & > thead {
         display: table-header-group;

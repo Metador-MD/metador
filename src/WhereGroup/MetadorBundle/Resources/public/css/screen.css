@@ -1,5 +1,5 @@
-.icons-sprite, .icon.mandatory, .icon.optional, .icon.conditional, .icon.help, .icon.help:hover, .icon.wizard, .icon.error, .icon.success, .icon.pencil, .icon.appedit, .icon.pagecode, .icon.add, .icon.world, .icon.delete, .icon.delete:hover {
-  background: url('../img/icons-s11cc728681.png') no-repeat;
+.icons-sprite, .icon.mandatory, .icon.optional, .icon.conditional, .icon.help, .icon.help:hover, .icon.wizard, .icon.error, .icon.success, .icon.pencil, .icon.appedit, .icon.pagecode, .icon.add, .icon.world, .icon.delete, .icon.import, .icon.delete:hover {
+  background: url('../img/icons-sf9fa5b36a3.png') no-repeat;
 }
 
 /*! normalize.css v1.0.2 | MIT License | git.io/normalize */
@@ -751,55 +751,58 @@ textarea {
   height: 16px;
 }
 .icon.mandatory {
-  background-position: 0 -48px;
+  background-position: -16px -32px;
 }
 .icon.optional {
-  background-position: -16px 0;
-}
-.icon.conditional {
   background-position: -16px -16px;
 }
+.icon.conditional {
+  background-position: 0 -32px;
+}
 .icon.help {
-  background-position: 0 -112px;
+  background-position: -16px -160px;
 }
 .icon.help:hover, .icon.help.help_hover, .icon.help.help-hover {
-  background-position: 0 -96px;
+  background-position: 0 -112px;
 }
 .icon:hover.help {
-  background-position: 0 -96px;
+  background-position: 0 -112px;
 }
 .icon.wizard {
-  background-position: -16px -112px;
-}
-.icon.error {
-  background-position: -16px -48px;
-}
-.icon.success {
-  background-position: -16px -128px;
-}
-.icon.pencil {
   background-position: 0 -128px;
 }
-.icon.appedit {
-  background-position: 0 -16px;
-}
-.icon.pagecode {
-  background-position: 0 -144px;
-}
-.icon.add {
-  background-position: 0 -160px;
-}
-.icon.world {
-  background-position: 0 -80px;
-}
-.icon.delete {
+.icon.error {
   background-position: 0 -64px;
 }
-.icon.delete:hover, .icon.delete.delete_hover, .icon.delete.delete-hover {
+.icon.success {
+  background-position: -16px -144px;
+}
+.icon.pencil {
+  background-position: 0 -144px;
+}
+.icon.appedit {
+  background-position: -16px 0;
+}
+.icon.pagecode {
+  background-position: -16px -128px;
+}
+.icon.add {
+  background-position: 0 0;
+}
+.icon.world {
   background-position: -16px -64px;
 }
+.icon.delete {
+  background-position: 0 -80px;
+}
+.icon.delete:hover, .icon.delete.delete_hover, .icon.delete.delete-hover {
+  background-position: -16px -80px;
+}
+.icon.import {
+  background-position: -16px -96px;
+}
 .icon:hover.delete {
-  background-position: -16px -64px;
+  background-position: -16px -80px;
 }
 
 .icon32 {
@@ -917,6 +920,7 @@ textarea {
 
 .tableBorder {
   border: 1px solid #DDD;
+  margin: 10px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -2340,4 +2344,30 @@ body {
   float: left;
   width: 200px;
   font-weight: bold;
+}
+
+.metadata-import-label {
+  display: block;
+  padding: 5px 0;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.metadata-import-input {
+  float: left;
+}
+
+.metadata-import-submit {
+  float: right;
+}
+
+.metadata-import-textarea {
+  width: 800px;
+  height: 200px;
+}
+
+.metadata-import-link:hover {
+  color: blue;
+  text-decoration: none;
 }

@@ -18,6 +18,7 @@
     &.add           {@include icons-sprite(add);}
     &.world         {@include icons-sprite(world);}
     &.delete        {@include icons-sprite(delete);}
+    &.import        {@include icons-sprite(table_import);}
     &:hover.delete  {@include icons-sprite(delete_hover);}
 }
 

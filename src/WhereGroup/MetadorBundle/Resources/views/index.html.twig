@@ -10,11 +10,9 @@
             </form>
         </div>
         <div style="float:right;">
-            <form action="{{ path('xml_upload') }}" method="post" enctype="multipart/form-data">
-                <label for="search_find">Import:</label>
-                <input name="Datei" type="file" size="50" maxlength="100000" accept="text/*" name="xml" />
-                <button>ok</button>
-            </form>
+            <a href="{{ path('import_index') }}" class="metadata-import-link">
+                <span class="icon import"></span>&nbsp; Import
+            </a>
         </div>
         <div style="clear:both;" />
     </div>
@@ -66,7 +64,7 @@
                             </button>
                         </form>
 {% endif %}
-                    </td>                    
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
@@ -85,7 +83,7 @@
                                 <div class="icon delete"></div>
                             </button>
                         </form>
-                    </td>                    
+                    </td>
                 </tr>
                 {% endfor %}
             </table>

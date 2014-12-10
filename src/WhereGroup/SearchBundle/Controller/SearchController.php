@@ -23,7 +23,8 @@ class SearchController extends Controller
     /**
      * @Route("/", name="search_index")
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
@@ -31,13 +32,14 @@ class SearchController extends Controller
             array(
                 'find' => $this->container->get('request')->get('find', '')
             )
-        );      
+        );
     }
 
     /**
      * @Route("/raw/", name="search_index_raw")
      */
-    public function indexRawAction() {
+    public function indexRawAction()
+    {
         $conf = $this->container->getParameter('metador');
 
         return $this->render(
@@ -45,20 +47,62 @@ class SearchController extends Controller
             array(
                 'find' => $this->container->get('request')->get('find', '')
             )
-        );      
+        );
     }
 
     /**
-     * @Route("/get/", name="search_get")
+     * @Route("/mb3/", name="search_index_mapbender")
      */
-    public function getAction() {
+    public function indexMapbenderAction()
+    {
+        $conf = $this->container->getParameter('metador');
+
+        return $this->render(
+            $conf['search']['template'] . ':Search:indexMapbender.html.twig',
+            array(
+                'find' => $this->container->get('request')->get('find', '')
+            )
+        );
+    }
+
+    /**
+     * @Route("/mb3/get/", name="search_get_mapbender")
+     */
+    public function getMapbenderAction()
+    {
         $conf = $this->container->getParameter('metador');
         $search = $this->container->get('metadata_search');
 
         $result = $search->find();
 
         $html = $this->render(
-            $conf['search']['template'] . ':Search:result.html.twig', $result
+            $conf['search']['template'] . ':Search:result-mapbender.html.twig',
+            $result
+        );
+
+        $response = new Response();
+        $response->headers->set('ContentType', 'application/json');
+        $response->setContent(json_encode(array(
+            'paging' => $result['paging'],
+            'html' => $html->getContent()
+        )));
+
+        return $response;
+    }
+
+    /**
+     * @Route("/get/", name="search_get")
+     */
+    public function getAction()
+    {
+        $conf = $this->container->getParameter('metador');
+        $search = $this->container->get('metadata_search');
+
+        $result = $search->find();
+
+        $html = $this->render(
+            $conf['search']['template'] . ':Search:result.html.twig',
+            $result
         );
 
         $response = new Response();
