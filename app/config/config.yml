@@ -13,6 +13,8 @@ parameters:
             main: %metador.templates.main%
             login: %metador.templates.login%
 
+        hits: %metador.hits%
+
         search:
             template: %metador.search.templates%
 

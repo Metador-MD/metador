@@ -105,6 +105,39 @@ class Metadata
         return $result;
     }
 
+    public function getMetadataCount($type)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+
+        /** @var QueryBuilder $queryBuilderC */
+        $queryBuilderC = $this->container
+            ->get('doctrine')
+            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->createQueryBuilder('m')
+            ->select('count(m)');
+
+        if (strtolower($type) === 'dataset') {
+            $queryBuilderC
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
+                    $qb->expr()->eq('m.hierarchyLevel', '?2')
+                ))
+                ->setParameters(array(
+                    1 => 'dataset',
+                    2 => 'series',
+                ));
+        } elseif (strtolower($type) === 'service') {
+            $queryBuilderC
+                ->where($qb->expr()->orx(
+                    $qb->expr()->eq('m.hierarchyLevel', '?1')
+                ))
+                ->setParameters(array(1 => 'service'));
+        }
+
+        return $queryBuilderC->getQuery()->getSingleScalarResult();
+    }
+
     /**
      * @param $limit
      * @param $offset
@@ -123,6 +156,16 @@ class Metadata
     public function getService($limit, $offset)
     {
         return $this->getMetadata($limit, $offset, 'service');
+    }
+
+    public function getServiceCount()
+    {
+        return $this->getMetadataCount('service');
+    }
+
+    public function getDatasetCount()
+    {
+        return $this->getMetadataCount('dataset');
     }
 
     /**
