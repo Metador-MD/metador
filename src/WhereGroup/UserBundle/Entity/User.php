@@ -50,7 +50,8 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $groups;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->groups = new ArrayCollection();
@@ -59,29 +60,35 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
     /**
      * @inheritDoc
      */
-    public function getSalt() {
+    public function getSalt()
+    {
         return $this->salt;
     }
 
     /**
      * @inheritDoc
      */
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
     /**
      * @inheritDoc
      */
-    public function getRoles() {
-        foreach($this->groups->toArray() as $group) {
+    public function getRoles()
+    {
+        $roles = array();
+
+        foreach ($this->groups->toArray() as $group) {
             $roles[] = $group->getRole();
         }
 
@@ -97,13 +104,15 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function eraseCredentials() {
+    public function eraseCredentials()
+    {
     }
 
     /**
      * @see \Serializable::serialize()
      */
-    public function serialize() {
+    public function serialize()
+    {
         return serialize(array(
             $this->id,
         ));
@@ -112,7 +121,8 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @see \Serializable::unserialize()
      */
-    public function unserialize($serialized) {
+    public function unserialize($serialized)
+    {
         list (
             $this->id,
         ) = unserialize($serialized);
@@ -267,7 +277,8 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->isActive;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return (string)$this->getId();
     }
 }
