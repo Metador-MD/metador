@@ -70,6 +70,7 @@
             },
             "onlineResource": ["Service/OnlineResource/@xlink:href", "asArray"],
             "containsOperationsName": [null, "string", "GetCapabilities"],
+            "containsOperationsDCP": [null, "string", "WebService"],
             "containsOperationsURL":  "Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href",
             "metadataLanguage": [null, "string", "ger"],
             "metadataStandardName": [null, "string", "19119"],

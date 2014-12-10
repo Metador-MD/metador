@@ -78,6 +78,7 @@
             },
             "onlineResource": ["wms:Service/wms:OnlineResource/@xlink:href", "asArray"],
             "containsOperationsName": [null, "string", "GetCapabilities"],
+            "containsOperationsDCP": [null, "string", "WebService"],
             "containsOperationsURL": "wms:Capability/wms:Request/wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href",
             "metadataLanguage": [null, "string", "ger"],
             "metadataStandardName": [null, "string", "19119"],
