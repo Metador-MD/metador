@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6.2
+* Minor changes.
+
 ## 2.0.6.0
 * Mapbender3 search integration.
 * License changed to MIT.

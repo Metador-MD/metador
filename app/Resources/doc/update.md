@@ -1,6 +1,7 @@
 # Update
 
 ## 2.0.6.0
+./app/Resources/scripts/composer-update.sh
 app/console assets:install  
 rm -rf app/cache/*  
 
