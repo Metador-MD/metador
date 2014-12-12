@@ -13,11 +13,13 @@ use WhereGroup\MetadorBundle\Entity\Address;
  * @package WhereGroup\MetadorBundle\Component
  * @author A. R. Pour
  */
-class Metadata
+class Metadata implements MetadataInterface
 {
     protected $container;
     protected $metadorUser;
     protected $address;
+
+    const REPOSITORY = "WhereGroupMetadorBundle:Metadata";
 
     /**
      * @param ContainerInterface $container
@@ -43,7 +45,7 @@ class Metadata
         /** @var \WhereGroup\MetadorBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
             ->getManager()
-            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->getRepository(self::REPOSITORY)
             ->findOneById($id);
 
         $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
@@ -51,6 +53,25 @@ class Metadata
         // EVENT ON LOAD
         $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
         $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+
+        return $metadata;
+    }
+
+    public function getByUUID($uuid)
+    {
+        /** @var \WhereGroup\MetadorBundle\Entity\Metadata $metadata */
+        $metadata = $this->container->get('doctrine')
+            ->getManager()
+            ->getRepository(self::REPOSITORY)
+            ->findOneByUuid($uuid);
+
+        if ($metadata) {
+            $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
+
+            // EVENT ON LOAD
+            $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        }
 
         return $metadata;
     }
@@ -69,7 +90,7 @@ class Metadata
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->container
             ->get('doctrine')
-            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->getRepository(self::REPOSITORY)
             ->createQueryBuilder('m')
             ->orderBy('m.updateTime', 'DESC')
             ->setFirstResult($offset)
@@ -113,7 +134,7 @@ class Metadata
         /** @var QueryBuilder $queryBuilderC */
         $queryBuilderC = $this->container
             ->get('doctrine')
-            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->getRepository(self::REPOSITORY)
             ->createQueryBuilder('m')
             ->select('count(m)');
 
@@ -188,6 +209,7 @@ class Metadata
 
         // UPDATE
         if ($id) {
+            $update = true;
             $metadata = $this->getById($id);
 
             if ($metadata->getReadonly()) {
@@ -201,6 +223,7 @@ class Metadata
 
         // INSERT
         } else {
+            $update = false;
             $metadata = new EntityMetadata();
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($now->getTimestamp());
@@ -208,7 +231,7 @@ class Metadata
             $metadata->setGroups($user->getRoles());
 
             // FIND UUID IN DATABASE
-            $uuid = $em->getRepository('WhereGroupMetadorBundle:Metadata')->findByUuid($p['fileIdentifier']);
+            $uuid = $em->getRepository(self::REPOSITORY)->findByUuid($p['fileIdentifier']);
 
             if ($uuid) {
                 $this->container->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
@@ -302,7 +325,18 @@ class Metadata
         // SET FLASH
         $title = isset($p['title']) ? $p['title'] : 'Datensatz';
 
-        $this->container->get('session')->getFlashBag()->add('success', $title . ' erfolgreich eingetragen.');
+        if ($update) {
+            $this->container->get('session')->getFlashBag()->add(
+                'success',
+                $title . ' bearbeitet.'
+            );
+        } else {
+            $this->container->get('session')->getFlashBag()->add(
+                'success',
+                $title . ' eingetragen.'
+            );
+        }
+
         return true;
     }
 

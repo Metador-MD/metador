@@ -10,9 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use Rhumsaa\Uuid\Uuid;
-use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
-
 use WhereGroup\MetadorBundle\Entity\Metadata;
 use WhereGroup\MetadorBundle\Entity\Helptext;
 use WhereGroup\MetadorBundle\Entity\Address;
@@ -75,65 +72,95 @@ class ImportController extends Controller
     }
 
     /**
+     * @Route("/wms_url_override", name="wms_url_override")
+     * @Method("POST")
+     */
+    public function overrideWmsAction()
+    {
+        $services = $this->get('request')->request->get('services', array());
+        $wmsImport   = $this->get('wms_import');
+
+        foreach ($services as $uuid => $service) {
+            if (isset($service['override']) && $service['override'] == 1) {
+
+                if (!($p = $wmsImport->isGetCapabilitiesUrl($service['url']))) {
+                    $this->get('session')->getFlashBag()->add(
+                        'error',
+                        $url . 'ist keine gültige URL bzw. liefert keine gültige WMS GetCapabilities XML.'
+                    );
+                    continue;
+                }
+
+                $wmsImport->update($p, $uuid, $service['id']);
+            }
+        }
+
+        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+    }
+
+    /**
      * @Route("/wms_url_import", name="wms_url_import")
      * @Method("POST")
+     * @Template()
      */
     public function wmsUrlImportAction()
     {
-        preg_match_all(
-            "/(htt[^\n]+)/i",
-            $this->get('request')->request->get('urls', ''),
-            $matches
+        $info = array();
+        $update = false;
+
+        $wmsImport = $this->get('wms_import');
+
+        // Parse URL's
+        $urls = $wmsImport->parseGetCapabilitiesUrls(
+            $this->get('request')->request->get('urls', '')
         );
 
-        if (!isset($matches[1]) || empty($matches[1])) {
+        if (!$urls) {
             $this->get('session')->getFlashBag()->add('error', 'Bitte mindestens eine GetCapabilities URL angeben.');
             return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
         }
 
-        $conf = $this->container->getParameter('metador');
-        $import = $this->get('metadata_import');
-
-        foreach ($matches[1] as $url) {
-            if (!(bool)parse_url(trim($url))) {
-                $this->get('session')->getFlashBag()->add('error', $url . 'ist keine gültige URL.');
+        foreach ($urls as $url) {
+            if (!($p = $wmsImport->isGetCapabilitiesUrl($url))) {
+                $this->get('session')->getFlashBag()->add(
+                    'error',
+                    $url . 'ist keine gültige URL bzw. liefert keine gültige WMS GetCapabilities XML.'
+                );
                 continue;
             }
 
-            try {
-                $xml = @file_get_contents(trim($url));
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $url . 'ist keine gültige URL.');
-                continue;
+            $uuid = $wmsImport->convertUrlToUuid($url);
+
+            if (!$uuid) {
+                $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
+                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
             }
 
-            try {
-                $p = $import->loadWMS($xml, $conf);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $url . ' liefert keine gültige XML.');
-                continue;
-            }
+            if ($id = $wmsImport->metadataExists($uuid)) {
+                $update = true;
 
+                $info[$uuid] = array(
+                    'title'     => $p['title'],
+                    'url'       => $url,
+                    'id'        => $id,
+                    'processed' => false
+                );
 
-            if (empty($p)) {
-                $this->get('session')->getFlashBag()->add('error', 'GetCapabilities konnte nicht bearbeitet werden.');
             } else {
-                try {
-                    $p['fileIdentifier'] = Uuid::uuid4()->toString();
-                    $p['identifier'][0]['code'] = $p['fileIdentifier'];
-                    $p['identifier'][0]['codespace'] = "";
+                $wmsImport->insert($p, $uuid);
 
-                    $p['dateStamp'] = date('Y-m-d');
-                    $p['hierarchyLevel'] = 'service';
-
-                    $metadata = $this->get('metador_metadata');
-                    $metadata->saveObject($p);
-
-                } catch (UnsatisfiedDependencyException $e) {
-                    $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
-                    return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
-                }
+                $info[$uuid] = array(
+                    'title'     => $p['title'],
+                    'url'       => $url,
+                    'processed' => true
+                );
             }
+        }
+
+        if ($update) {
+            return array(
+                'services' => $info
+            );
         }
 
         return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));

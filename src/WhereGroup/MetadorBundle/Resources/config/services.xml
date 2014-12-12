@@ -3,6 +3,7 @@
     <parameters>
         <parameter key="metador.twig.class">WhereGroup\MetadorBundle\Twig\Extension\MetadorExtension</parameter>
         <parameter key="metador.metadata_import.class">WhereGroup\MetadorBundle\Component\MetadataImport</parameter>
+        <parameter key="metador.wms_import.class">WhereGroup\MetadorBundle\Component\WmsImport</parameter>
         <parameter key="metador.listener.class">WhereGroup\MetadorBundle\EventListener\MetadorListener</parameter>
         <parameter key="metador.user.class">WhereGroup\MetadorBundle\Component\MetadorUser</parameter>
         <parameter key="metador.metadata.class">WhereGroup\MetadorBundle\Component\Metadata</parameter>
@@ -17,7 +18,13 @@
         </service>
 
         <service id="metadata_import" class="%metador.metadata_import.class%" />
-        
+
+        <service id="wms_import" class="%metador.wms_import.class%">
+            <argument type="service" id="metadata_import" />
+            <argument type="service" id="metador_metadata" />
+            <argument>%metador%</argument>
+        </service>
+
         <service id="metador.listener" class="%metador.listener.class%">
             <tag name="kernel.event_listener" event="metador.pre_save" method="onPreSave" />
             <argument type="service" id="service_container" />
