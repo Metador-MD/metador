@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2.0.6.2
+* Ask whether you want to overwrite the service metadata.
 * Minor changes.
 
 ## 2.0.6.0
