@@ -1,4 +1,5 @@
 <?php
+
 namespace WhereGroup\MetadorBundle\Component;
 
 /**
@@ -6,7 +7,7 @@ namespace WhereGroup\MetadorBundle\Component;
  * @package WhereGroup\MetadorBundle\Component
  * @author A. R. Pour
  */
-class MetadataImport
+class MetadataImport implements MetadataImportInterface
 {
     /**
      * Convert a XML to Metador data object.
