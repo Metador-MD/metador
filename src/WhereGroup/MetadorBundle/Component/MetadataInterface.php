@@ -28,6 +28,10 @@ interface MetadataInterface
      */
     public function getById($id);
 
+    /**
+     * @param string $uuid
+     * @return mixed
+     */
     public function getByUUID($uuid);
 
     /**
@@ -38,6 +42,10 @@ interface MetadataInterface
      */
     public function getMetadata($limit, $offset, $type = null);
 
+    /**
+     * @param string $type
+     * @return integer
+     */
     public function getMetadataCount($type);
 
     /**
@@ -53,7 +61,15 @@ interface MetadataInterface
      * @return mixed
      */
     public function getService($limit, $offset);
+
+    /**
+     * @return integer
+     */
     public function getServiceCount();
+
+    /**
+     * @return integer
+     */
     public function getDatasetCount();
 
     /**

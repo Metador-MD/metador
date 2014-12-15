@@ -14,10 +14,20 @@ use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
  */
 class WmsImport
 {
+    /** @var MetadataImportInterface  */
     private $metadataImport;
+
+    /** @var MetadataInterface  */
     private $metadata;
+
+    /** @var  array */
     private $conf;
 
+    /**
+     * @param MetadataImportInterface $metadataImport
+     * @param MetadataInterface $metadata
+     * @param $conf
+     */
     public function __construct(
         MetadataImportInterface $metadataImport,
         MetadataInterface $metadata,
@@ -28,14 +38,22 @@ class WmsImport
         $this->conf           = $conf;
     }
 
+    /**
+     * Unset objects.
+     */
     public function __destruct()
     {
         unset(
             $this->metadataImport,
+            $this->metadata,
             $this->conf
         );
     }
 
+    /**
+     * @param $string
+     * @return bool|array
+     */
     public function parseGetCapabilitiesUrls($string)
     {
         preg_match_all("/(htt[^\n]+)/i", $string, $matches);
@@ -45,6 +63,10 @@ class WmsImport
             : $matches[1];
     }
 
+    /**
+     * @param $url
+     * @return array|bool
+     */
     public function isGetCapabilitiesUrl($url)
     {
         if ((bool)parse_url(trim($url))) {
@@ -66,6 +88,10 @@ class WmsImport
         return false;
     }
 
+    /**
+     * @param $url
+     * @return bool|string
+     */
     public function convertUrlToUuid($url)
     {
         try {
@@ -89,10 +115,12 @@ class WmsImport
         } catch (UnsatisfiedDependencyException $e) {
             return false;
         }
-
-        return false;
     }
 
+    /**
+     * @param $uuid
+     * @return bool
+     */
     public function metadataExists($uuid)
     {
         $entity = $this->metadata->getByUUID($uuid);
@@ -102,6 +130,10 @@ class WmsImport
             : false;
     }
 
+    /**
+     * @param array $p
+     * @param string $uuid
+     */
     public function insert($p, $uuid)
     {
         $p['fileIdentifier'] = $uuid;
@@ -113,6 +145,11 @@ class WmsImport
         $this->metadata->saveObject($p);
     }
 
+    /**
+     * @param array $p
+     * @param string $uuid
+     * @param integer $id
+     */
     public function update($p, $uuid, $id)
     {
         $p['fileIdentifier'] = $uuid;

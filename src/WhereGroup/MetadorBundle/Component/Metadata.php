@@ -15,8 +15,13 @@ use WhereGroup\MetadorBundle\Entity\Address;
  */
 class Metadata implements MetadataInterface
 {
+    /** @var ContainerInterface  */
     protected $container;
+
+    /** @var MetadorUserInterface  */
     protected $metadorUser;
+
+    /** @var AddressInterface  */
     protected $address;
 
     const REPOSITORY = "WhereGroupMetadorBundle:Metadata";
@@ -57,6 +62,10 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
+  /**
+     * @param $uuid
+     * @return mixed
+     */
     public function getByUUID($uuid)
     {
         /** @var \WhereGroup\MetadorBundle\Entity\Metadata $metadata */
@@ -126,6 +135,10 @@ class Metadata implements MetadataInterface
         return $result;
     }
 
+    /**
+     * @param $type
+     * @return integer
+     */
     public function getMetadataCount($type)
     {
         /** @var QueryBuilder $qb */
@@ -179,11 +192,17 @@ class Metadata implements MetadataInterface
         return $this->getMetadata($limit, $offset, 'service');
     }
 
+    /**
+     * @return integer
+     */
     public function getServiceCount()
     {
         return $this->getMetadataCount('service');
     }
 
+    /**
+     * @return integer
+     */
     public function getDatasetCount()
     {
         return $this->getMetadataCount('dataset');
