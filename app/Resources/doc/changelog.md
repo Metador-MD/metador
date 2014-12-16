@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6.4
+* Added OpenLayers
+
 ## 2.0.6.3
 * Bugfix in Mapbender3 search element.
 
