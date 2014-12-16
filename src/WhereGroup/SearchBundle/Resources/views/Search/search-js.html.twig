@@ -1,4 +1,4 @@
-<script src="{{ asset('bundles/wolfsburgcore/js/OpenLayers/OpenLayers.js') }}"></script>
+<script src="{{ asset('bundles/wheregroupmetador/js/OpenLayers/OpenLayers.js') }}"></script>
 <script type="text/javascript">
     var callerParams;
     function receiveMessage(event) {
@@ -20,7 +20,7 @@
         parent.postMessage(JSON.stringify(props), window.location.href);
     }
     window.addEventListener("message", receiveMessage, false);
-        
+
     $(document).ready(function() {
         function search(firstPage) {
             if (typeof firstPage !== 'undefined') {
@@ -42,7 +42,7 @@
 
                     if (data.paging.count !== 0) {
                         $('#search_pageinfo').html(
-                            data.paging.currentPage + ' / ' + data.paging.pages    
+                            data.paging.currentPage + ' / ' + data.paging.pages
                         );
                     } else {
                         $('#search_pageinfo').html('');
@@ -66,7 +66,7 @@
 
                     $('#search_content').html(data.html);
                 }
-            });   
+            });
         }
 
         $(document).on('click', '.search_extended_toggle', function() {
@@ -79,12 +79,12 @@
         });
 
         $(document).on('click', '#search_next:not(.disabled)', function() {
-            $('#search_page').val($(this).attr('data-page')); 
+            $('#search_page').val($(this).attr('data-page'));
             search();
         });
 
         $(document).on('click', '#search_find_submit', function() {
-            $('#search_page').val(1); 
+            $('#search_page').val(1);
             search();
         });
 
@@ -112,7 +112,7 @@
                 .children('.metadata-extended-content')
                 .removeClass('act');
 
-            $("[data-id='" + $(this).attr('data-id') + "']", 
+            $("[data-id='" + $(this).attr('data-id') + "']",
                 $(this).closest('.metadata-extended')
             ).addClass('act');
         });
