@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6.3
+* Bugfix in Mapbender3 search element.
+
 ## 2.0.6.2
 * Ask whether you want to overwrite the service metadata.
 * Minor changes.
