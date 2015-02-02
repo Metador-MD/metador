@@ -27,8 +27,8 @@ class ImportMetadataCommand extends ContainerAwareCommand
                 )
             )
         )
-        ->setDescription('Export metadata from folder.')
-        ->setHelp('Export metadata from folder.')
+        ->setDescription('Import metadata from folder.')
+        ->setHelp('Import metadata from folder.')
         ->setName('metador:import:metadata');
     }
 
