@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6.5
+* dataset.xml.twig: namespace mismatch
+
 ## 2.0.6.4
 * Added OpenLayers
 
