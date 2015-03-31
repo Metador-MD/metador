@@ -2,6 +2,7 @@
 
 ## 2.0.6.5
 * dataset.xml.twig: namespace mismatch
+* Helptext adjusted (Thanks Charlotte)
 
 ## 2.0.6.4
 * Added OpenLayers
