@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0.0
+* Added profiles as bundles
+
 ## 2.0.6.5
 * dataset.xml.twig: namespace mismatch
 * Helptext adjusted (Thanks Charlotte)
