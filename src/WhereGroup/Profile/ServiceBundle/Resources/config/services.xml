@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <!-- EVENT LISTENER -->
+        <parameter key="metador.profile.service.menu.listener.class">WhereGroup\Profile\ServiceBundle\EventListener\ApplicationMenuListener</parameter>
+    </parameters>
+    <services>
+        <!-- EVENT LISTENER -->
+        <service id="metador.profile.service.menu.listener" class="%metador.profile.service.menu.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+        </service>
+    </services>
+</container>

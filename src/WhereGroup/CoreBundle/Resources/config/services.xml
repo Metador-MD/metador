@@ -1,28 +1,41 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="wheregroup.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
-        <parameter key="wheregroup.getparameter.class">WhereGroup\CoreBundle\Twig\Extension\GetParameterExtension</parameter>
-        <parameter key="wheregroup.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
-        <parameter key="wheregroup.casttoarray.class">WhereGroup\CoreBundle\Twig\Extension\CastToArrayExtension</parameter>
+        <!-- SERVICE -->
+        <parameter key="metador.application.class">WhereGroup\CoreBundle\Component\Application</parameter>
+        <!-- TWIG EXTENSION -->
+        <parameter key="metador.twig.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
+        <parameter key="metador.twig.getparameter.class">WhereGroup\CoreBundle\Twig\Extension\GetParameterExtension</parameter>
+        <parameter key="metador.twig.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
+        <parameter key="metador.twig.casttoarray.class">WhereGroup\CoreBundle\Twig\Extension\CastToArrayExtension</parameter>
+        <parameter key="metador.twig.application.class">WhereGroup\CoreBundle\Twig\Extension\ApplicationExtension</parameter>
      </parameters>
 
     <services>
-        <service id="wheregroup.twig.controllerinfo" class="%wheregroup.controllerinfo.class%">
+        <!-- SERVICE -->
+        <service id="metador.application" class="%metador.application.class%">
+            <argument type="service" id="service_container"/>
+        </service>
+        <!-- TWIG EXTENSION -->
+        <service id="metador.twig.controllerinfo" class="%metador.twig.controllerinfo.class%">
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
-        <service id="wheregroup.twig.getparameter" class="%wheregroup.getparameter.class%">
+        <service id="metador.twig.getparameter" class="%metador.twig.getparameter.class%">
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
-        <service id="wheregroup.twig.debug" class="%wheregroup.debug.class%">
+        <service id="metador.twig.debug" class="%metador.twig.debug.class%">
             <tag name="twig.extension" />
         </service>
-        <service id="wheregroup.twig.casttoarray" class="%wheregroup.casttoarray.class%">
+        <service id="metador.twig.casttoarray" class="%metador.twig.casttoarray.class%">
+            <tag name="twig.extension" />
+        </service>
+        <service id="metador.twig.application" class="%metador.twig.application.class%">
+            <argument type="service" id="service_container"/>
             <tag name="twig.extension" />
         </service>
     </services>
