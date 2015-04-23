@@ -1,0 +1,129 @@
+<h1>Geografischer Standort</h1>
+
+<div class="twoColBox">
+    <div class="left">
+        {% set id = 'p[bbox][wizard]' %}
+
+        <label>
+            <div class="icon optional"></div>{{'Auswahl'|trans}}:
+        </label>
+        <select id="bboxSelect" class="twoCol1 no-value">
+            <option value="" selected="selected"></option>
+            {% for name, value in examples['bbox']|cast_to_array %}
+            <option value="{{ value }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon help"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right"></div>
+    <div class="clear"></div>
+
+    <div class="left">
+        {% set id = 'p[bbox][wLongitude]' %}
+        <label>
+            <div class="icon mandatory"></div>{{'W Längengrad'|trans}}:
+        </label>
+        <input id="bboxw" type="text" value="" class="twoCol1 no-value"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon help"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        {% set id = 'p[bbox][sLatitude]' %}
+        <label>
+            <div class="icon mandatory"></div>{{'S Breitengrad'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group">
+                <div class="last showHelp" {{ id|md_data_obj }}>
+                    <div class="icon help"></div>
+                </div>
+            </div>
+            <input id="bboxs" type="text" value="" class="twoCol1 no-value"/>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="left">
+        {% set id = 'p[bbox][eLongitude]' %}
+        <label>
+            <div class="icon mandatory"></div>{{'E Längengrad'|trans}}:
+        </label>
+        <input id="bboxe" type="text" value="" class="twoCol1 no-value"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon help"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        {% set id = 'p[bbox][nLatitude]' %}
+        <label>
+            <div class="icon mandatory"></div>{{'N Breitengrad'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group">
+                <div class="last showHelp" {{ id|md_data_obj }}>
+                    <div class="icon help"></div>
+                </div>
+            </div>
+            <input id="bboxn" type="text" value="" class="twoCol1 no-value"/>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+
+    {% set id = 'p[bbox]' %}
+
+    <div class="fr" style="clear:right;margin-top: 20px;">
+        <div class="btn" id="add_{{ id|md_id }}"><div class="icon add"></div></div>
+    </div>
+    <div class="clear"></div>
+    <hr/>
+
+    {% if p['bbox'] is defined %}
+        {% set length = p['bbox']|length %}
+    {% else %}
+        {% set length = 0 %}
+    {% endif %}
+
+    <div class="clear"></div>
+        <table class="bbox-label">
+        <tr>
+            <td>{{'W Längengrad'|trans}}</td>
+            <td>{{'S Breitengrad'|trans}}</td>
+            <td>{{'E Längengrad'|trans}}</td>
+            <td>{{'N Breitengrad'|trans}}</td>
+        </tr>
+    </table>
+    <div class="singleResult" id="result_{{ id|md_id }}" data-count="{{ length }}">
+        {% if p['bbox'] is defined %}
+        {% for key, value in p['bbox'] %}
+        <div>
+            <input type="hidden" name="p[bbox][{{ key }}][nLatitude]" value="{{ value['nLatitude'] }}" />
+            <input type="hidden" name="p[bbox][{{ key }}][eLongitude]" value="{{ value['eLongitude'] }}" />
+            <input type="hidden" name="p[bbox][{{ key }}][sLatitude]" value="{{ value['sLatitude'] }}" />
+            <input type="hidden" name="p[bbox][{{ key }}][wLongitude]" value="{{ value['wLongitude'] }}" />
+            <table>
+                <tr>
+                    <td>{{ value['wLongitude'] }}</td>
+                    <td>{{ value['sLatitude'] }}</td>
+                    <td>{{ value['eLongitude'] }}</td>
+                    <td>{{ value['nLatitude'] }}</td>
+                </tr>
+            </table>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon delete"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>

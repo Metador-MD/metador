@@ -1,17 +1,13 @@
 <?php
 
-namespace WhereGroup\Profile\ServiceBundle\DependencyInjection;
+namespace WhereGroup\Profile\DatasetBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * Class WhereGroupProfileServiceExtension
- * @package WhereGroup\Profile\ServiceBundle\DependencyInjection
- */
-class WhereGroupProfileServiceExtension extends Extension
+class ProfileDatasetExtension extends Extension
 {
     /**
      * @param array $configs
@@ -28,6 +24,6 @@ class WhereGroupProfileServiceExtension extends Extension
      */
     public function getAlias()
     {
-        return 'where_group_profile_service';
+        return 'profile_dataset';
     }
 }

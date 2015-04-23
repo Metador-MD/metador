@@ -2,6 +2,9 @@
 
 ## 2.1.0.0
 * Added profiles as bundles
+* Added profile column to metadata entity
+* Defined metadata entity as superclass
+* Data object is now json instead of php serialized string
 
 ## 2.0.6.5
 * dataset.xml.twig: namespace mismatch

@@ -1,0 +1,77 @@
+{% extends 'WhereGroupMetadorBundle:Design:withMenu.html.twig' %}
+
+{% block title %}MeTaDor - Daten{% endblock %}
+
+{% block contentMenu %}
+    {% include 'ProfileDatasetBundle:Profile:contentMenu.html.twig' %}
+{% endblock %}
+
+{% block pageMenu %}
+    <ul class="secondMenu">
+        <li data-tab="metadata" class="act">Metadatensatz</li>
+        <li data-tab="identification">Identifikation</li>
+        <li data-tab="classification">Klassifizierung</li>
+        <li data-tab="keyword">Schlüsselwort</li>
+        <li data-tab="geographic">Geografischer Standort</li>
+        <li data-tab="temporal">Zeitbezug</li>
+        <li data-tab="quality">Qualität</li>
+        <li data-tab="conformity">Übereinstimmung</li>
+        <li data-tab="constraints">Beschränkungen</li>
+        <li data-tab="responsibleparty">Zuständige Stelle</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% if controller_action() == 'edit' %}
+<form action="{{ path('metadata_edit', {'profile' : profile, 'id': id}) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{#     <input type="hidden" name="id" value="{{ id }}" /> #}
+{% else %}
+<form action="{{ path('metadata_new', { 'profile' : profile }) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{% endif %}
+    {# ID #}
+    {% if id is defined %}
+    <input type="hidden" name="id" value="{{ id }}" />
+    {% endif %}
+
+    {# PROFILE #}
+    <input type="hidden" name="p[_profile]" value="dataset" />
+
+    {# DATE STAMP #}
+    <input type="hidden" name="p[dateStamp]" value="{% if p['dateStamp'] is defined %}{{ p['dateStamp'] }}{% endif %}" />
+
+
+    <div class="metadataFormPages">
+        <div id="metadata" class="act">
+            {% include 'ProfileDatasetBundle:Profile:metadata.html.twig' %}
+        </div>
+        <div id="identification">
+            {% include 'ProfileDatasetBundle:Profile:identification.html.twig' %}
+        </div>
+        <div id="classification">
+            {% include 'ProfileDatasetBundle:Profile:classification.html.twig' %}
+        </div>
+        <div id="keyword">
+            {% include 'ProfileDatasetBundle:Profile:keyword.html.twig' %}
+        </div>
+        <div id="geographic">
+            {% include 'ProfileDatasetBundle:Profile:geographic.html.twig' %}
+        </div>
+        <div id="temporal">
+            {% include 'ProfileDatasetBundle:Profile:temporal.html.twig' %}
+        </div>
+        <div id="quality">
+            {% include 'ProfileDatasetBundle:Profile:quality.html.twig' %}
+        </div>
+        <div id="conformity">
+            {% include 'ProfileDatasetBundle:Profile:conformity.html.twig' %}
+        </div>
+        <div id="constraints">
+            {% include 'ProfileDatasetBundle:Profile:constraints.html.twig' %}
+        </div>
+        <div id="responsibleparty">
+            {% include 'ProfileDatasetBundle:Profile:responsibleparty.html.twig' %}
+        </div>
+    </div>
+</form>
+{% endblock %}

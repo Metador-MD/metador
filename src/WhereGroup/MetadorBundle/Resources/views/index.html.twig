@@ -18,21 +18,24 @@
     </div>
     <hr/>
 
+    {% for item in applicationGet('app-preview') %}
     <div class="preview">
         <div class="head">
-            <a href="{{ path('wheregroup_metador_data_index') }}">Daten</a>
-            <a href="{{ path('wheregroup_metador_data_new') }}" style="float:right;"><div class="icon add"></div></a>
+            <a href="{{ path('metadata_index', {'profile': item.profile}) }}">{{ item.title }}</a>
+            <a href="{{ path('metadata_new', {'profile': item.profile}) }}" style="float:right;">
+                <div class="icon add"></div>
+            </a>
         </div>
         <div class="body">
             <table class="preview-table">
-                {% for row in dataset %}
+                {% for row in item.rows %}
                 <tr>
                     <td>
-                        <a href="{{ path('wheregroup_metador_data_edit', {'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
+                        <a href="{{ path('metadata_edit', {'profile': item.profile, 'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
                     </td>
                     <td class="last-1">
 {% if row.readonly == 0 %}
-                        <form action="{{ path('wheregroup_metador_data_delete', {'id':row.id}) }}" method="post">
+                        <form action="{{ path('metadata_delete', {'profile': item.profile, 'id':row.id}) }}" method="post">
                             <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
                                 <div class="icon delete"></div>
                             </button>
@@ -44,32 +47,7 @@
             </table>
         </div>
     </div>
-    <div class="preview">
-        <div class="head">
-            <a href="{{ path('wheregroup_metador_service_index') }}">Dienste</a>
-            <a href="{{ path('wheregroup_metador_service_new') }}" style="float:right;"><div class="icon add"></div></a>
-        </div>
-        <div class="body">
-            <table class="preview-table">
-                {% for row in service %}
-                <tr>
-                    <td>
-                        <a href="{{ path('wheregroup_metador_service_edit', {'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
-                    </td>
-                    <td class="last-1">
-{% if row.readonly == 0 %}
-                        <form action="{{ path('wheregroup_metador_service_delete', {'id':row.id}) }}" method="post">
-                            <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
-                                <div class="icon delete"></div>
-                            </button>
-                        </form>
-{% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
+    {% endfor %}
     <div class="preview">
         <div class="head">Adressen</div>
         <div class="body">

@@ -22,34 +22,32 @@ class MetadataController extends Controller
     public function indexAction($profile)
     {
         $page     = $this->get('request')->get('page', 1);
-        $metadata = $this->get('metador_metadata');
         $conf     = $this->container->getParameter('metador');
         $limit    = $conf['hits'];
-
         $paging   = new Paging(
             $this->get('metador_metadata')->getMetadataCount($profile),
             $limit,
             $page
         );
 
-        return $this->render(
-            $conf['templates']['form'] . ':Dataset:index.html.twig',
-            array(
-                'rows'   => $this->get('metador_metadata')->getMetadata(
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:index', array(
+            'data' => array(
+                'profile' => $profile,
+                'rows'    => $this->get('metador_metadata')->getMetadata(
                     $limit,
                     ($page * $limit) - $limit,
                     $profile
                 ),
-                'paging' => $paging->calculate()
+                'paging'  => $paging->calculate()
             )
-        );
+        ));
     }
 
     /**
-     * @Route("/new")
+     * @Route("/{profile}/new", name="metadata_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction()
+    public function newAction($profile)
     {
         $metadata = $this->get('metador_metadata');
 
@@ -59,28 +57,27 @@ class MetadataController extends Controller
 
         // SAVE
         } elseif (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
-            return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+            return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
         }
 
         // Load Template.
         $conf = $this->container->getParameter('metador');
 
-        return $this->render(
-            $conf['templates']['form'] . ':Dataset:form.html.twig',
-            array(
-                'p' => $p,
-                'examples' => $this->getExample(),
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+            'data' => array(
+                'profile'   => $profile,
+                'p'         => $p,
+                'examples'  => $this->getExample(),
                 'hasAccess' => true
             )
-        );
+        ));
     }
 
-
     /**
-     * @Route("/use/{id}")
+     * @Route("/{profile}/use/{id}", name="metadata_use")
      * @Method({"GET"})
      */
-    public function useAction($id)
+    public function useAction($profile, $id)
     {
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
@@ -93,22 +90,21 @@ class MetadataController extends Controller
         // Load Template.
         $conf = $this->container->getParameter('metador');
 
-
-        return $this->render(
-            $conf['templates']['form'] . ':Dataset:form.html.twig',
-            array(
-                'p' => $p,
-                'examples' => $this->getExample(),
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+            'data' => array(
+                'profile'   => $profile,
+                'p'         => $p,
+                'examples'  => $this->getExample(),
                 'hasAccess' => true
             )
-        );
+        ));
     }
 
     /**
-     * @Route("/edit/{id}")
+     * @Route("/{profile}/edit/{id}", name="metadata_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction($id)
+    public function editAction($profile, $id)
     {
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
@@ -122,34 +118,34 @@ class MetadataController extends Controller
         // SAVE
         } else {
             if (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
-                return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+                return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
             }
         }
 
         // Load Template.
         $conf = $this->container->getParameter('metador');
 
-        return $this->render(
-            $conf['templates']['form'] . ':Dataset:form.html.twig',
-            array(
-                'id' => $id,
-                'p' => $p,
-                'examples' => $this->getExample(),
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+            'data' => array(
+                'profile'   => $profile,
+                'id'        => $id,
+                'p'         => $p,
+                'examples'  => $this->getExample(),
                 'hasAccess' => !$data->getReadonly()
             )
-        );
+        ));
     }
 
     /**
-     * @Route("/delete/{id}")
+     * @Route("/{profile}/delete/{id}", name="metadata_delete")
      * @Method("POST")
      */
-    public function deleteAction($id)
+    public function deleteAction($profile, $id)
     {
         $metadata = $this->get('metador_metadata');
         $metadata->deleteById($id);
 
-        return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+        return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
     }
 
     private function getExample()

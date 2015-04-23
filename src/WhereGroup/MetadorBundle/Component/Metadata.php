@@ -85,13 +85,7 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
-    /**
-     * @param $limit
-     * @param $offset
-     * @param null $type
-     * @return mixed
-     */
-    public function getMetadata($limit, $offset, $type = null)
+    public function getMetadata($limit, $offset, $profile)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
@@ -103,25 +97,9 @@ class Metadata implements MetadataInterface
             ->createQueryBuilder('m')
             ->orderBy('m.updateTime', 'DESC')
             ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        if (strtolower($type) === 'dataset') {
-            $queryBuilder
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
-                    $qb->expr()->eq('m.hierarchyLevel', '?2')
-                ))
-                ->setParameters(array(
-                    1 => 'dataset',
-                    2 => 'series',
-                ));
-        } elseif (strtolower($type) === 'service') {
-            $queryBuilder
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1')
-                ))
-                ->setParameters(array(1 => 'service'));
-        }
+            ->setMaxResults($limit)
+            ->where('m.profile = :profile')
+            ->setParameter('profile', $profile);
 
         /** @var \WhereGroup\MetadorBundle\Entity\Metadata[] $result */
         $result = $queryBuilder
@@ -139,7 +117,7 @@ class Metadata implements MetadataInterface
      * @param $type
      * @return integer
      */
-    public function getMetadataCount($type)
+    public function getMetadataCount($profile)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
@@ -149,63 +127,11 @@ class Metadata implements MetadataInterface
             ->get('doctrine')
             ->getRepository(self::REPOSITORY)
             ->createQueryBuilder('m')
-            ->select('count(m)');
-
-        if (strtolower($type) === 'dataset') {
-            $queryBuilderC
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1'),
-                    $qb->expr()->eq('m.hierarchyLevel', '?2')
-                ))
-                ->setParameters(array(
-                    1 => 'dataset',
-                    2 => 'series',
-                ));
-        } elseif (strtolower($type) === 'service') {
-            $queryBuilderC
-                ->where($qb->expr()->orx(
-                    $qb->expr()->eq('m.hierarchyLevel', '?1')
-                ))
-                ->setParameters(array(1 => 'service'));
-        }
+            ->select('count(m)')
+            ->where('m.profile = :profile')
+            ->setParameter('profile', $profile);
 
         return $queryBuilderC->getQuery()->getSingleScalarResult();
-    }
-
-    /**
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getDataset($limit, $offset)
-    {
-        return $this->getMetadata($limit, $offset, 'dataset');
-    }
-
-    /**
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getService($limit, $offset)
-    {
-        return $this->getMetadata($limit, $offset, 'service');
-    }
-
-    /**
-     * @return integer
-     */
-    public function getServiceCount()
-    {
-        return $this->getMetadataCount('service');
-    }
-
-    /**
-     * @return integer
-     */
-    public function getDatasetCount()
-    {
-        return $this->getMetadataCount('dataset');
     }
 
     /**
@@ -306,6 +232,7 @@ class Metadata implements MetadataInterface
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
+        $metadata->setProfile(isset($p['_profile']) ? $p['_profile'] : $p['hierarchyLevel']);
         $metadata->setSearchfield(trim($searchfield));
         $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($date));

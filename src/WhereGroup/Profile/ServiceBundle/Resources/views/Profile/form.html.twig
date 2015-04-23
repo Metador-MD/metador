@@ -1,0 +1,71 @@
+{% extends 'WhereGroupMetadorBundle:Design:withMenu.html.twig' %}
+
+{% block title %}MeTaDor - Dienste{% endblock %}
+
+{% block contentMenu %}
+    {% include 'ProfileServiceBundle:Profile::contentMenu.html.twig' %}
+{% endblock %}
+
+{% block pageMenu %}
+    <ul class="secondMenu">
+        <li data-tab="metadata" class="act">Metadatensatz</li>
+        <li data-tab="identification">Identifikation</li>
+        <li data-tab="classification">Klassifizierung</li>
+        <li data-tab="keyword">Schlüsselwort</li>
+        <li data-tab="geographic">Geografischer Standort</li>
+        <li data-tab="temporal">Zeitbezug</li>
+        <li data-tab="conformity">Übereinstimmung</li>
+        <li data-tab="constraints">Beschränkungen</li>
+        <li data-tab="responsibleparty">Zuständige Stelle</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% if controller_action() == 'edit' %}
+<form action="{{ path('metadata_edit', { 'profile' : profile, 'id': id }) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+    <input type="hidden" name="id" value="{{ id }}" />
+{% else %}
+<form action="{{ path('metadata_new', { 'profile' : profile }) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{% endif %}
+
+    {#
+        DATE STAMP
+    #}
+    <input type="hidden" name="p[dateStamp]" value="{% if p['dateStamp'] is defined %}{{ p['dateStamp'] }}{% endif %}" />
+    {#
+        HIERARCHY LEVEL
+    #}
+    <input type="hidden" name="p[hierarchyLevel]" value="service" />
+
+    <div class="metadataFormPages">
+        <div id="metadata" class="act">
+            {% include 'ProfileServiceBundle:Profile::metadata.html.twig' %}
+        </div>
+        <div id="identification">
+            {% include 'ProfileServiceBundle:Profile::identification.html.twig' %}
+        </div>
+        <div id="classification">
+            {% include 'ProfileServiceBundle:Profile::classification.html.twig' %}
+        </div>
+        <div id="keyword">
+            {% include 'ProfileServiceBundle:Profile::keyword.html.twig' %}
+        </div>
+        <div id="geographic">
+            {% include 'ProfileServiceBundle:Profile::geographic.html.twig' %}
+        </div>
+        <div id="temporal">
+            {% include 'ProfileServiceBundle:Profile::temporal.html.twig' %}
+        </div>
+        <div id="conformity">
+            {% include 'ProfileServiceBundle:Profile::conformity.html.twig' %}
+        </div>
+        <div id="constraints">
+            {% include 'ProfileServiceBundle:Profile::constraints.html.twig' %}
+        </div>
+        <div id="responsibleparty">
+            {% include 'ProfileServiceBundle:Profile::responsibleparty.html.twig' %}
+        </div>
+    </div>
+</form>
+{% endblock %}

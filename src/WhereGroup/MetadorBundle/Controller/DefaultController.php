@@ -15,8 +15,6 @@ use WhereGroup\MetadorBundle\Entity\Helptext;
 use WhereGroup\MetadorBundle\Entity\Address;
 use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 
-
-
 /**
  * @Route("/metador")
  */
@@ -26,7 +24,8 @@ class DefaultController extends Controller
      * @Route("/")
      * @Template("WhereGroupMetadorBundle::index.html.twig")
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $limit = 30;
         $offset = 0;
 
@@ -34,8 +33,8 @@ class DefaultController extends Controller
         $address = $this->get('metador_address');
 
         return array(
-            'service' => $metadata->getService($limit, $offset),
-            'dataset' => $metadata->getDataset($limit, $offset),
+            'service' => array(), // $metadata->getService($limit, $offset),
+            'dataset' => array(), // $metadata->getDataset($limit, $offset),
             'address' => $address->get()
         );
     }
@@ -43,39 +42,21 @@ class DefaultController extends Controller
     /**
      * @Route("/xml/{id}")
      */
-    public function xmlAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $metadata = $this->get('metador_metadata');
-        $data = $metadata->getById($id);
-
-        if($data) {
+    public function xmlAction($id)
+    {
+        if ($data = $this->get('metador_metadata')->getById($id)) {
             $p = $data->getObject();
 
-            $data = array('p' => $p);
-
-            $conf = $this->container->getParameter('metador');
-
-            switch($p['hierarchyLevel']) {
-                case 'service' :
-                    $template = $conf['templates']['form'] . ':Service:service.xml.twig';
-                    break;
-                case 'dataset' :
-                case 'series' :
-                    $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
-                    break;
-                default :
-                    $template = "WhereGroupMetadorBundle::exception.xml.twig";
-                    $data = array('message' => 'HierarchyLevel unbekannt!');
-            }
-
-            $xml = $this->render($template, $data);
-
-        } else {
-            $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
-                "message" => "Datensatz nicht gefunden."
+            return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
+                'data' => array(
+                    'p' => $p,
+                )
             ));
         }
+
+        $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+            "message" => "Datensatz nicht gefunden."
+        ));
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
@@ -87,13 +68,14 @@ class DefaultController extends Controller
     /**
      * @Route("/obj/{id}")
      */
-    public function objAction($id) {
+    public function objAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
-        if($data) {
+        if ($data) {
 
             $p = $data->getObject();
 
@@ -117,13 +99,14 @@ class DefaultController extends Controller
     /**
      * @Route("/pdf/{id}")
      */
-    public function pdfAction($id) {
+    public function pdfAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $conf = $this->container->getParameter('metador');
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
-        if($data) {
+        if ($data) {
 
             $p = $data->getObject();
 
@@ -168,13 +151,14 @@ class DefaultController extends Controller
     /**
      * @Route("/xmlimport/{id}")
      */
-    public function xmlimportAction($id) {
+    public function xmlimportAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
-        if($data) {
+        if ($data) {
             $p = $data->getObject();
 
             $data = array('p' => $p);
@@ -182,14 +166,14 @@ class DefaultController extends Controller
             $conf = $this->container->getParameter('metador');
 
             switch($p['hierarchyLevel']) {
-                case 'service' :
+                case 'service':
                     $template = $conf['templates']['form'] . ':Service:service.xml.twig';
                     break;
-                case 'dataset' :
-                case 'series' :
+                case 'dataset':
+                case 'series':
                     $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
                     break;
-                default :
+                default:
                     $template = "WhereGroupMetadorBundle::exception.xml.twig";
                     $data = array('message' => 'HierarchyLevel unbekannt!');
             }
@@ -223,7 +207,8 @@ class DefaultController extends Controller
      * @Route("/help/get")
      * @Method({"POST", "GET"})
      */
-    public function getHelptext() {
+    public function getHelptext()
+    {
         $helptext = new Helptext();
         $string = "";
 
@@ -232,7 +217,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $helptext = $em->getRepository('WhereGroupMetadorBundle:Helptext')->findOneById($id);
 
-        if($helptext) {
+        if ($helptext) {
             $string = $helptext->getText();
         } else {
             $string = "Hilfetext nicht definiert.";
@@ -251,15 +236,17 @@ class DefaultController extends Controller
      * @Route("/help/set")
      * @Method("POST")
      */
-    public function setHelptext() {
-        if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN'))
+    public function setHelptext()
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
             throw new AccessDeniedException();
+        }
 
         $id = $this->getRequest()->get('id', false);
         $html = $this->getRequest()->get('html', false);
         $debug = "";
 
-        if($id && $html) {
+        if ($id && $html) {
             $em = $this->getDoctrine()->getManager();
             $helptext = $em->getRepository('WhereGroupMetadorBundle:Helptext')->findOneById($id);
 
@@ -267,10 +254,10 @@ class DefaultController extends Controller
             $html = str_replace(
                 array('<div>','</div>'),
                 array('',''),
-                $html)
-            ;
+                $html
+            );
 
-            if($helptext) {
+            if ($helptext) {
                 $helptext->setText($html);
             } else {
                 $helptext = new Helptext();
@@ -292,15 +279,17 @@ class DefaultController extends Controller
      * @Route("/address/get")
      * @Method({"POST", "GET"})
      */
-    public function addressGetAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER'))
+    public function addressGetAction()
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
+        }
 
         $array = array();
         $em = $this->getDoctrine()->getManager();
         $addresses = $em->getRepository('WhereGroupMetadorBundle:Address')->findAll();
 
-        foreach($addresses as $address) {
+        foreach ($addresses as $address) {
             $array[] = array(
                 'organisationName' => $address->getOrganisationName(),
                 'electronicMailAddress' => $address->getElectronicMailAddress(),
@@ -328,19 +317,21 @@ class DefaultController extends Controller
      * @Route("/address/delete/{id}")
      * @Method("POST")
      */
-    public function addressDeleteAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER'))
+    public function addressDeleteAction($id)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
+        }
 
         $em = $this->getDoctrine()->getManager();
         $address = $em->getRepository('WhereGroupMetadorBundle:Address')->findOneById($id);
 
         try {
-            if($address) {
+            if ($address) {
                 $em->remove($address);
                 $em->flush();
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->get('session')->getFlashBag()->add('error', $e->getMessage());
         }
 
@@ -351,8 +342,9 @@ class DefaultController extends Controller
      * @Route("/share/")
      * @Method("POST")
      */
-    public function shareAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER'))
+    public function shareAction()
+    {
+        if(false === $this->get('security.context')->isGranted('ROLE_USER'))
             throw new AccessDeniedException();
 
         $public = $this->getRequest()->get('public', 0);
@@ -363,7 +355,7 @@ class DefaultController extends Controller
         $metadata = $this->get('metador_metadata');
         $data = $metadata->getById($id);
 
-        if($data) {
+        if ($data) {
             // SYSTEM CHANGE
             $p = $data->getObject();
             $p['_SYSTEM'] = 1;
@@ -376,8 +368,9 @@ class DefaultController extends Controller
 
             // REMOVE SYSTEM CHANGE
             $p = $data->getObject();
-            if (isset($p['_SYSTEM']))
+            if (isset($p['_SYSTEM'])) {
                 unset($p['_SYSTEM']);
+            }
             $data->setObject($p);
 
             $em->persist($data);

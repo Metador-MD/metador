@@ -4,11 +4,7 @@ namespace WhereGroup\MetadorBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * Interface MetadataInterface
- * @package WhereGroup\MetadorBundle\Component
- * @author A. R. Pour
- */
+
 interface MetadataInterface
 {
 /**
@@ -34,43 +30,13 @@ interface MetadataInterface
      */
     public function getByUUID($uuid);
 
-    /**
-     * @param $limit
-     * @param $offset
-     * @param null $type
-     * @return mixed
-     */
-    public function getMetadata($limit, $offset, $type = null);
+    public function getMetadata($limit, $offset, $profile);
 
     /**
-     * @param string $type
+     * @param string $profile
      * @return integer
      */
-    public function getMetadataCount($type);
-
-    /**
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getDataset($limit, $offset);
-
-    /**
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getService($limit, $offset);
-
-    /**
-     * @return integer
-     */
-    public function getServiceCount();
-
-    /**
-     * @return integer
-     */
-    public function getDatasetCount();
+    public function getMetadataCount($profile);
 
     /**
      * @param $p

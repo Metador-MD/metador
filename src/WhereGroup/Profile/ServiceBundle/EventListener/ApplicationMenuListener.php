@@ -17,7 +17,7 @@ class ApplicationMenuListener
 
         $this->application->add('app-global-menu', 'service', array(
             'label'  => 'Geodatendienste',
-            'path'   => 'wheregroup_metador_service_index',
+            'path'   => 'metadata_index',
             'params' => array()
         ));
     }
