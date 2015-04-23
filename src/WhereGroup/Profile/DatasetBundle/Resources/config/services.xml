@@ -4,12 +4,13 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <!-- EVENT LISTENER -->
-        <parameter key="metador.profile.data.menu.listener.class">WhereGroup\Profile\DatasetBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.profile.dataset.menu.listener.class">WhereGroup\Profile\DatasetBundle\EventListener\ApplicationMenuListener</parameter>
     </parameters>
     <services>
         <!-- EVENT LISTENER -->
-        <service id="metador.profile.data.menu.listener" class="%metador.profile.data.menu.listener.class%">
+        <service id="metador.profile.dataset.menu.listener" class="%metador.profile.dataset.menu.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="metador_metadata" />
         </service>
     </services>
 </container>
