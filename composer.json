@@ -19,7 +19,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "tecnick.com/tcpdf": "dev-master",
-        "rhumsaa/uuid": "~2.8"
+        "ramsey/uuid": "~2.8"
     },
     "scripts": {
         "post-install-cmd": [
