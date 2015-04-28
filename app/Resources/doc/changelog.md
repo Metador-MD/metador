@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6.5
+* Changed rhumsaa/uuid to ramsey/uuid
+
 ## 2.0.6.4
 * Added OpenLayers
 

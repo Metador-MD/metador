@@ -11,6 +11,7 @@
 .project
 
 /app/config/parameters.yml
+/app/SymfonyRequirements.php
 /app/tmp
 /bin
 /src/User
