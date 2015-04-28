@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.6.5
+* Changed rhumsaa/uuid to ramsey/uuid
+* dataset.xml.twig: namespace mismatch
+* Helptext adjusted (Thanks Charlotte)
+
 ## 2.0.6.4
 * Added OpenLayers
 
