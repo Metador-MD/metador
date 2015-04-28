@@ -7,6 +7,7 @@
 * Data object is now json instead of php serialized string
 
 ## 2.0.6.5
+* Changed rhumsaa/uuid to ramsey/uuid
 * dataset.xml.twig: namespace mismatch
 * Helptext adjusted (Thanks Charlotte)
 

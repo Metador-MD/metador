@@ -2371,3 +2371,14 @@ body {
   color: blue;
   text-decoration: none;
 }
+
+textarea.code {
+  width: 100%;
+  height: 100px;
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  background: #faf8f0;
+}
