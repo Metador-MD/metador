@@ -139,16 +139,13 @@ class MetadataController extends Controller
      */
     public function deleteAction($profile, $id)
     {
-        $metadata = $this->get('metador_metadata');
-        $metadata->deleteById($id);
+        $this->get('metador_metadata')->deleteById($id);
 
         return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
     }
 
     private function getExample()
     {
-        $wizard = $this->container->get('metador_wizard');
-
-        return $wizard->getExamples('dataset');
+        return $this->container->get('metador_wizard')->getExamples('dataset');
     }
 }

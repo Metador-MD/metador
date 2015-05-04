@@ -1,8 +1,8 @@
 <?php
 
-namespace WhereGroup\MetadorBundle\Command;
+namespace WhereGroup\CoreBundle\Command;
 
-use WhereGroup\MetadorBundle\Entity\Helptext;
+use WhereGroup\CoreBundle\Entity\Helptext;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,11 +13,11 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 /**
- * Class ImportHelptextCommand
- * @package WhereGroup\MetadorBundle\Command
+ * Class ExportHelptextCommand
+ * @package WhereGroup\CoreBundle\Command
  * @author A. R. Pour
  */
-class ImportHelptextCommand extends ContainerAwareCommand
+class ExportHelptextCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -31,9 +31,9 @@ class ImportHelptextCommand extends ContainerAwareCommand
                 )
             )
         )
-        ->setDescription('Import helptext.')
-        ->setHelp('Import helptext.')
-        ->setName('metador:import:helptext');
+        ->setDescription('Export helptext.')
+        ->setHelp('Export helptext.')
+        ->setName('metador:export:helptext');
     }
 
     /**
@@ -54,53 +54,33 @@ class ImportHelptextCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $exportData = array();
+
         $filename = $input->getOption('file');
 
         if (empty($filename)) {
             throw new \RuntimeException("File wurde nicht angegeben!");
         }
 
-        // TODO: file_exists readable etc.
+
         $serializer = new Serializer(
             array(new GetSetMethodNormalizer()),
             array(new JsonEncoder())
         );
 
-        $helptexts = json_decode(file_get_contents($filename));
-
-        $em = $this
+        $helptexts = $this
             ->getContainer()
             ->get('doctrine')
-            ->getManager();
+            ->getRepository('WhereGroupCoreBundle:Helptext')
+            ->findAll();
 
         foreach ($helptexts as $helptext) {
-            $newHelptext = $serializer->deserialize(
-                $helptext,
-                'WhereGroup\MetadorBundle\Entity\Helptext',
-                'json'
-            );
-
-            $existingHelptext = $this
-                ->getContainer()
-                ->get('doctrine')
-                ->getRepository('WhereGroupMetadorBundle:Helptext')
-                ->findById(
-                    $newHelptext->getId()
-                );
-
-            if ($existingHelptext) {
-                $existingHelptext[0]->setText(
-                    $newHelptext->getText()
-                );
-                $em->persist($existingHelptext[0]);
-            } else {
-                $em->persist($newHelptext);
-            }
+            $exportData[] = $serializer->serialize($helptext, 'json');
         }
 
-        $em->flush();
+        file_put_contents($filename, json_encode($exportData));
 
-        $output->writeln('Import done.');
+        $output->writeln('File saved to "' . $filename . '".');
 
         return 0;
     }

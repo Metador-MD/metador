@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\MetadorBundle\Command;
+namespace WhereGroup\CoreBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Class ImportMetadataCommand
- * @package WhereGroup\MetadorBundle\Command
+ * @package WhereGroup\CoreBundle\Command
  * @author A. R. Pour
  */
 class ImportMetadataCommand extends ContainerAwareCommand
@@ -71,7 +71,7 @@ class ImportMetadataCommand extends ContainerAwareCommand
                 $config
             );
 
-            /** @var \WhereGroup\MetadorBundle\Component\Metadata $metadata */
+            /** @var \WhereGroup\CoreBundle\Component\Metadata $metadata */
             $metadata = $this->getContainer()->get('metador_metadata');
             $successful = $metadata->saveObject($object, false, 'root');
 

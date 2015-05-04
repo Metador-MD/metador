@@ -1,15 +1,22 @@
 <?php
 
-namespace WhereGroup\MetadorBundle\Controller;
+namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use WhereGroup\MetadorBundle\Entity\Metadata;
+use WhereGroup\MetadorBundle\Entity\Helptext;
+use WhereGroup\MetadorBundle\Entity\Address;
+use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
 
 /**
- * @Route("/import")
+ * @Route("/metador/import")
  */
 class ImportController extends Controller
 {
@@ -31,7 +38,7 @@ class ImportController extends Controller
         foreach ($this->getRequest()->files as $file) {
             if (!is_object($file)) {
                 $this->get('session')->getFlashBag()->add('error', 'Bitte XML-Datei angeben.');
-                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+                return $this->redirect($this->generateUrl('metador_dashboard'));
             }
 
             $path = $file->getPath() . '/' . $file->getClientOriginalName();
@@ -58,7 +65,7 @@ class ImportController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+        return $this->redirect($this->generateUrl('metador_dashboard'));
     }
 
     /**
@@ -72,7 +79,6 @@ class ImportController extends Controller
 
         foreach ($services as $uuid => $service) {
             if (isset($service['override']) && $service['override'] == 1) {
-
                 if (!($p = $wmsImport->isGetCapabilitiesUrl($service['url']))) {
                     $this->get('session')->getFlashBag()->add(
                         'error',
@@ -85,7 +91,7 @@ class ImportController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+        return $this->redirect($this->generateUrl('metador_dashboard'));
     }
 
     /**
@@ -107,7 +113,7 @@ class ImportController extends Controller
 
         if (!$urls) {
             $this->get('session')->getFlashBag()->add('error', 'Bitte mindestens eine GetCapabilities URL angeben.');
-            return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+            return $this->redirect($this->generateUrl('metador_dashboard'));
         }
 
         foreach ($urls as $url) {
@@ -123,7 +129,7 @@ class ImportController extends Controller
 
             if (!$uuid) {
                 $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
-                return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+                return $this->redirect($this->generateUrl('metador_dashboard'));
             }
 
             if ($id = $wmsImport->metadataExists($uuid)) {
@@ -153,6 +159,6 @@ class ImportController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('wheregroup_metador_default_index'));
+        return $this->redirect($this->generateUrl('metador_dashboard'));
     }
 }

@@ -95,32 +95,6 @@ class GDIDEController extends Controller
             )
         );
     }
-    /**
-     * Route("/test")
-     */
-    // public function testAction()
-    // {
-    //     $config = $this->container->getParameter('metador');
-
-    //     // ini_set('default_socket_timeout', 600);
-    //     // var_dump(ini_get('default_socket_timeout'));
-
-    //     $doc = new TestsuiteDocument(
-    //         $config['gdi_de']['url'],
-    //         $config['gdi_de']['user'],
-    //         $config['gdi_de']['password'],
-    //         isset($config['proxy']['host']) ? $config['proxy']['host'] : null,
-    //         isset($config['proxy']['port']) ? $config['proxy']['port'] : null
-    //     );
-
-    //     try {
-    //         $doc->deleteAllTestReport();
-    //     } catch (\SoapFault $fault) {
-    //         var_dump($fault);
-    //     }
-
-    //     die('done');
-    // }
 
     private function loadMetadata($id)
     {

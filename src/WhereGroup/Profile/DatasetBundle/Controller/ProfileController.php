@@ -56,4 +56,32 @@ class ProfileController extends Controller
 
         return $response;
     }
+
+    public function pdfAction($data)
+    {
+        // TODO: refactoring
+        return new Response("refactoring");
+
+        $html = $this->render("ProfileDatasetBundle:Profile:metadata.pdf.twig", array(
+            "p" => $data['p']
+        ));
+
+        error_reporting(E_ERROR);
+
+        require_once __DIR__ . '/../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
+
+        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Metador');
+        $pdf->SetTitle($p['title']);
+        $pdf->SetSubject('Metadaten');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->SetMargins(20, 20, 15);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->setAutoPageBreak(true, 20);
+        $pdf->AddPage();
+        $pdf->writeHTML($html->getContent(), true, true, false, false, '');
+        $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+    }
 }
