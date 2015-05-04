@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\SearchBundle\Component\Paging;
 
 /**
+ * TODO: remove me
  * @Route("/metador/service")
  */
 class ServiceController extends Controller

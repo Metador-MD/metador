@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="search-content">
-    {% if paging.prevPage is defined %}<a href="{{ path('wheregroup_metador_data_index', { 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}
+    {% if paging.prevPage is defined %}<a href="{{ path('metadata_index', { 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}
     <div class="search-prev{% if paging.prevPage is not defined %} disabled{% endif %}" id="search_prev" data-page="">
         <div class="page-arrow"></div>
     </div>
@@ -59,7 +59,7 @@
                     </td>
                     <td class="right last-1">
         {% if row.readonly == 0 %}
-                        <form action="{{ path('wheregroup_metador_data_delete', {'id':row.id}) }}" method="post">
+                        <form action="{{ path('metadata_delete', {'id':row.id}) }}" method="post">
                             <button class="noStyle" onClick="return confirm('Wirklich löschen?')">
                                 <div class="icon delete"></div>
                             </button>
@@ -73,7 +73,7 @@
         </div>
     {# CONTENT END #}
     </div>
-    {% if paging.nextPage is defined %}<a href="{{ path('wheregroup_metador_data_index', { 'page' : paging.nextPage }) }}" style="border: 1px solid red;">{% endif %}
+    {% if paging.nextPage is defined %}<a href="{{ path('metadata_index', { 'page' : paging.nextPage }) }}" style="border: 1px solid red;">{% endif %}
     <div class="search-next{% if paging.nextPage is not defined %} disabled{% endif %}" id="search_next" data-page="">
         <div class="page-arrow"></div>
     </div>

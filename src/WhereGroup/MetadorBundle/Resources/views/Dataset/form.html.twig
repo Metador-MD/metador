@@ -24,12 +24,12 @@
 {% block content %}
 
 {% if controller_action() == 'edit' %}
-<form action="{{ path('wheregroup_metador_data_edit', {'id': id}) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+<form action="{{ path('metadata_edit', {'id': id}) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
     <input type="hidden" name="id" value="{{ id }}" />
 {% else %}
-<form action="{{ path('wheregroup_metador_data_new') }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+<form action="{{ path('metadata_new') }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
 {% endif %}
-    
+
     {% if id is defined %}<input type="hidden" name="id" value="{{ id }}" />{% endif %}
     {#
         DATE STAMP

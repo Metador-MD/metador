@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\SearchBundle\Component\Paging;
 
 /**
+ * TODO: remove me
  * @Route("/metador/data")
  */
 class DataController extends Controller
@@ -49,7 +50,7 @@ class DataController extends Controller
 
         // SAVE
         } elseif (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
-            return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+            return $this->redirect($this->generateUrl('metadata_index'));
         }
 
         // Load Template.
@@ -112,7 +113,7 @@ class DataController extends Controller
         // SAVE
         } else {
             if (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
-                return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+                return $this->redirect($this->generateUrl('metadata_index'));
             }
         }
 
@@ -139,7 +140,7 @@ class DataController extends Controller
         $metadata = $this->get('metador_metadata');
         $metadata->deleteById($id);
 
-        return $this->redirect($this->generateUrl('wheregroup_metador_data_index'));
+        return $this->redirect($this->generateUrl('metadata_index'));
     }
 
     private function getExample()

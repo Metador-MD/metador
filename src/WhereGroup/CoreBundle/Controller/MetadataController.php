@@ -90,7 +90,7 @@ class MetadataController extends Controller
         // Load Template.
         $conf = $this->container->getParameter('metador');
 
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:use', array(
             'data' => array(
                 'profile'   => $profile,
                 'p'         => $p,
@@ -122,10 +122,7 @@ class MetadataController extends Controller
             }
         }
 
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
-
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:edit', array(
             'data' => array(
                 'profile'   => $profile,
                 'id'        => $id,
