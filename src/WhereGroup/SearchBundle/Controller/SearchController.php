@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Component\MetadorController;
+use WhereGroup\CoreBundle\Entity\Metadata;
+use WhereGroup\CoreBundle\Component\MetadorController;
 use WhereGroup\SearchBundle\Component\MetadataSearch;
 use WhereGroup\SearchBundle\Component\Paging;
 

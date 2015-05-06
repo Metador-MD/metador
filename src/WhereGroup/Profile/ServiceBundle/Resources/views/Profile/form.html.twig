@@ -1,9 +1,9 @@
-{% extends 'WhereGroupMetadorBundle:Design:withMenu.html.twig' %}
+{% extends 'WhereGroupThemeBundle::templateWithMenu.html.twig' %}
 
 {% block title %}MeTaDor - Dienste{% endblock %}
 
 {% block contentMenu %}
-    {% include 'ProfileServiceBundle:Profile::contentMenu.html.twig' %}
+    {% include 'ProfileServiceBundle:Profile:contentMenu.html.twig' %}
 {% endblock %}
 
 {% block pageMenu %}
@@ -40,31 +40,31 @@
 
     <div class="metadataFormPages">
         <div id="metadata" class="act">
-            {% include 'ProfileServiceBundle:Profile::metadata.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:metadata.html.twig' %}
         </div>
         <div id="identification">
-            {% include 'ProfileServiceBundle:Profile::identification.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:identification.html.twig' %}
         </div>
         <div id="classification">
-            {% include 'ProfileServiceBundle:Profile::classification.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:classification.html.twig' %}
         </div>
         <div id="keyword">
-            {% include 'ProfileServiceBundle:Profile::keyword.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:keyword.html.twig' %}
         </div>
         <div id="geographic">
-            {% include 'ProfileServiceBundle:Profile::geographic.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:geographic.html.twig' %}
         </div>
         <div id="temporal">
-            {% include 'ProfileServiceBundle:Profile::temporal.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:temporal.html.twig' %}
         </div>
         <div id="conformity">
-            {% include 'ProfileServiceBundle:Profile::conformity.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:conformity.html.twig' %}
         </div>
         <div id="constraints">
-            {% include 'ProfileServiceBundle:Profile::constraints.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:constraints.html.twig' %}
         </div>
         <div id="responsibleparty">
-            {% include 'ProfileServiceBundle:Profile::responsibleparty.html.twig' %}
+            {% include 'ProfileServiceBundle:Profile:responsibleparty.html.twig' %}
         </div>
     </div>
 </form>

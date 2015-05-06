@@ -31,7 +31,7 @@ class ExportController extends Controller
             ));
         }
 
-        $xml = $this->render("WhereGroupMetadorBundle::exception.xml.twig", array(
+        $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
             "message" => "Datensatz nicht gefunden."
         ));
 

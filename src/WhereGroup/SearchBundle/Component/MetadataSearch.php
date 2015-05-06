@@ -3,7 +3,7 @@
 namespace WhereGroup\SearchBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use WhereGroup\MetadorBundle\Component\MetadorUserInterface;
+use WhereGroup\CoreBundle\Component\MetadorUserInterface;
 
 class MetadataSearch {
     private $container;
@@ -36,31 +36,31 @@ class MetadataSearch {
 
         $searchCount = $this->container
                 ->get('doctrine')
-                ->getRepository('WhereGroupMetadorBundle:Metadata')
+                ->getRepository('WhereGroupCoreBundle:Metadata')
                 ->createQueryBuilder('m')
                 ->select('count(m.id)');
 
         $search = $this->container
                 ->get('doctrine')
-                ->getRepository('WhereGroupMetadorBundle:Metadata')
+                ->getRepository('WhereGroupCoreBundle:Metadata')
                 ->createQueryBuilder('m')
                 ->setFirstResult(($params['page'] * $params['limit']) - $params['limit'])
                 ->setMaxResults($params['limit']);
- 
+
         // prepair searchterms
         foreach (array_filter(explode(' ' , $params['searchterm'])) as $term) {
             $term = trim(strtolower($term));
-            
+
             $search->andWhere(
                 $qb->expr()->like(
-                    'm.searchfield', 
+                    'm.searchfield',
                     $qb->expr()->literal('%' . $term . '%')
                 )
             );
 
             $searchCount->andWhere(
                 $qb->expr()->like(
-                    'm.searchfield', 
+                    'm.searchfield',
                     $qb->expr()->literal('%' . $term . '%')
                 )
             );
@@ -73,19 +73,19 @@ class MetadataSearch {
             $search->setParameter('dataset', 'dataset');
             $searchCount->setParameter('dataset', 'dataset');
         }
-        
+
         if (!empty($params['filter-service'])) {
             $orx->add($qb->expr()->eq('m.hierarchyLevel', ':service'));
             $search->setParameter('service', 'service');
             $searchCount->setParameter('service', 'service');
         }
-        
+
         if (!empty($params['filter-series'])) {
             $orx->add($qb->expr()->eq('m.hierarchyLevel', ':series'));
             $search->setParameter('series', 'series');
             $searchCount->setParameter('series', 'series');
         }
-        
+
         $search->andWhere($orx);
         $searchCount->andWhere($orx);
 
@@ -96,12 +96,12 @@ class MetadataSearch {
             $roles = $user->getRoles();
 
             $orx = $qb->expr()->orX();
-            
+
             foreach ($roles as $role) {
                 if ($role === 'ROLE_USER') continue;
                 $orx->add($qb->expr()->like('m.groups', $qb->expr()->literal('%' . $role . '%')));
             }
-            
+
             $orx->add($qb->expr()->eq('m.public', ':public'));
 
             $search
@@ -112,7 +112,7 @@ class MetadataSearch {
                 ->andWhere($orx)
                 ->setParameter('public', true);
 
-            unset($orx);      
+            unset($orx);
         } else {
             $search->andWhere(
                 $qb->expr()->eq('m.public', ':public')

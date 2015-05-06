@@ -28,9 +28,17 @@ class Application
 
         $controllerInfo = $container->get('request')->get('_controller');
 
-        $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
-        $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
-        $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+        // Forward to controller generates a different controller information
+        if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
+            $this->bundle     = $match[1];
+            $this->controller = $match[2];
+            $this->action     = $match[3];
+        } else {
+            $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
+            $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
+            $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+        }
+
         $this->route      = $container->get('request')->get('_route');
 
         unset($controllerInfo);
@@ -41,6 +49,7 @@ class Application
         // dispatch event
         $event = new ApplicationEvent($this, array());
         $container->get('event_dispatcher')->dispatch('application.loading', $event);
+
 
         // die('<pre>' . print_r($this->data, 1) . '</pre>');
     }
@@ -124,6 +133,10 @@ class Application
      */
     public function isAction($action)
     {
+        if (is_array($action)) {
+            return in_array($this->action, $action);
+        }
+
         return ($this->action === $action);
     }
 

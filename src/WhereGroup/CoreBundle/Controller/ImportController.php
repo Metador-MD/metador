@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Entity\Helptext;
-use WhereGroup\MetadorBundle\Entity\Address;
-use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
+use WhereGroup\CoreBundle\Entity\Metadata;
+use WhereGroup\CoreBundle\Entity\Helptext;
+use WhereGroup\CoreBundle\Entity\Address;
+use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
 /**
  * @Route("/metador/import")

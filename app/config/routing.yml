@@ -10,10 +10,10 @@ where_group_user:
     resource: "@WhereGroupUserBundle/Controller/"
     type:     annotation
 
-where_group_metador:
-    resource: "@WhereGroupMetadorBundle/Controller/"
-    type:     annotation
-
 where_group_search:
     resource: "@WhereGroupSearchBundle/Controller/"
+    type:     annotation
+
+where_group_theme:
+    resource: "@WhereGroupThemeBundle/Controller/"
     type:     annotation

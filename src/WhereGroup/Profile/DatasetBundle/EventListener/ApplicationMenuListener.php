@@ -2,8 +2,9 @@
 
 namespace WhereGroup\Profile\DatasetBundle\EventListener;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
-use WhereGroup\MetadorBundle\Component\MetadataInterface;
+use WhereGroup\CoreBundle\Component\MetadataInterface;
 
 class ApplicationMenuListener
 {
@@ -11,10 +12,12 @@ class ApplicationMenuListener
 
     protected $application;
     protected $metadata;
+    protected $container;
 
-    public function __construct(MetadataInterface $metadata)
+    public function __construct(MetadataInterface $metadata, ContainerInterface $container)
     {
         $this->metadata = $metadata;
+        $this->container = $container;
     }
 
     public function __destruct()

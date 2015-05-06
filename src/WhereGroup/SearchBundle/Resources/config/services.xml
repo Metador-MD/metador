@@ -3,7 +3,7 @@
 
     <parameters>
         <parameter key="metador_metadata_search.class">WhereGroup\SearchBundle\Component\MetadataSearch</parameter>
-        <parameter key="metador.user.class">WhereGroup\MetadorBundle\Component\MetadorUser</parameter>
+        <parameter key="metador.user.class">WhereGroup\CoreBundle\Component\MetadorUser</parameter>
     </parameters>
 
     <services>

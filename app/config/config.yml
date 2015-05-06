@@ -4,15 +4,6 @@ imports:
 
 parameters:
     metador:
-        logo: %metador.logo%
-        favicon: %metador.favicon%
-
-        templates:
-            form: %metador.templates.form%
-            base: %metador.templates.base%
-            main: %metador.templates.main%
-            login: %metador.templates.login%
-
         hits: %metador.hits%
 
         search:
@@ -103,5 +94,5 @@ doctrine:
             default:
                 connection: default
                 mappings:
-                    WhereGroupMetadorBundle: ~
+                    WhereGroupCoreBundle: ~
                     WhereGroupUserBundle: ~

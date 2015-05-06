@@ -3,7 +3,7 @@
 namespace WhereGroup\ExportBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use WhereGroup\MetadorBundle\Event\MetadataChangeEvent;
+use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
 
 class MetadorListener
@@ -31,8 +31,8 @@ class MetadorListener
         $filename = rtrim($config['export']['path'], '/');
 
         if($this->testPath($config['export']['path'])) {
-        
-            $templating = $this->container->get('templating');          
+
+            $templating = $this->container->get('templating');
             $conf = $this->container->getParameter('metador');
 
             if($metadata->getHierarchyLevel() == 'service') {

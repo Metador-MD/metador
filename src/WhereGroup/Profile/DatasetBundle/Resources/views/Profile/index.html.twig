@@ -1,4 +1,4 @@
-{% extends 'WhereGroupMetadorBundle:Design:withoutMenu.html.twig' %}
+{% extends 'WhereGroupThemeBundle::templateWithoutMenu.html.twig' %}
 
 {% block title %}MeTaDor - Daten{% endblock %}
 
@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="search-content">
-    {% if paging.prevPage is defined %}<a href="{{ path('metadata_index', { 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}
+    {% if paging.prevPage is defined %}<a href="{{ path('metadata_index', { 'profile' : profile, 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}
     <div class="search-prev{% if paging.prevPage is not defined %} disabled{% endif %}" id="search_prev" data-page="">
         <div class="page-arrow"></div>
     </div>
@@ -73,7 +73,7 @@
         </div>
     {# CONTENT END #}
     </div>
-    {% if paging.nextPage is defined %}<a href="{{ path('metadata_index', { 'page' : paging.nextPage }) }}" style="border: 1px solid red;">{% endif %}
+    {% if paging.nextPage is defined %}<a href="{{ path('metadata_index', { 'profile' : profile, 'page' : paging.nextPage }) }}" style="border: 1px solid red;">{% endif %}
     <div class="search-next{% if paging.nextPage is not defined %} disabled{% endif %}" id="search_next" data-page="">
         <div class="page-arrow"></div>
     </div>

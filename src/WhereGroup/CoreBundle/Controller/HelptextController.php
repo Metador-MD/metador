@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\SearchBundle\Component\Paging;
-use WhereGroup\MetadorBundle\Entity\Helptext;
+use WhereGroup\CoreBundle\Entity\Helptext;
 
 /**
  * @Route("/metador")
@@ -28,7 +28,7 @@ class HelptextController extends Controller
         $id = $this->getRequest()->get('id', false);
 
         $em = $this->getDoctrine()->getManager();
-        $helptext = $em->getRepository('WhereGroupMetadorBundle:Helptext')->findOneById($id);
+        $helptext = $em->getRepository('WhereGroupCoreBundle:Helptext')->findOneById($id);
 
         if ($helptext) {
             $string = $helptext->getText();
@@ -36,7 +36,7 @@ class HelptextController extends Controller
             $string = "Hilfetext nicht definiert.";
         }
 
-        $html = $this->render("WhereGroupMetadorBundle:Design:helptext.html.twig", array(
+        $html = $this->render("WhereGroupThemeBundle:Template:helptext.html.twig", array(
             "html" => $string
         ));
 
@@ -62,7 +62,7 @@ class HelptextController extends Controller
 
         if ($id && $html) {
             $em = $this->getDoctrine()->getManager();
-            $helptext = $em->getRepository('WhereGroupMetadorBundle:Helptext')->findOneById($id);
+            $helptext = $em->getRepository('WhereGroupCoreBundle:Helptext')->findOneById($id);
 
             $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
             $html = str_replace(

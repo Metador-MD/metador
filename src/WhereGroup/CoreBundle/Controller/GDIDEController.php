@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\MetadorBundle\Controller;
+namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
-use WhereGroup\MetadorBundle\Entity\Metadata;
-use WhereGroup\MetadorBundle\Component\TestsuiteDocument;
+use WhereGroup\CoreBundle\Entity\Metadata;
+use WhereGroup\CoreBundle\Component\TestsuiteDocument;
 
 /**
  * @Route("/gdi-de")
@@ -44,36 +44,33 @@ class GDIDEController extends Controller
             );
 
             // POST
-            if (($conformity = $this->getRequest()->request->get('conformity', false))) {
+            if (($conformity = $this->getRequest()->request->get('conformity', false))
+                && ($xml = $this->renderXml($p))) {
+                $doc->setTestById($conformity);
+                $doc->setTkId($this->getRequest()->request->get('tkid'));
+                $doc->setXml($xml, $id . '.xml');
+                $doc->setName($id . '.xml');
+                $doc->setDescription('MeTaDor XML Nr. ' . $id);
+                $doc->addDocument();
+                $doc->testDocument();
 
-                if (($xml = $this->renderXml($p))) {
+                for ($i=0; $i<20; $i++) {
+                    $status = $doc->getDocumentStatus();
+                    sleep(2);
 
-                    $doc->setTestById($conformity);
-                    $doc->setTkId($this->getRequest()->request->get('tkid'));
-                    $doc->setXml($xml, $id . '.xml');
-                    $doc->setName($id . '.xml');
-                    $doc->setDescription('MeTaDor XML Nr. ' . $id);
-                    $doc->addDocument();
-                    $doc->testDocument();
+                    if ($status === "Finish") {
+                        $result = $doc->getTestReport($doc->getReportId());
 
-                    for ($i=0; $i<20; $i++) {
-                        $status = $doc->getDocumentStatus();
-                        sleep(2);
+                        // TODO: delete test reports
+                        // $doc->deleteAllTestReport();
 
-                        if ($status === "Finish") {
-                            $result = $doc->getTestReport($doc->getReportId());
-
-                            // TODO: delete test reports
-                            // $doc->deleteAllTestReport();
-
-                            return $this->get('templating')->renderResponse(
-                                'WhereGroupMetadorBundle:GDIDE:result.html.twig',
-                                array(
-                                    'id' => $id,
-                                    'result' => $result
-                                )
-                            );
-                        }
+                        return $this->get('templating')->renderResponse(
+                            'WhereGroupCoreBundle:GDIDE:result.html.twig',
+                            array(
+                                'id' => $id,
+                                'result' => $result
+                            )
+                        );
                     }
                 }
             }
@@ -88,7 +85,7 @@ class GDIDEController extends Controller
         }
 
         return $this->get('templating')->renderResponse(
-            'WhereGroupMetadorBundle:GDIDE:show.html.twig',
+            'WhereGroupCoreBundle:GDIDE:show.html.twig',
             array(
                 'p' => $p,
                 'classes' => $metadataClasses
@@ -100,7 +97,7 @@ class GDIDEController extends Controller
     {
         return $this->getDoctrine()
             ->getManager()
-            ->getRepository('WhereGroupMetadorBundle:Metadata')
+            ->getRepository('WhereGroupCoreBundle:Metadata')
             ->findOneById($id);
     }
 
@@ -119,7 +116,7 @@ class GDIDEController extends Controller
                 $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
                 break;
             default:
-                $template = "WhereGroupMetadorBundle::exception.xml.twig";
+                $template = "WhereGroupCoreBundle::exception.xml.twig";
                 $data = array('message' => 'HierarchyLevel unbekannt!');
         }
 

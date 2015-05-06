@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\SearchBundle\Component\Paging;
-use WhereGroup\MetadorBundle\Entity\Address;
+use WhereGroup\CoreBundle\Entity\Address;
 
 /**
  * @Route("/metador")
@@ -28,7 +28,7 @@ class AddressController extends Controller
 
         $array = array();
         $em = $this->getDoctrine()->getManager();
-        $addresses = $em->getRepository('WhereGroupMetadorBundle:Address')->findAll();
+        $addresses = $em->getRepository('WhereGroupCoreBundle:Address')->findAll();
 
         foreach ($addresses as $address) {
             $array[] = array(
@@ -65,7 +65,7 @@ class AddressController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('WhereGroupMetadorBundle:Address')->findOneById($id);
+        $address = $em->getRepository('WhereGroupCoreBundle:Address')->findOneById($id);
 
         try {
             if ($address) {
