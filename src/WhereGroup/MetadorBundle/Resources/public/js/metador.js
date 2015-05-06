@@ -12,29 +12,64 @@ function getUUID() {
     return s.join("");
 }
 
-function changeNames(clone, count) {
+function replaceCounter(split, delimiterStart, delimiterEnd, count, subCount, string) {
+    var tokens    = string.split(split);
+    var newString = "";
+    var counter   = 0;
+
+    for (var i = 0; i < tokens.length; i++) {
+        if (tokens[i].match(/^[\d]{1,3}$/)) {
+
+            if (counter === subCount) {
+                tokens[i] = delimiterStart + count + delimiterEnd;
+            } else {
+                tokens[i] = delimiterStart + tokens[i] + delimiterEnd;
+            }
+
+            counter++;
+        }
+        newString += tokens[i];
+    }
+
+    return newString;
+}
+
+function changeNames(clone, count, subCount) {
+    subCount = (typeof subCount === 'undefined') ? 0 : parseInt(subCount);
+
     clone.each(function() {
-        var name = $(this).attr('name');
-        var id = $(this).attr('id');
-        var obj_id = $(this).attr('data-obj-id');
+        var name    = $(this).attr('name');
+        var id      = $(this).attr('id');
+        var obj_id  = $(this).attr('data-obj-id');
 
         if(typeof name !== 'undefined' && name !== false) {
-            name = name.replace(/\[\d\]/g, "[" + count + "]");
+            name = replaceCounter(
+                /\[([\d]{1,3})\]/g,
+                "[", "]", count, subCount, name
+            );
             $(this).attr('name', name);
         }
 
+        id = 'p_resolution_0_denominator';
+
         if(typeof id !== 'undefined' && id !== false) {
-            id = id.replace(/_\d_/g, "_" + count + "_");
+            id = replaceCounter(
+                /_([\d]{1,3})_/g,
+                "_", "_", count, subCount, id
+            );
             $(this).attr('id', id);
         }
 
         if(typeof obj_id !== 'undefined' && obj_id !== false) {
-            obj_id = obj_id.replace(/_\d_/g, "_" + count + "_");
+            obj_id = replaceCounter(
+                /_([\d]{1,3})_/g,
+                "_", "_", count, subCount, obj_id
+            );
             $(this).attr('data-obj-id', obj_id);
         }
 
         if($(this).children().size() > 0) {
-            changeNames($(this).children(), count);
+            changeNames($(this).children(), count, subCount);
         }
     });
 }
@@ -130,8 +165,8 @@ $(document).ready(function() {
         var result = $('#result_' + $(this).attr("data-obj-id"));
         var name = $(this).attr("data-name");
 
-        if(source.val() == "") {
-            alert("Eingabe leer.")
+        if(source.val() === "") {
+            alert("Eingabe leer.");
             return false;
         }
 
@@ -159,56 +194,62 @@ $(document).ready(function() {
         }
     });
 
-
     // DUPLICATEABLE'S
-    $('div.duplicatable li.duplicate').click(function() {
-        var content = $(this).closest('.duplicatable').find('.content');
-        var count = $(this).closest('.duplicatable').attr("data-count");
+    $(document).on('click', '.duplicatable .duplicate', function() {
+        var duplicatable = $(this).closest('.duplicatable');
+        var content      = duplicatable.find('.content').eq(0);
+        var count        = duplicatable.attr("data-count");
 
         if(content.children().length > 9) {
             return false;
         }
 
-        var clone = content.find(".nr" + $(this).prev().attr('data-id'))
-            .clone().removeClass().addClass('nr' + ++count + ' act');
+        var clone = content.find("> .nr" + $(this).prev()
+            .attr('data-id'))
+            .clone()
+            .removeClass()
+            .addClass('nr' + (++count) + ' act');
 
-        changeNames(clone, count);
+        changeNames(clone, count, duplicatable.attr('data-level'));
 
-        $(this).closest('.duplicatable').find('ul').children().removeClass('act');
+        duplicatable.find('> ul').children().removeClass('act');
 
-        $(this).closest('.duplicatable').find('ul').find('.duplicate')
-            .before($('<li></li>').attr("data-id", count).text(count).addClass('tab act'));
+        duplicatable.find('> ul').find('.duplicate')
+            .before($('<li></li>')
+            .attr("data-id", count)
+            .text(count)
+            .addClass('tab act'));
 
         content.children().removeClass('act');
         content.append(clone);
 
-        $(this).closest('div.duplicatable').attr("data-count", count);
+        duplicatable.attr("data-count", count);
     });
 
-    $('div.duplicatable .menu.delete').live('click', function() {
+    $(document).on('click', 'div.duplicatable .menu.delete', function() {
         var element = $(this).closest('.duplicatable');
-        var list = element.find('ul li.act');
-        var content = element.find('div.content div.act');
+        var list    = element.find('ul').eq(0).find('.act');
+        var content = element.find('div.content').eq(0).find('> div.act');
 
         if(list.attr('data-id') != 0) {
             list.remove();
             content.remove();
 
-            element.find('ul').find('li').eq(0).addClass("act");
-            element.find('div.content div').eq(0).addClass("act");
+            element.find('ul').eq(0).find('li').eq(0).addClass("act");
+            element.find('.content').eq(0).find('div').eq(0).addClass("act");
         } else {
             alert("Das erste Element kann nicht gelöscht werden.");
         }
     });
 
-    $('.duplicatable ul li.tab').live('click', function() {
-        var content = $(this).closest('.duplicatable').find('.content');
+    $(document).on('click', '.duplicatable ul li.tab', function() {
+        var content = $(this).closest('.duplicatable').find('.content').eq(0);
 
         $(this).siblings().removeClass("act");
         $(this).addClass("act");
 
         content.children().removeClass('act');
-        content.find(".nr" + $(this).attr('data-id')).addClass('act');
+        content.find("> .nr" + $(this).attr('data-id')).addClass('act');
     });
 
 
