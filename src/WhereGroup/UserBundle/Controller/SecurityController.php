@@ -43,6 +43,7 @@ class SecurityController extends Controller
      *
      * @Route("/login", name="login")
      * @Method("GET")
+     * @Template("WhereGroupThemeBundle:Template:login.html.twig")
      */
     public function loginAction()
     {
@@ -61,14 +62,11 @@ class SecurityController extends Controller
 
         // Load Template.
         $conf = $this->container->getParameter('metador');
-        
-        return $this->render(
-            $conf['templates']['login'],
-            array(
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
-            )
-        );
+
+        return(array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error'         => $error,
+        ));
     }
 
     /**
