@@ -15,6 +15,9 @@
         <parameter key="metador.address.class">WhereGroup\CoreBundle\Component\Address</parameter>
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
 
+        <!-- EVENT LISTENER -->
+        <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationMenuListener</parameter>
+
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
         <parameter key="metador.twig.getparameter.class">WhereGroup\CoreBundle\Twig\Extension\GetParameterExtension</parameter>
@@ -55,6 +58,12 @@
             <argument type="service" id="service_container" />
             <argument type="service" id="metador_user" />
             <argument type="service" id="metador_address" />
+        </service>
+
+        <!-- EVENT LISTENER -->
+        <service id="metador.app.listener" class="%metador.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="service_container" />
         </service>
 
         <!-- TWIG EXTENSION -->

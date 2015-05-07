@@ -1,0 +1,47 @@
+{% extends 'WhereGroupThemeBundle::templateWithoutMenu.html.twig' %}
+
+{% block content %}
+<div class="gdi-de">
+    <div>
+        <a href="http://testsuite.gdi-de.org/" target="_BLANK" style="float:left;margin-right: 20px;">
+            <img src="{{ asset('bundles/wheregrouptheme/img/gdi-de-logo-s.png') }}" />
+        </a>
+        <h1>Testsuite Client</h1>
+        <p>Sie haben hier die Möglichkeit, die Konformität Ihrer Metadaten zu den Anforderungen der GDI-DE und den Vorgaben der INSPIRE-Richtlinie zu testen. Die Tests werden von der GDI-DE Testsuite (<a href="http://testsuite.gdi-de.org">http://testsuite.gdi-de.org</a>) zur Verfügung gestellt.</p>
+        <hr/>
+    </div>
+    <div class="clear"></div>
+
+{% if conf['gdi_de'] is defined %}
+    <h2 style="float:right;" title="{{ p['abstract'] }}">{{ p['title'] }}</h2>
+    {% for class in classes %}
+    <table>
+        <thead>
+            <tr class="title"><th>{{ class.Name }}</th></tr>
+        </thead>
+        <tbody>
+            <tr class="description"><td>{{ class.Description }}</td></tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                    <input type="hidden" name="tkid" value="{{ class.ID }}" />
+                    {% for conformity in class.conformityClasses %}
+                    <div>
+                        <input type="checkbox" name="conformity[]" value="{{ conformity.ID }}" {% if conformity.isMandetory == 1 %} checked="checked" {% endif %}/>
+                        <span title="{{ conformity.Description }}">{{ conformity.Name }}</span>
+                    </div>
+                    {% endfor %}
+                    <br/>
+                    <button class="gdi-de-button">Testbericht anfordern</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+
+{% else %}
+    <h2>GDI-DE Testsuite Konfiguration wurde nicht gefunden.</h2>
+{% endif %}
+</div>
+{% endblock %}

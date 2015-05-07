@@ -45,10 +45,10 @@ class ApplicationExtension extends \Twig_Extension
      * @param null $key
      * @return mixed
      */
-    public function applicationGet($type, $key = null)
+    public function applicationGet($type, $key = null, $default = null)
     {
         return $this->container
             ->get('metador.application')
-            ->get($type, $key);
+            ->get($type, $key, $default);
     }
 }

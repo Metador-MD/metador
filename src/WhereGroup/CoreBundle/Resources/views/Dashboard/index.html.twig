@@ -1,6 +1,7 @@
-{% extends 'WhereGroupThemeBundle::templateWithoutMenu.html.twig' %}
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
 
-{% block content %}
+{% block center %}
+<div class="content">
     <div style="font-size: 12px;">
         <div style="float:left;">
             <form method="get" action="{{ path('search_index') }}">
@@ -67,4 +68,5 @@
             </table>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -39,7 +39,7 @@ class Application
             $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
         }
 
-        $this->route      = $container->get('request')->get('_route');
+        $this->route = $container->get('request')->get('_route');
 
         unset($controllerInfo);
 
@@ -49,9 +49,6 @@ class Application
         // dispatch event
         $event = new ApplicationEvent($this, array());
         $container->get('event_dispatcher')->dispatch('application.loading', $event);
-
-
-        // die('<pre>' . print_r($this->data, 1) . '</pre>');
     }
 
     /**
@@ -98,15 +95,19 @@ class Application
      * @param null $key
      * @return array|string
      */
-    public function get($type, $key = null)
+    public function get($type, $key = null, $default = null)
     {
         $merged = array_merge_recursive($this->data, $this->dataEnd);
 
         if (is_null($key)) {
-            return isset($merged[$type]) ? $merged[$type] : array();
+            return isset($merged[$type])
+                ? $merged[$type]
+                : (is_null($default) ? array() : $default);
         }
 
-        return isset($merged[$type][$key]) ? $merged[$type][$key] : '';
+        return isset($merged[$type][$key])
+            ? $merged[$type][$key]
+            : (is_null($default) ? '' : $default);
     }
 
     /**

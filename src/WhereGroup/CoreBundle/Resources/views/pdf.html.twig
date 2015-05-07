@@ -1,0 +1,387 @@
+<style type="text/css">
+    table {width: 100%; border: 1px solid silver;}
+    .label {font-weight: bold; width:50%;}
+    .bbox-label{font-weight: bold; }
+    .last{height: 20px;}
+</style>
+
+<h1>Metadaten</h1>
+<table>
+    <tr>
+        <td class="label">Identifikator des Metadatensatzes:</td>
+        <td>{{ p['fileIdentifier'] }}</td>
+    </tr>
+    <tr>
+        <td class="label">Sprache der Metadaten:</td>
+        <td>{{ p['metadataLanguage'] }}</td>
+    </tr>
+</table>
+{% if p['responsiblePartyMetadata'][0]['organisationName'] is defined 
+and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
+    <h3>Für Metadaten verantwortliche Stelle</h3>
+    <table>
+        {% for rpm in p['responsiblePartyMetadata'] %}
+            <tr>
+                <td class="label">Name der Organisation:</td>
+                <td>{{rpm.organisationName}}</td>
+            </tr>
+            <tr>
+                <td class="label">Zuständige Person:</td>
+                <td>{{rpm.individualName}}</td>
+            </tr>
+            <tr>
+                <td class="label">E-Mail:</td>
+                <td>{{rpm.electronicMailAddress}}</td>
+            </tr>
+            <tr>
+                <td class="label">Staat:</td>
+                <td>{{rpm.country}}</td>
+            </tr>
+            <tr>
+                <td class="label">Bundesland:</td>
+                <td>{{rpm.administrativeArea}}</td>
+            </tr>
+            <tr>
+                <td class="label">Straße und Hausnummer / Postfach:</td>
+                <td>{{rpm.deliveryPoint}}</td>
+            </tr>
+            <tr>
+                <td class="label">Ort:</td>
+                <td>{{rpm.city}}</td>
+            </tr>
+            <tr>
+                <td class="label">PLZ:</td>
+                <td>{{rpm.postalCode}}</td>
+            </tr>
+            <tr>
+                <td class="label">Telefonnummer:</td>
+                <td>{{rpm.voice}}</td>
+            </tr>
+            <tr>
+                <td class="label">Faxnummer:</td>
+                <td>{{rpm.facsimile}}</td>
+            </tr>
+            <tr>
+                <td class="label">Internetadresse:</td>
+                <td>{{rpm.onlineResource}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+<h3>Angaben zur Metadatenspezifikation</h3>
+<table>
+    <tr>
+        <td class="label">Spezifikation:</td>
+        <td>{{p['metadataStandardName']}}</td>
+    </tr>
+    <tr>
+        <td class="label">Version:</td>
+        <td>{{p['metadataStandardVersion']}}</td>
+    </tr>
+    <tr>
+        <td class="label">Browser Bild:</td>
+        <td>{{p['browserGraphic']}}</td>
+    </tr>
+</table>
+<h1>Identifizierung</h1>
+<h3>Bezeichner</h3>
+<table>
+    {% for identifier in p['identifier']%}
+        <tr>
+            <td class="label">Code:</td>
+            <td>{{identifier['code']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Namensraum:</td>
+            <td>{{identifier['codespace']}}</td>
+        </tr>
+        {% if loop != loop.last%}
+            <tr>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+<p></p>
+<table>
+    <tr>
+        <td class="label">Titel:</td>
+        <td>{{p['title']}}</td>
+    </tr>  
+    <tr>
+        <td class="label">Alternativtitel:</td>
+        <td>{{p['alternateTitle']}}</td>
+    </tr>
+    <tr>
+        <td class="label">Kurzbeschreibung:</td>
+        <td>{{p['abstract']}}</td>
+    </tr>
+   {% if p['onlineResource'] is defined and p['onlineResource'] is not empty %}
+        <tr>
+            <td class="label">Ressourcenverweis:</td>
+            <td>
+                {% for onlineResource in p['onlineResource']%}
+                    {{onlineResource}}
+                {% endfor %}
+            </td>
+        </tr>
+   {% endif %}
+    <tr>
+        <td class="label">Ressourcenart</td>
+        <td>{{p['hierarchyLevel']}}</td>
+    </tr>
+    {% if p['language'] is defined and p['language'] is not empty %}
+        <tr>
+            <td class="label">Sprache der Ressource</td>
+            <td>
+                {% for language in p['language'] %}
+                    {{language}}{% if loop != loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endif %}
+</table>
+{% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
+    <h1>Klassifizierung</h1>
+    <table>
+        <tr>
+            <td class="label">Themenkategorie:</td>
+            <td>
+                {% for topicCategory in p['topicCategory']%}
+                    {{topicCategory}}{% if loop != loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endif %}
+{% if p['keyword'] is defined and p['keyword'] is not empty %}
+    <h1>Schlüsselwort</h1>
+    <table>
+        {% for key, value in p['keyword']%}
+            <tr>
+                <td class="label">{{key}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Datum</td>
+                <td>{{value['date']}}</td>
+            </tr>
+            <tr>
+                <td>Datum der:</td>
+                <td>{{value['type']}}</td>
+            </tr>
+            <tr>
+                <td>Schlüsselwort:</td>
+                <td>
+                    {% for key in value['value']%}
+                        {{key}}{% if loop != loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['bbox'] is defined and p['bbox'] is not empty %}
+    <h1>Geografischer Standort</h1>
+    <table>
+        <tr>
+            <td class="bbox-label">N Breitengrad</td>
+            <td class="bbox-label">E Längengrad</td>
+            <td class="bbox-label">S Breitengrad</td>
+            <td class="bbox-label">W Längengrad</td>
+
+        </tr>
+        {% for bbox in p['bbox'] %}
+        <tr>
+            <td>{{bbox['nLatitude']}}</td>
+            <td>{{bbox['eLongitude']}}</td>
+            <td>{{bbox['sLatitude']}}</td>
+            <td>{{bbox['wLongitude']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['creationDate'] is defined and p['creationDate'] is not empty %}
+    <h1>Zeitbezug</h1>
+    <table>
+        <tr>
+            <td class="label">Erstellungsdatum:</td>
+            <td>{{p['creationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Veröffentlichung:</td>
+            <td>{{p['publicationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Überarbeitung</td>
+            <td>{{p['revisionDate']}}</td>
+        </tr>
+    </table>
+    <h3>Zeitliche Ausdehnung</h3>
+    <table>
+        {% for temporalExtent in p['temporalExtent'] %}
+            <tr>
+                <td class="label">Anfangsdatum:</td>
+                <td>{{temporalExtent['begin']}}</td>
+            </tr>
+            <tr>
+                <td class="label">Enddatum:</td>
+                <td>{{temporalExtent['end']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+{% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty) %}
+    <h1>Qualität und Gültigkeit</h1>
+        {% if p['lineage'] is defined and p['lineage'] is not empty%}
+            <table>
+                <tr>
+                    <td class="label">Herkunft</td>
+                    <td>{{p['lineage']}}</td>
+                </tr>
+            </table>
+        {% endif %}
+    {% if p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty %}    
+        <h3>Räumliche Auflösung</h3>
+        <table>
+            <tr>
+                <td class="label">Äquivalenter Maßstab:</td>
+                <td>
+                    {% for resolution in p['resolution']%}
+                        {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+{% endif %}
+{% if p['dataquality'][0]['date'] is defined and p['dataquality'][0]['date'] is not empty %}
+    <h1>Übereinstimmung</h1>
+    <table>
+        {% for dataquality in p['dataquality']%}
+            <tr>
+                <td class="label">Titel:</td>
+                <td>{{dataquality['title']}}</td>
+            </tr>
+            <tr>
+                <td>Datum:</td>
+                <td>{{dataquality['date']}}</td>
+            </tr>
+            <tr>
+                <td>Datum der:</td>
+                <td>{{dataquality['type']}}</td>
+            </tr>
+            <tr>
+                <td>Grad:</td>
+                <td>{{dataquality['result']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+{% if (p['uselimitation'] is defined and p['uselimitation'] is not empty) or (p['otherconstraints'] is defined and p['otherconstraints'] is not empty)%}
+    <h1>Beschränkungen</h1>
+{% endif %}
+{% if p['uselimitation'] is defined and p['uselimitation'] is not empty %}
+    <h3>Bedingungen für den Zugang und die Nutzung:</h3>
+    <table>
+        {% for uselimitation in p['uselimitation'] %}
+            <tr>
+                <td>{{uselimitation}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
+    <h3>Beschränkungen des öffentlichen Zugangs:</h3>
+    <table>
+        {% for otherconstraints in p['otherconstraints'] %}
+            <tr>
+                <td>{{otherconstraints}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{%
+    if p['responsibleParty'][0]['organisationName'] is defined
+    and p['responsibleParty'][0]['organisationName'] is not empty
+%}
+<h1>Zuständige Stelle</h1>
+<h3>Verantwortliche Stelle</h3>
+<table>
+    {% for rp in p['responsibleParty'] %}
+        <tr>
+            <td class="label">Name der Organisation:</td>
+            <td>{{rp['organisationName']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Zuständige Person:</td>
+            <td>{{rp['individualName']}}</td>
+        </tr>
+         <tr>
+            <td class="label">E-Mail:</td>
+            <td>{{rp['electronicMailAddress']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Funktion:</td>
+            <td>{{rp['role']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Staat:</td>
+            <td>{{rp['country']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Bundesland:</td>
+            <td>{{rp['administrativeArea']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Straße und Hausnummer / Postfach:</td>
+            <td>{{rp['deliveryPoint']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Ort:</td>
+            <td>{{rp['city']}}</td>
+        </tr>
+        <tr>
+            <td class="label">PLZ:</td>
+            <td>{{rp['postalCode']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Telefonnummer:</td>
+            <td>{{rp['voice']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Faxnummer:</td>
+            <td>{{rp['facsimile']}}</td>
+        </tr>
+        <tr>
+            <td class="label">Internetadresse:</td>
+            <td>{{rp['onlineResource']}}</td>
+        </tr>
+        {% if loop != loop.last %}
+            <tr>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+{% endif %}
