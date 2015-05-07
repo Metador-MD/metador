@@ -1,7 +1,3 @@
-_metador:
-    pattern:   /
-    defaults:  { _controller: WhereGroupCoreBundle:Dashboard:index }
-
 where_group_core:
     resource: "@WhereGroupCoreBundle/Controller/"
     type:     annotation

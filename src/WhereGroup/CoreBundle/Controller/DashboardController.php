@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\SearchBundle\Component\Paging;
 
 /**
- * @Route("/metador")
+ * @Route("/")
  */
 class DashboardController extends Controller
 {
