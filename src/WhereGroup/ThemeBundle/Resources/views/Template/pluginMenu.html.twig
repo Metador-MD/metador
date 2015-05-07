@@ -1,0 +1,25 @@
+<ul class="plugin-menu-list">
+    {% for item in applicationGet('app-plugin-menu') %}
+    {# RAW CONTENT #}
+    {% if item.raw is defined %}
+        {{ item.raw|raw }}
+
+    {# INCLUDE CONTENT #}
+    {% elseif item.template is defined %}
+        {% include item.template %}
+
+    {# USE TEMPLATE #}
+    {% else %}
+        <li class="{% if item.active is defined and item.active %}act{% endif %}">
+            {% if item.path is defined %}
+            <a href="{{ path(item.path, item.params) }}">
+                {% if item.icon is defined %}
+                    <span class="{{ item.icon }}"></span>
+                {% endif %}
+                {{ item.label|trans }}
+            </a>
+            {% endif %}
+        </li>
+    {% endif %}
+    {% endfor %}
+</ul>

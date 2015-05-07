@@ -1,0 +1,48 @@
+$fontColor: #333;
+
+// http://www.colourlovers.com/palette/100694/Machu_Picchu
+$ivy: #607848;
+$mossociety: #789048;
+$agrioby: #C0D860;
+$aglet: #F0F0D8;
+$purple: #604848;
+$dark: #34323D;
+
+textarea.code {
+    width: 100%;
+    height: 100px;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    background: #faf8f0;
+}
+
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+
+$icons-layout:smart;
+@import "icons/*.png";
+
+@import "extra/normalize";
+@import "extra/main";
+@import "mixins";
+
+@import "project/template";
+@import "project/menu";
+@import "project/login";
+@import "project/content";
+@import "project/form";
+@import "project/gdide";
+@import "project/search";
+@import "project/metadata-import";
+@import "project/dashboard";
+
+@import "ui/icon";
+@import "ui/button";
+@import "ui/notify";
+@import "ui/table";
+@import "ui/dialog";
+
+

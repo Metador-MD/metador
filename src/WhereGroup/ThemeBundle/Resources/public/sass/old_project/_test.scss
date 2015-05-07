@@ -1,0 +1,57 @@
+.line {
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: 30px;
+    line-height: 30px;    
+}
+
+.xxx {
+    label {
+        width: 200px;
+        @extend .line;
+    }
+
+    input {
+        width: 700px;
+        float: left;
+        @extend .line;
+    }
+
+    .btn-group {
+        @extend .line;
+    }
+
+    .icon {
+        margin: 7px 0;
+    }
+}
+
+.yyy {
+    .left {
+        width: 500px;
+        float: left;
+
+        label {
+            width: 200px;
+            @extend .line;
+        }
+        input {
+            width: 400px;
+            float: left;
+            @extend .line;
+        }
+    }
+
+    .right {
+        width: 200px;
+        float: right;
+        margin-right: 5px;
+    }
+
+    input {
+        width: 150px;
+        float: left;
+        @extend .line;
+    }
+}

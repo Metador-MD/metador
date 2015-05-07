@@ -1,0 +1,114 @@
+// SIZES
+$pageWidth: 960px;
+$pageLeftWidth: 180px;
+$pageTopHeight: 150px;
+$pageBottomHeight: 20px;
+$global-menu-height: 40px;
+$bright: #e7e7e7;
+
+* {
+    @include box-sizing(border-box);
+    @include text-shadow(rgba(0,0,0,0.1) 1px 1px 0px);
+}
+
+a {
+    text-decoration: none;
+    color: #444;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+html, body{
+    height:100%;
+    width:100%;
+    padding: 0;
+    margin: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+.logo {
+    @include pos(0,'','',50%);
+    margin-left:-($pageWidth/2);
+    background-image: url('../img/logo.png');
+    background-repeat:no-repeat;
+    height: 200px;
+    width: 200px;
+    z-index: 2;
+}
+
+body {
+    font-family: Arial, Helvetica, Verdana,  sans-serif;
+    color: #333;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    line-height: normal;
+    background-color: $aglet;
+}
+
+.page {
+    @include pos(0,0,0,0);
+
+    & > .top {
+        background-color: $purple;
+        border-bottom: 5px solid darken($purple, 5%);
+        height: 40px;
+        line-height: 40px; // ?
+        @include pos(0,0,'',0);
+    }
+
+    & > .center {
+        @include pos($pageTopHeight,0,0,0);
+        background-color: white;
+
+        & > .left {
+            width: $pageLeftWidth;
+            margin-left:-($pageWidth/2);
+            @include pos(0,'',0,50%);
+
+            background-color: $bright;
+            border-right: 1px solid lighten($dark, 50%);
+            border-left: 1px solid darken($bright, 30%);
+        }
+
+        & > .right {
+            padding: 20px;
+            width: $pageWidth - $pageLeftWidth;
+            margin-left:-($pageWidth/2) + $pageLeftWidth;
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-right: 1px solid darken($bright, 30%);
+            overflow: auto;
+            @include pos(0,'',0,50%);
+        }
+
+        & > .content {
+            padding: 20px;
+            width: $pageWidth;
+            margin-left:-($pageWidth/2);
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-right: 1px solid darken($bright, 30%);
+            border-left: 1px solid darken($bright, 30%);
+            overflow: auto;
+            @include pos(0,'',0,50%);
+        }
+    }
+}
+
+.last-1 {
+    & * {
+        padding: 0;
+        margin: 0;
+    }
+    width: 20px;
+    padding: 0;
+}
+

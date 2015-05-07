@@ -1,0 +1,25 @@
+{% if app.user.username is defined %}
+<ul>
+    {% for item in applicationGet('app-content-menu') %}
+    {# RAW CONTENT #}
+    {% if item.raw is defined %}
+        {{ item.raw|raw }}
+
+    {# INCLUDE CONTENT #}
+    {% elseif item.template is defined %}
+        {% include item.template %}
+
+    {# USE TEMPLATE #}
+    {% else %}
+        <li class="{% if item.active is defined and item.active %}act{% endif %}">
+            {% if item.path is defined %}
+            <a href="{{ path(item.path, item.params) }}">{{ item.label|trans }}</a>
+            {% else %}
+            <span>{{ item.label|trans }}</span>
+            {% endif %}
+        </li>
+    {% endif %}
+    {% endfor %}
+    {% block globalMenuElement %}{% endblock %}
+</ul>
+{% endif %}

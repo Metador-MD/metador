@@ -1,0 +1,50 @@
+.preview {
+    width: 288px;
+    float: left;
+    border: 1px solid silver;
+    margin: 8px;
+    padding: 5px;
+    background-color: #EEE;
+
+    @include border-radius(5px);
+    @include box-shadow(inset -5px -5px 5px rgba(100,100,100,0.1));
+
+    & > .head {
+        border-bottom: 1px solid silver;
+        color: #444;
+        font-weight: bold;
+        padding: 5px 0;
+    }
+
+    & > .body {
+        height: 300px;
+        overflow: auto;
+        margin-top: 10px;
+
+
+        & > .preview-table {
+            width:100%;
+
+
+            color: #444;
+            font-style: italic;
+            font-size: 12px;
+            text-decoration: none;
+
+            & a  {
+                color: #444;
+                font-style: italic;
+                font-size: 12px;
+                text-decoration: none;
+            }
+
+            & tr {
+                height: 20px;
+
+                &:hover {
+                    background-color: #DDD;
+                }
+            }
+        }
+    }
+}

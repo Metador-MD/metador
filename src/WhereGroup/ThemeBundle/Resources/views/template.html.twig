@@ -1,0 +1,37 @@
+{% extends 'WhereGroupThemeBundle::base.html.twig' %}
+
+{% block title %}MeTaDor 2{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/datepicker/zebra_datepicker_metallic.css') }}">
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/116575fc7a/Metador21/style.css">
+{% endblock %}
+
+{% block body %}
+<div class="page">
+    {# <div class="logo">.</div> #}
+    <div class="top">
+        {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
+    </div>
+    <div class="plugin-menu">
+        <div class="plugin-menu-content">
+            <div class="plugin-menu-content-left">x</div>
+            <div class="plugin-menu-content-right">
+                {% include 'WhereGroupThemeBundle:Template:pluginMenu.html.twig' %}
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        {% block center %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregrouptheme/js/jquery-1.8.3.min.js') }}"></script>
+    <script src="{{ asset('bundles/wheregrouptheme/js/datepicker/zebra_datepicker.js') }}"></script>
+    {# Woanders einbinden #}
+    <script src="{{ asset('bundles/wheregroupcore/js/metador.js') }}"></script>
+    <script src="{{ asset('bundles/wheregroupcore/js/ui.js') }}"></script>
+{% endblock %}

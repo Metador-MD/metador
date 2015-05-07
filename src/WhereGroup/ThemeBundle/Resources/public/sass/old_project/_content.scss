@@ -1,0 +1,4 @@
+.logo {
+    margin-left:-($pageWidth/2) + 20px;
+    @include pos(10px,'',0,50%);
+}

@@ -1,0 +1,163 @@
+* {
+    @include box-sizing(border-box);
+    @include text-shadow(rgba(0,0,0,0.1) 1px 1px 0px);
+}
+
+a {
+    text-decoration: none;
+    color: #444;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+html, body{
+    height:100%;
+    width:100%;
+    padding: 0;
+    margin: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+body {
+    font-family: Arial, Helvetica, Verdana,  sans-serif;
+    color: #333;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    line-height: normal;
+}
+
+.page {
+    @include pos(0,0,0,0);
+
+    & > .top {
+        background-color: $dark;
+        border-top: 3px solid lighten($metador, 10%);
+        background-image: url('../img/bg_dark.png');
+        height: $pageTopHeight;
+
+        @include pos(0,0,'',0);
+
+        .version {
+            width: 200px;
+            margin-left:+($pageWidth/2) - 200px;
+            color: #888;
+            font-size: 10px;
+            display:block;
+            height: 20px;
+            text-align:right;
+            @include pos($pageTopHeight - 20px,'','',50%);
+        }
+    }
+
+    & > .center {
+        border-top: 1px solid #000;
+        // background-color: lighten($dark, 10%);
+        // background-image: url('../img/bg.png');
+
+        @include pos($pageTopHeight,0,0,0);
+
+        & > .left {
+            width: $pageLeftWidth;
+            margin-left:-($pageWidth/2);
+            background-color: $bright;
+            border-right: 1px solid lighten($dark, 50%);
+            border-left: 1px solid #666;
+            @include pos(0,'',0,50%);
+            @include box-shadow(inset -5px -5px 5px darken($bright, 5%));
+        }
+
+        & > .right {
+            width: $pageWidth - $pageLeftWidth;
+            margin-left:-($pageWidth/2) + $pageLeftWidth;
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-right: 1px solid #999;
+            padding: 20px;
+            overflow: auto;
+            @include pos(0,'',0,50%);
+            @include box-shadow(inset -5px -5px 5px rgba(3,3,3,0.1));
+        }
+
+        & > .content {
+            width: $pageWidth;
+            margin-left:-($pageWidth/2);
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-right: 1px solid #666;
+            border-left: 1px solid #666;
+            padding: 20px;
+            overflow: auto;
+            @include pos(0,'',0,50%);
+            @include box-shadow(inset -5px -5px 5px rgba(3,3,3,0.1));
+        }
+    }
+}
+
+.preview {
+    width: 288px;
+    float: left;
+    border: 1px solid silver;
+    margin: 8px;
+    padding: 5px;
+    background-color: #EEE;
+
+    @include border-radius(5px);
+    @include box-shadow(inset -5px -5px 5px rgba(100,100,100,0.1));
+
+    & > .head {
+        border-bottom: 1px solid silver;
+        color: #444;
+        font-weight: bold;
+        padding: 5px 0;
+    }
+
+    & > .body {
+        height: 300px;
+        overflow: auto;
+        margin-top: 10px;
+
+
+        & > .preview-table {
+            width:100%;
+
+
+            color: #444;
+            font-style: italic;
+            font-size: 12px;
+            text-decoration: none;
+
+            & a  {
+                color: #444;
+                font-style: italic;
+                font-size: 12px;
+                text-decoration: none;
+            }
+
+            & tr {
+                height: 20px;
+
+                &:hover {
+                    background-color: #DDD;
+                }
+            }
+        }
+    }
+}
+
+.last-1 {
+    & * {
+        padding: 0;
+        margin: 0;
+    }
+    width: 20px;
+    padding: 0;
+}
+
