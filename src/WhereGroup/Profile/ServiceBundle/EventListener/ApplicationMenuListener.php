@@ -9,22 +9,24 @@ use WhereGroup\CoreBundle\Component\MetadataInterface;
 class ApplicationMenuListener
 {
     const PROFILE = 'service';
+    const NAME    = 'Dienste';
 
-    protected $application;
     protected $metadata;
     protected $container;
     protected $id;
 
     public function __construct(MetadataInterface $metadata, ContainerInterface $container)
     {
-        $this->metadata = $metadata;
+        $this->metadata  = $metadata;
         $this->container = $container;
-        $this->id = $this->container->get('request')->get('id', 0);
+        $this->id        = $this->container->get('request')->get('id', 0);
+
+        var_dump($this->id);
     }
 
     public function __destruct()
     {
-        unset($this->metadata);
+        unset($this->metadata, $this->container);
     }
 
     /**
@@ -32,72 +34,89 @@ class ApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $this->application = $event->getApplication();
+        $app = $event->getApplication();
 
         /***********************************************************************
-         * Global menu
+         * Profile Name
          ***********************************************************************/
-        $this->application->add('app-global-menu', self::PROFILE, array(
-            'label'  => 'Dienste',
-            'path'   => 'metadata_index',
-            'params' => array('profile' => self::PROFILE)
-        ));
+        if ($app->isBundle('ProfileService')) {
+            $app->add('app-profile', 'profile', array(
+                'name'   => self::NAME,
+                'active' => $app->isController('Profile')
+            ));
+        }
 
         /***********************************************************************
          * Dashboard preview
          ***********************************************************************/
-        $this->application->add('app-preview', self::PROFILE, array(
-            'title'   => 'Dienste',
+        $app->add('app-preview', self::PROFILE, array(
+            'title'   => self::NAME,
             'profile' => self::PROFILE,
             'rows'    => $this->metadata->getMetadata(10, 0, self::PROFILE)
         ));
 
         /***********************************************************************
+         * Profile Menu
+         ***********************************************************************/
+        $app->add('app-profile-menu', self::PROFILE, array(
+            'label'  => self::NAME,
+            'path'   => 'metadata_index',
+            'params' => array('profile' => self::PROFILE)
+        ));
+
+        /***********************************************************************
          * Context menu
          ***********************************************************************/
-        if ($this->application->isBundle('ProfileService')) {
-            $this->application->add('app-content-menu', 'index', array(
-                'label'  => 'Übersicht',
-                'path'   => 'metadata_index',
-                'params' => array('profile' => self::PROFILE),
-                'active' => $this->application->isAction('index')
-            ))->add('app-content-menu', 'new', array(
+        if ($app->isBundle('ProfileService')) {
+            if (!$app->isAction('index')) {
+                $app->add('app-plugin-menu', 'index', array(
+                    'label'  => 'Übersicht',
+                    'icon'   => 'icon-list',
+                    'path'   => 'metadata_index',
+                    'params' => array('profile' => self::PROFILE)
+                ));
+            }
+
+            $app->add('app-plugin-menu', 'new', array(
                 'label'  => 'neu',
+                'icon'   => 'icon-file-empty',
                 'path'   => 'metadata_new',
                 'params' => array('profile' => self::PROFILE),
-                'active' => $this->application->isAction(array('new', 'use'))
+                'active' => $app->isAction(array('new', 'use'))
             ));
 
-            if ($this->application->isAction('edit')) {
-                $this->application->add('app-content-menu', 'edit', array(
-                    'label'  => 'bearbeiten',
-                    'active' => true
+            if ($app->isAction('edit')) {
+                $app->add('app-plugin-menu', 'xml', array(
+                    'label'  => 'XML',
+                    'icon'   => 'icon-embed',
+                    'path'   => 'metador_export_xml',
+                    'params' => array('id' => $this->id)
                 ));
             }
 
-            if (!$this->application->isAction('index')) {
-                // has access?
+            // if (!$app->isAction('index')) {
+            //     // has access?
 
-                $path = 'metadata_new';
-                $param = array(
-                    'profile' => self::PROFILE
-                );
+            //     $path = 'metadata_new';
+            //     $param = array(
+            //         'profile' => self::PROFILE
+            //     );
 
-                if ($this->application->isAction('edit')) {
-                    $path = 'metadata_edit';
-                    $param = array(
-                        'profile' => self::PROFILE,
-                        'id'      => $this->id
-                    );
-                }
+            //     if ($app->isAction('edit')) {
+            //         $path = 'metadata_edit';
+            //         $param = array(
+            //             'profile' => self::PROFILE,
+            //             'id'      => $this->id
+            //         );
+            //     }
 
-                $this->application->add('app-content-menu', 'save', array(
-                    'label'  => 'speichern',
-                    'path'   => $path,
-                    'params' => $param,
-                    'active' => false
-                ));
-            }
+            //     $app->add('app-plugin-menu', 'save', array(
+            //         'label'  => 'speichern',
+            //         'path'   => $path,
+            //         'params' => $param,
+            //         'active' => false
+            //     ));
+            // }
         }
     }
 }

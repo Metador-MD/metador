@@ -9,20 +9,22 @@ use WhereGroup\CoreBundle\Component\MetadataInterface;
 class ApplicationMenuListener
 {
     const PROFILE = 'dataset';
+    const NAME    = 'Geodaten';
 
-    protected $application;
     protected $metadata;
     protected $container;
+    protected $id;
 
     public function __construct(MetadataInterface $metadata, ContainerInterface $container)
     {
-        $this->metadata = $metadata;
+        $this->metadata  = $metadata;
         $this->container = $container;
+        $this->id        = $this->container->get('request')->get('id', 0);
     }
 
     public function __destruct()
     {
-        unset($this->metadata);
+        unset($this->metadata, $this->container);
     }
 
     /**
@@ -30,18 +32,35 @@ class ApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $this->application = $event->getApplication();
+        $app = $event->getApplication();
 
-        $this->application->add('app-global-menu', self::PROFILE, array(
-            'label'  => 'Geodaten',
+        /***********************************************************************
+         * Profile Name
+         ***********************************************************************/
+        if ($app->isBundle('ProfileDataset')) {
+            $app->add('app-profile', 'profile', array(
+                'name'   => self::NAME,
+                'active' => $app->isController('Profile')
+            ));
+        }
+
+        /***********************************************************************
+         * Dashboard preview
+         ***********************************************************************/
+        $app->add('app-preview', self::PROFILE, array(
+            'title'   => self::NAME,
+            'profile' => self::PROFILE,
+            'rows'    => $this->metadata->getMetadata(10, 0, self::PROFILE)
+        ));
+
+        /***********************************************************************
+         * Profile Menu
+         ***********************************************************************/
+        $app->add('app-profile-menu', self::PROFILE, array(
+            'label'  => self::NAME,
             'path'   => 'metadata_index',
             'params' => array('profile' => self::PROFILE)
         ));
 
-        $this->application->add('app-preview', self::PROFILE, array(
-            'title'   => 'Daten',
-            'profile' => self::PROFILE,
-            'rows'    => $this->metadata->getMetadata(10, 0, self::PROFILE)
-        ));
     }
 }

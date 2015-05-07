@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\DatasetBundle\Controller;
+namespace WhereGroup\Profile\ServiceBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use WhereGroup\SearchBundle\Component\Paging;
 class ProfileController extends Controller
 {
     /**
-     * @Template("ProfileDatasetBundle::index.html.twig")
+     * @Template("ProfileServiceBundle::index.html.twig")
      */
     public function indexAction($data)
     {
@@ -21,7 +21,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Template("ProfileDatasetBundle::form.html.twig")
+     * @Template("ProfileServiceBundle::form.html.twig")
      */
     public function newAction($data)
     {
@@ -29,7 +29,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Template("ProfileDatasetBundle::form.html.twig")
+     * @Template("ProfileServiceBundle::form.html.twig")
      */
     public function useAction($data)
     {
@@ -37,7 +37,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Template("ProfileDatasetBundle::form.html.twig")
+     * @Template("ProfileServiceBundle::form.html.twig")
      */
     public function editAction($data)
     {
@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
     public function xmlAction($data)
     {
-        $xml = $this->render("ProfileDatasetBundle:Profile:metadata.xml.twig", array(
+        $xml = $this->render("ProfileServiceBundle:Profile:metadata.xml.twig", array(
             "p" => $data['p']
         ));
 
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         // TODO: refactoring
         return new Response("refactoring");
 
-        $html = $this->render("ProfileDatasetBundle:Profile:metadata.pdf.twig", array(
+        $html = $this->render("ProfileServiceBundle:Profile:metadata.pdf.twig", array(
             "p" => $data['p']
         ));
 

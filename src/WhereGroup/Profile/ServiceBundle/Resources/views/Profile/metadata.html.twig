@@ -1,4 +1,13 @@
 <h1>Metadaten</h1>
+{#
+    DATE STAMP
+#}
+<input type="hidden" name="p[dateStamp]" value="{% if p['dateStamp'] is defined %}{{ p['dateStamp'] }}{% endif %}" />
+
+{#
+    HIERARCHY LEVEL
+#}
+<input type="hidden" name="p[hierarchyLevel]" value="service" />
 
 {#
     FILE IDENTIFIER
