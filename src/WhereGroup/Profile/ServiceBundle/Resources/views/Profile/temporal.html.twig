@@ -5,7 +5,7 @@
         <div class="icon mandatory"></div>{{'Mindestens eine Angabe verpflichtend.'|trans}}
     </label>
     <div class="clear"></div>
-    
+
     {% set id = 'p[creationDate]' %}
     {% set val = p['creationDate'] is defined ? p['creationDate'] : '' %}
 
@@ -16,7 +16,7 @@
         <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -31,11 +31,11 @@
         <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
-    
+
     {% set id = 'p[revisionDate]' %}
     {% set val = p['revisionDate'] is defined ? p['revisionDate'] : '' %}
 
@@ -46,12 +46,12 @@
         <div class="fr">
             <div class="btn-group" style="float:right;">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
             <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
         </div>
-    </div> 
+    </div>
     <div class="clear"></div>
 </div>
 {#
@@ -72,13 +72,13 @@
         {% for key,value in p['temporalExtent'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['temporalExtent'] %}
-        
+
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             <div class="twoColBox">
 
@@ -92,14 +92,14 @@
                     <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="twoCol1 datepicker"/>
                     <div class="btn-group">
                         <div class="last showHelp" {{ id|md_data_obj }}>
-                            <div class="icon help"></div>
+                            <div class="icon icon-question"></div>
                         </div>
                     </div>
                 </div>
 
                 {% set id = 'p[temporalExtent][' ~ key ~ '][end]' %}
                 {% set val = value['end'] %}
-                
+
                 <div class="right">
                     <label>
                         <div class="icon optional"></div>{{'Enddatum'|trans}}:
@@ -107,7 +107,7 @@
                     <div class="fr">
                         <div class="btn-group">
                             <div class="last showHelp" {{ id|md_data_obj }}>
-                                <div class="icon help"></div>
+                                <div class="icon icon-question"></div>
                             </div>
                         </div>
                         <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="twoCol1 datepicker"/>

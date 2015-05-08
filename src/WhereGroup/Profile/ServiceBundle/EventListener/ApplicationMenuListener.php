@@ -13,15 +13,11 @@ class ApplicationMenuListener
 
     protected $metadata;
     protected $container;
-    protected $id;
 
     public function __construct(MetadataInterface $metadata, ContainerInterface $container)
     {
         $this->metadata  = $metadata;
         $this->container = $container;
-        $this->id        = $this->container->get('request')->get('id', 0);
-
-        var_dump($this->id);
     }
 
     public function __destruct()
@@ -34,7 +30,9 @@ class ApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app = $event->getApplication();
+        $app      = $event->getApplication();
+        $id       = $app->getParameter('id', 0);
+        $metadata = $this->metadata->getMetadata(10, 1, self::PROFILE);
 
         /***********************************************************************
          * Profile Name
@@ -52,7 +50,7 @@ class ApplicationMenuListener
         $app->add('app-preview', self::PROFILE, array(
             'title'   => self::NAME,
             'profile' => self::PROFILE,
-            'rows'    => $this->metadata->getMetadata(10, 0, self::PROFILE)
+            'rows'    => $metadata['result']
         ));
 
         /***********************************************************************
@@ -70,53 +68,46 @@ class ApplicationMenuListener
         if ($app->isBundle('ProfileService')) {
             if (!$app->isAction('index')) {
                 $app->add('app-plugin-menu', 'index', array(
-                    'label'  => 'Übersicht',
-                    'icon'   => 'icon-list',
+                    'label'  => 'zurück',
+                    'icon'   => 'icon-redo2',
                     'path'   => 'metadata_index',
                     'params' => array('profile' => self::PROFILE)
                 ));
             }
 
-            $app->add('app-plugin-menu', 'new', array(
-                'label'  => 'neu',
-                'icon'   => 'icon-file-empty',
-                'path'   => 'metadata_new',
-                'params' => array('profile' => self::PROFILE),
-                'active' => $app->isAction(array('new', 'use'))
-            ));
+            if ($app->isAction('index')) {
+                $app->add('app-plugin-menu', 'new', array(
+                    'label'  => 'neu',
+                    'icon'   => 'icon-plus',
+                    'path'   => 'metadata_new',
+                    'params' => array('profile' => self::PROFILE),
+                    'active' => $app->isAction(array('new', 'use'))
+                ));
+            }
 
             if ($app->isAction('edit')) {
                 $app->add('app-plugin-menu', 'xml', array(
                     'label'  => 'XML',
-                    'icon'   => 'icon-embed',
+                    'icon'   => 'icon-download',
                     'path'   => 'metador_export_xml',
-                    'params' => array('id' => $this->id)
+                    'params' => array('id' => $id)
+                ));
+
+                $app->add('app-plugin-menu', 'delete', array(
+                    'label'  => 'löschen',
+                    'icon'   => 'icon-bin2',
+                    'path'   => 'metador_export_xml',
+                    'params' => array('id' => $id)
                 ));
             }
 
-            // if (!$app->isAction('index')) {
-            //     // has access?
+            if ($app->isAction('new') || $app->isAction('edit')) {
+                $app->add('app-plugin-menu', 'save', array(
+                    'label'  => 'speichern',
+                    'icon'   => 'icon-floppy-disk'
+                ));
+            }
 
-            //     $path = 'metadata_new';
-            //     $param = array(
-            //         'profile' => self::PROFILE
-            //     );
-
-            //     if ($app->isAction('edit')) {
-            //         $path = 'metadata_edit';
-            //         $param = array(
-            //             'profile' => self::PROFILE,
-            //             'id'      => $this->id
-            //         );
-            //     }
-
-            //     $app->add('app-plugin-menu', 'save', array(
-            //         'label'  => 'speichern',
-            //         'path'   => $path,
-            //         'params' => $param,
-            //         'active' => false
-            //     ));
-            // }
         }
     }
 }

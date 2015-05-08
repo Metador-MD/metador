@@ -1,4 +1,9 @@
 <h1>Metadaten</h1>
+
+{% if id is defined %}
+    <input type="hidden" name="id" value="{{ id }}" />
+{% endif %}
+
 {#
     DATE STAMP
 #}
@@ -22,8 +27,8 @@
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol2"/>
     <div class="btn-group">
-        <div class="wizard_{{ id|md_obj_id }}" {{ id|md_data_obj }}><div class="icon wizard"></div></div>
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="wizard_{{ id|md_obj_id }}" {{ id|md_data_obj }}><div class="icon icon-magic-wand"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
 </div>
@@ -45,7 +50,7 @@
         </select>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -68,10 +73,10 @@
         {% for key,value in p['responsiblePartyMetadata'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
-        <li class="menu" data-id="wizard_responsibleParty"><div class="icon wizard" {{ id|md_data_obj }}></div></li>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+        <li class="menu" data-id="wizard_responsibleParty"><div class="icon icon-magic-wand" {{ id|md_data_obj }}></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['responsiblePartyMetadata'] %}
@@ -88,7 +93,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -101,7 +106,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -117,7 +122,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1" />
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
                 <div class="right"></div>
@@ -133,7 +138,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -146,7 +151,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -164,7 +169,7 @@
                 <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -181,7 +186,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -194,7 +199,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -210,7 +215,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -223,7 +228,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -241,7 +246,7 @@
                 <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -269,7 +274,7 @@
         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -284,7 +289,7 @@
         <div class="fr">
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
             <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
@@ -305,7 +310,7 @@
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
     <div id="browserGraphic" class="browserGraphic"></div>

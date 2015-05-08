@@ -17,14 +17,14 @@
         {% for key,value in p['responsibleParty'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
-        <li class="menu" data-id="wizard_responsibleParty"><div class="icon wizard" {{ id|md_data_obj }}></div></li>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+        <li class="menu" data-id="wizard_responsibleParty"><div class="icon icon-magic-wand" {{ id|md_data_obj }}></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['responsibleParty'] %}
-        
+
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             <div class="twoColBox">
 
@@ -37,7 +37,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -66,7 +66,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1" />
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <select name="{{ id }}" class="twoCol1">
                             <option value="" {{ md_select(val, '') }}></option>
@@ -108,7 +108,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -139,7 +139,7 @@
                 <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -156,7 +156,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -185,7 +185,7 @@
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -198,7 +198,7 @@
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
                     </div>
@@ -208,7 +208,7 @@
 
             {% set id = 'p[responsibleParty][' ~ key ~ '][onlineResource]' %}
             {% set val = value['onlineResource'] is defined ? value['onlineResource'] : '' %}
-                
+
             <div class="oneColBox">
                 <label>
                     <div class="icon optional"></div>{{'Internetadresse'|trans}}:
@@ -216,7 +216,7 @@
                 <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <div class="clear"></div>

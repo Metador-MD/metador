@@ -9,7 +9,7 @@
     <label class="displayLeft">
         <div class="icon mandatory"></div>{{'Bedingungen für den Zugang und die Nutzung'|trans}}:
     </label>
-    
+
     <div class="clear"></div>
 
     <div class="left">
@@ -18,9 +18,9 @@
         </label>
         <input type="text" name="uselimitation_a" id="source_{{ id|md_id }}" class="twoCol2  no-value" />
         <div class="btn-group">
-            <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon add"></div></div>
+            <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon icon-plus"></div></div>
             <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="fr">
             <div class="btn-group">
                 <div class="last showHelp"  data-obj-id="{{ id|md_id }}_b">
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
             <select name="uselimitation_b" id="{{ id|md_id }}_b" class="twoCol1  no-value">
@@ -61,7 +61,7 @@
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endfor %}
@@ -81,9 +81,9 @@
     </label>
     <input type="text" id="source_{{ id|md_id }}" class="oneCol3  no-value" />
     <div class="btn-group">
-        <div id="wizard_{{ id|md_id }}"><div class="icon wizard"></div></div>
-        <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon add"></div></div>
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div id="wizard_{{ id|md_id }}"><div class="icon icon-magic-wand"></div></div>
+        <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon icon-plus"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
 
     <div class="clear"></div>
@@ -95,7 +95,7 @@
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endfor %}

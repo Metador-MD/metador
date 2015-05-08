@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
     public function xmlAction($data)
     {
-        $xml = $this->render("ProfileServiceBundle:Profile:metadata.xml.twig", array(
+        $xml = $this->render("ProfileServiceBundle:Export:metadata.xml.twig", array(
             "p" => $data['p']
         ));
 
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         // TODO: refactoring
         return new Response("refactoring");
 
-        $html = $this->render("ProfileServiceBundle:Profile:metadata.pdf.twig", array(
+        $html = $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(
             "p" => $data['p']
         ));
 

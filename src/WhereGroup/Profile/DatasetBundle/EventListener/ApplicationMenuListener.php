@@ -32,7 +32,8 @@ class ApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app = $event->getApplication();
+        $app      = $event->getApplication();
+        $metadata = $this->metadata->getMetadata(10, 1, self::PROFILE);
 
         /***********************************************************************
          * Profile Name
@@ -50,7 +51,7 @@ class ApplicationMenuListener
         $app->add('app-preview', self::PROFILE, array(
             'title'   => self::NAME,
             'profile' => self::PROFILE,
-            'rows'    => $this->metadata->getMetadata(10, 0, self::PROFILE)
+            'rows'    => $metadata['result']
         ));
 
         /***********************************************************************

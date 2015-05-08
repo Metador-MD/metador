@@ -3,7 +3,7 @@
 {% block title %}MeTaDor - Daten{% endblock %}
 
 {% block center %}
-<div class="content">
+<div class="page-content">
     {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
     <div class="search-content">
         {% if paging.prevPage is defined %}<a href="{{ path('metadata_index', { 'profile' : profile, 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}

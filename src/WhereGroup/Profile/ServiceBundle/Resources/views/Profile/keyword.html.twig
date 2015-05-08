@@ -14,7 +14,7 @@
     <input id="{{ id|md_id }}" type="text" value="" class="oneCol1 no-value"/>
     <div class="btn-group">
         <div class="last showHelp" {{ id|md_data_obj }}>
-            <div class="icon help"></div>
+            <div class="icon icon-question"></div>
         </div>
     </div>
     <div class="clear"></div>
@@ -33,7 +33,7 @@
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 no-value"/>
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 datepicker no-value"/>
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             <div class="fr">
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <select id="{{ id|md_id }}" class="threeCol1 no-value">
@@ -71,11 +71,11 @@
                     <option value="publication">Veröffentlichung</option>
                 </select>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="clear"></div>
     <hr/>
-    <div id="add_keyword" class="btn right"><div class="icon add"></div></div>
+    <div id="add_keyword" class="btn right"><div class="icon icon-plus"></div></div>
     <div class="clear"></div>
 </fieldset>
 
@@ -97,7 +97,7 @@
         </select>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
         </label>
         <div class="fr">
             {% for repo, data in examples['keywords'] %}
-            <select data-id="{{ loop.index }}" 
+            <select data-id="{{ loop.index }}"
                     data-title="{{ repo }}"
                     data-date="{{ data.date }}"
                     data-type="{{ data.type }}"
@@ -138,7 +138,7 @@
             <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
             <label>{{ repo }} - {{ keyword }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endfor %}

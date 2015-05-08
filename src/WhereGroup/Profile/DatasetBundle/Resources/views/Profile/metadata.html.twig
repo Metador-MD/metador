@@ -1,5 +1,9 @@
 <h1>Metadaten</h1>
 
+{% if id is defined %}
+    <input type="hidden" name="id" value="{{ id }}" />
+{% endif %}
+
 {# PROFILE #}
 <input type="hidden" name="p[_profile]" value="dataset" />
 

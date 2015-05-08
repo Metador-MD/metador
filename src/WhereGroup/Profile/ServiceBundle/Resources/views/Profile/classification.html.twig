@@ -1,6 +1,6 @@
 <h1>Klassifizierung</h1>
 {#
-    SERVICE TYPE 
+    SERVICE TYPE
 #}
 {% set id = 'p[serviceType]' %}
 {% set val = p['serviceType'] is defined ? p['serviceType'] : '' %}
@@ -20,7 +20,7 @@
     </select>
     <div class="btn-group">
         <div class="last showHelp"  {{ id|md_data_obj }}>
-            <div class="icon help"></div>
+            <div class="icon icon-question"></div>
         </div>
     </div>
     <div class="clear"></div>
@@ -40,7 +40,7 @@
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
         <div class="last showHelp"  {{ id|md_data_obj }}>
-            <div class="icon help"></div>
+            <div class="icon icon-question"></div>
         </div>
     </div>
     <div class="clear"></div>
@@ -52,7 +52,7 @@
 #}
 <h2>Dienste Operationen</h2>
 <div class="twoColBox">
-    
+
     {% set id = 'p[containsOperationsName]' %}
     {% set val = p['containsOperationsName'] is defined ? p['containsOperationsName'] : 'GetCapabilities' %}
 
@@ -63,7 +63,7 @@
         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
         <div class="fr">
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
             <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
@@ -96,7 +96,7 @@
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
 </div>
