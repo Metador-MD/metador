@@ -4,31 +4,25 @@
 {% set ca = controller_action() %}
 
 {% block center %}
-    <div class="left">
-        <div class="page-menu">
-            <label>Benutzer</label>
-            <ul>
-                <li {% if cn == 'user' and ca == 'index' %}class="act" {% endif %}>
-                    <a href="{{ path('user') }}">Anzeigen</a>
-                </li>
-                <li {% if cn == 'user' and ca == 'new' %}class="act" {% endif %}>
-                    <a href="{{ path('user_new') }}">Neu</a>
-                </li>
-            </ul>
-
-
-            <label>Gruppen</label>
-            <ul>
-                <li {% if cn == 'group' and ca == 'index' %}class="act" {% endif %}>
-                    <a href="{{ path('group') }}">Anzeigen</a>
-                </li>
-            </ul>
-        </div>
+    <div class="page-left">
+        <label class="page-menu-label">Benutzer</label>
+        <ul class="page-menu-list">
+            <li {% if cn == 'user' and ca == 'index' %}class="act" {% endif %}>
+                <a href="{{ path('user') }}">Anzeigen</a>
+            </li>
+            <li {% if cn == 'user' and ca == 'new' %}class="act" {% endif %}>
+                <a href="{{ path('user_new') }}">Neu</a>
+            </li>
+        </ul>
+        <label class="page-menu-label">Gruppen</label>
+        <ul class="page-menu-list">
+            <li {% if cn == 'group' and ca == 'index' %}class="act" {% endif %}>
+                <a href="{{ path('group') }}">Anzeigen</a>
+            </li>
+        </ul>
     </div>
-    <div class="right">
-        <div class="content">
-            {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
-            {% block content %}{% endblock %}
-        </div>
+    <div class="page-right">
+        {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+        {% block content %}{% endblock %}
     </div>
 {% endblock %}
