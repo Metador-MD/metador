@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\ServiceBundle\Controller;
+namespace WhereGroup\Plugin\ServiceBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

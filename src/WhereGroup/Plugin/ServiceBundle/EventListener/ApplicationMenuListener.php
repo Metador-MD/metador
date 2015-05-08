@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\ServiceBundle\EventListener;
+namespace WhereGroup\Plugin\ServiceBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
@@ -88,7 +88,8 @@ class ApplicationMenuListener
                     'label'  => 'XML',
                     'icon'   => 'icon-download',
                     'path'   => 'metador_export_xml',
-                    'params' => array('id' => $id)
+                    'params' => array('id' => $id),
+                    'target' => '_BLANK'
                 ));
 
                 $app->add('app-plugin-menu', 'confirm', array(

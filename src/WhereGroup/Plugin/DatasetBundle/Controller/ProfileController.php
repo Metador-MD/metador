@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\DatasetBundle\Controller;
+namespace WhereGroup\Plugin\DatasetBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\DatasetBundle;
+namespace WhereGroup\Plugin\DatasetBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

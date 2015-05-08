@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\DatasetBundle\EventListener;
+namespace WhereGroup\Plugin\DatasetBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;

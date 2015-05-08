@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\ServiceBundle;
+namespace WhereGroup\Plugin\ServiceBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Profile\DatasetBundle\DependencyInjection;
+namespace WhereGroup\Plugin\DatasetBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
