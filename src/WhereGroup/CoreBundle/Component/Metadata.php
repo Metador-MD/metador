@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\CoreBundle\Entity\Address;
-use WhereGroup\SearchBundle\Component\Paging;
+use WhereGroup\CoreBundle\Component\Paging;
 
 /**
  * Class Metadata
@@ -57,7 +57,7 @@ class Metadata implements MetadataInterface
         $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
 
         // EVENT ON LOAD
-        $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+        $event = new MetadataChangeEvent($metadata, array());
         $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
 
         return $metadata;
@@ -79,7 +79,7 @@ class Metadata implements MetadataInterface
             $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
 
             // EVENT ON LOAD
-            $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+            $event = new MetadataChangeEvent($metadata, array());
             $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
         }
 
@@ -252,7 +252,7 @@ class Metadata implements MetadataInterface
             $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
 
-        $event  = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+        $event  = new MetadataChangeEvent($metadata, array());
 
         // EVENT PRE SAVE
         try {
@@ -311,7 +311,7 @@ class Metadata implements MetadataInterface
         try {
             if ($metadata) {
                 // EVENT PRE DELETE
-                $event = new MetadataChangeEvent($metadata, $this->container->getParameter('metador'));
+                $event = new MetadataChangeEvent($metadata, array());
                 $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
 
                  // DELETE

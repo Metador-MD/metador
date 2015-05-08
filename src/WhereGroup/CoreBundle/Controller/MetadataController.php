@@ -21,10 +21,8 @@ class MetadataController extends Controller
      */
     public function indexAction($profile)
     {
-        $conf     = $this->container->getParameter('metador');
-
         $metadata = $this->get('metador_metadata')->getMetadata(
-            $conf['hits'],
+            20,
             $this->get('request')->get('page', 1),
             $profile
         );
@@ -56,14 +54,11 @@ class MetadataController extends Controller
             );
         }
 
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
-
         return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
             'data' => array(
                 'profile'   => $profile,
                 'p'         => $p,
-                'examples'  => $this->getExample(),
+                'examples'  => $this->getExample($profile),
                 'hasAccess' => true
             )
         ));
@@ -82,14 +77,11 @@ class MetadataController extends Controller
             unset($p['fileIdentifier'], $p['identifier']);
         }
 
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
-
         return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:use', array(
             'data' => array(
                 'profile'   => $profile,
                 'p'         => $p,
-                'examples'  => $this->getExample(),
+                'examples'  => $this->getExample($profile),
                 'hasAccess' => true
             ),
             'id' => $id
@@ -123,7 +115,7 @@ class MetadataController extends Controller
                 'profile'   => $profile,
                 'id'        => $id,
                 'p'         => $p,
-                'examples'  => $this->getExample(),
+                'examples'  => $this->getExample($profile),
                 'hasAccess' => !$data->getReadonly()
             ),
             'id' => $id
@@ -177,8 +169,18 @@ class MetadataController extends Controller
         return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
     }
 
-    private function getExample()
+    private function getExample($profile)
     {
-        return $this->container->get('metador_wizard')->getExamples('dataset');
+        try {
+            $path = $this->container
+                ->get('kernel')
+                ->locateResource('@Profile' . ucfirst($profile) . 'Bundle/Resources/config/wizard/');
+
+        } catch (\Exception $e) {
+            // TODO: MESSAGE;
+            return array();
+        }
+
+        return $this->container->get('metador_wizard')->getExamples($path);
     }
 }

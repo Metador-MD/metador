@@ -26,18 +26,6 @@ class AppKernel extends Kernel
             new WhereGroup\SearchBundle\WhereGroupSearchBundle(),
 
             /******************************************************************
-             * Profiles
-             ******************************************************************/
-            new WhereGroup\Profile\DatasetBundle\ProfileDatasetBundle(),
-            new WhereGroup\Profile\ServiceBundle\ProfileServiceBundle(),
-            // new User\Bund\Profile\CoreBundle\ProfileCoreBundle(),
-            // new User\Bund\Profile\BildBundle\ProfileBildBundle(),
-            // new User\Bund\Profile\DiensteBundle\ProfileDiensteBundle(),
-            // new User\Bund\Profile\RasterBundle\ProfileRasterBundle(),
-            // new User\Bund\Profile\SonstigeBundle\ProfileSonstigeBundle(),
-            // new User\Bund\Profile\VektorBundle\ProfileVektorBundle(),
-
-            /******************************************************************
              * User Bundle's
              ******************************************************************/
 

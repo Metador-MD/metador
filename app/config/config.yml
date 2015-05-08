@@ -3,32 +3,14 @@ imports:
     - { resource: security.yml }
 
 parameters:
-    metador:
-        hits: %metador.hits%
-
-        search:
-            template: %metador.search.templates%
-
-        gdi_de:
-            url: %metador.gdi.de.url%
-            user: %metador.gdi.de.user%
-            testlevel: %metador.gdi.de.testlevel%
-            password: %metador.gdi.de.password%
-
-        proxy:
-            host: %metador.proxy.host%
-            port: %metador.proxy.port%
-
-        export:
-            path: %metador.export.path%
-
-        xmlimport:
-            schema: %metador.xmlimport.schema%
-
-        wmsimport:
-            path: %metador.wmsimport.path%
-
-        user: %metador.user%
+    external_database_driver: pdo_pgsql
+    external_database_host: localhost
+    external_database_port: ~
+    external_database_name: ~
+    external_database_path: ~
+    external_database_user: ~
+    external_database_password: ~
+    external_database_charset: UTF8
 
 framework:
     #esi:             ~

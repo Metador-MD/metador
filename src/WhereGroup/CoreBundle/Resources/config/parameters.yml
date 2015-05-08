@@ -1,17 +1,14 @@
 parameters:
-    metador.user: ~
-    metador.hits: 20
-    metador.gdi.de.url: "https://testsuite.gdi-de.org/gdi/download?id=wsdl"
-    metador.gdi.de.user: ~
-    metador.gdi.de.password: ~
-    metador.gdi.de.testlevel:
-        # - PASS
-        # - INHERITED_FAILURE
-        - FAIL
-    metador.proxy.host: ~
-    metador.proxy.port: ~
-    metador.export.path: ~
-    metador.xmlimport.schema:
-        - "%kernel.root_dir%/../src/WhereGroup/CoreBundle/Resources/config/xmlimport.json"
-    metador.wmsimport.path: "%kernel.root_dir%/../src/WhereGroup/CoreBundle/Resources/config/"
-    metador.search.templates: "WhereGroupSearchBundle"
+    metador_user: ~
+    metador_proxy_host: ~
+    metador_proxy_port: ~
+
+    external_database_driver: pdo_pgsql
+    external_database_host: localhost
+    external_database_port: ~
+    external_database_name: ~
+    external_database_path: ~
+    external_database_user: ~
+    external_database_password: ~
+    external_database_charset: UTF8
+

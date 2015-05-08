@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Wizard
 {
     protected $container;
-    private $path = null;
 
     /**
      * @param ContainerInterface $container
@@ -20,40 +19,41 @@ class Wizard
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->path = __DIR__ . "/../Data/";
     }
 
     /**
      * @param $hierarchyLevel
      * @return array
      */
-    public function getExamples($hierarchyLevel)
+    public function getExamples($path)
     {
-        $folders = array('keywords/all/');
-        $keywords = array();
+        $examples = array();
 
-        if (trim($hierarchyLevel) === 'service') {
-            $folders = array_merge($folders, array('keywords/service/'));
-        } elseif (trim($hierarchyLevel) === 'dataset') {
-            $folders = array_merge($folders, array('keywords/dataset/'));
-        }
+        foreach (scandir($path) as $file) {
+            // echo "<br/>" . $path . $file;
 
-        foreach ($folders as $folder) {
-            foreach (scandir($this->path . $folder) as $file) {
-                if (substr($file, -5) != ".json") {
-                    continue;
+            if ($file !== '.' && $file !== '..' && is_dir($path . $file)) {
+                $array = array();
+
+                foreach (scandir($path . $file) as $subFile) {
+                    if (substr($subFile, -5) != ".json") {
+                        continue;
+                    }
+
+                    $array = array_merge($array, json_decode(file_get_contents($path . $file . '/' . $subFile), true));
                 }
 
-                $json = json_decode(file_get_contents($this->path . $folder . $file));
-                $keywords = array_merge($keywords, (array)$json);
+                $examples[$file] = $array;
+
+                continue;
+            } elseif (substr($file, -5) != ".json") {
+                continue;
             }
+
+            $examples[substr($file, 0, -5)]
+                = json_decode(file_get_contents($path . $file), true);
         }
 
-        return array(
-            'keywords' => $keywords,
-            'conformity' => (array)json_decode(file_get_contents($this->path . '/conformity.json')),
-            'otherconstraints' => json_decode(file_get_contents($this->path . '/otherconstraints.json')),
-            'bbox' => json_decode(file_get_contents($this->path . '/bbox.json')),
-        );
+        return $examples;
     }
 }

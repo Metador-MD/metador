@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\SearchBundle\Component;
+namespace WhereGroup\CoreBundle\Component;
 
 /**
  * Paging

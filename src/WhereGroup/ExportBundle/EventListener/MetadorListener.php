@@ -5,12 +5,12 @@ namespace WhereGroup\ExportBundle\EventListener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
-
 class MetadorListener
 {
     protected $container;
 
-    public function __construct(ContainerInterface $container) {
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
 
     }
@@ -30,12 +30,13 @@ class MetadorListener
         $config = $event->getConfig();
         $filename = rtrim($config['export']['path'], '/');
 
-        if($this->testPath($config['export']['path'])) {
-
+        if ($this->testPath($config['export']['path'])) {
             $templating = $this->container->get('templating');
-            $conf = $this->container->getParameter('metador');
 
-            if($metadata->getHierarchyLevel() == 'service') {
+            // TODO: anpassen!
+            $conf = array();
+
+            if ($metadata->getHierarchyLevel() == 'service') {
                 $template = $conf['templates']['form'] . ':Service:service.xml.twig';
             } else {
                 $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
@@ -43,8 +44,8 @@ class MetadorListener
 
             $filename .= '/' . md5($metadata->getUuid()) . '.xml';
 
-            if($metadata->getPublic() == 0) {
-                if(file_exists($filename)) {
+            if ($metadata->getPublic() == 0) {
+                if (file_exists($filename)) {
                     unlink($filename);
                 }
             } else {
@@ -67,18 +68,19 @@ class MetadorListener
         $config = $event->getConfig();
         $filename = rtrim($config['export']['path'], '/');
 
-        if($this->testPath($config['export']['path'])) {
+        if ($this->testPath($config['export']['path'])) {
             $filename .= '/' . md5($metadata->getUuid()) . '.xml';
 
-            if(file_exists($filename)) {
+            if (file_exists($filename)) {
                 unlink($filename);
             }
         }
 
     }
 
-    private function testPath($path) {
-        if(is_dir($path) && is_writable($path)) {
+    private function testPath($path)
+    {
+        if (is_dir($path) && is_writable($path)) {
             return true;
         }
 

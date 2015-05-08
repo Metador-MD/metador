@@ -60,9 +60,6 @@ class SecurityController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
-
         return(array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
