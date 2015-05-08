@@ -18,6 +18,7 @@ class Application
     private $controller;
     private $action;
     private $route;
+    private $parameter;
 
     /**
      * @param ContainerInterface $container
@@ -25,8 +26,11 @@ class Application
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-
-        $controllerInfo = $container->get('request')->get('_controller');
+        $controllerInfo  = $container->get('request')->get('_controller');
+        $this->parameter = $container->get('request')->attributes->all();
+        $this->route     = $container->get('request')->get('_route');
+        $this->data      = array();
+        $this->dataEnd   = array();
 
         // Forward to controller generates a different controller information
         if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
@@ -39,12 +43,7 @@ class Application
             $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
         }
 
-        $this->route = $container->get('request')->get('_route');
-
         unset($controllerInfo);
-
-        $this->data = array();
-        $this->dataEnd = array();
 
         // dispatch event
         $event = new ApplicationEvent($this, array());
@@ -108,6 +107,17 @@ class Application
         return isset($merged[$type][$key])
             ? $merged[$type][$key]
             : (is_null($default) ? '' : $default);
+    }
+
+    public function getParameter($parameter = null, $default = null)
+    {
+        if (!is_null($parameter)) {
+            return isset($this->parameter[$parameter])
+                ? $this->parameter[$parameter]
+                : $default;
+        }
+
+        return $this->parameter;
     }
 
     /**

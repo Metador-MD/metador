@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\CoreBundle\Entity\Address;
+use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * Class Metadata
@@ -85,8 +86,10 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
-    public function getMetadata($limit, $offset, $profile)
+    public function getMetadata($limit, $page, $profile)
     {
+        $paging = new Paging($this->getMetadataCount($profile), $limit, $page);
+
         /** @var QueryBuilder $qb */
         $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
 
@@ -96,7 +99,7 @@ class Metadata implements MetadataInterface
             ->getRepository(self::REPOSITORY)
             ->createQueryBuilder('m')
             ->orderBy('m.updateTime', 'DESC')
-            ->setFirstResult($offset)
+            ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
             ->where('m.profile = :profile')
             ->setParameter('profile', $profile);
@@ -110,7 +113,10 @@ class Metadata implements MetadataInterface
             $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
         }
 
-        return $result;
+        return array(
+            'result' => $result,
+            'paging' => $paging->calculate()
+        );
     }
 
     /**
@@ -188,7 +194,7 @@ class Metadata implements MetadataInterface
         if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
             $this->container->get('session')->getFlashBag()->add(
                 'error',
-                "'Identifikation > Bezeichner > Code' darf nicht leer sein!"
+                "UUID fehlt!"
             );
 
             return false;
@@ -217,11 +223,13 @@ class Metadata implements MetadataInterface
             foreach ($p['keyword'] as $value) {
                 if (isset($value['value']) && !empty($value['value'])) {
                     foreach ($value['value'] as $keyword) {
-                        $searchfield .= '<br/>' . strtolower($keyword);
+                        $searchfield .= ' ' . strtolower($keyword);
                     }
                 }
             }
         }
+
+        $p['_profile'] = isset($p['_profile']) ? $p['_profile'] : $p['hierarchyLevel'];
 
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
@@ -232,7 +240,7 @@ class Metadata implements MetadataInterface
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
-        $metadata->setProfile(isset($p['_profile']) ? $p['_profile'] : $p['hierarchyLevel']);
+        $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield(trim($searchfield));
         $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($date));

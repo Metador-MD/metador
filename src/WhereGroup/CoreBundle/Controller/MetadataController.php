@@ -21,24 +21,19 @@ class MetadataController extends Controller
      */
     public function indexAction($profile)
     {
-        $page     = $this->get('request')->get('page', 1);
         $conf     = $this->container->getParameter('metador');
-        $limit    = $conf['hits'];
-        $paging   = new Paging(
-            $this->get('metador_metadata')->getMetadataCount($profile),
-            $limit,
-            $page
+
+        $metadata = $this->get('metador_metadata')->getMetadata(
+            $conf['hits'],
+            $this->get('request')->get('page', 1),
+            $profile
         );
 
         return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:index', array(
             'data' => array(
                 'profile' => $profile,
-                'rows'    => $this->get('metador_metadata')->getMetadata(
-                    $limit,
-                    ($page * $limit) - $limit,
-                    $profile
-                ),
-                'paging'  => $paging->calculate()
+                'rows'    => $metadata['result'],
+                'paging'  => $metadata['paging']
             )
         ));
     }
@@ -49,15 +44,16 @@ class MetadataController extends Controller
      */
     public function newAction($profile)
     {
-        $metadata = $this->get('metador_metadata');
-
         // LOAD
         if ($this->get('request')->getMethod() == 'GET') {
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
-        } elseif (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p)) {
-            return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
+        } elseif (($p = $this->getRequest()->request->get('p', false))
+            && $this->get('metador_metadata')->saveObject($p)) {
+            return $this->redirect(
+                $this->generateUrl('metadata_index', array('profile' => $profile))
+            );
         }
 
         // Load Template.
@@ -79,8 +75,7 @@ class MetadataController extends Controller
      */
     public function useAction($profile, $id)
     {
-        $metadata = $this->get('metador_metadata');
-        $data = $metadata->getById($id);
+        $data = $this->get('metador_metadata')->getById($id);
 
         if (($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
@@ -96,7 +91,8 @@ class MetadataController extends Controller
                 'p'         => $p,
                 'examples'  => $this->getExample(),
                 'hasAccess' => true
-            )
+            ),
+            'id' => $id
         ));
     }
 
@@ -129,7 +125,8 @@ class MetadataController extends Controller
                 'p'         => $p,
                 'examples'  => $this->getExample(),
                 'hasAccess' => !$data->getReadonly()
-            )
+            ),
+            'id' => $id
         ));
     }
 

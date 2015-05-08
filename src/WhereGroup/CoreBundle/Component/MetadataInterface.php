@@ -30,7 +30,7 @@ interface MetadataInterface
      */
     public function getByUUID($uuid);
 
-    public function getMetadata($limit, $offset, $profile);
+    public function getMetadata($limit, $page, $profile);
 
     /**
      * @param string $profile

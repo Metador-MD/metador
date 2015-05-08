@@ -343,7 +343,7 @@ $(document).ready(function() {
         $.ajax({
             url: BASEDIR + "metador/help/get",
             data: {"id" : id},
-            type: "post",
+            type: "get",
             dataType: "html",
             success:  function(data) {
                 dialog.modalDialog({
