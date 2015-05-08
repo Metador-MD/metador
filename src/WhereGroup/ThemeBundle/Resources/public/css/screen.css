@@ -9,7 +9,7 @@ textarea.code {
   background: #faf8f0;
 }
 
-.icons-sprite, .icon.mandatory, .icon.optional, .icon.conditional, .icon.help, .icon.help:hover, .icon.wizard, .icon.error, .icon.success, .icon.pencil, .icon.appedit, .icon.pagecode, .icon.add, .icon.world, .icon.delete, .icon.import, .icon.delete:hover {
+.icons-sprite, .icon.optional, .icon.conditional, .icon.help, .icon.help:hover, .icon.wizard, .icon.error, .icon.success, .icon.pencil, .icon.appedit, .icon.pagecode, .icon.add, .icon.world, .icon.delete, .icon.import, .icon.delete:hover {
   background: url('../img/icons-sf9fa5b36a3.png') no-repeat;
 }
 
@@ -1580,6 +1580,15 @@ body {
   width: 25%;
 }
 
+.btn-group > div:hover .icon,
+.btn:hover > .icon,
+.metadata-header-url > span:hover > .icon,
+.btn-group > :hover > .icon,
+.menu:hover .icon,
+.duplicate:hover > .icon {
+  color: #333;
+}
+
 .gdi-de > table {
   margin-bottom: 20px;
   width: 100%;
@@ -2078,7 +2087,13 @@ body {
   color: #999;
 }
 .icon.mandatory {
-  background-position: -16px -32px;
+  color: #FFAEAE;
+}
+.icon.conditional {
+  color: #FFEC94;
+}
+.icon.optional {
+  color: #B0E57C;
 }
 .icon.optional {
   background-position: -16px -16px;
@@ -2137,10 +2152,6 @@ body {
   float: left;
   width: 32px;
   height: 32px;
-}
-
-.btn-group > div:hover .icon, .menu:hover .icon {
-  color: #333;
 }
 
 .btn, .metadata-header-url > span, .btn-group > * {

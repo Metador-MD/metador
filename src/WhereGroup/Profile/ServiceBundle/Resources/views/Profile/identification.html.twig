@@ -30,7 +30,7 @@
 
                 <div class="left">
                     <label for="{{ id|md_id }}">
-                        <div class="icon mandatory"></div>{{'Code'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Code'|trans}}:
                     </label>
                     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol2"/>
                     <div class="btn-group">
@@ -44,7 +44,7 @@
 
                 <div class="right">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional"></div>{{'Namensraum'|trans}}:
+                        <div class="icon optional icon-circle"></div>{{'Namensraum'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
@@ -69,7 +69,7 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon mandatory"></div>{{'Titel'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
@@ -86,7 +86,7 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon optional"></div>{{'Alternativtitel'|trans}}:
+        <div class="icon optional icon-circle"></div>{{'Alternativtitel'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
@@ -103,7 +103,7 @@
 {% set val = p['abstract'] is defined ? p['abstract'] : '' %}
 <div class="oneColBox">
     <label class="displayLeft" for="{{ id|md_id }}">
-        <div class="icon mandatory"></div>{{'Kurzbeschreibung'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Kurzbeschreibung'|trans}}:
     </label>
     <div class="btn-group displayRight">
         <div class="single showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
@@ -119,7 +119,7 @@
 
 <div class="oneColBox">
     <label>
-        <div class="icon mandatory"></div>{{'Ressourcenverweis'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Ressourcenverweis'|trans}}:
     </label>
     <input name="onlineResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol2 no-value" value="" />
     <div class="btn-group">
@@ -156,7 +156,7 @@
 
 <div class="oneColBox">
     <label>
-        <div class="icon optional"></div>{{'Gekoppelte Ressource'|trans}}:
+        <div class="icon optional icon-circle"></div>{{'Gekoppelte Ressource'|trans}}:
     </label>
     <input name="coupledResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol3 no-value" value="" />
     <div class="btn-group">

@@ -67,6 +67,7 @@ body {
     & .page-center {
         @include pos($pageTopHeight,0,0,0);
         background-color: white;
+        // background-image: url('../img/pattern.png');
 
         & .page-left {
             width: $pageLeftWidth;

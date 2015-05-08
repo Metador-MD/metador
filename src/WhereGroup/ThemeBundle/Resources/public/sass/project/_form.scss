@@ -358,3 +358,10 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
         width: 25%;
     }
 }
+
+.btn-group > div:hover .icon,
+.btn:hover > .icon,
+.menu:hover .icon,
+.duplicate:hover > .icon {
+    color: #333;
+}

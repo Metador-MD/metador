@@ -19,7 +19,7 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon mandatory"></div>{{'Identifikator des Metadatensatzes'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Identifikator des Metadatensatzes'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol2"/>
     <div class="btn-group">
@@ -38,7 +38,7 @@
 <div class="twoColBox">
     <div class="left">
         <label>
-            <div class="icon mandatory"></div>{{'Sprache der Metadaten'|trans}}:
+            <div class="icon mandatory icon-circle"></div>{{'Sprache der Metadaten'|trans}}:
         </label>
         <select name="{{ id }}" class="twoCol1">
             <option value="ger" {{ md_select(val, 'ger') }}>Deutsch</option>
@@ -85,7 +85,7 @@
 
                 <div class="left">
                     <label>
-                        <div class="icon mandatory"></div>{{'Name der Organisation'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Name der Organisation'|trans}}:
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
@@ -98,7 +98,7 @@
 
                 <div class="right">
                     <label>
-                        <div class="icon mandatory"></div>{{'E-Mail'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'E-Mail'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
@@ -265,7 +265,7 @@
 
     <div class="left">
         <label>
-            <div class="icon mandatory"></div>{{'Spezifikation'|trans}}:
+            <div class="icon mandatory icon-circle"></div>{{'Spezifikation'|trans}}:
         </label>
         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
         <div class="btn-group">
@@ -280,7 +280,7 @@
         {% set val = p['metadataStandardVersion'] is defined ? p['metadataStandardVersion'] : '2003/Cor.1:2006' %}
 
         <label>
-            <div class="icon mandatory"></div>{{'Version'|trans}}:
+            <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
         </label>
         <div class="fr">
             <div class="btn-group">

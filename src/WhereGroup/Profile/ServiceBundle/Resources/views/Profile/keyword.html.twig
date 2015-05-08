@@ -9,7 +9,7 @@
     {% set id = 'p[keyword][value]' %}
 
     <label>
-        <div class="icon mandatory"></div>{{'Schlüsselwort'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Schlüsselwort'|trans}}:
     </label>
     <input id="{{ id|md_id }}" type="text" value="" class="oneCol1 no-value"/>
     <div class="btn-group">
@@ -28,7 +28,7 @@
 
         <div class="left">
             <label>
-                <div class="icon mandatory"></div>{{'Titel'|trans}}:
+                <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 no-value"/>
             <div class="btn-group">
@@ -42,7 +42,7 @@
 
         <div class="center">
             <label>
-                <div class="icon mandatory"></div>{{'Datum'|trans}}:
+                <div class="icon mandatory icon-circle"></div>{{'Datum'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 datepicker no-value"/>
             <div class="btn-group">
@@ -56,7 +56,7 @@
 
         <div class="right">
             <label>
-                <div class="icon mandatory"></div>{{'Datum der'|trans}}:
+                <div class="icon mandatory icon-circle"></div>{{'Datum der'|trans}}:
             </label>
             <div class="fr">
                 <div class="btn-group">
@@ -83,12 +83,12 @@
 
 <div class="twoColBox">
     <label class="displayLeft">
-        <div class="icon mandatory"></div>{{'Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.'|trans}}
+        <div class="icon mandatory icon-circle"></div>{{'Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.'|trans}}
     </label>
     <div class="clear"></div>
     <div class="left">
         <label>
-            <div class="icon conditional"></div>{{'Repository'|trans}}:
+            <div class="icon conditional icon-circle"></div>{{'Repository'|trans}}:
         </label>
         <select class="twoCol1 keywordRepo no-value">
             {% for repo, data in examples['keywords'] %}
@@ -103,7 +103,7 @@
     </div>
     <div class="right">
         <label>
-            <div class="icon conditional"></div>{{'Schlüsselwort'|trans}}:
+            <div class="icon conditional icon-circle"></div>{{'Schlüsselwort'|trans}}:
         </label>
         <div class="fr">
             {% for repo, data in examples['keywords'] %}

@@ -24,7 +24,7 @@
     </ul>
     <div class="content">
         {% for key,value in p['responsibleParty'] %}
-        
+
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             <div class="twoColBox">
 
@@ -33,7 +33,7 @@
 
                 <div class="left">
                     <label>
-                        <div class="icon mandatory"></div>{{'Name der Organisation'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Name der Organisation'|trans}}:
                     </label>
                     <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
@@ -46,7 +46,7 @@
 
                 <div class="right">
                     <label>
-                        <div class="icon mandatory"></div>{{'E-Mail'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'E-Mail'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
@@ -75,7 +75,7 @@
 
                 <div class="right">
                     <label>
-                        <div class="icon mandatory"></div>{{'Funktion'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Funktion'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
@@ -208,7 +208,7 @@
 
             {% set id = 'p[responsibleParty][' ~ key ~ '][onlineResource]' %}
             {% set val = value['onlineResource'] is defined ? value['onlineResource'] : '' %}
-                
+
             <div class="oneColBox">
                 <label>
                     <div class="icon optional"></div>{{'Internetadresse'|trans}}:

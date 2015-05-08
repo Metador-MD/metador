@@ -25,7 +25,8 @@
                         <tr>
                             <th>{{ 'Titel'|trans }}</th>
                             <th>{{ 'bearbeitet von'|trans }}</th>
-                            <th>{{ 'bearbeitet am'|trans }}</th>
+                            <th>{{ 'am'|trans }}</th>
+                            <th>{{ 'um'|trans }}</th>
                             <th class="right last-1" title="{{ 'veröffentlichen'|trans }}"><div class="icon-earth"></div></th>
                             <th class="right last-1" title="{{ 'bearbeiten'|trans }}"><span class="icon-pencil"></span></th>
                         </tr>
@@ -43,6 +44,8 @@
                         </td>
                         <td>
                             <span class="icon-calendar"></span> {{ row.updateTime|date("d.m.Y") }}
+                        </td>
+                        <td>
                             <span class="icon-clock"></span> {{ row.updateTime|date("H:i") }}
                         </td>
                         <td>

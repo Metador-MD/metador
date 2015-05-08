@@ -131,12 +131,48 @@ class MetadataController extends Controller
     }
 
     /**
+     * @Route("/{profile}/confirm/{id}", name="metadata_confirm")
+     * @Method("GET")
+     */
+    public function confirmAction($profile, $id)
+    {
+        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:confirm', array(
+            'data' => array(
+                'id'      => $id,
+                'profile' => $profile,
+                'form'    => $this->createFormBuilder($this->get('metador_metadata')->getById($id))
+                    ->add('delete', 'submit', array('label' => 'löschen'))
+                    ->getForm()
+                    ->createView(),
+            ),
+            'id' => $id
+        ));
+    }
+
+    /**
      * @Route("/{profile}/delete/{id}", name="metadata_delete")
      * @Method("POST")
      */
     public function deleteAction($profile, $id)
     {
-        $this->get('metador_metadata')->deleteById($id);
+        $form = $this->createFormBuilder($this->get('metador_metadata')->getById($id))
+            ->add('delete', 'submit', array('label' => 'löschen'))
+            ->getForm()
+            ->submit($this->get('request'));
+
+        if ($form->isValid()) {
+            $this->get('metador_metadata')->deleteById($id);
+
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Erfolgreich gelöscht.'
+            );
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'Eintrag konnte nicht gelöscht werden.'
+            );
+        }
 
         return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
     }

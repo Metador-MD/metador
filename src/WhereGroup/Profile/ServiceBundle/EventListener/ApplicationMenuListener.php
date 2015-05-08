@@ -63,18 +63,9 @@ class ApplicationMenuListener
         ));
 
         /***********************************************************************
-         * Context menu
+         * Plugin menu
          ***********************************************************************/
         if ($app->isBundle('ProfileService')) {
-            if (!$app->isAction('index')) {
-                $app->add('app-plugin-menu', 'index', array(
-                    'label'  => 'zurück',
-                    'icon'   => 'icon-redo2',
-                    'path'   => 'metadata_index',
-                    'params' => array('profile' => self::PROFILE)
-                ));
-            }
-
             if ($app->isAction('index')) {
                 $app->add('app-plugin-menu', 'new', array(
                     'label'  => 'neu',
@@ -82,6 +73,13 @@ class ApplicationMenuListener
                     'path'   => 'metadata_new',
                     'params' => array('profile' => self::PROFILE),
                     'active' => $app->isAction(array('new', 'use'))
+                ));
+            } else {
+                $app->add('app-plugin-menu', 'index', array(
+                    'label'  => 'zurück',
+                    'icon'   => 'icon-redo2',
+                    'path'   => 'metadata_index',
+                    'params' => array('profile' => self::PROFILE)
                 ));
             }
 
@@ -93,11 +91,11 @@ class ApplicationMenuListener
                     'params' => array('id' => $id)
                 ));
 
-                $app->add('app-plugin-menu', 'delete', array(
+                $app->add('app-plugin-menu', 'confirm', array(
                     'label'  => 'löschen',
                     'icon'   => 'icon-bin2',
-                    'path'   => 'metador_export_xml',
-                    'params' => array('id' => $id)
+                    'path'   => 'metadata_confirm',
+                    'params' => array('profile' => self::PROFILE, 'id' => $id)
                 ));
             }
 
@@ -107,7 +105,6 @@ class ApplicationMenuListener
                     'icon'   => 'icon-floppy-disk'
                 ));
             }
-
         }
     }
 }

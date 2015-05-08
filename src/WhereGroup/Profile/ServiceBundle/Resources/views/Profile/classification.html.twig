@@ -7,7 +7,7 @@
 
 <div class="oneColBox">
     <label>
-        <div class="icon mandatory"></div>{{'Geodatendienst'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Geodatendienst'|trans}}:
     </label>
     <select name="{{ id }}" class="oneCol1">
         <option value="" {{ md_select(val, '') }}></option>
@@ -35,7 +35,7 @@
 
 <div class="oneColBox">
     <label>
-        <div class="icon mandatory"></div>{{'Version'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
@@ -58,7 +58,7 @@
 
     <div class="left">
         <label>
-            <div class="icon mandatory"></div>{{'Operation'|trans}}:
+            <div class="icon mandatory icon-circle"></div>{{'Operation'|trans}}:
         </label>
         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
         <div class="btn-group">
@@ -73,7 +73,7 @@
         {% set val = p['containsOperationsDCP'] is defined ? p['containsOperationsDCP'] : 'WebService' %}
 
         <label>
-            <div class="icon mandatory"></div>{{'Platform'|trans}}:
+            <div class="icon mandatory icon-circle"></div>{{'Platform'|trans}}:
         </label>
         <div class="fr">
             <div class="btn-group">
@@ -92,7 +92,7 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon mandatory"></div>{{'URL'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'URL'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
