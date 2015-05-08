@@ -4,6 +4,12 @@
     width: 16px;
     height: 16px;
 
+    font-size: 16px;
+
+    color: #999;
+
+
+
     &.mandatory     {@include icons-sprite(bulletRed);}
     &.optional      {@include icons-sprite(bulletGreen);}
     &.conditional   {@include icons-sprite(bulletOrange);}
@@ -27,4 +33,8 @@
     float: left;
     width: 32px;
     height: 32px;
+}
+
+.btn-group > div:hover .icon, .menu:hover .icon {
+    color: #333;
 }

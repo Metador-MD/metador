@@ -1,6 +1,6 @@
 $metador: $purple;
 
-.global-menu, .content-menu ul, .page-menu ul, .profile-list, .plugin-menu-list  {
+.global-menu, .content-menu ul, .page-menu-list, .profile-list, .plugin-menu-list  {
     margin: 0;
     list-style: none;
     z-index: 1;
@@ -123,7 +123,7 @@ $metador: $purple;
     // @include text-shadow(none);
 }
 
-.page-menu ul {
+.page-menu-list {
     padding: 0;
     display: block;
     border-bottom: 1px solid lighten($bright, 10%);
@@ -161,13 +161,13 @@ $metador: $purple;
 
     & a {
         font-size: 14px;
+        text-decoration: none;
         color: lighten($fontColor, 15%);
         @include text-shadow(lighten($fontColor, 60%) 1px 1px 2px);
-        text-decoration: none;
     }
 }
 
-.page-menu label {
+.page-menu-label {
     display: block;
     font-size: 14px;
     font-weight: bold;
@@ -177,15 +177,28 @@ $metador: $purple;
     background-color: #666;
 }
 
+.plugin-menu-list > li {
+    float: right;
+    padding: 0 5px;
 
-.plugin-menu-list > li > a {
-    display: block;
+    & > a {
+        display: block;
+        color: lighten($fontColor, 5%);
+        @include text-shadow(lighten($fontColor, 60%) 1px 1px 2px);
 
-    &:hover {
-        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
     }
+}
 
-    // & > span {
-    //     vertical-align: middle;
-    // }
+.no-style-button {
+    padding: 0;
+    margin: 0;
+    display: block;
+    border: 0;
+    background-color: transparent;
+    height: 40px;
+    color: lighten($fontColor, 5%);
+    @include text-shadow(lighten($fontColor, 60%) 1px 1px 2px);
 }

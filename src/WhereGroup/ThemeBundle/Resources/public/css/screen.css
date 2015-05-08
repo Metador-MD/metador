@@ -812,7 +812,7 @@ body {
   right: 0;
   bottom: 0;
 }
-.page > .top {
+.page > .page-top {
   background-color: #604848;
   border-bottom: 5px solid #513d3d;
   height: 40px;
@@ -822,7 +822,7 @@ body {
   left: 0;
   right: 0;
 }
-.page > .center {
+.page .page-center {
   position: absolute;
   top: 150px;
   left: 0;
@@ -830,7 +830,7 @@ body {
   bottom: 0;
   background-color: white;
 }
-.page > .center > .left {
+.page .page-center .page-left {
   width: 180px;
   margin-left: -480px;
   position: absolute;
@@ -841,7 +841,7 @@ body {
   border-right: 1px solid #b2b0be;
   border-left: 1px solid #9b9b9b;
 }
-.page > .center > .right {
+.page .page-center .page-right {
   padding: 20px;
   width: 780px;
   margin-left: -300px;
@@ -854,7 +854,7 @@ body {
   left: 50%;
   bottom: 0;
 }
-.page > .center > .content {
+.page .page-center .page-content {
   padding: 20px;
   width: 960px;
   margin-left: -480px;
@@ -878,7 +878,7 @@ body {
   margin: 0;
 }
 
-.global-menu, .content-menu ul, .page-menu ul, .profile-list, .plugin-menu-list {
+.global-menu, .content-menu ul, .page-menu-list, .profile-list, .plugin-menu-list {
   margin: 0;
   list-style: none;
   z-index: 1;
@@ -1014,12 +1014,12 @@ body {
   border-top-right-radius: 8px;
 }
 
-.page-menu ul {
+.page-menu-list {
   padding: 0;
   display: block;
   border-bottom: 1px solid white;
 }
-.page-menu ul > li {
+.page-menu-list > li {
   padding: 5px 10px;
   border-top: 1px solid white;
   border-bottom: 1px solid #cecece;
@@ -1028,10 +1028,10 @@ body {
   color: #595959;
   text-shadow: #cccccc 1px 1px 2px;
 }
-.page-menu ul > li:hover {
+.page-menu-list > li:hover {
   background-color: white;
 }
-.page-menu ul > li.act {
+.page-menu-list > li.act {
   background-color: #cecece;
   border-left: 4px solid #604848;
   border-top: 1px solid #b2b0be;
@@ -1047,17 +1047,17 @@ body {
   -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-.page-menu ul > li:first-child {
+.page-menu-list > li:first-child {
   border-top: 1px solid white;
 }
-.page-menu ul a {
+.page-menu-list a {
   font-size: 14px;
+  text-decoration: none;
   color: #595959;
   text-shadow: #cccccc 1px 1px 2px;
-  text-decoration: none;
 }
 
-.page-menu label {
+.page-menu-label {
   display: block;
   font-size: 14px;
   font-weight: bold;
@@ -1067,11 +1067,28 @@ body {
   background-color: #666;
 }
 
+.plugin-menu-list > li {
+  float: right;
+  padding: 0 5px;
+}
 .plugin-menu-list > li > a {
   display: block;
+  color: #404040;
+  text-shadow: #cccccc 1px 1px 2px;
 }
 .plugin-menu-list > li > a:hover {
   text-decoration: none;
+}
+
+.no-style-button {
+  padding: 0;
+  margin: 0;
+  display: block;
+  border: 0;
+  background-color: transparent;
+  height: 40px;
+  color: #404040;
+  text-shadow: #cccccc 1px 1px 2px;
 }
 
 .loginPage {
@@ -1539,9 +1556,6 @@ body {
   background-color: #efefef;
 }
 
-#metadataTable tbody tr {
-  cursor: pointer;
-}
 #metadataTable tbody tr:hover {
   background-color: #EDF2FF;
 }
@@ -2031,7 +2045,7 @@ body {
   padding: 5px 0;
 }
 .preview > .body {
-  height: 300px;
+  height: 200px;
   overflow: auto;
   margin-top: 10px;
 }
@@ -2060,6 +2074,8 @@ body {
   float: left;
   width: 16px;
   height: 16px;
+  font-size: 16px;
+  color: #999;
 }
 .icon.mandatory {
   background-position: -16px -32px;
@@ -2121,6 +2137,10 @@ body {
   float: left;
   width: 32px;
   height: 32px;
+}
+
+.btn-group > div:hover .icon, .menu:hover .icon {
+  color: #333;
 }
 
 .btn, .metadata-header-url > span, .btn-group > * {
@@ -2213,7 +2233,7 @@ body {
   font-weight: bold;
   font-size: 14px;
   text-align: center;
-  margin-bottom: 10px;
+  margin: 10px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;

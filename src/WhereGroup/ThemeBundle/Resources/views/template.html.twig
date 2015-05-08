@@ -5,15 +5,16 @@
 {% block css %}
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/datepicker/zebra_datepicker_metallic.css') }}">
-    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/116575fc7a/Metador21/style.css">
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/61f12517b7/Metador21/style.css">
 {% endblock %}
 
 {% block body %}
 <div class="page">
     {# <div class="logo">.</div> #}
-    <div class="top">
+    <div class="page-top">
         {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
     </div>
+    {% block form_start %}{% endblock %}
     <div class="plugin-menu">
         <div class="plugin-menu-content">
             <div class="plugin-menu-content-left">x</div>
@@ -22,9 +23,10 @@
             </div>
         </div>
     </div>
-    <div class="center">
+    <div class="page-center">
         {% block center %}{% endblock %}
     </div>
+    {% block form_end %}{% endblock %}
 </div>
 {% endblock %}
 {% block javascript %}

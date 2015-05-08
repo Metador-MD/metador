@@ -330,7 +330,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
 }
 
 #metadataTable tbody tr {
-    cursor: pointer;
+    // cursor: pointer;
 
     &:hover {
         background-color: #EDF2FF;
