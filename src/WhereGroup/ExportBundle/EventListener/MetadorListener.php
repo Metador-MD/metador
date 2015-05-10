@@ -26,36 +26,36 @@ class MetadorListener
      */
     public function onPostSave(MetadataChangeEvent $event)
     {
-        $metadata = $event->getDataset();
-        $config = $event->getConfig();
-        $filename = rtrim($config['export']['path'], '/');
+        // $metadata = $event->getDataset();
+        // $config = $event->getConfig();
+        // $filename = rtrim($config['export']['path'], '/');
 
-        if ($this->testPath($config['export']['path'])) {
-            $templating = $this->container->get('templating');
+        // if ($this->testPath($config['export']['path'])) {
+        //     $templating = $this->container->get('templating');
 
-            // TODO: anpassen!
-            $conf = array();
+        //     // TODO: anpassen!
+        //     $conf = array();
 
-            if ($metadata->getHierarchyLevel() == 'service') {
-                $template = $conf['templates']['form'] . ':Service:service.xml.twig';
-            } else {
-                $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
-            }
+        //     if ($metadata->getHierarchyLevel() == 'service') {
+        //         $template = $conf['templates']['form'] . ':Service:service.xml.twig';
+        //     } else {
+        //         $template = $conf['templates']['form'] . ':Dataset:dataset.xml.twig';
+        //     }
 
-            $filename .= '/' . md5($metadata->getUuid()) . '.xml';
+        //     $filename .= '/' . md5($metadata->getUuid()) . '.xml';
 
-            if ($metadata->getPublic() == 0) {
-                if (file_exists($filename)) {
-                    unlink($filename);
-                }
-            } else {
-                $xml = $templating->render($template, array(
-                    'p' => $metadata->getObject()
-                ));
+        //     if ($metadata->getPublic() == 0) {
+        //         if (file_exists($filename)) {
+        //             unlink($filename);
+        //         }
+        //     } else {
+        //         $xml = $templating->render($template, array(
+        //             'p' => $metadata->getObject()
+        //         ));
 
-                file_put_contents($filename, $xml);
-            }
-        }
+        //         file_put_contents($filename, $xml);
+        //     }
+        // }
     }
 
     /**
@@ -64,18 +64,17 @@ class MetadorListener
      */
     public function onDelete(MetadataChangeEvent $event)
     {
-        $metadata = $event->getDataset();
-        $config = $event->getConfig();
-        $filename = rtrim($config['export']['path'], '/');
+        // $metadata = $event->getDataset();
+        // $config = $event->getConfig();
+        // $filename = rtrim($config['export']['path'], '/');
 
-        if ($this->testPath($config['export']['path'])) {
-            $filename .= '/' . md5($metadata->getUuid()) . '.xml';
+        // if ($this->testPath($config['export']['path'])) {
+        //     $filename .= '/' . md5($metadata->getUuid()) . '.xml';
 
-            if (file_exists($filename)) {
-                unlink($filename);
-            }
-        }
-
+        //     if (file_exists($filename)) {
+        //         unlink($filename);
+        //     }
+        // }
     }
 
     private function testPath($path)

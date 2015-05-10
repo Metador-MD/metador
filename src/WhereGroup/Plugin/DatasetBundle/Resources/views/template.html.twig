@@ -17,3 +17,8 @@
         {% block content %}{% endblock %}
     </div>
 {% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/profiledataset/js/profile.js') }}"></script>
+{% endblock %}

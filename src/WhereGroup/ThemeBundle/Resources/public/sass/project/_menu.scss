@@ -157,24 +157,16 @@ $metador: $purple;
         &:first-child {
             border-top: 1px solid white;
         }
+
+        & a {
+            display: block;
+            font-size: 14px;
+            text-decoration: none;
+            color: lighten($fontColor, 15%);
+            @include text-shadow(lighten($fontColor, 60%) 1px 1px 2px);
+        }
     }
 
-    & a {
-        font-size: 14px;
-        text-decoration: none;
-        color: lighten($fontColor, 15%);
-        @include text-shadow(lighten($fontColor, 60%) 1px 1px 2px);
-    }
-}
-
-.page-menu-label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    padding: 5px 0;
-    background-color: #666;
 }
 
 .plugin-menu-list > li {

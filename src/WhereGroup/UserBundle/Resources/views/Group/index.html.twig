@@ -1,4 +1,4 @@
-{% extends 'WhereGroupUserBundle::template.html.twig' %}
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
 {% block content %}
 <h1>{{ 'Gruppen'|trans }}</h1>
@@ -20,7 +20,7 @@
                         <td>{{ entity.id }}</td>
                         <td>{{ entity.role }}</td>
                         <td>
-                            <a href="{{ path('group_confirm', { 'id': entity.id }) }}" class="info"><div class="icon delete"></div></a>
+                            <a href="{{ path('metador_admin_group_confirm', { 'id': entity.id }) }}" class="info"><div class="icon delete"></div></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -29,7 +29,7 @@
     </fieldset>
 </div>
 <div style="width: 200px;margin-left: 530px;">
-    <form action="{{ path('group_create') }}" method="post" autocomplete="off">
+    <form action="{{ path('metador_admin_group_create') }}" method="post" autocomplete="off">
         <fieldset class="fs">
             <legend>{{ 'Neue Gruppe erstellen'|trans }}</legend>
             <label for="{{ form.role.vars.id }}">{{ form_label(form.role) }}:</label>

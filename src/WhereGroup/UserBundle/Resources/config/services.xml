@@ -1,20 +1,18 @@
-<?xml version="1.0" ?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="where_group_user.example.class">WhereGroup\UserBundle\Example</parameter>
+        <!-- EVENT LISTENER -->
+        <parameter key="metador.user.app.listener.class">WhereGroup\UserBundle\EventListener\ApplicationMenuListener</parameter>
     </parameters>
 
     <services>
-        <service id="where_group_user.example" class="%where_group_user.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <!-- EVENT LISTENER -->
+        <service id="metador.user.app.listener" class="%metador.user.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="service_container" />
         </service>
     </services>
-    -->
 </container>

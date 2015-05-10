@@ -1,0 +1,33 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% block center %}
+    <div class="page-left">
+        <ul class="page-menu-list">
+        {% for item in applicationGet('app-admin-menu') %}
+        {# RAW CONTENT #}
+        {% if item.raw is defined %}
+            {{ item.raw|raw }}
+
+        {# INCLUDE CONTENT #}
+        {% elseif item.template is defined %}
+            {% include item.template %}
+
+        {# USE TEMPLATE #}
+        {% else %}
+            <li class="{% if item.active is defined and item.active %}act{% endif %}">
+                <a href="{{ path(item.path, item.params) }}">
+                    {% if item.icon is defined %}
+                        <span class="{{ item.icon }}"></span>
+                    {% endif %}
+                    {{ item.label|trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="page-right">
+        {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}

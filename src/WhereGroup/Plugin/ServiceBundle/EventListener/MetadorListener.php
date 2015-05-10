@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\EventListener;
+namespace WhereGroup\Plugin\ServiceBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
@@ -17,9 +17,8 @@ class MetadorListener
     public function onPreSave(MetadataChangeEvent $event)
     {
         $metadata = $event->getDataset();
-        $p = $metadata->getObject();
 
-        $p = $this->rebuildArrayKeys($p);
+        $p = $this->rebuildArrayKeys($metadata->getObject());
 
         if (strtolower($p['hierarchyLevel']) === 'service') {
             $p = $this->prepairService($p);

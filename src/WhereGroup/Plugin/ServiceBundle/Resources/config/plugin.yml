@@ -1,0 +1,4 @@
+profile-service:
+    name: "WhereGroup service profile"
+    description: "A profile for service metadata."
+    class: WhereGroup\Plugin\ServiceBundle\ProfileServiceBundle

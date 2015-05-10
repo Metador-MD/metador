@@ -164,6 +164,11 @@ class Application
         return ($this->route === $route);
     }
 
+    public function routeStartsWith($string)
+    {
+        return (strncmp($this->route, $string, strlen($string)) === 0);
+    }
+
     /**
      * @param $regex
      * @param $string

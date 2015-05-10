@@ -14,14 +14,14 @@ use WhereGroup\UserBundle\Form\UserType;
 /**
  * User controller.
  *
- * @Route("/user")
+ * @Route("/admin/user")
  */
 class UserController extends Controller
 {
     /**
      * Lists all User entities.
      *
-     * @Route("/", name="user")
+     * @Route("/", name="metador_admin_user")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/show/{id}", name="user_show")
+     * @Route("/show/{id}", name="metador_admin_user_show")
      * @Template()
      */
 
@@ -59,11 +59,11 @@ class UserController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-    
+
     /**
      * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/new", name="metador_admin_user_new")
      * @Template()
      */
     public function newAction()
@@ -78,14 +78,14 @@ class UserController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'groups'  => $groups
+            'groups' => $groups
         );
     }
 
     /**
      * Creates a new User entity.
      *
-     * @Route("/create", name="user_create")
+     * @Route("/create", name="metador_admin_user_create")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:User:new.html.twig")
      */
@@ -105,7 +105,7 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user'));
+            return $this->redirect($this->generateUrl('metador_admin_user'));
         }
 
         return array(
@@ -117,7 +117,7 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing User entity.
      *
-     * @Route("/edit/{id}", name="user_edit")
+     * @Route("/edit/{id}", name="metador_admin_user_edit")
      * @Template()
      */
     public function editAction($id)
@@ -135,9 +135,9 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
-            'form'   => $editForm->createView(),
-            'groups' => $groups,
+            'entity'      => $entity,
+            'form'        => $editForm->createView(),
+            'groups'      => $groups,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -145,7 +145,7 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
-     * @Route("/update/{id}", name="user_update")
+     * @Route("/update/{id}", name="metador_admin_user_update")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:User:edit.html.twig")
      */
@@ -166,24 +166,23 @@ class UserController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-
             $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
 
-            if($oldPassword != $entity->getPassword()) {
+            if ($oldPassword != $entity->getPassword()) {
                 $entity->setPassword(
                     $encoder->encodePassword($entity->getPassword(), $entity->getSalt())
                 );
             }
-                        
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user'));
+            return $this->redirect($this->generateUrl('metador_admin_user'));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $editForm->createView(),
+            'entity'      => $entity,
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -191,7 +190,7 @@ class UserController extends Controller
     /**
      * Deletes a User entity.
      *
-     * @Route("/delete/{id}", name="user_delete")
+     * @Route("/delete/{id}", name="metador_admin_user_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
@@ -211,7 +210,7 @@ class UserController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('metador_admin_user'));
     }
 
     private function createDeleteForm($id)

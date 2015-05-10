@@ -7,7 +7,6 @@
         <!-- SERVICE -->
         <parameter key="metador.application.class">WhereGroup\CoreBundle\Component\Application</parameter>
         <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
-        <parameter key="metador.listener.class">WhereGroup\CoreBundle\EventListener\MetadorListener</parameter>
         <parameter key="metador.user.class">WhereGroup\CoreBundle\Component\MetadorUser</parameter>
         <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
         <parameter key="metador.address.class">WhereGroup\CoreBundle\Component\Address</parameter>
@@ -32,10 +31,6 @@
         <service id="metador.twig_extension" class="%metador.twig.class%">
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
-        </service>
-        <service id="metador.listener" class="%metador.listener.class%">
-            <tag name="kernel.event_listener" event="metador.pre_save" method="onPreSave" />
-            <argument type="service" id="service_container" />
         </service>
         <service id="metador_user" class="%metador.user.class%">
             <argument type="service" id="service_container" />

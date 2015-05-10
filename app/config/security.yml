@@ -28,8 +28,7 @@ security:
     access_control:
         - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user, roles: ROLE_SUPERUSER }
-        - { path: ^/group, roles: ROLE_SUPERUSER }
+        - { path: ^/admin, roles: ROLE_SUPERUSER }
         - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:

@@ -1,14 +1,14 @@
-{% extends 'WhereGroupUserBundle::template.html.twig' %}
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
 {% block content %}
 <h1>{{ 'Gruppe löschen'|trans }}</h1>
 
-<form action="{{ path('group_delete', { 'id': entity.id }) }}" method="post" style="display:inline;">
+<form action="{{ path('metador_admin_group_delete', { 'id': entity.id }) }}" method="post" style="display:inline;">
     {{ form_widget(delete_form) }}
     <button type="submit">{{ 'löschen'|trans }}</button>
 </form>
 
-<form action="{{ path('group') }}" method="post" style="display:inline;">
+<form action="{{ path('metador_admin_group') }}" method="post" style="display:inline;">
     <button type="submit">{{ 'abbrechen'|trans }}</button>
 </form>
 {% endblock %}

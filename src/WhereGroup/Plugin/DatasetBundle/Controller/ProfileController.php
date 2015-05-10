@@ -44,6 +44,14 @@ class ProfileController extends Controller
         return $data;
     }
 
+    /**
+     * @Template("ProfileDatasetBundle::confirm.html.twig")
+     */
+    public function confirmAction($data)
+    {
+        return $data;
+    }
+
     public function xmlAction($data)
     {
         $xml = $this->render("ProfileDatasetBundle:Profile:metadata.xml.twig", array(

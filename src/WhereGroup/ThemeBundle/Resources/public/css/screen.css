@@ -1050,21 +1050,12 @@ body {
 .page-menu-list > li:first-child {
   border-top: 1px solid white;
 }
-.page-menu-list a {
+.page-menu-list > li a {
+  display: block;
   font-size: 14px;
   text-decoration: none;
   color: #595959;
   text-shadow: #cccccc 1px 1px 2px;
-}
-
-.page-menu-label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  padding: 5px 0;
-  background-color: #666;
 }
 
 .plugin-menu-list > li {
@@ -1089,6 +1080,25 @@ body {
   height: 40px;
   color: #404040;
   text-shadow: #cccccc 1px 1px 2px;
+}
+
+.table {
+  border: 1px solid #ddd;
+}
+
+.plugin-row {
+  height: 30px;
+  line-height: 30px;
+}
+.plugin-row > td:first-child {
+  width: 30px;
+  text-align: center;
+}
+.plugin-row.act > td {
+  background-color: #cff7d7;
+}
+.plugin-row.new > td {
+  background-color: #fff7c6;
 }
 
 .loginPage {

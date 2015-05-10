@@ -1,9 +1,9 @@
-{% extends 'WhereGroupUserBundle::template.html.twig' %}
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
 {% block content %}
 <h1>Benutzer bearbeiten</h1>
 
-<form action="{{ path('user_create') }}" method="post" {{ form_enctype(form) }} autocomplete="off" class="form">
+<form action="{{ path('metador_admin_user_create') }}" method="post" {{ form_enctype(form) }} autocomplete="off" class="form">
     <div class="left">
         <label for="{{ form.username.vars.id }}">{{ form.username.vars.name }}:</label>
         <input name="{{ form.username.vars.full_name }}" id="{{ form.username.vars.id }}" type="text" value="{{ form.username.vars.value }}" class="twoCol0"/>
@@ -40,7 +40,7 @@
 
 <hr/>
 
-<form action="{{ path('user') }}" method="get">
+<form action="{{ path('metador_admin_user') }}" method="get">
     <button type="submit" class="btn">zurück</button>
 </form>
 {% endblock %}

@@ -43,8 +43,20 @@ class ApplicationMenuListener
         $app->add('app-global-menu', 'admin', array(
             'icon'   => 'icon-cog',
             'label'  => 'Administration',
-            'path'   => 'user',
+            'path'   => 'metador_admin_index',
+            'params' => array(),
+            'active' => $app->routeStartsWith('metador_admin')
+        ), 'ROLE_SUPERUSER');
+
+        /***********************************************************************
+         * Admin Menu
+         ***********************************************************************/
+        $app->add('app-admin-menu', 'index', array(
+            'icon'   => 'icon-eye',
+            'label'  => 'Übersicht',
+            'path'   => 'metador_admin_index',
             'params' => array()
         ), 'ROLE_SUPERUSER');
+
     }
 }

@@ -13,14 +13,14 @@ use WhereGroup\UserBundle\Form\GroupType;
 /**
  * Group controller.
  *
- * @Route("/group")
+ * @Route("/admin/group")
  */
 class GroupController extends Controller
 {
     /**
      * Lists all Group entities.
      *
-     * @Route("/", name="group")
+     * @Route("/", name="metador_admin_group")
      * @Template()
      */
     public function indexAction()
@@ -36,7 +36,7 @@ class GroupController extends Controller
     /**
      * Finds and displays a Group entity.
      * @Method("GET")
-     * @Route("/delete/{id}", name="group_confirm")
+     * @Route("/delete/{id}", name="metador_admin_group_confirm")
      * @Template()
      */
     public function confirmDeleteAction($id)
@@ -55,31 +55,15 @@ class GroupController extends Controller
         );
     }
 
-//    /**
-//     * Displays a form to create a new Group entity.
-//     *
-//     * @Route("/new", name="group_new")
-//     * @Template()
-//     */
-//    public function newAction()
-//    {
-//        $entity = new Group();
-//        $form   = $this->createForm(new GroupType(), $entity);
-//
-//        return array(
-//            'entity' => $entity,
-//            'form'   => $form->createView(),
-//        );
-//    }
-
     /**
      * Creates a new Group entity.
      *
-     * @Route("/create", name="group_create")
+     * @Route("/create", name="metador_admin_group_create")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:Group:new.html.twig")
      */
-    public function createAction(Request $request) {
+    public function createAction(Request $request)
+    {
         $entity  = new Group();
         $form = $this->createForm(new GroupType(), $entity);
         $form->bind($request);
@@ -88,7 +72,7 @@ class GroupController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $roleExists = $em->getRepository('WhereGroupUserBundle:Group')->findOneBy(array('role' => $entity->getRole()));
-            if(!$roleExists) {
+            if (!$roleExists) {
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich hinzugefügt.');
@@ -100,13 +84,13 @@ class GroupController extends Controller
             $this->get('session')->getFlashBag()->set('warning', 'Gruppe konnte nicht hinzugefügt werden!');
         }
 
-        return $this->redirect($this->generateUrl('group'));
+        return $this->redirect($this->generateUrl('metador_admin_group'));
     }
 
     /**
      * Displays a form to edit an existing Group entity.
      *
-     * @Route("/edit/{id}", name="group_edit")
+     * @Route("/edit/{id}", name="metador_admin_group_edit")
      * @Method("GET")
      * @Template()
      */
@@ -131,7 +115,7 @@ class GroupController extends Controller
     /**
      * Edits an existing Group entity.
      *
-     * @Route("/edit/{id}", name="group_update")
+     * @Route("/edit/{id}", name="metador_admin_group_update")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:Group:edit.html.twig")
      */
@@ -153,7 +137,7 @@ class GroupController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('group_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('metador_admin_group_edit', array('id' => $id)));
         }
 
         return array(
@@ -166,7 +150,7 @@ class GroupController extends Controller
     /**
      * Deletes a Group entity.
      * @Method("POST")
-     * @Route("/delete/{id}", name="group_delete")
+     * @Route("/delete/{id}", name="metador_admin_group_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
@@ -187,7 +171,7 @@ class GroupController extends Controller
             $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich gelöscht.');
         }
 
-        return $this->redirect($this->generateUrl('group'));
+        return $this->redirect($this->generateUrl('metador_admin_group'));
     }
 
     private function createDeleteForm($id)
