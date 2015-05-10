@@ -4,7 +4,6 @@ namespace WhereGroup\Plugin\ServiceBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
-use WhereGroup\CoreBundle\Component\MetadataInterface;
 use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
 
 class ApplicationMenuListener extends ProfileApplicationMenuListener

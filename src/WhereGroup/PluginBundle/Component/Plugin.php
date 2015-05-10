@@ -5,6 +5,7 @@ namespace WhereGroup\PluginBundle\Component;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class Plugin
 {
@@ -68,8 +69,15 @@ class Plugin
     public function updateConfiguration()
     {
         $configuration = $this->getConfiguration();
+        $plugins       = $this->findPlugins();
 
-        foreach ($this->findPlugins() as $name => $plugin) {
+        foreach ($configuration['plugins'] as $key => $plugin) {
+            if (!isset($plugins[$key])) {
+                unset($configuration['plugins'][$key]);
+            }
+        }
+
+        foreach ($plugins as $name => $plugin) {
             if (!isset($configuration['plugins'][$name])) {
                 $plugin['active'] = false;
                 $plugin['new'] = true;
@@ -95,29 +103,18 @@ class Plugin
     public function findPlugins()
     {
         $plugins = array();
+        $finder = new Finder();
 
-        // get available plugins
-        foreach ($this->pluginPaths as $path) {
-            if (!is_dir($path)) {
-                continue;
-            }
+        $finder->files()
+            ->in($this->pluginPaths)
+            ->path('Resources/config/')
+            ->name('plugin.yml');
 
-            foreach (scandir($path) as $file) {
-                if ($file === '.' || $file === '..' || !is_dir($path . $file)) {
-                    continue;
-                }
+        foreach ($finder as $file) {
+            $pluginDefinition = $this->readYaml($file);
 
-                $pluginDefinitionFile = $path . $file . '/Resources/config/plugin.yml';
-
-                if (!file_exists($pluginDefinitionFile) || !is_readable($pluginDefinitionFile)) {
-                    continue;
-                }
-
-                $pluginDefinition = $this->readYaml($pluginDefinitionFile);
-
-                $plugins[key($pluginDefinition)]
-                    = $pluginDefinition[key($pluginDefinition)];
-            }
+            $plugins[key($pluginDefinition)]
+                = $pluginDefinition[key($pluginDefinition)];
         }
 
         return $plugins;
