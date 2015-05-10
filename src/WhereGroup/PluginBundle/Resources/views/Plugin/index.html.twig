@@ -1,0 +1,34 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'Plugins'|trans }}</h1>
+    <div class="plugin-table-border">
+    <table class="table plugin-table">
+    {% for key, plugin in plugins %}
+        {% set class = '' %}
+
+        {% if plugin['active'] %}
+            {% set class = 'act' %}
+        {% elseif plugin['new'] is defined %}
+            {% set class = 'new' %}
+        {% endif %}
+
+        <tr class="plugin-row {{ class }}">
+            <td>
+                <input type="checkbox" name="plugin[{{ key }}]"{% if plugin['active'] %} checked="checked"{% endif %} />
+            </td>
+            <td>{{ plugin['name'] }}</td>
+            <td>{{ plugin['description'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+{% endblock %}
+
+{% block form_start %}
+    <form action="{{ path('metador_admin_plugin_update') }}" method="post">
+{% endblock %}
+
+{% block form_end %}
+    </form>
+{% endblock %}
