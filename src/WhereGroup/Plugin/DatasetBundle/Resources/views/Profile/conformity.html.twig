@@ -15,21 +15,21 @@
         {% for key,value in p['dataquality'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
-        <li class="menu" id="wizard_p_dataquality"><div class="icon wizard"></div></li>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+        <li class="menu" id="wizard_p_dataquality"><div class="icon icon-magic-wand"></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['dataquality'] %}
-        
+
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             {% set id = 'p[dataquality][' ~ key ~ '][title]' %}
             {% set val = value['title'] is defined ? value['title'] : '' %}
 
             <div class="oneColBox">
                 <label class="displayLeft">
-                    <div class="icon optional"></div>{{'Titel'|trans}}:
+                    <div class="icon optional icon-circle"></div>{{'Titel'|trans}}:
                 </label>
                 <textarea name="{{ id }}" class="oneCol0">{{ val }}</textarea>
                 <div class="clear"></div>
@@ -41,12 +41,12 @@
 
                 <div class="left">
                     <label>
-                        <div class="icon conditional"></div>{{'Datum'|trans}}:
+                        <div class="icon conditional icon-circle"></div>{{'Datum'|trans}}:
                     </label>
                     <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
                     <div class="btn-group">
                         <div class="last showHelp" {{ id|md_data_obj }}>
-                            <div class="icon help"></div>
+                            <div class="icon icon-question"></div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
 
                 <div class="center">
                     <label>
-                        <div class="icon conditional"></div>{{'Datum der'|trans}}:
+                        <div class="icon conditional icon-circle"></div>{{'Datum der'|trans}}:
                     </label>
                     <select name="{{ id }}" class="threeCol1">
                         <option value="" {{ md_select(val, '') }}></option>
@@ -66,7 +66,7 @@
                     </select>
                     <div class="btn-group">
                         <div class="last showHelp" {{ id|md_data_obj }}>
-                            <div class="icon help"></div>
+                            <div class="icon icon-question"></div>
                         </div>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
 
                 <div class="right">
                     <label>
-                        <div class="icon conditional"></div>{{'Grad'|trans}}:
+                        <div class="icon conditional icon-circle"></div>{{'Grad'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
                             <div class="last showHelp" {{ id|md_data_obj }}>
-                                <div class="icon help"></div>
+                                <div class="icon icon-question"></div>
                             </div>
                         </div>
                         <select name="{{ id }}" class="threeCol1">
@@ -90,7 +90,7 @@
                             <option value="true" {{ md_select(val, 'true') }}>Konform</option>
                         </select>
                     </div>
-                </div> 
+                </div>
                 <div class="clear"></div>
             </div>
         </div>

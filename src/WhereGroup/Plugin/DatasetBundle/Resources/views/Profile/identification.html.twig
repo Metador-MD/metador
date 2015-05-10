@@ -16,9 +16,9 @@
         {% for key,value in p['identifier'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['identifier'] %}
@@ -30,12 +30,12 @@
 
                 <div class="left">
                     <label for="{{ id|md_id }}">
-                        <div class="icon mandatory icon-circle"></div>{{'Code'|trans}}:
+                        <div class="icon mandatory icon-circle icon-circle"></div>{{'Code'|trans}}:
                     </label>
                     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol2"/>
                     <div class="btn-group">
-                        <div class="wizard_p_fileidentifier" data-obj-id="{{ id|md_id }}"><div class="icon wizard"></div></div>
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                        <div class="wizard_p_fileidentifier" data-obj-id="{{ id|md_id }}"><div class="icon icon-magic-wand"></div></div>
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
@@ -44,11 +44,11 @@
 
                 <div class="right">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional"></div>{{'Namensraum'|trans}}:
+                        <div class="icon optional icon-circle"></div>{{'Namensraum'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
                     </div>
@@ -69,11 +69,11 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Titel'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
 </div>
@@ -86,11 +86,11 @@
 
 <div class="oneColBox">
     <label for="{{ id|md_id }}">
-        <div class="icon optional"></div>{{'Alternativtitel'|trans}}:
+        <div class="icon optional icon-circle"></div>{{'Alternativtitel'|trans}}:
     </label>
     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
     <div class="btn-group">
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
 </div>
@@ -102,10 +102,10 @@
 {% set val = p['abstract'] is defined ? p['abstract'] : '' %}
 <div class="oneColBox">
     <label class="displayLeft" for="{{ id|md_id }}">
-        <div class="icon mandatory icon-circle"></div>{{'Kurzbeschreibung'|trans}}:
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Kurzbeschreibung'|trans}}:
     </label>
     <div class="btn-group displayRight">
-        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <textarea name="{{ id }}" id="{{ id|md_id }}" class="oneCol0">{{ val }}</textarea>
     <div class="clear"></div>
@@ -118,14 +118,14 @@
 
 <div class="oneColBox">
     <label>
-        <div class="icon mandatory icon-circle"></div>{{'Ressourcenverweis'|trans}}:
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Ressourcenverweis'|trans}}:
     </label>
     <input name="onlineResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol2 no-value" value="" />
     <div class="btn-group">
         <div class="cmdAddSingleValue" {{ id|md_data_obj }} data-name="{{ id }}">
-            <div class="icon add"></div>
+            <div class="icon icon-plus"></div>
         </div>
-        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
 
     <div class="clear"></div>
@@ -137,7 +137,7 @@
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endif %}
@@ -164,7 +164,7 @@
         </select>
         <div class="btn-group">
             <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
@@ -178,7 +178,7 @@
         <div class="fr">
             <div class="btn-group">
                 <div class="last showHelp"  data-obj-id="{{ id|md_id }}">
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
         <select class="twoCol1 no-value" id="select_{{ id|md_id }}">
@@ -199,7 +199,7 @@
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
             <label>{{ value }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endif %}

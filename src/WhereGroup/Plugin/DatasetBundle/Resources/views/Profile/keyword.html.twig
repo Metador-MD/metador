@@ -9,12 +9,12 @@
     {% set id = 'p[keyword][value]' %}
 
     <label>
-        <div class="icon mandatory icon-circle"></div>{{'Schlüsselwort'|trans}}:
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Schlüsselwort'|trans}}:
     </label>
     <input id="{{ id|md_id }}" type="text" value="" class="oneCol1 no-value"/>
     <div class="btn-group">
         <div class="last showHelp" {{ id|md_data_obj }}>
-            <div class="icon help"></div>
+            <div class="icon icon-question"></div>
         </div>
     </div>
     <div class="clear"></div>
@@ -28,12 +28,12 @@
 
         <div class="left">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
+                <div class="icon mandatory icon-circle icon-circle"></div>{{'Titel'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 no-value"/>
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
         </div>
@@ -42,12 +42,12 @@
 
         <div class="center">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum'|trans}}:
+                <div class="icon mandatory icon-circle icon-circle"></div>{{'Datum'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 datepicker no-value"/>
             <div class="btn-group">
                 <div class="last showHelp" {{ id|md_data_obj }}>
-                    <div class="icon help"></div>
+                    <div class="icon icon-question"></div>
                 </div>
             </div>
         </div>
@@ -56,12 +56,12 @@
 
         <div class="right">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum der'|trans}}:
+                <div class="icon mandatory icon-circle icon-circle"></div>{{'Datum der'|trans}}:
             </label>
             <div class="fr">
                 <div class="btn-group">
                     <div class="last showHelp" {{ id|md_data_obj }}>
-                        <div class="icon help"></div>
+                        <div class="icon icon-question"></div>
                     </div>
                 </div>
                 <select id="{{ id|md_id }}" class="threeCol1 no-value">
@@ -75,7 +75,7 @@
     </div>
     <div class="clear"></div>
     <hr/>
-    <div id="add_keyword" class="btn right"><div class="icon add"></div></div>
+    <div id="add_keyword" class="btn right"><div class="icon icon-plus"></div></div>
     <div class="clear"></div>
 </fieldset>
 
@@ -83,13 +83,13 @@
 
 <div class="twoColBox">
     <label class="displayLeft">
-        <div class="icon mandatory icon-circle"></div>{{'Mindestens ein Schlüsselwort aus "GEMET - INSPIRE themes, version 1.0" verpflichtend.'|trans}}
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Mindestens ein Schlüsselwort aus "GEMET - INSPIRE themes, version 1.0" verpflichtend.'|trans}}
     </label>
     <div class="clear"></div>
 
     <div class="left">
         <label>
-            <div class="icon conditional"></div>{{'Repository'|trans}}:
+            <div class="icon conditional icon-circle"></div>{{'Repository'|trans}}:
         </label>
         <select class="twoCol1 keywordRepo no-value">
             {% for repo, data in examples['keywords'] %}
@@ -98,13 +98,13 @@
         </select>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
-                <div class="icon help"></div>
+                <div class="icon icon-question"></div>
             </div>
         </div>
     </div>
     <div class="right">
         <label>
-            <div class="icon conditional"></div>{{'Schlüsselwort'|trans}}:
+            <div class="icon conditional icon-circle"></div>{{'Schlüsselwort'|trans}}:
         </label>
         <div class="fr">
             {% for repo, data in examples['keywords'] %}
@@ -139,7 +139,7 @@
             <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
             <label>{{ repo }} - {{ keyword }}</label>
             <div class="btn cmdDeleteSingleValue">
-                <div class="icon delete"></div>
+                <div class="icon icon-bin2"></div>
             </div>
         </div>
         {% endfor %}

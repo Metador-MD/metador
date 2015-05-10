@@ -7,10 +7,10 @@
 {% set val = p['lineage'] is defined ? p['lineage'] : '' %}
 <div class="oneColBox">
     <label class="displayLeft" for="{{ id|md_id }}">
-        <div class="icon optional"></div>{{'Herkunft'|trans}}:
+        <div class="icon optional icon-circle"></div>{{'Herkunft'|trans}}:
     </label>
     <div class="btn-group displayRight">
-        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <textarea name="{{ id }}" id="{{ id|md_id }}" class="oneCol0">{{ val }}</textarea>
     <div class="clear"></div>
@@ -31,28 +31,28 @@
     <ul>
         {% for key,value in p['resolution'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
-        {% endfor %}        
-        <li class="duplicate"><div class="icon add"></div></li>
-        <li class="menu delete"><div class="icon delete"></div></li>
-        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon help"></div></li>
+        {% endfor %}
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
     </ul>
     <div class="content">
         {% for key,value in p['resolution'] %}
 
         <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
             <div class="twoColBox">
-            
+
                 {% set id = 'p[resolution][' ~ key ~ '][denominator]' %}
                 {% set val = value['denominator'] is defined ? value['denominator'] : '' %}
 
                 <div class="left">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional"></div>{{'Äquivalenter Maßstab'|trans}}:
+                        <div class="icon optional icon-circle"></div>{{'Äquivalenter Maßstab'|trans}}:
                     </label>
                     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
-                    </div> 
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
                 </div>
 
                 <div class="right"></div>
@@ -63,12 +63,12 @@
 
                 <div class="left">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional"></div>{{'Auflösungsabstand'|trans}}:
+                        <div class="icon optional icon-circle"></div>{{'Auflösungsabstand'|trans}}:
                     </label>
                     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
                     <div class="btn-group">
-                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
-                    </div> 
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
                 </div>
 
                 {% set id = 'p[resolution][' ~ key ~ '][uom]' %}
@@ -76,11 +76,11 @@
 
                 <div class="right">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional"></div>{{'Längeneinheit'|trans}}:
+                        <div class="icon optional icon-circle"></div>{{'Längeneinheit'|trans}}:
                     </label>
                     <div class="fr">
                         <div class="btn-group">
-                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon help"></div></div>
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                         </div>
                         <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
                     </div>
