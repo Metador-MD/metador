@@ -6,7 +6,6 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
-use WhereGroup\CoreBundle\Entity\Address;
 use WhereGroup\CoreBundle\Component\Paging;
 
 /**
@@ -22,24 +21,18 @@ class Metadata implements MetadataInterface
     /** @var MetadorUserInterface  */
     protected $metadorUser;
 
-    /** @var AddressInterface  */
-    protected $address;
-
     const REPOSITORY = "WhereGroupCoreBundle:Metadata";
 
     /**
      * @param ContainerInterface $container
      * @param MetadorUserInterface $metadorUser
-     * @param AddressInterface $address
      */
     public function __construct(
         ContainerInterface $container,
-        MetadorUserInterface $metadorUser,
-        AddressInterface $address
+        MetadorUserInterface $metadorUser
     ) {
         $this->container = $container;
         $this->metadorUser = $metadorUser;
-        $this->address = $address;
     }
 
     /**
@@ -273,8 +266,6 @@ class Metadata implements MetadataInterface
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
-
-        $this->address->set($metadata->getObject());
 
         // SET FLASH
         $title = isset($p['title']) ? $p['title'] : 'Datensatz';

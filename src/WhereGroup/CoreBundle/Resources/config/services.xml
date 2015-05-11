@@ -44,7 +44,6 @@
         <service id="metador_metadata" class="%metador.metadata.class%">
             <argument type="service" id="service_container" />
             <argument type="service" id="metador_user" />
-            <argument type="service" id="metador_address" />
         </service>
 
         <!-- EVENT LISTENER -->

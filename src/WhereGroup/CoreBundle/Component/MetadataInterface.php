@@ -4,18 +4,15 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 interface MetadataInterface
 {
 /**
      * @param ContainerInterface $container
      * @param MetadorUserInterface $metadorUser
-     * @param AddressInterface $address
      */
     public function __construct(
         ContainerInterface $container,
-        MetadorUserInterface $metadorUser,
-        AddressInterface $address
+        MetadorUserInterface $metadorUser
     );
 
     /**
