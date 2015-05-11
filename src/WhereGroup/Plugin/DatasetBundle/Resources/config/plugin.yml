@@ -1,4 +1,6 @@
 profile-dataset:
-    name: "WhereGroup dataset profile"
+    origin: "WhereGroup"
+    name: "Dataset profile"
     description: "A profile for dataset metadata."
     class: WhereGroup\Plugin\DatasetBundle\ProfileDatasetBundle
+    version: "1.0"
