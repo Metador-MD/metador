@@ -931,7 +931,6 @@ body {
 .profile-select > .profile-list {
   display: none;
   position: absolute;
-  width: 150px;
   text-align: left;
   background-color: #604848;
   color: #f0f0d8;
@@ -1442,6 +1441,46 @@ body {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+}
+
+.duplicatable .duplicatable {
+  margin: 10px;
+}
+.duplicatable .duplicatable .oneColBox, .duplicatable .duplicatable .twoColBox, .duplicatable .duplicatable .threeColBox {
+  width: 650px;
+}
+.duplicatable .duplicatable .twoColBox > .left {
+  width: 300px;
+}
+.duplicatable .duplicatable .threeColBox > .left, .duplicatable .duplicatable .threeColBox > .center {
+  width: 186.33333px;
+}
+.duplicatable .duplicatable .threeCol > .left, .duplicatable .duplicatable .threeCol > .center {
+  width: 183.33333px;
+}
+.duplicatable .duplicatable .oneCol0 {
+  width: 638px;
+}
+.duplicatable .duplicatable .oneCol1 {
+  width: 598px;
+}
+.duplicatable .duplicatable .oneCol2 {
+  width: 558px;
+}
+.duplicatable .duplicatable .oneCol3 {
+  width: 518px;
+}
+.duplicatable .duplicatable .twoCol0 {
+  width: 284px;
+}
+.duplicatable .duplicatable .twoCol1 {
+  width: 244px;
+}
+.duplicatable .duplicatable .twoCol2 {
+  width: 204px;
+}
+.duplicatable .duplicatable .threeCol1 {
+  width: 127.33333px;
 }
 
 .duplicatable {

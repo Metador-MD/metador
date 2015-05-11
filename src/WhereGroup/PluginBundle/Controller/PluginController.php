@@ -44,5 +44,7 @@ class PluginController extends Controller
             $this->get('request')->request->all(),
             'metador_admin_plugin'
         );
+
+        return $this->redirect($this->generateUrl('metador_admin_plugin'));
     }
 }

@@ -6,6 +6,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Process\Process;
 
 class Plugin
 {
@@ -84,6 +88,9 @@ class Plugin
                 $configuration['plugins'][$name] = $plugin;
             } elseif (isset($configuration['plugins'][$name]['new'])) {
                 unset($configuration['plugins'][$name]['new']);
+            } else {
+                $configuration['plugins'][$name]
+                    = array_merge($configuration['plugins'][$name], $plugin);
             }
         }
 
@@ -134,11 +141,24 @@ class Plugin
 
     public function clearCache($redirect)
     {
-        $url = $this->container->get('router')->generate($redirect);
+        $env     = '--env=' . $this->container->get('kernel')->getEnvironment();
+        $console = $this->rootDir . 'console';
+
         $fs  = new Filesystem();
         $fs->remove($this->container->getParameter('kernel.cache_dir'));
-        sleep(5);
-        header('Location: ' . $url);
-        exit;
+
+        sleep(4);
+
+        $commands = array(
+            "$console assets:install --no-debug $env $this->rootDir../web/",
+            "$console cache:warmup --no-debug $env"
+        );
+
+        foreach ($commands as $command) {
+            $process = new Process($command);
+            $process->run();
+        }
+
+
     }
 }

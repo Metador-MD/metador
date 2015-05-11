@@ -195,6 +195,42 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     @include border-radius($radius);
 }
 
+.duplicatable .duplicatable {
+    $correction: 50px;
+    margin: 10px;
+
+    .oneColBox, .twoColBox, .threeColBox {
+        width: $colBox - $correction;
+    }
+
+    .twoColBox {
+        & > .left {
+            width: ($colBox / 2) - $correction;
+        }
+    }
+
+    .threeColBox {
+        & > .left, & > .center {
+            width: ($colBox / 3) + ($padding/2) - $correction;
+        }
+    }
+
+    .threeCol {
+        & > .left, & > .center {
+            width: ($colBox / 3) - $correction;
+        }
+    }
+
+    & .oneCol0    {width: $oneColWidth - $correction;}
+    & .oneCol1    {width: $oneColWidth - $buttonWidth - $correction;}
+    & .oneCol2    {width: $oneColWidth - ($buttonWidth * 2) - $correction;}
+    & .oneCol3    {width: $oneColWidth - ($buttonWidth * 3) - $correction;}
+    & .twoCol0    {width: $twoColWidth - $correction;}
+    & .twoCol1    {width: $twoColWidth - $buttonWidth - $correction;}
+    & .twoCol2    {width: $twoColWidth - ($buttonWidth * 2) - $correction;}
+    & .threeCol1  {width: $threeColWidth - $buttonWidth - $correction;}
+}
+
 .duplicatable {
     border: 1px solid silver;
     margin-bottom: 10px;
