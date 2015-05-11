@@ -19,7 +19,9 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "tecnick.com/tcpdf": "dev-master",
-        "ramsey/uuid": "~2.8"
+        "ramsey/uuid": "~2.8",
+        "jms/di-extra-bundle": "1.5.*",
+        "jms/translation-bundle": "1.1.*"
     },
     "scripts": {
         "post-install-cmd": [
