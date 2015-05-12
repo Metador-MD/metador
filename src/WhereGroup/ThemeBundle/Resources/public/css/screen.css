@@ -1483,6 +1483,26 @@ body {
   width: 127.33333px;
 }
 
+.duplicatable > ul > li > .icon-maximize {
+  display: none;
+}
+.duplicatable > ul > li > .icon-minimize {
+  display: block;
+}
+
+.duplicatable.closed {
+  height: 50px;
+}
+.duplicatable.closed > ul > li > .icon-maximize {
+  display: block;
+}
+.duplicatable.closed > ul > li > .icon-minimize {
+  display: none;
+}
+.duplicatable.closed > .content {
+  display: none;
+}
+
 .duplicatable {
   border: 1px solid silver;
   margin-bottom: 10px;

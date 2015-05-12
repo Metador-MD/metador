@@ -232,6 +232,33 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
 }
 
 .duplicatable {
+    & > ul > li > .icon-maximize {
+        display: none;
+    }
+
+    & > ul > li > .icon-minimize {
+        display: block;
+    }
+}
+
+.duplicatable.closed {
+
+    & > ul > li > .icon-maximize {
+        display: block;
+    }
+
+    & > ul > li > .icon-minimize {
+        display: none;
+    }
+
+    & > .content {
+        display: none;
+    }
+
+    height: 50px;
+}
+
+.duplicatable {
     border: 1px solid silver;
     margin-bottom: 10px;
     @include border-radius($radius);
