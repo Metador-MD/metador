@@ -2,12 +2,20 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use JMS\TranslationBundle\Annotation\Ignore;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
+/**
+ * Class ProfileApplicationMenuListener
+ * @package WhereGroup\CoreBundle\Component
+ */
 abstract class ProfileApplicationMenuListener
 {
     protected $metadata;
 
+    /**
+     * @param MetadataInterface $metadata
+     */
     public function __construct(MetadataInterface $metadata)
     {
         $this->metadata  = $metadata;
@@ -18,14 +26,18 @@ abstract class ProfileApplicationMenuListener
         unset($this->metadata);
     }
 
+    /**
+     * @param ApplicationEvent $event
+     */
     public function onLoading(ApplicationEvent $event)
     {
-        $app      = $event->getApplication();
+        $app = $event->getApplication();
 
         /***********************************************************************
          * Profile Menu
          ***********************************************************************/
         $app->add('app-profile-menu', $this->profile, array(
+            /** @Ignore */
             'label'  => $this->name,
             'path'   => 'metadata_index',
             'params' => array('profile' => $this->profile)

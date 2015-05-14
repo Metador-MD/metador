@@ -14,7 +14,7 @@
 
     {# INCLUDE CONTENT #}
     {% elseif item.template is defined %}
-        {% include item.template %}
+        {{ include(item.template, item.params) }}
 
     {# USE TEMPLATE #}
     {% else %}
