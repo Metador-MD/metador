@@ -27,18 +27,18 @@ class AppKernel extends Kernel
             new WhereGroup\PluginBundle\WhereGroupPluginBundle(),
         );
 
-        // Auslagern
+        // LOAD PLUGINS
         $pluginConfigFile = __DIR__ . '/config/plugins.yml';
 
-        if (!file_exists($pluginConfigFile)) {
-            file_put_contents($pluginConfigFile, Yaml::dump(array('plugins' => array()), 2));
-        }
+        if (file_exists($pluginConfigFile)) {
+            $array = Yaml::parse($pluginConfigFile);
 
-        $array = Yaml::parse($pluginConfigFile);
-
-        foreach ($array['plugins'] as $name => $plugin) {
-            if ($plugin['active']) {
-                $bundles[] = new $plugin['class'];
+            if (isset($array['plugins'])) {
+                foreach ($array['plugins'] as $name => $plugin) {
+                    if ($plugin['active']) {
+                        $bundles[] = new $plugin['class_path'] . '/' . $plugin['class_name'];
+                    }
+                }
             }
         }
 

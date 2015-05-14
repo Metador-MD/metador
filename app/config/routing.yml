@@ -13,3 +13,6 @@ where_group_plugin:
 where_group_theme:
     resource: "@WhereGroupThemeBundle/Controller/"
     type:     annotation
+
+_plugins:
+    resource: plugins_routing.yml

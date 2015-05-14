@@ -17,8 +17,10 @@
             <td>
                 <input type="checkbox" name="plugin[{{ key }}]"{% if plugin['active'] %} checked="checked"{% endif %} />
             </td>
+            <td>{{ plugin['origin'] }}</td>
             <td>{{ plugin['name'] }}</td>
             <td>{{ plugin['description'] }}</td>
+            <td>{{ plugin['version'] }}</td>
         </tr>
     {% endfor %}
     </table>

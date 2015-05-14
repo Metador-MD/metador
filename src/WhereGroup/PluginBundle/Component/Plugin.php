@@ -16,8 +16,10 @@ class Plugin
     protected $container;
     protected $rootDir;
     protected $configurationFile;
+    protected $routingFile;
     protected $pluginPaths = array();
     protected $plugins = array();
+    protected $routing = array();
 
     /**
      * @param ContainerInterface $container
@@ -29,19 +31,54 @@ class Plugin
         // get plugin path's
         $this->rootDir           = $this->container->get('kernel')->getRootDir() . '/';
         $this->configurationFile = $this->rootDir . 'config/plugins.yml';
+        $this->routingFile       = $this->rootDir . 'config/plugins_routing.yml';
         $this->pluginPaths       = array(
             $this->rootDir . '../src/WhereGroup/Plugin/',
             $this->rootDir . '../src/User/Plugin/'
         );
 
-        $this->updateConfiguration();
+        // load configuration
+        $configuration = $this->getPluginConfiguration();
+        $this->routing = $this->getPluginRouting();
+        $plugins       = $this->findPlugins();
+
+        // remove not existing bundles
+        foreach ($configuration['plugins'] as $key => $plugin) {
+            if (!isset($plugins[$key])) {
+                unset($configuration['plugins'][$key]);
+            }
+        }
+
+        foreach ($plugins as $name => $plugin) {
+            // tag new plugins
+            if (!isset($configuration['plugins'][$name])) {
+                $plugin['active'] = false;
+                $plugin['new'] = true;
+                $configuration['plugins'][$name] = $plugin;
+
+            // remove new tag
+            } elseif (isset($configuration['plugins'][$name]['new'])) {
+                unset($configuration['plugins'][$name]['new']);
+
+            // override old configuration
+            } else {
+                $configuration['plugins'][$name]
+                    = array_merge($configuration['plugins'][$name], $plugin);
+            }
+        }
+
+        $this->plugins = $configuration['plugins'];
+        ksort($this->plugins);
+
+        $this->saveConfiguration();
+
+        unset($configuration, $plugins);
     }
 
     public function __destruct()
     {
         unset($this->container);
     }
-
 
     public function getPlugins()
     {
@@ -53,58 +90,40 @@ class Plugin
         $plugins = empty($request['plugin']) ? array() : $request['plugin'];
 
         foreach ($this->plugins as $key => $plugin) {
-            // enable
             if (isset($plugins[$key])) {
-                $this->plugins[$key]['active'] = true;
-            // disable
+                $this->enable($key, $this->plugins[$key]);
             } else {
-                $this->plugins[$key]['active'] = false;
+                $this->disable($key, $this->plugins[$key]);
             }
         }
 
-        $this->writeYaml(
-            $this->configurationFile,
-            array('plugins' => $this->plugins)
-        );
-
+        // die('<pre>' . print_r($this->routing, 1) . '</pre>');
+        $this->saveConfiguration();
         $this->clearCache($redirect);
     }
 
-    public function updateConfiguration()
+    protected function saveConfiguration()
     {
-        $configuration = $this->getConfiguration();
-        $plugins       = $this->findPlugins();
-
-        foreach ($configuration['plugins'] as $key => $plugin) {
-            if (!isset($plugins[$key])) {
-                unset($configuration['plugins'][$key]);
-            }
-        }
-
-        foreach ($plugins as $name => $plugin) {
-            if (!isset($configuration['plugins'][$name])) {
-                $plugin['active'] = false;
-                $plugin['new'] = true;
-                $configuration['plugins'][$name] = $plugin;
-            } elseif (isset($configuration['plugins'][$name]['new'])) {
-                unset($configuration['plugins'][$name]['new']);
-            } else {
-                $configuration['plugins'][$name]
-                    = array_merge($configuration['plugins'][$name], $plugin);
-            }
-        }
-
-        $this->plugins = $configuration['plugins'];
-        $this->writeYaml($this->configurationFile, $configuration);
+        $this->writeYaml($this->configurationFile, array('plugins' => $this->plugins));
+        $this->writeYaml($this->routingFile, $this->routing);
     }
 
-    public function getConfiguration()
+    protected function getPluginConfiguration()
     {
         if (!file_exists($this->configurationFile)) {
             $this->writeYaml($this->configurationFile, array('plugins' => array()));
         }
 
         return $this->readYaml($this->configurationFile);
+    }
+
+    protected function getPluginRouting()
+    {
+        if (!file_exists($this->routingFile)) {
+            $this->writeYaml($this->routingFile, array());
+        }
+
+        return $this->readYaml($this->routingFile);
     }
 
     public function findPlugins()
@@ -125,6 +144,43 @@ class Plugin
         }
 
         return $plugins;
+    }
+
+    protected function enable($key, &$plugin)
+    {
+        $plugin['active'] = true;
+
+        $routing = $this->locateResource($plugin['class_path'], 'config/routing.yml');
+
+        if ($routing) {
+            $this->routing[trim(str_replace('-', '_', $key))] = array(
+                'resource' => '@' . $plugin['class_name'] . '/Resources/config/routing.yml'
+            );
+        }
+    }
+
+    protected function disable($key, &$plugin)
+    {
+        $plugin['active'] = false;
+
+        if (isset($this->routing[trim(str_replace('-', '_', $key))])) {
+            unset($this->routing[trim(str_replace('-', '_', $key))]);
+        }
+    }
+
+    protected function locateResource($bundlePath, $path)
+    {
+        $fs = new Filesystem();
+
+        $path = $this->rootDir . '../src/'
+            . ltrim(rtrim(str_replace('\\', '/', $bundlePath), '/'), '/')
+            . '/Resources/' . ltrim($path, '/');
+
+        if ($fs->exists($path)) {
+            return $path;
+        }
+
+        return false;
     }
 
     public function readYaml($file)
@@ -158,7 +214,5 @@ class Plugin
             $process = new Process($command);
             $process->run();
         }
-
-
     }
 }

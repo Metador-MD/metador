@@ -1,6 +1,7 @@
 profile-service:
-    origin: "WhereGroup"
-    name: "Service profile"
-    description: "A profile for service metadata."
-    class: WhereGroup\Plugin\ServiceBundle\ProfileServiceBundle
-    version: "1.0"
+    origin: WhereGroup
+    name: Service profile
+    description: A profile for service metadata.
+    class_path: WhereGroup\Plugin\ServiceBundle
+    class_name: ProfileServiceBundle
+    version: 1.0

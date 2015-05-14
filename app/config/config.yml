@@ -79,27 +79,3 @@ doctrine:
                 mappings:
                     WhereGroupCoreBundle: ~
                     WhereGroupUserBundle: ~
-
-# http://jmsyst.com/bundles/JMSTranslationBundle
-# http://jmsyst.com/bundles/JMSTranslationBundle/master/webinterface
-# http://jmsyst.com/bundles/JMSI18nRoutingBundle
-services:
-    twig.text_extension:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - name: twig.extension
-
-jms_translation:
-    configs:
-        user:
-            dirs: [%kernel.root_dir%/../src/User]
-            output_dir: %kernel.root_dir%/Resources/translations
-            excluded_names: ["*TestCase.php", "*Test.php"]
-            excluded_dirs: [Command, Component, Controller, Entity, DependencyInjection, Event, EventListener]
-        wheregroup:
-            dirs: [%kernel.root_dir%/../src/WhereGroup]
-            output_dir: %kernel.root_dir%/Resources/translations
-            # ignored_domains: [routes]
-            excluded_names: ["*TestCase.php", "*Test.php"]
-            excluded_dirs: [cache, data, logs, sessions, Command, Component, Controller, Entity, DependencyInjection, Event, EventListener]
-            # extractors: [alias_of_the_extractor]

@@ -29,3 +29,36 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+# http://jmsyst.com/bundles/JMSTranslationBundle
+# http://jmsyst.com/bundles/JMSTranslationBundle/master/webinterface
+# http://jmsyst.com/bundles/JMSI18nRoutingBundle
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension
+
+jms_translation:
+    source_language: de
+    locales:
+        - de
+        - en
+
+    configs:
+        # app/console translation:extract --config=application
+        application:
+            dirs: [%kernel.root_dir%/../src/WhereGroup]
+            output_dir: %kernel.root_dir%/Resources/translations/application
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [Plugin]
+        # app/console translation:extract --config=plugins
+        plugins:
+            dirs: [%kernel.root_dir%/../src/WhereGroup/Plugin]
+            output_dir: %kernel.root_dir%/Resources/translations/plugins
+            excluded_names: ["*TestCase.php", "*Test.php"]
+        # app/console translation:extract --config=user
+        user:
+            dirs: [%kernel.root_dir%/../src/User]
+            output_dir: %kernel.root_dir%/Resources/translations/user
+            excluded_names: ["*TestCase.php", "*Test.php"]

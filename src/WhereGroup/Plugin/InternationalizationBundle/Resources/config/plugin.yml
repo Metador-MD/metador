@@ -1,7 +1,7 @@
 wheregroup-internationalization:
-    origin: "WhereGroup"
-    name: "Internationalization"
-    description: "Chose locale in Application"
-    class: "WhereGroup\Plugin\InternationalizationBundle\WhereGroupInternationalizationBundle"
-    version: "1.0"
-
+    origin: WhereGroup
+    name: Internationalization
+    description: Chose locale in Application
+    class_path: WhereGroup\Plugin\InternationalizationBundle
+    class_name: WhereGroupInternationalizationBundle
+    version: 1.0
