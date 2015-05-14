@@ -13,12 +13,15 @@ class Application
 {
     private $container;
     private $data;
-    private $dataEnd;
     private $bundle;
     private $controller;
     private $action;
     private $route;
     private $parameter;
+
+    const POSITION_PREPEND = 0;
+    const POSITION_NORMAL  = 1;
+    const POSITION_APPEND  = 2;
 
     /**
      * @param ContainerInterface $container
@@ -30,7 +33,6 @@ class Application
         $this->parameter = $container->get('request')->attributes->all();
         $this->route     = $container->get('request')->get('_route');
         $this->data      = array();
-        $this->dataEnd   = array();
 
         // Forward to controller generates a different controller information
         if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
@@ -57,7 +59,7 @@ class Application
      * @param null $role
      * @return $this
      */
-    public function add($type, $key, $data, $role = null, $append = false)
+    public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
         if (!is_null($role) && false === $this->container->get('security.context')->isGranted($role)) {
             return $this;
@@ -68,25 +70,19 @@ class Application
             $data['active'] = true;
         }
 
-        if ($append) {
-            $this->dataEnd[$type][$key] = $data;
-        } else {
-            $this->data[$type][$key] = $data;
-        }
+        $this->data[$position][$type][$key] = $data;
 
         return $this;
     }
 
-    /**
-     * @param $type
-     * @param $key
-     * @param $data
-     * @param null $role
-     * @return $this
-     */
+    public function prepend($type, $key, $data, $role = null)
+    {
+        return $this->add($type, $key, $data, $role, self::POSITION_PREPEND);
+    }
+
     public function append($type, $key, $data, $role = null)
     {
-        return $this->add($type, $key, $data, $role, true);
+        return $this->add($type, $key, $data, $role, self::POSITION_APPEND);
     }
 
     /**
@@ -96,7 +92,11 @@ class Application
      */
     public function get($type, $key = null, $default = null)
     {
-        $merged = array_merge_recursive($this->data, $this->dataEnd);
+        $merged = array_merge_recursive(
+            isset($this->data[self::POSITION_PREPEND]) ? $this->data[self::POSITION_PREPEND] : array(),
+            isset($this->data[self::POSITION_NORMAL])  ? $this->data[self::POSITION_NORMAL]  : array(),
+            isset($this->data[self::POSITION_APPEND])  ? $this->data[self::POSITION_APPEND]  : array()
+        );
 
         if (is_null($key)) {
             return isset($merged[$type])
