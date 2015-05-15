@@ -328,7 +328,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
 <table>
     {% for rp in p['responsibleParty'] %}
         <tr>
-            <td class="label">{% trans %}{% endtrans %}:</td>
+            <td class="label">{% trans %}Name der Organisation{% endtrans %}:</td>
             <td>{{rp['organisationName']}}</td>
         </tr>
         <tr>
