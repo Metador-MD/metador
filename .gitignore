@@ -12,6 +12,7 @@
 
 /app/config/parameters.yml
 /app/config/plugins.yml
+/app/config/plugins_routing.yml
 /app/SymfonyRequirements.php
 /app/tmp
 /bin
