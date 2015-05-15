@@ -1,4 +1,4 @@
-<h1>Klassifizierung</h1>
+<h1>{% trans %}Klassifizierung{% endtrans %}</h1>
 {#
     SERVICE TYPE
 #}
@@ -11,12 +11,24 @@
     </label>
     <select name="{{ id }}" class="oneCol1">
         <option value="" {{ md_select(val, '') }}></option>
-        <option value="view" {{ md_select(val, 'view') }}>Darstellungsdienste</option>
-        <option value="invoke" {{ md_select(val, 'invoke') }}>Dienste zum Abrufen von Geodatendiensten</option>
-        <option value="download" {{ md_select(val, 'download') }}>Download-Dienste</option>
-        <option value="other" {{ md_select(val, 'other') }}>Sonstige Dienste</option>
-        <option value="discovery" {{ md_select(val, 'discovery') }}>Suchdienste</option>
-        <option value="transformation" {{ md_select(val, 'transformation') }}>Transformationsdienste</option>
+        <option value="view" {{ md_select(val, 'view') }}>
+            {% trans %}Darstellungsdienste{% endtrans %}
+        </option>
+        <option value="invoke" {{ md_select(val, 'invoke') }}>
+            {% trans %}Dienste zum Abrufen von Geodatendiensten{% endtrans %}
+        </option>
+        <option value="download" {{ md_select(val, 'download') }}>
+            {% trans %}Download-Dienste{% endtrans %}
+        </option>
+        <option value="other" {{ md_select(val, 'other') }}>
+            {% trans %}Sonstige Dienste{% endtrans %}
+        </option>
+        <option value="discovery" {{ md_select(val, 'discovery') }}>
+            {% trans %}Suchdienste{% endtrans %}
+        </option>
+        <option value="transformation" {{ md_select(val, 'transformation') }}>
+            {% trans %}Transformationsdienste{% endtrans %}
+        </option>
     </select>
     <div class="btn-group">
         <div class="last showHelp"  {{ id|md_data_obj }}>
@@ -50,7 +62,7 @@
 {#
     CONTAINS OPERATIONS
 #}
-<h2>Dienste Operationen</h2>
+<h2>{% trans %}Dienste Operationen{% endtrans %}</h2>
 <div class="twoColBox">
 
     {% set id = 'p[containsOperationsName]' %}

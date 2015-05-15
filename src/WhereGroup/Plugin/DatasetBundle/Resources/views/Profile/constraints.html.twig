@@ -1,4 +1,4 @@
-<h1>Beschränkungen</h1>
+<h1>{% trans %}Beschränkungen{% endtrans %}</h1>
 
 {#
     USE LIMITATION
@@ -46,8 +46,10 @@
                 <option value="geossNonCommercial">geossNonCommercial</option>
                 <option value="geossOther">geossOther</option>
                 <option value="geossNonCommercial">geossNonCommercial</option>
-                <option value="Es gelten keine Bedingungen">Es gelten keine Bedingungen</option>
-                <option value="Bedingungen unbekannt">Bedingungen unbekannt</option>
+                <option value="{% trans %}Es gelten keine Bedingungen{% endtrans %}">
+                    {% trans %}Es gelten keine Bedingungen{% endtrans %}
+                </option>
+                <option value="{% trans %}Bedingungen unbekannt{% endtrans %}">{% trans %}Bedingungen unbekannt{% endtrans %}</option>
             </select>
         </div>
     </div>

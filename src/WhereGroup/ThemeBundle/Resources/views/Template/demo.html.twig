@@ -1,6 +1,6 @@
 {% extends 'WhereGroupThemeBundle::base.html.twig' %}
 
-{% block title %}MeTaDor{% endblock %}
+{% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
@@ -13,8 +13,8 @@
         <a href="{{ path('metador_dashboard') }}">
             <img src="{{ asset('bundles/wheregrouptheme/img/logo3.png') }}" class="logo" />
         </a>
-        <span class="version">Version: {{ version }}</span>
-        <h1 class="demoTitle">Metadatenerfassung für Alle.</h1>
+        <span class="version">{% trans %}Version{% endtrans %}: {{ version }}</span>
+        <h1 class="demoTitle">{% trans %}Metadatenerfassung für Alle{% endtrans %}.</h1>
     </div>
     <div class="center">
         <div class="content demo">
@@ -22,18 +22,18 @@
                 <a href="http://www.wheregroup.com">
                     <img src="{{ asset('bundles/wheregrouptheme/img/Wheregroup_logo_418x110.png') }}" />
                 </a>
-                <h2>Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste.</h2>
-                <p>Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden.</p>
-                <p>Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen.</p>
+                <h2>{% trans %}Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste{% endtrans %}.</h2>
+                <p>{% trans %}Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden{% endtrans %}.</p>
+                <p>{% trans %}Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen{% endtrans %}.</p>
             </div>
             <div class="right">
                 <form action="{{ path('login_check') }}" method="post" class="demoLoginForm">
-                    <p>Demo Benutzer: <b>metador</b>, Kennwort: <b>test</b>.</p>
+                    <p>{% trans %}Demo Benutzer{% endtrans %}: <b>metador</b>, {% trans %}Kennwort{% endtrans %}: <b>test</b>.</p>
                     <hr/>
-                    <label for="username">Benutzer:</label>
+                    <label for="username">{% trans %}Benutzer{% endtrans %}:</label>
                     <input type="text" id="username" name="_username" value="metador" />
                     <br/>
-                    <label for="password">Kennwort:</label>
+                    <label for="password">{% trans %}Kennwort{% endtrans %}:</label>
                     <input type="password" id="password" name="_password" value="test" />
                     <input type="hidden" name="_target_path" value="/" />
                     <br/><br/>

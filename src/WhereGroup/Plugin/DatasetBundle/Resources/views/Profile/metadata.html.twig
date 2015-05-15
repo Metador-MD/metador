@@ -1,4 +1,4 @@
-<h1>Metadaten</h1>
+<h1>{% trans %}Metadaten{% endtrans %}</h1>
 
 {% if id is defined %}
     <input type="hidden" name="id" value="{{ id }}" />
@@ -41,8 +41,12 @@
             <div class="icon mandatory icon-circle icon-circle"></div>{{'Sprache der Metadaten'|trans}}:
         </label>
         <select name="{{ id }}" class="twoCol1">
-            <option value="ger" {{ md_select(val, 'ger') }}>Deutsch</option>
-            <option value="eng" {{ md_select(val, 'eng') }}>Englisch</option>
+            <option value="ger" {{ md_select(val, 'ger') }}>
+                {% trans %}Deutsch{% endtrans %}
+            </option>
+            <option value="eng" {{ md_select(val, 'eng') }}>
+                {% trans %}Englisch{% endtrans %}
+            </option>
         </select>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
@@ -63,7 +67,7 @@
 {% endif %}
 {% set length = p['responsiblePartyMetadata']|length -1 %}
 
-<h2>Für Metadaten verantwortliche Stelle</h2>
+<h2>{% trans %}Für Metadaten verantwortliche Stelle{% endtrans %}</h2>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['responsiblePartyMetadata'] %}
@@ -257,7 +261,7 @@
 {#
     METADATA STANDARD NAME AND VERSION
 #}
-<h2>Angaben zur Metadatenspezifikation</h2>
+<h2>{% trans %}Angaben zur Metadatenspezifikation{% endtrans %}</h2>
 <div class="twoColBox">
 
     {% set id = 'p[metadataStandardName]' %}

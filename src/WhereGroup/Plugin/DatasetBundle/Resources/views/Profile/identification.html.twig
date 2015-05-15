@@ -1,4 +1,4 @@
-<h1>Identifizierung</h1>
+<h1>{% trans %}Identifizierung{% endtrans %}</h1>
 
 {#
     IDENTIFIER
@@ -10,7 +10,7 @@
 {% endif %}
 {% set length = p['identifier']|length -1 %}
 
-<h2>Bezeichner</h2>
+<h2>{% trans %}Bezeichner{% endtrans %}</h2>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['identifier'] %}
@@ -159,8 +159,12 @@
             <div class="icon"></div>{{'Ressourcenart'|trans}}:
         </label>
         <select name="{{ id }}" id="{{ id|md_id }}" class="twoCol1">
-            <option value="dataset" {{ md_select(val, 'dataset') }}>Geodatensatz</option>
-            <option value="series" {{ md_select(val, 'series') }}>Geodatensatzreihe</option>
+            <option value="dataset" {{ md_select(val, 'dataset') }}>
+                {% trans %}Geodatensatz{% endtrans %}
+            </option>
+            <option value="series" {{ md_select(val, 'series') }}>
+                {% trans %}Geodatensatzreihe{% endtrans %}
+            </option>
         </select>
         <div class="btn-group">
             <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
@@ -183,8 +187,12 @@
             </div>
         <select class="twoCol1 no-value" id="select_{{ id|md_id }}">
             <option value=""></option>
-            <option value="ger">Deutsch</option>
-            <option value="eng">Englisch</option>
+            <option value="ger">
+                {% trans %}Deutsch{% endtrans %}
+            </option>
+            <option value="eng">
+                {% trans %}Englisch{% endtrans %}
+            </option>
         </select>
         </div>
     </div>

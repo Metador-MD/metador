@@ -11,14 +11,14 @@
             <div>{{ error.message }}</div>
         {% endif %}
 
-        <span class="version">Version: {{ version }}</span>
-        <h1>MeTaDor</h1>
+        <span class="version">{% trans %}Version{% endtrans %}: {{ version }}</span>
+        <h1>Metador 2.1</h1>
         <hr/>
         <form action="{{ path('login_check') }}" method="post" class="loginForm">
-            <label for="username">Benutzer:</label>
+            <label for="username">{% trans %}Benutzer{% endtrans %}:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
             <br/>
-            <label for="password">Kennwort:</label>
+            <label for="password">{% trans %}Kennwort{% endtrans %}:</label>
             <input type="password" id="password" name="_password" />
             <br/><br/>
             <input type="submit" name="login" value="login" />

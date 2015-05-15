@@ -1,4 +1,4 @@
-<h1>Zuständige Stelle</h1>
+<h1>{% trans %}Zuständige Stelle{% endtrans %}</h1>
 
 {#
     RESPONSIBLE PARTY
@@ -11,7 +11,7 @@
 {% endif %}
 {% set length = p['responsibleParty']|length -1 %}
 
-<h2>Verantwortliche Stelle</h2>
+<h2>{% trans %}Verantwortliche Stelle{% endtrans %}</h2>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['responsibleParty'] %}
@@ -83,17 +83,39 @@
                         </div>
                         <select name="{{ id }}" class="twoCol1">
                             <option value="" {{ md_select(val, '') }}></option>
-                            <option value="pointOfContact" {{ md_select(val, 'pointOfContact') }}>Ansprechpartner</option>
-                            <option value="author" {{ md_select(val, 'author') }}>Autor</option>
-                            <option value="processor" {{ md_select(val, 'processor') }}>Bearbeiter</option>
-                            <option value="owner" {{ md_select(val, 'owner') }}>Eigentümer</option>
-                            <option value="publisher" {{ md_select(val, 'publisher') }}>Herausgeber</option>
-                            <option value="user" {{ md_select(val, 'user') }}>Nutzer</option>
-                            <option value="principalInvestigator" {{ md_select(val, 'principalInvestigator') }}>Projektleitung</option>
-                            <option value="resourceProvider" {{ md_select(val, 'resourceProvider') }}>Ressourcenanbieter</option>
-                            <option value="originator" {{ md_select(val, 'originator') }}>Urheber</option>
-                            <option value="distributor" {{ md_select(val, 'distributor') }}>Vertrieb</option>
-                            <option value="custodian" {{ md_select(val, 'custodian') }}>Verwalter</option>
+                            <option value="pointOfContact" {{ md_select(val, 'pointOfContact') }}>
+                                {% trans %}Ansprechpartner{% endtrans %}
+                            </option>
+                            <option value="author" {{ md_select(val, 'author') }}>
+                                {% trans %}Autor{% endtrans %}
+                            </option>
+                            <option value="processor" {{ md_select(val, 'processor') }}>
+                                {% trans %}Bearbeiter{% endtrans %}
+                            </option>
+                            <option value="owner" {{ md_select(val, 'owner') }}>
+                                {% trans %}Eigentümer{% endtrans %}
+                            </option>
+                            <option value="publisher" {{ md_select(val, 'publisher') }}>
+                                {% trans %}Herausgeber{% endtrans %}
+                            </option>
+                            <option value="user" {{ md_select(val, 'user') }}>
+                                {% trans %}Nutzer{% endtrans %}
+                            </option>
+                            <option value="principalInvestigator" {{ md_select(val, 'principalInvestigator') }}>
+                                {% trans %}Projektleitung{% endtrans %}
+                            </option>
+                            <option value="resourceProvider" {{ md_select(val, 'resourceProvider') }}>
+                                {% trans %}Ressourcenanbieter{% endtrans %}
+                            </option>
+                            <option value="originator" {{ md_select(val, 'originator') }}>
+                                {% trans %}Urheber{% endtrans %}
+                            </option>
+                            <option value="distributor" {{ md_select(val, 'distributor') }}>
+                                {% trans %}Vertrieb{% endtrans %}
+                            </option>
+                            <option value="custodian" {{ md_select(val, 'custodian') }}>
+                                {% trans %}Verwalter{% endtrans %}
+                            </option>
                         </select>
                     </div>
                 </div>

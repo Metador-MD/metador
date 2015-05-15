@@ -1,4 +1,4 @@
-<h1>Schlüsselwort</h1>
+<h1>{% trans %}Schlüsselwort{% endtrans %}</h1>
 
 {#
     FREE KEYWORD
@@ -66,9 +66,15 @@
                 </div>
                 <select id="{{ id|md_id }}" class="threeCol1 no-value">
                     <option value=""></option>
-                    <option value="creation">Erstellungsdatum</option>
-                    <option value="revision">Überarbeitung</option>
-                    <option value="publication">Veröffentlichung</option>
+                    <option value="creation">
+                        {% trans %}Erstellungsdatum{% endtrans %}
+                    </option>
+                    <option value="revision">
+                        {% trans %}Überarbeitung{% endtrans %}
+                    </option>
+                    <option value="publication">
+                        {% trans %}Veröffentlichung{% endtrans %}
+                    </option>
                 </select>
             </div>
         </div>

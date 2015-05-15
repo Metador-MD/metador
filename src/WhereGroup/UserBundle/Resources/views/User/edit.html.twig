@@ -1,7 +1,7 @@
 {% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
 {% block content %}
-<h1>Benutzer bearbeiten</h1>
+<h1>{% trans %}Benutzer bearbeiten{% endtrans %}</h1>
 
 <form action="{{ path('metador_admin_user_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} autocomplete="off" class="form">
     <div class="left">
@@ -34,18 +34,18 @@
         </select>
     </div>
     <div class="clear"></div>
-    <button type="submit" class="btn">speichern</button>
+    <button type="submit" class="btn">{% trans %}speichern{% endtrans %}</button>
     <div class="clear"></div>
 </form>
 
 <hr/>
 
 <form action="{{ path('metador_admin_user') }}" method="get">
-    <button type="submit" class="btn">zurück</button>
+    <button type="submit" class="btn">{% trans %}zurück{% endtrans %}</button>
 </form>
 
 <form action="{{ path('metador_admin_user_delete', { 'id': entity.id }) }}" method="post">
     {{ form_widget(delete_form) }}
-    <button type="submit" class="btn" style="margin-left: 10px;">löschen</button>
+    <button type="submit" class="btn" style="margin-left: 10px;">{% trans %}löschen{% endtrans %}</button>
 </form>
 {% endblock %}

@@ -1,4 +1,4 @@
-<h1>Übereinstimmung</h1>
+<h1>{% trans %}Übereinstimmung{% endtrans %}</h1>
 
 {#
     DATA QUALITY
@@ -60,9 +60,9 @@
                     </label>
                     <select name="{{ id }}" class="threeCol1">
                         <option value="" {{ md_select(val, '') }}></option>
-                        <option value="creation" {{ md_select(val, 'creation') }}>Erstellungsdatum</option>
-                        <option value="revision" {{ md_select(val, 'revision') }}>Überarbeitung</option>
-                        <option value="publication" {{ md_select(val, 'publication') }}>Veröffentlichung</option>
+                        <option value="creation" {{ md_select(val, 'creation') }}>{% trans %}Erstellungsdatum{% endtrans %}</option>
+                        <option value="revision" {{ md_select(val, 'revision') }}>{% trans %}Überarbeitung{% endtrans %}</option>
+                        <option value="publication" {{ md_select(val, 'publication') }}>{% trans %}Veröffentlichung{% endtrans %}</option>
                     </select>
                     <div class="btn-group">
                         <div class="last showHelp" {{ id|md_data_obj }}>
@@ -85,9 +85,15 @@
                             </div>
                         </div>
                         <select name="{{ id }}" class="threeCol1">
-                            <option value="" {{ md_select(val, '') }}>Nicht überprüft</option>
-                            <option value="false" {{ md_select(val, 'false') }}>Nicht Konform</option>
-                            <option value="true" {{ md_select(val, 'true') }}>Konform</option>
+                            <option value="" {{ md_select(val, '') }}>
+                                {% trans %}Nicht überprüft{% endtrans %}
+                            </option>
+                            <option value="false" {{ md_select(val, 'false') }}>
+                                {% trans %}Nicht Konform{% endtrans %}
+                            </option>
+                            <option value="true" {{ md_select(val, 'true') }}>
+                                {% trans %}Konform{% endtrans %}
+                            </option>
                         </select>
                     </div>
                 </div>

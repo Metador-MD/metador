@@ -1,4 +1,4 @@
-<h1>Zeitbezug</h1>
+<h1>{% trans %}Zeitbezug{% endtrans %}</h1>
 
 <div class="threeColBox">
     <label class="displayLeft">
@@ -66,7 +66,7 @@
 {% set id = 'p[temporalExtent]' %}
 {% set length = p['temporalExtent']|length -1 %}
 
-<h2>Zeitliche Ausdehnung</h2>
+<h2>{% trans %}Zeitliche Ausdehnung{% endtrans %}</h2>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['temporalExtent'] %}

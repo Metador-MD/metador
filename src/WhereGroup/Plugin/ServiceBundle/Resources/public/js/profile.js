@@ -50,8 +50,6 @@ function changeNames(clone, count, subCount) {
             $(this).attr('name', name);
         }
 
-        id = 'p_resolution_0_denominator';
-
         if(typeof id !== 'undefined' && id !== false) {
             id = replaceCounter(
                 /_([\d]{1,3})_/g,
@@ -92,7 +90,7 @@ function addBBOX(w, s, e, n) {
                     $('<td></td>').html(n)
                 )
             ),
-            $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon delete'))
+            $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
         )
     );
 
@@ -192,7 +190,7 @@ $(document).ready(function() {
                     .html(source.val()),
                 $('<div></div>')
                     .addClass("btn cmdDeleteSingleValue")
-                    .append($('<div></div>').addClass('icon delete'))
+                    .append($('<div></div>').addClass('icon icon-bin2'))
                 )
         );
 
@@ -243,7 +241,7 @@ $(document).ready(function() {
         var list    = element.find('ul').eq(0).find('.act');
         var content = element.find('div.content').eq(0).find('> div.act');
 
-        if(list.attr('data-id') != 0) {
+        if(list.attr('data-id') !== 0) {
             list.remove();
             content.remove();
 
@@ -284,7 +282,7 @@ $(document).ready(function() {
                     .html($(this).val()),
                 $('<div></div>')
                     .addClass("btn cmdDeleteSingleValue")
-                    .append($('<div></div>').addClass('icon delete'))
+                    .append($('<div></div>').addClass('icon icon-bin2'))
                 )
         );
         $(this).val('');
@@ -336,7 +334,7 @@ $(document).ready(function() {
                 $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][type]").val($(this).attr('data-type')),
                 $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][value][]").val($(this).val()),
                 $('<label></label>').text($(this).attr('data-title') + ' - ' + $(this).val()),
-                $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon delete'))
+                $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
             )
         );
 
@@ -352,7 +350,7 @@ $(document).ready(function() {
                 $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][type]").val($('#p_keyword_type').val()),
                 $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][value][]").val($('#p_keyword_value').val()),
                 $('<label></label>').text($('#p_keyword_title').val() + ' - ' + $('#p_keyword_value').val()),
-                $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon delete'))
+                $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
             )
         );
 
@@ -392,7 +390,7 @@ $(document).ready(function() {
                         .html($(this).text()),
                     $('<div></div>')
                         .addClass("btn cmdDeleteSingleValue")
-                        .append($('<div></div>').addClass('icon delete'))
+                        .append($('<div></div>').addClass('icon icon-bin2'))
                     )
             );
 
@@ -469,7 +467,7 @@ $('[data-id="wizard_responsibleParty"]').click(function() {
             dataType: "json",
             success:  function(data) {
                 for(var i in data) {
-                    if(data[i].individualName == "")
+                    if(data[i].individualName === "")
                         continue;
 
                     $('.wizard-content').append(
@@ -503,7 +501,7 @@ $('[data-id="wizard_responsibleParty"]').click(function() {
                     .html($(this).val()),
                 $('<div></div>')
                     .addClass("btn cmdDeleteSingleValue")
-                    .append($('<div></div>').addClass('icon delete'))
+                    .append($('<div></div>').addClass('icon icon-bin2'))
                 )
         );
         $(this).val('');
@@ -517,7 +515,7 @@ $('[data-id="wizard_responsibleParty"]').click(function() {
                     .html($(this).val()),
                 $('<div></div>')
                     .addClass("btn cmdDeleteSingleValue")
-                    .append($('<div></div>').addClass('icon delete'))
+                    .append($('<div></div>').addClass('icon icon-bin2'))
                 )
         );
         $(this).val('');

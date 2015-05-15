@@ -4,7 +4,7 @@
 <div class="page-content">
     {% if form.delete is defined %}
         <strong>{{ form.vars.value.title }}</strong>
-        {{ 'Wirklich löschen?'|trans }}
+        {% trans %}Wirklich löschen{% endtrans %}?
     {% endif %}
 
     <form action="{{ path('metadata_delete', { 'profile': profile, 'id': form.vars.value.id }) }}" method="post">

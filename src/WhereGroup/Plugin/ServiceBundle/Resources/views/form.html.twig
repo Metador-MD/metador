@@ -1,18 +1,18 @@
 {% extends 'ProfileServiceBundle::template.html.twig' %}
 
-{% block title %}MeTaDor - Dienste{% endblock %}
+{% block title %}MeTaDor - {% trans %}Dienste{% endtrans %}{% endblock %}
 
 {% block menu %}
 <ul class="page-menu-list profile-menu">
-    <li data-tab="metadata" class="act">Metadatensatz</li>
-    <li data-tab="identification">Identifikation</li>
-    <li data-tab="classification">Klassifizierung</li>
-    <li data-tab="keyword">Schlüsselwort</li>
-    <li data-tab="geographic">Geografischer Standort</li>
-    <li data-tab="temporal">Zeitbezug</li>
-    <li data-tab="conformity">Übereinstimmung</li>
-    <li data-tab="constraints">Beschränkungen</li>
-    <li data-tab="responsibleparty">Zuständige Stelle</li>
+    <li data-tab="metadata" class="act">{% trans %}Metadatensatz{% endtrans %}</li>
+    <li data-tab="identification">{% trans %}Identifikation{% endtrans %}</li>
+    <li data-tab="classification">{% trans %}Klassifizierung{% endtrans %}</li>
+    <li data-tab="keyword">{% trans %}Schlüsselwort{% endtrans %}</li>
+    <li data-tab="geographic">{% trans %}Geografischer Standort{% endtrans %}</li>
+    <li data-tab="temporal">{% trans %}Zeitbezug{% endtrans %}</li>
+    <li data-tab="conformity">{% trans %}Übereinstimmung{% endtrans %}</li>
+    <li data-tab="constraints">{% trans %}Beschränkungen{% endtrans %}</li>
+    <li data-tab="responsibleparty">{% trans %}Zuständige Stelle{% endtrans %}</li>
 </ul>
 {% endblock %}
 

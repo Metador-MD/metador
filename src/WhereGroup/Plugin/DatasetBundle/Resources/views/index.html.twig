@@ -1,6 +1,6 @@
 {% extends 'WhereGroupThemeBundle::template.html.twig' %}
 
-{% block title %}MeTaDor - Daten{% endblock %}
+{% block title %}MeTaDor - {% trans %}Daten{% endtrans %}{% endblock %}
 
 {% block center %}
 <div class="page-content">
@@ -14,7 +14,7 @@
             {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
             <div class="search-center-form">
                 <div class="search-center-form-left" id="search_pageinfo">
-                    Seite {{ paging.currentPage }} von {{ paging.pages }}
+                    {% trans %}Seite{% endtrans %} {{ paging.currentPage }} {% trans %}von{% endtrans %} {{ paging.pages }}
                 </div>
                 <div class="clear"></div>
             </div>
