@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2015-05-15T15:21:42Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="db60c2dab3a9a3aba67783ce998426b5950d53d0" resname="Alternativtitel">
+        <jms:reference-file line="119">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="89">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="119">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Alternativtitel</source>
+        <target state="new">Alternativtitel</target>
+      </trans-unit>
+      <trans-unit id="d39585437cee01c0e00bfd0336958d2ebe42e872" resname="Anfangsdatum">
+        <jms:reference-file line="230">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="90">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="231">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Anfangsdatum</source>
+        <target state="new">Anfangsdatum</target>
+      </trans-unit>
+      <trans-unit id="9bb4c91cfe4ce65f66139e579423ddffe5249035" resname="Angaben zur Metadatenspezifikation">
+        <jms:reference-file line="77">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="264">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="77">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Angaben zur Metadatenspezifikation</source>
+        <target state="new">Angaben zur Metadatenspezifikation</target>
+      </trans-unit>
+      <trans-unit id="132af4b546b4cdfb49f2d0f5d9bb461812ee3bf1" resname="Ansprechpartner">
+        <jms:reference-file line="87">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Ansprechpartner</source>
+        <target state="new">Ansprechpartner</target>
+      </trans-unit>
+      <trans-unit id="318368dd039ad9928c5ff22257cdea3e3c7b167f" resname="Aufklärung/Militär">
+        <jms:reference-file line="13">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Aufklärung/Militär</source>
+        <target state="new">Aufklärung/Militär</target>
+      </trans-unit>
+      <trans-unit id="0177f6dca0b77baecf3594b78a69e36e9e7a3a6d" resname="Auswahl">
+        <jms:reference-file line="30">views/Profile/constraints.html.twig</jms:reference-file>
+        <jms:reference-file line="8">views/Profile/geographic.html.twig</jms:reference-file>
+        <source>Auswahl</source>
+        <target state="new">Auswahl</target>
+      </trans-unit>
+      <trans-unit id="7cf3052036d7199a5e2f6e7e10f529f898e86b08" resname="Autor">
+        <jms:reference-file line="90">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Autor</source>
+        <target state="new">Autor</target>
+      </trans-unit>
+      <trans-unit id="522fe1b41fa3a75a8ef8c8b12a8d2b8c18147a95" resname="Bauwerke">
+        <jms:reference-file line="14">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Bauwerke</source>
+        <target state="new">Bauwerke</target>
+      </trans-unit>
+      <trans-unit id="7ea436fdda029fd88910bf2cb7e929f023691de7" resname="Bearbeiter">
+        <jms:reference-file line="93">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Bearbeiter</source>
+        <target state="new">Bearbeiter</target>
+      </trans-unit>
+      <trans-unit id="21867c735256206467c12bcd161c49f2f2ddd5ac" resname="Bedingungen für den Zugang und die Nutzung">
+        <jms:reference-file line="303">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="10">views/Profile/constraints.html.twig</jms:reference-file>
+        <jms:reference-file line="304">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Bedingungen für den Zugang und die Nutzung</source>
+        <target state="new">Bedingungen für den Zugang und die Nutzung</target>
+      </trans-unit>
+      <trans-unit id="8e3678b73c2b550828e277d531908cec4896701b" resname="Bedingungen unbekannt">
+        <jms:reference-file line="52">views/Profile/constraints.html.twig</jms:reference-file>
+        <source>Bedingungen unbekannt</source>
+        <target state="new">Bedingungen unbekannt</target>
+      </trans-unit>
+      <trans-unit id="bd26f3d230afe66f494112b04dd33a943d0fb4a6" resname="Benutzer">
+        <jms:reference-file line="27">Resources/views/index.html.twig</jms:reference-file>
+        <source>Benutzer</source>
+        <target state="new">Benutzer</target>
+      </trans-unit>
+      <trans-unit id="8d534ab1567b5dcaba963452d3ffb06d08a0d71d" resname="Beschränkungen">
+        <jms:reference-file line="300">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="15">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/constraints.html.twig</jms:reference-file>
+        <jms:reference-file line="301">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="14">Resources/views/form.html.twig</jms:reference-file>
+        <source>Beschränkungen</source>
+        <target state="new">Beschränkungen</target>
+      </trans-unit>
+      <trans-unit id="aab82b66f04c2f620018863dd1307e356c84a7e9" resname="Beschränkungen des öffentlichen Zugangs">
+        <jms:reference-file line="313">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="82">views/Profile/constraints.html.twig</jms:reference-file>
+        <jms:reference-file line="314">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="80">views/Profile/constraints.html.twig</jms:reference-file>
+        <source>Beschränkungen des öffentlichen Zugangs</source>
+        <target state="new">Beschränkungen des öffentlichen Zugangs</target>
+      </trans-unit>
+      <trans-unit id="02d6ec698aa8e9ab29a6ec21b0fbd67e2cae1b3e" resname="Bezeichner">
+        <jms:reference-file line="93">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="13">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="93">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Bezeichner</source>
+        <target state="new">Bezeichner</target>
+      </trans-unit>
+      <trans-unit id="fd78062b5624ed79e05ca596305e119e6ef37e1e" resname="Bilddaten/Basiskarten/Landbedeckung">
+        <jms:reference-file line="15">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Bilddaten/Basiskarten/Landbedeckung</source>
+        <target state="new">Bilddaten/Basiskarten/Landbedeckung</target>
+      </trans-unit>
+      <trans-unit id="4944bc33ea7bbef855a69ecfa9d576e7005f07c8" resname="Binnengewässer">
+        <jms:reference-file line="16">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Binnengewässer</source>
+        <target state="new">Binnengewässer</target>
+      </trans-unit>
+      <trans-unit id="e5a4d8bba21c37b9e23519eb8e3a6f85398854e5" resname="Biologie">
+        <jms:reference-file line="17">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Biologie</source>
+        <target state="new">Biologie</target>
+      </trans-unit>
+      <trans-unit id="6b6c437f5edc3cc4eba793d5d06de350bc9a5aea" resname="Browser Bild">
+        <jms:reference-file line="88">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="309">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="88">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Browser Bild</source>
+        <target state="new">Browser Bild</target>
+      </trans-unit>
+      <trans-unit id="97384fcd04f09e760df02b8559c692b3fef85dc6" resname="Bundesland">
+        <jms:reference-file line="41">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="351">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="150">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="142">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="41">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="352">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Bundesland</source>
+        <target state="new">Bundesland</target>
+      </trans-unit>
+      <trans-unit id="adac69379a626c2436948a4ef1792c7d719ef929" resname="Code">
+        <jms:reference-file line="97">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="33">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="97">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Code</source>
+        <target state="new">Code</target>
+      </trans-unit>
+      <trans-unit id="800f8e87f514040c293c703734f3b2624348d5cd" resname="Darstellungsdienste">
+        <jms:reference-file line="15">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Darstellungsdienste</source>
+        <target state="new">Darstellungsdienste</target>
+      </trans-unit>
+      <trans-unit id="dd86b1252be257b315efc811fb3e812cb127a905" resname="Daten">
+        <jms:reference-file line="3">Resources/views/index.html.twig</jms:reference-file>
+        <jms:reference-file line="3">Resources/views/form.html.twig</jms:reference-file>
+        <source>Daten</source>
+        <target state="new">Daten</target>
+      </trans-unit>
+      <trans-unit id="df5c3008c765b0f5cdf0189d6a71536187af3365" resname="Datum">
+        <jms:reference-file line="173">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="279">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="28">Resources/views/index.html.twig</jms:reference-file>
+        <jms:reference-file line="45">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="44">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="173">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="280">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Datum</source>
+        <target state="new">Datum</target>
+      </trans-unit>
+      <trans-unit id="1e322bfa222e6af4747c2400a66a312f428f6746" resname="Datum der">
+        <jms:reference-file line="283">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="59">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="59">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="177">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="284">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Datum der</source>
+        <target state="new">Datum der</target>
+      </trans-unit>
+      <trans-unit id="a6a7709266d3a74cd8c4657eb32a56d5727b91eb" resname="Deutsch">
+        <jms:reference-file line="9">Resources/views/menu.html.twig</jms:reference-file>
+        <jms:reference-file line="191">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="45">views/Profile/metadata.html.twig</jms:reference-file>
+        <source>Deutsch</source>
+        <target state="new">Deutsch</target>
+      </trans-unit>
+      <trans-unit id="3af74bb5b64f592b24554eeec6903a02f53e3edd" resname="Dienste">
+        <jms:reference-file line="3">Resources/views/index.html.twig</jms:reference-file>
+        <jms:reference-file line="3">Resources/views/form.html.twig</jms:reference-file>
+        <source>Dienste</source>
+        <target state="new">Dienste</target>
+      </trans-unit>
+      <trans-unit id="7ad32077e6a696a8b91f27a2117248592eb6f621" resname="Dienste Operationen">
+        <jms:reference-file line="65">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Dienste Operationen</source>
+        <target state="new">Dienste Operationen</target>
+      </trans-unit>
+      <trans-unit id="e6aa1389cf0301db3dec9780053fd1cca9df0fa2" resname="Dienste zum Abrufen von Geodatendiensten">
+        <jms:reference-file line="18">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Dienste zum Abrufen von Geodatendiensten</source>
+        <target state="new">Dienste zum Abrufen von Geodatendiensten</target>
+      </trans-unit>
+      <trans-unit id="dd05060c380f882ad93c61d671e241c9ee78ad6e" resname="Download-Dienste">
+        <jms:reference-file line="21">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Download-Dienste</source>
+        <target state="new">Download-Dienste</target>
+      </trans-unit>
+      <trans-unit id="abb3373d67b2edeb631da95130c74673b58ecabb" resname="E Längengrad">
+        <jms:reference-file line="196">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="56">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="101">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="196">views/Export/pdf.html.twig</jms:reference-file>
+        <source>E Längengrad</source>
+        <target state="new">E Längengrad</target>
+      </trans-unit>
+      <trans-unit id="9eeffe4b7b6e5e1e997946906659420d101fba64" resname="E-Mail">
+        <jms:reference-file line="33">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="339">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="105">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="49">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="33">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="340">views/Export/pdf.html.twig</jms:reference-file>
+        <source>E-Mail</source>
+        <target state="new">E-Mail</target>
+      </trans-unit>
+      <trans-unit id="2843ee905670dff643e00887cccea5a744518ea8" resname="Eigentümer">
+        <jms:reference-file line="96">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Eigentümer</source>
+        <target state="new">Eigentümer</target>
+      </trans-unit>
+      <trans-unit id="ce6ff42293f255e169a57d53254e099bc3879eef" resname="Enddatum">
+        <jms:reference-file line="234">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="105">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="235">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Enddatum</source>
+        <target state="new">Enddatum</target>
+      </trans-unit>
+      <trans-unit id="edd873d673cfc7a9b464fa3d67b391785fd8fdd4" resname="Englisch">
+        <jms:reference-file line="16">Resources/views/menu.html.twig</jms:reference-file>
+        <jms:reference-file line="194">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="48">views/Profile/metadata.html.twig</jms:reference-file>
+        <source>Englisch</source>
+        <target state="new">Englisch</target>
+      </trans-unit>
+      <trans-unit id="be011490429b1f65a7743ac778551485a624958a" resname="Erstellungsdatum">
+        <jms:reference-file line="214">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="70">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="63">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="14">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="215">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="64">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Erstellungsdatum</source>
+        <target state="new">Erstellungsdatum</target>
+      </trans-unit>
+      <trans-unit id="dadbb05dd9b4c9a36a4170bf3895664ec0b73e26" resname="Es gelten keine Bedingungen">
+        <jms:reference-file line="49">views/Profile/constraints.html.twig</jms:reference-file>
+        <jms:reference-file line="50">views/Profile/constraints.html.twig</jms:reference-file>
+        <source>Es gelten keine Bedingungen</source>
+        <target state="new">Es gelten keine Bedingungen</target>
+      </trans-unit>
+      <trans-unit id="4f0150bee5871fd6de3687b271c625c16fb424f4" resname="Faxnummer">
+        <jms:reference-file line="61">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="371">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="227">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="219">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="61">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="372">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Faxnummer</source>
+        <target state="new">Faxnummer</target>
+      </trans-unit>
+      <trans-unit id="e0e8dce3beb7b6a282a00783cba9014c9968addc" resname="Freitext">
+        <jms:reference-file line="17">views/Profile/constraints.html.twig</jms:reference-file>
+        <source>Freitext</source>
+        <target state="new">Freitext</target>
+      </trans-unit>
+      <trans-unit id="4ab9dd62f9fe7d649a992f348602a9f71bd51d1f" resname="Funktion">
+        <jms:reference-file line="343">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="78">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="344">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Funktion</source>
+        <target state="new">Funktion</target>
+      </trans-unit>
+      <trans-unit id="ce7d09a0fc05ea97641905ccbc3827645c043e97" resname="Für Metadaten verantwortliche Stelle">
+        <jms:reference-file line="21">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="70">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="21">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Für Metadaten verantwortliche Stelle</source>
+        <target state="new">Für Metadaten verantwortliche Stelle</target>
+      </trans-unit>
+      <trans-unit id="b3630277499db734c1cac592683c1f9abcad5afa" resname="Gekoppelte Ressource">
+        <jms:reference-file line="159">views/Profile/identification.html.twig</jms:reference-file>
+        <source>Gekoppelte Ressource</source>
+        <target state="new">Gekoppelte Ressource</target>
+      </trans-unit>
+      <trans-unit id="c0b922437a4b7170342c8e51d0313e37b0463e5e" resname="Geodatendienst">
+        <jms:reference-file line="10">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Geodatendienst</source>
+        <target state="new">Geodatendienst</target>
+      </trans-unit>
+      <trans-unit id="49b2b8e3d52715593a72727d9943d94c871b2413" resname="Geodatensatz">
+        <jms:reference-file line="163">views/Profile/identification.html.twig</jms:reference-file>
+        <source>Geodatensatz</source>
+        <target state="new">Geodatensatz</target>
+      </trans-unit>
+      <trans-unit id="f1f1f8f91017bf0af0cb710ab422c2081f32b9c4" resname="Geodatensatzreihe">
+        <jms:reference-file line="166">views/Profile/identification.html.twig</jms:reference-file>
+        <source>Geodatensatzreihe</source>
+        <target state="new">Geodatensatzreihe</target>
+      </trans-unit>
+      <trans-unit id="bd58f48478fed857c937ab7b3810635e930ca4aa" resname="Geografischer Standort">
+        <jms:reference-file line="192">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="11">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="192">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Geografischer Standort</source>
+        <target state="new">Geografischer Standort</target>
+      </trans-unit>
+      <trans-unit id="efcd438d8a4b944a12cf2a4c48990e4ba835aee2" resname="Geowissenschaften">
+        <jms:reference-file line="18">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Geowissenschaften</source>
+        <target state="new">Geowissenschaften</target>
+      </trans-unit>
+      <trans-unit id="2a5eb4b9ef70b6b6b10abe38030303fee3ac449e" resname="Gesellschaft">
+        <jms:reference-file line="19">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Gesellschaft</source>
+        <target state="new">Gesellschaft</target>
+      </trans-unit>
+      <trans-unit id="a6af7dcb42b90965e629f39d2e4b677379025407" resname="Gesundheitswesen">
+        <jms:reference-file line="20">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Gesundheitswesen</source>
+        <target state="new">Gesundheitswesen</target>
+      </trans-unit>
+      <trans-unit id="d1a1ada5f727b6c9ebe1dc6ef032df58597e9a35" resname="Grad">
+        <jms:reference-file line="287">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="79">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="288">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="85">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Grad</source>
+        <target state="new">Grad</target>
+      </trans-unit>
+      <trans-unit id="d6f5294774bd04b81881ed01a02e13faff052648" resname="Grenzen">
+        <jms:reference-file line="21">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Grenzen</source>
+        <target state="new">Grenzen</target>
+      </trans-unit>
+      <trans-unit id="39aa30906bbe8abcf53da789ec83e015491179cf" resname="Herausgeber">
+        <jms:reference-file line="99">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Herausgeber</source>
+        <target state="new">Herausgeber</target>
+      </trans-unit>
+      <trans-unit id="33644860091ca9098aa2e02675a8f4f2630f3d26" resname="Herkunft">
+        <jms:reference-file line="251">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="23">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="10">views/Profile/quality.html.twig</jms:reference-file>
+        <jms:reference-file line="252">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Herkunft</source>
+        <target state="new">Herkunft</target>
+      </trans-unit>
+      <trans-unit id="892b61b58653a23de73f04c3011c80bfdad2eb33" resname="Höhenangaben">
+        <jms:reference-file line="22">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Höhenangaben</source>
+        <target state="new">Höhenangaben</target>
+      </trans-unit>
+      <trans-unit id="73ccf5475124c6a424d23ad723620ec0db62a3f9" resname="Identifikation">
+        <jms:reference-file line="8">Resources/views/form.html.twig</jms:reference-file>
+        <source>Identifikation</source>
+        <target state="new">Identifikation</target>
+      </trans-unit>
+      <trans-unit id="91cdd448363778da523b373b32e171e20d8f10fc" resname="Identifikator des Metadatensatzes">
+        <jms:reference-file line="11">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="22">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="11">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="26">views/Profile/metadata.html.twig</jms:reference-file>
+        <source>Identifikator des Metadatensatzes</source>
+        <target state="new">Identifikator des Metadatensatzes</target>
+      </trans-unit>
+      <trans-unit id="e2f58dbba797ae57098721b638b41203a9fe4b3c" resname="Identifizierung">
+        <jms:reference-file line="92">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="92">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Identifizierung</source>
+        <target state="new">Identifizierung</target>
+      </trans-unit>
+      <trans-unit id="cd73b7090a4212c5356346617a0f1eac91b89769" resname="Internetadresse">
+        <jms:reference-file line="65">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="375">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="244">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="236">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="65">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="376">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Internetadresse</source>
+        <target state="new">Internetadresse</target>
+      </trans-unit>
+      <trans-unit id="7f4aaafcb319d33cf9e15a7b210efea180329b94" resname="Klassifizierung">
+        <jms:reference-file line="152">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="9">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/classification.html.twig</jms:reference-file>
+        <jms:reference-file line="152">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Klassifizierung</source>
+        <target state="new">Klassifizierung</target>
+      </trans-unit>
+      <trans-unit id="adf69cc8a917405d3382d263410b2f83a26383ec" resname="Klimatologie/Meteorologie/Atmosphäre">
+        <jms:reference-file line="23">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Klimatologie/Meteorologie/Atmosphäre</source>
+        <target state="new">Klimatologie/Meteorologie/Atmosphäre</target>
+      </trans-unit>
+      <trans-unit id="c509d36a84f059156cb4eaf7bb0e057d137abf08" resname="Konform">
+        <jms:reference-file line="95">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="101">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Konform</source>
+        <target state="new">Konform</target>
+      </trans-unit>
+      <trans-unit id="169c9ceb129d9c7674fa4d0d7237213598f0a8ba" resname="Kurzbeschreibung">
+        <jms:reference-file line="123">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="105">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="123">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="106">views/Profile/identification.html.twig</jms:reference-file>
+        <source>Kurzbeschreibung</source>
+        <target state="new">Kurzbeschreibung</target>
+      </trans-unit>
+      <trans-unit id="979ab0842f0681af35610f05d43671a4d0f88ae9" resname="Landwirtschaft">
+        <jms:reference-file line="24">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Landwirtschaft</source>
+        <target state="new">Landwirtschaft</target>
+      </trans-unit>
+      <trans-unit id="d656ae68d1daff567a83eaa96ce0217237561271" resname="Meere">
+        <jms:reference-file line="25">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Meere</source>
+        <target state="new">Meere</target>
+      </trans-unit>
+      <trans-unit id="04dd427578413dba2edcfbf08c84bbe2726e1f99" resname="Metadaten">
+        <jms:reference-file line="8">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="8">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Metadaten</source>
+        <target state="new">Metadaten</target>
+      </trans-unit>
+      <trans-unit id="0864ef0ed505cd11d2fc6bb2ce7ce9b9b6a79a71" resname="Metadatensatz">
+        <jms:reference-file line="7">Resources/views/form.html.twig</jms:reference-file>
+        <source>Metadatensatz</source>
+        <target state="new">Metadatensatz</target>
+      </trans-unit>
+      <trans-unit id="eed23f613c9911b14d76d6d7e68351753a3b9160" resname="Mindestens ein Schlüsselwort aus &quot;GEMET - INSPIRE themes, version 1.0&quot; verpflichtend.">
+        <jms:reference-file line="92">views/Profile/keyword.html.twig</jms:reference-file>
+        <source>Mindestens ein Schlüsselwort aus "GEMET - INSPIRE themes, version 1.0" verpflichtend.</source>
+        <target state="new">Mindestens ein Schlüsselwort aus "GEMET - INSPIRE themes, version 1.0" verpflichtend.</target>
+      </trans-unit>
+      <trans-unit id="40b87fafedf75bf31e90b25fc16197ad68807c9a" resname="Mindestens ein Schlüsselwort aus &quot;ISO - 19119 geographic services taxonomy&quot; verpflichtend.">
+        <jms:reference-file line="92">views/Profile/keyword.html.twig</jms:reference-file>
+        <source>Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.</source>
+        <target state="new">Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.</target>
+      </trans-unit>
+      <trans-unit id="b546947c0def06f4133c954cc71b143285a10129" resname="Mindestens eine Angabe verpflichtend.">
+        <jms:reference-file line="5">views/Profile/temporal.html.twig</jms:reference-file>
+        <source>Mindestens eine Angabe verpflichtend.</source>
+        <target state="new">Mindestens eine Angabe verpflichtend.</target>
+      </trans-unit>
+      <trans-unit id="512e912cf96696ae8a97729362d42ab26521a2b3" resname="N Breitengrad">
+        <jms:reference-file line="195">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="68">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="102">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="195">views/Export/pdf.html.twig</jms:reference-file>
+        <source>N Breitengrad</source>
+        <target state="new">N Breitengrad</target>
+      </trans-unit>
+      <trans-unit id="974360ef7462dfe42b39f038da5292db2ef51201" resname="Name der Organisation">
+        <jms:reference-file line="25">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="331">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="92">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="36">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="25">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="332">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Name der Organisation</source>
+        <target state="new">Name der Organisation</target>
+      </trans-unit>
+      <trans-unit id="9a8f594a31432ffe85f2062a26d624b1569cb6b1" resname="Namensraum">
+        <jms:reference-file line="101">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="47">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="101">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Namensraum</source>
+        <target state="new">Namensraum</target>
+      </trans-unit>
+      <trans-unit id="c17585f4e0f417942207eaa38e9c0f428bd3c5e0" resname="Nicht Konform">
+        <jms:reference-file line="92">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="98">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Nicht Konform</source>
+        <target state="new">Nicht Konform</target>
+      </trans-unit>
+      <trans-unit id="709a4ab1d15f6ab722793a3b3e5ded12f9c0ba60" resname="Nicht überprüft">
+        <jms:reference-file line="89">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="95">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Nicht überprüft</source>
+        <target state="new">Nicht überprüft</target>
+      </trans-unit>
+      <trans-unit id="16be13a3ddd490eca51e493e5915e290ccd8ca5c" resname="Nutzer">
+        <jms:reference-file line="102">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Nutzer</source>
+        <target state="new">Nutzer</target>
+      </trans-unit>
+      <trans-unit id="430d32076eb256f0fb1db5fd1333254c368ef1ba" resname="Operation">
+        <jms:reference-file line="73">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Operation</source>
+        <target state="new">Operation</target>
+      </trans-unit>
+      <trans-unit id="d95f9e67114d4f4267b966a80a35f074ad30dc5d" resname="Ort">
+        <jms:reference-file line="49">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="359">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="185">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="177">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="49">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="360">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Ort</source>
+        <target state="new">Ort</target>
+      </trans-unit>
+      <trans-unit id="331742bc72c826bb5c576822cdf2569f43ec3b01" resname="Ortsangaben">
+        <jms:reference-file line="26">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Ortsangaben</source>
+        <target state="new">Ortsangaben</target>
+      </trans-unit>
+      <trans-unit id="79c2dfde02ee7ed10d30d3e61ac18307a3271ec5" resname="PLZ">
+        <jms:reference-file line="53">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="363">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="198">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="190">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="53">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="364">views/Export/pdf.html.twig</jms:reference-file>
+        <source>PLZ</source>
+        <target state="new">PLZ</target>
+      </trans-unit>
+      <trans-unit id="0db658abcaf0bc4f689f6fb14a5ef39bf7c2c190" resname="Planungsunterlagen/Kataster">
+        <jms:reference-file line="27">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Planungsunterlagen/Kataster</source>
+        <target state="new">Planungsunterlagen/Kataster</target>
+      </trans-unit>
+      <trans-unit id="123a7f2fcc9ae7cbbbd7c7627a483853a9708dab" resname="Platform">
+        <jms:reference-file line="88">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Platform</source>
+        <target state="new">Platform</target>
+      </trans-unit>
+      <trans-unit id="eacb29186986826bb6c75475bf47212677c3417a" resname="Projektleitung">
+        <jms:reference-file line="105">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Projektleitung</source>
+        <target state="new">Projektleitung</target>
+      </trans-unit>
+      <trans-unit id="b17ad979388b6c5ae91fbc882180837b5e1d6c30" resname="Qualität">
+        <jms:reference-file line="13">Resources/views/form.html.twig</jms:reference-file>
+        <source>Qualität</source>
+        <target state="new">Qualität</target>
+      </trans-unit>
+      <trans-unit id="f23affe8758361a955093dee4809f7c3ce5201de" resname="Qualität und Gültigkeit">
+        <jms:reference-file line="247">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/quality.html.twig</jms:reference-file>
+        <jms:reference-file line="248">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Qualität und Gültigkeit</source>
+        <target state="new">Qualität und Gültigkeit</target>
+      </trans-unit>
+      <trans-unit id="312386841084261c610413fa4de8b7505f469407" resname="Repository">
+        <jms:reference-file line="98">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="97">views/Profile/keyword.html.twig</jms:reference-file>
+        <source>Repository</source>
+        <target state="new">Repository</target>
+      </trans-unit>
+      <trans-unit id="a13a4595cbcd6c12fa3361c6eeb425f266dc387f" resname="Ressourcenanbieter">
+        <jms:reference-file line="108">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Ressourcenanbieter</source>
+        <target state="new">Ressourcenanbieter</target>
+      </trans-unit>
+      <trans-unit id="0e84a804a19258d6e210a4841f45e86768961160" resname="Ressourcenart">
+        <jms:reference-file line="137">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="159">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="137">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Ressourcenart</source>
+        <target state="new">Ressourcenart</target>
+      </trans-unit>
+      <trans-unit id="30fc09e784a3e125847453ef40f9c30cfa2d5ce5" resname="Ressourcenverweis">
+        <jms:reference-file line="128">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="121">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="128">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="122">views/Profile/identification.html.twig</jms:reference-file>
+        <source>Ressourcenverweis</source>
+        <target state="new">Ressourcenverweis</target>
+      </trans-unit>
+      <trans-unit id="d226d2c799931e6a9e87b151fa91e98a66c6dc6e" resname="Räumliche Auflösung">
+        <jms:reference-file line="257">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/Profile/quality.html.twig</jms:reference-file>
+        <jms:reference-file line="258">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Räumliche Auflösung</source>
+        <target state="new">Räumliche Auflösung</target>
+      </trans-unit>
+      <trans-unit id="726ec604105850d1f157e36d141d50aa858eac24" resname="S Breitengrad">
+        <jms:reference-file line="197">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="40">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="100">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="197">views/Export/pdf.html.twig</jms:reference-file>
+        <source>S Breitengrad</source>
+        <target state="new">S Breitengrad</target>
+      </trans-unit>
+      <trans-unit id="862ceca9fa94fb1ee7dea92292be345105db7991" resname="Schlüsselwort">
+        <jms:reference-file line="165">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="181">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="10">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="7">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="12">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="113">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="165">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="181">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="112">views/Profile/keyword.html.twig</jms:reference-file>
+        <source>Schlüsselwort</source>
+        <target state="new">Schlüsselwort</target>
+      </trans-unit>
+      <trans-unit id="633082b8c84bd2b31426259d8b96a0212c59fd7f" resname="Seite">
+        <jms:reference-file line="17">Resources/views/index.html.twig</jms:reference-file>
+        <source>Seite</source>
+        <target state="new">Seite</target>
+      </trans-unit>
+      <trans-unit id="3cfd6e3f4ab49badb931628439f7616a4f497d8d" resname="Sonstige Dienste">
+        <jms:reference-file line="24">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Sonstige Dienste</source>
+        <target state="new">Sonstige Dienste</target>
+      </trans-unit>
+      <trans-unit id="3bd9b27e881a66c5da07a85ef86d3c2808e095cb" resname="Spezifikation">
+        <jms:reference-file line="80">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="272">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="80">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Spezifikation</source>
+        <target state="new">Spezifikation</target>
+      </trans-unit>
+      <trans-unit id="59506ba17831ce70d6c955817e013a624a9b811d" resname="Sprache der Metadaten">
+        <jms:reference-file line="15">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="41">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="15">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="45">views/Profile/metadata.html.twig</jms:reference-file>
+        <source>Sprache der Metadaten</source>
+        <target state="new">Sprache der Metadaten</target>
+      </trans-unit>
+      <trans-unit id="86ffd376c76371db6b58d056a84a0f896cfd6e41" resname="Sprache der Ressource">
+        <jms:reference-file line="142">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="180">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="142">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Sprache der Ressource</source>
+        <target state="new">Sprache der Ressource</target>
+      </trans-unit>
+      <trans-unit id="1d0274db54382a4b4b7a8fb8925d8f3750964c44" resname="Staat">
+        <jms:reference-file line="37">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="347">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="137">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="129">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="37">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="348">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Staat</source>
+        <target state="new">Staat</target>
+      </trans-unit>
+      <trans-unit id="94e6bd3a816eb815fb9379fb160bf69cd4aa08ba" resname="Straße und Hausnummer / Postfach">
+        <jms:reference-file line="45">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="355">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="167">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="159">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="45">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="356">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Straße und Hausnummer / Postfach</source>
+        <target state="new">Straße und Hausnummer / Postfach</target>
+      </trans-unit>
+      <trans-unit id="89cfd05424667b5380c2bfe3e660a27869bbe64f" resname="Suchdienste">
+        <jms:reference-file line="27">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Suchdienste</source>
+        <target state="new">Suchdienste</target>
+      </trans-unit>
+      <trans-unit id="3cf24bd14d83dda63637b625607939c622edcdf6" resname="Telefonnummer">
+        <jms:reference-file line="57">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="367">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="214">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="206">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="57">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="368">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Telefonnummer</source>
+        <target state="new">Telefonnummer</target>
+      </trans-unit>
+      <trans-unit id="b1aafd2fad974ad3f25d6091adbf6769ffd0e4ce" resname="Themenkategorie">
+        <jms:reference-file line="155">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="9">views/Profile/classification.html.twig</jms:reference-file>
+        <jms:reference-file line="155">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Themenkategorie</source>
+        <target state="new">Themenkategorie</target>
+      </trans-unit>
+      <trans-unit id="950701e758d18a72134a6b8948c7cf42867c0eb9" resname="Titel">
+        <jms:reference-file line="115">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="275">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="26">Resources/views/index.html.twig</jms:reference-file>
+        <jms:reference-file line="31">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="32">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="72">views/Profile/identification.html.twig</jms:reference-file>
+        <jms:reference-file line="115">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="276">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Titel</source>
+        <target state="new">Titel</target>
+      </trans-unit>
+      <trans-unit id="14cf038c40549c40893a1975c6bf1b91570dc3c2" resname="Transformationsdienste">
+        <jms:reference-file line="30">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Transformationsdienste</source>
+        <target state="new">Transformationsdienste</target>
+      </trans-unit>
+      <trans-unit id="0e2d9b0777a485c1276de0803c12a7d76fbc5c39" resname="URL">
+        <jms:reference-file line="107">views/Profile/classification.html.twig</jms:reference-file>
+        <source>URL</source>
+        <target state="new">URL</target>
+      </trans-unit>
+      <trans-unit id="b0b30059851a52f9eb00eccd1592b1cfccd29113" resname="Uhrzeit">
+        <jms:reference-file line="29">Resources/views/index.html.twig</jms:reference-file>
+        <source>Uhrzeit</source>
+        <target state="new">Uhrzeit</target>
+      </trans-unit>
+      <trans-unit id="393d777dd0025c100adea9fa1aa26d9086ba2011" resname="Umwelt">
+        <jms:reference-file line="28">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Umwelt</source>
+        <target state="new">Umwelt</target>
+      </trans-unit>
+      <trans-unit id="ee5d5bea9150345947b2392128393d20e34f744c" resname="Urheber">
+        <jms:reference-file line="111">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Urheber</source>
+        <target state="new">Urheber</target>
+      </trans-unit>
+      <trans-unit id="dae32d97f9dbc32722aa6ff318fc3f3b3bbf4863" resname="Ver- und Entsorgung/Nachrichtenwesen">
+        <jms:reference-file line="29">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Ver- und Entsorgung/Nachrichtenwesen</source>
+        <target state="new">Ver- und Entsorgung/Nachrichtenwesen</target>
+      </trans-unit>
+      <trans-unit id="a9d13db195c2579356b791fcb2c296f9068f311a" resname="Verantwortliche Stelle">
+        <jms:reference-file line="327">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="14">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="328">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Verantwortliche Stelle</source>
+        <target state="new">Verantwortliche Stelle</target>
+      </trans-unit>
+      <trans-unit id="6af4a1d33bb1dc799486d129808e41fc3f20088c" resname="Verkehrswesen">
+        <jms:reference-file line="30">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Verkehrswesen</source>
+        <target state="new">Verkehrswesen</target>
+      </trans-unit>
+      <trans-unit id="2da600bf9404843107a9531694f654e5662959e0" resname="Version">
+        <jms:reference-file line="84">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="287">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="84">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="50">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Version</source>
+        <target state="new">Version</target>
+      </trans-unit>
+      <trans-unit id="3b6ede9853e1ed87a68d841f471e215d6f0fd6f9" resname="Vertrieb">
+        <jms:reference-file line="114">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Vertrieb</source>
+        <target state="new">Vertrieb</target>
+      </trans-unit>
+      <trans-unit id="7aec124924608e09172033c5d49d271a4bb91c39" resname="Verwalter">
+        <jms:reference-file line="117">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <source>Verwalter</source>
+        <target state="new">Verwalter</target>
+      </trans-unit>
+      <trans-unit id="4b569b051dcf6513b284b5f67a1e704be157d6d8" resname="Veröffentlichung">
+        <jms:reference-file line="218">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="76">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="65">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="219">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="70">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Veröffentlichung</source>
+        <target state="new">Veröffentlichung</target>
+      </trans-unit>
+      <trans-unit id="8ccafda6d619317c83e43feef0eeb929e79fae82" resname="W Längengrad">
+        <jms:reference-file line="198">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="28">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="99">views/Profile/geographic.html.twig</jms:reference-file>
+        <jms:reference-file line="198">views/Export/pdf.html.twig</jms:reference-file>
+        <source>W Längengrad</source>
+        <target state="new">W Längengrad</target>
+      </trans-unit>
+      <trans-unit id="2873686a58bcbdfbc29efe9fb9d5f3fd5c0cda53" resname="Wirklich löschen">
+        <jms:reference-file line="7">Resources/views/confirm.html.twig</jms:reference-file>
+        <source>Wirklich löschen</source>
+        <target state="new">Wirklich löschen</target>
+      </trans-unit>
+      <trans-unit id="bb84b829629350e1fac8160c64e250a891a502b2" resname="Wirklich löschen?">
+        <jms:reference-file line="7">Resources/views/confirm.html.twig</jms:reference-file>
+        <source>Wirklich löschen?</source>
+        <target state="new">Wirklich löschen?</target>
+      </trans-unit>
+      <trans-unit id="255cc7a4a1fa24c8c4f8b1044a2b45d27467c6bf" resname="Wirtschaft">
+        <jms:reference-file line="31">views/Profile/classification.html.twig</jms:reference-file>
+        <source>Wirtschaft</source>
+        <target state="new">Wirtschaft</target>
+      </trans-unit>
+      <trans-unit id="d5c1cc710eea8991c71b80748ab1b1e0134d2e7b" resname="Zeitbezug">
+        <jms:reference-file line="211">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="12">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="212">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Zeitbezug</source>
+        <target state="new">Zeitbezug</target>
+      </trans-unit>
+      <trans-unit id="d296bda615b6e6dcb1f6df283896beba1f8aad54" resname="Zeitliche Ausdehnung">
+        <jms:reference-file line="226">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="69">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="227">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Zeitliche Ausdehnung</source>
+        <target state="new">Zeitliche Ausdehnung</target>
+      </trans-unit>
+      <trans-unit id="c28b691449b12b738475540b35a44bddd84ebfe5" resname="Zuständige Person">
+        <jms:reference-file line="29">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="335">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="121">views/Profile/metadata.html.twig</jms:reference-file>
+        <jms:reference-file line="65">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="336">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Zuständige Person</source>
+        <target state="new">Zuständige Person</target>
+      </trans-unit>
+      <trans-unit id="262d958a07026180dc56f6b8e25535b6513d1e3f" resname="Zuständige Stelle">
+        <jms:reference-file line="326">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="16">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/responsibleparty.html.twig</jms:reference-file>
+        <jms:reference-file line="327">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="15">Resources/views/form.html.twig</jms:reference-file>
+        <source>Zuständige Stelle</source>
+        <target state="new">Zuständige Stelle</target>
+      </trans-unit>
+      <trans-unit id="4e647b522116fd7acaf0b4149ad1fc2ee7ef310b" resname="bearbeiten">
+        <jms:reference-file line="31">Resources/views/index.html.twig</jms:reference-file>
+        <source>bearbeiten</source>
+        <target state="new">bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="f0f989b82b5c542908212af74304691709b8a6dc" resname="veröffentlichen">
+        <jms:reference-file line="30">Resources/views/index.html.twig</jms:reference-file>
+        <source>veröffentlichen</source>
+        <target state="new">veröffentlichen</target>
+      </trans-unit>
+      <trans-unit id="445584edc4cc7bcf1b07500ef1605d08c0f45727" resname="von">
+        <jms:reference-file line="17">Resources/views/index.html.twig</jms:reference-file>
+        <source>von</source>
+        <target state="new">von</target>
+      </trans-unit>
+      <trans-unit id="6b62be480582f129251eb140207a677e21aa9ba2" resname="Äquivalenter Maßstab">
+        <jms:reference-file line="260">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="50">views/Profile/quality.html.twig</jms:reference-file>
+        <jms:reference-file line="261">views/Export/pdf.html.twig</jms:reference-file>
+        <source>Äquivalenter Maßstab</source>
+        <target state="new">Äquivalenter Maßstab</target>
+      </trans-unit>
+      <trans-unit id="0ac73bba44bd06c609d50f54155f7b27abcda0af" resname="Überarbeitung">
+        <jms:reference-file line="222">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="73">views/Profile/keyword.html.twig</jms:reference-file>
+        <jms:reference-file line="64">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="44">views/Profile/temporal.html.twig</jms:reference-file>
+        <jms:reference-file line="223">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="67">views/Profile/conformity.html.twig</jms:reference-file>
+        <source>Überarbeitung</source>
+        <target state="new">Überarbeitung</target>
+      </trans-unit>
+      <trans-unit id="19e26f32b31f4d3663a65ce2796aee24ec71c156" resname="Übereinstimmung">
+        <jms:reference-file line="271">Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="14">Resources/views/form.html.twig</jms:reference-file>
+        <jms:reference-file line="1">views/Profile/conformity.html.twig</jms:reference-file>
+        <jms:reference-file line="272">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="13">Resources/views/form.html.twig</jms:reference-file>
+        <source>Übereinstimmung</source>
+        <target state="new">Übereinstimmung</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

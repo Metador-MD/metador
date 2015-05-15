@@ -42,7 +42,6 @@ services:
 jms_translation:
     source_language: de
     locales:
-        - de
         - en
 
     configs:
