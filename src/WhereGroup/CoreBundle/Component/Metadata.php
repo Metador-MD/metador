@@ -226,7 +226,7 @@ class Metadata implements MetadataInterface
 
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($now->getTimestamp());
-        $metadata->setUuid($p['fileIdentifier']);
+        $metadata->setUuid(isset($p['fileIdentifier']) ? $p['fileIdentifier'] : '');
         $metadata->setCodespace(isset($p['identifier'][0]['codespace']) ? $p['identifier'][0]['codespace'] : '');
         $metadata->setTitle(isset($p['title']) ? $p['title'] : '');
         $metadata->setAbstract(isset($p['abstract']) ? $p['abstract'] : '');
