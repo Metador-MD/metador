@@ -6,14 +6,14 @@
         {% if locale != 'de' %}
         <li>
             <form action="{{ path('metador_locale_update', { 'locale': 'de' }) }}" method="post">
-                <button class="noStyle">de</button>
+                <button class="noStyle">{{ 'Deutsch'|trans }}</button>
             </form>
         </li>
         {% endif %}
         {% if locale != 'en' %}
         <li>
             <form action="{{ path('metador_locale_update', { 'locale': 'en' }) }}" method="post">
-                <button class="noStyle">en</button>
+                <button class="noStyle">{{ 'Englisch'|trans }}</button>
             </form>
         </li>
         {% endif %}

@@ -428,3 +428,14 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
 .duplicate:hover > .icon {
     color: #333;
 }
+
+textarea.code {
+    width: 100%;
+    height: 100px;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    background: #faf8f0;
+}

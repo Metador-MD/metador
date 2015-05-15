@@ -1,18 +1,3 @@
-textarea.code {
-  width: 100%;
-  height: 100px;
-  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-  white-space: pre;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -o-pre-wrap;
-  background: #faf8f0;
-}
-
-.icons-sprite, .icon.optional, .icon.conditional, .icon.help, .icon.help:hover, .icon.wizard, .icon.error, .icon.success, .icon.pencil, .icon.appedit, .icon.pagecode, .icon.add, .icon.world, .icon.delete, .icon.import, .icon.delete:hover {
-  background: url('../img/icons-sf9fa5b36a3.png') no-repeat;
-}
-
 /*! normalize.css v1.0.2 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
@@ -782,14 +767,12 @@ html, body {
 }
 
 .logo {
-  position: absolute;
-  top: 0;
-  left: 50%;
+  margin-top: 40px;
   margin-left: -480px;
-  background-image: url("../img/logo.png");
+  background-image: url("");
   background-repeat: no-repeat;
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
   z-index: 2;
 }
 
@@ -823,12 +806,12 @@ body {
   right: 0;
 }
 .page .page-center {
+  background-color: #c0d0a1;
   position: absolute;
-  top: 150px;
+  top: 200px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: white;
 }
 .page .page-center .page-left {
   width: 180px;
@@ -898,10 +881,10 @@ body {
 
 .plugin-menu {
   border: 1px solid #9b9b9b;
-  background-color: #b4b4b4;
+  background-color: #789048;
   height: 40px;
   position: absolute;
-  top: 110px;
+  top: 160px;
   left: 0;
   right: 0;
 }
@@ -910,6 +893,9 @@ body {
   padding: 0 10px;
   width: 960px;
   margin-left: -480px;
+  border-width: 0 1px 0 1px;
+  border-style: solid;
+  border-color: #6a7f40;
   position: absolute;
   top: 0;
   left: 50%;
@@ -950,7 +936,7 @@ body {
   height: 30px;
   line-height: 30px;
 }
-.profile-select > .profile-list > li > a {
+.profile-select > .profile-list > li > a, .profile-select > .profile-list > li button {
   color: #f0f0d8;
   display: block;
   padding: 0 10px;
@@ -960,9 +946,12 @@ body {
   -o-border-radius: 8px;
   border-radius: 8px;
 }
-.profile-select > .profile-list > li > a:hover {
+.profile-select > .profile-list > li > a:hover, .profile-select > .profile-list > li button:hover {
   background-color: #6f5353;
   text-decoration: none;
+}
+.profile-select > .profile-list > li button {
+  padding: 10px;
 }
 
 .profile-select.act > .profile-list {
@@ -971,10 +960,10 @@ body {
   border-style: solid;
   border-color: #e2e2b3;
 }
-.profile-select.act > .profile-list > li > a {
+.profile-select.act > .profile-list > li > a, .profile-select.act > .profile-list > li button {
   color: #604848;
 }
-.profile-select.act > .profile-list > li > a:hover {
+.profile-select.act > .profile-list > li > a:hover, .profile-select.act > .profile-list > li button:hover {
   background-color: #f7f7ea;
 }
 
@@ -982,7 +971,9 @@ body {
   display: block;
 }
 
-.global-menu > li > a, .profile-list-label {
+.global-menu > li > a,
+.global-menu > li button,
+.profile-list-label {
   color: #f0f0d8;
   font-size: 14px;
   text-decoration: none;
@@ -995,11 +986,13 @@ body {
   border-color: #604848;
 }
 
-.global-menu > li:hover > a, .global-menu > li:hover .profile-list-label {
-  color: white;
+.global-menu > li:hover > a,
+.global-menu > li:hover .profile-list-label {
+  color: #f0f0d8;
 }
 
-.global-menu > li.act > a, .global-menu > li.act .profile-list-label {
+.global-menu > li.act > a,
+.global-menu > li.act .profile-list-label {
   background-color: #f0f0d8;
   color: #604848;
   border-width: 0 1px 0 1px;
@@ -1061,10 +1054,15 @@ body {
   float: right;
   padding: 0 5px;
 }
+.plugin-menu-list > li > button, .plugin-menu-list > li > a {
+  color: #d7e1c3;
+  text-shadow: #3f4c26 1px 1px 2px;
+}
+.plugin-menu-list > li > button:hover, .plugin-menu-list > li > a:hover {
+  color: #aabf7f;
+}
 .plugin-menu-list > li > a {
   display: block;
-  color: #404040;
-  text-shadow: #cccccc 1px 1px 2px;
 }
 .plugin-menu-list > li > a:hover {
   text-decoration: none;
@@ -1077,8 +1075,6 @@ body {
   border: 0;
   background-color: transparent;
   height: 40px;
-  color: #404040;
-  text-shadow: #cccccc 1px 1px 2px;
 }
 
 .table {
@@ -1658,6 +1654,17 @@ body {
   color: #333;
 }
 
+textarea.code {
+  width: 100%;
+  height: 100px;
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  background: #faf8f0;
+}
+
 .gdi-de > table {
   margin-bottom: 20px;
   width: 100%;
@@ -2100,11 +2107,15 @@ body {
   text-decoration: none;
 }
 
+.dashboard {
+  text-align: center;
+}
+
 .preview {
-  width: 288px;
-  float: left;
+  display: inline-block;
+  width: 285px;
   border: 1px solid silver;
-  margin: 8px;
+  margin: 5px;
   padding: 5px;
   background-color: #EEE;
   -webkit-border-radius: 5px;
@@ -2163,57 +2174,6 @@ body {
 }
 .icon.optional {
   color: #B0E57C;
-}
-.icon.optional {
-  background-position: -16px -16px;
-}
-.icon.conditional {
-  background-position: 0 -32px;
-}
-.icon.help {
-  background-position: -16px -160px;
-}
-.icon.help:hover, .icon.help.help_hover, .icon.help.help-hover {
-  background-position: 0 -112px;
-}
-.icon:hover.help {
-  background-position: 0 -112px;
-}
-.icon.wizard {
-  background-position: 0 -128px;
-}
-.icon.error {
-  background-position: 0 -64px;
-}
-.icon.success {
-  background-position: -16px -144px;
-}
-.icon.pencil {
-  background-position: 0 -144px;
-}
-.icon.appedit {
-  background-position: -16px 0;
-}
-.icon.pagecode {
-  background-position: -16px -128px;
-}
-.icon.add {
-  background-position: 0 0;
-}
-.icon.world {
-  background-position: -16px -64px;
-}
-.icon.delete {
-  background-position: 0 -80px;
-}
-.icon.delete:hover, .icon.delete.delete_hover, .icon.delete.delete-hover {
-  background-position: -16px -80px;
-}
-.icon.import {
-  background-position: -16px -96px;
-}
-.icon:hover.delete {
-  background-position: -16px -80px;
 }
 
 .icon32 {

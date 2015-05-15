@@ -1,10 +1,16 @@
+.dashboard {
+    text-align: center;
+}
+
 .preview {
-    width: 288px;
-    float: left;
+    display: inline-block;
+    width: 285px;
+    // float: left;
     border: 1px solid silver;
-    margin: 8px;
+    margin: 5px;
     padding: 5px;
     background-color: #EEE;
+    // margin: 0 auto;
 
     @include border-radius(5px);
     @include box-shadow(inset -5px -5px 5px rgba(100,100,100,0.1));

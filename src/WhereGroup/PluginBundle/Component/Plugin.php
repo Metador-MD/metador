@@ -150,6 +150,16 @@ class Plugin
     {
         $plugin['active'] = true;
 
+        if (isset($plugin['require'])) {
+            foreach ($plugin['require'] as $require) {
+                if (!isset($this->plugins[$require])) {
+                    throw new \RuntimeException("Plugin $require not found!");
+                }
+
+                $this->enable($require, $this->plugins[$require]);
+            }
+        }
+
         $routing = $this->locateResource($plugin['class_path'], 'config/routing.yml');
 
         if ($routing) {
@@ -197,18 +207,21 @@ class Plugin
 
     public function clearCache($redirect)
     {
-        $env     = '--env=' . $this->container->get('kernel')->getEnvironment();
+        $env     = $this->container->get('kernel')->getEnvironment();
         $console = $this->rootDir . 'console';
+
+        $commands = array();
+
+        if ($env === 'dev') {
+            $commands[] = "$console assets:install --symlink --no-debug --env=$env $this->rootDir../web/";
+        } else {
+            $commands[] = "$console assets:install --no-debug --env=$env $this->rootDir../web/";
+        }
 
         $fs  = new Filesystem();
         $fs->remove($this->container->getParameter('kernel.cache_dir'));
 
-        sleep(4);
-
-        $commands = array(
-            "$console assets:install --no-debug $env $this->rootDir../web/",
-            "$console cache:warmup --no-debug $env"
-        );
+        sleep(5);
 
         foreach ($commands as $command) {
             $process = new Process($command);

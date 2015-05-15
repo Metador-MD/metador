@@ -1,12 +1,12 @@
 {% extends 'WhereGroupThemeBundle::template.html.twig' %}
 
 {% block center %}
-<div class="page-content">
+<div class="page-content dashboard">
     {% for item in applicationGet('app-preview') %}
     <div class="preview">
         <div class="head">
             <a href="{{ path('metadata_index', {'profile': item.profile}) }}">
-                <span class="icon-eye"></span> {{ item.title }}
+                {{ item.title }}
             </a>
             <a href="{{ path('metadata_new', {'profile': item.profile}) }}" style="float:right;">
                 <div class="icon-plus"></div>

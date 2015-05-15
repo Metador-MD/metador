@@ -36,7 +36,8 @@ class AppKernel extends Kernel
             if (isset($array['plugins'])) {
                 foreach ($array['plugins'] as $name => $plugin) {
                     if ($plugin['active']) {
-                        $bundles[] = new $plugin['class_path'] . '/' . $plugin['class_name'];
+                        $class = $plugin['class_path'] . '\\' . $plugin['class_name'];
+                        $bundles[] = new $class;
                     }
                 }
             }
