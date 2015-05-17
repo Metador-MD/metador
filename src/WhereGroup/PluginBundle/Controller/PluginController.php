@@ -2,14 +2,17 @@
 
 namespace WhereGroup\PluginBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
+ * Class PluginController
+ * @package WhereGroup\PluginBundle\Controller
+ * @author A.R.Pour
  * @Route("/admin/plugin")
  */
 class PluginController extends Controller

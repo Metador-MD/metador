@@ -1,25 +1,16 @@
 <?php
 
-namespace WhereGroup\ExportBundle\EventListener;
+namespace WhereGroup\Plugin\ExportBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
-class MetadorListener
+/**
+ * Class MetadataListener
+ * @package WhereGroup\Plugin\ExportBundle\EventListener
+ * @author A.R.Pour
+ */
+class MetadataListener
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-
-    }
-
-    public function onPreSave(MetadataChangeEvent $event)
-    {
-
-    }
-
     /**
      * Stores the metadata xml to the filesystem.
      * @param  MetadataChangeEvent $event

@@ -2,9 +2,13 @@
 
 namespace WhereGroup\PluginBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
+/**
+ * Class ApplicationMenuListener
+ * @package WhereGroup\PluginBundle\EventListener
+ * @author A.R.Pour
+ */
 class ApplicationMenuListener
 {
     /**

@@ -52,6 +52,17 @@ class Application
         $container->get('event_dispatcher')->dispatch('application.loading', $event);
     }
 
+    public function debug()
+    {
+        return
+            "\n<br/>" . $this->bundle .
+            "\n<br/>" . $this->controller .
+            "\n<br/>" . $this->action .
+            "\n<br/>" . $this->route .
+            '<pre>' . print_r($this->data, 1) . '</pre>' .
+            '<pre>' . print_r($this->parameter, 1) . '</pre>';
+    }
+
     /**
      * @param $type
      * @param $key

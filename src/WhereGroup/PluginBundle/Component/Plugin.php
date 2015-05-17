@@ -6,11 +6,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
 
+/**
+ * Class Plugin
+ * @package WhereGroup\PluginBundle\Component
+ * @author A.R.Pour
+ */
 class Plugin
 {
     protected $container;
@@ -75,16 +79,26 @@ class Plugin
         unset($configuration, $plugins);
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
         unset($this->container);
     }
 
+    /**
+     * @return array
+     */
     public function getPlugins()
     {
         return $this->plugins;
     }
 
+    /**
+     * @param $request
+     * @param $redirect
+     */
     public function update($request, $redirect)
     {
         $plugins = empty($request['plugin']) ? array() : $request['plugin'];
@@ -102,12 +116,18 @@ class Plugin
         $this->clearCache($redirect);
     }
 
+    /**
+     *
+     */
     protected function saveConfiguration()
     {
         $this->writeYaml($this->configurationFile, array('plugins' => $this->plugins));
         $this->writeYaml($this->routingFile, $this->routing);
     }
 
+    /**
+     * @return array
+     */
     protected function getPluginConfiguration()
     {
         if (!file_exists($this->configurationFile)) {
@@ -117,6 +137,9 @@ class Plugin
         return $this->readYaml($this->configurationFile);
     }
 
+    /**
+     * @return array
+     */
     protected function getPluginRouting()
     {
         if (!file_exists($this->routingFile)) {
@@ -126,6 +149,9 @@ class Plugin
         return $this->readYaml($this->routingFile);
     }
 
+    /**
+     * @return array
+     */
     public function findPlugins()
     {
         $plugins = array();
@@ -146,6 +172,10 @@ class Plugin
         return $plugins;
     }
 
+    /**
+     * @param $key
+     * @param $plugin
+     */
     protected function enable($key, &$plugin)
     {
         $plugin['active'] = true;
@@ -169,6 +199,10 @@ class Plugin
         }
     }
 
+    /**
+     * @param $key
+     * @param $plugin
+     */
     protected function disable($key, &$plugin)
     {
         $plugin['active'] = false;
@@ -178,6 +212,11 @@ class Plugin
         }
     }
 
+    /**
+     * @param $bundlePath
+     * @param $path
+     * @return bool|string
+     */
     protected function locateResource($bundlePath, $path)
     {
         $fs = new Filesystem();
@@ -193,11 +232,20 @@ class Plugin
         return false;
     }
 
+    /**
+     * @param $file
+     * @return array
+     */
     public function readYaml($file)
     {
         return Yaml::parse($file);
     }
 
+    /**
+     * @param $file
+     * @param $array
+     * @return $this
+     */
     public function writeYaml($file, $array)
     {
         file_put_contents($file, Yaml::dump($array, 2));
@@ -205,6 +253,9 @@ class Plugin
         return $this;
     }
 
+    /**
+     * @param $redirect
+     */
     public function clearCache($redirect)
     {
         $env     = $this->container->get('kernel')->getEnvironment();

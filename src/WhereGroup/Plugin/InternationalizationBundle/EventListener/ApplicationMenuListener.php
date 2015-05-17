@@ -42,5 +42,15 @@ class ApplicationMenuListener
                 'locale' => $this->request->getLocale()
             )
         ));
+
+        if ($app->routeStartsWith('metador_admin') && $this->kernel->getEnvironment() === 'dev') {
+            $app->add('app-admin-menu', 'locale', array(
+                'icon'   => 'icon-flag',
+                'label'  => 'Sprachen',
+                'path'   => 'jms_translation_index',
+                'params' => array(),
+                'target' => '_BLANK'
+            ), 'ROLE_SUPERUSER');
+        }
     }
 }

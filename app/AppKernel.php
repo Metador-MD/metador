@@ -17,13 +17,17 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
+            // Translation
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\AopBundle\JMSAopBundle(),
+
             /******************************************************************
              * WhereGroup Metador Bundle's
              ******************************************************************/
             new WhereGroup\CoreBundle\WhereGroupCoreBundle(),
             new WhereGroup\ThemeBundle\WhereGroupThemeBundle(),
             new WhereGroup\UserBundle\WhereGroupUserBundle(),
-            new WhereGroup\ExportBundle\WhereGroupExportBundle(),
             new WhereGroup\PluginBundle\WhereGroupPluginBundle(),
         );
 
@@ -47,11 +51,6 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-
-            // Translation
-            $bundles[] = new JMS\TranslationBundle\JMSTranslationBundle();
-            $bundles[] = new JMS\DiExtraBundle\JMSDiExtraBundle($this);
-            $bundles[] = new JMS\AopBundle\JMSAopBundle();
         }
 
         return $bundles;
