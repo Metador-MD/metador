@@ -55,12 +55,12 @@ class Application
     public function debug()
     {
         return
-            "\n<br/>" . $this->bundle .
-            "\n<br/>" . $this->controller .
-            "\n<br/>" . $this->action .
-            "\n<br/>" . $this->route .
-            '<pre>' . print_r($this->data, 1) . '</pre>' .
-            '<pre>' . print_r($this->parameter, 1) . '</pre>';
+            "\n<br/>Bundle     : " . $this->bundle .
+            "\n<br/>Controller : " . $this->controller .
+            "\n<br/>Action     : " . $this->action .
+            "\n<br/>Route       : " . $this->route .
+            'Data: <pre>' . print_r($this->data, 1) . '</pre>' .
+            'Parameter:<pre>' . print_r($this->parameter, 1) . '</pre>';
     }
 
     /**
