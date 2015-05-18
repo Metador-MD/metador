@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-05-15T15:23:40Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2015-05-18T11:20:10Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -118,7 +118,7 @@
         <target state="new">Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen</target>
       </trans-unit>
       <trans-unit id="ab2e26dd8b8868a3969cb3321e0c983c0d9d67d4" resname="Plugins">
-        <jms:reference-file line="22">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
+        <jms:reference-file line="26">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Plugins</source>
         <target state="new">Plugins</target>
       </trans-unit>
@@ -171,15 +171,15 @@
         <jms:reference-file line="37">views/User/edit.html.twig</jms:reference-file>
         <jms:reference-file line="37">views/User/new.html.twig</jms:reference-file>
         <jms:reference-file line="109">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
-        <jms:reference-file line="29">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
+        <jms:reference-file line="33">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>speichern</source>
-        <target>save</target>
+        <target state="new">speichern</target>
       </trans-unit>
       <trans-unit id="c27aae4d9d9fab6708a2b5c01659afa4c45290e1" resname="zurück">
         <jms:reference-file line="44">views/User/edit.html.twig</jms:reference-file>
         <jms:reference-file line="81">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <source>zurück</source>
-        <target>back</target>
+        <target state="new">zurück</target>
       </trans-unit>
       <trans-unit id="cb27327d0207bc407a6a6bb530dca360ec49a044" resname="Übersicht">
         <jms:reference-file line="56">CoreBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>

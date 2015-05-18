@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-05-15T15:21:42Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2015-05-18T11:20:18Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -632,6 +632,11 @@
         <jms:reference-file line="142">views/Export/pdf.html.twig</jms:reference-file>
         <source>Sprache der Ressource</source>
         <target state="new">Sprache der Ressource</target>
+      </trans-unit>
+      <trans-unit id="210fbcd6c3e7c77e979e692bf7c813357301f289" resname="Sprachen">
+        <jms:reference-file line="49">InternationalizationBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
+        <source>Sprachen</source>
+        <target state="new">Sprachen</target>
       </trans-unit>
       <trans-unit id="1d0274db54382a4b4b7a8fb8925d8f3750964c44" resname="Staat">
         <jms:reference-file line="37">Resources/views/pdf.html.twig</jms:reference-file>
