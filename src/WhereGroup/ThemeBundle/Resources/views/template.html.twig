@@ -3,10 +3,10 @@
 {% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
+    {# <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}"> #}
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/datepicker/zebra_datepicker_metallic.css') }}">
-    {# <link rel="stylesheet" href="http://i.icomoon.io/public/temp/e084c91855/Metador21/style.css"> #}
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/1c7d2810ab/Metador21/style.css">
 {% endblock %}
 
 {% block body %}
@@ -20,7 +20,11 @@
         <div class="plugin-menu-content">
             <div class="plugin-menu-content-left"></div>
             <div class="plugin-menu-content-right">
-                {% include 'WhereGroupThemeBundle:Template:pluginMenu.html.twig' %}
+                <ul class="plugin-menu-list">
+                    {% block plugin_menu %}
+                    {% include 'WhereGroupThemeBundle:Template:pluginMenu.html.twig' %}
+                    {% endblock %}
+                </ul>
             </div>
         </div>
     </div>

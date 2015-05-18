@@ -25,10 +25,11 @@ class ApplicationMenuListener
             'icon'   => 'icon-stack',
             'label'  => 'Plugins',
             'path'   => 'metador_admin_plugin',
-            'params' => array()
+            'params' => array(),
+            'active' => $app->isBundle('plugin')
         ), 'ROLE_SUPERUSER');
 
-        if ($app->isBundle('plugin')) {
+        if ($app->isBundle('plugin') && $app->isAction('index')) {
             $app->add('app-plugin-menu', 'save', array(
                 'label'  => 'speichern',
                 'icon'   => 'icon-floppy-disk'

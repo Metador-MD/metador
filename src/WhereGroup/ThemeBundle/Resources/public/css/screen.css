@@ -785,7 +785,7 @@ body {
   width: 100%;
   height: 100%;
   line-height: normal;
-  background-color: #f0f0d8;
+  background-color: #f5f4f2;
 }
 
 .page {
@@ -796,8 +796,8 @@ body {
   bottom: 0;
 }
 .page > .page-top {
-  background-color: #604848;
-  border-bottom: 5px solid #513d3d;
+  background-color: #373739;
+  border-bottom: 5px solid #2a2a2c;
   height: 40px;
   line-height: 40px;
   position: absolute;
@@ -806,7 +806,7 @@ body {
   right: 0;
 }
 .page .page-center {
-  background-color: #c0d0a1;
+  background-color: #d6d9dc;
   position: absolute;
   top: 200px;
   left: 0;
@@ -816,13 +816,13 @@ body {
 .page .page-center .page-left {
   width: 180px;
   margin-left: -480px;
+  background-color: #e7e7e7;
+  border-right: 1px solid #b2b0be;
+  border-left: 1px solid #9b9b9b;
   position: absolute;
   top: 0;
   left: 50%;
   bottom: 0;
-  background-color: #e7e7e7;
-  border-right: 1px solid #b2b0be;
-  border-left: 1px solid #9b9b9b;
 }
 .page .page-center .page-right {
   padding: 20px;
@@ -881,7 +881,7 @@ body {
 
 .plugin-menu {
   border: 1px solid #9b9b9b;
-  background-color: #789048;
+  background-color: #9ea6ae;
   height: 40px;
   position: absolute;
   top: 160px;
@@ -895,7 +895,7 @@ body {
   margin-left: -480px;
   border-width: 0 1px 0 1px;
   border-style: solid;
-  border-color: #6a7f40;
+  border-color: #838c96;
   position: absolute;
   top: 0;
   left: 50%;
@@ -918,12 +918,12 @@ body {
   display: none;
   position: absolute;
   text-align: left;
-  background-color: #604848;
-  color: #f0f0d8;
+  background-color: #373739;
+  color: #f5f4f2;
   padding: 10px;
   border-width: 0 1px 1px 1px;
   border-style: solid;
-  border-color: #513d3d;
+  border-color: #2a2a2c;
   margin-top: -5px;
   -moz-border-radius-bottomleft: 8px;
   -webkit-border-bottom-left-radius: 8px;
@@ -937,7 +937,7 @@ body {
   line-height: 30px;
 }
 .profile-select > .profile-list > li > a, .profile-select > .profile-list > li button {
-  color: #f0f0d8;
+  color: #f5f4f2;
   display: block;
   padding: 0 10px;
   -webkit-border-radius: 8px;
@@ -947,7 +947,7 @@ body {
   border-radius: 8px;
 }
 .profile-select > .profile-list > li > a:hover, .profile-select > .profile-list > li button:hover {
-  background-color: #6f5353;
+  background-color: #444446;
   text-decoration: none;
 }
 .profile-select > .profile-list > li button {
@@ -955,16 +955,16 @@ body {
 }
 
 .profile-select.act > .profile-list {
-  background-color: #f0f0d8;
+  background-color: #f5f4f2;
   border-width: 0 1px 1px 1px;
   border-style: solid;
-  border-color: #e2e2b3;
+  border-color: #dfdcd5;
 }
 .profile-select.act > .profile-list > li > a, .profile-select.act > .profile-list > li button {
-  color: #604848;
+  color: #373739;
 }
 .profile-select.act > .profile-list > li > a:hover, .profile-select.act > .profile-list > li button:hover {
-  background-color: #f7f7ea;
+  background-color: white;
 }
 
 .profile-select:hover .profile-list {
@@ -974,7 +974,7 @@ body {
 .global-menu > li > a,
 .global-menu > li button,
 .profile-list-label {
-  color: #f0f0d8;
+  color: #f5f4f2;
   font-size: 14px;
   text-decoration: none;
   text-align: center;
@@ -983,21 +983,21 @@ body {
   display: block;
   border-width: 0 1px 0 1px;
   border-style: solid;
-  border-color: #604848;
+  border-color: #373739;
 }
 
 .global-menu > li:hover > a,
 .global-menu > li:hover .profile-list-label {
-  color: #f0f0d8;
+  color: #f5f4f2;
 }
 
 .global-menu > li.act > a,
 .global-menu > li.act .profile-list-label {
-  background-color: #f0f0d8;
-  color: #604848;
+  background-color: #f5f4f2;
+  color: #373739;
   border-width: 0 1px 0 1px;
   border-style: solid;
-  border-color: #f0f0d8;
+  border-color: #f5f4f2;
   -moz-border-radius-topleft: 8px;
   -webkit-border-top-left-radius: 8px;
   border-top-left-radius: 8px;
@@ -1025,7 +1025,7 @@ body {
 }
 .page-menu-list > li.act {
   background-color: #cecece;
-  border-left: 4px solid #604848;
+  border-left: 4px solid #373739;
   border-top: 1px solid #b2b0be;
   border-bottom: 1px solid #b2b0be;
   color: #333333;
@@ -1055,11 +1055,11 @@ body {
   padding: 0 5px;
 }
 .plugin-menu-list > li > button, .plugin-menu-list > li > a {
-  color: #d7e1c3;
-  text-shadow: #3f4c26 1px 1px 2px;
+  color: white;
+  text-shadow: #69737d 1px 1px 2px;
 }
 .plugin-menu-list > li > button:hover, .plugin-menu-list > li > a:hover {
-  color: #aabf7f;
+  color: #d6d9dc;
 }
 .plugin-menu-list > li > a {
   display: block;
@@ -1077,23 +1077,81 @@ body {
   height: 40px;
 }
 
-.table {
-  border: 1px solid #ddd;
+.plugin-table {
+  width: 100%;
+}
+.plugin-table .plugin-row {
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #DDD;
+}
+.plugin-table .plugin-row:hover {
+  background-color: #EEE;
+}
+.plugin-table .plugin-mark {
+  cursor: pointer;
+}
+.plugin-table .plugin-col-mark {
+  width: 5%;
+}
+.plugin-table .plugin-col-mark .icon-checkmark {
+  color: #5077ae;
+}
+.plugin-table .plugin-col-mark .icon-checkmark2 {
+  color: #b8c8df;
+  text-shadow: none;
+}
+.plugin-table .plugin-col-name {
+  width: 85%;
+}
+.plugin-table .plugin-col-origin {
+  width: 10%;
+  text-align: right;
+  font-size: 14px;
+  color: #666;
 }
 
-.plugin-row {
+.plugin-code, .plugin-code-header {
+  background-color: #373739;
+  margin-bottom: 0;
+  padding: 10px 20px;
+}
+
+.plugin-code-header {
+  border-top: 5px solid #1e1e1f;
+  color: #c9c3b8;
+  font-weight: bold;
+}
+
+.plugin-code {
+  color: #f5f4f2;
+  white-space: wrap;
+  border-top: 5px solid #1e1e1f;
+  padding: 20px;
+}
+.plugin-code.header {
+  margin-top: 0;
+  border-top: 1px solid #1e1e1f;
+}
+
+.plugin-view .icon-circle {
+  color: #5077ae;
+}
+
+.plugin-code .comment {
+  color: #999;
+}
+
+.plugin-install-title {
+  display: block;
   height: 30px;
   line-height: 30px;
+  font-size: 20px;
+  color: #5077ae;
 }
-.plugin-row > td:first-child {
-  width: 30px;
-  text-align: center;
-}
-.plugin-row.act > td {
-  background-color: #cff7d7;
-}
-.plugin-row.new > td {
-  background-color: #fff7c6;
+.plugin-install-title.done {
+  color: #373739;
 }
 
 .loginPage {
@@ -1217,6 +1275,10 @@ body {
 .content.demo .center dl dd {
   margin-left: 0;
   margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #373739;
 }
 
 .logo {

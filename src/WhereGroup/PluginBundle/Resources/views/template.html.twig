@@ -1,0 +1,16 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% block center %}
+    <div class="page-content">
+        {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block plugin_menu %}
+    <li>
+        <a href="{{ path('metador_admin_plugin') }}">
+            <span class="icon-redo2"></span> {% trans %}zurück{% endtrans %}
+        </a>
+    </li>
+{% endblock %}

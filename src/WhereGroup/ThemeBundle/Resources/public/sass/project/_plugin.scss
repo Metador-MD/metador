@@ -1,21 +1,88 @@
-.table {
-    border: 1px solid #ddd;
+$plugin-blue: #5077AE;
+
+.plugin-table {
+    width: 100%;
+
+    .plugin-row {
+        font-size: 18px;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #DDD;
+        &:hover {
+            background-color: #EEE;
+        }
+    }
+
+    .plugin-mark {
+        cursor: pointer;
+    }
+
+    .plugin-col-mark {
+        width: 5%;
+
+        .icon-checkmark {
+            color: $plugin-blue;
+        }
+
+        .icon-checkmark2 {
+            color: lighten($plugin-blue, 30%);
+            @include text-shadow(none);
+        }
+    }
+
+    .plugin-col-name {
+        width: 85%;
+    }
+
+    .plugin-col-origin {
+        width: 10%;
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+    }
 }
 
-.plugin-row {
+.plugin-code, .plugin-code-header {
+    background-color: $primary;
+    margin-bottom: 0;
+    padding: 10px 20px;
+}
+
+.plugin-code-header {
+    border-top: 5px solid darken($primary, 10%);
+    color: darken($primary-contrast, 20%);
+    font-weight: bold;
+}
+
+.plugin-code {
+    color: $primary-contrast;
+    white-space: wrap;
+    border-top: 5px solid darken($primary, 10%);
+    padding: 20px;
+
+    &.header {
+        margin-top: 0;
+        border-top: 1px solid darken($primary, 10%);
+    }
+}
+
+.plugin-view .icon-circle {
+    color: $plugin-blue;
+}
+
+.plugin-code .comment {
+    color: #999;
+}
+
+.plugin-install-title {
+    display: block;
     height: 30px;
     line-height: 30px;
+    font-size: 20px;
+    color: $plugin-blue;
 
-    & > td:first-child {
-        width: 30px;
-        text-align: center;
-    }
-
-    &.act > td {
-        background-color: #cff7d7;
-    }
-
-    &.new > td {
-        background-color: #fff7c6;
+    &.done {
+        color: $primary;
     }
 }
+

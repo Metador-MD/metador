@@ -1,0 +1,25 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1>{% trans %}Bitte warten{% endtrans %}...</h1>
+
+
+    <p class="plugin-install-title">
+        <span class="icon-file-text"></span> {% trans %}Konfiguration{% endtrans %}
+    </p>
+    <p class="plugin-install-title">
+        <span class="icon-share2"></span> {% trans %}Assets{% endtrans %}
+    </p>
+    <p class="plugin-install-title">
+        <span class="icon-database"></span> {% trans %}Database{% endtrans %}
+    </p>
+    <p class="plugin-install-title">
+        <span class="icon-power"></span> {% trans %}Cache{% endtrans %}
+    </p>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregroupplugin/js/plugin.js') }}"></script>
+{% endblock %}

@@ -36,18 +36,81 @@ class PluginController extends Controller
     /**
      * @Route("/update", name="metador_admin_plugin_update")
      * @Method("POST")
+     * @Template()
      */
-    public function updatePluginAction()
+    public function updateAction()
     {
         if (false === $this->get('security.context')->isGranted('ROLE_SUPERUSER')) {
             throw new AccessDeniedException();
         }
 
-        $this->get('metador_plugin')->update(
-            $this->get('request')->request->all(),
-            'metador_admin_plugin'
+        return array(
+            'plugins' => $this->get('request')->request->all()
         );
+        // $this->get('metador_plugin')->update(
+        //     $this->get('request')->request->all(),
+        //     'metador_admin_plugin'
+        // );
 
-        return $this->redirect($this->generateUrl('metador_admin_plugin'));
+        // return $this->redirect($this->generateUrl('metador_admin_plugin'));
+    }
+
+    /**
+     * @Route("/view/{plugin}", name="metador_admin_plugin_view")
+     * @Method("GET")
+     */
+    public function viewAction($plugin)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_SUPERUSER')) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->forward($plugin . ':Plugin:view');
+    }
+
+    /**
+     * @Route("/command/config", name="metador_admin_plugin_command_config")
+     * @Method("POST")
+     */
+    public function configAction()
+    {
+        return new JsonResponse(
+            $this->get('metador_plugin')->update(
+                $this->get('request')->request->all()
+            )
+        );
+    }
+
+    /**
+     * @Route("/command/assets", name="metador_admin_plugin_command_assets")
+     * @Method("POST")
+     */
+    public function assetsAction()
+    {
+        return new JsonResponse(
+            $this->get('metador_plugin')->assetsInstall()
+        );
+    }
+
+    /**
+     * @Route("/command/database", name="metador_admin_plugin_command_database")
+     * @Method("POST")
+     */
+    public function databaseAction()
+    {
+        return new JsonResponse(
+            $this->get('metador_plugin')->doctrineUpdate()
+        );
+    }
+
+    /**
+     * @Route("/command/cache", name="metador_admin_plugin_command_cache")
+     * @Method("POST")
+     */
+    public function cacheAction()
+    {
+        return new JsonResponse(
+            $this->get('metador_plugin')->clearCache()
+        );
     }
 }

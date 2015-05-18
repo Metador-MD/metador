@@ -2,29 +2,25 @@
 
 {% block content %}
     <h1>{{ 'Plugins'|trans }}</h1>
-    <div class="plugin-table-border">
-    <table class="table plugin-table">
+    <table class="plugin-table">
     {% for key, plugin in plugins %}
-        {% set class = '' %}
-
-        {% if plugin['active'] %}
-            {% set class = 'act' %}
-        {% elseif plugin['new'] is defined %}
-            {% set class = 'new' %}
-        {% endif %}
-
-        <tr class="plugin-row {{ class }}">
-            <td>
-                <input type="checkbox" name="plugin[{{ key }}]"{% if plugin['active'] %} checked="checked"{% endif %} />
+        <tr class="plugin-row">
+            <td class="plugin-col-mark">
+                <span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>
+                <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
             </td>
-            <td>{{ plugin['origin'] }}</td>
-            <td>{{ plugin['name'] }}</td>
-            <td>{{ plugin['description'] }}</td>
-            <td>{{ plugin['version'] }}</td>
+            <td class="plugin-col-name">
+                {% if plugin['active'] %}
+                <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
+                    {{ plugin['name'] }}</td>
+                </a>
+                {% else %}
+                    {{ plugin['name'] }}</td>
+                {% endif %}
+            <td class="plugin-col-origin">{{ plugin['origin'] }}</td>
         </tr>
     {% endfor %}
     </table>
-    </div>
 {% endblock %}
 
 {% block form_start %}
@@ -33,4 +29,9 @@
 
 {% block form_end %}
     </form>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregroupplugin/js/plugin.js') }}"></script>
 {% endblock %}

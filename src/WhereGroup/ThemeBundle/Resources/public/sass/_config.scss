@@ -1,18 +1,16 @@
 $fontColor: #333;
 
 // http://www.colourlovers.com/palette/100694/Machu_Picchu
-$ivy: #607848;
-$mossociety: #789048;
-$agrioby: #C0D860;
-$aglet: #F0F0D8;
-$purple: #604848;
+// http://www.colourlovers.com/palette/3765452/Muted_Noon
 $dark: #34323D;
 
 // COLORS
-$primary: $purple;
-$primary-contrast: $aglet;
-$secondary: $mossociety;
-$secondary-contrast: #FFF;
+$primary: #373739;
+$primary-contrast: #F5F4F2;
+// $secondary: #69737D;
+// $secondary-contrast: lighten($secondary, 20%);
+$secondary: lighten(#69737D, 20%);
+$secondary-contrast: lighten($secondary, 20%);
 
 $logo: '';
 // $logo: '../img/logo.png';
