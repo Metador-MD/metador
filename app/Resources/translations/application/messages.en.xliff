@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-05-18T11:20:10Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2015-05-18T12:16:12Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,17 +9,17 @@
       <trans-unit id="b8be3d1264310c3b8c848d4b90d5206179a40cc4" resname="Administration">
         <jms:reference-file line="45">CoreBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Administration</source>
-        <target state="new">Administration</target>
+        <target>Administration</target>
       </trans-unit>
       <trans-unit id="92d993836badc2705a02dcc346baede737659a59" resname="Adressen">
         <jms:reference-file line="36">views/Dashboard/index.html.twig</jms:reference-file>
         <source>Adressen</source>
-        <target state="new">Adressen</target>
+        <target>Addresses</target>
       </trans-unit>
       <trans-unit id="22c631f3edf5003c9f0e38325107a807990f00d7" resname="Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden">
         <jms:reference-file line="26">views/Template/demo.html.twig</jms:reference-file>
         <source>Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden</source>
-        <target state="new">Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden</target>
+        <target>Registered as a demo user, you have full access to all MeTaDor2 features. Your data may be viewed and edited by all other demo users.</target>
       </trans-unit>
       <trans-unit id="bd26f3d230afe66f494112b04dd33a943d0fb4a6" resname="Benutzer">
         <jms:reference-file line="18">views/Template/login.html.twig</jms:reference-file>
@@ -28,66 +28,66 @@
         <jms:reference-file line="4">views/User/index.html.twig</jms:reference-file>
         <jms:reference-file line="10">views/User/index.html.twig</jms:reference-file>
         <source>Benutzer</source>
-        <target state="new">Benutzer</target>
+        <target>User</target>
       </trans-unit>
       <trans-unit id="2ea88c3cfb7a5c1bb73f09a524fea6081cc25d4d" resname="Benutzer bearbeiten">
         <jms:reference-file line="4">views/User/edit.html.twig</jms:reference-file>
         <jms:reference-file line="4">views/User/new.html.twig</jms:reference-file>
         <source>Benutzer bearbeiten</source>
-        <target state="new">Benutzer bearbeiten</target>
+        <target>Edit user</target>
       </trans-unit>
       <trans-unit id="99636bf839dc54fbfc6d2eb330af8b3a8e98d4f8" resname="Benutzername">
         <jms:reference-file line="6">Resources/views/login.html.twig</jms:reference-file>
         <jms:reference-file line="10">views/User/index.html.twig</jms:reference-file>
         <source>Benutzername</source>
-        <target state="new">Benutzername</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="af094ca98800acdee75db089cee45e9099a41db6" resname="Bestehende Gruppen löschen / bearbeiten">
         <jms:reference-file line="8">views/Group/index.html.twig</jms:reference-file>
         <source>Bestehende Gruppen löschen / bearbeiten</source>
-        <target state="new">Bestehende Gruppen löschen / bearbeiten</target>
+        <target>Delete / edit groups</target>
       </trans-unit>
       <trans-unit id="d87f47b47e4d5794d53fe0734c49417bd046cde0" resname="Dashboard">
         <jms:reference-file line="35">CoreBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Dashboard</source>
-        <target state="new">Dashboard</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="dbf00e51b8b1abb774dbdc0b75a06b1b15861960" resname="Demo Benutzer">
         <jms:reference-file line="31">views/Template/demo.html.twig</jms:reference-file>
         <source>Demo Benutzer</source>
-        <target state="new">Demo Benutzer</target>
+        <target>Demo User</target>
       </trans-unit>
       <trans-unit id="84add5b2952787581cb9a8851eef63d1ec75d22b" resname="Email">
         <jms:reference-file line="11">views/User/index.html.twig</jms:reference-file>
         <source>Email</source>
-        <target state="new">Email</target>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="628a0741388b330405f3e0fe6a3ffe8bd4d45ea4" resname="Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste">
         <jms:reference-file line="25">views/Template/demo.html.twig</jms:reference-file>
         <source>Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste</source>
-        <target state="new">Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste</target>
+        <target>Creating, editing, validating and exporting of INSPIRE-compliant metadatasets for data and services</target>
       </trans-unit>
       <trans-unit id="f4e8075cef9dd01c29f3d3523cd1b788e525a78b" resname="Gruppe">
-        <jms:reference-file line="15">UserBundle/Form/GroupType.php</jms:reference-file>
         <jms:reference-file line="13">views/Group/index.html.twig</jms:reference-file>
+        <jms:reference-file line="15">UserBundle/Form/GroupType.php</jms:reference-file>
         <source>Gruppe</source>
-        <target state="new">Gruppe</target>
+        <target>Group</target>
       </trans-unit>
       <trans-unit id="2fcba4f2ee7c161a165ca4ca5549aa69c389743a" resname="Gruppe löschen">
         <jms:reference-file line="4">views/Group/confirmDelete.html.twig</jms:reference-file>
         <source>Gruppe löschen</source>
-        <target state="new">Gruppe löschen</target>
+        <target>Delete Group</target>
       </trans-unit>
       <trans-unit id="1d07109939b9502fc5b63b1bda7842fb34578113" resname="Gruppen">
         <jms:reference-file line="42">UserBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <jms:reference-file line="4">views/Group/index.html.twig</jms:reference-file>
         <source>Gruppen</source>
-        <target state="new">Gruppen</target>
+        <target>Groups</target>
       </trans-unit>
       <trans-unit id="479c1a8a60307588b44c9cb84fc0d433ae299bc3" resname="Isactive">
         <jms:reference-file line="12">views/User/index.html.twig</jms:reference-file>
         <source>Isactive</source>
-        <target state="new">Isactive</target>
+        <target>Isactive</target>
       </trans-unit>
       <trans-unit id="834162a9d4e12ab3d512527330293204a0b63d90" resname="Kennwort">
         <jms:reference-file line="21">views/Template/login.html.twig</jms:reference-file>
@@ -95,96 +95,96 @@
         <jms:reference-file line="36">views/Template/demo.html.twig</jms:reference-file>
         <jms:reference-file line="8">Resources/views/login.html.twig</jms:reference-file>
         <source>Kennwort</source>
-        <target state="new">Kennwort</target>
+        <target>Password</target>
       </trans-unit>
       <trans-unit id="78877d3c54cea3eac989c6986a3cc4bd755916aa" resname="Metadatenerfassung für Alle">
         <jms:reference-file line="17">views/Template/demo.html.twig</jms:reference-file>
         <source>Metadatenerfassung für Alle</source>
-        <target state="new">Metadatenerfassung für Alle</target>
+        <target>Collection of metadata for everyone</target>
       </trans-unit>
       <trans-unit id="e5683279e563d2437946cafb7ee9c66bdb58a64a" resname="Neu">
         <jms:reference-file line="32">views/User/index.html.twig</jms:reference-file>
         <source>Neu</source>
-        <target state="new">Neu</target>
+        <target>New</target>
       </trans-unit>
       <trans-unit id="57b30b4537a0d5d667e59c504df7fe49d24a7578" resname="Neue Gruppe erstellen">
         <jms:reference-file line="34">views/Group/index.html.twig</jms:reference-file>
         <source>Neue Gruppe erstellen</source>
-        <target state="new">Neue Gruppe erstellen</target>
+        <target>Create new group</target>
       </trans-unit>
       <trans-unit id="0d7b9cf1a0696c071a736df039071d098d42de6f" resname="Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen">
         <jms:reference-file line="27">views/Template/demo.html.twig</jms:reference-file>
         <source>Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen</source>
-        <target state="new">Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen</target>
+        <target>Use the GD-DE Testsuite gateway to check your metadata for compliance to standards</target>
       </trans-unit>
       <trans-unit id="ab2e26dd8b8868a3969cb3321e0c983c0d9d67d4" resname="Plugins">
         <jms:reference-file line="26">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <target>Plugins</target>
       </trans-unit>
       <trans-unit id="ff4fc0276e960c348647b647235f68200887c9d2" resname="Profile">
         <jms:reference-file line="39">views/Template/globalMenu.html.twig</jms:reference-file>
         <source>Profile</source>
-        <target state="new">Profile</target>
+        <target>Profiles</target>
       </trans-unit>
       <trans-unit id="2da600bf9404843107a9531694f654e5662959e0" resname="Version">
         <jms:reference-file line="14">views/Template/login.html.twig</jms:reference-file>
         <jms:reference-file line="16">views/Template/demo.html.twig</jms:reference-file>
         <source>Version</source>
-        <target state="new">Version</target>
+        <target>Version</target>
       </trans-unit>
       <trans-unit id="c0aa9ef764d832b80428d756a731a94251b0e3a1" resname="XML">
         <jms:reference-file line="92">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <source>XML</source>
-        <target state="new">XML</target>
+        <target>XML</target>
       </trans-unit>
       <trans-unit id="6dc693acd6fb4fa68e52a9311c8eeb706d0e7307" resname="abbrechen">
         <jms:reference-file line="12">views/Group/confirmDelete.html.twig</jms:reference-file>
         <source>abbrechen</source>
-        <target state="new">abbrechen</target>
+        <target>cancel</target>
       </trans-unit>
       <trans-unit id="f55e266ed958f39d6720f1e882711d4d9da0348a" resname="abmelden">
         <jms:reference-file line="4">views/Template/globalMenu.html.twig</jms:reference-file>
         <source>abmelden</source>
-        <target state="new">abmelden</target>
+        <target>log out</target>
       </trans-unit>
       <trans-unit id="86f93c1ce9044da36fe6f09c5226141d5ff2b364" resname="erstellen">
         <jms:reference-file line="38">views/Group/index.html.twig</jms:reference-file>
         <source>erstellen</source>
-        <target state="new">erstellen</target>
+        <target>log out</target>
       </trans-unit>
       <trans-unit id="38976f96b934f83752e78e543695abfb0619ab96" resname="löschen">
-        <jms:reference-file line="8">views/Group/confirmDelete.html.twig</jms:reference-file>
-        <jms:reference-file line="49">views/User/edit.html.twig</jms:reference-file>
+        <jms:reference-file line="100">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <jms:reference-file line="136">CoreBundle/Controller/MetadataController.php</jms:reference-file>
         <jms:reference-file line="151">CoreBundle/Controller/MetadataController.php</jms:reference-file>
-        <jms:reference-file line="100">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
+        <jms:reference-file line="8">views/Group/confirmDelete.html.twig</jms:reference-file>
+        <jms:reference-file line="49">views/User/edit.html.twig</jms:reference-file>
         <source>löschen</source>
-        <target state="new">löschen</target>
+        <target>delete</target>
       </trans-unit>
       <trans-unit id="b5f70ca6cbc05b1d1fd92749ed9ebfa071b1cc80" resname="neu">
         <jms:reference-file line="73">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <source>neu</source>
-        <target state="new">neu</target>
+        <target>new</target>
       </trans-unit>
       <trans-unit id="3e114627f3ccfdba41d93c2f568396032659ab76" resname="speichern">
+        <jms:reference-file line="109">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <jms:reference-file line="37">views/User/edit.html.twig</jms:reference-file>
         <jms:reference-file line="37">views/User/new.html.twig</jms:reference-file>
-        <jms:reference-file line="109">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
         <jms:reference-file line="33">PluginBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>speichern</source>
-        <target state="new">speichern</target>
+        <target>save</target>
       </trans-unit>
       <trans-unit id="c27aae4d9d9fab6708a2b5c01659afa4c45290e1" resname="zurück">
-        <jms:reference-file line="44">views/User/edit.html.twig</jms:reference-file>
         <jms:reference-file line="81">CoreBundle/Component/ProfileApplicationMenuListener.php</jms:reference-file>
+        <jms:reference-file line="44">views/User/edit.html.twig</jms:reference-file>
         <source>zurück</source>
-        <target state="new">zurück</target>
+        <target>back</target>
       </trans-unit>
       <trans-unit id="cb27327d0207bc407a6a6bb530dca360ec49a044" resname="Übersicht">
         <jms:reference-file line="56">CoreBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Übersicht</source>
-        <target state="new">Übersicht</target>
+        <target>Overview</target>
       </trans-unit>
     </body>
   </file>
