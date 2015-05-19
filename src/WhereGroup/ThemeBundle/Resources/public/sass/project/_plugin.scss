@@ -19,6 +19,7 @@ $plugin-blue: #5077AE;
 
     .plugin-col-mark {
         width: 5%;
+        padding-left: 10px;
 
         .icon-checkmark {
             color: $plugin-blue;
@@ -32,14 +33,27 @@ $plugin-blue: #5077AE;
 
     .plugin-col-name {
         width: 85%;
+        padding-left: 10px;
+
+        & > a {
+            display: block;
+            text-decoration: none;
+        }
     }
 
     .plugin-col-origin {
         width: 10%;
+        padding-right: 10px;
         text-align: right;
         font-size: 14px;
         color: #666;
     }
+
+    .plugin-col-status {
+        width: 30px;
+
+    }
+
 }
 
 .plugin-code, .plugin-code-header {
@@ -59,6 +73,10 @@ $plugin-blue: #5077AE;
     white-space: wrap;
     border-top: 5px solid darken($primary, 10%);
     padding: 20px;
+
+    &.small {
+        font-size: 10px;
+    }
 
     &.header {
         margin-top: 0;
@@ -84,5 +102,10 @@ $plugin-blue: #5077AE;
     &.done {
         color: $primary;
     }
+}
+
+#plugin-reload {
+    float: right;
+    display: none;
 }
 

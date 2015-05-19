@@ -99,9 +99,9 @@ class Plugin
      * @param $request
      * @param $redirect
      */
-    public function update($request, $redirect)
+    public function update($request)
     {
-        $plugins = empty($request['plugin']) ? array() : $request['plugin'];
+        $plugins = empty($request['plugins']) ? array() : array_flip(explode(',', $request['plugins']));
 
         foreach ($this->plugins as $key => $plugin) {
             if (isset($plugins[$key])) {
@@ -111,9 +111,11 @@ class Plugin
             }
         }
 
-        // die('<pre>' . print_r($this->routing, 1) . '</pre>');
         $this->saveConfiguration();
-        $this->clearCache($redirect);
+
+        return array(
+            'output' => 'done'
+        );
     }
 
     /**
@@ -253,30 +255,44 @@ class Plugin
         return $this;
     }
 
-    /**
-     * @param $redirect
-     */
-    public function clearCache($redirect)
+    public function assetsInstall()
     {
         $env     = $this->container->get('kernel')->getEnvironment();
         $console = $this->rootDir . 'console';
 
-        $commands = array();
-
         if ($env === 'dev') {
-            $commands[] = "$console assets:install --symlink --no-debug --env=$env $this->rootDir../web/";
+            $command = "$console assets:install --symlink --no-debug --env=$env $this->rootDir../web/";
         } else {
-            $commands[] = "$console assets:install --no-debug --env=$env $this->rootDir../web/";
+            $command = "$console assets:install --no-debug --env=$env $this->rootDir../web/";
         }
 
+        $process = new Process($command);
+        $process->run();
+
+        return array(
+            'output' => $process->getOutput()
+        );
+    }
+
+    public function doctrineUpdate()
+    {
+        $console = $this->rootDir . 'console';
+
+        $process = new Process("$console doctrine:schema:update --force --no-debug");
+        $process->run();
+
+        return array(
+            'output' => $process->getOutput()
+        );
+    }
+
+    public function clearCache()
+    {
         $fs  = new Filesystem();
         $fs->remove($this->container->getParameter('kernel.cache_dir'));
 
-        sleep(5);
-
-        foreach ($commands as $command) {
-            $process = new Process($command);
-            $process->run();
-        }
+        return array(
+            'output' => 'done'
+        );
     }
 }

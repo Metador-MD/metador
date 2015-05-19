@@ -2,6 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,15 +45,18 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        return array(
-            'plugins' => $this->get('request')->request->all()
-        );
-        // $this->get('metador_plugin')->update(
-        //     $this->get('request')->request->all(),
-        //     'metador_admin_plugin'
-        // );
+        $plugins = array();
+        $array   = $this->get('request')->request->all();
 
-        // return $this->redirect($this->generateUrl('metador_admin_plugin'));
+        foreach ($array['plugin'] as $key => $value) {
+            if ($value == 1) {
+                $plugins[] = $key;
+            }
+        }
+
+        return array(
+            'plugins' => implode(',', $plugins)
+        );
     }
 
     /**

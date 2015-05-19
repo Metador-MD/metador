@@ -9,13 +9,13 @@
                 <span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>
                 <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
             </td>
-            <td class="plugin-col-name">
+            <td class="plugin-col-name" {% if plugin['description'] is defined %}title="{{ plugin['description']|trans }}"{% endif %}>
                 {% if plugin['active'] %}
                 <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
-                    {{ plugin['name'] }}</td>
+                    {{ plugin['name']|trans }}</td>
                 </a>
                 {% else %}
-                    {{ plugin['name'] }}</td>
+                    {{ plugin['name']|trans }}</td>
                 {% endif %}
             <td class="plugin-col-origin">{{ plugin['origin'] }}</td>
         </tr>
