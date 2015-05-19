@@ -30,6 +30,9 @@
     {% endfor %}
 
     {% set profile = applicationGet('app-profile', 'profile') %}
+    {% set profiles = applicationGet('app-profile-menu') %}
+
+    {% if profiles is not empty %}
     <li class="profile-select{% if profile.active is defined and profile.active %} act{% endif %}">
         <label class="profile-list-label">
             <span class="icon-file-text"></span>
@@ -40,11 +43,12 @@
             {% endif %}
         </label>
         <ul class="profile-list">
-            {% for item in applicationGet('app-profile-menu') %}
+            {% for item in profiles %}
             <li>
                 <a href="{{ path(item.path, item.params) }}">{{ item.label|trans }}</a>
             </li>
             {% endfor %}
         </ul>
     </li>
+    {% endif %}
 </ul>
