@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?bjmaka');
-	src:url('fonts/icomoon.eot?#iefixbjmaka') format('embedded-opentype'),
-		url('fonts/icomoon.woff?bjmaka') format('woff'),
-		url('fonts/icomoon.ttf?bjmaka') format('truetype'),
-		url('fonts/icomoon.svg?bjmaka#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?lvx5o6');
+	src:url('fonts/icomoon.eot?#iefixlvx5o6') format('embedded-opentype'),
+		url('fonts/icomoon.woff?lvx5o6') format('woff'),
+		url('fonts/icomoon.ttf?lvx5o6') format('truetype'),
+		url('fonts/icomoon.svg?lvx5o6#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -55,6 +55,10 @@
 	content: "\e962";
 }
 
+.icon-database:before {
+	content: "\e964";
+}
+
 .icon-redo2:before {
 	content: "\e968";
 }
@@ -65,6 +69,10 @@
 
 .icon-users:before {
 	content: "\e972";
+}
+
+.icon-hour-glass:before {
+	content: "\e979";
 }
 
 .icon-maximize:before {
@@ -89,6 +97,10 @@
 
 .icon-bin2:before {
 	content: "\e9ad";
+}
+
+.icon-power:before {
+	content: "\e9b5";
 }
 
 .icon-switch:before {
@@ -121,5 +133,13 @@
 
 .icon-checkmark2:before {
 	content: "\ea11";
+}
+
+.icon-terminal:before {
+	content: "\ea81";
+}
+
+.icon-share2:before {
+	content: "\ea82";
 }
 
