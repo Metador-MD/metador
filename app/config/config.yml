@@ -69,13 +69,6 @@ doctrine:
                 user:     %external_database_user%
                 password: %external_database_password%
                 charset:  %external_database_charset%
-
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        default_entity_manager: default
-        entity_managers:
-            default:
-                connection: default
-                mappings:
-                    WhereGroupCoreBundle: ~
-                    WhereGroupUserBundle: ~
+        auto_mapping: true

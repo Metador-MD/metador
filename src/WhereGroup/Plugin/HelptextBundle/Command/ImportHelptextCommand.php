@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Command;
+namespace WhereGroup\Plugin\HelptextBundle\Command;
 
 use WhereGroup\CoreBundle\Entity\Helptext;
 use Symfony\Component\Console\Input\InputOption;

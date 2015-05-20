@@ -1,0 +1,4 @@
+wheregroup_heltext:
+    resource: "@WhereGroupHelptextBundle/Controller/"
+    type:     annotation
+    prefix:   /

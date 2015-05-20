@@ -40,4 +40,7 @@
     <script src="{{ asset('bundles/wheregrouptheme/js/datepicker/zebra_datepicker.js') }}"></script>
     <script src="{{ asset('bundles/wheregroupcore/js/metador.js') }}"></script>
     <script src="{{ asset('bundles/wheregroupcore/js/ui.js') }}"></script>
+    {% for plugin in applicationGet('app-javascript') %}
+    <script src="{{ asset(plugin.src) }}"></script>
+    {% endfor %}
 {% endblock %}

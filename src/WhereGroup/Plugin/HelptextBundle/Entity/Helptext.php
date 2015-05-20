@@ -1,11 +1,10 @@
 <?php
-namespace WhereGroup\CoreBundle\Entity;
+
+namespace WhereGroup\Plugin\HelptextBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WhereGroup\CoreBundle\Entity\Helptext
- *
  * @ORM\Table(name="metador_helptext")
  * @ORM\Entity
  */

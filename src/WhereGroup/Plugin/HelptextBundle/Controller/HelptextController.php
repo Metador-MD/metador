@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Controller;
+namespace WhereGroup\Plugin\HelptextBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,8 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\SearchBundle\Component\Paging;
-use WhereGroup\CoreBundle\Entity\Helptext;
+use WhereGroup\Plugin\HelptextBundle\Entity\Helptext;
 
 /**
  * @Route("/metador")
@@ -28,7 +27,7 @@ class HelptextController extends Controller
         $id = $this->getRequest()->get('id', false);
 
         $em = $this->getDoctrine()->getManager();
-        $helptext = $em->getRepository('WhereGroupCoreBundle:Helptext')->findOneById($id);
+        $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
 
         if ($helptext) {
             $string = $helptext->getText();
@@ -62,7 +61,7 @@ class HelptextController extends Controller
 
         if ($id && $html) {
             $em = $this->getDoctrine()->getManager();
-            $helptext = $em->getRepository('WhereGroupCoreBundle:Helptext')->findOneById($id);
+            $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
 
             $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
             $html = str_replace(

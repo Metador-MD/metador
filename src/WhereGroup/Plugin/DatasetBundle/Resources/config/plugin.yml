@@ -5,3 +5,5 @@ profile-dataset:
     class_path: WhereGroup\Plugin\DatasetBundle
     class_name: ProfileDatasetBundle
     version: 1.0
+    require:
+        - wheregroup-helptext

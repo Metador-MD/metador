@@ -6,7 +6,6 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
-use WhereGroup\CoreBundle\Component\Paging;
 
 /**
  * Class Metadata

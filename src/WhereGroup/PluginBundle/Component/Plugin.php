@@ -24,6 +24,7 @@ class Plugin
     protected $pluginPaths = array();
     protected $plugins = array();
     protected $routing = array();
+    protected $requiredPlugins = array();
 
     /**
      * @param ContainerInterface $container
@@ -105,10 +106,14 @@ class Plugin
 
         foreach ($this->plugins as $key => $plugin) {
             if (isset($plugins[$key])) {
-                $this->enable($key, $this->plugins[$key]);
+                $this->enable($key);
             } else {
-                $this->disable($key, $this->plugins[$key]);
+                $this->disable($key);
             }
+        }
+
+        foreach ($this->requiredPlugins as $requiredPlugin) {
+            $this->enable($requiredPlugin);
         }
 
         $this->saveConfiguration();
@@ -178,25 +183,25 @@ class Plugin
      * @param $key
      * @param $plugin
      */
-    protected function enable($key, &$plugin)
+    protected function enable($key)
     {
-        $plugin['active'] = true;
+        $this->plugins[$key]['active'] = true;
 
-        if (isset($plugin['require'])) {
-            foreach ($plugin['require'] as $require) {
+        if (isset($this->plugins[$key]['require'])) {
+            foreach ($this->plugins[$key]['require'] as $require) {
                 if (!isset($this->plugins[$require])) {
                     throw new \RuntimeException("Plugin $require not found!");
                 }
 
-                $this->enable($require, $this->plugins[$require]);
+                $this->requiredPlugins[] = $require;
             }
         }
 
-        $routing = $this->locateResource($plugin['class_path'], 'config/routing.yml');
+        $routing = $this->locateResource($this->plugins[$key]['class_path'], 'config/routing.yml');
 
         if ($routing) {
             $this->routing[trim(str_replace('-', '_', $key))] = array(
-                'resource' => '@' . $plugin['class_name'] . '/Resources/config/routing.yml'
+                'resource' => '@' . $this->plugins[$key]['class_name'] . '/Resources/config/routing.yml'
             );
         }
     }
@@ -205,9 +210,9 @@ class Plugin
      * @param $key
      * @param $plugin
      */
-    protected function disable($key, &$plugin)
+    protected function disable($key)
     {
-        $plugin['active'] = false;
+        $this->plugins[$key]['active'] = false;
 
         if (isset($this->routing[trim(str_replace('-', '_', $key))])) {
             unset($this->routing[trim(str_replace('-', '_', $key))]);
