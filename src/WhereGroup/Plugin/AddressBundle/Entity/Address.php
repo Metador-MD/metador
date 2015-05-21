@@ -1,11 +1,13 @@
 <?php
-namespace WhereGroup\CoreBundle\Entity;
+
+namespace WhereGroup\Plugin\AddressBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WhereGroup\CoreBundle\Entity\Address
- *
+ * Class Address
+ * @package WhereGroup\Plugin\AddressBundle\Entity
+ * @author A.R.Pour
  * @ORM\Table(name="metador_address")
  * @ORM\Entity
  */

@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Component;
+namespace WhereGroup\Plugin\AddressBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

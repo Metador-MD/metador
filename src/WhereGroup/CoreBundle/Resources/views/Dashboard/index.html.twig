@@ -4,52 +4,8 @@
 <div class="page-content">
     {% for item in applicationGet('app-preview') %}
     <div class="preview">
-        <div class="head">
-            <a href="{{ path('metadata_index', {'profile': item.profile}) }}">
-                {{ item.title }}
-            </a>
-            <a href="{{ path('metadata_new', {'profile': item.profile}) }}" style="float:right;">
-                <div class="icon-plus"></div>
-            </a>
-        </div>
-        <div class="body">
-            <table class="preview-table">
-                {% for row in item.rows %}
-                <tr>
-                    <td>
-                        <a href="{{ path('metadata_edit', {'profile': item.profile, 'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
-                    </td>
-                    <td class="last-1">
-{% if row.readonly == 0 %}
-                        <a href="{{ path('metadata_confirm', {'profile': item.profile, 'id':row.id}) }}">
-                            <span class="icon-bin2"></span>
-                        </a>
-{% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+        {{ include(item.template, item.params) }}
     </div>
     {% endfor %}
-    <div class="preview">
-        <div class="head">{{ 'Adressen'|trans }}</div>
-        <div class="body">
-            <table class="preview-table">
-                {% for row in address %}
-                <tr>
-                    <td>{{ row.individualName ? row.individualName : 'noname' }}</td>
-                    <td class="last-1">
-                        <form action="{{ path('metador_address_delete', {'id':row.id}) }}" method="post">
-                            <button class="noStyle">
-                                <div class="icon-bin2"></div>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
 </div>
 {% endblock %}

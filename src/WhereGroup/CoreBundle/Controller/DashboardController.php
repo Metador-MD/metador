@@ -22,8 +22,6 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        return array(
-            'address' => $this->get('metador_address')->get()
-        );
+        return array();
     }
 }

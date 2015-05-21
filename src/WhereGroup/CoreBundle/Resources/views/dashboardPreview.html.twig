@@ -1,0 +1,26 @@
+<div class="head">
+    <a href="{{ path('metadata_index', {'profile': profile}) }}">
+        {{ title }}
+    </a>
+    <a href="{{ path('metadata_new', {'profile': profile}) }}" style="float:right;">
+        <div class="icon-plus"></div>
+    </a>
+</div>
+<div class="body">
+    <table class="preview-table">
+        {% for row in rows %}
+        <tr>
+            <td>
+                <a href="{{ path('metadata_edit', {'profile': profile, 'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
+            </td>
+            <td class="last-1">
+{% if row.readonly == 0 %}
+                <a href="{{ path('metadata_confirm', {'profile': profile, 'id':row.id}) }}">
+                    <span class="icon-bin2"></span>
+                </a>
+{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

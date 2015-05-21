@@ -1,15 +1,15 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Component;
+namespace WhereGroup\Plugin\AddressBundle\Component;
 
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use WhereGroup\CoreBundle\Entity\Address as EntityAddress;
+use WhereGroup\Plugin\AddressBundle\Entity\Address as EntityAddress;
 
 /**
  * Class Address
- * @package WhereGroup\CoreBundle\Component
- * @author A. R. Pour
+ * @package WhereGroup\Plugin\AddressBundle\Component
+ * @author A.R.Pour
  */
 class Address implements AddressInterface
 {
@@ -32,7 +32,7 @@ class Address implements AddressInterface
             ->getManager()
             ->createQueryBuilder('y')
             ->select('y.id, y.individualName')
-            ->from('WhereGroupCoreBundle:Address', 'y')
+            ->from('WhereGroupAddressBundle:Address', 'y')
             ->getQuery()
             ->getResult();
 
@@ -41,6 +41,7 @@ class Address implements AddressInterface
 
     /**
      * @param $metadataObject
+     * @return $this
      */
     public function set($metadataObject)
     {
@@ -68,7 +69,7 @@ class Address implements AddressInterface
 
             $result = $qb
                 ->select('count(u)')
-                ->from('WhereGroup\CoreBundle\Entity\Address', 'u')
+                ->from('WhereGroup\Plugin\AddressBundle\Entity\Address', 'u')
                 ->where($qb->expr()->andx(
                     $qb->expr()->eq('u.organisationName', '?1'),
                     $qb->expr()->eq('u.individualName', '?2'),
@@ -127,5 +128,7 @@ class Address implements AddressInterface
                 unset($address, $result);
             }
         }
+
+        return $this;
     }
 }

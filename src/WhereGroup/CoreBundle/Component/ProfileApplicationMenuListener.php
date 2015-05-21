@@ -50,9 +50,12 @@ abstract class ProfileApplicationMenuListener
             $metadata = $this->metadata->getMetadata(10, 1, $this->profile);
 
             $app->add('app-preview', $this->profile, array(
-                'title'   => $this->name,
-                'profile' => $this->profile,
-                'rows'    => $metadata['result']
+                'template' => 'WhereGroupCoreBundle::dashboardPreview.html.twig',
+                'params'   => array(
+                    'title'   => $this->name,
+                    'profile' => $this->profile,
+                    'rows'    => $metadata['result']
+                )
             ));
         }
 

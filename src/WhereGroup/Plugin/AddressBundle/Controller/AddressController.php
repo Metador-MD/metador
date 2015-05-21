@@ -1,14 +1,11 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Controller;
+namespace WhereGroup\Plugin\AddressBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\SearchBundle\Component\Paging;
 use WhereGroup\CoreBundle\Entity\Address;
 
 /**
@@ -28,7 +25,7 @@ class AddressController extends Controller
 
         $array = array();
         $em = $this->getDoctrine()->getManager();
-        $addresses = $em->getRepository('WhereGroupCoreBundle:Address')->findAll();
+        $addresses = $em->getRepository('WhereGroupAddressBundle:Address')->findAll();
 
         foreach ($addresses as $address) {
             $array[] = array(
@@ -65,7 +62,7 @@ class AddressController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('WhereGroupCoreBundle:Address')->findOneById($id);
+        $address = $em->getRepository('WhereGroupAddressBundle:Address')->findOneById($id);
 
         try {
             if ($address) {
