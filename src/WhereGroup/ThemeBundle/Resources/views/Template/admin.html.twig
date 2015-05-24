@@ -28,6 +28,12 @@
     </div>
     <div class="page-right">
         {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
-        {% block content %}{% endblock %}
+        {% block content %}
+            <ul class="app-information">
+            {% for item in applicationGet('app-information') %}
+                <li><span class="{{ item.icon }}"></span> {{ item.label|trans }}</li>
+            {% endfor %}
+            </ul>
+        {% endblock %}
     </div>
 {% endblock %}

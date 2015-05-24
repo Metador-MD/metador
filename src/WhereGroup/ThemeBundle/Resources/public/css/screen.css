@@ -2294,6 +2294,10 @@ textarea.code {
   background-color: #DDD;
 }
 
+.app-information {
+  list-style: none;
+}
+
 .icon {
   display: block;
   float: left;

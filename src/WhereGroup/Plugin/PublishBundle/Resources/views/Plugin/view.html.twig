@@ -2,10 +2,27 @@
 
 {% block content %}
 <div class="plugin-view">
-    <h1>{% trans %}Import / Export{% endtrans %}</h1>
+    <h1>{% trans %}Metadaten veröffentlichen{% endtrans %}</h1>
 
     <div class="plugin-description">
-        {% trans %}Import und Export von Metadaten über die Oberfläche oder Terminal.{% endtrans %}
+        {% trans %}Metadaten lassen sich durch Freigabe in der Oberfläche in einen Ordner im Filesystem exportieren{% endtrans %}.
     </div>
+
+    <h2>{% trans %}Konfiguration{% endtrans %}</h2>
+
+    <p>
+        <span class="icon-circle"></span>
+        {% trans %}Standardmäßig werden Metadaten in den Ordner "var/published/" geschrieben falls Ordner vorhanden{% endtrans %}.
+    </p>
+
+    <p class="plugin-code-header">
+        <span class="icon-file-text"></span>
+        app/config/parameters.yml
+    </p>
+
+    <pre class="plugin-code header">
+parameters:
+  publish_folder:   "%kernel.root_dir%/../var/published"
+    </pre>
 </div>
 {% endblock %}

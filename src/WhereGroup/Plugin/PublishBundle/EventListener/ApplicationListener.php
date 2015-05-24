@@ -14,6 +14,15 @@ class ApplicationListener extends ApplicationIntegration
 {
     protected $app     = null;
     protected $prefix  = 'publish';
+    protected $exportPath = null;
+
+    /**
+     * @param $exportPath
+     */
+    public function __construct($exportPath)
+    {
+        $this->exportPath = rtrim($exportPath, '/') . '/';
+    }
 
     /**
      * @param ApplicationEvent $event
@@ -35,5 +44,11 @@ class ApplicationListener extends ApplicationIntegration
         ));
 
         $this->addToScripts('bundles/wheregrouppublish/publish.js');
+
+        if ($this->app->isRoute('metador_admin_index')) {
+            if (!is_writeable($this->exportPath)) {
+                $this->addToWarnings('icon-notification', 'Publish Folder is not writeable!');
+            }
+        }
     }
 }

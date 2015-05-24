@@ -4,6 +4,18 @@ namespace WhereGroup\PluginBundle\Component;
 
 abstract class ApplicationIntegration
 {
+    protected function addToWarnings($icon, $message)
+    {
+        if ($this->app->isRoute('metador_admin_index')) {
+            $this->app->add('app-information', md5($this->prefix . $message), array(
+                'icon'  => $icon,
+                'label' => $message
+            ));
+        }
+
+        return $this;
+    }
+
     protected function addToScripts($script)
     {
         $this->app->add('app-javascript', $this->prefix, $script);

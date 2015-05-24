@@ -6,12 +6,20 @@
     <parameters>
         <!-- EVENT LISTENER -->
         <parameter key="metador.publish.app.listener.class">WhereGroup\Plugin\PublishBundle\EventListener\ApplicationListener</parameter>
+        <parameter key="metador.publish.metador.listener.class">WhereGroup\Plugin\PublishBundle\EventListener\MetadataListener</parameter>
     </parameters>
 
     <services>
         <!-- EVENT LISTENER -->
         <service id="metador_publish_app_listener" class="%metador.publish.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument>%publish_folder%</argument>
+        </service>
+        <service id="metador_publish_metador_listener" class="%metador.publish.metador.listener.class%">
+            <tag name="kernel.event_listener" event="metador.post_save" method="onPostSave" />
+            <tag name="kernel.event_listener" event="metador.pre_delete" method="onDelete" />
+            <argument>%publish_folder%</argument>
+            <argument type="service" id="templating" />
         </service>
     </services>
 </container>

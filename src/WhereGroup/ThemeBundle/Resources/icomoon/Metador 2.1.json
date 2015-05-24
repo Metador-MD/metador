@@ -12104,19 +12104,19 @@
 				},
 				{
 					"id": 951,
-					"order": 0,
+					"order": 49,
 					"prevSize": 32,
 					"code": 59912,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "notification, warning2",
-					"name": ""
+					"name": "notification"
 				},
 				{
 					"id": 953,
 					"order": 24,
 					"prevSize": 32,
 					"code": 59913,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "question, help",
 					"name": "question"
 				},
@@ -12125,7 +12125,7 @@
 					"order": 15,
 					"prevSize": 32,
 					"code": 59914,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "plus, add",
 					"name": "plus"
 				},
@@ -12140,12 +12140,12 @@
 				},
 				{
 					"id": 965,
-					"order": 0,
+					"order": 48,
 					"prevSize": 32,
 					"code": 59916,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "info, information",
-					"name": ""
+					"name": "info"
 				},
 				{
 					"id": 23,
@@ -12179,7 +12179,7 @@
 					"order": 33,
 					"prevSize": 32,
 					"code": 59920,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark, tick",
 					"name": "checkmark"
 				},
@@ -12188,7 +12188,7 @@
 					"order": 34,
 					"prevSize": 32,
 					"code": 59921,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark2, tick2",
 					"name": "checkmark2"
 				},
@@ -13196,7 +13196,7 @@
 					"order": 38,
 					"prevSize": 32,
 					"code": 60033,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "terminal, console",
 					"name": "terminal"
 				},
@@ -13205,7 +13205,7 @@
 					"order": 41,
 					"prevSize": 32,
 					"code": 60034,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "share2, social",
 					"name": "share2"
 				},
@@ -13655,7 +13655,7 @@
 					"order": 43,
 					"prevSize": 32,
 					"code": 60084,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "github4, brand43",
 					"name": "github4"
 				},
