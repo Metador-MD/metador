@@ -32,7 +32,7 @@ class AppKernel extends Kernel
         );
 
         // LOAD PLUGINS
-        $pluginConfigFile = __DIR__ . '/config/plugins.yml';
+        $pluginConfigFile = $this->rootDir . '/../var/plugins/plugins.yml';
 
         if (file_exists($pluginConfigFile)) {
             $array = Yaml::parse($pluginConfigFile);
@@ -54,6 +54,16 @@ class AppKernel extends Kernel
         }
 
         return $bundles;
+    }
+
+    public function getCacheDir()
+    {
+        return $this->rootDir . '/../var/cache/' . $this->environment;
+    }
+
+    public function getLogDir()
+    {
+        return $this->rootDir . '/../var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -35,8 +35,8 @@ class Plugin
 
         // get plugin path's
         $this->rootDir           = $this->container->get('kernel')->getRootDir() . '/';
-        $this->configurationFile = $this->rootDir . 'config/plugins.yml';
-        $this->routingFile       = $this->rootDir . 'config/plugins_routing.yml';
+        $this->configurationFile = $this->rootDir . '../var/plugins/plugins.yml';
+        $this->routingFile       = $this->rootDir . '../var/plugins/plugins_routing.yml';
         $this->pluginPaths       = array(
             $this->rootDir . '../src/WhereGroup/Plugin/',
             $this->rootDir . '../src/User/Plugin/'
