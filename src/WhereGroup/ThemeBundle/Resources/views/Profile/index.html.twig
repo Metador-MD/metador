@@ -1,6 +1,6 @@
 {% extends 'WhereGroupThemeBundle::template.html.twig' %}
 
-{% block title %}MeTaDor - {% trans %}Daten{% endtrans %}{% endblock %}
+{% set cols = applicationGet('app-profile-table') %}
 
 {% block center %}
 <div class="page-content">
@@ -20,14 +20,26 @@
             </div>
         {# CONTENT START #}
             <div class="tableBorder">
-                <table class="table" id="metadataTable" data-controller="data">
+                <table class="table" id="metadataTable" data-controller="service">
                     <thead>
                         <tr>
                             <th>{{ 'Titel'|trans }}</th>
                             <th>{{ 'Benutzer'|trans }}</th>
                             <th>{{ 'Datum'|trans }}</th>
                             <th>{{ 'Uhrzeit'|trans }}</th>
-                            <th class="right last-1" title="{{ 'veröffentlichen'|trans }}"><div class="icon-earth"></div></th>
+
+                            {% if cols is defined and cols is not empty %}
+                            {% for col in cols %}
+                            <th class="{% if col.header.class is defined %}{{ col.header.class }}{% endif %}" title="{% if col.header.label is defined %}{{ col.header.label }}{% endif %}">
+                                {% if col.header.icon is defined %}
+                                <div class="icon-earth"></div>
+                                {% else %}
+                                {{ col.header.label|trans }}
+                                {% endif %}
+                            </th>
+                            {% endfor %}
+                            {% endif %}
+
                             <th class="right last-1" title="{{ 'bearbeiten'|trans }}"><span class="icon-pencil"></span></th>
                         </tr>
                     </thead>
@@ -48,11 +60,15 @@
                         <td>
                             <span class="icon-clock"></span> {{ row.updateTime|date("H:i") }}
                         </td>
+
+                        {% if cols is defined and cols is not empty %}
+                        {% for col in cols %}
                         <td>
-            {% if row.readonly == 0 %}
-                            <input type="checkbox" name="{{ row.id }}" class="shareMetadata" {% if row.public == 1 %}checked="checked"{% endif %} />
-            {% endif %}
+                            {{ include(col.body.template, col.body.params) }}
                         </td>
+                        {% endfor %}
+                        {% endif %}
+
                         <td class="right last-1">
             {% if row.readonly == 0 %}
                             <a href="{{ path('metadata_edit', { 'profile' : profile, 'id' : row.id }) }}">

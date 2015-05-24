@@ -1,7 +1,0 @@
-wheregroup-export:
-    origin: WhereGroup
-    name: Import/Export
-    description: Import und Export von Metadaten über die Oberfläche oder Terminal
-    class_path: WhereGroup\Plugin\ExportBundle
-    class_name: WhereGroupExportBundle
-    version: 1.0

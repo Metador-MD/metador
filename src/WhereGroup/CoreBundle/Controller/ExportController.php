@@ -21,7 +21,7 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        if ($data = $this->get('metador_metadata')->getById($id)) {
+        if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
             return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
@@ -48,7 +48,7 @@ class ExportController extends Controller
      */
     public function objAction($id)
     {
-        $data = $this->get('metador_metadata')->getById($id);
+        $data = $this->get('metadata')->getById($id);
 
         if ($data) {
             $p = $data->getObject();
@@ -67,7 +67,7 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $data = $this->get('metador_metadata')->getById($id);
+        $data = $this->get('metadata')->getById($id);
 
         if ($data) {
             $p = $data->getObject();

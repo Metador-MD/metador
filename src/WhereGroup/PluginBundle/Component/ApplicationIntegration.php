@@ -6,9 +6,7 @@ abstract class ApplicationIntegration
 {
     protected function addToScripts($script)
     {
-        $this->app->add('app-javascript', $this->prefix, array(
-            'src' => $script
-        ));
+        $this->app->add('app-javascript', $this->prefix, $script);
 
         return $this;
     }

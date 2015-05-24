@@ -21,7 +21,7 @@ class MetadataController extends Controller
      */
     public function indexAction($profile)
     {
-        $metadata = $this->get('metador_metadata')->getMetadata(
+        $metadata = $this->get('metadata')->getMetadata(
             20,
             $this->get('request')->get('page', 1),
             $profile
@@ -48,7 +48,7 @@ class MetadataController extends Controller
 
         // SAVE
         } elseif (($p = $this->getRequest()->request->get('p', false))
-            && $this->get('metador_metadata')->saveObject($p)) {
+            && $this->get('metadata')->saveObject($p)) {
             return $this->redirect(
                 $this->generateUrl('metadata_index', array('profile' => $profile))
             );
@@ -70,7 +70,7 @@ class MetadataController extends Controller
      */
     public function useAction($profile, $id)
     {
-        $data = $this->get('metador_metadata')->getById($id);
+        $data = $this->get('metadata')->getById($id);
 
         if (($p = $data->getObject())) {
             $p['dateStamp'] = date("Y-m-d");
@@ -94,7 +94,7 @@ class MetadataController extends Controller
      */
     public function editAction($profile, $id)
     {
-        $metadata = $this->get('metador_metadata');
+        $metadata = $this->get('metadata');
         $data = $metadata->getById($id);
 
         // LOAD
@@ -132,7 +132,7 @@ class MetadataController extends Controller
             'data' => array(
                 'id'      => $id,
                 'profile' => $profile,
-                'form'    => $this->createFormBuilder($this->get('metador_metadata')->getById($id))
+                'form'    => $this->createFormBuilder($this->get('metadata')->getById($id))
                     ->add('delete', 'submit', array('label' => 'löschen'))
                     ->getForm()
                     ->createView(),
@@ -147,13 +147,13 @@ class MetadataController extends Controller
      */
     public function deleteAction($profile, $id)
     {
-        $form = $this->createFormBuilder($this->get('metador_metadata')->getById($id))
+        $form = $this->createFormBuilder($this->get('metadata')->getById($id))
             ->add('delete', 'submit', array('label' => 'löschen'))
             ->getForm()
             ->submit($this->get('request'));
 
         if ($form->isValid()) {
-            $this->get('metador_metadata')->deleteById($id);
+            $this->get('metadata')->deleteById($id);
 
             $this->get('session')->getFlashBag()->add(
                 'success',

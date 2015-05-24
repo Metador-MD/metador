@@ -2,24 +2,21 @@
 
 namespace WhereGroup\Plugin\HelptextBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
-use WhereGroup\CoreBundle\Component\MetadataInterface;
+use WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
-class ApplicationMenuListener
+class ApplicationMenuListener extends ApplicationIntegration
 {
+    protected $app     = null;
+    protected $prefix  = 'helptext';
+
     /**
      * @param ApplicationEvent $event
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app = $event->getApplication();
+        $this->app = $event->getApplication();
 
-        /***********************************************************************
-         * JAVASCRIPT
-         ***********************************************************************/
-        $app->add('app-javascript', 'helptext', array(
-            'src' => 'bundles/wheregrouphelptext/helptext.js'
-        ));
+        $this->addToScripts('bundles/wheregrouphelptext/helptext.js');
     }
 }

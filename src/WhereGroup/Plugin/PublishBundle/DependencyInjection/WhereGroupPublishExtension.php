@@ -1,18 +1,19 @@
 <?php
 
-namespace WhereGroup\Plugin\ExportBundle\DependencyInjection;
+namespace WhereGroup\Plugin\PublishBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class WhereGroupExportExtension
- * @package WhereGroup\Plugin\ExportBundle\DependencyInjection
+ * Class WhereGroupPublishExtension
+ * @package WhereGroup\Plugin\PublishBundle\DependencyInjection
  * @author A.R.Pour
  */
-class WhereGroupExportExtension extends Extension
+class WhereGroupPublishExtension extends Extension
 {
     /**
      * Loads a specific configuration.
@@ -28,5 +29,8 @@ class WhereGroupExportExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('parameters.yml');
     }
 }

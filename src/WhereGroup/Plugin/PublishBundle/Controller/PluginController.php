@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Plugin\ExportBundle\Controller;
+namespace WhereGroup\Plugin\PublishBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

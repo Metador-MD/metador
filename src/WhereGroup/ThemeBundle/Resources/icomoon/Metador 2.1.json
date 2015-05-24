@@ -8,6 +8,46 @@
 		{
 			"selection": [
 				{
+					"order": 45,
+					"id": 0,
+					"prevSize": 32,
+					"code": 58880,
+					"name": "wheregroup",
+					"tempChar": ""
+				}
+			],
+			"id": 2,
+			"metadata": {
+				"name": "Untitled Set",
+				"importSize": {
+					"width": 102,
+					"height": 109
+				}
+			},
+			"height": 1024,
+			"prevSize": 32,
+			"icons": [
+				{
+					"id": 0,
+					"paths": [
+						"M208.449 1004.421c-58.765-35.829-115.738-88.193-162.341-149.21-25.359-33.202-46.107-62.975-46.107-66.16s32.9-5.887 73.112-6.002c58.873-0.169 83.617-5.068 127.055-25.159 71.127-32.897 142.451-100.91 174.711-166.601 22.294-45.396 26.041-64.644 25.944-133.248-0.094-64.675-4.182-87.84-21.147-119.75-27.537-51.795-78.941-100.939-133.197-127.341-51.174-24.903-154.65-34.036-201.319-17.77-30.255 10.545-29.8 9.583 18.686-39.516 48.661-49.276 127.434-102.757 169.639-115.171 19.243-5.66 21.226-3.065 21.226 27.786 0 77.068 69.108 154.556 177.872 199.44 50.727 20.934 77.992 25.998 142.877 26.537 85.845 0.713 129.85-14.062 162.523-54.569 18.48-22.912 21.716-73.431 6.521-101.823-20.814-38.891 1.038-26.718 64.616 35.995 71.416 70.445 103.098 115.671 71.677 102.319-79.235-33.669-133.395 7.86-154.67 118.602-13.781 71.732 2.659 159.786 45.765 245.118 42.254 83.646 86.197 122.171 147.196 129.047 23.736 2.675 43.157 6.576 43.157 8.668 0 25.226-113.584 191.852-130.779 191.852-3.594 0-6.535-30.929-6.535-68.731 0-115.074-53.642-200.467-153.918-245.022-58.004-25.773-166.927-20.327-232.343 11.617-108.192 52.832-181.681 163.345-192.26 289.119l-5.85 69.553-32.112-19.579zM466.511 193.452c-56.798-21.855-105.391-68.919-113.615-110.038-13.164-65.822 72.625-102.293 172.689-73.414 69.839 20.156 113.218 46.958 135.716 83.852 25.343 41.56 22.952 75.857-6.926 99.358-32.722 25.739-121.305 25.853-187.864 0.242z"
+					],
+					"attrs": [
+						{}
+					],
+					"isMulticolor": false,
+					"width": 962,
+					"grid": 0,
+					"tags": [
+						"Zeichnung"
+					]
+				}
+			],
+			"invisible": false
+		},
+		{
+			"selection": [
+				{
 					"name": "glass",
 					"order": 0,
 					"id": 1
@@ -1233,7 +1273,7 @@
 					"id": 245,
 					"prevSize": 28,
 					"code": 61713,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "mail-reply, reply",
@@ -9736,7 +9776,7 @@
 					"order": 6,
 					"prevSize": 32,
 					"code": 59653,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "pencil, write",
 					"name": "pencil"
 				},
@@ -9997,7 +10037,7 @@
 					"order": 4,
 					"prevSize": 32,
 					"code": 59682,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "file-text, file",
 					"name": "file-text"
 				},
@@ -10105,7 +10145,7 @@
 					"order": 31,
 					"prevSize": 32,
 					"code": 59694,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "stack, layers",
 					"name": "stack"
 				},
@@ -10393,7 +10433,7 @@
 					"order": 19,
 					"prevSize": 32,
 					"code": 59726,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "clock, time2",
 					"name": "clock"
 				},
@@ -10438,7 +10478,7 @@
 					"order": 20,
 					"prevSize": 32,
 					"code": 59731,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "calendar, date",
 					"name": "calendar"
 				},
@@ -10555,7 +10595,7 @@
 					"order": 16,
 					"prevSize": 32,
 					"code": 59744,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "download, save",
 					"name": "download"
 				},
@@ -10573,7 +10613,7 @@
 					"order": 14,
 					"prevSize": 32,
 					"code": 59746,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "floppy-disk, save2",
 					"name": "floppy-disk"
 				},
@@ -10588,12 +10628,12 @@
 				},
 				{
 					"id": 381,
-					"order": 0,
+					"order": 39,
 					"prevSize": 32,
 					"code": 59748,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "database, db",
-					"name": ""
+					"name": "database"
 				},
 				{
 					"id": 399,
@@ -10627,7 +10667,7 @@
 					"order": 18,
 					"prevSize": 32,
 					"code": 59752,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "redo2, right",
 					"name": "redo2"
 				},
@@ -10708,7 +10748,7 @@
 					"id": 1628,
 					"prevSize": 32,
 					"code": 59761,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "user, profile2",
 					"name": "user"
 				},
@@ -10717,7 +10757,7 @@
 					"order": 26,
 					"prevSize": 32,
 					"code": 59762,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "users, group",
 					"name": "users"
 				},
@@ -10777,12 +10817,12 @@
 				},
 				{
 					"id": 506,
-					"order": 0,
+					"order": 42,
 					"prevSize": 32,
 					"code": 59769,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "hour-glass, loading",
-					"name": ""
+					"name": "hour-glass"
 				},
 				{
 					"id": 510,
@@ -10942,7 +10982,7 @@
 					"order": 36,
 					"prevSize": 32,
 					"code": 59787,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "enlarge2, expand2",
 					"name": "maximize"
 				},
@@ -10951,18 +10991,18 @@
 					"order": 35,
 					"prevSize": 32,
 					"code": 59788,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "shrink2, collapse2",
 					"name": "minimize"
 				},
 				{
 					"id": 548,
-					"order": 0,
+					"order": 46,
 					"prevSize": 32,
 					"code": 59789,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "key, password",
-					"name": ""
+					"name": "key"
 				},
 				{
 					"id": 549,
@@ -11023,7 +11063,7 @@
 					"order": 7,
 					"prevSize": 32,
 					"code": 59796,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "cog, gear",
 					"name": "cog"
 				},
@@ -11050,7 +11090,7 @@
 					"order": 22,
 					"prevSize": 32,
 					"code": 59799,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "magic-wand, wizard",
 					"name": "magic-wand"
 				},
@@ -11185,7 +11225,7 @@
 					"order": 3,
 					"prevSize": 32,
 					"code": 59814,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "meter, gauge",
 					"name": "meter"
 				},
@@ -11248,7 +11288,7 @@
 					"order": 2,
 					"prevSize": 32,
 					"code": 59821,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "bin2, trashcan2",
 					"name": "bin2"
 				},
@@ -11317,19 +11357,19 @@
 				},
 				{
 					"id": 743,
-					"order": 0,
+					"order": 40,
 					"prevSize": 32,
 					"code": 59829,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "power, lightning",
-					"name": ""
+					"name": "power"
 				},
 				{
 					"id": 746,
 					"order": 8,
 					"prevSize": 32,
 					"code": 59830,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "switch",
 					"name": "switch"
 				},
@@ -11509,7 +11549,7 @@
 					"id": 1423,
 					"prevSize": 32,
 					"code": 59850,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "earth, globe2",
 					"name": "earth"
 				},
@@ -11527,7 +11567,7 @@
 					"order": 37,
 					"prevSize": 32,
 					"code": 59852,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "flag, report",
 					"name": "flag"
 				},
@@ -11545,7 +11585,7 @@
 					"order": 32,
 					"prevSize": 32,
 					"code": 59854,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "eye, views",
 					"name": "eye"
 				},
@@ -12076,7 +12116,7 @@
 					"order": 24,
 					"prevSize": 32,
 					"code": 59913,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "question, help",
 					"name": "question"
 				},
@@ -12085,7 +12125,7 @@
 					"order": 15,
 					"prevSize": 32,
 					"code": 59914,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "plus, add",
 					"name": "plus"
 				},
@@ -12139,7 +12179,7 @@
 					"order": 33,
 					"prevSize": 32,
 					"code": 59920,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark, tick",
 					"name": "checkmark"
 				},
@@ -12148,7 +12188,7 @@
 					"order": 34,
 					"prevSize": 32,
 					"code": 59921,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark2, tick2",
 					"name": "checkmark2"
 				},
@@ -13153,19 +13193,19 @@
 				},
 				{
 					"id": 1273,
-					"order": 0,
+					"order": 38,
 					"prevSize": 32,
 					"code": 60033,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "terminal, console",
-					"name": ""
+					"name": "terminal"
 				},
 				{
 					"id": 1285,
-					"order": 0,
+					"order": 41,
 					"prevSize": 32,
 					"code": 60034,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "share2, social",
 					"name": "share2"
 				},
@@ -13612,10 +13652,10 @@
 				},
 				{
 					"id": 1335,
-					"order": 0,
+					"order": 43,
 					"prevSize": 32,
 					"code": 60084,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "github4, brand43",
 					"name": "github4"
 				},

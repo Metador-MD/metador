@@ -1,0 +1,7 @@
+wheregroup-publish:
+    origin: WhereGroup
+    name: Veröffentlichen
+    description: Metadaten Veröffentlichen.
+    class_path: WhereGroup\Plugin\PublishBundle
+    class_name: WhereGroupPublishBundle
+    version: 1.0

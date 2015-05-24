@@ -13,7 +13,7 @@ use WhereGroup\SearchBundle\Component\Paging;
 class ProfileController extends Controller
 {
     /**
-     * @Template("ProfileDatasetBundle::index.html.twig")
+     * @Template("WhereGroupThemeBundle:Profile:index.html.twig")
      */
     public function indexAction($data)
     {

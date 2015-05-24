@@ -184,10 +184,7 @@ class Metadata implements MetadataInterface
 
         // CHECK FOR UUID
         if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
-            $this->container->get('session')->getFlashBag()->add(
-                'error',
-                "UUID fehlt!"
-            );
+            $this->container->get('session')->getFlashBag()->add('error', "UUID fehlt!");
 
             return false;
         }
@@ -244,27 +241,7 @@ class Metadata implements MetadataInterface
             $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
 
-        $event  = new MetadataChangeEvent($metadata, array());
-
-        // EVENT PRE SAVE
-        try {
-            $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
-        } catch (\Exception $e) {
-            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
-            return false;
-        }
-
-        // SAVE TO DATABASE
-        $em->persist($metadata);
-        $em->flush();
-
-        // EVENT POST SAVE
-        try {
-            $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
-        } catch (\Exception $e) {
-            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
-            return false;
-        }
+        $this->save($metadata);
 
         // SET FLASH
         $title = isset($p['title']) ? $p['title'] : 'Datensatz';
@@ -314,5 +291,35 @@ class Metadata implements MetadataInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param $entity
+     * @return bool
+     */
+    public function save($entity)
+    {
+        $em = $this->container->get('doctrine')->getManager();
+        $event  = new MetadataChangeEvent($entity, array());
+
+        // EVENT PRE SAVE
+        try {
+            $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+        } catch (\Exception $e) {
+            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
+            return false;
+        }
+
+        // SAVE TO DATABASE
+        $em->persist($entity);
+        $em->flush();
+
+        // EVENT POST SAVE
+        try {
+            $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
+        } catch (\Exception $e) {
+            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
+            return false;
+        }
     }
 }
