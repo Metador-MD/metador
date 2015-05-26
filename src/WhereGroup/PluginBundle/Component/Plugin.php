@@ -24,7 +24,6 @@ class Plugin
     protected $pluginPaths = array();
     protected $plugins = array();
     protected $routing = array();
-    protected $requiredPlugins = array();
 
     /**
      * @param ContainerInterface $container
@@ -112,10 +111,6 @@ class Plugin
             }
         }
 
-        foreach ($this->requiredPlugins as $requiredPlugin) {
-            $this->enable($requiredPlugin);
-        }
-
         $this->saveConfiguration();
 
         return array(
@@ -123,12 +118,68 @@ class Plugin
         );
     }
 
+    protected function sortPlugins()
+    {
+        $plugins = array();
+        $require = array(
+            'hasChildren' => array(),
+            'hasParent'   => array(),
+            'isSingle'    => array()
+        );
+
+        // get plugin informations
+        foreach ($this->plugins as $key => $value) {
+            if (isset($value['require']) && !empty($value['require'])) {
+                foreach ($value['require'] as $plugin) {
+                    $require['hasChildren'][$plugin][$key] = true;
+                    $require['hasParent'][$key][$plugin] = true;
+                }
+            } else {
+                $require['isSingle'][] = $key;
+            }
+        }
+
+        // sort
+        while (!empty($require['hasChildren'])) {
+            foreach ($require['hasChildren'] as $key => $value) {
+                if (!isset($require['hasParent'][$key])) {
+                    // add plugin
+                    $plugins[$key] = $this->plugins[$key];
+
+                    unset($this->plugins[$key]);
+
+                    // clean children array
+                    unset($require['hasChildren'][$key]);
+
+                    // clean parent array
+                    foreach ($require['hasParent'] as $pKey => $pValue) {
+                        if (isset($require['hasParent'][$pKey][$key])) {
+                            unset($require['hasParent'][$pKey][$key]);
+                            if (empty($require['hasParent'][$pKey])) {
+                                unset($require['hasParent'][$pKey]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        unset($require);
+
+        foreach ($this->plugins as $key => $value) {
+            // add rest
+            $plugins[$key] = $this->plugins[$key];
+        }
+
+        return $this->plugins = $plugins;
+    }
+
     /**
      *
      */
     protected function saveConfiguration()
     {
-        $this->writeYaml($this->configurationFile, array('plugins' => $this->plugins));
+        $this->writeYaml($this->configurationFile, array('plugins' => $this->sortPlugins()));
         $this->writeYaml($this->routingFile, $this->routing);
     }
 
@@ -195,7 +246,7 @@ class Plugin
                     throw new \RuntimeException("Plugin $require not found!");
                 }
 
-                $this->requiredPlugins[] = $require;
+                $this->enable($require);
             }
         }
 

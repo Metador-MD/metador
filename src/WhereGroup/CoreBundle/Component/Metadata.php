@@ -189,11 +189,13 @@ class Metadata implements MetadataInterface
             return false;
         }
 
+        $date = "";
+
         if (empty($p['revisionDate'])) {
             if (empty($p['publicationDate'])) {
-                if (empty($p['creationDate'])) {
+                if (empty($p['creationDate']) && !empty($p['dateStamp'])) {
                     $date = $p['dateStamp'];
-                } else {
+                } elseif (!empty($p['creationDate'])) {
                     $date = $p['creationDate'];
                 }
             } else {
@@ -216,6 +218,10 @@ class Metadata implements MetadataInterface
                     }
                 }
             }
+        }
+
+        if (!isset($p['hierarchyLevel'])) {
+            throw new \RuntimeException("Hierarchy level not found!");
         }
 
         $p['_profile'] = isset($p['_profile']) ? $p['_profile'] : $p['hierarchyLevel'];
