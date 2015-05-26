@@ -2,6 +2,8 @@
 
 namespace WhereGroup\PluginBundle\Component;
 
+use JMS\TranslationBundle\Annotation\Ignore;
+
 abstract class ApplicationIntegration
 {
     protected function addToWarnings($icon, $message)
@@ -9,6 +11,7 @@ abstract class ApplicationIntegration
         if ($this->app->isRoute('metador_admin_index')) {
             $this->app->add('app-information', md5($this->prefix . $message), array(
                 'icon'  => $icon,
+                /** @Ignore */
                 'label' => $message
             ));
         }
