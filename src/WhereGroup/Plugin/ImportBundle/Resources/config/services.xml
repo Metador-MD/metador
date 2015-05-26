@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- SERVICE -->
+        <parameter key="metador.metadata.import.class">WhereGroup\Plugin\ImportBundle\Component\MetadataImport</parameter>
+
+        <!-- EVENT LISTENER -->
+        <parameter key="metador.import.app.listener.class">WhereGroup\Plugin\ImportBundle\EventListener\ApplicationListener</parameter>
+    </parameters>
+
+    <services>
+        <!-- SERVICE -->
+        <service id="metadata_import" class="%metador.metadata.import.class%">
+            <argument type="service" id="kernel" />
+        </service>
+
+        <!-- EVENT LISTENER -->
+        <service id="metador_import_app_listener" class="%metador.import.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+        </service>
+    </services>
+</container>

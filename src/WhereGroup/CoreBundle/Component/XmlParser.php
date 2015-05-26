@@ -55,7 +55,7 @@ class XmlParser
     }
 
     /**
-     *Load JSON schema
+     * Load JSON schema
      * @param  string $json schema
      */
     public function loadSchema($json)

@@ -2,12 +2,11 @@
 
 namespace WhereGroup\Plugin\HelptextBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use WhereGroup\Plugin\HelptextBundle\Entity\Helptext;
 
 /**
@@ -21,12 +20,10 @@ class HelptextController extends Controller
      */
     public function getHelptext()
     {
-        $helptext = new Helptext();
-        $string = "";
-
         $id = $this->getRequest()->get('id', false);
-
         $em = $this->getDoctrine()->getManager();
+
+        /** @var Helptext $helptext */
         $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
 
         if ($helptext) {
@@ -57,10 +54,11 @@ class HelptextController extends Controller
 
         $id = $this->getRequest()->get('id', false);
         $html = $this->getRequest()->get('html', false);
-        $debug = "";
 
         if ($id && $html) {
             $em = $this->getDoctrine()->getManager();
+
+            /** @var Helptext $helptext */
             $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
 
             $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);

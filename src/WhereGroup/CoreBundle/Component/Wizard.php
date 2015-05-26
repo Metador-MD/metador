@@ -11,18 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Wizard
 {
-    protected $container;
-
     /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @param $hierarchyLevel
+     * @param $path
      * @return array
      */
     public function getExamples($path)
@@ -30,8 +20,6 @@ class Wizard
         $examples = array();
 
         foreach (scandir($path) as $file) {
-            // echo "<br/>" . $path . $file;
-
             if ($file !== '.' && $file !== '..' && is_dir($path . $file)) {
                 $array = array();
 

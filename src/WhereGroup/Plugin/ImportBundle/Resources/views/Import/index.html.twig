@@ -1,0 +1,13 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% block center %}
+<div class="page-content">
+    <form action="{{ path('metador_import_xml') }}" name="metadataForm" method="post" enctype="multipart/form-data">
+        <label class="metadata-import-label">{% trans %}Metadaten XML-Datei{% endtrans %}</label>
+        <div class="metadata-import-input">
+            <input type="file" size="50" maxlength="100000" accept="text/*" name="xml" />
+        </div>
+        <button class="btn metadata-import-submit" type="submit">{% trans %}importieren{% endtrans %}</button>
+    </form>
+</div>
+{% endblock %}

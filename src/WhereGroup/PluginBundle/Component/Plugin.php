@@ -170,10 +170,12 @@ class Plugin
             ->name('plugin.yml');
 
         foreach ($finder as $file) {
-            $pluginDefinition = $this->readYaml($file);
+            $pluginDefinition = $this->readYaml($file->getRealpath());
 
-            $plugins[key($pluginDefinition)]
-                = $pluginDefinition[key($pluginDefinition)];
+            if (is_array($pluginDefinition)) {
+                $plugins[key($pluginDefinition)]
+                    = $pluginDefinition[key($pluginDefinition)];
+            }
         }
 
         return $plugins;

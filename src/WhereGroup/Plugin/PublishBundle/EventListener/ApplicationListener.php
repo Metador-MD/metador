@@ -47,7 +47,7 @@ class ApplicationListener extends ApplicationIntegration
 
         if ($this->app->isRoute('metador_admin_index')) {
             if (!is_writeable($this->exportPath)) {
-                $this->addToWarnings('icon-notification', 'Publish Folder is not writeable!');
+                $this->addToWarnings('icon-notification', 'Ordner zum veröffentlichen der Metadaten ist nicht beschreibbar!');
             }
         }
     }
