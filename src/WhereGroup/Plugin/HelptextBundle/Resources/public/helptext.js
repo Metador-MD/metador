@@ -1,11 +1,13 @@
 $(document).ready(function() {
-    $('.showHelp').live('click', function() {
+    $(document).on('click', '.showHelp', function() {
         var dialog = $('<div>');
         var id = $(this).attr('data-obj-id');
 
         $.ajax({
             url: BASEDIR + "metador/help/get",
-            data: {"id" : id},
+            data: {
+                "id" : id
+            },
             type: "get",
             dataType: "html",
             success:  function(data) {
@@ -21,7 +23,10 @@ $(document).ready(function() {
                                 if($('.helptext').attr("contentEditable")) {
                                     $.ajax({
                                         url: BASEDIR + "metador/help/set",
-                                        data: {"id" : id, "html": $('.helptext').html()},
+                                        data: {
+                                            "id" : id,
+                                            "html": $('.helptext').html()
+                                        },
                                         type: "post", dataType: "html"
                                     });
                                 }

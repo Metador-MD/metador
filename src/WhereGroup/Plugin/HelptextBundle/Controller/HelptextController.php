@@ -27,7 +27,9 @@ class HelptextController extends Controller
         $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
 
         if ($helptext) {
-            $string = $helptext->getText();
+            $string = $this->get('translator')->trans(
+                $helptext->getText()
+            );
         } else {
             $string = "Hilfetext nicht definiert.";
         }
