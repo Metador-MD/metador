@@ -2,7 +2,7 @@
 
 {% block center %}
 <div class="page-content">
-    <form action="{{ path('metador_import_xml') }}" name="metadataForm" method="post" enctype="multipart/form-data">
+    <form action="{{ path('metador_import_xml', { 'profile': profile }) }}" name="metadataForm" method="post" enctype="multipart/form-data">
         <label class="metadata-import-label">{% trans %}Metadaten XML-Datei{% endtrans %}</label>
         <div class="metadata-import-input">
             <input type="file" size="50" maxlength="100000" accept="text/*" name="xml" />

@@ -140,6 +140,11 @@ class Application
         return ($this->bundle === $bundle);
     }
 
+    public function getBundle()
+    {
+        return $this->bundle;
+    }
+
     /**
      * @param $controller
      * @return bool

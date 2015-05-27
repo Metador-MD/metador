@@ -23,12 +23,18 @@ class ApplicationListener extends ApplicationIntegration
     {
         $this->app = $event->getApplication();
 
-        if ($this->app->isRoute('metador_dashboard')) {
+        if ($this->app->isController('Profile') && $this->app->isAction('index')) {
+            $bundle  = strtolower($this->app->getBundle());
+
             $this->app->add('app-plugin-menu', 'import', array(
                 'label'  => 'Import',
                 'icon'   => 'icon-upload',
                 'path'   => 'metador_import_index',
-                'params' => array()
+                'params' => array(
+                    'profile' => strstr($bundle, 'profile') !== false
+                        ? substr($bundle, strlen('profile'))
+                        : 'dataset'
+                )
             ));
         }
     }

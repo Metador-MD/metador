@@ -17,20 +17,22 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ImportController extends Controller
 {
     /**
-     * @Route("import/", name="metador_import_index")
+     * @Route("{profile}/", name="metador_import_index")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($profile)
     {
-        return array();
+        return array(
+            'profile' => $profile
+        );
     }
 
     /**
-     * @Route("import/xml", name="metador_import_xml")
+     * @Route("{profile}/xml/", name="metador_import_xml")
      * @Method("POST")
      */
-    public function xmlAction()
+    public function xmlAction($profile)
     {
         /** @var UploadedFile $file */
         foreach ($this->getRequest()->files as $file) {
@@ -48,6 +50,7 @@ class ImportController extends Controller
                 $p   = $this->get('metadata_import')->load($xml);
 
                 if (!empty($p)) {
+                    $p['_profile'] = $profile;
                     $this->get('metadata')->saveObject($p);
                     $this->get('session')->getFlashBag()->add('info', 'Erfolgreich importiert.');
                 } else {
