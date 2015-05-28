@@ -32,9 +32,11 @@ class MetadataImport implements MetadataImportInterface
      * @param $conf
      * @return array
      */
-    public function load($xml)
+    public function load($xml, $profile = null)
     {
-        $profile = $this->getProfileString($xml);
+        if (is_null($profile)) {
+            $profile = $this->getProfileString($xml);
+        }
 
         if (empty($profile)) {
             return false;
@@ -54,7 +56,7 @@ class MetadataImport implements MetadataImportInterface
      * @param $bundle
      * @return array|string
      */
-    public function getSchemaFile($bundle)
+    protected function getSchemaFile($bundle)
     {
         return $this->kernel->locateResource('@' . $bundle . '/Resources/import/metadata.xml.json');
     }
@@ -63,7 +65,7 @@ class MetadataImport implements MetadataImportInterface
      * @param $string
      * @return mixed
      */
-    public function getProfileString($string)
+    protected function getProfileString($string)
     {
         $dom = new \DOMDocument();
         $dom->loadXml($string);

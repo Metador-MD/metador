@@ -61,4 +61,73 @@ class ImportController extends Controller
 
         return $this->redirect($this->generateUrl('metador_dashboard'));
     }
+
+    /**
+     * @Route("test/{profile}/{id}", name="metador_import_test")
+     * @Template()
+     */
+    public function testAction($profile, $id)
+    {
+        $metadata = $this->get('metadata')->getById($id);
+        $object1  = $metadata->getObject();
+        $object2  = $this->get('metadata_import')->load(
+            $this->get('templating')->render(
+                "Profile" . ucfirst(strtolower($profile)) . "Bundle:Export:metadata.xml.twig",
+                array("p" => $object1)
+            ),
+            ucfirst(strtolower($profile))
+        );
+
+        $object2['_profile'] = $profile;
+
+        $arr1 = array();
+        $arr2 = array();
+        $this->flatten($object1, $arr1);
+        $this->flatten($object2, $arr2);
+
+        return array(
+            'result' => $this->test($arr1, $arr2)
+        );
+    }
+
+    /**
+     * @param $array
+     * @return string
+     */
+    private function test($arr1, $arr2)
+    {
+        ksort($arr1);
+        ksort($arr2);
+
+        $result = array(
+            'status' => 1,
+            'data'   => array()
+        );
+
+        foreach ($arr1 as $key => $value) {
+            if (isset($arr2[$key]) && $value === $arr2[$key] && $value !== "") {
+                $result['data'][$key] = 1;
+            } else {
+                $result['data'][$key] = 0;
+                $result['status'] = 0;
+            }
+        }
+
+        return $result;
+    }
+
+    private function flatten($array, &$result, $prefix = null)
+    {
+        foreach ($array as $key => $value) {
+            if (!is_null($prefix)) {
+                $key = $prefix . '_' . $key;
+            }
+
+            if (is_array($value)) {
+                $this->flatten($value, $result, $key);
+            } else {
+                $result[$key] = $value;
+            }
+        }
+    }
 }

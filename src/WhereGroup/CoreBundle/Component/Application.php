@@ -18,6 +18,7 @@ class Application
     private $action;
     private $route;
     private $parameter;
+    private $env;
 
     const POSITION_PREPEND = 0;
     const POSITION_NORMAL  = 1;
@@ -33,6 +34,7 @@ class Application
         $this->parameter = $container->get('request')->attributes->all();
         $this->route     = $container->get('request')->get('_route');
         $this->data      = array();
+        $this->env       = $container->get('kernel')->getEnvironment();
 
         // Forward to controller generates a different controller information
         if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
@@ -131,6 +133,11 @@ class Application
         return $this->parameter;
     }
 
+    public function isEnv($env)
+    {
+        return ($this->env === $env);
+    }
+
     /**
      * @param $bundle
      * @return bool
@@ -183,6 +190,11 @@ class Application
     public function routeStartsWith($string)
     {
         return (strncmp($this->route, $string, strlen($string)) === 0);
+    }
+
+    public function bundeStartsWith($string)
+    {
+        return (strncmp($this->bundle, $string, strlen($string)) === 0);
     }
 
     /**

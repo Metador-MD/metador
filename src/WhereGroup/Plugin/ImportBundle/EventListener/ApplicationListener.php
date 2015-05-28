@@ -23,19 +23,33 @@ class ApplicationListener extends ApplicationIntegration
     {
         $this->app = $event->getApplication();
 
-        if ($this->app->isController('Profile') && $this->app->isAction('index')) {
-            $bundle  = strtolower($this->app->getBundle());
+        $bundle  = strtolower($this->app->getBundle());
+        $profile = strstr($bundle, 'profile') !== false
+                    ? substr($bundle, strlen('profile'))
+                    : 'dataset';
 
-            $this->app->add('app-plugin-menu', 'import', array(
-                'label'  => 'Import',
-                'icon'   => 'icon-upload',
-                'path'   => 'metador_import_index',
-                'params' => array(
-                    'profile' => strstr($bundle, 'profile') !== false
-                        ? substr($bundle, strlen('profile'))
-                        : 'dataset'
-                )
-            ));
+        if ($this->app->isController('Profile')) {
+            if ($this->app->isAction('index')) {
+                $this->app->add('app-plugin-menu', 'import', array(
+                    'label'  => 'Import',
+                    'icon'   => 'icon-upload',
+                    'path'   => 'metador_import_index',
+                    'params' => array(
+                        'profile' => $profile
+                    )
+                ));
+
+            } elseif ($this->app->isAction('edit') && $this->app->isEnv('dev')) {
+                $this->app->add('app-plugin-menu', 'import-test', array(
+                    'label'  => 'Test-Import',
+                    'icon'   => 'icon-accessibility',
+                    'path'   => 'metador_import_test',
+                    'params' => array(
+                        'profile' => $profile,
+                        'id'      => $this->app->getParameter('id', 0)
+                    )
+                ));
+            }
         }
     }
 }
