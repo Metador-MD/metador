@@ -7,7 +7,7 @@ parameters:
     database_host: localhost
     database_port: ~
     database_name: ~
-    database_path: "%kernel.root_dir%/../metador.db"
+    database_path: "%kernel.root_dir%/../var/metador.db"
     database_user: root
     database_password: ~
     database_charset: UTF8
