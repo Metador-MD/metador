@@ -125,7 +125,7 @@ class XmlParser
 
         $commands['recursive'] = isset($commands['recursive']) ? $commands['recursive'] : false;
         $commands['asArray']   = isset($commands['asArray']) ? $commands['asArray'] : false;
-        $commands['function']  = isset($commands['function']) ? $commands['function'] : null;
+        $commands['_function']  = isset($commands['_function']) ? $commands['_function'] : null;
 
         foreach ($object as $key => $val) {
             switch($key) {
@@ -137,7 +137,7 @@ class XmlParser
                     break;
                 case "recursive": $commands['recursive'] = $val;
                     break;
-                case "function": $commands['function'] = $val;
+                case "_function": $commands['_function'] = $val;
                     break;
                 case "data":
                     if (is_string($val) && isset($this->cache[$val])) {
@@ -149,8 +149,8 @@ class XmlParser
                         $result = $this->parseData($val, $name, $path, $context, $commands);
                     }
 
-                    if (!is_null($commands['function'])) {
-                        $result = $this->functions->get($commands['function'], $result);
+                    if (!is_null($commands['_function'])) {
+                        $result = $this->functions->get($commands['_function'], $result);
                     }
 
                     break;
