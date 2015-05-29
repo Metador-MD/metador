@@ -106,9 +106,9 @@ class ImportController extends Controller
 
         foreach ($arr1 as $key => $value) {
             if (isset($arr2[$key]) && $value === $arr2[$key] && $value !== "") {
-                $result['data'][1][$key] = 1;
+                $result['data'][$key] = 1;
             } else {
-                $result['data'][0][$key] = 0;
+                $result['data'][$key] = 0;
                 $result['status'] = 0;
             }
         }

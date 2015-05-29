@@ -7,11 +7,11 @@
     </h1>
     <hr/>
 
-    {% for key,value in result['data'][0] %}
+    {% for key,value in result['data'] if value == 0 %}
         <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
     {% endfor %}
 
-    {% for key,value in result['data'][1] %}
+    {% for key,value in result['data']  if value == 1 %}
         <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
     {% endfor %}
 </div>
