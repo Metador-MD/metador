@@ -81,6 +81,12 @@ class XmlParserFunctions
         return is_array($data) ? $data : array($data);
     }
 
+    protected function debug($data, $args = null)
+    {
+        echo '<pre>' . print_r($data, 1) . '</pre>';
+        die('<pre>' . print_r($args, 1) . '</pre>');
+    }
+
     /**
      * @param $data
      * @param null $args

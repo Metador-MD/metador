@@ -129,6 +129,7 @@ class XmlParser
 
         foreach ($object as $key => $val) {
             switch($key) {
+                case "_":
                 case "cmd":
                     break;
                 case "path": $path .= $val;
