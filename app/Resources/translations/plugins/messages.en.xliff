@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-05-18T17:00:59Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2015-05-27T16:42:05Z" source-language="de" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
+      <trans-unit id="92d993836badc2705a02dcc346baede737659a59" resname="Adressen">
+        <jms:reference-file line="1">Resources/views/dashboardPreview.html.twig</jms:reference-file>
+        <jms:reference-file line="5">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Adressen</source>
+        <target>Addresses</target>
+      </trans-unit>
+      <trans-unit id="d7dc824300e421b96eca5352a3c85d6d0ea44f13" resname="Allgemeine Hinweise, Lieferbedingungen und zusätzliche Leistungen der Vertriebsstelle.">
+        <jms:reference-file line="143">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Allgemeine Hinweise, Lieferbedingungen und zusätzliche Leistungen der Vertriebsstelle.</source>
+        <target>General instructions, terms of delivery and additional services of the sales agent.</target>
+      </trans-unit>
       <trans-unit id="db60c2dab3a9a3aba67783ce998426b5950d53d0" resname="Alternativtitel">
         <jms:reference-file line="119">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="89">views/Profile/identification.html.twig</jms:reference-file>
@@ -13,12 +24,67 @@
         <source>Alternativtitel</source>
         <target>Alternative title</target>
       </trans-unit>
+      <trans-unit id="411f533995e63d1ca468fb9be12b8627b81e149d" resname="Andere Einschränkungen und rechtliche Voraussetzungen für den Zugriff und die Verwendung des Datensatzes. Gibt an aus welcher Datenbasis der Datensatz entnommen wurde.">
+        <jms:reference-file line="138">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Andere Einschränkungen und rechtliche Voraussetzungen für den Zugriff und die Verwendung des Datensatzes. Gibt an aus welcher Datenbasis der Datensatz entnommen wurde.</source>
+        <target>Other restrictions and legal prerequisites for accessing and using the data set. Specifies from which database the dataset was collected.</target>
+      </trans-unit>
       <trans-unit id="d39585437cee01c0e00bfd0336958d2ebe42e872" resname="Anfangsdatum">
         <jms:reference-file line="230">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="90">views/Profile/temporal.html.twig</jms:reference-file>
         <jms:reference-file line="231">views/Export/pdf.html.twig</jms:reference-file>
         <source>Anfangsdatum</source>
         <target>Start date</target>
+      </trans-unit>
+      <trans-unit id="8c7d27c51f480300fabf07c9e21936e465ccee2c" resname="Angabe EPSG Code">
+        <jms:reference-file line="27">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe EPSG Code</source>
+        <target>Information on EPSG Code</target>
+      </trans-unit>
+      <trans-unit id="48484c73395d633f686c429b9bead783e7dd082f" resname="Angabe EPSG Code&lt;br&gt;">
+        <jms:reference-file line="134">Resources/views/dump.html.twig</jms:reference-file>
+        <source><![CDATA[Angabe EPSG Code<br>]]></source>
+        <target><![CDATA[Angabe EPSG Code<br>]]></target>
+      </trans-unit>
+      <trans-unit id="333a36376d8b3099b3d53aec66836b8d9cf5e820" resname="Angabe der Straße und Hausnummer">
+        <jms:reference-file line="13">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe der Straße und Hausnummer</source>
+        <target>Street and house number</target>
+      </trans-unit>
+      <trans-unit id="ea31b8ce8acd83b0a12485eb968470bdb87d7e07" resname="Angabe der benutzten Dekompressionsmethode">
+        <jms:reference-file line="43">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe der benutzten Dekompressionsmethode</source>
+        <target>Information on used decompression method</target>
+      </trans-unit>
+      <trans-unit id="4a6f8d759e09d6e63da5effe916e7e27f5d7c27b" resname="Angabe des Einstufungssystems.">
+        <jms:reference-file line="50">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe des Einstufungssystems.</source>
+        <target>Information on classification system</target>
+      </trans-unit>
+      <trans-unit id="0ed76b1a81126e66a6d1ba48e1f75fe96dc55f80" resname="Angabe des Konformitätsergebnisses">
+        <jms:reference-file line="109">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe des Konformitätsergebnisses</source>
+        <target>Information on conformity result</target>
+      </trans-unit>
+      <trans-unit id="9523c44322ad3bf9ce782c0bd62ce3fd53089445" resname="Angabe eines Verweises auf ein Qualitätsbericht.">
+        <jms:reference-file line="94">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe eines Verweises auf ein Qualitätsbericht.</source>
+        <target>Specification of a reference to a quality report.</target>
+      </trans-unit>
+      <trans-unit id="a2f8d4801fd8aed3e8542d571586b359317b7c3e" resname="Angabe eines Zeitraums">
+        <jms:reference-file line="196">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angabe eines Zeitraums</source>
+        <target>Specification of a period</target>
+      </trans-unit>
+      <trans-unit id="50f2907cfded000f53e2f20aea12ff58852f78f4" resname="Angaben zur Bildqualität des Datensatzes">
+        <jms:reference-file line="86">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angaben zur Bildqualität des Datensatzes</source>
+        <target>Information on image quality of the dataset</target>
+      </trans-unit>
+      <trans-unit id="0d7077276f7d951139b5b114bb8647c4cc9993fc" resname="Angaben zur Datenübertragung">
+        <jms:reference-file line="158">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Angaben zur Datenübertragung</source>
+        <target>Information for data transmission</target>
       </trans-unit>
       <trans-unit id="9bb4c91cfe4ce65f66139e579423ddffe5249035" resname="Angaben zur Metadatenspezifikation">
         <jms:reference-file line="77">Resources/views/pdf.html.twig</jms:reference-file>
@@ -32,10 +98,50 @@
         <source>Ansprechpartner</source>
         <target>Contact person</target>
       </trans-unit>
+      <trans-unit id="0b2831b9dbf2b6b3f48fda3add978cfc7a45ecd6" resname="Anwendungseinschränkungen für die Ressource">
+        <jms:reference-file line="48">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Anwendungseinschränkungen für die Ressource</source>
+        <target>Application restrictions for the resource</target>
+      </trans-unit>
+      <trans-unit id="aca392054eca397c4f1043a55636cf4ed118349a" resname="Anzahl der Datenträger">
+        <jms:reference-file line="170">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Anzahl der Datenträger</source>
+        <target>Number of data mediums</target>
+      </trans-unit>
+      <trans-unit id="481fe9808a062333b46daf92b2f2489b970000d6" resname="Anzahl der geometrischen Objekte eines Typs, die im Datenbestand vorkommen">
+        <jms:reference-file line="179">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Anzahl der geometrischen Objekte eines Typs, die im Datenbestand vorkommen</source>
+        <target>Number of geometric objects of a type that occur in the dataset</target>
+      </trans-unit>
+      <trans-unit id="a7074147e42e8fbd67c9ddd00494733dea5a7960" resname="Art der Verbindung zum assoziierten Datenbestand">
+        <jms:reference-file line="45">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Art der Verbindung zum assoziierten Datenbestand</source>
+        <target>Type of connection to associated dataset</target>
+      </trans-unit>
+      <trans-unit id="b9180cba3f03c4687701fdb992064d0d68d1b357" resname="Art des Datums">
+        <jms:reference-file line="32">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Art des Datums</source>
+        <target>Type of date</target>
+      </trans-unit>
       <trans-unit id="318368dd039ad9928c5ff22257cdea3e3c7b167f" resname="Aufklärung/Militär">
         <jms:reference-file line="13">views/Profile/classification.html.twig</jms:reference-file>
         <source>Aufklärung/Militär</source>
         <target>Intelligence/Military</target>
+      </trans-unit>
+      <trans-unit id="2ced667d7247d30598ac2dca5a7b40307ac151aa" resname="Aufnahmeendzeit">
+        <jms:reference-file line="73">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Aufnahmeendzeit</source>
+        <target>Recording end time</target>
+      </trans-unit>
+      <trans-unit id="9a154a95b559ed016c8481f2b78baf314ed1fee9" resname="Aufnahmestartzeit">
+        <jms:reference-file line="72">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Aufnahmestartzeit</source>
+        <target>Recording start time</target>
+      </trans-unit>
+      <trans-unit id="312db844f988040cba5454f2451089be53e5766d" resname="Aufnahmestartzeit und -endzeit">
+        <jms:reference-file line="197">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Aufnahmestartzeit und -endzeit</source>
+        <target>Recording start time and end time</target>
       </trans-unit>
       <trans-unit id="0177f6dca0b77baecf3594b78a69e36e9e7a3a6d" resname="Auswahl">
         <jms:reference-file line="30">views/Profile/constraints.html.twig</jms:reference-file>
@@ -47,6 +153,16 @@
         <jms:reference-file line="90">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <source>Autor</source>
         <target>Author</target>
+      </trans-unit>
+      <trans-unit id="41457c5de1fcf3eebe595bcc3f56e9fe7da5eafd" resname="Basisinformation zum Leistungsumfang des bereit gestellten Dienstes">
+        <jms:reference-file line="139">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Basisinformation zum Leistungsumfang des bereit gestellten Dienstes</source>
+        <target>Basic information on the scope of provided service</target>
+      </trans-unit>
+      <trans-unit id="c300da3eaa03cfeddf90e44cc4eda45380bf6adf" resname="Basisinformationen zum Datenbestand">
+        <jms:reference-file line="28">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Basisinformationen zum Datenbestand</source>
+        <target>Basic information on dataset</target>
       </trans-unit>
       <trans-unit id="522fe1b41fa3a75a8ef8c8b12a8d2b8c18147a95" resname="Bauwerke">
         <jms:reference-file line="14">views/Profile/classification.html.twig</jms:reference-file>
@@ -70,10 +186,70 @@
         <source>Bedingungen unbekannt</source>
         <target>Conditions unknown</target>
       </trans-unit>
-      <trans-unit id="bd26f3d230afe66f494112b04dd33a943d0fb4a6" resname="Benutzer">
-        <jms:reference-file line="27">Resources/views/index.html.twig</jms:reference-file>
-        <source>Benutzer</source>
-        <target>User</target>
+      <trans-unit id="b47bddb27064c9926c1e33c996a5382cb55c694e" resname="Bereich, auf den sich die Metadaten beziehen.">
+        <jms:reference-file line="5">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bereich, auf den sich die Metadaten beziehen.</source>
+        <target>Area to which the metadata relate</target>
+      </trans-unit>
+      <trans-unit id="bca5549e85766dd2cbb1464969751136757689d1" resname="Beschreibende Angaben zur Ausdehnung">
+        <jms:reference-file line="147">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibende Angaben zur Ausdehnung</source>
+        <target>Descriptive information on the extent</target>
+      </trans-unit>
+      <trans-unit id="06b30163986b352d2e84fa5ff682abeb92473ba1" resname="Beschreibung der Bewertungsmethode">
+        <jms:reference-file line="101">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der Bewertungsmethode</source>
+        <target>Description of valuation method</target>
+      </trans-unit>
+      <trans-unit id="592f6e293ead106f3dc136b0c2c421ac877df68d" resname="Beschreibung der Qualitätsprüfung">
+        <jms:reference-file line="99">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der Qualitätsprüfung</source>
+        <target>Description of quality assessment</target>
+      </trans-unit>
+      <trans-unit id="edc9a773c82d3a6d056e2ec24bbd83acf6ce6ef7" resname="Beschreibung der Qualitätsprüfung (Die Beschreibung der Lagegenauigkeit.)">
+        <jms:reference-file line="119">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der Qualitätsprüfung (Die Beschreibung der Lagegenauigkeit.)</source>
+        <target>Description of quality assessment (Description of positional accuracy)</target>
+      </trans-unit>
+      <trans-unit id="d18cbe564b1ce814e996efa94b52a0a79d6a6730" resname="Beschreibung der genutzten Quelldaten">
+        <jms:reference-file line="130">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der genutzten Quelldaten</source>
+        <target>Description of used source data</target>
+      </trans-unit>
+      <trans-unit id="20c3f6f8259cd485a30ee35d78d18cc4f8864796" resname="Beschreibung der genutzten Quelldaten. Die Referenz auf die UUID des Metadatensatzes der Quelle.">
+        <jms:reference-file line="174">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der genutzten Quelldaten. Die Referenz auf die UUID des Metadatensatzes der Quelle.</source>
+        <target>Description of the used source data. The reference to the UUID of the metadata set of source.</target>
+      </trans-unit>
+      <trans-unit id="ac91172a467f525750dbb64b5740f190d9beb511" resname="Beschreibung der online Resource">
+        <jms:reference-file line="166">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der online Resource</source>
+        <target>Description of Online Resource</target>
+      </trans-unit>
+      <trans-unit id="256f00d039b3fdd1261ec42cddd98f0ec1dc0e44" resname="Beschreibung der Übereinstimmung des Evaluierungsergebnisses nach einem Qualitätsprüfverfahren gegen einen zulässigen Prüfwert">
+        <jms:reference-file line="188">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung der Übereinstimmung des Evaluierungsergebnisses nach einem Qualitätsprüfverfahren gegen einen zulässigen Prüfwert</source>
+        <target>Description of conformity of the evaluation result for a quality investigation against an allowable test value</target>
+      </trans-unit>
+      <trans-unit id="851a11ca1bd63a6d4d67ae0ffa133acf4fa3c0b1" resname="Beschreibung des Attributs, welches durch den Zellwert ausgeprägt wird">
+        <jms:reference-file line="84">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung des Attributs, welches durch den Zellwert ausgeprägt wird</source>
+        <target>Description of the attribute, which is pronounced by the cell value.</target>
+      </trans-unit>
+      <trans-unit id="25198afd7376e0e404be30820c1553a0f75b2ff5" resname="Beschreibung des Ziels und des Ergebnisses der Operation.">
+        <jms:reference-file line="155">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung des Ziels und des Ergebnisses der Operation.</source>
+        <target>Description of the target and the result of the operation.</target>
+      </trans-unit>
+      <trans-unit id="5aeb5902bed72626648bf135dc353a931fe9fa7e" resname="Beschreibung des geometrischen Bearbeitungszustand des Datensatzes.">
+        <jms:reference-file line="125">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung des geometrischen Bearbeitungszustand des Datensatzes.</source>
+        <target>Description of geometric processing status of the dataset.</target>
+      </trans-unit>
+      <trans-unit id="33feb5eefcac766cf478e000e2f7535da3a71d4a" resname="Beschreibung des radiometrischen Bearbeitungszustand des Datensatzes.">
+        <jms:reference-file line="126">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Beschreibung des radiometrischen Bearbeitungszustand des Datensatzes.</source>
+        <target>Description of the radiometric processing status of the dataset.</target>
       </trans-unit>
       <trans-unit id="8d534ab1567b5dcaba963452d3ffb06d08a0d71d" resname="Beschränkungen">
         <jms:reference-file line="15">Resources/views/form.html.twig</jms:reference-file>
@@ -98,6 +274,51 @@
         <jms:reference-file line="93">views/Export/pdf.html.twig</jms:reference-file>
         <source>Bezeichner</source>
         <target>Identifier</target>
+      </trans-unit>
+      <trans-unit id="a8be8e5f0d7e0f6c05cd3157468ccb98852ce5dc" resname="Bezeichnung der Bewertungsmethode">
+        <jms:reference-file line="102">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung der Bewertungsmethode</source>
+        <target>Name of the evaluation method</target>
+      </trans-unit>
+      <trans-unit id="512e895a9d7a4117027d912784d120cf7a9cd758" resname="Bezeichnung der ElementView">
+        <jms:reference-file line="26">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung der ElementView</source>
+        <target>Name of the ElementView</target>
+      </trans-unit>
+      <trans-unit id="4649f312cb215bd174bcfc652775856eec8c6f7f" resname="Bezeichnung der Hierarchieebene, auf die sich die Metadaten beziehen.">
+        <jms:reference-file line="6">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung der Hierarchieebene, auf die sich die Metadaten beziehen.</source>
+        <target>Hierarchy level name to which the metadata relate.</target>
+      </trans-unit>
+      <trans-unit id="bfea81dfc9a89f6d8ad375a9b2aa2766182d728f" resname="Bezeichnung der verantwortlichen Organisation">
+        <jms:reference-file line="9">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung der verantwortlichen Organisation</source>
+        <target>Name of the responsible organization</target>
+      </trans-unit>
+      <trans-unit id="d47a337067410b86eb32d8a79659f16fd2942552" resname="Bezeichnung des Datenformats">
+        <jms:reference-file line="41">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung des Datenformats</source>
+        <target>Identification of the data format</target>
+      </trans-unit>
+      <trans-unit id="4dc788d45cf5a33fa5eb42fa825eef6731dd6952" resname="Bezeichnung des GeoInfo-Metadatenprofils">
+        <jms:reference-file line="24">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung des GeoInfo-Metadatenprofils</source>
+        <target>Name of the GeoInfo-Metadata profile</target>
+      </trans-unit>
+      <trans-unit id="3f359a4606c38f1fb7ab49c9ff9befff03bcfb01" resname="Bezeichnung des Mediums">
+        <jms:reference-file line="169">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung des Mediums</source>
+        <target>Name of the medium</target>
+      </trans-unit>
+      <trans-unit id="7337b4db895b17df29a65dc8b9845fd28c4badd9" resname="Bezeichnung des Metadatenstandards">
+        <jms:reference-file line="23">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung des Metadatenstandards</source>
+        <target>Name of the metadata standard</target>
+      </trans-unit>
+      <trans-unit id="74ab61657806d9bb8c46d2a4a26b091355e9926c" resname="Bezeichnung des auf die Daten angewendeten Testverfahrens">
+        <jms:reference-file line="98">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Bezeichnung des auf die Daten angewendeten Testverfahrens</source>
+        <target>Identification of the test method applied to the data</target>
       </trans-unit>
       <trans-unit id="fd78062b5624ed79e05ca596305e119e6ef37e1e" resname="Bilddaten/Basiskarten/Landbedeckung">
         <jms:reference-file line="15">views/Profile/classification.html.twig</jms:reference-file>
@@ -128,6 +349,7 @@
         <jms:reference-file line="142">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <jms:reference-file line="41">views/Export/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="352">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="15">Resources/views/dump.html.twig</jms:reference-file>
         <source>Bundesland</source>
         <target>Federal state</target>
       </trans-unit>
@@ -143,20 +365,44 @@
         <source>Darstellungsdienste</source>
         <target>Presentation service</target>
       </trans-unit>
+      <trans-unit id="65a658af9efa207c2ecad74564243790541e1746" resname="Das Aufnahmedatum des Datensatzes">
+        <jms:reference-file line="31">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Das Aufnahmedatum des Datensatzes</source>
+        <target>Date of recording</target>
+      </trans-unit>
+      <trans-unit id="fb0715f1c204de21d8b4742d13e1db5fba4cca31" resname="Das Datum der Quelle (z.B. das Aufnahmedatum)">
+        <jms:reference-file line="176">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Das Datum der Quelle (z.B. das Aufnahmedatum)</source>
+        <target>The date of the source (for example, the recording date)</target>
+      </trans-unit>
       <trans-unit id="dd86b1252be257b315efc811fb3e812cb127a905" resname="Daten">
         <jms:reference-file line="3">Resources/views/form.html.twig</jms:reference-file>
-        <jms:reference-file line="3">Resources/views/index.html.twig</jms:reference-file>
         <source>Daten</source>
         <target>Data</target>
       </trans-unit>
+      <trans-unit id="eaac5035d7933ad9084f162873e7a9786e98bd84" resname="Daten Profil">
+        <jms:reference-file line="5">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Daten Profil</source>
+        <target>Data profile</target>
+      </trans-unit>
+      <trans-unit id="31aadcf56d13978e1a2cfda9c0ab44f2ec0c287b" resname="Daten, die im Vergleich zum beschriebenen Geltungsbereich fehlen">
+        <jms:reference-file line="114">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Daten, die im Vergleich zum beschriebenen Geltungsbereich fehlen</source>
+        <target>Data that is missing compared to the described scope</target>
+      </trans-unit>
+      <trans-unit id="05d5b8e5d52f492dcf9d995c2b6326fca0c02cb9" resname="Daten, die im Vergleich zum beschriebenen Geltungsbereich überschüssig sind">
+        <jms:reference-file line="97">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Daten, die im Vergleich zum beschriebenen Geltungsbereich überschüssig sind</source>
+        <target>Data that is in surplus compared to the descriped scope</target>
+      </trans-unit>
       <trans-unit id="df5c3008c765b0f5cdf0189d6a71536187af3365" resname="Datum">
-        <jms:reference-file line="28">Resources/views/index.html.twig</jms:reference-file>
         <jms:reference-file line="173">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="279">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="45">views/Profile/keyword.html.twig</jms:reference-file>
         <jms:reference-file line="44">views/Profile/conformity.html.twig</jms:reference-file>
         <jms:reference-file line="173">views/Export/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="280">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="106">Resources/views/dump.html.twig</jms:reference-file>
         <source>Datum</source>
         <target>Date</target>
       </trans-unit>
@@ -169,6 +415,61 @@
         <source>Datum der</source>
         <target>Date of</target>
       </trans-unit>
+      <trans-unit id="ed274ce8ede49458602eec28c3ad92a4d0023bda" resname="Datum der Erzeugung">
+        <jms:reference-file line="103">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum der Erzeugung</source>
+        <target>Date of creation</target>
+      </trans-unit>
+      <trans-unit id="862daa6675f581f003ef4d94eb08e3f022fcade6" resname="Datum der Verfahrensspezifikation">
+        <jms:reference-file line="107">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum der Verfahrensspezifikation</source>
+        <target>Date of process specification</target>
+      </trans-unit>
+      <trans-unit id="140869fcfa300b533d505724c9453f1afb599d59" resname="Datum des verwendeten Objektartenkatalogs">
+        <jms:reference-file line="184">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum des verwendeten Objektartenkatalogs</source>
+        <target>Date of the object types catalog used</target>
+      </trans-unit>
+      <trans-unit id="b8a2920015537cace9dc59cdc7f1b9dd6a019d43" resname="Datum und Zeit, wann die Ressource verfügbar sein wird.">
+        <jms:reference-file line="142">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum und Zeit, wann die Ressource verfügbar sein wird.</source>
+        <target>Date and time when the resource will be available.</target>
+      </trans-unit>
+      <trans-unit id="c430711d58878f00400788626cd97db7d164abae" resname="Datum, an dem der Metadatensatz erstellt bzw. geändert wurde.">
+        <jms:reference-file line="22">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum, an dem der Metadatensatz erstellt bzw. geändert wurde.</source>
+        <target>Date on which the metadataset was created or modified</target>
+      </trans-unit>
+      <trans-unit id="32e127ea5ed2df7a361ec94bbe56efea5bf853ad" resname="Datum, an dem die Quelle erfasst wurde">
+        <jms:reference-file line="128">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Datum, an dem die Quelle erfasst wurde</source>
+        <target>Date on which the source was recorded</target>
+      </trans-unit>
+      <trans-unit id="dbfbee1433c85b75b9e181af298996c563fdcc98" resname="Der Dateiname der Quelle bzw. Bezeichnung der Quelle.">
+        <jms:reference-file line="175">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Der Dateiname der Quelle bzw. Bezeichnung der Quelle.</source>
+        <target>The file name of the source or name of the source.</target>
+      </trans-unit>
+      <trans-unit id="49a1a1747cee6e3d7d4df8e94560bf50fb368260" resname="Der Name zum Aufruf der Schnittstelle.">
+        <jms:reference-file line="156">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Der Name zum Aufruf der Schnittstelle.</source>
+        <target>The name to access the interface.</target>
+      </trans-unit>
+      <trans-unit id="c0af710b8f04e3666b5cf087821bdc6fde8c71ff" resname="Der Urheber des Datensatzes.">
+        <jms:reference-file line="54">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Der Urheber des Datensatzes.</source>
+        <target>The author of the dataset</target>
+      </trans-unit>
+      <trans-unit id="43bec6700793e1fd78cb963c170104316bfb0863" resname="Der genutzte Aufnahmemodus des Sensors während der Aufnahme.">
+        <jms:reference-file line="88">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Der genutzte Aufnahmemodus des Sensors während der Aufnahme.</source>
+        <target>The recording mode of the sensor used during recording.</target>
+      </trans-unit>
+      <trans-unit id="22978ec6e5f85d4af20a42c25cb55fedb50ae1c0" resname="Der standardisierte Name eines Diensttyps (z.B. WMS, WFS, WCS).">
+        <jms:reference-file line="136">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Der standardisierte Name eines Diensttyps (z.B. WMS, WFS, WCS).</source>
+        <target>The standardized name of a service type (e.g. WMS, WFS, WCS).</target>
+      </trans-unit>
       <trans-unit id="a6a7709266d3a74cd8c4657eb32a56d5727b91eb" resname="Deutsch">
         <jms:reference-file line="191">views/Profile/identification.html.twig</jms:reference-file>
         <jms:reference-file line="45">views/Profile/metadata.html.twig</jms:reference-file>
@@ -176,9 +477,143 @@
         <source>Deutsch</source>
         <target>German</target>
       </trans-unit>
+      <trans-unit id="94fd77ba1d4ca9b7d98fc69295dfb0f452211d8c" resname="Die Angabe Sensor oder Plattform">
+        <jms:reference-file line="46">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe Sensor oder Plattform</source>
+        <target>The indication of the snensor or platform</target>
+      </trans-unit>
+      <trans-unit id="7e8724117e370586f12e44467406d554baf488a0" resname="Die Angabe der Ausgabe des Datensatzes.">
+        <jms:reference-file line="33">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der Ausgabe des Datensatzes.</source>
+        <target>Specification of the output of the data set.</target>
+      </trans-unit>
+      <trans-unit id="665cde046f023f1e72113673e320a3453ec3148a" resname="Die Angabe der Größe des Pixels.">
+        <jms:reference-file line="58">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der Größe des Pixels.</source>
+        <target>Indication of the size of the pixel.</target>
+      </trans-unit>
+      <trans-unit id="170f5c4fb536fdb608ed4aefb7697dd84e099e75" resname="Die Angabe der Größe des Pixels. (Einheit)">
+        <jms:reference-file line="60">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der Größe des Pixels. (Einheit)</source>
+        <target>The indication of the size of the pixel.(unit)</target>
+      </trans-unit>
+      <trans-unit id="081d3dfb0b189aabb4dd9c7f6049c4425397926e" resname="Die Angabe der Größe des Pixels. (Wert)">
+        <jms:reference-file line="59">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der Größe des Pixels. (Wert)</source>
+        <target>The indication of the size of the pixel (value)</target>
+      </trans-unit>
+      <trans-unit id="96d33f3e8b6f1ed802c5cbd4054d863aac67db10" resname="Die Angabe der ID des genutzten Quelldatensatzes.">
+        <jms:reference-file line="123">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der ID des genutzten Quelldatensatzes.</source>
+        <target>Specification of the ID of the used source dataset.</target>
+      </trans-unit>
+      <trans-unit id="63710346354a2eebf5d54730bdd9171a00a5ffd2" resname="Die Angabe der Urheberhinweise.">
+        <jms:reference-file line="55">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe der Urheberhinweise.</source>
+        <target>Information on the copyright.</target>
+      </trans-unit>
+      <trans-unit id="d88f641e886b4bd7f37cba1e6a0e0669febe7fe6" resname="Die Angabe des Datums der Nutzungslizenz.">
+        <jms:reference-file line="53">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des Datums der Nutzungslizenz.</source>
+        <target>Indication of the date of the license of use.</target>
+      </trans-unit>
+      <trans-unit id="8409ae64622d3f1f4d85441f023ee56b0a13352b" resname="Die Angabe des Grads der Einstufung.">
+        <jms:reference-file line="49">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des Grads der Einstufung.</source>
+        <target>Indication of the degree of classification</target>
+      </trans-unit>
+      <trans-unit id="b46584b5d55bd8b2a4202e9ba05cedea32d8ad8a" resname="Die Angabe des Pixelwertes, der Bereiche ohne gültige Daten identifiziert. (No data value)">
+        <jms:reference-file line="77">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des Pixelwertes, der Bereiche ohne gültige Daten identifiziert. (No data value)</source>
+        <target>Specification of the pixel value, which identifies areas without valid data (No data value)</target>
+      </trans-unit>
+      <trans-unit id="72445eaa05b87c3063bd3c5f4af5e54a8dfe771f" resname="Die Angabe des Sensors bzw. Plattform.">
+        <jms:reference-file line="44">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des Sensors bzw. Plattform.</source>
+        <target>Indication of the sensor or platform</target>
+      </trans-unit>
+      <trans-unit id="ff7a96c181ff079f1262ea929f5aecdaa00ef73e" resname="Die Angabe des Winkels zwischen Zenit und Sensor.">
+        <jms:reference-file line="89">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des Winkels zwischen Zenit und Sensor.</source>
+        <target>Indication of the degree between zenith and sensor</target>
+      </trans-unit>
+      <trans-unit id="f92bee0aa34e696c225f95b8e31f7a851431231a" resname="Die Angabe des benutzten Referenzmodells (z.B. digitales Höhenmodell, DGN-Datei).">
+        <jms:reference-file line="127">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe des benutzten Referenzmodells (z.B. digitales Höhenmodell, DGN-Datei).</source>
+        <target>Indication of the used reference model (e.g. digital elevation model, DGN)</target>
+      </trans-unit>
+      <trans-unit id="d8710209928fc4dedefd3793058a7f47f2bed3f2" resname="Die Angabe, ob der Objektartenkatalog Bestandteil des Datensatzes bei dessen Abgabe ist.">
+        <jms:reference-file line="180">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Angabe, ob der Objektartenkatalog Bestandteil des Datensatzes bei dessen Abgabe ist.</source>
+        <target>Whether or not the feature catalog is part of the record in its delivery.</target>
+      </trans-unit>
+      <trans-unit id="17a0303dc0d077f6b1641c37807066d7cfe61422" resname="Die Art der Kopplung zwischen den Metadaten der Dienste und der Geodaten.">
+        <jms:reference-file line="149">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Art der Kopplung zwischen den Metadaten der Dienste und der Geodaten.</source>
+        <target>The type of coupling between the metadata of services and geodata.</target>
+      </trans-unit>
+      <trans-unit id="1315ae0f940ecfd83d57d61ee56128baa2a71710" resname="Die Ausdehnung des Dienstes.">
+        <jms:reference-file line="146">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Ausdehnung des Dienstes.</source>
+        <target>The extension of the service.</target>
+      </trans-unit>
+      <trans-unit id="67f5b75d8d00e5c9d8f298e612dfb5ce8f17a4ec" resname="Die Bezeichnung des Datenträgers. (Mediennummer)">
+        <jms:reference-file line="25">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Bezeichnung des Datenträgers. (Mediennummer)</source>
+        <target>Name of the data medium (Medium number)</target>
+      </trans-unit>
+      <trans-unit id="dac12d0c5393e44e024c9e74014ec0c5eb97cdd6" resname="Die ID ist eine UUID und referenziert den Metadatensatz eindeutig.">
+        <jms:reference-file line="1">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die ID ist eine UUID und referenziert den Metadatensatz eindeutig.</source>
+        <target>The ID is an UUID and refers to the metadataset clearly</target>
+      </trans-unit>
+      <trans-unit id="0e37d108ded69ee429bc2de5af75137635ba52bf" resname="Die ID-Nummer beim Datenprovider.">
+        <jms:reference-file line="132">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die ID-Nummer beim Datenprovider.</source>
+        <target>ID number at data provider.</target>
+      </trans-unit>
+      <trans-unit id="6056c456ccb81c894c3ea0176afa17a33cd6be77" resname="Die Kosten und Bedingungen für den Bezug der Ressource unter Angabe der Währung, gemäß ISO 4217.">
+        <jms:reference-file line="141">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Kosten und Bedingungen für den Bezug der Ressource unter Angabe der Währung, gemäß ISO 4217.</source>
+        <target>The costs and conditions for access to the resource, showing the currency, according to ISO 4217.</target>
+      </trans-unit>
+      <trans-unit id="766b7825022d102a3e00daa0df5d4c993530616f" resname="Die URL zum Aufruf des Dienstes.">
+        <jms:reference-file line="157">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die URL zum Aufruf des Dienstes.</source>
+        <target>The URL for calling the service.</target>
+      </trans-unit>
+      <trans-unit id="aeb332bffc0cd3a9370e405091b3cdf692bd78e0" resname="Die Version des Dienstes.">
+        <jms:reference-file line="140">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die Version des Dienstes.</source>
+        <target>The version of the service.</target>
+      </trans-unit>
+      <trans-unit id="3c7f2bf8e583257e563d9c700125c41b8f0af68b" resname="Die geographische Ausdehnung des Datensatzes">
+        <jms:reference-file line="64">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die geographische Ausdehnung des Datensatzes</source>
+        <target>The geographical extent of the dataset</target>
+      </trans-unit>
+      <trans-unit id="98d0e7287c745309a78a29777760a7372e5bc232" resname="Die rechtlichen Einschränkungen und Sicherheitseinschränkungen bei Benutzung des Dienstes und Verteilen der Daten vom Dienst.">
+        <jms:reference-file line="145">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die rechtlichen Einschränkungen und Sicherheitseinschränkungen bei Benutzung des Dienstes und Verteilen der Daten vom Dienst.</source>
+        <target>The legal constraints and security restrictions on use of the service and distribution of the data from the service.</target>
+      </trans-unit>
+      <trans-unit id="5edb00194c2838099d3ed23f2aef229d06cf2977" resname="Die softwaretechnische Basis für implementierte Operationen.">
+        <jms:reference-file line="154">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die softwaretechnische Basis für implementierte Operationen.</source>
+        <target>The software-technical basis for implemented operations.</target>
+      </trans-unit>
+      <trans-unit id="11379f757a8bad48bbae7787378d57d458c5ece7" resname="Die thematische Einordnung des Datensatzes.">
+        <jms:reference-file line="63">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die thematische Einordnung des Datensatzes.</source>
+        <target>The thematic classification of the dataset.</target>
+      </trans-unit>
+      <trans-unit id="776916932007e8d7789baeb5f4d4a4ff13ad6144" resname="Die theoretische radiometrische Auflösung des Datensatzes.">
+        <jms:reference-file line="82">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Die theoretische radiometrische Auflösung des Datensatzes.</source>
+        <target>The theoretical radiometric resolution of the dataset.</target>
+      </trans-unit>
       <trans-unit id="3af74bb5b64f592b24554eeec6903a02f53e3edd" resname="Dienste">
         <jms:reference-file line="3">Resources/views/form.html.twig</jms:reference-file>
-        <jms:reference-file line="3">Resources/views/index.html.twig</jms:reference-file>
         <source>Dienste</source>
         <target>Services</target>
       </trans-unit>
@@ -187,10 +622,20 @@
         <source>Dienste Operationen</source>
         <target>Services Operations</target>
       </trans-unit>
+      <trans-unit id="920f9fcb2a053ea7283f0370644e623af6fda449" resname="Dienste Profil">
+        <jms:reference-file line="5">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Dienste Profil</source>
+        <target>Services profile</target>
+      </trans-unit>
       <trans-unit id="e6aa1389cf0301db3dec9780053fd1cca9df0fa2" resname="Dienste zum Abrufen von Geodatendiensten">
         <jms:reference-file line="18">views/Profile/classification.html.twig</jms:reference-file>
         <source>Dienste zum Abrufen von Geodatendiensten</source>
         <target>Services to retrieve geodata services</target>
+      </trans-unit>
+      <trans-unit id="9f89dbf931848bfd67664913b85074a94d056009" resname="Digitale Übertragungsoptionen">
+        <jms:reference-file line="161">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Digitale Übertragungsoptionen</source>
+        <target>Digital Transfer Options</target>
       </trans-unit>
       <trans-unit id="dd05060c380f882ad93c61d671e241c9ee78ad6e" resname="Download-Dienste">
         <jms:reference-file line="21">views/Profile/classification.html.twig</jms:reference-file>
@@ -215,10 +660,55 @@
         <source>E-Mail</source>
         <target>E-Mail</target>
       </trans-unit>
+      <trans-unit id="ce8fdbcbfea8c9afd52daa6446ac89d4f5142a51" resname="E-Mail-Adresse">
+        <jms:reference-file line="18">Resources/views/dump.html.twig</jms:reference-file>
+        <source>E-Mail-Adresse</source>
+        <target>E-Mail Address</target>
+      </trans-unit>
       <trans-unit id="2843ee905670dff643e00887cccea5a744518ea8" resname="Eigentümer">
         <jms:reference-file line="96">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <source>Eigentümer</source>
         <target>Owner</target>
+      </trans-unit>
+      <trans-unit id="fb24c2ccf262884758d51004341ad49c2a4db21b" resname="Ein sinnvoller Name des Datensatzes. Besteht bei Rasterkarten üblicherweise aus Kartenblattname und Kartenblattnummer.">
+        <jms:reference-file line="29">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Ein sinnvoller Name des Datensatzes. Besteht bei Rasterkarten üblicherweise aus Kartenblattname und Kartenblattnummer.</source>
+        <target>A reasonable name of the dataset. For raster maps it usually consists of card name and map sheet number.</target>
+      </trans-unit>
+      <trans-unit id="a541431a2a6f4b1395c177c50dc3a522671d1358" resname="Eindeutiger Identifikator des übergeordneten Metadatensatzes (Elternobjekt), auf den sich der aktuelle Metadatensatz (Kindobjekt) bezieht.">
+        <jms:reference-file line="4">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Eindeutiger Identifikator des übergeordneten Metadatensatzes (Elternobjekt), auf den sich der aktuelle Metadatensatz (Kindobjekt) bezieht.</source>
+        <target>Unique identifier of the parent metadataset (parent object) to which the current metadataset (child object) refers.</target>
+      </trans-unit>
+      <trans-unit id="d7dd1d7d143243bd71c3f8be2079c586b20234b5" resname="Eindeutiger Identifikator für die Schnittstelle (z.B. GetMap, GetCapabilities).">
+        <jms:reference-file line="153">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Eindeutiger Identifikator für die Schnittstelle (z.B. GetMap, GetCapabilities).</source>
+        <target>Unique identifier for the interface (for example, GetMap, GetCapabilities).</target>
+      </trans-unit>
+      <trans-unit id="ece91cf043d4a745204ea3ac60f31e21f70f29fd" resname="Eindeutiger Identifikator zur Kennzeichnung eines geografischen Gebiets">
+        <jms:reference-file line="71">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Eindeutiger Identifikator zur Kennzeichnung eines geografischen Gebiets</source>
+        <target>Unique identifier for marking a geographical area</target>
+      </trans-unit>
+      <trans-unit id="921eb4c6e44ab125376c0d3e56c17b8af359ef4c" resname="Eine Liste der im Datensatz vorkommenden Objektarten.">
+        <jms:reference-file line="181">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Eine Liste der im Datensatz vorkommenden Objektarten.</source>
+        <target>A list of object types contained in the data set.</target>
+      </trans-unit>
+      <trans-unit id="5e965b32db43a933643e3a7593c769c45a02f051" resname="Einhaltung der Regeln des konzeptionellen Schemas">
+        <jms:reference-file line="187">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Einhaltung der Regeln des konzeptionellen Schemas</source>
+        <target>Compliance with the rules of the conceptual schema</target>
+      </trans-unit>
+      <trans-unit id="7eca37a87cc21268a56e8d207a20bcd85360b599" resname="Einhaltung der Werte im Wertebereichen">
+        <jms:reference-file line="189">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Einhaltung der Werte im Wertebereichen</source>
+        <target>Compliance with the values in the ranges of values</target>
+      </trans-unit>
+      <trans-unit id="3f5f99ad08ce0ebe1de84a902268097cc4f89797" resname="Einschränkungen bezüglich der Ressource">
+        <jms:reference-file line="47">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Einschränkungen bezüglich der Ressource</source>
+        <target>Restrictions on the resource</target>
       </trans-unit>
       <trans-unit id="ce6ff42293f255e169a57d53254e099bc3879eef" resname="Enddatum">
         <jms:reference-file line="234">Resources/views/pdf.html.twig</jms:reference-file>
@@ -233,6 +723,16 @@
         <jms:reference-file line="16">Resources/views/menu.html.twig</jms:reference-file>
         <source>Englisch</source>
         <target>English</target>
+      </trans-unit>
+      <trans-unit id="c1969f98a5a778d7c6e482600224e3b691e32292" resname="Erklärung der Bedeutung der Übereinstimmung für dieses Resultat">
+        <jms:reference-file line="108">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Erklärung der Bedeutung der Übereinstimmung für dieses Resultat</source>
+        <target>Explanation of the meaning of the accordance for this result</target>
+      </trans-unit>
+      <trans-unit id="2403ad19cded2eeeaae7b897eb77d55099544472" resname="Ermöglicht das wechseln der Sprache in der Oberfläche.">
+        <jms:reference-file line="7">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Ermöglicht das wechseln der Sprache in der Oberfläche.</source>
+        <target>Allows switching the language of the interface</target>
       </trans-unit>
       <trans-unit id="be011490429b1f65a7743ac778551485a624958a" resname="Erstellungsdatum">
         <jms:reference-file line="214">Resources/views/pdf.html.twig</jms:reference-file>
@@ -250,6 +750,16 @@
         <source>Es gelten keine Bedingungen</source>
         <target>No terms and conditions apply</target>
       </trans-unit>
+      <trans-unit id="b716cff6ebe420b37066fa4a031e98efa7a90bf2" resname="Exakte Bezeichnung des Zeichensatzstandards, der im Datensatz verwendet wird. Wenn kein Text im Datensatz enthalten ist, wird der Zeichensatz der Metadatendatei verwendet.">
+        <jms:reference-file line="62">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Exakte Bezeichnung des Zeichensatzstandards, der im Datensatz verwendet wird. Wenn kein Text im Datensatz enthalten ist, wird der Zeichensatz der Metadatendatei verwendet.</source>
+        <target>Exact name of the font standards that will be used in the data set. If no text is included in the data set, the font of the metadata file is used.</target>
+      </trans-unit>
+      <trans-unit id="82c434448b5f55efab9a4ea40ff926732f8f58a7" resname="Exakte Bezeichnung des Zeichensatzstandards, der im Metadatensatz verwendet wird.">
+        <jms:reference-file line="3">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Exakte Bezeichnung des Zeichensatzstandards, der im Metadatensatz verwendet wird.</source>
+        <target>Exact name of the font standards, used in the metadata set.</target>
+      </trans-unit>
       <trans-unit id="4f0150bee5871fd6de3687b271c625c16fb424f4" resname="Faxnummer">
         <jms:reference-file line="61">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="371">Resources/views/pdf.html.twig</jms:reference-file>
@@ -259,6 +769,16 @@
         <jms:reference-file line="372">views/Export/pdf.html.twig</jms:reference-file>
         <source>Faxnummer</source>
         <target>Fax number</target>
+      </trans-unit>
+      <trans-unit id="0d622e2f1709e06427011d24ab566380440f4237" resname="Form, in der die Ressource vorliegt (Darstellungsart), z.B. digitales Video, digitales Bild, analoges Bild">
+        <jms:reference-file line="137">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Form, in der die Ressource vorliegt (Darstellungsart), z.B. digitales Video, digitales Bild, analoges Bild</source>
+        <target>Form, in which the resource is present (display mode), for example digital video, digital image, analog image</target>
+      </trans-unit>
+      <trans-unit id="085cf980aabe3e732600b7c7e0c2dfe594c343a4" resname="Formatbeschreibung des Datensatzes">
+        <jms:reference-file line="39">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Formatbeschreibung des Datensatzes</source>
+        <target>Format description of the data set</target>
       </trans-unit>
       <trans-unit id="e0e8dce3beb7b6a282a00783cba9014c9968addc" resname="Freitext">
         <jms:reference-file line="17">views/Profile/constraints.html.twig</jms:reference-file>
@@ -272,6 +792,21 @@
         <source>Funktion</source>
         <target>Function</target>
       </trans-unit>
+      <trans-unit id="5d41cf724963db86bd375e0fb8872fb1c448fb2b" resname="Funktion der Online-Ressource">
+        <jms:reference-file line="20">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Funktion der Online-Ressource</source>
+        <target>Function of the online resource</target>
+      </trans-unit>
+      <trans-unit id="00773499d93c98e35bd35bb596e89b4fea50f896" resname="Funktion der online Resource">
+        <jms:reference-file line="167">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Funktion der online Resource</source>
+        <target>Function of the online resource</target>
+      </trans-unit>
+      <trans-unit id="c431220d852943e7e90dece066e4ea220e74c640" resname="Fähigkeit eines Sensorsystems, Signale von benachbarten Objektstrukturen getrennt zu erfassen.">
+        <jms:reference-file line="91">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Fähigkeit eines Sensorsystems, Signale von benachbarten Objektstrukturen getrennt zu erfassen.</source>
+        <target>Ability of a sensor system to detect signals separated from adjacent object structures.</target>
+      </trans-unit>
       <trans-unit id="ce7d09a0fc05ea97641905ccbc3827645c043e97" resname="Für Metadaten verantwortliche Stelle">
         <jms:reference-file line="21">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="70">views/Profile/metadata.html.twig</jms:reference-file>
@@ -279,10 +814,40 @@
         <source>Für Metadaten verantwortliche Stelle</source>
         <target>Responsible authority for metadata</target>
       </trans-unit>
+      <trans-unit id="746505ea56fac48a614e26f23ab999deedff49c6" resname="Für die Metadaten verantwortliche Stelle.">
+        <jms:reference-file line="7">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Für die Metadaten verantwortliche Stelle.</source>
+        <target>Authority responsible for the metadata</target>
+      </trans-unit>
       <trans-unit id="b3630277499db734c1cac592683c1f9abcad5afa" resname="Gekoppelte Ressource">
         <jms:reference-file line="159">views/Profile/identification.html.twig</jms:reference-file>
         <source>Gekoppelte Ressource</source>
         <target>Coupled resource</target>
+      </trans-unit>
+      <trans-unit id="9aeb599938719660218cf14b4957899d3bcf0d72" resname="Genauigkeit der Ist-Koordinaten zu den Soll-Koordinaten">
+        <jms:reference-file line="118">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Genauigkeit der Ist-Koordinaten zu den Soll-Koordinaten</source>
+        <target>Accuracy of the actual coordinates of the target coordinates</target>
+      </trans-unit>
+      <trans-unit id="df6fbd6a8626a03213d80cf4cd7587ad8e42ac63" resname="Genauigkeit der quantitativen Angaben und die Korrektheit von nichtquantitativen Angaben sowie der Klassifikation von Objekten und ihrer Beziehungen">
+        <jms:reference-file line="192">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Genauigkeit der quantitativen Angaben und die Korrektheit von nichtquantitativen Angaben sowie der Klassifikation von Objekten und ihrer Beziehungen</source>
+        <target>Accuracy of quantitative data and the correctness of non-quantitative information as well as the classification of objects and their relationships</target>
+      </trans-unit>
+      <trans-unit id="d199edc4e6a81725ddac31c7f44ed84d72356e40" resname="Genauigkeit von nicht-quantitativen Attributen">
+        <jms:reference-file line="194">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Genauigkeit von nicht-quantitativen Attributen</source>
+        <target>Accuracy of non-quantitative attributes</target>
+      </trans-unit>
+      <trans-unit id="7a77ccea1f22ebc0f31c73099f8d12bb94d81026" resname="Genauigkeit von quantitativen Attributen">
+        <jms:reference-file line="195">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Genauigkeit von quantitativen Attributen</source>
+        <target>Accuracy of quantitative attributes</target>
+      </trans-unit>
+      <trans-unit id="c44e945ef0f2d397ba9620bf8388d70cac39b0f4" resname="Genauigkeitsangabe bezüglich einer als richtig akzeptierten Bezugs- oder Sollposition">
+        <jms:reference-file line="191">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Genauigkeitsangabe bezüglich einer als richtig akzeptierten Bezugs- oder Sollposition</source>
+        <target>Information on accuracy with respect to an accepted reference or target position</target>
       </trans-unit>
       <trans-unit id="c0b922437a4b7170342c8e51d0313e37b0463e5e" resname="Geodatendienst">
         <jms:reference-file line="10">views/Profile/classification.html.twig</jms:reference-file>
@@ -305,7 +870,7 @@
         <jms:reference-file line="1">views/Profile/geographic.html.twig</jms:reference-file>
         <jms:reference-file line="192">views/Export/pdf.html.twig</jms:reference-file>
         <source>Geografischer Standort</source>
-        <target>Geographical location</target>
+        <target>Geographical Location</target>
       </trans-unit>
       <trans-unit id="efcd438d8a4b944a12cf2a4c48990e4ba835aee2" resname="Geowissenschaften">
         <jms:reference-file line="18">views/Profile/classification.html.twig</jms:reference-file>
@@ -348,6 +913,16 @@
         <source>Herkunft</source>
         <target>Source</target>
       </trans-unit>
+      <trans-unit id="1c4adaf9ba64c94e46a4fba1ae3629137fe59374" resname="Hier wird der Name des Kanals angegeben.">
+        <jms:reference-file line="80">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Hier wird der Name des Kanals angegeben.</source>
+        <target>The name of the band is given.</target>
+      </trans-unit>
+      <trans-unit id="7eb6b2100cecbbe294d068f36bb7b2fac8446593" resname="Hilfetext nicht definiert.">
+        <jms:reference-file line="135">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Hilfetext nicht definiert.</source>
+        <target>Help text not defined.</target>
+      </trans-unit>
       <trans-unit id="892b61b58653a23de73f04c3011c80bfdad2eb33" resname="Höhenangaben">
         <jms:reference-file line="22">views/Profile/classification.html.twig</jms:reference-file>
         <source>Höhenangaben</source>
@@ -366,12 +941,62 @@
         <source>Identifikator des Metadatensatzes</source>
         <target>Identifier of metadataset</target>
       </trans-unit>
+      <trans-unit id="fe86c08f669a19edbc05dc987114cba19142eefb" resname="Identifikator des fest gekoppelten Datensatzes.">
+        <jms:reference-file line="151">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Identifikator des fest gekoppelten Datensatzes.</source>
+        <target>Identifier of the tightly coupled dataset.</target>
+      </trans-unit>
       <trans-unit id="e2f58dbba797ae57098721b638b41203a9fe4b3c" resname="Identifizierung">
         <jms:reference-file line="92">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="1">views/Profile/identification.html.twig</jms:reference-file>
         <jms:reference-file line="92">views/Export/pdf.html.twig</jms:reference-file>
         <source>Identifizierung</source>
         <target>Identification</target>
+      </trans-unit>
+      <trans-unit id="d6fbc9d2bdd580e18ed0bc5805dc26db323d6f5f" resname="Import">
+        <jms:reference-file line="28">ImportBundle/EventListener/ApplicationListener.php</jms:reference-file>
+        <source>Import</source>
+        <target>Import</target>
+      </trans-unit>
+      <trans-unit id="7349873f2f6b7c67f66f0334272a3be8fef6c5b5" resname="Information zum Inhalt einer Rasterdatenzelle">
+        <jms:reference-file line="76">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Information zum Inhalt einer Rasterdatenzelle</source>
+        <target>Information about the content of a raster data cell</target>
+      </trans-unit>
+      <trans-unit id="8b134ce017bf11d7d6b05ccb3b0ed1a5debdb453" resname="Information über den Herstellungsprozess des Datenbestands im genannten Geltungsbereich">
+        <jms:reference-file line="124">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Information über den Herstellungsprozess des Datenbestands im genannten Geltungsbereich</source>
+        <target>Information about the manufacturing process of the data of the aforementioned scope</target>
+      </trans-unit>
+      <trans-unit id="7e0bcc91191bf98d78745dac67c30df48a74c754" resname="Information über den Wertebereich der Zelle">
+        <jms:reference-file line="79">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Information über den Wertebereich der Zelle</source>
+        <target>Information on the range of values of the cell</target>
+      </trans-unit>
+      <trans-unit id="b6ebfcd19f6d01a01f5834a5023c37183a465092" resname="Information über die Verwendbarkeit eines Bildes">
+        <jms:reference-file line="83">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Information über die Verwendbarkeit eines Bildes</source>
+        <target>Information about the availability of an image</target>
+      </trans-unit>
+      <trans-unit id="662470f71f7ca7a6fe7609c3e68963c613b57987" resname="Information über die bei der Datenerzeugung genutzten Datenquellen im genannten Geltungsbereich">
+        <jms:reference-file line="129">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Information über die bei der Datenerzeugung genutzten Datenquellen im genannten Geltungsbereich</source>
+        <target>Information about the data sources used in data generation in mentioned scope</target>
+      </trans-unit>
+      <trans-unit id="3a0fb24e3aa5d299fef06eb62091232c87293c55" resname="Informationen zur Offline-Bereitstellung">
+        <jms:reference-file line="168">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Informationen zur Offline-Bereitstellung</source>
+        <target>Information for offline deployment</target>
+      </trans-unit>
+      <trans-unit id="d2ecf84343b5bf2c7af9f26eb63794bd787413f9" resname="Informationen zur Online-Bereitstellung">
+        <jms:reference-file line="162">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Informationen zur Online-Bereitstellung</source>
+        <target>Information for online deployment</target>
+      </trans-unit>
+      <trans-unit id="4d47e460671e28c204df7622db06135c5a55b2f7" resname="Internationalisierung">
+        <jms:reference-file line="5">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Internationalisierung</source>
+        <target>Internationalization</target>
       </trans-unit>
       <trans-unit id="cd73b7090a4212c5356346617a0f1eac91b89769" resname="Internetadresse">
         <jms:reference-file line="65">Resources/views/pdf.html.twig</jms:reference-file>
@@ -396,11 +1021,22 @@
         <source>Klimatologie/Meteorologie/Atmosphäre</source>
         <target>Climatology/Meteorology/Atmosphere</target>
       </trans-unit>
+      <trans-unit id="faa93ceb66c7d8e2ff5674ce05611746da7a340f" resname="Konfiguration">
+        <jms:reference-file line="11">views/Plugin/view.html.twig</jms:reference-file>
+        <jms:reference-file line="10">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Konfiguration</source>
+        <target>Configuration</target>
+      </trans-unit>
       <trans-unit id="c509d36a84f059156cb4eaf7bb0e057d137abf08" resname="Konform">
         <jms:reference-file line="95">views/Profile/conformity.html.twig</jms:reference-file>
         <jms:reference-file line="101">views/Profile/conformity.html.twig</jms:reference-file>
         <source>Konform</source>
         <target>Compliant</target>
+      </trans-unit>
+      <trans-unit id="5ea144c57336dff98c1d47826690df6a1d048084" resname="Koordinatenpaare, die das Begrenzungspolygon definieren">
+        <jms:reference-file line="66">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Koordinatenpaare, die das Begrenzungspolygon definieren</source>
+        <target>Pairs of coordinates that define the boundary polygon</target>
       </trans-unit>
       <trans-unit id="169c9ceb129d9c7674fa4d0d7237213598f0a8ba" resname="Kurzbeschreibung">
         <jms:reference-file line="123">Resources/views/pdf.html.twig</jms:reference-file>
@@ -410,10 +1046,60 @@
         <source>Kurzbeschreibung</source>
         <target>Short description</target>
       </trans-unit>
+      <trans-unit id="85e364474ce60d25bf37362f67557ac4d0ae0beb" resname="Kurzbeschreibung des Datensatzes">
+        <jms:reference-file line="36">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Kurzbeschreibung des Datensatzes</source>
+        <target>Short description of the dataset</target>
+      </trans-unit>
       <trans-unit id="979ab0842f0681af35610f05d43671a4d0f88ae9" resname="Landwirtschaft">
         <jms:reference-file line="24">views/Profile/classification.html.twig</jms:reference-file>
         <source>Landwirtschaft</source>
         <target>Farming</target>
+      </trans-unit>
+      <trans-unit id="1a4e1cbf859be36184e4e24055352c8f7674dc4c" resname="Legt automatisch Adressen in der Datenbank ab">
+        <jms:reference-file line="8">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Legt automatisch Adressen in der Datenbank ab</source>
+        <target>Automatically stores addresses in the database</target>
+      </trans-unit>
+      <trans-unit id="26c1b554dbd19afa8c6b5815552464e9942d5556" resname="Legt die Sprachdatei für die Hauptanwendung an">
+        <jms:reference-file line="39">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Legt die Sprachdatei für die Hauptanwendung an</source>
+        <target>Creates language data for the main application</target>
+      </trans-unit>
+      <trans-unit id="6a9729542d8366d471494898c0f6cec039634aaa" resname="Legt die Sprachdatei für die Metador Plugins an">
+        <jms:reference-file line="42">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Legt die Sprachdatei für die Metador Plugins an</source>
+        <target>Creates language data for Metador plugins</target>
+      </trans-unit>
+      <trans-unit id="dffd4520408f6ffaf10e0919ff8c9c7249e8d248" resname="Legt die Sprachdatei für die sonstige Plugins an">
+        <jms:reference-file line="45">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Legt die Sprachdatei für die sonstige Plugins an</source>
+        <target>Creates language data for other plugins</target>
+      </trans-unit>
+      <trans-unit id="90aeb8a43f80389cd3561946bb8a92de70f1df9b" resname="Lizenzgenehmigung bzw. Lizenzfreigabe">
+        <jms:reference-file line="56">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Lizenzgenehmigung bzw. Lizenzfreigabe</source>
+        <target>License permit or license release</target>
+      </trans-unit>
+      <trans-unit id="9e10ccfe8b10d82460749950974e543367d6696f" resname="Maß der Einhaltung von logischen Regeln der Datenstruktur, der Attributierung und der Beziehungen.">
+        <jms:reference-file line="186">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Maß der Einhaltung von logischen Regeln der Datenstruktur, der Attributierung und der Beziehungen.</source>
+        <target>Degree of compliance with the logical rules of data structure, attribution and relationships.</target>
+      </trans-unit>
+      <trans-unit id="f8430451eb0ab697f418d5c7f6ad55f22d05de4a" resname="Maß, wie der im Geltungsbereich definierte Datenbestand in Übereinstimmung mit der physikalischen Datenstruktur gespeichert ist">
+        <jms:reference-file line="190">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Maß, wie der im Geltungsbereich definierte Datenbestand in Übereinstimmung mit der physikalischen Datenstruktur gespeichert ist</source>
+        <target>Measure how the dataset defined in the scope is saved in accordance with the physical data structure</target>
+      </trans-unit>
+      <trans-unit id="35a4b180948ee07c04801c045d83421a28708ba3" resname="Maßeinheit, in der das Qualitätsergebnis angegeben wird">
+        <jms:reference-file line="111">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Maßeinheit, in der das Qualitätsergebnis angegeben wird</source>
+        <target>Unit in which the quality result is given</target>
+      </trans-unit>
+      <trans-unit id="916b2f295b19035d5c9b61247d27f569dd40ea7b" resname="Maßeinheit, in der das Qualitätsergebnis angegeben wird (Die Einheit der absolute Lageabweichung zum räumlichen Bezugssystem.)">
+        <jms:reference-file line="120">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Maßeinheit, in der das Qualitätsergebnis angegeben wird (Die Einheit der absolute Lageabweichung zum räumlichen Bezugssystem.)</source>
+        <target>Unit in which the quality result is given (The unit of absolute positional deviation to the spatial reference system.)</target>
       </trans-unit>
       <trans-unit id="d656ae68d1daff567a83eaa96ce0217237561271" resname="Meere">
         <jms:reference-file line="25">views/Profile/classification.html.twig</jms:reference-file>
@@ -427,10 +1113,45 @@
         <source>Metadaten</source>
         <target>Metadata</target>
       </trans-unit>
+      <trans-unit id="9e1d27f347c4e774d6538dbbdf487e91a24303a5" resname="Metadaten XML-Datei">
+        <jms:reference-file line="6">views/Import/index.html.twig</jms:reference-file>
+        <source>Metadaten XML-Datei</source>
+        <target>Metadata XML-File</target>
+      </trans-unit>
+      <trans-unit id="6d533fdb62c826eaf5c6697da272decb16071f20" resname="Metadaten lassen sich durch Freigabe in der Oberfläche in einen Ordner im Filesystem exportieren">
+        <jms:reference-file line="8">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Metadaten lassen sich durch Freigabe in der Oberfläche in einen Ordner im Filesystem exportieren</source>
+        <target>Metadata can be exported in a folder in the filesystem by releasing it in the interface.</target>
+      </trans-unit>
+      <trans-unit id="cb2ffe37fc68ffc54b3baf9b6e020afc99e72962" resname="Metadaten veröffentlichen">
+        <jms:reference-file line="5">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Metadaten veröffentlichen</source>
+        <target>Publish metadata</target>
+      </trans-unit>
+      <trans-unit id="11c2065453f8ae3c1fe800a400ce81c814d9b647" resname="Metadaten-Profil für Daten">
+        <jms:reference-file line="8">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Metadaten-Profil für Daten</source>
+        <target>Metadata profile for data</target>
+      </trans-unit>
+      <trans-unit id="1dd8232763712e89f2dd23e5d80b25f611cfba32" resname="Metadaten-Profil für Dienste">
+        <jms:reference-file line="8">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Metadaten-Profil für Dienste</source>
+        <target>Metadata profile for services</target>
+      </trans-unit>
       <trans-unit id="0864ef0ed505cd11d2fc6bb2ce7ce9b9b6a79a71" resname="Metadatensatz">
         <jms:reference-file line="7">Resources/views/form.html.twig</jms:reference-file>
         <source>Metadatensatz</source>
         <target>Metadataset</target>
+      </trans-unit>
+      <trans-unit id="5dcc6d55e88c24f0453f5352710095afcec57366" resname="Methode">
+        <jms:reference-file line="81">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Methode</source>
+        <target>Method</target>
+      </trans-unit>
+      <trans-unit id="b268c6bd41d7fd8db738eea549d4db67eb635fca" resname="Methode, mit der geografische Informationen räumlich dargestellt werden.">
+        <jms:reference-file line="57">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Methode, mit der geografische Informationen räumlich dargestellt werden.</source>
+        <target>Method to spatially present geographical information</target>
       </trans-unit>
       <trans-unit id="eed23f613c9911b14d76d6d7e68351753a3b9160" resname="Mindestens ein Schlüsselwort aus &quot;GEMET - INSPIRE themes, version 1.0&quot; verpflichtend.">
         <jms:reference-file line="92">views/Profile/keyword.html.twig</jms:reference-file>
@@ -455,6 +1176,21 @@
         <source>N Breitengrad</source>
         <target>N Latitude</target>
       </trans-unit>
+      <trans-unit id="6a8bb10fa6a4c80b21b33e13da483fd294ce52d1" resname="Name der Datei (Dateiname)">
+        <jms:reference-file line="30">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der Datei (Dateiname)</source>
+        <target>Name of the file (filename)</target>
+      </trans-unit>
+      <trans-unit id="6f901fec76c8947a7d7a72f1f04e1bd7de7a34a5" resname="Name der Diensteoperation.">
+        <jms:reference-file line="152">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der Diensteoperation.</source>
+        <target>Name of services operation.</target>
+      </trans-unit>
+      <trans-unit id="7f290edf51393852ece67fa56fb43f216e3616ae" resname="Name der Kartenserie">
+        <jms:reference-file line="34">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der Kartenserie</source>
+        <target>Name of the map series</target>
+      </trans-unit>
       <trans-unit id="974360ef7462dfe42b39f038da5292db2ef51201" resname="Name der Organisation">
         <jms:reference-file line="25">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="331">Resources/views/pdf.html.twig</jms:reference-file>
@@ -464,6 +1200,31 @@
         <jms:reference-file line="332">views/Export/pdf.html.twig</jms:reference-file>
         <source>Name der Organisation</source>
         <target>Name of organization</target>
+      </trans-unit>
+      <trans-unit id="cc325d23fd468ff044b1fca1932edd4ed37a6a10" resname="Name der Quelle">
+        <jms:reference-file line="131">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der Quelle</source>
+        <target>Name of the source</target>
+      </trans-unit>
+      <trans-unit id="da324d11cf88d13bcc4a18b59a4bcee9954124f7" resname="Name der online Resource">
+        <jms:reference-file line="165">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der online Resource</source>
+        <target>Name of the online resource</target>
+      </trans-unit>
+      <trans-unit id="2f670d38636a376fffba175355a5847f1bf50677" resname="Name der zuständigen Kontaktperson">
+        <jms:reference-file line="8">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name der zuständigen Kontaktperson</source>
+        <target>Name the responsible person to contact</target>
+      </trans-unit>
+      <trans-unit id="b676a7d9119b78297857257585bced235180edcc" resname="Name des Formats">
+        <jms:reference-file line="159">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name des Formats</source>
+        <target>Name of the format</target>
+      </trans-unit>
+      <trans-unit id="e5fc105fe2e2e5aa28b338777d1568fa29ba2013" resname="Name des verwendeten Objektartenkatalogs.">
+        <jms:reference-file line="183">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Name des verwendeten Objektartenkatalogs.</source>
+        <target>Name of the object type catalog used.</target>
       </trans-unit>
       <trans-unit id="9a8f594a31432ffe85f2062a26d624b1569cb6b1" resname="Namensraum">
         <jms:reference-file line="101">Resources/views/pdf.html.twig</jms:reference-file>
@@ -484,6 +1245,11 @@
         <source>Nicht überprüft</source>
         <target>Not verified</target>
       </trans-unit>
+      <trans-unit id="22fe32d8e8e4278a5e80d5860b03c07b8ebc7a4b" resname="Notiz bezüglich des Mediums">
+        <jms:reference-file line="171">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Notiz bezüglich des Mediums</source>
+        <target>Note regarding the medium</target>
+      </trans-unit>
       <trans-unit id="16be13a3ddd490eca51e493e5915e290ccd8ca5c" resname="Nutzer">
         <jms:reference-file line="102">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <source>Nutzer</source>
@@ -502,12 +1268,17 @@
         <jms:reference-file line="49">views/Export/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="360">views/Export/pdf.html.twig</jms:reference-file>
         <source>Ort</source>
-        <target>Place</target>
+        <target>City</target>
       </trans-unit>
       <trans-unit id="331742bc72c826bb5c576822cdf2569f43ec3b01" resname="Ortsangaben">
         <jms:reference-file line="26">views/Profile/classification.html.twig</jms:reference-file>
         <source>Ortsangaben</source>
         <target>Location information</target>
+      </trans-unit>
+      <trans-unit id="81d5079a13a9b09916b191a92a439d0beedc1847" resname="Ortsname">
+        <jms:reference-file line="14">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Ortsname</source>
+        <target>City name</target>
       </trans-unit>
       <trans-unit id="79c2dfde02ee7ed10d30d3e61ac18307a3271ec5" resname="PLZ">
         <jms:reference-file line="53">Resources/views/pdf.html.twig</jms:reference-file>
@@ -529,10 +1300,35 @@
         <source>Platform</source>
         <target>Platform</target>
       </trans-unit>
+      <trans-unit id="6f1c0314d224734a173aab3588a66b05835934a4" resname="Position oder Funktion der zuständigen Person">
+        <jms:reference-file line="10">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Position oder Funktion der zuständigen Person</source>
+        <target>Position or function of the responsible person</target>
+      </trans-unit>
+      <trans-unit id="c67fa629643def5fbe0daaee869f32df42f983b6" resname="Positionsgenauigkeiten von Objekten">
+        <jms:reference-file line="117">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Positionsgenauigkeiten von Objekten</source>
+        <target>Positioning accuracy of objects</target>
+      </trans-unit>
+      <trans-unit id="9d242837641f561c7a0cb228778c37a0c94e3f92" resname="Postleitzahl">
+        <jms:reference-file line="16">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Postleitzahl</source>
+        <target>Postal code</target>
+      </trans-unit>
       <trans-unit id="eacb29186986826bb6c75475bf47212677c3417a" resname="Projektleitung">
         <jms:reference-file line="105">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <source>Projektleitung</source>
         <target>Project management</target>
+      </trans-unit>
+      <trans-unit id="f825a23e422733682045bd6c7142d47e63017cd4" resname="Protocol der online Resource">
+        <jms:reference-file line="164">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Protocol der online Resource</source>
+        <target>Protocol of the online resource</target>
+      </trans-unit>
+      <trans-unit id="4a7ee73f4f74f773dc8b16be3ebfea8a5c269fb6" resname="Prüfung, ob die für diese Disziplin vorgesehenen Klassen den möglichen Wertebereich vollständig abdecken">
+        <jms:reference-file line="193">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Prüfung, ob die für diese Disziplin vorgesehenen Klassen den möglichen Wertebereich vollständig abdecken</source>
+        <target>Assessment whether the classes intended for this discipline cover the possible value range entirely.</target>
       </trans-unit>
       <trans-unit id="b17ad979388b6c5ae91fbc882180837b5e1d6c30" resname="Qualität">
         <jms:reference-file line="13">Resources/views/form.html.twig</jms:reference-file>
@@ -545,6 +1341,11 @@
         <jms:reference-file line="248">views/Export/pdf.html.twig</jms:reference-file>
         <source>Qualität und Gültigkeit</source>
         <target>Quality and validity</target>
+      </trans-unit>
+      <trans-unit id="b9d45cb2adf69a986bf77a2607672c7209f25300" resname="Rahmen, in dem der assoziierte Datenbestand erzeugt wurde - hier wird auf den Sensor bzw. die Plattform verwiesen, welches zur Quelle gehört">
+        <jms:reference-file line="40">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Rahmen, in dem der assoziierte Datenbestand erzeugt wurde - hier wird auf den Sensor bzw. die Plattform verwiesen, welches zur Quelle gehört</source>
+        <target>Framework in which the associated dataset has been created - Reference is made to the sensor or the platform, which is part of the source</target>
       </trans-unit>
       <trans-unit id="312386841084261c610413fa4de8b7505f469407" resname="Repository">
         <jms:reference-file line="98">views/Profile/keyword.html.twig</jms:reference-file>
@@ -571,6 +1372,16 @@
         <jms:reference-file line="122">views/Profile/identification.html.twig</jms:reference-file>
         <source>Ressourcenverweis</source>
         <target>Reference to resources</target>
+      </trans-unit>
+      <trans-unit id="6bd8f377e33bd7c00f79bd7a84dfaee34a2e98c2" resname="Rolle, die die verantwortliche Stelle in Bezug auf die Quelle (Source) einnimmt">
+        <jms:reference-file line="133">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Rolle, die die verantwortliche Stelle in Bezug auf die Quelle (Source) einnimmt</source>
+        <target>Role played by the responsible entity with respect to the source</target>
+      </trans-unit>
+      <trans-unit id="f6f9e3ef4ae2893bd261354cd65da8732f0a3b7d" resname="Rolle, die die verantwortliche Stelle in Bezug auf die Ressource einnimmt">
+        <jms:reference-file line="21">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Rolle, die die verantwortliche Stelle in Bezug auf die Ressource einnimmt</source>
+        <target>Role played by the responsible entity with respect to the resource</target>
       </trans-unit>
       <trans-unit id="d226d2c799931e6a9e87b151fa91e98a66c6dc6e" resname="Räumliche Auflösung">
         <jms:reference-file line="257">Resources/views/pdf.html.twig</jms:reference-file>
@@ -601,11 +1412,6 @@
         <source>Schlüsselwort</source>
         <target>Keyword</target>
       </trans-unit>
-      <trans-unit id="633082b8c84bd2b31426259d8b96a0212c59fd7f" resname="Seite">
-        <jms:reference-file line="17">Resources/views/index.html.twig</jms:reference-file>
-        <source>Seite</source>
-        <target>Page</target>
-      </trans-unit>
       <trans-unit id="3cfd6e3f4ab49badb931628439f7616a4f497d8d" resname="Sonstige Dienste">
         <jms:reference-file line="24">views/Profile/classification.html.twig</jms:reference-file>
         <source>Sonstige Dienste</source>
@@ -617,6 +1423,11 @@
         <jms:reference-file line="80">views/Export/pdf.html.twig</jms:reference-file>
         <source>Spezifikation</source>
         <target>Specification</target>
+      </trans-unit>
+      <trans-unit id="3355779d5b2d0438e4709c61fbe928bd2fb84669" resname="Sprachdateien generieren">
+        <jms:reference-file line="31">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Sprachdateien generieren</source>
+        <target>Create language data</target>
       </trans-unit>
       <trans-unit id="59506ba17831ce70d6c955817e013a624a9b811d" resname="Sprache der Metadaten">
         <jms:reference-file line="15">Resources/views/pdf.html.twig</jms:reference-file>
@@ -633,6 +1444,16 @@
         <source>Sprache der Ressource</source>
         <target>Language of resource</target>
       </trans-unit>
+      <trans-unit id="b4563b29aaedbcfde22eb74d076ff387841b1fdc" resname="Sprache in der die Metadaten erhoben wurden.">
+        <jms:reference-file line="2">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Sprache in der die Metadaten erhoben wurden.</source>
+        <target>Language in which the metadata was collected.</target>
+      </trans-unit>
+      <trans-unit id="f6b097afe695a1f0b670a7fd1fbd561b1cd33bb1" resname="Sprache, die im Datensatz verwendet wird.">
+        <jms:reference-file line="61">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Sprache, die im Datensatz verwendet wird.</source>
+        <target>Language that is used in the dataset.</target>
+      </trans-unit>
       <trans-unit id="210fbcd6c3e7c77e979e692bf7c813357301f289" resname="Sprachen">
         <jms:reference-file line="49">InternationalizationBundle/EventListener/ApplicationMenuListener.php</jms:reference-file>
         <source>Sprachen</source>
@@ -645,8 +1466,19 @@
         <jms:reference-file line="129">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <jms:reference-file line="37">views/Export/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="348">views/Export/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="17">Resources/views/dump.html.twig</jms:reference-file>
         <source>Staat</source>
         <target>State</target>
+      </trans-unit>
+      <trans-unit id="24898b86fda0f5dacfd97085e247b0c6efc6a19e" resname="Standardmäßig werden Metadaten in den Ordner &quot;var/published/&quot; geschrieben falls Ordner vorhanden">
+        <jms:reference-file line="15">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Standardmäßig werden Metadaten in den Ordner "var/published/" geschrieben falls Ordner vorhanden</source>
+        <target>By default, metadata is written into the folder "var/published", if available.</target>
+      </trans-unit>
+      <trans-unit id="73a605c42f097626302e5e960d75180d84f10af9" resname="Standardsprache definieren">
+        <jms:reference-file line="14">views/Plugin/view.html.twig</jms:reference-file>
+        <source>Standardsprache definieren</source>
+        <target>Define default language</target>
       </trans-unit>
       <trans-unit id="94e6bd3a816eb815fb9379fb160bf69cd4aa08ba" resname="Straße und Hausnummer / Postfach">
         <jms:reference-file line="45">Resources/views/pdf.html.twig</jms:reference-file>
@@ -656,12 +1488,22 @@
         <jms:reference-file line="45">views/Export/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="356">views/Export/pdf.html.twig</jms:reference-file>
         <source>Straße und Hausnummer / Postfach</source>
-        <target>Street name and house number/ Postbox</target>
+        <target>Street name and house number / Postbox</target>
+      </trans-unit>
+      <trans-unit id="15fa3f687e4b781956c502b04d7876a844e4d384" resname="Struktur der Sachdaten">
+        <jms:reference-file line="75">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Struktur der Sachdaten</source>
+        <target>Structure of attribute data</target>
       </trans-unit>
       <trans-unit id="89cfd05424667b5380c2bfe3e660a27869bbe64f" resname="Suchdienste">
         <jms:reference-file line="27">views/Profile/classification.html.twig</jms:reference-file>
         <source>Suchdienste</source>
         <target>Search engines</target>
+      </trans-unit>
+      <trans-unit id="d5d87a86f0a01fce3ed4e8cf8635981ef85b738f" resname="Telefaxnummer der verantwortlichen Organisation oder Person">
+        <jms:reference-file line="12">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Telefaxnummer der verantwortlichen Organisation oder Person</source>
+        <target>Fax number of the responsible organization or person </target>
       </trans-unit>
       <trans-unit id="3cf24bd14d83dda63637b625607939c622edcdf6" resname="Telefonnummer">
         <jms:reference-file line="57">Resources/views/pdf.html.twig</jms:reference-file>
@@ -673,6 +1515,11 @@
         <source>Telefonnummer</source>
         <target>Phone number</target>
       </trans-unit>
+      <trans-unit id="79cf62a86912f6cb53bcc7872883c733139b9d9b" resname="Telefonnummer der verantwortlichen Organisation oder Person">
+        <jms:reference-file line="11">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Telefonnummer der verantwortlichen Organisation oder Person</source>
+        <target>Phone number of the responsible organization or person</target>
+      </trans-unit>
       <trans-unit id="b1aafd2fad974ad3f25d6091adbf6769ffd0e4ce" resname="Themenkategorie">
         <jms:reference-file line="155">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="9">views/Profile/classification.html.twig</jms:reference-file>
@@ -681,7 +1528,6 @@
         <target>Theme category</target>
       </trans-unit>
       <trans-unit id="950701e758d18a72134a6b8948c7cf42867c0eb9" resname="Titel">
-        <jms:reference-file line="26">Resources/views/index.html.twig</jms:reference-file>
         <jms:reference-file line="115">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="275">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="72">views/Profile/identification.html.twig</jms:reference-file>
@@ -697,20 +1543,60 @@
         <source>Transformationsdienste</source>
         <target>Services of transformation</target>
       </trans-unit>
+      <trans-unit id="edcaf9aaa2828c11cf212b2f0aa35b326468dfeb" resname="Typ">
+        <jms:reference-file line="85">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Typ</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="7c3ceedd3d166466ac56b2f6123451d788a697ca" resname="Typ der Bewertungsmethode für die Qualitätsprüfung">
+        <jms:reference-file line="100">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Typ der Bewertungsmethode für die Qualitätsprüfung</source>
+        <target>Type of evaluation method for quality testing</target>
+      </trans-unit>
+      <trans-unit id="84b428ae1e06c23e35efb09012539d5e2376ccf6" resname="Typ der Information, die in der Zelle dargestellt wird">
+        <jms:reference-file line="78">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Typ der Information, die in der Zelle dargestellt wird</source>
+        <target>Type of information that is displayed in the cell</target>
+      </trans-unit>
+      <trans-unit id="914e497795a5f425e6e81bda6a2a4cc219c20c96" resname="Typ der geometrischen Objekte">
+        <jms:reference-file line="178">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Typ der geometrischen Objekte</source>
+        <target>Type of geometric objects</target>
+      </trans-unit>
+      <trans-unit id="f7d4228754a736f835ebb2c153459d1b18bbbc3b" resname="Typischer Zeitraum für die Erfüllung eines Lieferauftrages.">
+        <jms:reference-file line="144">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Typischer Zeitraum für die Erfüllung eines Lieferauftrages.</source>
+        <target>Typical period for the fulfillment of a supply contract.</target>
+      </trans-unit>
       <trans-unit id="0e2d9b0777a485c1276de0803c12a7d76fbc5c39" resname="URL">
         <jms:reference-file line="107">views/Profile/classification.html.twig</jms:reference-file>
         <source>URL</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit id="b0b30059851a52f9eb00eccd1592b1cfccd29113" resname="Uhrzeit">
-        <jms:reference-file line="29">Resources/views/index.html.twig</jms:reference-file>
-        <source>Uhrzeit</source>
-        <target>Time</target>
+      <trans-unit id="5ce81adcd0a39c4e0be2e188b5732b333b125d33" resname="URL der online Resource">
+        <jms:reference-file line="163">Resources/views/dump.html.twig</jms:reference-file>
+        <source>URL der online Resource</source>
+        <target>URL of the online resource</target>
+      </trans-unit>
+      <trans-unit id="9cf16aa6bcef74dbf3ad019423adaa56de496332" resname="URL zur verantwortlichen Stelle">
+        <jms:reference-file line="38">Resources/views/dump.html.twig</jms:reference-file>
+        <source>URL zur verantwortlichen Stelle</source>
+        <target>URL to the responsible authority</target>
+      </trans-unit>
+      <trans-unit id="42d305fdc512d5f7208c6e8b81a0833ebdb7c8d6" resname="URL zur verantwortlichen Stelle für die Metadaten">
+        <jms:reference-file line="19">Resources/views/dump.html.twig</jms:reference-file>
+        <source>URL zur verantwortlichen Stelle für die Metadaten</source>
+        <target>URL for the responsible entity for the metadata</target>
       </trans-unit>
       <trans-unit id="393d777dd0025c100adea9fa1aa26d9086ba2011" resname="Umwelt">
         <jms:reference-file line="28">views/Profile/classification.html.twig</jms:reference-file>
         <source>Umwelt</source>
         <target>Environment</target>
+      </trans-unit>
+      <trans-unit id="7818be275be8371c0d6ee8314292ccd999e1527f" resname="Unterstützende Beschreibung von der Datenkopplung im Fall eines fest gekoppelten Dienstes.">
+        <jms:reference-file line="150">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Unterstützende Beschreibung von der Datenkopplung im Fall eines fest gekoppelten Dienstes.</source>
+        <target>Supporting description of the data connection in the case of a tightly coupled service.</target>
       </trans-unit>
       <trans-unit id="ee5d5bea9150345947b2392128393d20e34f744c" resname="Urheber">
         <jms:reference-file line="111">views/Profile/responsibleparty.html.twig</jms:reference-file>
@@ -729,6 +1615,11 @@
         <source>Verantwortliche Stelle</source>
         <target>Responsible authority</target>
       </trans-unit>
+      <trans-unit id="faa06e0fec4f493f3c774e43f8c30ab592d3b6a5" resname="Verantwortliche Stelle für den Datensatz">
+        <jms:reference-file line="37">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Verantwortliche Stelle für den Datensatz</source>
+        <target>Responsible entity for the dataset</target>
+      </trans-unit>
       <trans-unit id="6af4a1d33bb1dc799486d129808e41fc3f20088c" resname="Verkehrswesen">
         <jms:reference-file line="30">views/Profile/classification.html.twig</jms:reference-file>
         <source>Verkehrswesen</source>
@@ -742,10 +1633,30 @@
         <source>Version</source>
         <target>Version</target>
       </trans-unit>
+      <trans-unit id="75c3cabd94c145dd48ca2d498ca7a764821c24d6" resname="Version des Datenformats">
+        <jms:reference-file line="42">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Version des Datenformats</source>
+        <target>Version of the data format</target>
+      </trans-unit>
+      <trans-unit id="778e8e2be33144ad2c4b7e6d24ca99c2678676c3" resname="Version des Formats">
+        <jms:reference-file line="160">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Version des Formats</source>
+        <target>Version of the format</target>
+      </trans-unit>
+      <trans-unit id="91fa1e08b3edf7ee62aa79cb91521c364fcb27fb" resname="Version des verwendeten Objektartenkatalogs">
+        <jms:reference-file line="185">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Version des verwendeten Objektartenkatalogs</source>
+        <target>Version of the object types catalog used</target>
+      </trans-unit>
       <trans-unit id="3b6ede9853e1ed87a68d841f471e215d6f0fd6f9" resname="Vertrieb">
         <jms:reference-file line="114">views/Profile/responsibleparty.html.twig</jms:reference-file>
         <source>Vertrieb</source>
         <target>Distribution</target>
+      </trans-unit>
+      <trans-unit id="e28363d82e35319fe88026e94f84a1b240e45155" resname="Vertriebseinheiten">
+        <jms:reference-file line="172">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Vertriebseinheiten</source>
+        <target>Distribution unit</target>
       </trans-unit>
       <trans-unit id="7aec124924608e09172033c5d49d271a4bb91c39" resname="Verwalter">
         <jms:reference-file line="117">views/Profile/responsibleparty.html.twig</jms:reference-file>
@@ -769,6 +1680,21 @@
         <jms:reference-file line="198">views/Export/pdf.html.twig</jms:reference-file>
         <source>W Längengrad</source>
         <target>W Longitude</target>
+      </trans-unit>
+      <trans-unit id="88f9f2c7fcc9d34faf80be8e247fdfe19ec3c740" resname="Wann wurde die Bewertungsmethode veröffentlicht, erstellt oder überarbeitet.">
+        <jms:reference-file line="116">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Wann wurde die Bewertungsmethode veröffentlicht, erstellt oder überarbeitet.</source>
+        <target>When was the assessment method published, created or revised?</target>
+      </trans-unit>
+      <trans-unit id="61400d457b24ea15c60bef4edc4a10dbcb133d75" resname="Wertetyp, in dem das Qualitätsergebnis angegeben wird">
+        <jms:reference-file line="110">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Wertetyp, in dem das Qualitätsergebnis angegeben wird</source>
+        <target>Value type, in which the quality result is given</target>
+      </trans-unit>
+      <trans-unit id="ee982d44e457ea51ea6568f16ff92415b8df75e8" resname="Winkel zwischen Nordrichtung und Sensor, gemessen im Szenenmittelpunkt.">
+        <jms:reference-file line="90">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Winkel zwischen Nordrichtung und Sensor, gemessen im Szenenmittelpunkt.</source>
+        <target>Angle between the north direction and sensor, measured in the scene center</target>
       </trans-unit>
       <trans-unit id="2873686a58bcbdfbc29efe9fb9d5f3fd5c0cda53" resname="Wirklich löschen">
         <jms:reference-file line="7">Resources/views/confirm.html.twig</jms:reference-file>
@@ -800,6 +1726,11 @@
         <source>Zeitliche Ausdehnung</source>
         <target>Temporal extension</target>
       </trans-unit>
+      <trans-unit id="940200118b228c7332ca45d05f9b38ab6e84d6b8" resname="Zeitpunkt der Bewertung">
+        <jms:reference-file line="104">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Zeitpunkt der Bewertung</source>
+        <target>Time of the evaluation</target>
+      </trans-unit>
       <trans-unit id="c28b691449b12b738475540b35a44bddd84ebfe5" resname="Zuständige Person">
         <jms:reference-file line="29">Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="335">Resources/views/pdf.html.twig</jms:reference-file>
@@ -819,20 +1750,125 @@
         <source>Zuständige Stelle</source>
         <target>Responsible authority</target>
       </trans-unit>
-      <trans-unit id="4e647b522116fd7acaf0b4149ad1fc2ee7ef310b" resname="bearbeiten">
-        <jms:reference-file line="31">Resources/views/index.html.twig</jms:reference-file>
-        <source>bearbeiten</source>
-        <target>edit</target>
+      <trans-unit id="4fac4a854157d72ab4e7668c7d7481f7ea154250" resname="Zusätzliche Angaben zur Einstufung.">
+        <jms:reference-file line="51">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Zusätzliche Angaben zur Einstufung.</source>
+        <target>Additional information on the classification.</target>
+      </trans-unit>
+      <trans-unit id="c07ec237e6f1d03c109026c69e8bd30fa4b21c75" resname="Zusätzliche Bemerkungen.">
+        <jms:reference-file line="74">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Zusätzliche Bemerkungen.</source>
+        <target>Additional Comments.</target>
+      </trans-unit>
+      <trans-unit id="a715e53fe1c463b16d8fe452b4fe1128cdcdb369" resname="bibliografische Angaben zum Objektartenkatalog">
+        <jms:reference-file line="182">Resources/views/dump.html.twig</jms:reference-file>
+        <source>bibliografische Angaben zum Objektartenkatalog</source>
+        <target>Bibliographic information about the object types catalog</target>
+      </trans-unit>
+      <trans-unit id="7fc3eb6a163a42cc4c06146a6f2ac68ab4cab02d" resname="bibliografische Angaben zur Benutzeranforderung, anhand derer die Daten bewertet werden">
+        <jms:reference-file line="105">Resources/views/dump.html.twig</jms:reference-file>
+        <source>bibliografische Angaben zur Benutzeranforderung, anhand derer die Daten bewertet werden</source>
+        <target>bibliographic information for user requirement with which the data is evaluated</target>
+      </trans-unit>
+      <trans-unit id="9e771c421814cdfa22751ae2772d6a0c39dbb181" resname="bibliografischer Nachweis zur eindeutigen Identifizierung der Bewertungsmethode">
+        <jms:reference-file line="115">Resources/views/dump.html.twig</jms:reference-file>
+        <source>bibliografischer Nachweis zur eindeutigen Identifizierung der Bewertungsmethode</source>
+        <target>bibliographic evidence to uniquely identify the evaluation method</target>
+      </trans-unit>
+      <trans-unit id="8871173e3c8cb94f89bf0beedf92d98dddb5a50d" resname="digitale Darstellung der räumlichen Informationen im Datenbestand">
+        <jms:reference-file line="177">Resources/views/dump.html.twig</jms:reference-file>
+        <source>digitale Darstellung der räumlichen Informationen im Datenbestand</source>
+        <target>digital representation of spatial information in the dataset</target>
+      </trans-unit>
+      <trans-unit id="9ee7e44648ee6281d52be6b43b8288e8b54705d5" resname="eine Gebietsgrenze des Datenbestands, ausgedrückt als geschlossener Satz von (x,y) Koordinaten des Polygons (der letzte Punkt ist eine Wiederholung des ersten Punkts)">
+        <jms:reference-file line="148">Resources/views/dump.html.twig</jms:reference-file>
+        <source>eine Gebietsgrenze des Datenbestands, ausgedrückt als geschlossener Satz von (x,y) Koordinaten des Polygons (der letzte Punkt ist eine Wiederholung des ersten Punkts)</source>
+        <target>an area limit of the dataset, expressed as a closed set of (x, y) coordinates of the polygon (the last point is a repeat of the first point)</target>
+      </trans-unit>
+      <trans-unit id="93498aded83ad8f5e79c4b69bf520d6a7977b404" resname="geografische Angaben zur Ausdehnung">
+        <jms:reference-file line="65">Resources/views/dump.html.twig</jms:reference-file>
+        <source>geografische Angaben zur Ausdehnung</source>
+        <target>geographical information on the extent</target>
+      </trans-unit>
+      <trans-unit id="40335d7409430266c74873ddb0dd9ad1b5684856" resname="gibt die Ebene an, auf die sich die Qualitätsangaben beziehen">
+        <jms:reference-file line="93">Resources/views/dump.html.twig</jms:reference-file>
+        <source>gibt die Ebene an, auf die sich die Qualitätsangaben beziehen</source>
+        <target>indicates the level to which the quality of information relates</target>
+      </trans-unit>
+      <trans-unit id="593fa11d709aff3d78269a8895a8f3e723a4e089" resname="importieren">
+        <jms:reference-file line="10">views/Import/index.html.twig</jms:reference-file>
+        <source>importieren</source>
+        <target>Import</target>
+      </trans-unit>
+      <trans-unit id="ca10409f95a35152999816b35ac517f3caef6141" resname="nicht-quantitative Qualitätsinformation über die Herkunft der Daten bezogen auf den genannten Geltungsbereich">
+        <jms:reference-file line="122">Resources/views/dump.html.twig</jms:reference-file>
+        <source>nicht-quantitative Qualitätsinformation über die Herkunft der Daten bezogen auf den genannten Geltungsbereich</source>
+        <target>non-quantitative quality information about the origin of the data related to the aforementioned scope</target>
+      </trans-unit>
+      <trans-unit id="1d4e788ca2e2d365b74b975c1f51bf51967c860b" resname="nördlichste Koordinate des Begrenzungsrechtecks, Breite in Dezimalgrad">
+        <jms:reference-file line="70">Resources/views/dump.html.twig</jms:reference-file>
+        <source>nördlichste Koordinate des Begrenzungsrechtecks, Breite in Dezimalgrad</source>
+        <target>northernmost coordinate of the bounding box, width in decimal degrees</target>
+      </trans-unit>
+      <trans-unit id="6813c18f5e3289924e40df5762208e65564072d3" resname="prozentuale Angabe der Fläche des Datenbestands, die durch Wolken bedeckt ist. Wertebereich: 0.0 - 100.0">
+        <jms:reference-file line="87">Resources/views/dump.html.twig</jms:reference-file>
+        <source>prozentuale Angabe der Fläche des Datenbestands, die durch Wolken bedeckt ist. Wertebereich: 0.0 - 100.0</source>
+        <target>percentage figure of the surface of the data volume that is covered by clouds. Range: 0.0 - 100.0</target>
+      </trans-unit>
+      <trans-unit id="47dcf26c6372efca540d2f8ebecf16730d1b8e68" resname="quantitative Qualitätsinformation über die Daten">
+        <jms:reference-file line="95">Resources/views/dump.html.twig</jms:reference-file>
+        <source>quantitative Qualitätsinformation über die Daten</source>
+        <target>quantitative Qualitätsinformation über die Daten</target>
+      </trans-unit>
+      <trans-unit id="63a140e636ecf959e1f2ea5f5d33f027def6bf38" resname="quantitative(r) Ergebniswert(e) der angewendeten Bewertungsmethode">
+        <jms:reference-file line="113">Resources/views/dump.html.twig</jms:reference-file>
+        <source>quantitative(r) Ergebniswert(e) der angewendeten Bewertungsmethode</source>
+        <target>quantitative quality information about the data</target>
+      </trans-unit>
+      <trans-unit id="a6c81efb4d5cac54e42e9c1339d86b397edb9abe" resname="quantitative(r) Ergebniswert(e) der angewendeten Bewertungsmethode (Die absolute Lageabweichung zum räumlichen Bezugssystem.)">
+        <jms:reference-file line="121">Resources/views/dump.html.twig</jms:reference-file>
+        <source>quantitative(r) Ergebniswert(e) der angewendeten Bewertungsmethode (Die absolute Lageabweichung zum räumlichen Bezugssystem.)</source>
+        <target>quantitative return value(s) of the valuation method used (the absolute positional deviation to the spatial reference system.)</target>
+      </trans-unit>
+      <trans-unit id="005cb13b6f2f8125c43fad6ff3421b45b79e1925" resname="rechtliche Einschränkungen für die Verwendung der Ressource">
+        <jms:reference-file line="52">Resources/views/dump.html.twig</jms:reference-file>
+        <source>rechtliche Einschränkungen für die Verwendung der Ressource</source>
+        <target>legal restrictions on the use of the resource</target>
+      </trans-unit>
+      <trans-unit id="419a33a576dccab51a51a0b29b5773a1a777e465" resname="statistische Methode zur Ermittlung des Werts">
+        <jms:reference-file line="112">Resources/views/dump.html.twig</jms:reference-file>
+        <source>statistische Methode zur Ermittlung des Werts</source>
+        <target>statistical method for determining the value</target>
+      </trans-unit>
+      <trans-unit id="549d63ac97a8111b013dd4b8c8e91872bbfac5a6" resname="südlichste Koordinate des Begrenzungsrechtecks, Breite in Dezimalgrad">
+        <jms:reference-file line="69">Resources/views/dump.html.twig</jms:reference-file>
+        <source>südlichste Koordinate des Begrenzungsrechtecks, Breite in Dezimalgrad</source>
+        <target>southernmost coordinates of the bounding box, width in decimal degrees</target>
+      </trans-unit>
+      <trans-unit id="642549fcf3a9ce7c1d6496d6afea90e9713eaed0" resname="umfassende Qualitätsbewertung der Daten">
+        <jms:reference-file line="92">Resources/views/dump.html.twig</jms:reference-file>
+        <source>umfassende Qualitätsbewertung der Daten</source>
+        <target>comprehensive quality evaluation of data</target>
       </trans-unit>
       <trans-unit id="f0f989b82b5c542908212af74304691709b8a6dc" resname="veröffentlichen">
-        <jms:reference-file line="30">Resources/views/index.html.twig</jms:reference-file>
+        <jms:reference-file line="36">PublishBundle/EventListener/ApplicationListener.php</jms:reference-file>
         <source>veröffentlichen</source>
         <target>publish</target>
       </trans-unit>
-      <trans-unit id="445584edc4cc7bcf1b07500ef1605d08c0f45727" resname="von">
-        <jms:reference-file line="17">Resources/views/index.html.twig</jms:reference-file>
-        <source>von</source>
-        <target>of</target>
+      <trans-unit id="45672d89bbf7cffd328bf7f3b37d267bc5efb036" resname="vorhandene und fehlende Objekte">
+        <jms:reference-file line="96">Resources/views/dump.html.twig</jms:reference-file>
+        <source>vorhandene und fehlende Objekte</source>
+        <target>existing and missing objects</target>
+      </trans-unit>
+      <trans-unit id="fe95b367e92ecc95d932b435a0f3dc66f6fdbb14" resname="weitere Informationen zum Datenbestand">
+        <jms:reference-file line="35">Resources/views/dump.html.twig</jms:reference-file>
+        <source>weitere Informationen zum Datenbestand</source>
+        <target>More information about the dataset</target>
+      </trans-unit>
+      <trans-unit id="908c1f3ddc80c3d56d9c6b4075734fe28bc39874" resname="westlichste Koordinate des Begrenzungsrechtecks, Länge in Dezimalgrad">
+        <jms:reference-file line="67">Resources/views/dump.html.twig</jms:reference-file>
+        <source>westlichste Koordinate des Begrenzungsrechtecks, Länge in Dezimalgrad</source>
+        <target>westernmost coordinate of the bounding box, length in decimal degrees</target>
       </trans-unit>
       <trans-unit id="6b62be480582f129251eb140207a677e21aa9ba2" resname="Äquivalenter Maßstab">
         <jms:reference-file line="260">Resources/views/pdf.html.twig</jms:reference-file>
@@ -859,6 +1895,16 @@
         <jms:reference-file line="13">Resources/views/form.html.twig</jms:reference-file>
         <source>Übereinstimmung</source>
         <target>Accordance</target>
+      </trans-unit>
+      <trans-unit id="6e1fd93aae842476ecf49a65c8fba73aadc4df3d" resname="Übertragungsvolumen">
+        <jms:reference-file line="173">Resources/views/dump.html.twig</jms:reference-file>
+        <source>Übertragungsvolumen</source>
+        <target>transmission volume</target>
+      </trans-unit>
+      <trans-unit id="eca95ea0e7e0ede15e2a532616d546431639aba7" resname="östlichste Koordinate des Begrenzungsrechtecks, Länge in Dezimalgrad">
+        <jms:reference-file line="68">Resources/views/dump.html.twig</jms:reference-file>
+        <source>östlichste Koordinate des Begrenzungsrechtecks, Länge in Dezimalgrad</source>
+        <target>easternmost coordinate of the bounding box, length in decimal degrees</target>
       </trans-unit>
     </body>
   </file>
