@@ -37,8 +37,13 @@ class HelptextController extends Controller
                 $text = trim(preg_replace('/^<br>/', '', trim($text)));
             }
 
-            /** @Ignore */
-            $string = $this->get('translator')->trans($text);
+            if ($this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
+                $string = $text;
+            } else {
+                /** @Ignore */
+                $string = $this->get('translator')->trans($text);
+            }
+
         } else {
             $string = "Hilfetext nicht definiert.";
         }
