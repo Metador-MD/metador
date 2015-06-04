@@ -1,2 +1,2 @@
 parameters:
-  publish_folder:   "%kernel.root_dir%/../var/published"
+    publish_folder:   "%kernel.root_dir%/../var/published"

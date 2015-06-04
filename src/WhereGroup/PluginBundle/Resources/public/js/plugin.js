@@ -61,19 +61,3 @@ $(document).ready(function() {
         }, pluginElement.attr('data-plugins'));
     }
 });
-
-
-        // request('assets', function(data) {
-        //     check('assets', data);
-
-        //     request('database', function(data) {
-        //         check('database', data);
-
-        //         request('cache', function(data) {
-        //             check('cache', data);
-
-        //             $('.plugin-wait').hide();
-        //             $('#plugin-reload').show();
-        //         });
-        //     });
-        // });

@@ -97,7 +97,7 @@ class Plugin
 
     /**
      * @param $request
-     * @param $redirect
+     * @return array
      */
     public function update($request)
     {
@@ -298,7 +298,7 @@ class Plugin
      */
     public function readYaml($file)
     {
-        return Yaml::parse($file);
+        return Yaml::parse(file_get_contents($file));
     }
 
     /**

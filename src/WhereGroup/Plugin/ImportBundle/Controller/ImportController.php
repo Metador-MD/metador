@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ImportControllerController
@@ -32,10 +33,10 @@ class ImportController extends Controller
      * @Route("{profile}/xml/", name="metador_import_xml")
      * @Method("POST")
      */
-    public function xmlAction($profile)
+    public function xmlAction(Request $request, $profile)
     {
         /** @var UploadedFile $file */
-        foreach ($this->getRequest()->files as $file) {
+        foreach ($request->files as $file) {
             if (!$file instanceof UploadedFile) {
                 $this->get('session')->getFlashBag()->add('error', 'Bitte XML-Datei angeben.');
                 return $this->redirect($this->generateUrl('metador_dashboard'));

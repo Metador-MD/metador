@@ -5,14 +5,14 @@
     <ul class="profile-list">
         {% if locale != 'de' %}
         <li>
-            <form action="{{ path('metador_locale_update', { 'locale': 'de' }) }}" method="post">
+            <form action="{{ path('metador_admin_locale_update', { 'locale': 'de' }) }}" method="post">
                 <button class="noStyle">{{ 'Deutsch'|trans }}</button>
             </form>
         </li>
         {% endif %}
         {% if locale != 'en' %}
         <li>
-            <form action="{{ path('metador_locale_update', { 'locale': 'en' }) }}" method="post">
+            <form action="{{ path('metador_admin_locale_update', { 'locale': 'en' }) }}" method="post">
                 <button class="noStyle">{{ 'Englisch'|trans }}</button>
             </form>
         </li>

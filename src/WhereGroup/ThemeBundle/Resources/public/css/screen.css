@@ -760,6 +760,11 @@ html, body {
   width: 100%;
   padding: 0;
   margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .clear {
@@ -2296,6 +2301,38 @@ textarea.code {
 
 .app-information {
   list-style: none;
+}
+
+.metador-translation {
+  padding: 20px;
+}
+.metador-translation .locale-word {
+  padding: 0 0 20px 0;
+}
+.metador-translation .locale-translation {
+  width: 480px;
+  height: 100px;
+  float: left;
+  overflow: auto;
+}
+.metador-translation .locale-add-existing {
+  color: #ddd;
+  font-size: 26px;
+  width: 50px;
+  text-align: center;
+  float: left;
+}
+.metador-translation .locale-add-existing > .icon-arrow-left.act {
+  color: green;
+  cursor: pointer;
+}
+.metador-translation .locale-existing {
+  width: 330px;
+  float: left;
+  height: 100px;
+  border-left: 1px solid #ddd;
+  padding: 0 20px;
+  overflow: auto;
 }
 
 .icon {

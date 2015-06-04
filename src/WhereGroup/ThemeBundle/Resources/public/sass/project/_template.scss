@@ -1,11 +1,3 @@
-// SIZES
-$pageWidth: 960px;
-$pageLeftWidth: 180px;
-$pageTopHeight: 200px;
-$pageBottomHeight: 20px;
-$global-menu-height: 40px;
-$bright: #e7e7e7;
-
 * {
     @include box-sizing(border-box);
     @include text-shadow(rgba(0,0,0,0.1) 1px 1px 0px);
@@ -25,6 +17,7 @@ html, body{
     width:100%;
     padding: 0;
     margin: 0;
+    @include pos(0,0,0,0);
 }
 
 .clear {

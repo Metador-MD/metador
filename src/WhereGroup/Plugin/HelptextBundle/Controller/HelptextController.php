@@ -2,6 +2,7 @@
 
 namespace WhereGroup\Plugin\HelptextBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,9 +19,9 @@ class HelptextController extends Controller
      * @Route("/help/get", name="metador_helptext_get")
      * @Method("GET")
      */
-    public function getHelptext()
+    public function getHelptext(Request $request)
     {
-        $id = $this->getRequest()->get('id', false);
+        $id = $request->get('id', false);
         $em = $this->getDoctrine()->getManager();
 
         /** @var Helptext $helptext */
@@ -40,7 +41,6 @@ class HelptextController extends Controller
             if ($this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
                 $string = $text;
             } else {
-                /** @Ignore */
                 $string = $this->get('translator')->trans($text);
             }
 
@@ -62,39 +62,41 @@ class HelptextController extends Controller
      * @Route("/help/set", name="metador_helptext_set")
      * @Method("POST")
      */
-    public function setHelptext()
+    public function setHelptext(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        $id = $this->getRequest()->get('id', false);
-        $html = $this->getRequest()->get('html', false);
+        $id   = $request->get('id', null);
+        $html = $request->get('html', null);
 
-        if ($id && $html) {
-            $em = $this->getDoctrine()->getManager();
-
-            /** @var Helptext $helptext */
-            $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
-
-            $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
-            $html = str_replace(
-                array('<div>','</div>'),
-                array('',''),
-                $html
-            );
-
-            if ($helptext) {
-                $helptext->setText($html);
-            } else {
-                $helptext = new Helptext();
-                $helptext->setId($id);
-                $helptext->setText($html);
-            }
-
-            $em->persist($helptext);
-            $em->flush();
+        if (is_null($id) || is_null($html)) {
+            throw new \Exception("ID oder HTML Parameter nicht gefunden.", 1);
         }
+
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Helptext $helptext */
+        $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
+
+        $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
+        $html = str_replace(
+            array('<div>','</div>'),
+            array('',''),
+            $html
+        );
+
+        if ($helptext) {
+            $helptext->setText($html);
+        } else {
+            $helptext = new Helptext();
+            $helptext->setId($id);
+            $helptext->setText($html);
+        }
+
+        $em->persist($helptext);
+        $em->flush();
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/html');

@@ -4,7 +4,7 @@ namespace WhereGroup\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
@@ -13,13 +13,13 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('password')
-            ->add('email',null,array('required' => false))
+            ->add('email', null, array('required' => false))
             ->add('isActive')
-            ->add('groups',null,array('required' => false))
+            ->add('groups', null, array('required' => false))
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'WhereGroup\UserBundle\Entity\User'

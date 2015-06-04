@@ -12536,12 +12536,12 @@
 				},
 				{
 					"id": 1071,
-					"order": 0,
+					"order": 53,
 					"prevSize": 32,
 					"code": 59960,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "arrow-left, left3",
-					"name": ""
+					"name": "arrow-left"
 				},
 				{
 					"id": 1072,
@@ -13196,7 +13196,7 @@
 					"order": 38,
 					"prevSize": 32,
 					"code": 60033,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "terminal, console",
 					"name": "terminal"
 				},
@@ -13205,7 +13205,7 @@
 					"order": 41,
 					"prevSize": 32,
 					"code": 60034,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "share2, social",
 					"name": "share2"
 				},
@@ -13655,7 +13655,7 @@
 					"order": 43,
 					"prevSize": 32,
 					"code": 60084,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "github4, brand43",
 					"name": "github4"
 				},

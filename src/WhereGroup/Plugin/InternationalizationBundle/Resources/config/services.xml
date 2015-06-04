@@ -4,12 +4,23 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <!-- COMPONENT -->
+        <!-- SERVICE -->
+        <parameter key="wheregroup.metador.locale.class">WhereGroup\Plugin\InternationalizationBundle\Component\Locale</parameter>
+
+        <!-- EVENTLISTENER -->
         <parameter key="wheregroup.internationalization.app.listener.class">WhereGroup\Plugin\InternationalizationBundle\EventListener\ApplicationMenuListener</parameter>
     </parameters>
 
     <services>
-        <!-- COMPONENT -->
+        <!-- SERVICE -->
+        <service id="metador_locale" class="%wheregroup.metador.locale.class%">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="metador_plugin" />
+            <argument>%i18n_locales%</argument>
+            <argument>%i18n_bundles%</argument>
+        </service>
+
+        <!-- EVENTLISTENER -->
         <service id="wheregroup_internationalization_app_listener" class="%wheregroup.internationalization.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
             <argument type="service" id="kernel" />

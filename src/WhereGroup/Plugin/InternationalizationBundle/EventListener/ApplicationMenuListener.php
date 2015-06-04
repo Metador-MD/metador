@@ -6,9 +6,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
+use WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
-class ApplicationMenuListener
+class ApplicationMenuListener extends ApplicationIntegration
 {
+    protected $app     = null;
+    protected $prefix  = 'locale';
+
     /** @var Request */
     private $request;
 
@@ -34,22 +38,25 @@ class ApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app = $event->getApplication();
+        $this->app = $event->getApplication();
 
-        $app->prepend('app-global-menu', 'locale', array(
+        $this->app->prepend('app-global-menu', 'locale', array(
             'template' => "WhereGroupInternationalizationBundle::menu.html.twig",
             'params'   => array(
                 'locale' => $this->request->getLocale()
             )
         ));
 
-        if ($app->routeStartsWith('metador_admin') && $this->kernel->getEnvironment() === 'dev') {
-            $app->add('app-admin-menu', 'locale', array(
+        if ($this->app->isBundle('internationalization')) {
+            $this->addToScripts('bundles/wheregroupinternationalization/locale.js');
+        }
+
+        if ($this->app->routeStartsWith('metador_admin') && $this->kernel->getEnvironment() === 'dev') {
+            $this->app->add('app-admin-menu', 'locale', array(
                 'icon'   => 'icon-flag',
                 'label'  => 'Sprachen',
-                'path'   => 'jms_translation_index',
-                'params' => array(),
-                'target' => '_BLANK'
+                'path'   => 'metador_admin_locale_edit',
+                'params' => array()
             ), 'ROLE_SUPERUSER');
         }
     }

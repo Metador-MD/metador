@@ -19,11 +19,11 @@ class MetadataController extends Controller
      * @Route("/{profile}/index", name="metadata_index")
      * @Method("GET")
      */
-    public function indexAction($profile)
+    public function indexAction($profile, Request $request)
     {
         $metadata = $this->get('metadata')->getMetadata(
             20,
-            $this->get('request')->get('page', 1),
+            $request->get('page', 1),
             $profile
         );
 
@@ -40,14 +40,14 @@ class MetadataController extends Controller
      * @Route("/{profile}/new", name="metadata_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction($profile)
+    public function newAction($profile, Request $request)
     {
         // LOAD
-        if ($this->get('request')->getMethod() == 'GET') {
+        if ($request->getMethod() == 'GET') {
             $p = array('dateStamp' => date("Y-m-d"));
 
         // SAVE
-        } elseif (($p = $this->getRequest()->request->get('p', false))
+        } elseif (($p = $request->request->get('p', false))
             && $this->get('metadata')->saveObject($p)) {
             return $this->redirect(
                 $this->generateUrl('metadata_index', array('profile' => $profile))
@@ -92,20 +92,20 @@ class MetadataController extends Controller
      * @Route("/{profile}/edit/{id}", name="metadata_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction($profile, $id)
+    public function editAction($profile, $id, Request $request)
     {
         $metadata = $this->get('metadata');
         $data = $metadata->getById($id);
 
         // LOAD
-        if ($this->get('request')->getMethod() == 'GET') {
+        if ($request == 'GET') {
             if (($p = $data->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
 
         // SAVE
         } else {
-            if (($p = $this->getRequest()->request->get('p', false)) && $metadata->saveObject($p, $id)) {
+            if (($p = $request->request->get('p', false)) && $metadata->saveObject($p, $id)) {
                 return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
             }
         }
@@ -145,12 +145,12 @@ class MetadataController extends Controller
      * @Route("/{profile}/delete/{id}", name="metadata_delete")
      * @Method("POST")
      */
-    public function deleteAction($profile, $id)
+    public function deleteAction($profile, $id, Request $request)
     {
         $form = $this->createFormBuilder($this->get('metadata')->getById($id))
             ->add('delete', 'submit', array('label' => 'löschen'))
             ->getForm()
-            ->submit($this->get('request'));
+            ->submit($request);
 
         if ($form->isValid()) {
             $this->get('metadata')->deleteById($id);
