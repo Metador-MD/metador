@@ -14,15 +14,32 @@ web_profiler:
 monolog:
     handlers:
         main:
-            type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
-            level: debug
-        firephp:
-            type:  firephp
-            level: info
-        chromephp:
-            type:  chromephp
-            level: info
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: INFO
+                VERBOSITY_VERY_VERBOSE: DEBUG
+            channels: ["!doctrine"]
+        console_very_verbose:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: NOTICE
+                VERBOSITY_VERY_VERBOSE: NOTICE
+                VERBOSITY_DEBUG: DEBUG
+            channels: ["doctrine"]
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type:   firephp
+        #    level:  info
+        #chromephp:
+        #    type:   chromephp
+        #    level:  info
 
 assetic:
     use_controller: true
@@ -30,34 +47,3 @@ assetic:
 #swiftmailer:
 #    delivery_address: me@example.com
 
-# http://jmsyst.com/bundles/JMSTranslationBundle
-# http://jmsyst.com/bundles/JMSTranslationBundle/master/webinterface
-# http://jmsyst.com/bundles/JMSI18nRoutingBundle
-services:
-    twig.text_extension:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - name: twig.extension
-
-jms_translation:
-    source_language: de
-    locales:
-        - en
-
-    configs:
-        # app/console translation:extract --config=application
-        application:
-            dirs: [%kernel.root_dir%/../src/WhereGroup]
-            output_dir: %kernel.root_dir%/Resources/translations/application
-            excluded_names: ["*TestCase.php", "*Test.php"]
-            excluded_dirs: [Plugin]
-        # app/console translation:extract --config=plugins
-        plugins:
-            dirs: [%kernel.root_dir%/../src/WhereGroup/Plugin]
-            output_dir: %kernel.root_dir%/Resources/translations/plugins
-            excluded_names: ["*TestCase.php", "*Test.php"]
-        # app/console translation:extract --config=user
-        user:
-            dirs: [%kernel.root_dir%/../src/User]
-            output_dir: %kernel.root_dir%/Resources/translations/user
-            excluded_names: ["*TestCase.php", "*Test.php"]

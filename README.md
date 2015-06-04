@@ -1,8 +1,4 @@
-MeTaDor2
-========
-Metadata Editor for creating metadata according to the INSPIRE and GDI-DE implementing rules.
+metador-2.1
+===========
 
-[Required](app/Resources/doc/required.md)  
-[Installation](app/Resources/doc/installation.md)  
-[Changelog](app/Resources/doc/changelog.md)  
-[Update](app/Resources/doc/update.md)  
+A Symfony project created on June 1, 2015, 11:42 am.
