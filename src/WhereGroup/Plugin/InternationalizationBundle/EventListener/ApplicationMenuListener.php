@@ -2,7 +2,7 @@
 
 namespace WhereGroup\Plugin\InternationalizationBundle\EventListener;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
@@ -13,8 +13,8 @@ class ApplicationMenuListener extends ApplicationIntegration
     protected $app     = null;
     protected $prefix  = 'locale';
 
-    /** @var Request */
-    private $request;
+    /** @var RequestStack */
+    private $requestStack;
 
     /** @var KernelInterface  */
     private $kernel;
@@ -22,15 +22,10 @@ class ApplicationMenuListener extends ApplicationIntegration
     /**
      * @param KernelInterface $kernel
      */
-    public function __construct(KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel, RequestStack $requestStack)
     {
         $this->kernel = $kernel;
-
-        if ($this->kernel->getContainer()->has('request')) {
-            $this->request = $this->kernel->getContainer()->get('request');
-        } else {
-            $this->request = Request::createFromGlobals();
-        }
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -43,7 +38,7 @@ class ApplicationMenuListener extends ApplicationIntegration
         $this->app->prepend('app-global-menu', 'locale', array(
             'template' => "WhereGroupInternationalizationBundle::menu.html.twig",
             'params'   => array(
-                'locale' => $this->request->getLocale()
+                'locale' => $this->requestStack->getCurrentRequest()->getLocale()
             )
         ));
 

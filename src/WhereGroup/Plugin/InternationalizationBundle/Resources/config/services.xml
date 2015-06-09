@@ -18,12 +18,14 @@
             <argument type="service" id="metador_plugin" />
             <argument>%i18n_locales%</argument>
             <argument>%i18n_bundles%</argument>
+            <argument>%i18n_import%</argument>
         </service>
 
         <!-- EVENTLISTENER -->
         <service id="wheregroup_internationalization_app_listener" class="%wheregroup.internationalization.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
             <argument type="service" id="kernel" />
+            <argument type="service" id="request_stack" />
         </service>
 
         <service id="wheregroup_internationalization_locale_listener" class="WhereGroup\Plugin\InternationalizationBundle\EventListener\LocaleListener">

@@ -20,13 +20,15 @@ class Locale
     protected $locales;
     protected $bundles;
     protected $domains;
+    protected $import;
 
-    public function __construct(KernelInterface $kernel, Plugin $plugin, $locales, $bundles)
+    public function __construct(KernelInterface $kernel, Plugin $plugin, $locales, $bundles, $import)
     {
         $this->kernel  = $kernel;
         $this->plugin  = $plugin;
         $this->locales = $locales;
         $this->bundles = $bundles;
+        $this->import  = $import;
         $this->domains = array(
             'messages'
         );
@@ -93,6 +95,18 @@ class Locale
                         }
                     }
                 }
+            }
+        }
+
+        if (!empty($locale) && isset($this->import[$locale])) {
+            if (is_array($this->import[$locale])) {
+                foreach ($this->import[$locale] as $filepath) {
+                    $temp = Yaml::parse(file_get_contents($filepath));
+                    $translations['all'] = array_merge($translations['all'], $temp);
+                }
+            } elseif (is_string($this->import[$locale]) && file_exists($this->import[$locale])) {
+                $temp = Yaml::parse(file_get_contents($this->import[$locale]));
+                $translations['all'] = array_merge($translations['all'], $temp);
             }
         }
 

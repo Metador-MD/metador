@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class LocaleController extends Controller
 {
     /**
-     * @Route("/update/{locale}", name="metador_admin_locale_update")
+     * @Route("/change/{locale}", name="metador_admin_locale_update")
      * @Method("POST")
      */
     public function localeAction($locale)

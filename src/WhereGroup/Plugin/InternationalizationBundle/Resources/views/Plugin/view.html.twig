@@ -2,48 +2,42 @@
 
 {% block content %}
 <div class="plugin-view">
-    <h1>{% trans %}Internationalisierung{% endtrans %}</h1>
-    <div class="plugin-description">
-        {% trans %}Ermöglicht das wechseln der Sprache in der Oberfläche.{% endtrans %}
-    </div>
+    {{ plugin.info('Internationalisierung', 'Ermöglicht das wechseln der Sprache in der Oberfläche.') }}
 
-    <h2>{% trans %}Konfiguration{% endtrans %}</h2>
+    {{ plugin.header('Konfiguration') }}
 
-    <p>
-        <span class="icon-circle"></span>
-        {% trans %}Standardsprache definieren{% endtrans %}
-    </p>
+    {{ plugin.list('Standardsprache definieren') }}
 
-    <p class="plugin-code-header">
-        <span class="icon-file-text"></span>
-        app/config/parameters.yml
-    </p>
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    locale: de') }}
 
-    <pre class="plugin-code header">
-parameters:
-    locale: de
-    </pre>
+    {{ plugin.list('Unterstützte Sprachen') }}
 
-    {# ###################################################################### #}
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_locales:
+        - en') }}
 
-    <p>
-        <span class="icon-circle"></span>
-        {% trans %}Sprachdateien generieren{% endtrans %}
-    </p>
+    {{ plugin.list('Import einer Sprachdatei als Eingabehilfe') }}
 
-    <p class="plugin-code-header">
-        <span class="icon-terminal"></span> Terminal
-    </p>
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_import:
+        en: ~') }}
 
-    <pre class="plugin-code header">
-<span class="comment"># {% trans %}Legt die Sprachdatei für die Hauptanwendung an{% endtrans %}</span>
-app/console translation:extract --config=application
+    {{ plugin.list('Für Plugins kann man automatisch übersetzungen schreiben. Alle anderen Bundles müssen hier angegeben werden.') }}
 
-<span class="comment"># {% trans %}Legt die Sprachdatei für die Metador Plugins an{% endtrans %}</span>
-app/console translation:extract --config=plugins
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_bundles:
+        - WhereGroupCoreBundle
+        - WhereGroupThemeBundle
+        - WhereGroupUserBundle
+        - WhereGroupPluginBundle') }}
 
-<span class="comment"># {% trans %}Legt die Sprachdatei für die sonstige Plugins an{% endtrans %}</span>
-app/console translation:extract --config=user
-    </pre>
+    {{ plugin.list('Legt die Sprachdateien für die Hauptanwendung an') }}
+
+    {{ plugin.terminal('Terminal', '',
+        'app/console translation:update en WhereGroupCoreBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupThemeBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupUserBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupPluginBundle --no-backup --force --output-format=yml') }}
 </div>
 {% endblock %}
