@@ -1,0 +1,95 @@
+Metadaten: __Metadaten
+'Identifikator des Metadatensatzes': '__Identifikator des Metadatensatzes'
+'Sprache der Metadaten': '__Sprache der Metadaten'
+'Für Metadaten verantwortliche Stelle': '__Für Metadaten verantwortliche Stelle'
+'Name der Organisation': '__Name der Organisation'
+'Zuständige Person': '__Zuständige Person'
+E-Mail: __E-Mail
+Staat: __Staat
+Bundesland: __Bundesland
+'Straße und Hausnummer / Postfach': '__Straße und Hausnummer / Postfach'
+Ort: __Ort
+PLZ: __PLZ
+Telefonnummer: __Telefonnummer
+Faxnummer: __Faxnummer
+Internetadresse: __Internetadresse
+'Angaben zur Metadatenspezifikation': '__Angaben zur Metadatenspezifikation'
+Spezifikation: __Spezifikation
+Version: __Version
+'Browser Bild': '__Browser Bild'
+Identifizierung: __Identifizierung
+Bezeichner: __Bezeichner
+Code: __Code
+Namensraum: __Namensraum
+Titel: __Titel
+Alternativtitel: __Alternativtitel
+Kurzbeschreibung: __Kurzbeschreibung
+Ressourcenverweis: __Ressourcenverweis
+Ressourcenart: __Ressourcenart
+'Sprache der Ressource': '__Sprache der Ressource'
+Klassifizierung: __Klassifizierung
+Themenkategorie: __Themenkategorie
+Schlüsselwort: __Schlüsselwort
+Datum: __Datum
+'Datum der': '__Datum der'
+'Geografischer Standort': '__Geografischer Standort'
+'N Breitengrad': '__N Breitengrad'
+'E Längengrad': '__E Längengrad'
+'S Breitengrad': '__S Breitengrad'
+'W Längengrad': '__W Längengrad'
+Zeitbezug: __Zeitbezug
+Erstellungsdatum: __Erstellungsdatum
+Veröffentlichung: __Veröffentlichung
+Überarbeitung: __Überarbeitung
+'Zeitliche Ausdehnung': '__Zeitliche Ausdehnung'
+Anfangsdatum: __Anfangsdatum
+Enddatum: __Enddatum
+'Qualität und Gültigkeit': '__Qualität und Gültigkeit'
+Herkunft: __Herkunft
+'Räumliche Auflösung': '__Räumliche Auflösung'
+'Äquivalenter Maßstab': '__Äquivalenter Maßstab'
+Übereinstimmung: __Übereinstimmung
+Grad: __Grad
+Beschränkungen: __Beschränkungen
+'Bedingungen für den Zugang und die Nutzung': '__Bedingungen für den Zugang und die Nutzung'
+'Beschränkungen des öffentlichen Zugangs': '__Beschränkungen des öffentlichen Zugangs'
+'Zuständige Stelle': '__Zuständige Stelle'
+'Verantwortliche Stelle': '__Verantwortliche Stelle'
+Funktion: __Funktion
+'Dienste Profil': '__Dienste Profil'
+'Metadaten-Profil für Dienste': '__Metadaten-Profil für Dienste'
+'Wirklich löschen?': '__Wirklich löschen?'
+Dienste: __Dienste
+Metadatensatz: __Metadatensatz
+Identifikation: __Identifikation
+'Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.': '__Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.'
+Repository: __Repository
+'Nicht überprüft': '__Nicht überprüft'
+'Nicht Konform': '__Nicht Konform'
+Konform: __Konform
+'Gekoppelte Ressource': '__Gekoppelte Ressource'
+Freitext: __Freitext
+Auswahl: __Auswahl
+Geodatendienst: __Geodatendienst
+Darstellungsdienste: __Darstellungsdienste
+'Dienste zum Abrufen von Geodatendiensten': '__Dienste zum Abrufen von Geodatendiensten'
+Download-Dienste: __Download-Dienste
+'Sonstige Dienste': '__Sonstige Dienste'
+Suchdienste: __Suchdienste
+Transformationsdienste: __Transformationsdienste
+'Dienste Operationen': '__Dienste Operationen'
+Operation: __Operation
+Platform: __Platform
+URL: __URL
+Ansprechpartner: __Ansprechpartner
+Autor: __Autor
+Bearbeiter: __Bearbeiter
+Eigentümer: __Eigentümer
+Herausgeber: __Herausgeber
+Nutzer: __Nutzer
+Projektleitung: __Projektleitung
+Ressourcenanbieter: __Ressourcenanbieter
+Urheber: __Urheber
+Vertrieb: __Vertrieb
+Verwalter: __Verwalter
+'Mindestens eine Angabe verpflichtend.': '__Mindestens eine Angabe verpflichtend.'
