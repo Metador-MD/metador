@@ -1,95 +1,95 @@
-Metadaten: __Metadaten
-'Identifikator des Metadatensatzes': '__Identifikator des Metadatensatzes'
-'Sprache der Metadaten': '__Sprache der Metadaten'
-'Für Metadaten verantwortliche Stelle': '__Für Metadaten verantwortliche Stelle'
-'Name der Organisation': '__Name der Organisation'
-'Zuständige Person': '__Zuständige Person'
-E-Mail: __E-Mail
-Staat: __Staat
-Bundesland: __Bundesland
-'Straße und Hausnummer / Postfach': '__Straße und Hausnummer / Postfach'
-Ort: __Ort
-PLZ: __PLZ
-Telefonnummer: __Telefonnummer
-Faxnummer: __Faxnummer
-Internetadresse: __Internetadresse
-'Angaben zur Metadatenspezifikation': '__Angaben zur Metadatenspezifikation'
-Spezifikation: __Spezifikation
-Version: __Version
-'Browser Bild': '__Browser Bild'
-Identifizierung: __Identifizierung
-Bezeichner: __Bezeichner
-Code: __Code
-Namensraum: __Namensraum
-Titel: __Titel
-Alternativtitel: __Alternativtitel
-Kurzbeschreibung: __Kurzbeschreibung
-Ressourcenverweis: __Ressourcenverweis
-Ressourcenart: __Ressourcenart
-'Sprache der Ressource': '__Sprache der Ressource'
-Klassifizierung: __Klassifizierung
-Themenkategorie: __Themenkategorie
-Schlüsselwort: __Schlüsselwort
-Datum: __Datum
-'Datum der': '__Datum der'
-'Geografischer Standort': '__Geografischer Standort'
-'N Breitengrad': '__N Breitengrad'
-'E Längengrad': '__E Längengrad'
-'S Breitengrad': '__S Breitengrad'
-'W Längengrad': '__W Längengrad'
-Zeitbezug: __Zeitbezug
-Erstellungsdatum: __Erstellungsdatum
-Veröffentlichung: __Veröffentlichung
-Überarbeitung: __Überarbeitung
-'Zeitliche Ausdehnung': '__Zeitliche Ausdehnung'
-Anfangsdatum: __Anfangsdatum
-Enddatum: __Enddatum
-'Qualität und Gültigkeit': '__Qualität und Gültigkeit'
-Herkunft: __Herkunft
-'Räumliche Auflösung': '__Räumliche Auflösung'
-'Äquivalenter Maßstab': '__Äquivalenter Maßstab'
-Übereinstimmung: __Übereinstimmung
-Grad: __Grad
-Beschränkungen: __Beschränkungen
-'Bedingungen für den Zugang und die Nutzung': '__Bedingungen für den Zugang und die Nutzung'
-'Beschränkungen des öffentlichen Zugangs': '__Beschränkungen des öffentlichen Zugangs'
-'Zuständige Stelle': '__Zuständige Stelle'
-'Verantwortliche Stelle': '__Verantwortliche Stelle'
-Funktion: __Funktion
-'Dienste Profil': '__Dienste Profil'
-'Metadaten-Profil für Dienste': '__Metadaten-Profil für Dienste'
-'Wirklich löschen?': '__Wirklich löschen?'
-Dienste: __Dienste
-Metadatensatz: __Metadatensatz
-Identifikation: __Identifikation
-'Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.': '__Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.'
-Repository: __Repository
-'Nicht überprüft': '__Nicht überprüft'
-'Nicht Konform': '__Nicht Konform'
-Konform: __Konform
-'Gekoppelte Ressource': '__Gekoppelte Ressource'
-Freitext: __Freitext
-Auswahl: __Auswahl
-Geodatendienst: __Geodatendienst
-Darstellungsdienste: __Darstellungsdienste
-'Dienste zum Abrufen von Geodatendiensten': '__Dienste zum Abrufen von Geodatendiensten'
-Download-Dienste: __Download-Dienste
-'Sonstige Dienste': '__Sonstige Dienste'
-Suchdienste: __Suchdienste
-Transformationsdienste: __Transformationsdienste
-'Dienste Operationen': '__Dienste Operationen'
-Operation: __Operation
-Platform: __Platform
-URL: __URL
-Ansprechpartner: __Ansprechpartner
-Autor: __Autor
-Bearbeiter: __Bearbeiter
-Eigentümer: __Eigentümer
-Herausgeber: __Herausgeber
-Nutzer: __Nutzer
-Projektleitung: __Projektleitung
-Ressourcenanbieter: __Ressourcenanbieter
-Urheber: __Urheber
-Vertrieb: __Vertrieb
-Verwalter: __Verwalter
-'Mindestens eine Angabe verpflichtend.': '__Mindestens eine Angabe verpflichtend.'
+Metadaten: Metadata
+'Identifikator des Metadatensatzes': 'Identifer of metadataset'
+'Sprache der Metadaten': 'Language of metadata'
+'Für Metadaten verantwortliche Stelle': 'Authority responsible for metadata'
+'Name der Organisation': 'Name of organization'
+'Zuständige Person': 'Responsible person'
+E-Mail: E-Mail
+Staat: State
+Bundesland: 'Federal state'
+'Straße und Hausnummer / Postfach': 'Street name and house number / Postbox'
+Ort: City
+PLZ: Postcode
+Telefonnummer: 'Phone number'
+Faxnummer: 'Fax number'
+Internetadresse: 'Web address'
+'Angaben zur Metadatenspezifikation': 'Details to specification of metadata'
+Spezifikation: Specification
+Version: Version
+'Browser Bild': 'Browser image'
+Identifizierung: Identification
+Bezeichner: Identifier
+Code: Code
+Namensraum: Namespace
+Titel: Title
+Alternativtitel: 'Alternative title'
+Kurzbeschreibung: 'Short description'
+Ressourcenverweis: 'Reference to resources'
+Ressourcenart: 'Type of resources'
+'Sprache der Ressource': 'Language of resource'
+Klassifizierung: Classification
+Themenkategorie: 'Theme category'
+Schlüsselwort: Keyword
+Datum: Date
+'Datum der': 'Date of'
+'Geografischer Standort': 'Geographical Location'
+'N Breitengrad': 'N Latitude'
+'E Längengrad': 'E Longitude'
+'S Breitengrad': 'S Latitude'
+'W Längengrad': 'W Longitude'
+Zeitbezug: 'Time reference'
+Erstellungsdatum: 'Creation date'
+Veröffentlichung: Publication
+Überarbeitung: Revision
+'Zeitliche Ausdehnung': 'Temporal extension'
+Anfangsdatum: 'Start date'
+Enddatum: 'End date'
+'Qualität und Gültigkeit': 'Quality and validity'
+Herkunft: Source
+'Räumliche Auflösung': 'Spatial resolution'
+'Äquivalenter Maßstab': 'Equivalent scale'
+Übereinstimmung: Accordance
+Grad: Degree
+Beschränkungen: Restrictions
+'Bedingungen für den Zugang und die Nutzung': 'Conditions for access and use'
+'Beschränkungen des öffentlichen Zugangs': 'Restrictions of public access'
+'Zuständige Stelle': 'Responsible authority'
+'Verantwortliche Stelle': 'Responsible authority'
+Funktion: Function
+'Dienste Profil': 'Services profile'
+'Metadaten-Profil für Dienste': 'Metadata profile for services'
+'Wirklich löschen?': 'Are you sure you want to delete?'
+Dienste: Services
+Metadatensatz: Metadataset
+Identifikation: Identification
+'Mindestens ein Schlüsselwort aus "ISO - 19119 geographic services taxonomy" verpflichtend.': 'At least one keyword of "ISO - 19119 geographic services taxonomy" compulsory.'
+Repository: Repository
+'Nicht überprüft': 'Not verified'
+'Nicht Konform': 'Not compliant'
+Konform: Compliant
+'Gekoppelte Ressource': 'Coupled resource'
+Freitext: 'Free text'
+Auswahl: Selection
+Geodatendienst: 'Geodata service'
+Darstellungsdienste: 'Presentation service'
+'Dienste zum Abrufen von Geodatendiensten': 'Services to retrieve geodata services'
+Download-Dienste: 'Download services'
+'Sonstige Dienste': 'Other services'
+Suchdienste: 'Search engines'
+Transformationsdienste: 'Services of transformation'
+'Dienste Operationen': 'Services Operations'
+Operation: Operation
+Platform: Platform
+URL: URL
+Ansprechpartner: 'Contact person'
+Autor: Author
+Bearbeiter: Editor
+Eigentümer: Owner
+Herausgeber: Publisher
+Nutzer: User
+Projektleitung: 'Project management'
+Ressourcenanbieter: 'Provider of resources'
+Urheber: Author
+Vertrieb: Distribution
+Verwalter: Administrator
+'Mindestens eine Angabe verpflichtend.': 'At least one statement compulsory.'
