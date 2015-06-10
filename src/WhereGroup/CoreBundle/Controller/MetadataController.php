@@ -98,7 +98,7 @@ class MetadataController extends Controller
         $data = $metadata->getById($id);
 
         // LOAD
-        if ($request == 'GET') {
+        if ($request->getMethod() == 'GET') {
             if (($p = $data->getObject())) {
                 $p['dateStamp'] = date("Y-m-d");
             }
