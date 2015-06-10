@@ -13,7 +13,8 @@ class MetadorExtension extends \Twig_Extension
 
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             'md_select' => new \Twig_Function_Method($this, 'isSelected'),
         );
@@ -57,7 +58,8 @@ class MetadorExtension extends \Twig_Extension
         return 'data-obj-id="' . rtrim($string, "_") . '"';
     }
 
-    public function isSelected($value, $option) {
+    public function isSelected($value, $option)
+    {
         return $value == $option ? 'selected="selected"' : '';
     }
 }
