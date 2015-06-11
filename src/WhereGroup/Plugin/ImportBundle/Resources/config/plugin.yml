@@ -1,7 +1,7 @@
 wheregroup-import:
     origin: WhereGroup
     name: Import
-    description: Ermöglicht das importieren von Metadaten.
+    description: Ermöglicht das importieren von Metadaten
     class_path: WhereGroup\Plugin\ImportBundle
     class_name: WhereGroupImportBundle
     version: 1.0

@@ -1,5 +1,4 @@
 Internationalisierung: Internationalization
-'Ermöglicht das wechseln der Sprache in der Oberfläche.': 'Allows switching the language of the interface'
 Konfiguration: Configuration
 'Standardsprache definieren': 'Define default language'
 'Sprachdateien generieren': 'Create language data'
@@ -9,3 +8,5 @@ Konfiguration: Configuration
 Deutsch: German
 Englisch: English
 'Keine Übersetzungsdatei gefunden': 'No translation data found'
+Sprachen: Languages
+'Ermöglicht das wechseln der Sprache in der Oberfläche': 'Allows switching the language of the interface'

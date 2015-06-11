@@ -49,6 +49,7 @@ $(document).ready(function() {
 
     $(document).on('click', '[data-cmd="set-translation"]', function() {
         var self = this;
+        $('div[data-name="result"]').html('');
 
         $.ajax({
             url: BASEDIR + "admin/locale/update/translation",

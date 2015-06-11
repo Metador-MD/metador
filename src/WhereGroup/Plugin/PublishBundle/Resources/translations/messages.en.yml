@@ -1,4 +1,6 @@
-'Metadaten veröffentlichen': 'Publish metadata'
+'Metadaten Veröffentlichen': 'Publish metadata'
 'Metadaten lassen sich durch Freigabe in der Oberfläche in einen Ordner im Filesystem exportieren': 'Metadata can be exported in a folder in the filesystem by releasing it in the interface.'
 Konfiguration: Configuration
 'Standardmäßig werden Metadaten in den Ordner "var/published/" geschrieben falls Ordner vorhanden': 'By default, metadata is written into the folder "var/published", if available.'
+'Ordner zum veröffentlichen der Metadaten ist nicht beschreibbar!': 'Public folder does not exist or is not writable!'
+Veröffentlichen: Publish
