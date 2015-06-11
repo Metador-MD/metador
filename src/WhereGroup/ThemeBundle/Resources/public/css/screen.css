@@ -2335,6 +2335,13 @@ textarea.code {
   overflow: auto;
 }
 
+.locale-menu > .left {
+  float: left;
+}
+.locale-menu > .right {
+  float: right;
+}
+
 .icon {
   display: block;
   float: left;

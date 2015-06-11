@@ -35,4 +35,12 @@
     }
 }
 
+.locale-menu {
+    & > .left {
+        float: left;
+    }
 
+    & > .right {
+        float: right;
+    }
+}

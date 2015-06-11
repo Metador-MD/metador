@@ -1,22 +1,31 @@
 {% extends 'WhereGroupPluginBundle::template.html.twig' %}
 
 {% block content %}
-    <select name="bundle" data-cmd="get-translation" data-name="bundle">
-        <option value=""></option>
-    {% for bundle in bundles  %}
-        <option value="{{ bundle }}">{{ bundle }}</option>
-    {% endfor %}
-    </select>
+    <div class="locale-menu">
+        <div class="left">
+            <select name="bundle" data-cmd="get-translation" data-name="bundle">
+                <option value=""></option>
+            {% for bundle in bundles  %}
+                <option value="{{ bundle }}">{{ bundle }}</option>
+            {% endfor %}
+            </select>
 
-    <select name="domain" data-cmd="get-translation" data-name="domain">
-        <option value="messages">messages</option>
-    </select>
+            <select name="domain" data-cmd="get-translation" data-name="domain">
+                <option value="messages">messages</option>
+            </select>
 
-    <select name="locale" data-cmd="get-translation" data-name="locale">
-    {% for locale in locales %}
-        <option value="{{ locale }}">{{ locale }}</option>
-    {% endfor %}
-    </select>
+            <select name="locale" data-cmd="get-translation" data-name="locale">
+            {% for locale in locales %}
+                <option value="{{ locale }}">{{ locale }}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <div class="right">
+            <input type="text" name="locale" value="" data-name="value">
+            <button data-cmd="set-translation">{% trans %}speichern{% endtrans %}</button>
+        </div>
+        <div class="clear"></div>
+    </div>
 
     <hr/>
 

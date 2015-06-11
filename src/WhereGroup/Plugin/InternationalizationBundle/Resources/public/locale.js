@@ -46,4 +46,25 @@ $(document).ready(function() {
             $(this).siblings('div.locale-existing').text()
         ).change();
     });
+
+    $(document).on('click', '[data-cmd="set-translation"]', function() {
+        var self = this;
+
+        $.ajax({
+            url: BASEDIR + "admin/locale/update/translation",
+            data: {
+                'bundle'      : $('select[data-name="bundle"]').val(),
+                'domain'      : $('select[data-name="domain"]').val(),
+                'locale'      : $('select[data-name="locale"]').val(),
+                'key'         : $('input[data-name="value"]').val(),
+                'translation' : '__' + $('input[data-name="value"]').val()
+            },
+            type: "post",
+            dataType: "json",
+            success:  function(json) {
+                $('[data-name="bundle"]').change();
+                $('input[data-name="value"]').val('');
+            }
+        });
+    });
 });
