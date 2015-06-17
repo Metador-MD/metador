@@ -9,7 +9,7 @@
 <div class="loginPage">
     <div class="loginDialog">
         {% if error %}
-            <div>{{ error.message }}</div>
+            <div>{{ error.message | replace({ "Bad credentials": "Benutzername oder Kennwort falsch" }) | trans }}</div>
         {% endif %}
 
         <span class="version">{% trans %}Version{% endtrans %}: {{ version }}</span>
