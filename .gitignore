@@ -1,5 +1,6 @@
 *~
 *.db
+*.db3
 *.cache
 *.phar
 *.TODO
