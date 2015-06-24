@@ -48,7 +48,8 @@ class ImportController extends Controller
 
             if ($file->getClientOriginalExtension() === 'xml') {
                 $xml = file_get_contents($path);
-                $p   = $this->get('metadata_import')->load($xml);
+
+                $p   = $this->get('metadata_import')->load($xml, $profile);
 
                 if (!empty($p)) {
                     $p['_profile'] = $profile;
