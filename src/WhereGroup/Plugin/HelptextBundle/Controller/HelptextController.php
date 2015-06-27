@@ -38,7 +38,7 @@ class HelptextController extends Controller
                 $text = trim(preg_replace('/^<br>/', '', trim($text)));
             }
 
-            if ($this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
+            if ($this->get('security.context')->isGranted('ROLE_HELPTEXT_ADMIN')) {
                 $string = $text;
             } else {
                 $string = $this->get('translator')->trans($text);
@@ -64,7 +64,7 @@ class HelptextController extends Controller
      */
     public function setHelptext(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_METADOR_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HELPTEXT_ADMIN')) {
             throw new AccessDeniedException();
         }
 
