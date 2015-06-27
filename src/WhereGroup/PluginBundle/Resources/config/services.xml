@@ -20,6 +20,7 @@
         <!-- EVENT LISTENER -->
         <service id="metador.plugin.app.listener" class="%metador.plugin.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument>%kernel.root_dir%</argument>
         </service>
     </services>
 </container>

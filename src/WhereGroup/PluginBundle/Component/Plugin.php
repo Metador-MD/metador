@@ -118,6 +118,9 @@ class Plugin
         );
     }
 
+    /**
+     * @return array
+     */
     protected function sortPlugins()
     {
         $plugins = array();
@@ -234,11 +237,24 @@ class Plugin
 
     /**
      * @param $key
-     * @param $plugin
      */
     protected function enable($key)
     {
         $this->plugins[$key]['active'] = true;
+
+        // siblings allowed?
+        if (isset($this->plugins[$key]['siblings'])
+            && !empty($this->plugins[$key]['type'])
+            && $this->plugins[$key]['siblings'] === false) {
+            foreach ($this->plugins as $pluginKey => $plugin) {
+                if (isset($this->plugins[$pluginKey]['type'])
+                    && $pluginKey !== $key
+                    && $this->plugins[$pluginKey]['type'] === $this->plugins[$key]['type']
+                    && $this->plugins[$pluginKey]['active'] === true) {
+                    $this->disable($pluginKey);
+                }
+            }
+        }
 
         if (isset($this->plugins[$key]['require'])) {
             foreach ($this->plugins[$key]['require'] as $require) {
@@ -261,7 +277,6 @@ class Plugin
 
     /**
      * @param $key
-     * @param $plugin
      */
     protected function disable($key)
     {
@@ -313,6 +328,9 @@ class Plugin
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function assetsInstall()
     {
         $env     = $this->container->get('kernel')->getEnvironment();
@@ -332,6 +350,9 @@ class Plugin
         );
     }
 
+    /**
+     * @return array
+     */
     public function doctrineUpdate()
     {
         $console = $this->rootDir . 'console';
@@ -344,6 +365,9 @@ class Plugin
         );
     }
 
+    /**
+     * @return array
+     */
     public function clearCache()
     {
         $fs  = new Filesystem();

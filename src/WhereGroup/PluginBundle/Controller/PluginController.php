@@ -2,6 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Controller;
 
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,6 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
+use WhereGroup\PluginBundle\Entity\Plugin;
 
 /**
  * Class PluginController
@@ -57,6 +64,112 @@ class PluginController extends Controller
         return array(
             'plugins' => implode(',', $plugins)
         );
+    }
+
+    /**
+     * @Route("/import", name="metador_admin_plugin_import")
+     * @Method("GET")
+     * @Template()
+     */
+    public function importAction()
+    {
+        return array(
+            'form' => $this
+                ->createFormBuilder(new Plugin())
+                ->add('attachment', 'file', array('label' => 'Plugin'))
+                ->add('save', 'submit', array('label' => 'Importieren'))
+                ->getForm()
+                ->createView()
+        );
+    }
+
+    /**
+     * @Route("/upload", name="metador_admin_plugin_upload")
+     * @Method("POST")
+     * @Template("WhereGroupPluginBundle:Plugin:import.html.twig")
+     */
+    public function uploadAction(Request $request)
+    {
+        $kernelPath = $this->get('kernel')->getRootDir();
+
+        $pluginPath = $kernelPath . '/../src/User/Plugin/';
+        $tempPath   = $kernelPath . '/../var/temp/';
+
+        $form = $this->createFormBuilder(new Plugin())
+            ->add('attachment', 'file', array('label' => 'Plugin'))
+            ->add('save', 'submit', array('label' => 'Importieren'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form['attachment']->getData();
+
+            if (!$file instanceof UploadedFile) {
+                $this->get('session')->getFlashBag()->add('error', 'Datei-Upload ist fehlgeschlagen.');
+                return $this->redirectToRoute('metador_admin_plugin');
+            }
+
+            // get extension
+            $extension = $file->guessExtension();
+
+            if (!$extension || $extension !== 'zip') {
+                $this->get('session')->getFlashBag()->add('error', 'Hochgeladene Datei ist kein Metador Plugin.');
+                return $this->redirectToRoute('metador_admin_plugin');
+            }
+
+            $pluginFile = $file->move($tempPath, $file->getFilename());
+
+            unset($file);
+
+            // extract to temp folder
+            $zip = new \ZipArchive;
+
+            if ($zip->open($pluginFile->getRealPath()) !== true) {
+                $this->get('session')->getFlashBag()->add('error', 'Entpacken fehlgeschlagen.');
+                return $this->redirectToRoute('metador_admin_plugin');
+            }
+
+            $tempFolder = $tempPath . $pluginFile->getFilename() . '_dir';
+            $zip->extractTo($tempFolder);
+            $zip->close();
+
+            $fs = new Filesystem();
+
+            // remove uploaded file
+            $fs->remove($pluginFile->getRealPath());
+
+            // find bundles
+            $finder = new Finder();
+            $finder->in($tempFolder)->directories()->name('*Bundle');
+
+            foreach ($finder as $folder) {
+                /** @var SplFileInfo $folder  */
+                $copyPath = $pluginPath . $folder->getRelativePath() . '/';
+
+                if (!$fs->exists($pluginPath)) {
+                    $fs->mkdir($copyPath, 0644, true);
+                }
+
+                if ($fs->exists($copyPath . '/' . $folder->getFilename())) {
+                    $this->get('session')->getFlashBag()->add('error', 'Plugin ist existiert bereits.');
+                } else {
+                    $fs->mirror($folder->getRealPath(), $copyPath . $folder->getFilename());
+                }
+            }
+
+            $fs->remove($tempFolder);
+
+            return $this->redirectToRoute('metador_admin_plugin');
+        }
+
+        return array(
+            'form' => $form->createView()
+        );
+
+
+        // $this->redirect($this->generateUrl('metador_admin_plugin'));
     }
 
     /**

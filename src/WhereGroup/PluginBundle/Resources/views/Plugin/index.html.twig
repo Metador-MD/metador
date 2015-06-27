@@ -4,7 +4,7 @@
     <h1>{{ 'Plugins'|trans }}</h1>
     <table class="plugin-table">
     {% for key, plugin in plugins %}
-        <tr class="plugin-row">
+        <tr class="plugin-row{% if plugin['new'] is defined %} new{% endif %}">
             <td class="plugin-col-mark">
                 <span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>
                 <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />

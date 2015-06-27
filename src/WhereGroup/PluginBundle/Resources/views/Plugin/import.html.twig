@@ -1,0 +1,15 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block javascript %}
+
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, { 'action': path('metador_admin_plugin_upload'), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
