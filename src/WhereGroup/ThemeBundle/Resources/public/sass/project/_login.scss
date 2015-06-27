@@ -1,5 +1,10 @@
-.loginPage {
+.ie8 {
+    .loginPage {
+        background: url($background) no-repeat fixed;
+    }
+}
 
+.loginPage {
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale');
     -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale')";
     background: url($background) no-repeat center center fixed;
@@ -8,24 +13,14 @@
     -o-background-size: cover;
     background-size: cover;
 
-    // background-image: url('../img/bg.png');
     @include pos(0,0,0,0);
 
     .loginDialog {
         @include pos(0, '', 0, 0);
         width: 25%;
+        min-width: 300px;
         background-color: rgba(0, 0, 0,0.5);
         padding: 40px;
-        // width: 400px;
-        // height: 230px;
-        // padding: 10px 50px;
-        // background-image: url('../img/noise.png');
-        // border: 1px solid lighten($dark, 50%);
-        // margin-left:-(200px);
-        // margin-top:-(150px);
-        // @include border-radius(5px);
-        // @include pos(50%,'','',50%);
-        // @include box-shadow(rgba(3,3,3,0.2) 3px 3px 20px);
 
         .loginLogo {
             @include pos(10px, 40px, '', '');
@@ -62,7 +57,7 @@
                 height: 40px;
                 line-height: 40px;
                 border: 1px solid white;
-                background-color: black;
+                background-color: white;
                 background-color: rgba(255, 255, 255, 0.5);
                 padding: 0 40px;
                 color: $fontColor;
@@ -71,11 +66,6 @@
                 &::-moz-placeholder { color: $fontColor; }
                 &:-ms-input-placeholder { color: $fontColor; }
                 &::-webkit-input-placeholder { color: $fontColor; }
-
-                // &:-webkit-autofill
-                //     -webkit-box-shadow: 0 0 0px 1000px white inset;
-                //     color: $fontColor;
-                // }
 
                 @include border-radius(4px);
             }

@@ -813,7 +813,7 @@ body {
 .page .page-center {
   background-color: #d6d9dc;
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -889,7 +889,7 @@ body {
   background-color: #9ea6ae;
   height: 40px;
   position: absolute;
-  top: 160px;
+  top: 110px;
   left: 0;
   right: 0;
 }
@@ -1091,6 +1091,12 @@ body {
   line-height: 40px;
   border-bottom: 1px solid #DDD;
 }
+.plugin-table .plugin-row.new {
+  background-color: #f1ffb3;
+}
+.plugin-table .plugin-row.new:hover {
+  background-color: #e8ff80;
+}
 .plugin-table .plugin-row:hover {
   background-color: #EEE;
 }
@@ -1177,6 +1183,10 @@ body {
   display: none;
 }
 
+.ie8 .loginPage {
+  background: url("../img/background.jpg") no-repeat fixed;
+}
+
 .loginPage {
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale');
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale')";
@@ -1197,6 +1207,7 @@ body {
   left: 0;
   bottom: 0;
   width: 25%;
+  min-width: 300px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 40px;
 }
@@ -1232,7 +1243,7 @@ body {
   height: 40px;
   line-height: 40px;
   border: 1px solid white;
-  background-color: black;
+  background-color: white;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 0 40px;
   color: #333333;
