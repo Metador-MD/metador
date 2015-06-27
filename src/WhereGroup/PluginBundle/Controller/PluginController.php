@@ -76,8 +76,14 @@ class PluginController extends Controller
         return array(
             'form' => $this
                 ->createFormBuilder(new Plugin())
-                ->add('attachment', 'file', array('label' => 'Plugin'))
-                ->add('save', 'submit', array('label' => 'Importieren'))
+                ->add('attachment', 'file', array('label' => 'Datei', 'label_attr' => array(
+                    'class' => 'plugin-label plugin-row'
+                ), 'attr' => array(
+                    'class' => 'plugin-row'
+                )))
+                ->add('save', 'submit', array('label' => 'Importieren', 'attr' => array(
+                    'class' => 'plugin-row'
+                )))
                 ->getForm()
                 ->createView()
         );
@@ -96,8 +102,14 @@ class PluginController extends Controller
         $tempPath   = $kernelPath . '/../var/temp/';
 
         $form = $this->createFormBuilder(new Plugin())
-            ->add('attachment', 'file', array('label' => 'Plugin'))
-            ->add('save', 'submit', array('label' => 'Importieren'))
+            ->add('attachment', 'file', array('label' => 'Datei', 'label_attr' => array(
+                'class' => 'plugin-label plugin-row'
+            ), 'attr' => array(
+                'class' => 'plugin-row'
+            )))
+            ->add('save', 'submit', array('label' => 'Importieren', 'attr' => array(
+                'class' => 'plugin-row'
+            )))
             ->getForm();
 
         $form->handleRequest($request);

@@ -1383,6 +1383,14 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
 }
 
+.plugin-import .plugin-label {
+  font-weight: bold;
+}
+.plugin-import .plugin-row {
+  display: block;
+  margin: 10px;
+}
+
 .metadataForm input[type='text'], .metadataForm input[type='password'], .metadataForm select, .metadataForm textarea, .form > .left input[type='text'], .form > .left input[type='password'], .form > .left select, .form > .left textarea, .form > .right input[type='text'], .form > .right input[type='password'], .form > .right select, .form > .right textarea {
   border-color: silver;
   border-style: solid;

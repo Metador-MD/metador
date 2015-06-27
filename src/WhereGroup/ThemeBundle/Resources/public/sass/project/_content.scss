@@ -6,3 +6,14 @@ h1, h2, h3, h4, h5 {
     margin-left:-($pageWidth/2) + 20px;
     @include pos(10px,'',0,50%);
 }
+
+.plugin-import {
+    .plugin-label {
+        font-weight: bold;
+    }
+
+    .plugin-row {
+        display: block;
+        margin: 10px;
+    }
+}
