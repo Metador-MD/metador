@@ -18,7 +18,7 @@ class ApplicationMenuListener extends ApplicationIntegration
     protected $pluginFolder = null;
 
     /**
-     * @param $exportPath
+     * @param $kernelRootDir
      */
     public function __construct($kernelRootDir)
     {

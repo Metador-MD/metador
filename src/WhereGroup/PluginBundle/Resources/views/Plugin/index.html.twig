@@ -12,11 +12,14 @@
             <td class="plugin-col-name" {% if plugin['description'] is defined %}title="{{ plugin['description']|trans }}"{% endif %}>
                 {% if plugin['active'] %}
                 <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
-                    {{ plugin['name']|trans }}</td>
+                    {{ plugin['name']|trans }}
                 </a>
                 {% else %}
-                    {{ plugin['name']|trans }}</td>
+                <a href="{{ path('metador_admin_plugin_confirm', { 'plugin': key }) }}">
+                    {{ plugin['name']|trans }}
+                </a>
                 {% endif %}
+            </td>
             <td class="plugin-col-origin">{{ plugin['origin'] }}</td>
         </tr>
     {% endfor %}

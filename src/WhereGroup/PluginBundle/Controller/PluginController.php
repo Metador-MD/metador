@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use WhereGroup\PluginBundle\Entity\Plugin;
 
@@ -179,9 +178,29 @@ class PluginController extends Controller
         return array(
             'form' => $form->createView()
         );
+    }
 
+    /**
+     * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm")
+     * @Method("GET")
+     * @Template()
+     */
+    public function confirmAction($plugin)
+    {
+        return array(
+            'plugin' => $plugin
+        );
+    }
 
-        // $this->redirect($this->generateUrl('metador_admin_plugin'));
+    /**
+     * @Route("/delete/{plugin}", name="metador_admin_plugin_delete")
+     * @Method("POST")
+     */
+    public function deleteAction($plugin)
+    {
+        $this->get('metador_plugin')->delete($plugin);
+
+        return $this->redirectToRoute('metador_admin_plugin');
     }
 
     /**

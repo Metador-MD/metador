@@ -235,6 +235,19 @@ class Plugin
         return $plugins;
     }
 
+
+    public function delete($plugin)
+    {
+        $fs = new Filesystem();
+
+        $path = $this->rootDir . '../src/'
+            . ltrim(rtrim(str_replace('\\', '/', $this->plugins[$plugin]['class_path']), '/'), '/');
+
+        if ($fs->exists($path)) {
+            $fs->remove($path);
+        }
+    }
+
     /**
      * @param $key
      */
@@ -311,7 +324,7 @@ class Plugin
      * @param $file
      * @return array
      */
-    public function readYaml($file)
+    protected function readYaml($file)
     {
         return Yaml::parse(file_get_contents($file));
     }
@@ -321,7 +334,7 @@ class Plugin
      * @param $array
      * @return $this
      */
-    public function writeYaml($file, $array)
+    protected function writeYaml($file, $array)
     {
         file_put_contents($file, Yaml::dump($array, 2));
 
