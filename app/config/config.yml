@@ -28,6 +28,7 @@ framework:
         save_path: "%kernel.root_dir%/../var/sessions"
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
+        name: METADOR2
     fragments:       ~
     http_method_override: true
 
