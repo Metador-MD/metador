@@ -235,8 +235,7 @@ class Plugin
         return $plugins;
     }
 
-
-    public function delete($plugin)
+    public function locate($plugin)
     {
         $fs = new Filesystem();
 
@@ -244,8 +243,23 @@ class Plugin
             . ltrim(rtrim(str_replace('\\', '/', $this->plugins[$plugin]['class_path']), '/'), '/');
 
         if ($fs->exists($path)) {
-            $fs->remove($path);
+            return $path;
         }
+
+        return false;
+    }
+
+
+    public function delete($plugin)
+    {
+        if ($this->locate($plugin)) {
+            $fs = new Filesystem();
+            $fs->remove($path);
+
+            return true;
+        }
+
+        // todo: exception
     }
 
     /**
