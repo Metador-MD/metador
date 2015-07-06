@@ -6,6 +6,8 @@
     <parameters>
         <!-- SERVICE -->
         <parameter key="metador.metadata.import.class">WhereGroup\Plugin\ImportBundle\Component\MetadataImport</parameter>
+        <parameter key="metador.wms_import.class">WhereGroup\Plugin\ImportBundle\Component\WmsImport</parameter>
+        <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.import.app.listener.class">WhereGroup\Plugin\ImportBundle\EventListener\ApplicationListener</parameter>
@@ -15,6 +17,12 @@
         <!-- SERVICE -->
         <service id="metadata_import" class="%metador.metadata.import.class%">
             <argument type="service" id="kernel" />
+            <argument type="service" id="metador_plugin" />
+        </service>
+
+        <service id="wms_import" class="%metador.wms_import.class%">
+            <argument type="service" id="metadata_import" />
+            <argument type="service" id="metadata" />
         </service>
 
         <!-- EVENT LISTENER -->
