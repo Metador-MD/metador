@@ -132,4 +132,103 @@ class ImportController extends Controller
             }
         }
     }
+
+    /**
+     * @Route("/wms_url_override", name="wms_url_override")
+     * @Method("POST")
+     */
+    public function overrideWmsAction()
+    {
+        $services = $this->get('request')->request->get('services', array());
+        $wmsImport   = $this->get('wms_import');
+
+        foreach ($services as $uuid => $service) {
+            if (isset($service['override']) && $service['override'] == 1) {
+
+                if (!($p = $wmsImport->isGetCapabilitiesUrl($service['url']))) {
+                    $this->get('session')->getFlashBag()->add(
+                        'error',
+                        $url . 'ist keine gültige URL bzw. liefert keine gültige WMS GetCapabilities XML.'
+                    );
+                    continue;
+                }
+
+                $wmsImport->update($p, $uuid, $service['id']);
+            }
+        }
+
+        return $this->redirect($this->generateUrl('metador_dashboard'));
+    }
+
+    /**
+     * @Route("{profile}/wms_url_import", name="wms_url_import")
+     * @Method("POST")
+     * @Template()
+     */
+    public function wmsUrlImportAction()
+    {
+        $info = array();
+        $update = false;
+
+        $wmsImport = $this->get('wms_import');
+
+        // Parse URL's
+        $urls = $wmsImport->parseGetCapabilitiesUrls(
+            $this->get('request')->request->get('urls', '')
+        );
+
+        if (!$urls) {
+            $this->get('session')->getFlashBag()->add('error', 'Bitte mindestens eine GetCapabilities URL angeben.');
+            return $this->redirect($this->generateUrl('metador_dashboard'));
+        }
+
+        foreach ($urls as $url) {
+            if (!($p = $wmsImport->isGetCapabilitiesUrl($url))) {
+                $this->get('session')->getFlashBag()->add(
+                    'error',
+                    $url . 'ist keine gültige URL bzw. liefert keine gültige WMS GetCapabilities XML.'
+                );
+                continue;
+            }
+
+            $uuid = $wmsImport->convertUrlToUuid($url);
+
+            if (!$uuid) {
+                $this->get('session')->getFlashBag()->add('error', 'UUID konnte nicht generiert werden.');
+                return $this->redirect($this->generateUrl('metador_dashboard'));
+            }
+
+            if ($id = $wmsImport->metadataExists($uuid)) {
+                $update = true;
+
+                $info[$uuid] = array(
+                    'title'     => $p['title'],
+                    'url'       => $url,
+                    'id'        => $id,
+                    'processed' => false
+                );
+
+            } else {
+                $wmsImport->insert($p, $uuid);
+
+                $info[$uuid] = array(
+                    'title'     => $p['title'],
+                    'url'       => $url,
+                    'processed' => true
+                );
+            }
+        }
+
+        if ($update) {
+            return array(
+                'services' => $info
+            );
+        }
+
+        return $this->redirect($this->generateUrl('metador_dashboard'));
+    }
+
+
+
+
 }
