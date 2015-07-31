@@ -206,6 +206,7 @@ class PluginController extends Controller
     /**
      * @Route("/view/{plugin}", name="metador_admin_plugin_view")
      * @Method("GET")
+     * @Template()
      */
     public function viewAction($plugin)
     {
@@ -213,7 +214,12 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        return $this->forward($plugin . ':Plugin:view');
+        // Show template if exists
+        if ($this->get('templating')->exists($plugin . ':Plugin:view.html.twig')) {
+            return $this->forward($plugin . ':Plugin:view');
+        }
+
+        return array();
     }
 
     /**
