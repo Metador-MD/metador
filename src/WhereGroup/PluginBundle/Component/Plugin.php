@@ -252,7 +252,9 @@ class Plugin
 
     public function delete($plugin)
     {
-        if ($this->locate($plugin)) {
+        $path = $this->locate($plugin);
+
+        if ($path) {
             $fs = new Filesystem();
             $fs->remove($path);
 
