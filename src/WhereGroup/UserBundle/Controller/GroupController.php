@@ -147,7 +147,6 @@ class GroupController extends Controller
     }
 
     /**
-     * @Method("POST")
      * @Route("/delete/{id}", name="metador_admin_group_delete")
      * @Method("POST")
      */
@@ -158,15 +157,16 @@ class GroupController extends Controller
             ->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('WhereGroupUserBundle:Group')->find($id);
+            $entity = $this->getRepository()->findOneById($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Group entity.');
             }
 
+            $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
             $em->flush();
+
             $this->addFlash('success', 'Gruppe erfolgreich gelöscht.');
         }
 
@@ -178,6 +178,7 @@ class GroupController extends Controller
         return $this
             ->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
+            ->add('submit', 'submit', array('label' => 'löschen'))
             ->getForm();
     }
 

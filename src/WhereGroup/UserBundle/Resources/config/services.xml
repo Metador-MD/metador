@@ -9,7 +9,7 @@
         <!-- EVENT LISTENER -->
         <service id="metador.user.app.listener" class="%metador.user.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
-            <argument type="service" id="service_container" />
+            <argument type="service" id="request_stack" />
         </service>
     </services>
 </container>

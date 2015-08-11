@@ -2,22 +2,22 @@
 
 namespace WhereGroup\UserBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 use WhereGroup\CoreBundle\Component\MetadataInterface;
 
 class ApplicationMenuListener
 {
-    protected $container;
+    protected $requestStack;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->container = $container;
+        $this->requestStack = $requestStack;
     }
 
     public function __destruct()
     {
-        unset($this->container);
+        unset($this->requestStack);
     }
 
     /**
@@ -44,7 +44,9 @@ class ApplicationMenuListener
                 'active' => $app->isController('group')
             ), 'ROLE_SUPERUSER');
 
+            // USER BUNDLE
             if ($app->isBundle('user')) {
+                // GROUP INDEX
                 if ($app->isRoute('metador_admin_group')) {
                     $app->add('app-plugin-menu', 'new', array(
                         'label'  => 'Neu',
@@ -52,14 +54,25 @@ class ApplicationMenuListener
                         'path'   => 'metador_admin_group_new',
                         'params' => array(),
                     ));
+                // NOT GORUP INDEX
+                } else {
+                    $app->add('app-plugin-menu', 'index', array(
+                        'label'  => 'zurück',
+                        'icon'   => 'icon-redo2',
+                        'path'   => 'metador_admin_group',
+                        'params' => array()
+                    ));
                 }
 
+                // GROUP EDIT
                 if ($app->isController('group') && $app->isAction('edit')) {
                     $app->add('app-plugin-menu', 'delete', array(
                         'label'  => 'löschen',
                         'icon'   => 'icon-bin2',
                         'path'   => 'metador_admin_group_confirm',
-                        'params' => array(),
+                        'params' => array(
+                            'id' => $this->requestStack->getCurrentRequest()->get('id')
+                        ),
                     ));
                 }
             }
