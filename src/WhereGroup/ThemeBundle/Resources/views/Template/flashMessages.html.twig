@@ -1,18 +1,7 @@
-{% set successMsg = app.session.flashbag.get('success') %}
-{% set errorMsg = app.session.flashbag.get('error') %}
-
-{% if successMsg %}
-    <div class="notify success">
-    {% for message in successMsg %}
-        {{ message }}<br/>
+{% for type in ['error', 'warning', 'success', 'notice'] %}
+    {% for message in app.session.flashbag.get(type) %}
+        <div class="notify {{ type }}">
+            {{ message }}
+        </div>
     {% endfor %}
-    </div>
-{% endif %}
-
-{% if errorMsg %}
-    <div class="notify error">
-    {% for message in errorMsg %}
-        {{ message }}<br/>
-    {% endfor %}
-    </div>
-{% endif %}
+{% endfor %}

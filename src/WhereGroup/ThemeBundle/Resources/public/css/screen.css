@@ -1411,7 +1411,7 @@ h1, h2, h3, h4, h5 {
   text-shadow: white 1px 1px 0;
 }
 
-.metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label {
+.metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
   font-size: 14px;
   color: #666;
@@ -2361,6 +2361,40 @@ textarea.code {
   float: right;
 }
 
+.fs-view {
+  border: 1px solid #373739;
+  margin: 20px;
+  padding: 20px;
+}
+
+.basic-form > div label {
+  margin: 10px 0;
+}
+.basic-form > div input, .basic-form > div select {
+  border-color: silver;
+  border-style: solid;
+  font-size: 12px;
+  color: #333;
+  display: block;
+  height: 30px;
+  padding: 5px;
+  background-color: white;
+  width: 100%;
+  border: 1px solid silver;
+  padding: 10px 5px;
+  -webkit-box-shadow: #d7d9dc 1px 1px 3px;
+  -moz-box-shadow: #d7d9dc 1px 1px 3px;
+  box-shadow: #d7d9dc 1px 1px 3px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+.basic-form > div select {
+  height: 80px;
+}
+
 .icon {
   display: block;
   float: left;
@@ -2484,12 +2518,20 @@ textarea.code {
   border-radius: 5px;
 }
 .notify.error {
-  border-color: #bd362f #942a25 #6b1f1b;
-  background-color: #ffc2bf;
+  border-color: #e68e8a #dd6560 #d43d36;
+  background-color: #e68e8a;
+}
+.notify.warning {
+  border-color: #fea500 #cb8400 #986300;
+  background-color: #fea500;
 }
 .notify.success {
-  border-color: #51a351 #408140 #2f5f2f;
-  background-color: #b2ffbf;
+  border-color: #73c47f #4fb55e #3e934b;
+  background-color: #73c47f;
+}
+.notify.notice {
+  border-color: #82acde #5a91d3 #3477c6;
+  background-color: #82acde;
 }
 
 .tableBorder {

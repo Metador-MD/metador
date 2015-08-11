@@ -192,7 +192,7 @@ class Application
         return (strncmp($this->route, $string, strlen($string)) === 0);
     }
 
-    public function bundeStartsWith($string)
+    public function bundleStartsWith($string)
     {
         return (strncmp($this->bundle, $string, strlen($string)) === 0);
     }

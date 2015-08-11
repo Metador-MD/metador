@@ -11,14 +11,23 @@
     @include border-radius(5px);
 
     &.error {
-        $color: #BD362F;
-        border-color: $color darken($color, 10%) darken($color, 20%);
-        background-color: #ffc2bf;
+        border-color: $error darken($error, 10%) darken($error, 20%);
+        background-color: $error;
+    }
+
+    &.warning {
+        border-color: $warning darken($warning, 10%) darken($warning, 20%);
+        background-color: $warning;
     }
 
     &.success {
-        $color: #51A351;
-        border-color: $color darken($color, 10%) darken($color, 20%);
-        background-color: #b2ffbf;
+        border-color: $success darken($success, 10%) darken($success, 20%);
+        background-color: $success;
+    }
+
+
+    &.notice {
+        border-color: $notice darken($notice, 10%) darken($notice, 20%);
+        background-color: $notice;
     }
 }

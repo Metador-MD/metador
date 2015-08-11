@@ -1,13 +1,18 @@
+// FONT COLORS
 $fontColor: #333;
 $dark: #34323D;
 
-// COLORS
+// BASE COLORS
 $primary: #373739;
 $primary-contrast: #F5F4F2;
-// $secondary: #69737D;
-// $secondary-contrast: lighten($secondary, 20%);
 $secondary: lighten(#69737D, 20%);
 $secondary-contrast: lighten($secondary, 20%);
+
+// OTHER COLORS
+$error: #E68E8A;
+$warning: #FEA500;
+$notice: #82ACDE;
+$success: #73C47F;
 
 $logo: '';
 $background: '../img/background.jpg';

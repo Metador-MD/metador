@@ -13,8 +13,10 @@ class GroupType extends AbstractType
         $builder
             ->add('role', 'text', array(
                 'label' => 'Gruppe'
-
+            ))->add('description', 'text', array(
+                'label' => 'Beschreibung',
             ))->add('users', null, array(
+                'label' => 'Benutzer',
                 'required' => false
             ));
     }

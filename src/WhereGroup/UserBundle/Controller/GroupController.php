@@ -17,47 +17,40 @@ use WhereGroup\UserBundle\Form\GroupType;
  */
 class GroupController extends Controller
 {
+    const REPOSITORY = 'WhereGroupUserBundle:Group';
+
     /**
-     * Lists all Group entities.
-     *
      * @Route("/", name="metador_admin_group")
      * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
         return array(
-            'form' => $this->createForm(new GroupType(), new Group())->createView(),
-            'entities' => $em->getRepository('WhereGroupUserBundle:Group')->findAll(),
+            'groups' => $this
+                ->getRepository()
+                ->getAllSorted(),
         );
     }
 
     /**
-     * Finds and displays a Group entity.
+     *
+     * @Route("/new/", name="metador_admin_group_new")
      * @Method("GET")
-     * @Route("/delete/{id}", name="metador_admin_group_confirm")
      * @Template()
      */
-    public function confirmDeleteAction($id)
+    public function newAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WhereGroupUserBundle:Group')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Group entity.');
-        }
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $this->createDeleteForm($id)->createView(),
+            'form' => $this
+                ->createForm(new GroupType(), new Group())
+                ->createView(),
+            'users' => $this
+                ->getRepository('WhereGroupUserBundle:User')
+                ->findAll()
         );
     }
 
     /**
-     * Creates a new Group entity.
-     *
      * @Route("/create", name="metador_admin_group_create")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:Group:new.html.twig")
@@ -71,92 +64,98 @@ class GroupController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $roleExists = $em->getRepository('WhereGroupUserBundle:Group')->findOneBy(array('role' => $entity->getRole()));
+            $roleExists = $this
+                ->getRepository()
+                ->findOneBy(array('role' => $entity->getRole()));
+
             if (!$roleExists) {
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich hinzugefügt.');
+
+                $this->addFlash('success', 'Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->get('session')->getFlashBag()->set('notice', 'Gruppe existiert bereits.');
+                $this->addFlash('warning', 'Gruppe existiert bereits.');
             }
 
         } else {
-            $this->get('session')->getFlashBag()->set('warning', 'Gruppe konnte nicht hinzugefügt werden!');
+            $this->addFlash('warning', 'Gruppe konnte nicht hinzugefügt werden!');
         }
 
         return $this->redirect($this->generateUrl('metador_admin_group'));
     }
 
     /**
-     * Displays a form to edit an existing Group entity.
-     *
      * @Route("/edit/{id}", name="metador_admin_group_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("WhereGroupUserBundle:Group:new.html.twig")
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WhereGroupUserBundle:Group')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Group entity.');
-        }
-
-        $editForm = $this->createForm(new GroupType(), $entity);
-
         return array(
-            'entity' => $entity,
-            'form'   => $editForm->createView(),
+            'form' => $this
+                ->createForm(new GroupType(), $this->getGroup($id))
+                ->createView(),
+            'users' => $this
+                ->getRepository('WhereGroupUserBundle:User')
+                ->findAll()
         );
     }
 
     /**
-     * Edits an existing Group entity.
-     *
      * @Route("/edit/{id}", name="metador_admin_group_update")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:Group:edit.html.twig")
+     * @Template("WhereGroupUserBundle:Group:new.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $form = $this
+            ->createForm(new GroupType(), $this->getGroup($id))
+            ->submit($request);
 
-        $entity = $em->getRepository('WhereGroupUserBundle:Group')->find($id);
+        if ($form->isValid()) {
+            $group = $form->getData();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Group entity.');
+            // See method documentation for Doctrine weirdness
+            // foreach ($group->getUsers() as $user) {
+            //     $user->addGroup($group);
+            // }
+            $this->getDoctrine()->getManager()->persist($group);
+
+
+            // die("sd");
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('metador_admin_group');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new GroupType(), $entity);
-        $editForm->bind($request);
+        return array('form' => $form);
+    }
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('metador_admin_group_edit', array('id' => $id)));
-        }
-
+    /**
+     * @Method("GET")
+     * @Route("/delete/{id}", name="metador_admin_group_confirm")
+     * @Template()
+     */
+    public function confirmAction($id)
+    {
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $this
+                ->createDeleteForm($id)
+                ->createView()
         );
     }
 
     /**
-     * Deletes a Group entity.
      * @Method("POST")
      * @Route("/delete/{id}", name="metador_admin_group_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form = $this
+            ->createDeleteForm($id)
+            ->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -168,7 +167,7 @@ class GroupController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->set('success', 'Gruppe erfolgreich gelöscht.');
+            $this->addFlash('success', 'Gruppe erfolgreich gelöscht.');
         }
 
         return $this->redirect($this->generateUrl('metador_admin_group'));
@@ -176,9 +175,30 @@ class GroupController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this
+            ->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    private function getRepository($repository = null)
+    {
+        return $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository(is_null($repository) ? self::REPOSITORY : $repository);
+    }
+
+    private function getGroup($id)
+    {
+        $entity = $this
+            ->getRepository()
+            ->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Group entity.');
+        }
+
+        return $entity;
     }
 }
