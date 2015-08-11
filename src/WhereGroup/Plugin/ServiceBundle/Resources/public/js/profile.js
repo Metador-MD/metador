@@ -498,5 +498,10 @@ $(document).ready(function() {
 
         dialog.modalDialog('open');
     });
-
+    
+    $('[data-confirm-abort]').click(function() {       
+        if (!confirm($(this).attr('data-confirm-abort'))) {
+            return false;
+        }
+    });
 });
