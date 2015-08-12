@@ -74,7 +74,7 @@ class Application
      */
     public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
-        if (!is_null($role) && false === $this->container->get('security.context')->isGranted($role)) {
+        if (!is_null($role) && false === $this->container->get('security.authorization_checker')->isGranted($role)) {
             return $this;
         }
 

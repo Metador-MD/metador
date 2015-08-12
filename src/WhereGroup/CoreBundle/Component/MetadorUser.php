@@ -23,7 +23,7 @@ class MetadorUser implements MetadorUserInterface
 
     public function getUser()
     {
-        return $this->container->get('security.context')->getToken()->getUser();
+        return $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
     /**
