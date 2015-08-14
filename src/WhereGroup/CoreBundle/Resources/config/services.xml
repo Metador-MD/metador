@@ -10,6 +10,7 @@
         <parameter key="metador.user.class">WhereGroup\CoreBundle\Component\MetadorUser</parameter>
         <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
+        <parameter key="metador.logging.class">WhereGroup\CoreBundle\Component\Logging</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationMenuListener</parameter>
@@ -40,6 +41,11 @@
         <service id="metadata" class="%metador.metadata.class%">
             <argument type="service" id="service_container" />
             <argument type="service" id="metador_user" />
+        </service>
+        <service id="metador_logging" class="%metador.logging.class%">
+            <argument type="service" id="session.flash_bag" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="security.token_storage" />
         </service>
 
         <!-- EVENT LISTENER -->
