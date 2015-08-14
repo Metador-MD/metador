@@ -88,8 +88,8 @@ class Group implements RoleInterface
      */
     public function addUser(\WhereGroup\UserBundle\Entity\User $user)
     {
-        $this->users->add($user);
         $user->addGroup($this);
+        $this->users->add($user);
 
 
         return $this;

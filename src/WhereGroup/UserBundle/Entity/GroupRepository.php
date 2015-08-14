@@ -8,7 +8,7 @@ class GroupRepository extends EntityRepository
 {
     private $entity = 'WhereGroupUserBundle:Group';
 
-    public function getAllSorted()
+    public function findAllSorted()
     {
         return $this->getEntityManager()->createQuery(
             "SELECT p FROM $this->entity p ORDER BY p.role"

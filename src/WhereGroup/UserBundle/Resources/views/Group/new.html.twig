@@ -18,21 +18,7 @@
     <h1>{{ title }}</h1>
 
     <div class="basic-form">
-        {{ form_row(form.role) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form._token) }}
-
-        <div>
-            {{ form_label(form.users) }}
-            <select name="{{ form.users.vars.full_name }}" multiple="multiple">
-            {% for user in users %}
-                <option value="{{ user.id }}" {% if user.id in form.users.vars.value %} selected="selected" {% endif %}>
-                    {{ user.username }}
-                </option>
-            {% endfor %}
-            </select>
-        </div>
-
+        {{ form_widget(form) }}
     </div>
 {% endblock %}
 

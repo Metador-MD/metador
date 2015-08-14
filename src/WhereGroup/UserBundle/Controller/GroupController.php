@@ -28,7 +28,7 @@ class GroupController extends Controller
         return array(
             'groups' => $this
                 ->getRepository()
-                ->getAllSorted(),
+                ->findAllSorted(),
         );
     }
 
@@ -111,6 +111,8 @@ class GroupController extends Controller
         $form = $this
             ->createForm(new GroupType(), $this->getGroup($id))
             ->submit($request);
+
+        // die('<pre>' . print_r($request->request->all(), 1) . '</pre>');
 
         if ($form->isValid()) {
             $group = $form->getData();

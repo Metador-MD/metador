@@ -1,46 +1,45 @@
 {% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
+{% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+    {% set title  = 'Benutzer bearbeiten'|trans %}
+    {% set path   = 'metador_admin_user_update' %}
+    {% set params = {id: form.vars.value.id} %}
+{% else %}
+    {% set title  = 'Benutzer erstellen'|trans %}
+    {% set path   = 'metador_admin_user_create' %}
+    {% set params = {} %}
+{% endif %}
+
+
+{# CONTENT #}
 {% block content %}
-<h1>{% trans %}Benutzer bearbeiten{% endtrans %}</h1>
+    <h1>{{ title }}</h1>
 
-<form action="{{ path('metador_admin_user_create') }}" method="post" {{ form_enctype(form) }} autocomplete="off" class="form">
-    <div class="left">
-        <label for="{{ form.username.vars.id }}">{{ form.username.vars.name }}:</label>
-        <input name="{{ form.username.vars.full_name }}" id="{{ form.username.vars.id }}" type="text" value="{{ form.username.vars.value }}" class="twoCol0"/>
-
-        <div class="clear"></div>
-
-        <label for="{{ form.password.vars.id }}">{{ form.password.vars.name }}:</label>
-        <input name="{{ form.password.vars.full_name }}" id="{{ form.password.vars.id }}" type="password" value="{{ form.password.vars.value }}" class="twoCol0"/>
-
-        <div class="clear"></div>
-
-        <label for="{{ form.email.vars.id }}">{{ form.email.vars.name }}:</label>
-        <input name="{{ form.email.vars.full_name }}" id="{{ form.email.vars.id }}" type="text" value="{{ form.email.vars.value }}" class="twoCol0"/>
-
-        <div class="clear"></div>
-
-        <legend for="{{ form.isActive.vars.id }}">{{ form_label(form.isActive) }}</legend>
-        {{ form_widget(form.isActive) }}
-        {{ form_widget(form._token) }}
-        <div class="clear"></div>
+    <div class="basic-form">
+        {{ form_widget(form) }}
     </div>
-    <div class="right">
-        <label for="{{ form.groups.vars.id }}">{{ form.groups.vars.name }}:</label>
-        <select name="{{ form.groups.vars.full_name }}" id="{{ form.groups.vars.id }}" multiple="multiple">
-        {% for group in groups %}
-            <option value="{{ group.id }}" {% if group.id in form.groups.vars.value %} selected="selected" {% endif %}>{{ group.role }}</option>
-        {% endfor %}
-        </select>
-    </div>
-    <div class="clear"></div>
-    <button type="submit" class="btn">{% trans %}speichern{% endtrans %}</button>
-    <div class="clear"></div>
-</form>
+{% endblock %}
 
-<hr/>
+{# MENU #}
+{% block plugin_menu %}
+    {{ parent() }}
 
-<form action="{{ path('metador_admin_user') }}" method="get">
-    <button type="submit" class="btn">zurück</button>
-</form>
+    <li>
+        <button type="submit" class="no-style-button">
+            <span class="icon-floppy-disk"></span>
+            {% trans %}speichern{% endtrans %}
+        </button>
+    </li>
+{% endblock %}
+
+{# FORM START #}
+{% block form_start %}
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+{% endblock %}
+
+{# FORM END #}
+{% block form_end %}
+    {{ form_end(form) }}
 {% endblock %}

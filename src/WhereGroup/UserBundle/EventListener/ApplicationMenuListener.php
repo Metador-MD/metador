@@ -27,7 +27,9 @@ class ApplicationMenuListener
     {
         $app = $event->getApplication();
 
+        // ADMIN AREA
         if ($app->routeStartsWith('metador_admin')) {
+            // USER MENU
             $app->add('app-admin-menu', 'user', array(
                 'icon'   => 'icon-user',
                 'label'  => 'Benutzer',
@@ -36,6 +38,7 @@ class ApplicationMenuListener
                 'active' => $app->isController('user')
             ), 'ROLE_SUPERUSER');
 
+            // GROUP MENU
             $app->add('app-admin-menu', 'group', array(
                 'icon'   => 'icon-users',
                 'label'  => 'Gruppen',
@@ -44,10 +47,10 @@ class ApplicationMenuListener
                 'active' => $app->isController('group')
             ), 'ROLE_SUPERUSER');
 
-            // USER BUNDLE
-            if ($app->isBundle('user')) {
+            // GROUP CONTROLLER
+            if ($app->isBundle('user') && $app->isController('group')) {
                 // GROUP INDEX
-                if ($app->isRoute('metador_admin_group')) {
+                if ($app->isAction('index')) {
                     $app->add('app-plugin-menu', 'new', array(
                         'label'  => 'Neu',
                         'icon'   => 'icon-users',
@@ -65,11 +68,44 @@ class ApplicationMenuListener
                 }
 
                 // GROUP EDIT
-                if ($app->isController('group') && $app->isAction('edit')) {
+                if ($app->isAction('edit')) {
                     $app->add('app-plugin-menu', 'delete', array(
                         'label'  => 'löschen',
                         'icon'   => 'icon-bin2',
                         'path'   => 'metador_admin_group_confirm',
+                        'params' => array(
+                            'id' => $this->requestStack->getCurrentRequest()->get('id')
+                        ),
+                    ));
+                }
+            }
+
+            // USER CONTROLLER
+            if ($app->isBundle('user') && $app->isController('user')) {
+                // USER INDEX
+                if ($app->isAction('index')) {
+                    $app->add('app-plugin-menu', 'new', array(
+                        'label'  => 'Neu',
+                        'icon'   => 'icon-users',
+                        'path'   => 'metador_admin_user_new',
+                        'params' => array(),
+                    ));
+                // NOT GORUP INDEX
+                } else {
+                    $app->add('app-plugin-menu', 'index', array(
+                        'label'  => 'zurück',
+                        'icon'   => 'icon-redo2',
+                        'path'   => 'metador_admin_user',
+                        'params' => array()
+                    ));
+                }
+
+                // USER EDIT
+                if ($app->isAction('edit')) {
+                    $app->add('app-plugin-menu', 'delete', array(
+                        'label'  => 'löschen',
+                        'icon'   => 'icon-bin2',
+                        'path'   => 'metador_admin_user_confirm',
                         'params' => array(
                             'id' => $this->requestStack->getCurrentRequest()->get('id')
                         ),

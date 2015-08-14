@@ -2367,10 +2367,52 @@ textarea.code {
   padding: 20px;
 }
 
+.title-box {
+  position: relative;
+  float: left;
+  margin: 0 20px 20px 0;
+  width: 340px;
+  border-bottom: 4px solid #73c47f;
+}
+.title-box.disabled {
+  border-color: silver;
+}
+.title-box.superuser {
+  border-color: #fea500;
+}
+.title-box .title-box-logo {
+  text-align: center;
+  font-size: 60px;
+  float: left;
+  width: 80px;
+}
+.title-box .title-box-logo > a:hover {
+  text-decoration: none;
+}
+.title-box .title-box-info {
+  margin-left: 10px;
+}
+.title-box .title-box-info .title {
+  font-size: 25px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 90px;
+  right: 0;
+}
+.title-box .title-box-info .alternate {
+  font-style: italic;
+  font-size: 12px;
+  position: absolute;
+  top: 40px;
+  left: 90px;
+  right: 0;
+}
+
 .basic-form > div label {
   margin: 10px 0;
 }
-.basic-form > div input, .basic-form > div select {
+.basic-form > div input[type=text], .basic-form > div input[type=password], .basic-form > div select, .basic-form > div textarea {
   border-color: silver;
   border-style: solid;
   font-size: 12px;
@@ -2391,7 +2433,13 @@ textarea.code {
   -o-border-radius: 5px;
   border-radius: 5px;
 }
+.basic-form > div input[type=text][required=required], .basic-form > div input[type=password][required=required], .basic-form > div select[required=required], .basic-form > div textarea[required=required] {
+  border-color: #fea500;
+}
 .basic-form > div select {
+  height: 80px;
+}
+.basic-form > div textarea {
   height: 80px;
 }
 

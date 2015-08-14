@@ -4,6 +4,51 @@
     padding: 20px;
 }
 
+.title-box {
+    position: relative;
+    float: left;
+    margin: 0 20px 20px 0;
+    width: ($pageWidth - $pageLeftWidth) / 2 - 50;
+    border-bottom: 4px solid $success;
+
+
+
+    &.disabled {
+        border-color: silver;
+    }
+
+    &.superuser {
+        border-color: $warning;
+    }
+
+    .title-box-logo {
+        text-align: center;
+        font-size: 60px;
+        float: left;
+        width: 80px;
+
+        & > a:hover {
+            text-decoration: none;
+        }
+    }
+
+    .title-box-info {
+        margin-left: 10px;
+
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            @include pos(0, 0, '', 90px);
+        }
+
+        .alternate {
+            font-style: italic;
+            font-size: 12px;
+            @include pos(40px, 0, '', 90px);
+        }
+    }
+}
+
 .basic-form {
     & > div {
         label {
@@ -11,7 +56,7 @@
             margin: 10px 0;
         }
 
-        input, select {
+        input[type=text], input[type=password], select, textarea {
             border-color: silver;
             border-style: solid;
             font-size: 12px;
@@ -25,9 +70,17 @@
             padding: 10px 5px;
             @include box-shadow(lighten(#3D3F44, 60%) 1px 1px 3px);
             @include border-radius($radius);
+
+            &[required=required] {
+                border-color: $warning;
+            }
         }
 
         select {
+            height: 80px;
+        }
+
+        textarea {
             height: 80px;
         }
     }
