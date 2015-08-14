@@ -2,6 +2,7 @@
 
 namespace WhereGroup\UserBundle\Controller;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -58,8 +59,10 @@ class GroupController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Group();
-        $form = $this->createForm(new GroupType(), $entity);
-        $form->bind($request);
+        $form = $this
+            ->createForm(new GroupType(), $entity)
+            ->submit($request);
+
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -72,9 +75,9 @@ class GroupController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $this->addFlash('success', 'Gruppe erfolgreich hinzugefügt.');
+                $this->get('metador_logging')->success('Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->addFlash('warning', 'Gruppe existiert bereits.');
+                $this->get('metador_logging')->success('Gruppe existiert bereits.');
             }
 
         } else {
@@ -154,9 +157,11 @@ class GroupController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        /** @var Form $form */
         $form = $this
             ->createDeleteForm($id)
             ->submit($request);
+
 
         if ($form->isValid()) {
             $entity = $this->getRepository()->findOneById($id);
@@ -175,6 +180,10 @@ class GroupController extends Controller
         return $this->redirect($this->generateUrl('metador_admin_group'));
     }
 
+    /**
+     * @param $id
+     * @return Form
+     */
     private function createDeleteForm($id)
     {
         return $this
@@ -184,6 +193,10 @@ class GroupController extends Controller
             ->getForm();
     }
 
+    /**
+     * @param null $repository
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     */
     private function getRepository($repository = null)
     {
         return $this
@@ -192,6 +205,10 @@ class GroupController extends Controller
             ->getRepository(is_null($repository) ? self::REPOSITORY : $repository);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     private function getGroup($id)
     {
         $entity = $this
