@@ -25,16 +25,19 @@ class TeaserExtension extends \Twig_Extension
         $count  = 0;
         $words  = explode(' ', $string);
 
+        
+        
         foreach ($words as $word) {
             $count += strlen($word);
-
+           
             if ($count >= $maxLen) {
+                $teaser .= ' ...';
                 break;
             }
 
-            $teaser += ' ' . $word;
+            $teaser .= ' '. $word;
         }
-
-        return trim($teaser) . ' ...';
+        
+        return trim($teaser);
     }
 }

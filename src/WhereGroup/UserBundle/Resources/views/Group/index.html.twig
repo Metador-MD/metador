@@ -2,36 +2,32 @@
 
 {% block content %}
     <h1>{{ 'Gruppen'|trans }}</h1>
+    
+    {% for group in groups %}
+        
+    {#{% set class = '' %}
+    {% if not group.isactive %}
+        {% set class = class ~ ' disabled' %}
+    {% endif %}#}
+    
 
-    {{ 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'|teaser }}
-
-
-    <div class="tableBorder">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>{{ 'Gruppe'|trans }}</th>
-                    <th>{{ 'Beschreibung'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for group in groups %}
-                <tr>
-                    <td>
-                        <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
-                        {{ group.role|replace({'ROLE_': ''})|title  }}
-                        </a>
-                    <td>{{ group.description }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="title-box {#{{ class|trim }}#}">
+        <div class="title-box-logo">
+            <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
+                <span class="icon-users"></span>
+            </a>
+        </div>
+        <div class="title-box-info">
+            <div class="title">
+                <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
+                {{ group.role|replace({'ROLE_': ''})|title }}
+                </a>
+            </div>
+            <div class="alternate">
+                {{ group.description |teaser(50) }}
+            </div>
+        </div>
     </div>
-
+    {% endfor %}
     <br/>
 {% endblock %}
