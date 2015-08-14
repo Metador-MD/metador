@@ -2370,7 +2370,7 @@ textarea.code {
 .title-box {
   position: relative;
   float: left;
-  margin: 0 20px 20px 0;
+  margin: 14px;
   width: 340px;
   border-bottom: 4px solid #73c47f;
 }
