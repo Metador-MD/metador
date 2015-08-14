@@ -80,10 +80,17 @@ abstract class ProfileApplicationMenuListener
                     'active' => $app->isAction(array('new', 'use'))
                 ));
             } else {
+                $data = array();
+                
+                if ($app->isAction('new') || $app->isAction('edit')) {
+                    $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
+                }
+                
                 $app->add('app-plugin-menu', 'index', array(
                     'label'  => 'zurück',
                     'icon'   => 'icon-redo2',
                     'path'   => 'metadata_index',
+                    'data'   => $data,
                     'params' => array('profile' => $this->profile)
                 ));
             }
