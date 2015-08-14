@@ -12,7 +12,7 @@ use WhereGroup\CoreBundle\Event\LoggingEvent;
  * Class Logging
  * @package WhereGroup\CoreBundle\Component
  */
-class Logging
+class Logger
 {
     private $flashBag;
     private $eventDispatcher;
