@@ -5,13 +5,12 @@
     
     {% for group in groups %}
         
-    {#{% set class = '' %}
-    {% if not group.isactive %}
+    {% set class = '' %}
+    {% if group.users|length == 0 %}
         {% set class = class ~ ' disabled' %}
-    {% endif %}#}
+    {% endif %}
     
-
-    <div class="title-box {#{{ class|trim }}#}">
+    <div class="title-box {{ class|trim }}">
         <div class="title-box-logo">
             <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
                 <span class="icon-users"></span>
@@ -23,8 +22,8 @@
                 {{ group.role|replace({'ROLE_': ''})|title }}
                 </a>
             </div>
-            <div class="alternate">
-                {{ group.description |teaser(50) }}
+            <div class="alternate" title="{{ group.description }}">
+                {{ group.description |teaser(30) }}
             </div>
         </div>
     </div>
