@@ -75,9 +75,9 @@ class GroupController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $this->get('metador_logging')->success('Gruppe erfolgreich hinzugefügt.');
+                $this->get('metador_logger')->success('Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->get('metador_logging')->success('Gruppe existiert bereits.');
+                $this->get('metador_logger')->success('Gruppe existiert bereits.');
             }
 
         } else {
