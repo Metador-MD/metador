@@ -90,7 +90,7 @@ class Logger
         }
 
         $this->eventDispatcher->dispatch(
-            'metador.on_log',
+            'metador.log',
             new LoggingEvent(
                 $type,
                 $message,
