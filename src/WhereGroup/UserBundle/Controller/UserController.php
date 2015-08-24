@@ -71,6 +71,8 @@ class UserController extends Controller
                 $encoder->encodePassword($user->getPassword(), $user->getSalt())
             );
 
+            $this->get('metador_logger')->success('Benutzer ' . $user->getUsername() . ' wurde erstellt.');
+
             return $this
                 ->save($user)
                 ->redirect($this->generateUrl('metador_admin_user'));
@@ -135,6 +137,11 @@ class UserController extends Controller
             } else {
                 $user->setPassword($oldPassword);
             }
+
+            $this->get('metador_logger')->success(
+                'Benutzer %username% wurde bearbeitet.',
+                array('%username%' => $user->getUsername())
+            );
 
             return $this
                 ->save($user)
@@ -204,8 +211,6 @@ class UserController extends Controller
 
     private function save($entity)
     {
-        $this->get('metador_logger')->success('Benutzer erfolgreich gespeichert.');
-
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
