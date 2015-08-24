@@ -31,10 +31,11 @@ class PluginController extends Controller
      */
     public function indexAction()
     {
-
         if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SUPERUSER')) {
             throw new AccessDeniedException();
         }
+
+        // $plugins = $this->get('metador_plugin_repository')->getPlugins();
 
         return array(
             'plugins' => $this->get('metador_plugin')->getPlugins()
