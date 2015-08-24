@@ -204,6 +204,8 @@ class UserController extends Controller
 
     private function save($entity)
     {
+        $this->get('metador_logger')->success('Benutzer erfolgreich gespeichert.');
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
@@ -213,6 +215,8 @@ class UserController extends Controller
 
     private function remove($entity)
     {
+        $this->get('metador_logger')->success('Benutzer erfolgreich gelöscht.');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($entity);
         $em->flush();
