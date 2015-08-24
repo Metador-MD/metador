@@ -1,3 +1,6 @@
+parameters:
+    metador_version: 2.1.0.0
+
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
@@ -37,7 +40,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        version: 2.1.0.0
+        version: %metador_version%
 
 # Assetic Configuration
 assetic:
