@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-dff9cb');
-	src:url('fonts/icomoon.eot?#iefix-dff9cb') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?-dff9cb') format('truetype'),
-		url('fonts/icomoon.woff?-dff9cb') format('woff'),
-		url('fonts/icomoon.svg?-dff9cb#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-1jk11i');
+	src:url('fonts/icomoon.eot?#iefix-1jk11i') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?-1jk11i') format('truetype'),
+		url('fonts/icomoon.woff?-1jk11i') format('woff'),
+		url('fonts/icomoon.svg?-1jk11i#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -25,9 +25,6 @@
 
 .icon-wheregroup:before {
 	content: "\e600";
-}
-.icon-circle:before {
-	content: "\f111";
 }
 .icon-pencil:before {
 	content: "\e905";
@@ -98,6 +95,12 @@
 .icon-switch:before {
 	content: "\e9b6";
 }
+.icon-power-cord:before {
+	content: "\e9b7";
+}
+.icon-clipboard:before {
+	content: "\e9b8";
+}
 .icon-earth:before {
 	content: "\e9ca";
 }
@@ -124,6 +127,9 @@
 }
 .icon-checkmark2:before {
 	content: "\ea11";
+}
+.icon-arrow-right:before {
+	content: "\ea34";
 }
 .icon-arrow-left:before {
 	content: "\ea38";

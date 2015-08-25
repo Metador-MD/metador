@@ -1,0 +1,21 @@
+<div class="paging">
+    <div class="left">
+        {% if paging.prevPage is defined %}
+            <a href="{{ path(path_name, { page: paging.prevPage }) }}">
+                <span class="icon-arrow-left"></span>
+            </a>
+        {% endif %}
+    </div>
+    <div class="center">
+        {% if paging.count > 0 %}
+            Seite {{ paging.currentPage }} von {{ paging.pages }}
+        {% endif %}
+    </div>
+    <div class="right">
+        {% if paging.nextPage is defined %}
+            <a href="{{ path(path_name, { page: paging.nextPage }) }}">
+                <span class="icon-arrow-right"></span>
+            </a>
+        {% endif %}
+    </div>
+</div>

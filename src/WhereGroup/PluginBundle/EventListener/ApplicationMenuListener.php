@@ -37,7 +37,7 @@ class ApplicationMenuListener extends ApplicationIntegration
          * Admin Menu
          ***********************************************************************/
         $this->app->add('app-admin-menu', 'plugin', array(
-            'icon'   => 'icon-stack',
+            'icon'   => 'icon-power-cord',
             'label'  => 'Plugins',
             'path'   => 'metador_admin_plugin',
             'params' => array(),
