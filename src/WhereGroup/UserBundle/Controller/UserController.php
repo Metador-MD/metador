@@ -121,8 +121,6 @@ class UserController extends Controller
 
         $oldPassword = $user->getPassword();
 
-        $this->get('logger')->info($oldPassword);
-
         $form = $this
             ->createForm(new UserType(), $user)
             ->submit($request);
