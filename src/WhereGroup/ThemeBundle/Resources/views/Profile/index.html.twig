@@ -32,7 +32,7 @@
                             {% for col in cols %}
                             <th class="{% if col.header.class is defined %}{{ col.header.class }}{% endif %}" title="{% if col.header.label is defined %}{{ col.header.label }}{% endif %}">
                                 {% if col.header.icon is defined %}
-                                <div class="icon-earth"></div>
+                                <div class="{{ col.header.icon }}"></div>
                                 {% else %}
                                 {{ col.header.label|trans }}
                                 {% endif %}
