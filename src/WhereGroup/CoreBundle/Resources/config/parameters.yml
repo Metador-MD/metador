@@ -1,7 +1,7 @@
 parameters:
-    metador_user: ~
-    metador_proxy_host: ~
-    metador_proxy_port: ~
+    user: ~
+    proxy_host: ~
+    proxy_port: ~
 
     external_database_driver: pdo_pgsql
     external_database_host: localhost
