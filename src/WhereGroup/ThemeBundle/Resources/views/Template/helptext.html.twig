@@ -1,5 +1,5 @@
-<div class="helptext" {% if is_granted('ROLE_METADOR_ADMIN') %}contentEditable="true"{% endif %}>
-    {% if is_granted('ROLE_METADOR_ADMIN') %}
+<div class="helptext" {% if is_granted('ROLE_HELPTEXT_ADMIN') %}contentEditable="true"{% endif %}>
+    {% if is_granted('ROLE_HELPTEXT_ADMIN') %}
         {{ html }}
     {% else %}
         {{ html|raw }}

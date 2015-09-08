@@ -23,7 +23,10 @@ class MetadorUser implements MetadorUserInterface
 
     public function getUser()
     {
-        return $this->container->get('security.token_storage')->getToken()->getUser();
+        return $this->container
+            ->get('security.token_storage')
+            ->getToken()
+            ->getUser();
     }
 
     /**
@@ -64,7 +67,7 @@ class MetadorUser implements MetadorUserInterface
                 'ROLE_USER',
                 'ROLE_SUPERUSER',
                 'ROLE_ADMIN',
-                'ROLE_METADOR_ADMIN');
+                'ROLE_HELPTEXT_ADMIN');
         }
 
         foreach ($user->getRoles() as $userRole) {
