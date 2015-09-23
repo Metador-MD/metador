@@ -76,7 +76,7 @@ class ProfileController extends Controller
 
         error_reporting(E_ERROR);
 
-        require_once __DIR__ . '/../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
+        require_once __DIR__ . '/../../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
 
         $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
         $pdf->SetCreator(PDF_CREATOR);
