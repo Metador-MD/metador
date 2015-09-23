@@ -67,9 +67,6 @@ class ProfileController extends Controller
 
     public function pdfAction($data)
     {
-        // TODO: refactoring
-        return new Response("refactoring");
-
         $html = $this->render("ProfileDatasetBundle:Profile:metadata.pdf.twig", array(
             "p" => $data['p']
         ));
