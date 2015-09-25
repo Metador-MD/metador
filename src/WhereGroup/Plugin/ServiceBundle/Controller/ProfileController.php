@@ -89,4 +89,13 @@ class ProfileController extends Controller
         $pdf->writeHTML($html->getContent(), true, true, false, false, '');
         $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
     }
+    
+    public function htmlAction($data)
+    {
+        return new Response(
+            $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(
+                    "p" => $data['p']
+                ))
+        );
+    }
 }

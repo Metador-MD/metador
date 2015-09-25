@@ -83,4 +83,27 @@ class ExportController extends Controller
 
         return new Response('Datensatz nicht gefunden.');
     }
+    
+    /**
+    * @Route("/html/{id}", name="metador_export_html")
+    * @Method("GET")
+    */
+    public function htmlAction($id)
+    {
+        
+        $data = $this->get('metadata')->getById($id);
+       
+        if ($data) {
+            $p = $data->getObject();
+             
+            ksort($p);
+            return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
+                'data' => array(
+                    'p' => $p,
+                )
+            ));
+        }
+
+        return new Response('Datensatz nicht gefunden.');
+    }
 }
