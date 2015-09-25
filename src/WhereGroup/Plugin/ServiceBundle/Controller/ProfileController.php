@@ -92,10 +92,8 @@ class ProfileController extends Controller
     
     public function htmlAction($data)
     {
-        return new Response(
-            $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(
-                    "p" => $data['p']
-                ))
-        );
+        return $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(
+            "p" => $data['p']
+        ));
     }
 }
