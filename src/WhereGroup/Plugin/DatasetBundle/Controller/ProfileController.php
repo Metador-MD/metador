@@ -54,7 +54,7 @@ class ProfileController extends Controller
 
     public function xmlAction($data)
     {
-        $xml = $this->render("ProfileDatasetBundle:Profile:metadata.xml.twig", array(
+        $xml = $this->render("ProfileDatasetBundle:Export:metadata.xml.twig", array(
             "p" => $data['p']
         ));
 
@@ -67,16 +67,13 @@ class ProfileController extends Controller
 
     public function pdfAction($data)
     {
-        // TODO: refactoring
-        return new Response("refactoring");
-
-        $html = $this->render("ProfileDatasetBundle:Profile:metadata.pdf.twig", array(
+        $html = $this->render("ProfileDatasetBundle:Export:pdf.html.twig", array(
             "p" => $data['p']
         ));
 
         error_reporting(E_ERROR);
 
-        require_once __DIR__ . '/../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
+        require_once __DIR__ . '/../../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
 
         $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
         $pdf->SetCreator(PDF_CREATOR);
@@ -91,5 +88,12 @@ class ProfileController extends Controller
         $pdf->AddPage();
         $pdf->writeHTML($html->getContent(), true, true, false, false, '');
         $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+    }
+    
+    public function htmlAction($data)
+    {
+        return $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(
+            "p" => $data['p']
+        ));
     }
 }
