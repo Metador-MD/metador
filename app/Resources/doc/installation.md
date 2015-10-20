@@ -22,6 +22,9 @@ chmod o+rw app/logs
 
 # Create Superuser
 app/console metador:reset:superuser 
+
+#Create plugins_routing.yml
+touch var/plugins/plugins_routing.yml
 ```
 
 <a href="../../../README.md">&laquo; back</a>
