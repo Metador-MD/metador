@@ -6,6 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
+use WhereGroup\UserBundle\Component\UserInterface;
 
 /**
  * Class Metadata
@@ -17,18 +18,18 @@ class Metadata implements MetadataInterface
     /** @var ContainerInterface  */
     protected $container;
 
-    /** @var MetadorUserInterface  */
+    /** @var UserInterface  */
     protected $metadorUser;
 
     const REPOSITORY = "WhereGroupCoreBundle:Metadata";
 
     /**
      * @param ContainerInterface $container
-     * @param MetadorUserInterface $metadorUser
+     * @param UserInterface $metadorUser
      */
     public function __construct(
         ContainerInterface $container,
-        MetadorUserInterface $metadorUser
+        UserInterface $metadorUser
     ) {
         $this->container = $container;
         $this->metadorUser = $metadorUser;
@@ -142,9 +143,9 @@ class Metadata implements MetadataInterface
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
         if (is_null($username)) {
-            $user = $this->metadorUser->getUser();
+            $user = $this->metadorUser->getUserFromSession();
         } else {
-            $user = $this->metadorUser->getUserByUsername($username);
+            $user = $this->metadorUser->getByUsername($username);
         }
 
         $now  = new \DateTime();

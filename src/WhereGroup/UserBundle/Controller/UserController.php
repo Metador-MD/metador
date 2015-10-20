@@ -7,9 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Form\UserType;
+use WhereGroup\CoreBundle\Component\MetadorException;
 
 /**
  * User controller.
@@ -18,9 +20,6 @@ use WhereGroup\UserBundle\Form\UserType;
  */
 class UserController extends Controller
 {
-
-    const REPOSITORY = 'WhereGroupUserBundle:User';
-
     /**
      *
      * @Route("/", name="metador_admin_user")
@@ -29,9 +28,7 @@ class UserController extends Controller
     public function indexAction()
     {
         return array(
-            'users' => $this
-                ->getRepository()
-                ->findAllSorted(),
+            'users' => $this->get('metador_user')->findAll(),
         );
     }
 
@@ -65,17 +62,18 @@ class UserController extends Controller
             ->submit($request);
 
         if ($form->isValid()) {
-            // TODO: user exists?
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-            $user->setPassword(
-                $encoder->encodePassword($user->getPassword(), $user->getSalt())
-            );
+            try {
+                $this->get('metador_user')->insert($user);
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde erstellt.',
+                    array('%username%' => $user->getUsername())
+                );
+            // todo eigene Exception
+            } catch (MetadorException $e) {
+                $this->get('metador_logger')->warning($e->getMessage());
+            }
 
-            $this->get('metador_logger')->success('Benutzer ' . $user->getUsername() . ' wurde erstellt.');
-
-            return $this
-                ->save($user)
-                ->redirect($this->generateUrl('metador_admin_user'));
+            return $this->redirectToRoute('metador_admin_user');
         }
 
         return array(
@@ -90,12 +88,11 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
-        $user = $this
-            ->getRepository()
-            ->findOneById($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException('Benutzer konnte nicht gefunden werden');
+        try {
+            $user = $this->get('metador_user')->get($id);
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->warning($e->getMessage());
+            return $this->redirectToRoute('metador_admin_user');
         }
 
         return array(
@@ -113,37 +110,38 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $user = $this->getRepository()->findOneById($id);
+        try {
+            $user = $this->get('metador_user')->get($id);
 
-        if (!$user) {
-            throw $this->createNotFoundException('Benutzer konnte nicht gefunden werden');
-        }
+            $oldPassword = $user->getPassword();
 
-        $oldPassword = $user->getPassword();
+            $form = $this
+                ->createForm(new UserType(), $user)
+                ->submit($request);
 
-        $form = $this
-            ->createForm(new UserType(), $user)
-            ->submit($request);
+            if ($form->isValid()) {
+                if ($user->getPassword() != "" && $oldPassword != $user->getPassword()) {
+                    $user->setPassword(
+                        $this->get('metador_user')->encodePassword($user, $user->getPassword())
+                    );
+                } else {
+                    $user->setPassword($oldPassword);
+                }
 
-        if ($form->isValid()) {
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $this->get('metador_user')->update($user);
 
-            if ($user->getPassword() != "" && $oldPassword != $user->getPassword()) {
-                $user->setPassword(
-                    $encoder->encodePassword($user->getPassword(), $user->getSalt())
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde bearbeitet.',
+                    array('%username%' => $user->getUsername())
                 );
-            } else {
-                $user->setPassword($oldPassword);
+
+                return $this->redirectToRoute('metador_admin_user');
             }
 
-            $this->get('metador_logger')->success(
-                'Benutzer %username% wurde bearbeitet.',
-                array('%username%' => $user->getUsername())
-            );
 
-            return $this
-                ->save($user)
-                ->redirect($this->generateUrl('metador_admin_user'));
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->warning($e->getMessage());
+            return $this->redirectToRoute('metador_admin_user');
         }
 
         return array(
@@ -176,18 +174,20 @@ class UserController extends Controller
             ->submit($request);
 
         if ($form->isValid()) {
-            $user = $this->getRepository()->findOneById($id);
-
-            if (!$user) {
-                throw $this->createNotFoundException('Benutzer konnte nicht gefunden werden');
+            try {
+                $user = $this->get('metador_user')->get($id);
+                $this->get('metador_user')->delete($user);
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde gelöscht.',
+                    array('%username%' => $user->getUsername())
+                );
+            } catch (MetadorException $e) {
+                $this->get('metador_logger')->warning($e->getMessage());
+                return $this->redirectToRoute('metador_admin_user');
             }
-
-            $this
-                ->remove($user)
-                ->addFlash('success', 'Benutzer erfolgreich gelöscht.');
         }
 
-        return $this->redirect($this->generateUrl('metador_admin_group'));
+        return $this->redirectToRoute('metador_admin_user');
     }
 
     private function createDeleteForm($id)
@@ -197,33 +197,5 @@ class UserController extends Controller
             ->add('id', 'hidden')
             ->add('submit', 'submit', array('label' => 'löschen'))
             ->getForm();
-    }
-
-    private function getRepository($repository = null)
-    {
-        return $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository(is_null($repository) ? self::REPOSITORY : $repository);
-    }
-
-    private function save($entity)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
-        $em->flush();
-
-        return $this;
-    }
-
-    private function remove($entity)
-    {
-        $this->get('metador_logger')->success('Benutzer erfolgreich gelöscht.');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($entity);
-        $em->flush();
-
-        return $this;
     }
 }

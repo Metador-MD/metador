@@ -5,6 +5,7 @@
 *.phar
 *.TODO
 *.lock
+*.sublime-workspace
 *Test*
 
 .sass-cache

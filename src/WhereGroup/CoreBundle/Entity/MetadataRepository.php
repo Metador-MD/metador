@@ -11,7 +11,7 @@ class MetadataRepository extends EntityRepository
     public function getAllByProfile($profile)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT * FROM $entity p WHERE p.profile = :profile"
+            "SELECT * FROM $this->entity p WHERE p.profile = :profile"
         )
         ->setParameter('profile', $profile)
         ->getResult();
