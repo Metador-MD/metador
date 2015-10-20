@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use WhereGroup\UserBundle\Component\UserInterface;
 
 interface MetadataInterface
 {
@@ -12,7 +13,7 @@ interface MetadataInterface
      */
     public function __construct(
         ContainerInterface $container,
-        MetadorUserInterface $metadorUser
+        UserInterface $metadorUser
     );
 
     /**
