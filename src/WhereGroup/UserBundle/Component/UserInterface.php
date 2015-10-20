@@ -3,13 +3,11 @@
 namespace WhereGroup\UserBundle\Component;
 
 use WhereGroup\UserBundle\Entity\User as UserEntity;
-use WhereGroup\CoreBundle\Component\MetadorException;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-interface User
+interface UserInterface
 {
     public function __construct(
         TokenStorageInterface $tokenStorage,

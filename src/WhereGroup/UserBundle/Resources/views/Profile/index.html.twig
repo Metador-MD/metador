@@ -1,0 +1,40 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% set title  = 'Benutzerdaten ändern'|trans %}
+{% set path   = 'metador_profile_update' %}
+{% set params = {id: form.vars.value.id} %}
+
+{% block plugin_menu %}
+    <li>
+        <button type="submit" class="no-style-button">
+            <span class="icon-floppy-disk"></span>
+            {% trans %}speichern{% endtrans %}
+        </button>
+    </li>
+{% endblock %}
+
+{% block center %}
+    <div class="page-content">
+        <h1>{{ title }}</h1>
+
+        <div class="basic-form">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block form_start %}
+    {{ form_start(form, {
+        'action': path(path, params),
+        'method': 'POST',
+        'attr': {
+            novalidate: 'novalidate',
+            autocomplete: 'off'
+        }
+        })
+    }}
+{% endblock %}
+
+{% block form_end %}
+    {{ form_end(form) }}
+{% endblock %}
