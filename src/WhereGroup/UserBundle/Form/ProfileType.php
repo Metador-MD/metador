@@ -18,10 +18,11 @@ class ProfileType extends AbstractType
             ->add('username', null, array(
                 'label' => 'Benutzername'
             ))
-            ->add('password', 'password', array(
+            ->add('password', 'repeated', array(
+                'type' => 'password',
                 'required' => false,
-                'attr'     => array('placeholder'=>'***'),
-                'label'    => 'Passwort'
+                'first_options'  => array('label' => 'Password'),
+                'second_options' => array('label' => 'Repeat Password'),
             ))
             ->add('email', null, array('required' => false));
         ;
