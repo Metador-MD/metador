@@ -21,6 +21,7 @@ class ProfileType extends AbstractType
             ->add('password', 'repeated', array(
                 'type' => 'password',
                 'required' => false,
+                'invalid_message' => 'Passwörter stimmen nicht überein.',
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
