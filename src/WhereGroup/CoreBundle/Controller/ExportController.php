@@ -29,6 +29,7 @@ class ExportController extends Controller
             $p = $data->getObject();
 
             if ($granted === true || $data->getPublic() === true) {
+                
                 return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
                     'data' => array(
                         'p' => $p,
@@ -110,11 +111,12 @@ class ExportController extends Controller
         $granted = $this
             ->get('security.authorization_checker')
             ->isGranted('ROLE_USER');
-
+        
         if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
             if ($granted === true || $data->getPublic() === true) {
+//                die('<pre>'.print_r($p, 1).'</pre>');
                 return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
                     'data' => array(
                         'p' => $p,
