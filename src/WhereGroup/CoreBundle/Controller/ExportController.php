@@ -21,19 +21,30 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
+        $granted = $this
+            ->get('security.authorization_checker')
+            ->isGranted('ROLE_USER');
+
         if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
-            return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
-                'data' => array(
-                    'p' => $p,
-                )
+            if ($granted === true || $data->getPublic() === true) {
+                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
+                    'data' => array(
+                        'p' => $p,
+                    )
+                ));
+            }
+
+            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
+                "message" => "Zugriff verweigert."
+            ));
+
+        } else {
+            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
+                "message" => "Datensatz nicht gefunden."
             ));
         }
-
-        $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
-            "message" => "Datensatz nicht gefunden."
-        ));
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
@@ -83,19 +94,19 @@ class ExportController extends Controller
 
         return new Response('Datensatz nicht gefunden.');
     }
-    
+
     /**
     * @Route("/html/{id}", name="metador_export_html")
     * @Method("GET")
     */
     public function htmlAction($id)
     {
-        
+
         $data = $this->get('metadata')->getById($id);
-       
+
         if ($data) {
             $p = $data->getObject();
-             
+
             ksort($p);
             return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
                 'data' => array(

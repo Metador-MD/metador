@@ -26,6 +26,7 @@ security:
                 target: /
 
     access_control:
+        - { path: ^/metador/xml, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_SUPERUSER }
