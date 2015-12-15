@@ -29,6 +29,7 @@ class ExportController extends Controller
             $p = $data->getObject();
 
             if ($granted === true || $data->getPublic() === true) {
+                
                 return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
                     'data' => array(
                         'p' => $p,
@@ -78,21 +79,27 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $data = $this->get('metadata')->getById($id);
+        $granted = $this
+            ->get('security.authorization_checker')
+            ->isGranted('ROLE_USER');
 
-        if ($data) {
+        if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
-            ksort($p);
+            if ($granted === true || $data->getPublic() === true) {
+                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:pdf', array(
+                    'data' => array(
+                        'p' => $p,
+                    )
+                ));
+            }
 
-            return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:pdf', array(
-                'data' => array(
-                    'p' => $p,
-                )
-            ));
+
+            return new Response('Zugriff verweigert.');
+
+        } else {
+            return new Response('Datensatz nicht gefunden.');
         }
-
-        return new Response('Datensatz nicht gefunden.');
     }
 
     /**
@@ -101,20 +108,26 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-
-        $data = $this->get('metadata')->getById($id);
-
-        if ($data) {
+        $granted = $this
+            ->get('security.authorization_checker')
+            ->isGranted('ROLE_USER');
+        
+        if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
-            ksort($p);
-            return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
-                'data' => array(
-                    'p' => $p,
-                )
-            ));
-        }
+            if ($granted === true || $data->getPublic() === true) {
+//                die('<pre>'.print_r($p, 1).'</pre>');
+                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
+                    'data' => array(
+                        'p' => $p,
+                    )
+                ));
+            }
 
-        return new Response('Datensatz nicht gefunden.');
+            return new Response('Zugriff verweigert.');
+
+        } else {
+            return new Response('Datensatz nicht gefunden.');
+        }
     }
 }

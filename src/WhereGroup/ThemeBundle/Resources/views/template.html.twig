@@ -13,7 +13,9 @@
 <div class="page">
     <div class="logo"></div>
     <div class="page-top">
-        {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
+	{% block global_menu %}
+	    {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
+	{% endblock %}
     </div>
     {% block form_start %}{% endblock %}
     <div class="plugin-menu">

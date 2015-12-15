@@ -106,6 +106,21 @@ abstract class ProfileApplicationMenuListener
                     'target' => '_BLANK'
                 ));
 
+                $app->add('app-plugin-menu', 'pdf', array(
+                    'label'  => 'PDF',
+                    'icon'   => 'icon-file-pdf',
+                    'path'   => 'metador_export_pdf',
+                    'params' => array('id' => $id)
+                ));
+
+                $app->add('app-plugin-menu', 'html', array(
+                    'label'  => 'HTML',
+                    'icon'   => 'icon-embed2',
+                    'path'   => 'metador_export_html',
+                    'params' => array('id' => $id)
+                ));
+
+
                 $app->add('app-plugin-menu', 'confirm', array(
                     'label'  => 'löschen',
                     'icon'   => 'icon-bin2',
