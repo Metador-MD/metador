@@ -1,3 +1,7 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+@import 'bundles/wheregrouptheme/style/sass-lib/extensions';
+
 .fs-view {
     border: 1px solid $primary;
     margin: 20px;
@@ -58,8 +62,8 @@
             width: 100%;
             border: 1px solid silver;
             padding: 10px 5px;
-            @include box-shadow(lighten(#3d3f44, 60%) 1px 1px 3px);
-            @include border-radius($radius);
+            box-shadow: lighten(#3d3f44, 60%) 1px 1px 3px;
+            border-radius: $radius;
             &[required=required] {
                 border-color: $warning;
             }

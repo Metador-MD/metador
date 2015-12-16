@@ -1,19 +1,22 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 $primary: #3D3F44;
 
 .modal {
     z-index: 1;
     background-color: black;
-    @include opacity(0.6); 
+    opacity: 0.6;
     @include pos(0px,0px,0px,0px);
 }
 
 .dialog {
     z-index: 2;
     border: 1px solid $primary;
-    background-color: white;    
+    background-color: white;
     @include posCenter(400px, 300px);
-    @include border-radius(8px);
-    @include box-shadow(darken($primary, 10%) 2px 2px 15px);
+    border-radius: 8px;
+    box-shadow: darken($primary, 10%) 2px 2px 15px;
 
     .head {
         height: 40px;
@@ -25,8 +28,8 @@ $primary: #3D3F44;
         border-bottom: 1px solid white;
         color: lighten($primary, 20%);
         @include pos(0px,0px,'',0px);
-        @include border-top-radius(8px);
-        @include text-shadow(white 0 1px 1px);
+        border-top-radius: 8px;
+        text-shadow: white 0 1px 1px;
     }
 
     .body {
@@ -43,7 +46,7 @@ $primary: #3D3F44;
         border-top: 1px solid white;
         text-align: right;
         @include pos('',0px,0px,0px);
-        @include border-bottom-radius(8px);
+        border-bottom-radius: 8px;
 
         .btn {
             float: right;
@@ -51,5 +54,3 @@ $primary: #3D3F44;
         }
     }
 }
-
-

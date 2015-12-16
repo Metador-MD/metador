@@ -1,37 +1,13 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+@import 'bundles/wheregrouptheme/style/sass-lib/extensions';
+
 $buttonWidth: 40px;
 $widthForm: 725px;
-$radius: 5px;
 
-$colBox: 700px;
+$colBox: 701px;
 $space: 20px;
 $padding: 6px;
-
-%input {
-    border-color: silver;
-    border-style: solid;
-    font-size: 12px;
-    color: #333;
-    float:left;
-    display: block;
-    height: 30px;
-    padding: 5px;
-    background-color: white;
-    @include box-shadow(lighten(#3D3F44, 60%) 1px 1px 3px);
-
-    &.no-value {
-        color: #666;
-        background-color: #DFE8FF;
-        @include text-shadow(white 1px 1px 0);
-    }
-}
-
-%label {
-    display: block;
-    font-size: 14px;
-    //font-weight: bold;
-    color: #666;
-    margin: 3px 0;
-}
 
 .metadataForm {
     & .btn, & .btn-group > * {
@@ -59,7 +35,7 @@ $padding: 6px;
     & fieldset {
         border: 1px solid silver;
         padding: 10px 5px;
-        @include border-radius($radius);
+        border-radius: $radius;
     }
 
     & .metadataFormPages {
@@ -99,12 +75,12 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
 
 .oneCol0, .twoCol0 {
     border-width: 1px;
-    @include border-radius($radius);
+    border-radius: $radius;
 }
 
 .oneCol1, .oneCol2, .oneCol3, .twoCol1, .twoCol2, .threeCol1 {
     border-width: 1px 0px 1px 1px;
-    @include border-left-radius($radius);
+    border-left-radius: $radius;
 }
 
 .oneCol0    {width: $oneColWidth;}
@@ -154,7 +130,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     border: 1px solid silver;
     min-height: 30px;
 
-    @include border-radius($radius);
+    border-radius: $radius;
 
     & > div {
         clear: both;
@@ -162,7 +138,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
         & > label, & > table {
             background-color: #fff;
             border: 1px solid #aaa;
-            @include border-radius(4px);
+            border-radius: 4px;
             margin-bottom: 5px;
         }
 
@@ -192,7 +168,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     border: 1px solid silver;
     height: 290px;
     margin-right: 20px;
-    @include border-radius($radius);
+    border-radius: $radius;
 }
 
 .duplicatable .duplicatable {
@@ -261,7 +237,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
 .duplicatable {
     border: 1px solid silver;
     margin-bottom: 10px;
-    @include border-radius($radius);
+    border-radius: $radius;
 
     ul {
         margin: 0;
@@ -270,7 +246,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
         height: 30px;
         border-bottom: 1px solid silver;
         background-color: $bright;
-        @include border-top-radius($radius);
+        border-top-radius: $radius;
 
         & > li {
             cursor: pointer;
@@ -286,7 +262,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
             border-color: silver;
             border-style: solid;
             background-color: darken($bright, 10%);
-            @include border-top-radius($radius);
+            border-top-radius: $radius;
 
             &.act, &.menu {
                 background-image: url('../img/noise.png');
@@ -330,7 +306,7 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     height: 105px;
     margin-top: 10px;
     padding: 2px;
-    @include border-radius($radius);
+    border-radius: $radius;
 
     img {
         width: 100px;

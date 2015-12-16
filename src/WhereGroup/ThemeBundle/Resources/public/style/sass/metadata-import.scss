@@ -1,3 +1,6 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 .metadata-import-label {
     display: block;
     padding: 5px 0;
@@ -23,4 +26,3 @@
     color: blue;
     text-decoration: none;
 }
-

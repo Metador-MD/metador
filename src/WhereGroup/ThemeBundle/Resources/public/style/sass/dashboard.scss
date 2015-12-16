@@ -1,3 +1,5 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 .preview {
     display: inline-block;
     width: 285px;
@@ -8,8 +10,8 @@
     background-color: #EEE;
     // margin: 0 auto;
 
-    @include border-radius(5px);
-    @include box-shadow(inset -5px -5px 5px rgba(100,100,100,0.1));
+    border-radius: 5px;
+    box-shadow: inset -5px -5px 5px rgba(100,100,100,0.1);
 
     & > .head {
         border-bottom: 1px solid silver;

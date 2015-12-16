@@ -1,3 +1,6 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+@import 'bundles/wheregrouptheme/style/sass/ui_button';
 
 /*
  * INDEX
@@ -32,13 +35,13 @@ $extended-search-height: 250px;
 .search-input {
     padding: 0 5px;
     border-width: 1px 0 1px 1px;
-    @include border-left-radius(4px);
+    border-left-radius: 4px;
 }
 
 .search-button {
     width: 50px;
     border-width: 1px 1px 1px 0;
-    @include border-right-radius(4px);
+    border-right-radius: 4px;
 }
 
 .search-extended {
@@ -147,11 +150,11 @@ $extended-search-height: 250px;
 
         & > .page-arrow {
             background-image: none;
-        }             
+        }
     }
 
     &:hover {
-        background-color: darken($bright, 5%);          
+        background-color: darken($bright, 5%);
     }
 }
 
@@ -161,7 +164,7 @@ $extended-search-height: 250px;
     & > .page-arrow {
         background-image: url(../img/arrow-left-d.png);
     }
-    
+
     &:hover {
         & > .page-arrow {
             background-image: url(../img/arrow-left-l.png);
@@ -204,7 +207,7 @@ $extended-search-height: 250px;
     margin: 10px;
     border: 1px solid darken($bright, 5%);
     background-color: lighten($bright, 5%);
-    @include border-radius(4px);
+    border-radius: 4px;
 
     &.extended {
         .metadata-extended {
@@ -263,7 +266,7 @@ $extended-search-height: 250px;
     border: 1px dashed darken($bright, 15%);
     background-color: lighten($bright, 8%);
     display: none;
-    @include border-radius(4px);
+    border-radius: 4px;
 }
 
 .metadata-extended-toggle {

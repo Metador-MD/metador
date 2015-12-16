@@ -1,6 +1,9 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 * {
-    @include box-sizing(border-box);
-    @include text-shadow(rgba(0,0,0,0.1) 1px 1px 0px);
+    box-sizing: border-box;
+    text-shadow: rgba(0,0,0,0.1) 1px 1px 0px;
 }
 
 a {

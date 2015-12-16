@@ -1,3 +1,6 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 .btn {
     display: block;
     background-color: #F8F8F8;
@@ -13,18 +16,18 @@
     border-width: 1px;
     border-style: solid;
     border-color: #DDD darken(#DDD, 10%) darken(#DDD, 20%);
-    
+
     //user-select: none;
 
-    @include border-radius(5px);
-    @include text-shadow(white 0 1px 2px);
-    @include box-shadow(lighten(#3D3F44, 60%) 1px 1px 3px);
-    @include background-image(linear-gradient(top, #FFF, #DDD));
+    border-radius: 5px;
+    text-shadow: white 0 1px 2px;
+    box-shadow: lighten(#3D3F44, 60%) 1px 1px 3px;
+    background-image: linear-gradient(top, #FFF, #DDD);
 
     &:hover {
         color: black;
         background-color: #DDD;
-        @include background-image(linear-gradient(top, #DDD, #DDD));
+        background-image: linear-gradient(top, #DDD, #DDD);
     }
 
     & a {
@@ -39,22 +42,22 @@
 .btn-group {
     & > * {
         @extend .btn;
-        @include border-radius(0px);
+        border-radius: 0px;
         border-right-color: #EEE;
     }
 
     & > .first {
         border-right-color: #EEE;
-        @include border-left-radius(5px);
+        border-left-radius: 5px;
     }
 
     & > .last {
         border-right-color: darken(#DDD, 20%);
-        @include border-right-radius(5px);
+        border-right-radius: 5px;
     }
 
     & > .single {
         border-right-color: darken(#DDD, 20%);
-        @include border-radius(5px);
+        border-radius: 5px;
     }
 }

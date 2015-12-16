@@ -1,7 +1,10 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
 .tableBorder {
     border: 1px solid #DDD;
     margin: 10px;
-    @include border-radius(5px);
+    border-radius: 5px;
 }
 
 .table {
