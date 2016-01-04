@@ -26,8 +26,9 @@
                     <form action="" method="post">
                     <input type="hidden" name="tkid" value="{{ class.ID }}" />
                     {% for conformity in class.conformityClasses %}
+
                     <div>
-                        <input type="checkbox" name="conformity[]" value="{{ conformity.ID }}" {% if conformity.isMandetory == 1 %} checked="checked" {% endif %}/>
+                        <input type="checkbox" name="conformity[]" value="{{ conformity.ID }}" {% if conformity.isMandatory == 1 %} checked="checked" {% endif %}/>
                         <span title="{{ conformity.Description }}">{{ conformity.Name }}</span>
                     </div>
                     {% endfor %}
