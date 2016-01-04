@@ -24,3 +24,8 @@
     color: #666;
     margin: 3px 0;
 }
+
+%inlineBlock {
+    display: inline-block;
+    zoom: 1;  *display: inline;  /* IE7 Hack */
+}

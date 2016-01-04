@@ -30,8 +30,3 @@
     -ms-user-select: $select;
     user-select: $select;
 }
-
-%inlineBlock {
-    display: inline-block;
-    zoom: 1;  *display: inline;  /* IE7 Hack */
-}
