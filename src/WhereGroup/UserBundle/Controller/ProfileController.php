@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         return array(
             'form' => $this
-                ->createForm(new ProfileType(), $user)
+                ->createForm(new ProfileType, $user)
                 ->createView(),
             'user' => $user
         );

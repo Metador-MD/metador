@@ -8,8 +8,6 @@ class MetadorExtension extends \Twig_Extension
 {
     public function __construct(ContainerInterface $container)
     {
-        if ($container->isScopeActive('request')) {
-        }
 
     }
 
@@ -23,9 +21,9 @@ class MetadorExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'md_id' => new \Twig_Filter_Method($this, 'getId', array('is_safe' => array('html'))),
-            'md_obj_id' => new \Twig_Filter_Method($this, 'getObjectId', array('is_safe' => array('html'))),
-            'md_data_obj' => new \Twig_Filter_Method($this, 'getDataObject', array('is_safe' => array('html'))),
+            'md_id' => new \Twig_SimpleFilter('getId', array($this, 'is_safe' => array('html'))),
+            'md_obj_id' => new \Twig_SimpleFilter('getObjectId', array($this, 'is_safe' => array('html'))),
+            'md_data_obj' => new \Twig_SimpleFilter('getDataObject', array($this, 'is_safe' => array('html'))),
         );
     }
 

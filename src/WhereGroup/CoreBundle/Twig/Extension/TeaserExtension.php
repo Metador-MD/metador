@@ -9,7 +9,7 @@ class TeaserExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'teaser' => new \Twig_Filter_Method($this, 'teaser')
+            'teaser' => new \Twig_SimpleFilter('teaser', array($this))
         );
     }
 

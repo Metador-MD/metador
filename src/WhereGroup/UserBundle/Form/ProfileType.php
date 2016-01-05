@@ -5,6 +5,8 @@ namespace WhereGroup\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class ProfileType extends AbstractType
 {
@@ -18,8 +20,8 @@ class ProfileType extends AbstractType
             ->add('username', null, array(
                 'label' => 'Benutzername'
             ))
-            ->add('password', 'repeated', array(
-                'type' => 'password',
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
                 'required' => false,
                 'invalid_message' => 'Passwörter stimmen nicht überein.',
                 'first_options'  => array('label' => 'Password'),
@@ -37,13 +39,5 @@ class ProfileType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'WhereGroup\UserBundle\Entity\User'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'wheregroup_userbundle_usertype';
     }
 }
