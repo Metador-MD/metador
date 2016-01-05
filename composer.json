@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.7@beta",
+        "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "doctrine/dbal": "<2.5",
         "doctrine/doctrine-bundle": "~1.4",
@@ -21,7 +21,8 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "tecnick.com/tcpdf": "dev-master",
-        "ramsey/uuid": "~2.8"
+        "ramsey/uuid": "~2.8",
+        "phpunit/phpunit": "4.8.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
