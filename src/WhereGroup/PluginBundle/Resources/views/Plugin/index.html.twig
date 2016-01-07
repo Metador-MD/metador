@@ -1,0 +1,40 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'Plugins'|trans }}</h1>
+    <table class="plugin-table">
+    {% for key, plugin in plugins %}
+        <tr class="plugin-row{% if plugin['new'] is defined %} new{% endif %}">
+            <td class="plugin-col-mark">
+                <span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>
+                <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
+            </td>
+            <td class="plugin-col-name" {% if plugin['description'] is defined %}title="{{ plugin['description']|trans }}"{% endif %}>
+                {% if plugin['active'] %}
+                <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
+                    {{ plugin['name']|trans }}
+                </a>
+                {% else %}
+                <a href="{{ path('metador_admin_plugin_confirm', { 'plugin': key }) }}">
+                    {{ plugin['name']|trans }}
+                </a>
+                {% endif %}
+            </td>
+            <td class="plugin-col-origin">{{ plugin['origin'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block form_start %}
+    <form action="{{ path('metador_admin_plugin_update') }}" method="post">
+{% endblock %}
+
+{% block form_end %}
+    </form>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregroupplugin/js/plugin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,122 @@
+<h1>{% trans %}Zeitbezug{% endtrans %}</h1>
+
+<div class="threeColBox">
+    <label class="displayLeft">
+        <div class="icon mandatory icon-circle icon-circle"></div>{{'Mindestens eine Angabe verpflichtend.'|trans}}
+    </label>
+    <div class="clear"></div>
+
+    {% set id = 'p[creationDate]' %}
+    {% set val = p['creationDate'] is defined ? p['creationDate'] : '' %}
+
+    <div class="left">
+        <label>
+            <div class="icon conditional icon-circle"></div>{{'Erstellungsdatum'|trans}}:
+        </label>
+        <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon icon-question"></div>
+            </div>
+        </div>
+    </div>
+
+    {% set id = 'p[publicationDate]' %}
+    {% set val = p['publicationDate'] is defined ? p['publicationDate'] : '' %}
+
+    <div class="center">
+        <label>
+            <div class="icon conditional icon-circle"></div>{{'Veröffentlichung'|trans}}:
+        </label>
+        <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon icon-question"></div>
+            </div>
+        </div>
+    </div>
+
+    {% set id = 'p[revisionDate]' %}
+    {% set val = p['revisionDate'] is defined ? p['revisionDate'] : '' %}
+
+    <div class="right">
+        <label>
+            <div class="icon conditional icon-circle"></div>{{'Überarbeitung'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group" style="float:right;">
+                <div class="last showHelp" {{ id|md_data_obj }}>
+                    <div class="icon icon-question"></div>
+                </div>
+            </div>
+            <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="threeCol1 datepicker"/>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{#
+    TODO: duplizierbar
+#}
+
+
+{% if p['temporalExtent'] is not defined %}
+    {% set p = p|merge({'temporalExtent': [{'begin':'','end':''}]}) %}
+{% endif %}
+
+{% set id = 'p[temporalExtent]' %}
+{% set length = p['temporalExtent']|length -1 %}
+
+<h2>{% trans %}Zeitliche Ausdehnung{% endtrans %}</h2>
+<div class="duplicatable" data-count="{{ length }}">
+    <ul>
+        {% for key,value in p['temporalExtent'] %}
+        <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
+        {% endfor %}
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+    </ul>
+    <div class="content">
+        {% for key,value in p['temporalExtent'] %}
+
+        <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
+            <div class="twoColBox">
+
+                {% set id = 'p[temporalExtent][' ~ key ~ '][begin]' %}
+                {% set val = value['begin'] %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Anfangsdatum'|trans}}:
+                    </label>
+                    <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="twoCol1 datepicker"/>
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}>
+                            <div class="icon icon-question"></div>
+                        </div>
+                    </div>
+                </div>
+
+                {% set id = 'p[temporalExtent][' ~ key ~ '][end]' %}
+                {% set val = value['end'] %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Enddatum'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}>
+                                <div class="icon icon-question"></div>
+                            </div>
+                        </div>
+                        <input name="{{ id }}" {{ id|md_id }} type="text" value="{{ val }}" class="twoCol1 datepicker"/>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+

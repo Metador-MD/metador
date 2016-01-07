@@ -1,0 +1,250 @@
+<h1>{% trans %}Zuständige Stelle{% endtrans %}</h1>
+
+{#
+    RESPONSIBLE PARTY
+#}
+
+{% set id = 'p[responsibleParty]' %}
+
+{% if p['responsibleParty'] is not defined %}
+    {% set p = p|merge({'responsibleParty': [{'organisationName':'', 'electronicMailAddress':'', 'role':''}]}) %}
+{% endif %}
+{% set length = p['responsibleParty']|length -1 %}
+
+<h2>{% trans %}Verantwortliche Stelle{% endtrans %}</h2>
+<div class="duplicatable" data-count="{{ length }}">
+    <ul>
+        {% for key,value in p['responsibleParty'] %}
+        <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
+        {% endfor %}
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+        <li class="menu" data-id="wizard_responsibleParty"><div class="icon icon-magic-wand" {{ id|md_data_obj }}></div></li>
+    </ul>
+    <div class="content">
+        {% for key,value in p['responsibleParty'] %}
+
+        <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
+            <div class="twoColBox">
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][organisationName]' %}
+                {% set val = value['organisationName'] is defined ? value['organisationName'] : '' %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon mandatory icon-circle icon-circle"></div>{{'Name der Organisation'|trans}}:
+                    </label>
+                    <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+                </div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][electronicMailAddress]' %}
+                {% set val = value['electronicMailAddress'] is defined ? value['electronicMailAddress'] : '' %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon mandatory icon-circle icon-circle"></div>{{'E-Mail'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                        <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][individualName]' %}
+                {% set val = value['individualName'] is defined ? value['individualName'] : '' %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Zuständige Person'|trans}}:
+                    </label>
+                    <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1" />
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+                </div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][role]' %}
+                {% set val = value['role'] is defined ? value['role'] : '' %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon mandatory icon-circle icon-circle"></div>{{'Funktion'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                        <select name="{{ id }}" class="twoCol1">
+                            <option value="" {{ md_select(val, '') }}></option>
+                            <option value="pointOfContact" {{ md_select(val, 'pointOfContact') }}>
+                                {% trans %}Ansprechpartner{% endtrans %}
+                            </option>
+                            <option value="author" {{ md_select(val, 'author') }}>
+                                {% trans %}Autor{% endtrans %}
+                            </option>
+                            <option value="processor" {{ md_select(val, 'processor') }}>
+                                {% trans %}Bearbeiter{% endtrans %}
+                            </option>
+                            <option value="owner" {{ md_select(val, 'owner') }}>
+                                {% trans %}Eigentümer{% endtrans %}
+                            </option>
+                            <option value="publisher" {{ md_select(val, 'publisher') }}>
+                                {% trans %}Herausgeber{% endtrans %}
+                            </option>
+                            <option value="user" {{ md_select(val, 'user') }}>
+                                {% trans %}Nutzer{% endtrans %}
+                            </option>
+                            <option value="principalInvestigator" {{ md_select(val, 'principalInvestigator') }}>
+                                {% trans %}Projektleitung{% endtrans %}
+                            </option>
+                            <option value="resourceProvider" {{ md_select(val, 'resourceProvider') }}>
+                                {% trans %}Ressourcenanbieter{% endtrans %}
+                            </option>
+                            <option value="originator" {{ md_select(val, 'originator') }}>
+                                {% trans %}Urheber{% endtrans %}
+                            </option>
+                            <option value="distributor" {{ md_select(val, 'distributor') }}>
+                                {% trans %}Vertrieb{% endtrans %}
+                            </option>
+                            <option value="custodian" {{ md_select(val, 'custodian') }}>
+                                {% trans %}Verwalter{% endtrans %}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][country]' %}
+                {% set val = value['country'] is defined ? value['country'] : '' %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Staat'|trans}}:
+                    </label>
+                    <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+                </div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][administrativeArea]' %}
+                {% set val = value['administrativeArea'] is defined ? value['administrativeArea'] : '' %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Bundesland'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                        <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            {% set id = 'p[responsibleParty][' ~ key ~ '][deliveryPoint]' %}
+            {% set val = value['deliveryPoint'] is defined ? value['deliveryPoint'] : '' %}
+
+            <div class="oneColBox">
+                <label>
+                    <div class="icon optional icon-circle"></div>{{'Straße und Hausnummer / Postfach'|trans}}:
+                </label>
+                <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
+                <div class="btn-group">
+                    <div class="last showHelp" {{ id|md_data_obj }}>
+                        <div class="icon icon-question"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="twoColBox">
+                {% set id = 'p[responsibleParty][' ~ key ~ '][city]' %}
+                {% set val = value['city'] is defined ? value['city'] : '' %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Ort'|trans}}:
+                    </label>
+                    <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+                </div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][postalCode]' %}
+                {% set val = value['postalCode'] is defined ? value['postalCode'] : '' %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'PLZ'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                        <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][voice]' %}
+                {% set val = value['voice'] is defined ? value['voice'] : '' %}
+
+                <div class="left">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Telefonnummer'|trans}}:
+                    </label>
+                    <input name="{{ id }}" type="text" value="{{ val }}" class="twoCol1"/>
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+                </div>
+
+                {% set id = 'p[responsibleParty][' ~ key ~ '][facsimile]' %}
+                {% set val = value['facsimile'] is defined ? value['facsimile'] : '' %}
+
+                <div class="right">
+                    <label>
+                        <div class="icon optional icon-circle"></div>{{'Faxnummer'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                        <input type="text" name="{{ id }}" value="{{ val }}" class="twoCol1" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            {% set id = 'p[responsibleParty][' ~ key ~ '][onlineResource]' %}
+            {% set val = value['onlineResource'] is defined ? value['onlineResource'] : '' %}
+
+            <div class="oneColBox">
+                <label>
+                    <div class="icon optional icon-circle"></div>{{'Internetadresse'|trans}}:
+                </label>
+                <input id="{{ id|md_id }}" name="{{ id }}" type="text" value="{{ val }}" class="oneCol1"/>
+                <div class="btn-group">
+                    <div class="last showHelp" {{ id|md_data_obj }}>
+                        <div class="icon icon-question"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

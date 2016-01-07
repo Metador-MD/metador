@@ -1,0 +1,54 @@
+<ul class="global-menu">
+    {% if app.user.username is defined %}
+    <li>
+        <a href="{{ path('logout') }}" title="{{ app.user.username }} {{ 'abmelden'|trans }}">
+            <span class="icon-switch"></span>
+        </a>
+    </li>
+    {% endif %}
+
+    {% for item in applicationGet('app-global-menu') %}
+    {# RAW CONTENT #}
+    {% if item.raw is defined %}
+        {{ item.raw|raw }}
+
+    {# INCLUDE CONTENT #}
+    {% elseif item.template is defined %}
+        {{ include(item.template, item.params) }}
+
+    {# USE TEMPLATE #}
+    {% else %}
+        <li class="{% if item.active is defined and item.active %}act{% endif %}">
+            <a href="{{ path(item.path, item.params) }}">
+                {% if item.icon is defined %}
+                    <span class="{{ item.icon }}"></span>
+                {% endif %}
+                {{ item.label|trans }}
+            </a>
+        </li>
+    {% endif %}
+    {% endfor %}
+
+    {% set profile = applicationGet('app-profile', 'profile') %}
+    {% set profiles = applicationGet('app-profile-menu') %}
+
+    {% if profiles is not empty %}
+    <li class="profile-select{% if profile.active is defined and profile.active %} act{% endif %}">
+        <label class="profile-list-label">
+            <span class="icon-file-text"></span>
+            {% if profile.name is defined %}
+                {{ profile.name|trans }}
+            {% else %}
+                {{ 'Profile'|trans }}
+            {% endif %}
+        </label>
+        <ul class="profile-list">
+            {% for item in profiles %}
+            <li>
+                <a href="{{ path(item.path, item.params) }}">{{ item.label|trans }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endif %}
+</ul>

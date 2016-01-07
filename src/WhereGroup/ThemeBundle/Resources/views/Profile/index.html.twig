@@ -1,0 +1,93 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% set cols = applicationGet('app-profile-table') %}
+
+{% block center %}
+<div class="page-content">
+    <div class="search-content">
+        {% if paging.prevPage is defined %}<a href="{{ path('metadata_index', { 'profile' : profile, 'page' : paging.prevPage }) }}" style="border: 1px solid red;">{% endif %}
+        <div class="search-prev{% if paging.prevPage is not defined %} disabled{% endif %}" id="search_prev" data-page="">
+            <div class="page-arrow"></div>
+        </div>
+        {% if paging.prevPage is defined %}</a>{% endif %}
+        <div class="search-center">
+            {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+            <div class="search-center-form">
+                <div class="search-center-form-left" id="search_pageinfo">
+                    {% trans %}Seite{% endtrans %} {{ paging.currentPage }} {% trans %}von{% endtrans %} {{ paging.pages }}
+                </div>
+                <div class="clear"></div>
+            </div>
+        {# CONTENT START #}
+            <div class="tableBorder">
+                <table class="table" id="metadataTable" data-controller="service">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Titel'|trans }}</th>
+                            <th>{{ 'Benutzer'|trans }}</th>
+                            <th>{{ 'Datum'|trans }}</th>
+                            <th>{{ 'Uhrzeit'|trans }}</th>
+
+                            {% if cols is defined and cols is not empty %}
+                            {% for col in cols %}
+                            <th class="{% if col.header.class is defined %}{{ col.header.class }}{% endif %}" title="{% if col.header.label is defined %}{{ col.header.label }}{% endif %}">
+                                {% if col.header.icon is defined %}
+                                <div class="{{ col.header.icon }}"></div>
+                                {% else %}
+                                {{ col.header.label|trans }}
+                                {% endif %}
+                            </th>
+                            {% endfor %}
+                            {% endif %}
+
+                            <th class="right last-1" title="{{ 'bearbeiten'|trans }}"><span class="icon-pencil"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% for row in rows %}
+                    <tr data-id="{{ row.id }}">
+                        <td>
+                            <a href="{{ path('metadata_edit', { 'profile' : profile, 'id' : row.id }) }}">
+                                {{ row.title }}
+                            </a>
+                        </td>
+                        <td>
+                            <span class="icon-user"></span> {{ row.updateUser.username }}
+                        </td>
+                        <td>
+                            <span class="icon-calendar"></span> {{ row.updateTime|date("d.m.Y") }}
+                        </td>
+                        <td>
+                            <span class="icon-clock"></span> {{ row.updateTime|date("H:i") }}
+                        </td>
+
+                        {% if cols is defined and cols is not empty %}
+                        {% for col in cols %}
+                        <td>
+                            {{ include(col.body.template, col.body.params) }}
+                        </td>
+                        {% endfor %}
+                        {% endif %}
+
+                        <td class="right last-1">
+            {% if row.readonly == 0 %}
+                            <a href="{{ path('metadata_edit', { 'profile' : profile, 'id' : row.id }) }}">
+                                <span class="icon-pencil"></span>
+                            </a>
+            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {# CONTENT END #}
+        </div>
+        {% if paging.nextPage is defined %}<a href="{{ path('metadata_index', { 'profile' : profile, 'page' : paging.nextPage }) }}" style="border: 1px solid red;">{% endif %}
+        <div class="search-next{% if paging.nextPage is not defined %} disabled{% endif %}" id="search_next" data-page="">
+            <div class="page-arrow"></div>
+        </div>
+        {% if paging.nextPage is defined %}</a>{% endif %}
+    </div>
+</div>
+{% endblock %}

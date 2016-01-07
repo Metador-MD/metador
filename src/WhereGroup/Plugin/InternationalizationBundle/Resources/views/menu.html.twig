@@ -1,0 +1,21 @@
+<li class="profile-select">
+    <label class="profile-list-label">
+        <span class="icon-flag"></span>
+    </label>
+    <ul class="profile-list">
+        {% if locale != 'de' %}
+        <li>
+            <form action="{{ path('metador_admin_locale_update', { 'locale': 'de' }) }}" method="post">
+                <button class="noStyle">{{ 'Deutsch'|trans }}</button>
+            </form>
+        </li>
+        {% endif %}
+        {% if locale != 'en' %}
+        <li>
+            <form action="{{ path('metador_admin_locale_update', { 'locale': 'en' }) }}" method="post">
+                <button class="noStyle">{{ 'Englisch'|trans }}</button>
+            </form>
+        </li>
+        {% endif %}
+    </ul>
+</li>

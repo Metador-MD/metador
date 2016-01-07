@@ -1,0 +1,4 @@
+wheregroup_internationalization_locale:
+    resource: "@WhereGroupInternationalizationBundle/Controller/"
+    type:     annotation
+    prefix:   /

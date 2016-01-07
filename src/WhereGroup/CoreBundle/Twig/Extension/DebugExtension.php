@@ -23,5 +23,4 @@ class DebugExtension extends \Twig_Extension
     {
         return '<pre>' . htmlspecialchars(print_r($var, true), ENT_QUOTES) . '</pre>';
     }
-
 }

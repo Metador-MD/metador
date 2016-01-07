@@ -1,9 +1,11 @@
 *~
 *.db
+*.db3
 *.cache
 *.phar
 *.TODO
 *.lock
+*.sublime-workspace
 *Test*
 
 .sass-cache
@@ -11,9 +13,11 @@
 .project
 
 /app/config/parameters.yml
+/app/config/plugins.yml
+/app/config/plugins_routing.yml
 /app/SymfonyRequirements.php
+/app/Resources/translations/user
 /app/tmp
 /bin
-/src/User
 /vendor
 /web/bundles

@@ -1,0 +1,27 @@
+{% if app.environment == 'dev' %}
+    {% set BASEDIR = app.request.basepath ~ '/app_dev.php/' %}
+{% else %}
+    {% set BASEDIR = app.request.basepath ~ '/app.php/' %}
+{% endif %}
+<!DOCTYPE html>
+<!--[if IE 8]>       <html class="ie8"> <![endif]-->
+<!--[if !IE 8]><!--> <html>             <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="{{ asset('bundles/wheregrouptheme/img/favicon.png') }}" type="image/png" />
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascript %}
+            <script type="text/javascript">
+                var BASEDIR = '{{ BASEDIR }}';
+            </script>
+        {% endblock %}
+    </body>
+</html>

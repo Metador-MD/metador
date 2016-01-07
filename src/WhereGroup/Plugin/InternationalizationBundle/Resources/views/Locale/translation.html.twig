@@ -1,0 +1,27 @@
+{% if translations['current'] is not defined or translations['current'] is empty %}
+    <div class="notify error">{% trans %}Keine Übersetzungsdatei gefunden{% endtrans %}</div>
+{% endif %}
+
+{% for word, translation in translations['current'] %}
+    {% set translated = "" %}
+    {% set copy = false %}
+
+    {% if translations['all'][word] is defined and translations['all'][word]|trim is not empty %}
+        {% set translated = translations['all'][word] %}
+    {% endif %}
+
+    {% if translated is not empty and translation != translated %}
+        {% set copy = true %}
+    {% endif %}
+
+<div class="metador-translation">
+    <div class="locale-word">{{ word }}</div>
+    <textarea class="locale-translation" data-cmd="translation-changed" data-key="{{ word }}">{{ translation }}</textarea>
+    <div class="locale-add-existing" data-cmd="translation-copy">
+        <span class="icon-arrow-left{% if copy %} act{% endif %}"></span>
+    </div>
+    <div class="locale-existing">{% if copy %}{{ translated }}{% endif %}</div>
+    <div class="clear"></div>
+</div>
+<hr/>
+{% endfor %}

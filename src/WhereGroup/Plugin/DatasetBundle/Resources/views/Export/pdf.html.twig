@@ -1,0 +1,389 @@
+<style type="text/css">
+    table {width: 100%; border: 1px solid silver;}
+    .label {font-weight: bold; width:50%;}
+    .bbox-label{font-weight: bold; }
+    .last{height: 20px;}
+</style>
+
+<h1>{% trans %}Metadaten{% endtrans %}</h1>
+<table>
+    <tr>
+        <td class="label">{% trans %}Identifikator des Metadatensatzes{% endtrans %}:</td>
+        <td>{{ p['fileIdentifier'] }}</td>
+    </tr>
+    <tr>
+        <td class="label">{% trans %}Sprache der Metadaten{% endtrans %}:</td>
+        <td>{{ p['metadataLanguage'] }}</td>
+    </tr>
+</table>
+{% if p['responsiblePartyMetadata'][0]['organisationName'] is defined
+and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
+    <h3>{% trans %}Für Metadaten verantwortliche Stelle{% endtrans %}</h3>
+    <table>
+        {% for rpm in p['responsiblePartyMetadata'] %}
+            <tr>
+                <td class="label">{% trans %}Name der Organisation{% endtrans %}:</td>
+                <td>{{rpm.organisationName}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Zuständige Person{% endtrans %}:</td>
+                <td>{{rpm.individualName}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}E-Mail{% endtrans %}:</td>
+                <td>{{rpm.electronicMailAddress}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Staat{% endtrans %}:</td>
+                <td>{{rpm.country}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Bundesland{% endtrans %}:</td>
+                <td>{{rpm.administrativeArea}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Straße und Hausnummer / Postfach{% endtrans %}:</td>
+                <td>{{rpm.deliveryPoint}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Ort{% endtrans %}:</td>
+                <td>{{rpm.city}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}PLZ{% endtrans %}:</td>
+                <td>{{rpm.postalCode}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Telefonnummer{% endtrans %}:</td>
+                <td>{{rpm.voice}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
+                <td>{{rpm.facsimile}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+                <td>{{rpm.onlineResource}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+<h3>{% trans %}Angaben zur Metadatenspezifikation{% endtrans %}</h3>
+<table>
+    <tr>
+        <td class="label">{% trans %}Spezifikation{% endtrans %}:</td>
+        <td>{{p['metadataStandardName']}}</td>
+    </tr>
+    <tr>
+        <td class="label">{% trans %}Version{% endtrans %}:</td>
+        <td>{{p['metadataStandardVersion']}}</td>
+    </tr>
+    {% if p['browserGraphic'] is defined %}
+    <tr>
+        <td class="label">{% trans %}Browser Bild{% endtrans %}:</td>
+        <td>{{p['browserGraphic']}}</td>
+    </tr>
+    {% endif %}
+</table>
+<h1>{% trans %}Identifizierung{% endtrans %}</h1>
+<h3>{% trans %}Bezeichner{% endtrans %}</h3>
+<table>
+    {% for identifier in p['identifier']%}
+        <tr>
+            <td class="label">{% trans %}Code{% endtrans %}:</td>
+            <td>{{identifier['code']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Namensraum{% endtrans %}:</td>
+            <td>{{identifier['codespace']}}</td>
+        </tr>
+        {% if loop != loop.last%}
+            <tr>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+<p></p>
+<table>
+    <tr>
+        <td class="label">{% trans %}Titel{% endtrans %}:</td>
+        <td>{{p['title']}}</td>
+    </tr>
+    <tr>
+        <td class="label">{% trans %}Alternativtitel{% endtrans %}:</td>
+        <td>{{p['alternateTitle']}}</td>
+    </tr>
+    <tr>
+        <td class="label">{% trans %}Kurzbeschreibung{% endtrans %}:</td>
+        <td>{{p['abstract']}}</td>
+    </tr>
+   {% if p['onlineResource'] is defined and p['onlineResource'] is not empty %}
+        <tr>
+            <td class="label">{% trans %}Ressourcenverweis{% endtrans %}:</td>
+            <td>
+                {% for onlineResource in p['onlineResource']%}
+                    {{onlineResource}}
+                {% endfor %}
+            </td>
+        </tr>
+   {% endif %}
+    <tr>
+        <td class="label">{% trans %}Ressourcenart{% endtrans %}</td>
+        <td>{{p['hierarchyLevel']}}</td>
+    </tr>
+    {% if p['language'] is defined and p['language'] is not empty %}
+        <tr>
+            <td class="label">{% trans %}Sprache der Ressource{% endtrans %}</td>
+            <td>
+                {% for language in p['language'] %}
+                    {{language}}{% if loop != loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endif %}
+</table>
+{% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
+    <h1>{% trans %}Klassifizierung{% endtrans %}</h1>
+    <table>
+        <tr>
+            <td class="label">{% trans %}Themenkategorie{% endtrans %}:</td>
+            <td>
+                {% for topicCategory in p['topicCategory']%}
+                    {{topicCategory}}{% if loop != loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endif %}
+{% if p['keyword'] is defined and p['keyword'] is not empty %}
+    <h1>{% trans %}Schlüsselwort{% endtrans %}</h1>
+    <table>
+        {% for key, value in p['keyword']%}
+            <tr>
+                <td class="label">{{key}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{% trans %}Datum{% endtrans %}</td>
+                <td>{{value['date']}}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Datum der{% endtrans %}:</td>
+                <td>{{value['type']}}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Schlüsselwort{% endtrans %}:</td>
+                <td>
+                    {% for key in value['value']%}
+                        {{key}}{% if loop != loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['bbox'] is defined and p['bbox'] is not empty %}
+    <h1>{% trans %}Geografischer Standort{% endtrans %}</h1>
+    <table>
+        <tr>
+            <td class="bbox-label">{% trans %}N Breitengrad{% endtrans %}</td>
+            <td class="bbox-label">{% trans %}E Längengrad{% endtrans %}</td>
+            <td class="bbox-label">{% trans %}S Breitengrad{% endtrans %}</td>
+            <td class="bbox-label">{% trans %}W Längengrad{% endtrans %}</td>
+
+        </tr>
+        {% for bbox in p['bbox'] %}
+        <tr>
+            <td>{{bbox['nLatitude']}}</td>
+            <td>{{bbox['eLongitude']}}</td>
+            <td>{{bbox['sLatitude']}}</td>
+            <td>{{bbox['wLongitude']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['creationDate'] is defined and p['creationDate'] is not empty %}
+    <h1>{% trans %}Zeitbezug{% endtrans %}</h1>
+    <table>
+        <tr>
+            <td class="label">{% trans %}Erstellungsdatum{% endtrans %}:</td>
+            <td>{{p['creationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Veröffentlichung{% endtrans %}:</td>
+            <td>{{p['publicationDate']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Überarbeitung{% endtrans %}</td>
+            <td>{{p['revisionDate']}}</td>
+        </tr>
+    </table>
+    <h3>{% trans %}Zeitliche Ausdehnung{% endtrans %}</h3>
+    <table>
+        {% for temporalExtent in p['temporalExtent'] %}
+            <tr>
+                <td class="label">{% trans %}Anfangsdatum{% endtrans %}:</td>
+                <td>{{temporalExtent['begin']}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Enddatum{% endtrans %}:</td>
+                <td>{{temporalExtent['end']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+{% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty) %}
+    <h1>{% trans %}Qualität und Gültigkeit{% endtrans %}</h1>
+        {% if p['lineage'] is defined and p['lineage'] is not empty%}
+            <table>
+                <tr>
+                    <td class="label">{% trans %}Herkunft{% endtrans %}</td>
+                    <td>{{p['lineage']}}</td>
+                </tr>
+            </table>
+        {% endif %}
+    {% if p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty %}
+        <h3>{% trans %}Räumliche Auflösung{% endtrans %}</h3>
+        <table>
+            <tr>
+                <td class="label">{% trans %}Äquivalenter Maßstab{% endtrans %}:</td>
+                <td>
+                    {% for resolution in p['resolution']%}
+                        {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+{% endif %}
+{% if p['dataquality'][0]['date'] is defined and p['dataquality'][0]['date'] is not empty %}
+    <h1>{% trans %}Übereinstimmung{% endtrans %}</h1>
+    <table>
+        {% for dataquality in p['dataquality']%}
+            <tr>
+                <td class="label">{% trans %}Titel{% endtrans %}:</td>
+                <td>{{dataquality['title']}}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Datum{% endtrans %}:</td>
+                <td>{{dataquality['date']}}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Datum der{% endtrans %}:</td>
+                <td>{{dataquality['type']}}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Grad{% endtrans %}:</td>
+                <td>{{dataquality['result']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+{% if (p['uselimitation'] is defined and p['uselimitation'] is not empty) or (p['otherconstraints'] is defined and p['otherconstraints'] is not empty)%}
+    <h1>{% trans %}Beschränkungen{% endtrans %}</h1>
+{% endif %}
+{% if p['uselimitation'] is defined and p['uselimitation'] is not empty %}
+    <h3>{% trans %}Bedingungen für den Zugang und die Nutzung{% endtrans %}:</h3>
+    <table>
+        {% for uselimitation in p['uselimitation'] %}
+            <tr>
+                <td>{{uselimitation}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
+    <h3>{% trans %}Beschränkungen des öffentlichen Zugangs{% endtrans %}:</h3>
+    <table>
+        {% for otherconstraints in p['otherconstraints'] %}
+            <tr>
+                <td>{{otherconstraints}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{%
+    if p['responsibleParty'][0]['organisationName'] is defined
+    and p['responsibleParty'][0]['organisationName'] is not empty
+%}
+<h1>{% trans %}Zuständige Stelle{% endtrans %}</h1>
+<h3>{% trans %}Verantwortliche Stelle{% endtrans %}</h3>
+<table>
+    {% for rp in p['responsibleParty'] %}
+        <tr>
+            <td class="label">{% trans %}Name der Organisation{% endtrans %}:</td>
+            <td>{{rp['organisationName']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Zuständige Person{% endtrans %}:</td>
+            <td>{{rp['individualName']}}</td>
+        </tr>
+         <tr>
+            <td class="label">{% trans %}E-Mail{% endtrans %}:</td>
+            <td>{{rp['electronicMailAddress']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Funktion{% endtrans %}:</td>
+            <td>{{rp['role']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Staat{% endtrans %}:</td>
+            <td>{{rp['country']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Bundesland{% endtrans %}:</td>
+            <td>{{rp['administrativeArea']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Straße und Hausnummer / Postfach{% endtrans %}:</td>
+            <td>{{rp['deliveryPoint']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Ort{% endtrans %}:</td>
+            <td>{{rp['city']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}PLZ{% endtrans %}:</td>
+            <td>{{rp['postalCode']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Telefonnummer{% endtrans %}:</td>
+            <td>{{rp['voice']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
+            <td>{{rp['facsimile']}}</td>
+        </tr>
+        <tr>
+            <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+            <td>{{rp['onlineResource']}}</td>
+        </tr>
+        {% if loop != loop.last %}
+            <tr>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+{% endif %}

@@ -1,0 +1,22 @@
+{
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"*.lock"
+			],
+			"folder_exclude_patterns":
+			[
+				".git",
+				"bin",
+				"var",
+				".idea",
+				".sass-cache"
+			],
+			"follow_symlinks": false,
+			"name": "Metador2",
+			"path": "."
+		}
+	]
+}

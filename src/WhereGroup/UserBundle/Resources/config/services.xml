@@ -1,20 +1,25 @@
-<?xml version="1.0" ?>
-
-<container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-    <!--
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="where_group_user.example.class">WhereGroup\UserBundle\Example</parameter>
+        <!-- SERVICE -->
+        <parameter key="metador.user.class">WhereGroup\UserBundle\Component\User</parameter>
+
+        <!-- EVENT LISTENER -->
+        <parameter key="metador.user.app.listener.class">WhereGroup\UserBundle\EventListener\ApplicationMenuListener</parameter>
     </parameters>
 
     <services>
-        <service id="where_group_user.example" class="%where_group_user.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <!-- SERVICE -->
+        <service id="metador_user" class="%metador.user.class%">
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.user_password_encoder.generic" />
+        </service>
+
+        <!-- EVENT LISTENER -->
+        <service id="metador.user.app.listener" class="%metador.user.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="request_stack" />
         </service>
     </services>
-    -->
 </container>

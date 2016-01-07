@@ -1,0 +1,9 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <strong>{{ plugin }}</strong> {% trans %}Wirklich löschen{% endtrans %}?
+
+    <form action="{{ path('metador_admin_plugin_delete', { 'plugin': plugin }) }}" method="post">
+        <button type="submit">{% trans %}löschen{% endtrans %}</button>
+    </form>
+{% endblock %}

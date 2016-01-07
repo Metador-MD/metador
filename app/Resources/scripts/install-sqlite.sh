@@ -17,8 +17,8 @@ app/console doctrine:database:create
 app/console doctrine:schema:create
 app/console assets:install web
 
-chmod o+rw app/cache
-chmod o+rw app/logs
+chmod o+rw app/var/cache
+chmod o+rw app/var/logs
 
 echo "Create Superuser"
 app/console metador:reset:superuser 

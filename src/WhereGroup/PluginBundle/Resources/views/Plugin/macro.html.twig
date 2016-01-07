@@ -1,0 +1,40 @@
+{% macro info(title, description) %}
+    <h1>{{ title|trans }}</h1>
+    <div class="plugin-description">
+        {{ description|trans }}
+    </div>
+{% endmacro %}
+
+{% macro header(title) %}
+    <h2>{{ title|trans }}</h2>
+{% endmacro %}
+
+{% macro list(string) %}
+    <p>
+        <span class="icon-circle"></span> {{ string|trans }}
+    </p>
+{% endmacro %}
+
+{% macro terminal(title, comment, string) %}
+    {% if title != '' %}
+    <p class="plugin-code-header">
+        <span class="icon-terminal"></span> {{ title|trans }}
+    </p>
+    {% endif %}
+    <pre class="plugin-code{% if title != '' %} header{% endif %}">{% if comment != '' %}<span class="comment"># {{ comment }}</span>{% endif %}
+
+{{ string }}
+    </pre>
+{% endmacro %}
+
+{% macro file(file, comment, string) %}
+    {% if file != '' %}
+    <p class="plugin-code-header">
+        <span class="icon-file-text"></span> {{ file|trans }}
+    </p>
+    {% endif %}
+    <pre class="plugin-code{% if file != '' %} header{% endif %}">{% if comment != '' %}<span class="comment"># {{ comment }}</span>{% endif %}
+
+{{ string }}
+    </pre>
+{% endmacro %}

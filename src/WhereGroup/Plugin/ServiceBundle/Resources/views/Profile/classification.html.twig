@@ -1,0 +1,115 @@
+<h1>{% trans %}Klassifizierung{% endtrans %}</h1>
+{#
+    SERVICE TYPE
+#}
+{% set id = 'p[serviceType]' %}
+{% set val = p['serviceType'] is defined ? p['serviceType'] : '' %}
+
+<div class="oneColBox">
+    <label>
+        <div class="icon mandatory icon-circle"></div>{{'Geodatendienst'|trans}}:
+    </label>
+    <select name="{{ id }}" class="oneCol1">
+        <option value="" {{ md_select(val, '') }}></option>
+        <option value="view" {{ md_select(val, 'view') }}>
+            {% trans %}Darstellungsdienste{% endtrans %}
+        </option>
+        <option value="invoke" {{ md_select(val, 'invoke') }}>
+            {% trans %}Dienste zum Abrufen von Geodatendiensten{% endtrans %}
+        </option>
+        <option value="download" {{ md_select(val, 'download') }}>
+            {% trans %}Download-Dienste{% endtrans %}
+        </option>
+        <option value="other" {{ md_select(val, 'other') }}>
+            {% trans %}Sonstige Dienste{% endtrans %}
+        </option>
+        <option value="discovery" {{ md_select(val, 'discovery') }}>
+            {% trans %}Suchdienste{% endtrans %}
+        </option>
+        <option value="transformation" {{ md_select(val, 'transformation') }}>
+            {% trans %}Transformationsdienste{% endtrans %}
+        </option>
+    </select>
+    <div class="btn-group">
+        <div class="last showHelp"  {{ id|md_data_obj }}>
+            <div class="icon icon-question"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+{#
+    SERVICE TYPE VERSION
+#}
+{% set id = 'p[serviceTypeVersion]' %}
+{% set val = p['serviceTypeVersion'] is defined ? p['serviceTypeVersion'] : '' %}
+
+<div class="oneColBox">
+    <label>
+        <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
+    </label>
+    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
+    <div class="btn-group">
+        <div class="last showHelp"  {{ id|md_data_obj }}>
+            <div class="icon icon-question"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+{#
+    CONTAINS OPERATIONS
+#}
+<h2>{% trans %}Dienste Operationen{% endtrans %}</h2>
+<div class="twoColBox">
+
+    {% set id = 'p[containsOperationsName]' %}
+    {% set val = p['containsOperationsName'] is defined ? p['containsOperationsName'] : 'GetCapabilities' %}
+
+    <div class="left">
+        <label>
+            <div class="icon mandatory icon-circle"></div>{{'Operation'|trans}}:
+        </label>
+        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon icon-question"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+
+        {% set id = 'p[containsOperationsDCP]' %}
+        {% set val = p['containsOperationsDCP'] is defined ? p['containsOperationsDCP'] : 'WebService' %}
+
+        <label>
+            <div class="icon mandatory icon-circle"></div>{{'Platform'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group">
+                <div class="last showHelp" {{ id|md_data_obj }}>
+                    <div class="icon icon-question"></div>
+                </div>
+            </div>
+            <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% set id = 'p[containsOperationsURL]' %}
+{% set val = p['containsOperationsURL'] is defined ? p['containsOperationsURL'] : '' %}
+
+<div class="oneColBox">
+    <label for="{{ id|md_id }}">
+        <div class="icon mandatory icon-circle"></div>{{'URL'|trans}}:
+    </label>
+    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
+    <div class="btn-group">
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+    </div>
+    <div class="clear"></div>
+</div>
+

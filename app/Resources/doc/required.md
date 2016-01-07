@@ -5,6 +5,7 @@
 * PHP SQLite extension (php5-sqlite)
 * PHP cURL extension (php5-curl)
 * PHP Internationalization (php5-intl)
+* PHP MD-String (php5-mdstring)
 
 ```
 # On debian systems...

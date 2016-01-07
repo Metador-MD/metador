@@ -9,7 +9,7 @@ if [ -d "$TEMPPATH/$PROJECTNAME" ]; then
     rm -rf "$TEMPPATH/$PROJECTNAME"
 fi
 
-git clone https://github.com/WhereGroup/$PROJECTNAME.git
+git clone https://github.com/WhereGroup/$PROJECTNAME.git -b 2.1
 
 cd $TEMPPATH/$PROJECTNAME
 

@@ -1,0 +1,34 @@
+{% extends 'WhereGroupThemeBundle::base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="loginPage">
+    <div class="loginDialog">
+        {% if error %}
+            <div>{{ error.message | replace({ "Bad credentials": "Benutzername oder Kennwort falsch" }) | trans }}</div>
+        {% endif %}
+
+        <span class="version">{% trans %}Version{% endtrans %}: {{ version }}</span>
+        <h1>Metador 2.1b</h1>
+        <hr/>
+        <form action="{{ path('login_check') }}" method="post" class="loginForm" autocomplete="off">
+            <p class="wrapper-user-login">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{% trans %}Benutzer{% endtrans %}" autocomplete="off" />
+            </p>
+            <p class="wrapper-user-password">
+                <input type="password" id="password" name="_password" placeholder="{% trans %}Kennwort{% endtrans %}" />
+            </p>
+            <button type="submit" class="metador-login-button">{% trans %}login{% endtrans %}</button>
+        </form>
+
+        <div class="link-icons">
+            <a href="http://www.wheregroup.com/de/metador" class="icon-wheregroup" target="_BLANK" title="WhereGroup"></a>
+            <a href="https://github.com/WhereGroup/metador2" class="icon-github4" target="_BLANK" title="Github"></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

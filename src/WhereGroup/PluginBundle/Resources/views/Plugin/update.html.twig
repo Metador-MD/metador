@@ -1,0 +1,64 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1 class="plugin-wait">{% trans %}Bitte warten{% endtrans %}...</h1>
+    <a class="btn success" id="plugin-reload" href="{{ path('metador_admin_plugin') }}">
+        {% trans %}Seite neu laden{% endtrans %}
+    </a>
+
+    <table class="plugin-table" data-cmd="update-plugins" data-plugins="{{ plugins }}">
+        <tr class="plugin-row">
+            <td class="plugin-col-mark">
+                <span class="icon-file-text"></span>
+            </td>
+            <td class="plugin-col-name">
+                {% trans %}Konfiguration{% endtrans %}
+            </td>
+            <td class="plugin-col-origin">
+                <span class="icon-hour-glass" id="plugin-config-status"></span>
+            </td>
+        </tr>
+        <tr><td colspan="3" id="plugin-config-results"></td></tr>
+        <tr class="plugin-row">
+            <td class="plugin-col-mark">
+                <span class="icon-power"></span>
+            </td>
+            <td class="plugin-col-name">
+                {% trans %}Cache{% endtrans %}
+            </td>
+            <td class="plugin-col-origin">
+                <span class="icon-hour-glass" id="plugin-cache-status"></span>
+            </td>
+        </tr>
+        <tr><td colspan="3" id="plugin-cache-results"></td></tr>
+        <tr class="plugin-row">
+            <td class="plugin-col-mark">
+                <span class="icon-share2"></span>
+            </td>
+            <td class="plugin-col-name">
+                {% trans %}Assets{% endtrans %}
+            </td>
+            <td class="plugin-col-origin">
+                <span class="icon-hour-glass" id="plugin-assets-status"></span>
+            </td>
+        </tr>
+        <tr><td colspan="3" id="plugin-assets-results"></td></tr>
+        <tr class="plugin-row">
+            <td class="plugin-col-mark">
+                <span class="icon-database"></span>
+            </td>
+            <td class="plugin-col-name">
+                {% trans %}Datenbank{% endtrans %}
+            </td>
+            <td class="plugin-col-origin">
+                <span class="icon-hour-glass" id="plugin-database-status"></span>
+            </td>
+        </tr>
+        <tr><td colspan="3" id="plugin-database-results"></td></tr>
+    </table>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregroupplugin/js/plugin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,17 @@
+<div class="head">{{ 'Adressen'|trans }}</div>
+<div class="body">
+    <table class="preview-table">
+        {% for row in address %}
+        <tr>
+            <td>{{ row.individualName ? row.individualName : 'noname' }}</td>
+            <td class="last-1">
+                <form action="{{ path('metador_address_delete', {'id':row.id}) }}" method="post">
+                    <button class="noStyle">
+                        <div class="icon-bin2"></div>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

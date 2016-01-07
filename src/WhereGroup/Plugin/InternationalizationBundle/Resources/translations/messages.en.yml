@@ -1,0 +1,12 @@
+Internationalisierung: Internationalization
+Konfiguration: Configuration
+'Standardsprache definieren': 'Define default language'
+'Sprachdateien generieren': 'Create language data'
+'Legt die Sprachdatei für die Hauptanwendung an': 'Creates language data for the main application'
+'Legt die Sprachdatei für die Metador Plugins an': 'Creates language data for Metador plugins'
+'Legt die Sprachdatei für die sonstige Plugins an': 'Creates language data for other plugins'
+Deutsch: German
+Englisch: English
+'Keine Übersetzungsdatei gefunden': 'No translation data found'
+Sprachen: Languages
+'Ermöglicht das wechseln der Sprache in der Oberfläche': 'Allows switching the language of the interface'

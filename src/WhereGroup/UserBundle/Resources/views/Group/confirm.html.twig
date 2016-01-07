@@ -1,0 +1,13 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'Gruppe löschen'|trans }}</h1>
+
+    <div class="notify warning">
+        {% trans %}Gruppe wirklich löschen{% endtrans %}?
+    </div>
+
+    <form action="{{ path('metador_admin_group_delete', { 'id': form.vars.value.id }) }}" method="post">
+    {{ form(form) }}
+    </form>
+{% endblock %}

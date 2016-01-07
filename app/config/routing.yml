@@ -1,18 +1,14 @@
-_metador:
-    pattern:   /
-    defaults:  { _controller: WhereGroupMetadorBundle:Default:index }
+where_group_core:
+    resource: "@WhereGroupCoreBundle/Controller/"
+    type:     annotation
 
 where_group_user:
     resource: "@WhereGroupUserBundle/Controller/"
     type:     annotation
-    prefix:   /
 
-where_group_metador:
-    resource: "@WhereGroupMetadorBundle/Controller/"
+where_group_plugin:
+    resource: "@WhereGroupPluginBundle/Controller/"
     type:     annotation
-    prefix:   /
 
-where_group_search:
-    resource: "@WhereGroupSearchBundle/Controller/"
-    type:     annotation
-    prefix:   /
+_plugins:
+    resource: "../../var/plugins/plugins_routing.yml"

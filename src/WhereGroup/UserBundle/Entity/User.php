@@ -2,6 +2,7 @@
 namespace WhereGroup\UserBundle\Entity;
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WhereGroup\UserBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -18,37 +20,39 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=32)
      */
-    private $salt;
+    protected $salt;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    protected $isActive;
 
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     * @ORM\JoinTable(name="users_groups")
      */
-    private $groups;
+    protected $groups;
 
     public function __construct()
     {
@@ -229,9 +233,9 @@ class User implements AdvancedUserInterface, \Serializable
      * @param \WhereGroup\UserBundle\Entity\Group $groups
      * @return User
      */
-    public function addGroup(\WhereGroup\UserBundle\Entity\Group $groups)
+    public function addGroup(\WhereGroup\UserBundle\Entity\Group $group)
     {
-        $this->groups[] = $groups;
+        $this->groups->add($group);
 
         return $this;
     }

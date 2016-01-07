@@ -1,0 +1,15 @@
+{% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'Benutzer löschen'|trans }}</h1>
+
+    <div class="notify warning">
+        {% trans %}Benutzer wirklich löschen{% endtrans %}?
+    </div>
+
+    {{ form_start(form, { 'action': path('metador_admin_user_delete', { 'id': form.vars.value.id }), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

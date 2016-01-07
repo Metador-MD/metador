@@ -1,0 +1,24 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% if id is defined %}
+    {% set path = 'metadata_edit' %}
+    {% set param = {'profile' : profile, 'id': id} %}
+{% else %}
+    {% set path = 'metadata_new' %}
+    {% set param = {'profile' : profile} %}
+{% endif %}
+
+{% block center %}
+    <div class="page-left">
+        {% block menu %}{% endblock %}
+    </div>
+    <div class="page-right">
+        {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/profileservice/js/profile.js') }}"></script>
+{% endblock %}

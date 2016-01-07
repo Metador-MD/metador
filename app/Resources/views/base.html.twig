@@ -1,9 +1,0 @@
-{% set conf = getParameter('metador') %}
-
-{% if app.environment == 'dev' %}
-    {% set BASEDIR = app.request.basepath ~ '/app_dev.php/' %}
-{% else %}
-    {% set BASEDIR = app.request.basepath ~ '/app.php/' %}
-{% endif %}
-
-{% extends conf['templates']['base'] %}

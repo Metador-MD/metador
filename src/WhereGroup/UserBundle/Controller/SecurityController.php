@@ -3,6 +3,7 @@
 namespace WhereGroup\UserBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -18,9 +19,8 @@ class SecurityController extends Controller
      * @Template(":Design:demo.html.twig")
      * @Method("GET")
      */
-    public function demoAction()
+    public function demoAction(Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
 
         // get the login error if there is one
@@ -43,10 +43,10 @@ class SecurityController extends Controller
      *
      * @Route("/login", name="login")
      * @Method("GET")
+     * @Template("WhereGroupThemeBundle:Template:login.html.twig")
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
 
         // get the login error if there is one
@@ -59,16 +59,10 @@ class SecurityController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        // Load Template.
-        $conf = $this->container->getParameter('metador');
-        
-        return $this->render(
-            $conf['templates']['login'],
-            array(
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
-            )
-        );
+        return(array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error'         => $error,
+        ));
     }
 
     /**

@@ -7,218 +7,195 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Form\UserType;
+use WhereGroup\CoreBundle\Component\MetadorException;
 
 /**
  * User controller.
  *
- * @Route("/user")
+ * @Route("/admin/user")
  */
 class UserController extends Controller
 {
     /**
-     * Lists all User entities.
      *
-     * @Route("/", name="user")
+     * @Route("/", name="metador_admin_user")
      * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WhereGroupUserBundle:User')->findAll();
-
         return array(
-            'entities' => $entities,
+            'users' => $this->get('metador_user')->findAll(),
         );
     }
 
-    /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/show/{id}", name="user_show")
-     * @Template()
-     */
-
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WhereGroupUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    
     /**
      * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/new", name="metador_admin_user_new")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new User();
-
-        $em = $this->getDoctrine()->getManager();
-        $groups = $em->getRepository('WhereGroupUserBundle:Group')->findAll();
-
-        $form = $this->createForm(new UserType(), $entity);
-
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-            'groups'  => $groups
+            'form' => $this
+                ->createForm(new UserType(), new User())
+                ->createView()
         );
     }
 
     /**
-     * Creates a new User entity.
      *
-     * @Route("/create", name="user_create")
+     * @Route("/create", name="metador_admin_user_create")
      * @Method("POST")
      * @Template("WhereGroupUserBundle:User:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new User();
-        $form = $this->createForm(new UserType(), $entity);
-        $form->bind($request);
+        $user  = new User();
+
+        $form = $this
+            ->createForm(new UserType(), $user)
+            ->submit($request);
 
         if ($form->isValid()) {
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
-            $entity->setPassword(
-                $encoder->encodePassword($entity->getPassword(), $entity->getSalt())
-            );
+            try {
+                $this->get('metador_user')->insert($user);
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde erstellt.',
+                    array('%username%' => $user->getUsername())
+                );
+            // todo eigene Exception
+            } catch (MetadorException $e) {
+                $this->get('metador_logger')->warning($e->getMessage());
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('user'));
+            return $this->redirectToRoute('metador_admin_user');
         }
 
         return array(
-            'entity' => $entity,
             'form'   => $form->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing User entity.
      *
-     * @Route("/edit/{id}", name="user_edit")
-     * @Template()
+     * @Route("/edit/{id}", name="metador_admin_user_edit")
+     * @Template("WhereGroupUserBundle:User:new.html.twig")
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $groups = $em->getRepository('WhereGroupUserBundle:Group')->findAll();
-        $entity = $em->getRepository('WhereGroupUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+        try {
+            $user = $this->get('metador_user')->get($id);
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->warning($e->getMessage());
+            return $this->redirectToRoute('metador_admin_user');
         }
 
-        $editForm = $this->createForm(new UserType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity' => $entity,
-            'form'   => $editForm->createView(),
-            'groups' => $groups,
-            'delete_form' => $deleteForm->createView(),
+            'form' => $this
+                ->createForm(new UserType(), $user)
+                ->createView(),
         );
     }
 
     /**
-     * Edits an existing User entity.
      *
-     * @Route("/update/{id}", name="user_update")
+     * @Route("/update/{id}", name="metador_admin_user_update")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:User:edit.html.twig")
+     * @Template("WhereGroupUserBundle:User:new.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        try {
+            $user = $this->get('metador_user')->get($id);
 
-        $entity = $em->getRepository('WhereGroupUserBundle:User')->find($id);
+            $oldPassword = $user->getPassword();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
+            $form = $this
+                ->createForm(new UserType(), $user)
+                ->submit($request);
 
-        $oldPassword = $entity->getPassword();
+            if ($form->isValid()) {
+                if ($user->getPassword() != "" && $oldPassword != $user->getPassword()) {
+                    $user->setPassword(
+                        $this->get('metador_user')->encodePassword($user, $user->getPassword())
+                    );
+                } else {
+                    $user->setPassword($oldPassword);
+                }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new UserType(), $entity);
-        $editForm->bind($request);
+                $this->get('metador_user')->update($user);
 
-        if ($editForm->isValid()) {
-
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
-
-            if($oldPassword != $entity->getPassword()) {
-                $entity->setPassword(
-                    $encoder->encodePassword($entity->getPassword(), $entity->getSalt())
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde bearbeitet.',
+                    array('%username%' => $user->getUsername())
                 );
-            }
-                        
-            $em->persist($entity);
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('user'));
+                return $this->redirectToRoute('metador_admin_user');
+            }
+
+
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->warning($e->getMessage());
+            return $this->redirectToRoute('metador_admin_user');
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $form->createView(),
         );
     }
 
     /**
-     * Deletes a User entity.
-     *
-     * @Route("/delete/{id}", name="user_delete")
+     * @Method("GET")
+     * @Route("/delete/{id}", name="metador_admin_user_confirm")
+     * @Template()
+     */
+    public function confirmAction($id)
+    {
+        return array(
+            'form' => $this
+                ->createDeleteForm($id)
+                ->createView()
+        );
+    }
+
+    /**
+     * @Route("/delete/{id}", name="metador_admin_user_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form = $this
+            ->createDeleteForm($id)
+            ->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('WhereGroupUserBundle:User')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+            try {
+                $user = $this->get('metador_user')->get($id);
+                $this->get('metador_user')->delete($user);
+                $this->get('metador_logger')->success(
+                    'Benutzer %username% wurde gelöscht.',
+                    array('%username%' => $user->getUsername())
+                );
+            } catch (MetadorException $e) {
+                $this->get('metador_logger')->warning($e->getMessage());
+                return $this->redirectToRoute('metador_admin_user');
             }
-
-            $em->remove($entity);
-            $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirectToRoute('metador_admin_user');
     }
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this
+            ->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->add('submit', 'submit', array('label' => 'löschen'))
+            ->getForm();
     }
 }

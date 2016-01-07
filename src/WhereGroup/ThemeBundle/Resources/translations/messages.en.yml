@@ -1,0 +1,17 @@
+abmelden: 'log out'
+Profile: Profiles
+Version: Version
+Benutzer: User
+Kennwort: Password
+login: login
+'Metadatenerfassung für Alle': 'Collection of metadata for everyone'
+'Erzeugen, Bearbeiten, Validieren und Exportieren von INSPIRE-konformen Metadatensätzen für Daten und Dienste': 'Creating, editing, validating and exporting of INSPIRE-compliant metadatasets for data and services'
+'Als Demonutzer angemeldet, steht Ihnen die volle Funktionalität von MeTaDor2 zur Verfügung. Ihre Daten können von allen anderen Demonutzern betrachtet und editiert werden': 'Registered as a demo user, you have full access to all MeTaDor2 features. Your data may be viewed and edited by all other demo users.'
+'Nutzen Sie die Schnittstelle der GDI-DE Testsuite um Ihre Metadaten auf Konformität zu den Standards zu testen': 'Use the GDI-DE Testsuite gateway to check your metadata for compliance to standards'
+'Demo Benutzer': 'Demo User'
+Seite: Page
+von: of
+Titel: Title
+Datum: Date
+Uhrzeit: Time
+bearbeiten: edit

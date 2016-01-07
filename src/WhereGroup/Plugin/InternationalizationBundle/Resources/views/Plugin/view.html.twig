@@ -1,0 +1,43 @@
+{% extends 'WhereGroupPluginBundle::template.html.twig' %}
+
+{% block content %}
+<div class="plugin-view">
+    {{ plugin.info('Internationalisierung', 'Ermöglicht das wechseln der Sprache in der Oberfläche.') }}
+
+    {{ plugin.header('Konfiguration') }}
+
+    {{ plugin.list('Standardsprache definieren') }}
+
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    locale: de') }}
+
+    {{ plugin.list('Unterstützte Sprachen') }}
+
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_locales:
+        - en') }}
+
+    {{ plugin.list('Import einer Sprachdatei als Eingabehilfe') }}
+
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_import:
+        en: ~') }}
+
+    {{ plugin.list('Für Plugins kann man automatisch übersetzungen schreiben. Alle anderen Bundles müssen hier angegeben werden.') }}
+
+    {{ plugin.file('app/config/parameters.yml', '', 'parameters:
+    i18n_bundles:
+        - WhereGroupCoreBundle
+        - WhereGroupThemeBundle
+        - WhereGroupUserBundle
+        - WhereGroupPluginBundle') }}
+
+    {{ plugin.list('Legt die Sprachdateien für die Hauptanwendung an') }}
+
+    {{ plugin.terminal('Terminal', '',
+        'app/console translation:update en WhereGroupCoreBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupThemeBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupUserBundle --no-backup --force --output-format=yml
+app/console translation:update en WhereGroupPluginBundle --no-backup --force --output-format=yml') }}
+</div>
+{% endblock %}

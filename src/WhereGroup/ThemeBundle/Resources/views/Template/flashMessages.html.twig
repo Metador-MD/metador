@@ -1,0 +1,7 @@
+{% for type in ['error', 'warning', 'success', 'notice'] %}
+    {% for message in app.session.flashbag.get(type) %}
+        <div class="notify {{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

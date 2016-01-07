@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * WhereGroup\UserBundle\Entity\User
  * @ORM\Table(name="groups")
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="WhereGroup\UserBundle\Entity\GroupRepository")
  */
 class Group implements RoleInterface
 {
@@ -17,17 +18,22 @@ class Group implements RoleInterface
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="role", type="string", length=255, unique=true)
      */
-    private $role;
+    protected $role;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
      */
-    private $users;
+    protected $users;
+
+    /**
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    protected $description;
 
     public function __construct()
     {
@@ -80,9 +86,11 @@ class Group implements RoleInterface
      * @param \WhereGroup\UserBundle\Entity\User $users
      * @return Group
      */
-    public function addUser(\WhereGroup\UserBundle\Entity\User $users)
+    public function addUser(\WhereGroup\UserBundle\Entity\User $user)
     {
-        $this->users[] = $users;
+        $user->addGroup($this);
+        $this->users->add($user);
+
 
         return $this;
     }
@@ -107,6 +115,17 @@ class Group implements RoleInterface
         return $this->users;
     }
 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
 
     public function __toString()
     {

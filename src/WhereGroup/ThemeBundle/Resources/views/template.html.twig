@@ -1,0 +1,49 @@
+{% extends 'WhereGroupThemeBundle::base.html.twig' %}
+
+{% block title %}Metador 2.1{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/datepicker/zebra_datepicker_metallic.css') }}">
+    {# <link rel="stylesheet" href="http://i.icomoon.io/public/temp/2f06e8fb92/Metador21/style.css"> #}
+{% endblock %}
+
+{% block body %}
+<div class="page">
+    <div class="logo"></div>
+    <div class="page-top">
+	{% block global_menu %}
+	    {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
+	{% endblock %}
+    </div>
+    {% block form_start %}{% endblock %}
+    <div class="plugin-menu">
+        <div class="plugin-menu-content">
+            <div class="plugin-menu-content-left"></div>
+            <div class="plugin-menu-content-right">
+                <ul class="plugin-menu-list">
+                    {% block plugin_menu %}
+                    {% include 'WhereGroupThemeBundle:Template:pluginMenu.html.twig' %}
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="page-center">
+        {% block center %}{% endblock %}
+    </div>
+    {% block form_end %}{% endblock %}
+</div>
+<h1></h1>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/wheregrouptheme/js/jquery-1.8.3.min.js') }}"></script>
+    <script src="{{ asset('bundles/wheregrouptheme/js/datepicker/zebra_datepicker.js') }}"></script>
+    <script src="{{ asset('bundles/wheregroupcore/js/metador.js') }}"></script>
+    <script src="{{ asset('bundles/wheregroupcore/js/ui.js') }}"></script>
+    {% for plugin, src in applicationGet('app-javascript') %}
+    <script src="{{ asset(src) }}"></script>
+    {% endfor %}
+{% endblock %}

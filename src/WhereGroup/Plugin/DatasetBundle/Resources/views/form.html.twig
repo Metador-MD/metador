@@ -1,0 +1,61 @@
+{% extends 'ProfileDatasetBundle::template.html.twig' %}
+
+{% block title %}Metador - {% trans %}Daten{% endtrans %}{% endblock %}
+
+{% block menu %}
+<ul class="page-menu-list profile-menu">
+    <li data-tab="metadata" class="act">{% trans %}Metadatensatz{% endtrans %}</li>
+    <li data-tab="identification">{% trans %}Identifikation{% endtrans %}</li>
+    <li data-tab="classification">{% trans %}Klassifizierung{% endtrans %}</li>
+    <li data-tab="keyword">{% trans %}Schlüsselwort{% endtrans %}</li>
+    <li data-tab="geographic">{% trans %}Geografischer Standort{% endtrans %}</li>
+    <li data-tab="temporal">{% trans %}Zeitbezug{% endtrans %}</li>
+    <li data-tab="quality">{% trans %}Qualität{% endtrans %}</li>
+    <li data-tab="conformity">{% trans %}Übereinstimmung{% endtrans %}</li>
+    <li data-tab="constraints">{% trans %}Beschränkungen{% endtrans %}</li>
+    <li data-tab="responsibleparty">{% trans %}Zuständige Stelle{% endtrans %}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="metadataFormPages">
+    <div id="metadata" class="act">
+        {% include 'ProfileDatasetBundle:Profile:metadata.html.twig' %}
+    </div>
+    <div id="identification">
+        {% include 'ProfileDatasetBundle:Profile:identification.html.twig' %}
+    </div>
+    <div id="classification">
+        {% include 'ProfileDatasetBundle:Profile:classification.html.twig' %}
+    </div>
+    <div id="keyword">
+        {% include 'ProfileDatasetBundle:Profile:keyword.html.twig' %}
+    </div>
+    <div id="geographic">
+        {% include 'ProfileDatasetBundle:Profile:geographic.html.twig' %}
+    </div>
+    <div id="temporal">
+        {% include 'ProfileDatasetBundle:Profile:temporal.html.twig' %}
+    </div>
+    <div id="quality">
+        {% include 'ProfileDatasetBundle:Profile:quality.html.twig' %}
+    </div>
+    <div id="conformity">
+        {% include 'ProfileDatasetBundle:Profile:conformity.html.twig' %}
+    </div>
+    <div id="constraints">
+        {% include 'ProfileDatasetBundle:Profile:constraints.html.twig' %}
+    </div>
+    <div id="responsibleparty">
+        {% include 'ProfileDatasetBundle:Profile:responsibleparty.html.twig' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block form_start %}
+    <form action="{{ path(path, param) }}" method="post" name="metadataForm" class="metadataForm" autocomplete="off">
+{% endblock %}
+
+{% block form_end %}
+    </form>
+{% endblock %}

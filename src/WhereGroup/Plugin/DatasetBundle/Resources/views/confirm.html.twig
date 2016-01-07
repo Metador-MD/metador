@@ -1,0 +1,15 @@
+{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+
+{% block center %}
+<div class="page-content">
+    {% if form.delete is defined %}
+        <strong>{{ form.vars.value.title }}</strong>
+        {% trans %}Wirklich löschen{% endtrans %}?
+    {% endif %}
+
+    <form action="{{ path('metadata_delete', { 'profile': profile, 'id': form.vars.value.id }) }}" method="post">
+    {{ form(form) }}
+    </form>
+</div>
+{% endblock %}
+

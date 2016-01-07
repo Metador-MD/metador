@@ -1,0 +1,30 @@
+.icon {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 16px;
+
+    font-size: 16px;
+
+    color: #999;
+
+
+    &.mandatory {
+        color: #FFAEAE;
+    }
+
+    &.conditional {
+        color: #FFEC94;
+    }
+
+    &.optional {
+        color: #B0E57C;
+    }
+}
+
+.icon32 {
+    display: block;
+    float: left;
+    width: 32px;
+    height: 32px;
+}
