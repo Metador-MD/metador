@@ -1,9 +1,9 @@
 image: wg-ubuntu-14-04-basic
 
-cache:
-    paths:
-        - bin/
-        - vendor/
+# cache:
+#     paths:
+#         - bin/
+#         - vendor/
 
 before_script:
   - composer update --no-progress
