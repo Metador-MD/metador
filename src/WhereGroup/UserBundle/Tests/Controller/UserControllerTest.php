@@ -8,7 +8,7 @@ class UserControllerTest extends WebTestCase
 {
     public function testCompleteScenario()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
     /*
     public function testCompleteScenario()
