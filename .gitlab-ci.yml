@@ -5,4 +5,5 @@ before_script:
 
 test:
     script:
-      - app/Resources/scripts/test.sh
+        - bin/phpunit -c app/
+#      - app/Resources/scripts/test.sh
