@@ -12,16 +12,17 @@ stages:
   - test
   - build
 
-job1:
+test_job:
     stage: test
     script:
         - bin/phpunit -c app/
         - bin/phpcs -n --extensions=php --standard=PSR2 src/
         # - bin/phpcpd src/
 
-job2:
+build_job:
     stage: build
     only:
         - master
     script:
-        - echo "hello world"
+        - chmod +x app/Resources/scripts/build.sh
+        - app/Resources/scripts/build.sh

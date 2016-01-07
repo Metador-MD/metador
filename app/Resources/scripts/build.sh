@@ -1,6 +1,9 @@
 #!/bin/bash
 TEMPPATH=/tmp
 PROJECTNAME=metador2
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+ROOTPATH=$SCRIPTPATH/../../../.
 
 cd $TEMPPATH
 
@@ -9,12 +12,16 @@ if [ -d "$TEMPPATH/$PROJECTNAME" ]; then
     rm -rf "$TEMPPATH/$PROJECTNAME"
 fi
 
-git clone https://github.com/WhereGroup/$PROJECTNAME.git -b 2.1
+mkdir $TEMPPATH/$PROJECTNAME
+
+# git clone https://github.com/WhereGroup/$PROJECTNAME.git -b 2.1
+
+cp -R $ROOTPATH/* $TEMPPATH/$PROJECTNAME
 
 cd $TEMPPATH/$PROJECTNAME
 
-cp app/config/parameters.yml.dist app/config/parameters.yml
-app/Resources/scripts/composer-update.sh
+# cp app/config/parameters.yml.dist app/config/parameters.yml
+# app/Resources/scripts/composer-update.sh
 
 rm -rf `find . -type d -name .git`
 
