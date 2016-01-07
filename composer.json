@@ -22,7 +22,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "tecnick.com/tcpdf": "dev-master",
         "ramsey/uuid": "~2.8",
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "4.8.*",
+        "squizlabs/php_codesniffer": "2.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
