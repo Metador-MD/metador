@@ -16,8 +16,8 @@ job1:
     stage: test
     script:
         - bin/phpunit -c app/
-        - bin/phpcs -n --extensions=php --standard=PSR2 --report=summary src/
-        - bin/phpcpd src/
+        - bin/phpcs -n --extensions=php --standard=PSR2 src/
+        # - bin/phpcpd src/
 
 job2:
     stage: build
