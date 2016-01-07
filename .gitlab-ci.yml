@@ -2,11 +2,21 @@ image: wg-ubuntu-14-04-basic
 
 cache:
     paths:
+        - bin/
         - vendor/
 
 before_script:
   - composer update --no-progress
 
-test:
+stages:
+  - test
+  - build
+
+job1:
+    stage: test
     script:
         - bin/phpunit -c app/
+
+job2:
+    stage: build
+        - echo "hello world"
