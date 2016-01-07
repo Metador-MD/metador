@@ -128,17 +128,21 @@ class XmlParser
         $commands['_function']  = isset($commands['_function']) ? $commands['_function'] : null;
 
         foreach ($object as $key => $val) {
-            switch($key) {
+            switch ($key) {
                 case "_":
                 case "cmd":
                     break;
-                case "path": $path .= $val;
+                case "path":
+                    $path .= $val;
                     break;
-                case "asArray": $commands['asArray'] = $val;
+                case "asArray":
+                    $commands['asArray'] = $val;
                     break;
-                case "recursive": $commands['recursive'] = $val;
+                case "recursive":
+                    $commands['recursive'] = $val;
                     break;
-                case "_function": $commands['_function'] = $val;
+                case "_function":
+                    $commands['_function'] = $val;
                     break;
                 case "data":
                     if (is_string($val) && isset($this->cache[$val])) {
@@ -159,7 +163,6 @@ class XmlParser
                     if (is_object($val)) {
                         $tmp = $this->parseRecursive($val, $key, $context, $path, $commands);
                     } elseif (is_array($val) && count($val) >= 2) {
-
                         if (is_null($val[0])) {
                             $tmp = $this->functions->get($val[1], null, array_slice($val, 2));
                         } else {
@@ -239,7 +242,7 @@ class XmlParser
 
         if ($nodes) {
             foreach ($nodes as $node) {
-                switch($node->nodeType) {
+                switch ($node->nodeType) {
                     case XML_ATTRIBUTE_NODE:
                         $result[] = $node->value;
                         break;

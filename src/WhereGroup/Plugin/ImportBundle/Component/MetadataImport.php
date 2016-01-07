@@ -16,9 +16,9 @@ class MetadataImport implements MetadataImportInterface
 {
     /** @var KernelInterface  */
     private $kernel;
-    
+
     private $plugin;
-    
+
     // todo: change to PluginInterface
     public function __construct(KernelInterface $kernel, Plugin $plugin)
     {
@@ -119,7 +119,8 @@ class MetadataImport implements MetadataImportInterface
 
         // read metadata
         $parser = new XmlParser($xml, new XmlParserFunctions());
-        switch($version["version"]) {
+
+        switch ($version["version"]) {
             case "1.1.1":
                 $parser->loadSchema(file_get_contents($path . 'wms_1-1-1.json'));
                 break;
