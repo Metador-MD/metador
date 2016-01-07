@@ -1,9 +1,12 @@
 image: wg-ubuntu-14-04-basic
 
+cache:
+    paths:
+        - vendor/
+
 before_script:
   - composer update --no-progress
 
 test:
     script:
         - bin/phpunit -c app/
-#      - app/Resources/scripts/test.sh
