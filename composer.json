@@ -23,7 +23,8 @@
         "tecnick.com/tcpdf": "dev-master",
         "ramsey/uuid": "~2.8",
         "phpunit/phpunit": "4.8.*",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "2.*",
+        "sebastian/phpcpd": "2.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
