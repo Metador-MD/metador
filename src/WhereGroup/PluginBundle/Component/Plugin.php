@@ -254,7 +254,7 @@ class Plugin
             return true;
         }
 
-        // todo: exception
+        // TODO: exception
     }
 
     /**

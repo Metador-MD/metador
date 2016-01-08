@@ -19,7 +19,7 @@ class MetadataImport implements MetadataImportInterface
 
     private $plugin;
 
-    // todo: change to PluginInterface
+    // TODO: change to PluginInterface
     public function __construct(KernelInterface $kernel, Plugin $plugin)
     {
         $this->kernel = $kernel;
