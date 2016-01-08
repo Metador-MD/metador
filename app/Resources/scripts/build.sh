@@ -31,6 +31,6 @@ if [ -f "$TEMPPATH/$PROJECTNAME.zip" ]; then
     rm "$TEMPPATH/$PROJECTNAME.zip"
 fi
 
-zip -r $PROJECTNAME.zip $PROJECTNAME
+zip -q -r $PROJECTNAME.zip $PROJECTNAME
 
 rm -rf "$TEMPPATH/$PROJECTNAME"
