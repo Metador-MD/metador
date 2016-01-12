@@ -15,6 +15,7 @@ class MetadorExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('md_select', array($this, 'isSelected'))
+        );
     }
 
     public function getFilters()
