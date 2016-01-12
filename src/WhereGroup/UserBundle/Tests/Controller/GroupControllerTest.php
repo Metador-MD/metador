@@ -6,7 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GroupControllerTest extends WebTestCase
 {
-    /*
+    public function testCompleteScenario()
+    {
+        $this->assertTrue(true);
+    }
+/*
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
@@ -50,6 +54,5 @@ class GroupControllerTest extends WebTestCase
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
-
-    */
+*/
 }

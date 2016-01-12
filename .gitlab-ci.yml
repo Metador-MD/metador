@@ -1,0 +1,28 @@
+image: wg-ubuntu-14-04-basic
+
+cache:
+    paths:
+        - bin/
+        - vendor/
+
+before_script:
+  - composer update --no-progress
+
+stages:
+  - test
+  - build
+
+test_job:
+    stage: test
+    script:
+        - bin/phpunit -c app/
+        - bin/phpcs -n --extensions=php --standard=PSR2 src/
+        # - bin/phpcpd src/
+
+build_job:
+    stage: build
+    only:
+        - master
+    script:
+        - chmod +x app/Resources/scripts/build.sh
+        - app/Resources/scripts/build.sh

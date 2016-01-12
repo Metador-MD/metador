@@ -1,0 +1,6 @@
+first-test-plugin:
+    origin: WhereGroup
+    name: First Plugin
+    description: Beispiel Plugin für Metador 2.1
+    class_path: FirstPluginBundle
+    class_name: WhereGroupFirstPluginBundle
