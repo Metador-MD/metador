@@ -36,28 +36,31 @@ class Application
         RequestStack $requestStack,
         $env
     ) {
-        $this->env                  = $env;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->request              = $requestStack->getCurrentRequest();
-        $this->parameter            = $this->request->attributes->all();
-        $this->route                = $this->request->get('_route');
-        $controllerInfo             = $this->request->get('_controller');
+        try {
+            $this->env                  = $env;
+            $this->authorizationChecker = $authorizationChecker;
+            $this->request              = $requestStack->getCurrentRequest();
+            $this->parameter            = $this->request->attributes->all();
+            $this->route                = $this->request->get('_route');
+            $controllerInfo             = $this->request->get('_controller');
 
-        // Forward to controller generates a different controller information
-        if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
-            $this->bundle     = $match[1];
-            $this->controller = $match[2];
-            $this->action     = $match[3];
-        } else {
-            $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
-            $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
-            $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+            // Forward to controller generates a different controller information
+            if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
+                $this->bundle     = $match[1];
+                $this->controller = $match[2];
+                $this->action     = $match[3];
+            } else {
+                $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
+                $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
+                $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+            }
+
+            unset($controllerInfo);
+
+            // dispatch event
+            $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
+        } catch (\Exception $e) {
         }
-
-        unset($controllerInfo);
-
-        // dispatch event
-        $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
     }
 
     public function debug()
