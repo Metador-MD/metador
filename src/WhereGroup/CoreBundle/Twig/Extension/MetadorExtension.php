@@ -14,7 +14,7 @@ class MetadorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'md_select' => new \Twig_Function_Method($this, 'isSelected'),
+            'md_select' => new \Twig_SimpleFunction('isSelected', $this),
         );
     }
 
