@@ -28,8 +28,8 @@ class ControllerInfoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
-            'controller_action' => new \Twig_Function_Method($this, 'getControllerAction')
+            new \Twig_SimpleFunction('controller_name', array($this, 'getControllerName')),
+            new \Twig_SimpleFunction('controller_action', array($this, 'getControllerAction'))
         );
     }
 

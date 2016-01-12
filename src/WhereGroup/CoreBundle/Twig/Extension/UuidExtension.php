@@ -11,7 +11,7 @@ class UuidExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'uuid' => new \Twig_Function_Method($this, 'uuid'),
+            new \Twig_SimpleFunction('uuid', array($this, 'uuid')),
         );
     }
 

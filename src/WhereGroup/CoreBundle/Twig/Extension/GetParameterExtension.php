@@ -19,7 +19,7 @@ class GetParameterExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'getParameter' => new \Twig_Function_Method($this, 'getParameter')
+            new \Twig_SimpleFunction('getParameter', array($this, 'getParameter'))
         );
     }
 

@@ -28,7 +28,7 @@ class ApplicationExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'applicationGet' => new \Twig_Function_Method($this, 'applicationGet')
+            new \Twig_SimpleFunction('applicationGet', array($this, 'applicationGet'))
         );
     }
 

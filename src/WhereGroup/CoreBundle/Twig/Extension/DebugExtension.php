@@ -9,7 +9,7 @@ class DebugExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'debug' => new \Twig_SimpleFilter('debug', array($this, 'is_safe' => array('html')))
+            new \Twig_SimpleFilter('debug', array($this, 'debug'), array('is_safe' => array('html')))
         );
     }
 

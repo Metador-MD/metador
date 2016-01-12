@@ -14,16 +14,16 @@ class MetadorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'md_select' => new \Twig_Function_Method($this, 'isSelected'),
+            'md_select' => new \Twig_SimpleFunction('md_select', array($this, 'isSelected')),
         );
     }
 
     public function getFilters()
     {
         return array(
-            'md_id' => new \Twig_SimpleFilter('getId', array($this, 'is_safe' => array('html'))),
-            'md_obj_id' => new \Twig_SimpleFilter('getObjectId', array($this, 'is_safe' => array('html'))),
-            'md_data_obj' => new \Twig_SimpleFilter('getDataObject', array($this, 'is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_id', array($this, 'getId'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_obj_id', array($this, 'getObjectId'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
         );
     }
 

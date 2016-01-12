@@ -2,14 +2,12 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 class TeaserExtension extends \Twig_Extension
 {
     public function getFilters()
     {
         return array(
-            'teaser' => new \Twig_SimpleFilter('teaser', array($this))
+            new \Twig_SimpleFilter('teaser', array($this, 'teaser'))
         );
     }
 
@@ -17,7 +15,6 @@ class TeaserExtension extends \Twig_Extension
     {
         return 'teaser';
     }
-
 
     public function teaser($string, $maxLen = 100)
     {
