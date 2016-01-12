@@ -3,6 +3,10 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -12,29 +16,32 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
 class Application
 {
     private $container;
-    private $data;
+    private $data = array();
     private $bundle;
     private $controller;
     private $action;
     private $route;
     private $parameter;
     private $env;
+    private $requestStack;
+    private $authorizationChecker;
 
     const POSITION_PREPEND = 0;
     const POSITION_NORMAL  = 1;
     const POSITION_APPEND  = 2;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-        $controllerInfo  = $container->get('request')->get('_controller');
-        $this->parameter = $container->get('request')->attributes->all();
-        $this->route     = $container->get('request')->get('_route');
-        $this->data      = array();
-        $this->env       = $container->get('kernel')->getEnvironment();
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizationCheckerInterface $authorizationChecker,
+        RequestStack $requestStack,
+        $env
+    ) {
+        $this->env                  = $env;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->request              = $requestStack->getCurrentRequest();
+        $this->parameter            = $this->request->attributes->all();
+        $this->route                = $this->request->get('_route');
+        $controllerInfo             = $this->request->get('_controller');
 
         // Forward to controller generates a different controller information
         if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
@@ -50,8 +57,7 @@ class Application
         unset($controllerInfo);
 
         // dispatch event
-        $event = new ApplicationEvent($this, array());
-        $container->get('event_dispatcher')->dispatch('application.loading', $event);
+        $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
     }
 
     public function debug()
@@ -60,7 +66,7 @@ class Application
             "\n<br/>Bundle     : " . $this->bundle .
             "\n<br/>Controller : " . $this->controller .
             "\n<br/>Action     : " . $this->action .
-            "\n<br/>Route       : " . $this->route .
+            "\n<br/>Route      : " . $this->route .
             'Data: <pre>' . print_r($this->data, 1) . '</pre>' .
             'Parameter:<pre>' . print_r($this->parameter, 1) . '</pre>';
     }
@@ -74,7 +80,11 @@ class Application
      */
     public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
-        if (!is_null($role) && false === $this->container->get('security.authorization_checker')->isGranted($role)) {
+        try {
+            if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
+                return $this;
+            }
+        } catch (\Exception $e) {
             return $this;
         }
 

@@ -27,7 +27,10 @@
     <services>
         <!-- SERVICE -->
         <service id="metador.application" class="%metador.application.class%">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="request_stack" />
+            <argument>%kernel.environment%</argument>
         </service>
         <service id="metador.twig_extension" class="%metador.twig.class%">
             <argument type="service" id="service_container" />
@@ -67,7 +70,7 @@
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.application" class="%metador.twig.application.class%">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="metador.application" />
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.uuid" class="%metador.twig.uuid.class%">

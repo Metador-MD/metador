@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use WhereGroup\CoreBundle\Component\Application;
 
 /**
  * Class ApplicationExtension
@@ -10,16 +11,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ApplicationExtension extends \Twig_Extension
 {
-    protected $container;
+    private $application;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Application $application)
     {
-        if ($container->isScopeActive('request')) {
-            $this->container = $container;
-        }
+        $this->application = $application;
     }
 
     /**
@@ -47,8 +43,6 @@ class ApplicationExtension extends \Twig_Extension
      */
     public function applicationGet($type, $key = null, $default = null)
     {
-        return $this->container
-            ->get('metador.application')
-            ->get($type, $key, $default);
+        return $this->application->get($type, $key, $default);
     }
 }
