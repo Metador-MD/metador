@@ -1,16 +1,10 @@
 <?php
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class MetadorExtension extends \Twig_Extension
 {
-    public function __construct(ContainerInterface $container)
-    {
-
-    }
-
     public function getFunctions()
     {
         return array(

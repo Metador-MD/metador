@@ -15,16 +15,15 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class Application
 {
-    private $container;
-    private $data = array();
-    private $bundle;
-    private $controller;
-    private $action;
-    private $route;
-    private $parameter;
-    private $env;
-    private $requestStack;
-    private $authorizationChecker;
+    private $data                 = array();
+    private $bundle               = null;
+    private $controller           = null;
+    private $action               = null;
+    private $route                = null;
+    private $parameter            = null;
+    private $env                  = null;
+    private $requestStack         = null;
+    private $authorizationChecker = null;
 
     const POSITION_PREPEND = 0;
     const POSITION_NORMAL  = 1;
@@ -39,10 +38,21 @@ class Application
         try {
             $this->env                  = $env;
             $this->authorizationChecker = $authorizationChecker;
-            $this->request              = $requestStack->getCurrentRequest();
-            $this->parameter            = $this->request->attributes->all();
-            $this->route                = $this->request->get('_route');
-            $controllerInfo             = $this->request->get('_controller');
+            $this->requestStack         = $requestStack;
+
+            // dispatch event
+            $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
+        } catch (\Exception $e) {
+        }
+    }
+
+    public function updateInformation()
+    {
+        if (is_null($this->route)) {
+            $request         = $this->requestStack->getCurrentRequest();
+            $this->parameter = $request->attributes->all();
+            $this->route     = $request->get('_route');
+            $controllerInfo  = $request->get('_controller');
 
             // Forward to controller generates a different controller information
             if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
@@ -54,17 +64,13 @@ class Application
                 $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
                 $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
             }
-
-            unset($controllerInfo);
-
-            // dispatch event
-            $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
-        } catch (\Exception $e) {
         }
     }
 
     public function debug()
     {
+        $this->updateInformation();
+
         return
             "\n<br/>Bundle     : " . $this->bundle .
             "\n<br/>Controller : " . $this->controller .
@@ -83,6 +89,8 @@ class Application
      */
     public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
+        $this->updateInformation();
+
         try {
             if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
                 return $this;
@@ -91,7 +99,6 @@ class Application
             return $this;
         }
 
-        //$data['active'] = false;
         if (isset($data['path']) && $data['path'] === $this->route) {
             $data['active'] = true;
         }
@@ -137,6 +144,8 @@ class Application
 
     public function getParameter($parameter = null, $default = null)
     {
+        $this->updateInformation();
+
         if (!is_null($parameter)) {
             return isset($this->parameter[$parameter])
                 ? $this->parameter[$parameter]
@@ -157,11 +166,15 @@ class Application
      */
     public function isBundle($bundle)
     {
+        $this->updateInformation();
+
         return ($this->bundle === $bundle);
     }
 
     public function getBundle()
     {
+        $this->updateInformation();
+
         return $this->bundle;
     }
 
@@ -171,6 +184,8 @@ class Application
      */
     public function isController($controller)
     {
+        $this->updateInformation();
+
         return ($this->controller === $controller);
     }
 
@@ -180,6 +195,8 @@ class Application
      */
     public function isAction($action)
     {
+        $this->updateInformation();
+
         if (is_array($action)) {
             return in_array($this->action, $action);
         }
@@ -193,6 +210,8 @@ class Application
      */
     public function isRoute($route)
     {
+        $this->updateInformation();
+
         if (is_array($route)) {
             return in_array($this->route, $route);
         }
@@ -202,11 +221,15 @@ class Application
 
     public function routeStartsWith($string)
     {
+        $this->updateInformation();
+
         return (strncmp($this->route, $string, strlen($string)) === 0);
     }
 
     public function bundleStartsWith($string)
     {
+        $this->updateInformation();
+
         return (strncmp($this->bundle, $string, strlen($string)) === 0);
     }
 

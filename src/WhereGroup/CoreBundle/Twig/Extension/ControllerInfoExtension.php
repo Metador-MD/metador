@@ -3,26 +3,32 @@ namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ControllerInfoExtension extends \Twig_Extension
 {
-    protected $name;
-    protected $action;
+    private $name         = null;
+    private $action       = null;
+    private $requestStack = null;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(RequestStack $requestStack)
     {
-        if ($container->isScopeActive('request')) {
-            $controller = $container->get('request')->get('_controller');
+        $this->requestStack = $requestStack;
+    }
+
+    public function updateInformation()
+    {
+        if (is_null($this->name)) {
+            $controller = $this->requestStack->getCurrentRequest()->get('_controller');
 
             $matches = array();
-            
+
             preg_match("/Controller\\\([\w]*)Controller/i", $controller, $matches);
             $this->name = isset($matches[1]) ? strtolower($matches[1]) : '';
 
             preg_match("/\:([\w]*)Action/i", $controller, $matches);
             $this->action = isset($matches[1]) ? strtolower($matches[1]) : '';
         }
-        
     }
 
     public function getFunctions()
@@ -38,14 +44,15 @@ class ControllerInfoExtension extends \Twig_Extension
         return 'controller_info_extension';
     }
 
-
     public function getControllerName()
     {
+        $this->updateInformation();
         return $this->name;
     }
 
     public function getControllerAction()
     {
+        $this->updateInformation();
         return $this->action;
     }
 }

@@ -6,7 +6,6 @@
     <parameters>
         <!-- SERVICE -->
         <parameter key="metador.application.class">WhereGroup\CoreBundle\Component\Application</parameter>
-        <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
         <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
@@ -15,8 +14,8 @@
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationMenuListener</parameter>
 
         <!-- TWIG EXTENSION -->
+        <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
         <parameter key="metador.twig.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
-        <parameter key="metador.twig.getparameter.class">WhereGroup\CoreBundle\Twig\Extension\GetParameterExtension</parameter>
         <parameter key="metador.twig.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
         <parameter key="metador.twig.casttoarray.class">WhereGroup\CoreBundle\Twig\Extension\CastToArrayExtension</parameter>
         <parameter key="metador.twig.application.class">WhereGroup\CoreBundle\Twig\Extension\ApplicationExtension</parameter>
@@ -31,10 +30,6 @@
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="request_stack" />
             <argument>%kernel.environment%</argument>
-        </service>
-        <service id="metador.twig_extension" class="%metador.twig.class%">
-            <argument type="service" id="service_container" />
-            <tag name="twig.extension" />
         </service>
         <service id="metador_wizard" class="%metador.wizard.class%" />
         <service id="metadata" class="%metador.metadata.class%">
@@ -55,12 +50,11 @@
         </service>
 
         <!-- TWIG EXTENSION -->
-        <service id="metador.twig.controllerinfo" class="%metador.twig.controllerinfo.class%">
-            <argument type="service" id="service_container" />
+        <service id="metador.twig.extension" class="%metador.twig.class%">
             <tag name="twig.extension" />
         </service>
-        <service id="metador.twig.getparameter" class="%metador.twig.getparameter.class%">
-            <argument type="service" id="service_container" />
+        <service id="metador.twig.controllerinfo" class="%metador.twig.controllerinfo.class%">
+            <argument type="service" id="request_stack" />
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.debug" class="%metador.twig.debug.class%">
