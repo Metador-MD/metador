@@ -1,10 +1,15 @@
 <?php
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\HttpFoundation\Request;
-
+/**
+ * Class MetadorExtension
+ * @package WhereGroup\CoreBundle\Twig\Extension
+ */
 class MetadorExtension extends \Twig_Extension
 {
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
@@ -12,6 +17,9 @@ class MetadorExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return array(
@@ -21,12 +29,18 @@ class MetadorExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'metador_extension';
     }
 
-
+    /**
+     * @param $string
+     * @return string
+     */
     public function getId($string)
     {
         $string = str_replace(array('[', ']'), array('_','_'), strtolower($string));
@@ -34,6 +48,10 @@ class MetadorExtension extends \Twig_Extension
         return ltrim(rtrim($string, "_"), "_");
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function getObjectId($string)
     {
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
@@ -42,6 +60,10 @@ class MetadorExtension extends \Twig_Extension
         return ltrim(rtrim($string, "_"), "_");
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function getDataObject($string)
     {
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
@@ -50,6 +72,11 @@ class MetadorExtension extends \Twig_Extension
         return 'data-obj-id="' . rtrim($string, "_") . '"';
     }
 
+    /**
+     * @param $value
+     * @param $option
+     * @return string
+     */
     public function isSelected($value, $option)
     {
         return $value == $option ? 'selected="selected"' : '';

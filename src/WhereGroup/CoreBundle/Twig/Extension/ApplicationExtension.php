@@ -13,6 +13,10 @@ class ApplicationExtension extends \Twig_Extension
 {
     private $application;
 
+    /**
+     * ApplicationExtension constructor.
+     * @param Application $application
+     */
     public function __construct(Application $application)
     {
         $this->application = $application;
