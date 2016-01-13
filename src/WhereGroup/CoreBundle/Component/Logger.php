@@ -2,11 +2,9 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Symfony\Bridge\Twig\Node\TransDefaultDomainNode;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
 
@@ -22,9 +20,11 @@ class Logger
     private $translatorInterface;
 
     /**
+     * Logger constructor.
      * @param FlashBagInterface $flashBag
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TokenInterface $tokenInterface
+     * @param TokenStorageInterface $tokenStorage
+     * @param TranslatorInterface $translatorInterface
      */
     public function __construct(
         FlashBagInterface $flashBag,
@@ -50,7 +50,8 @@ class Logger
 
     /**
      * @param $message
-     * @param bool|true $display
+     * @param array $parameters
+     * @param bool $display
      */
     public function info($message, $parameters = array(), $display = true)
     {
@@ -59,7 +60,8 @@ class Logger
 
     /**
      * @param $message
-     * @param bool|true $display
+     * @param array $parameters
+     * @param bool $display
      */
     public function success($message, $parameters = array(), $display = true)
     {
@@ -68,7 +70,8 @@ class Logger
 
     /**
      * @param $message
-     * @param bool|true $display
+     * @param array $parameters
+     * @param bool $display
      */
     public function warning($message, $parameters = array(), $display = true)
     {
@@ -77,7 +80,8 @@ class Logger
 
     /**
      * @param $message
-     * @param bool|true $display
+     * @param array $parameters
+     * @param bool $display
      */
     public function error($message, $parameters = array(), $display = true)
     {
@@ -87,6 +91,7 @@ class Logger
     /**
      * @param $type
      * @param $message
+     * @param $parameters
      * @param $display
      */
     public function log($type, $message, $parameters, $display)

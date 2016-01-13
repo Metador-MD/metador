@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -29,6 +28,13 @@ class Application
     const POSITION_NORMAL  = 1;
     const POSITION_APPEND  = 2;
 
+    /**
+     * Application constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param RequestStack $requestStack
+     * @param $env
+     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
@@ -46,10 +52,12 @@ class Application
         }
     }
 
-    public function updateInformation()
+    private function updateInformation()
     {
-        if (is_null($this->route)) {
-            $request         = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (is_null($this->route) && is_object($request)) {
+
             $this->parameter = $request->attributes->all();
             $this->route     = $request->get('_route');
             $controllerInfo  = $request->get('_controller');
@@ -67,6 +75,9 @@ class Application
         }
     }
 
+    /**
+     * @return string
+     */
     public function debug()
     {
         $this->updateInformation();
@@ -85,6 +96,7 @@ class Application
      * @param $key
      * @param $data
      * @param null $role
+     * @param int $position
      * @return $this
      */
     public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
@@ -108,11 +120,25 @@ class Application
         return $this;
     }
 
+    /**
+     * @param $type
+     * @param $key
+     * @param $data
+     * @param null $role
+     * @return Application
+     */
     public function prepend($type, $key, $data, $role = null)
     {
         return $this->add($type, $key, $data, $role, self::POSITION_PREPEND);
     }
 
+    /**
+     * @param $type
+     * @param $key
+     * @param $data
+     * @param null $role
+     * @return Application
+     */
     public function append($type, $key, $data, $role = null)
     {
         return $this->add($type, $key, $data, $role, self::POSITION_APPEND);
@@ -142,6 +168,11 @@ class Application
             : (is_null($default) ? '' : $default);
     }
 
+    /**
+     * @param null $parameter
+     * @param null $default
+     * @return null
+     */
     public function getParameter($parameter = null, $default = null)
     {
         $this->updateInformation();
@@ -155,6 +186,10 @@ class Application
         return $this->parameter;
     }
 
+    /**
+     * @param $env
+     * @return bool
+     */
     public function isEnv($env)
     {
         return ($this->env === $env);
@@ -171,6 +206,9 @@ class Application
         return ($this->bundle === $bundle);
     }
 
+    /**
+     * @return null
+     */
     public function getBundle()
     {
         $this->updateInformation();
@@ -219,6 +257,10 @@ class Application
         return ($this->route === $route);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public function routeStartsWith($string)
     {
         $this->updateInformation();
@@ -226,6 +268,10 @@ class Application
         return (strncmp($this->route, $string, strlen($string)) === 0);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public function bundleStartsWith($string)
     {
         $this->updateInformation();

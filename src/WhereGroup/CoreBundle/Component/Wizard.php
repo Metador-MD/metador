@@ -2,8 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Class Wizard
  * @package WhereGroup\CoreBundle\Component

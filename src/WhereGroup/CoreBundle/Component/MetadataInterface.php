@@ -5,11 +5,16 @@ namespace WhereGroup\CoreBundle\Component;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\UserBundle\Component\UserInterface;
 
+/**
+ * Interface MetadataInterface
+ * @package WhereGroup\CoreBundle\Component
+ */
 interface MetadataInterface
 {
-/**
+    /**
+     * MetadataInterface constructor.
      * @param ContainerInterface $container
-     * @param MetadorUserInterface $metadorUser
+     * @param UserInterface $metadorUser
      */
     public function __construct(
         ContainerInterface $container,
@@ -28,6 +33,12 @@ interface MetadataInterface
      */
     public function getByUUID($uuid);
 
+    /**
+     * @param $limit
+     * @param $page
+     * @param $profile
+     * @return mixed
+     */
     public function getMetadata($limit, $page, $profile);
 
     /**

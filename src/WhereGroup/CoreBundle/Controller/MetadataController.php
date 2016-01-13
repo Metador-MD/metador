@@ -3,12 +3,10 @@
 namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\SearchBundle\Component\Paging;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/metadata")
@@ -49,9 +47,8 @@ class MetadataController extends Controller
         // SAVE
         } elseif (($p = $request->request->get('p', false))
             && $this->get('metadata')->saveObject($p)) {
-            return $this->redirect(
-                $this->generateUrl('metadata_index', array('profile' => $profile))
-            );
+
+            return $this->redirectToRoute('metadata_index', array('profile' => $profile));
         }
 
         return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(

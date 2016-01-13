@@ -10,8 +10,8 @@ use WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
 class ApplicationMenuListener extends ApplicationIntegration
 {
-    protected $app     = null;
-    protected $prefix  = 'locale';
+    protected $app    = null;
+    protected $prefix = 'locale';
 
     /** @var RequestStack */
     private $requestStack;
@@ -24,7 +24,7 @@ class ApplicationMenuListener extends ApplicationIntegration
      */
     public function __construct(KernelInterface $kernel, RequestStack $requestStack)
     {
-        $this->kernel = $kernel;
+        $this->kernel       = $kernel;
         $this->requestStack = $requestStack;
     }
 
@@ -33,6 +33,10 @@ class ApplicationMenuListener extends ApplicationIntegration
      */
     public function onLoading(ApplicationEvent $event)
     {
+        if (!is_object($this->requestStack->getCurrentRequest())) {
+            return false;
+        }
+        
         $this->app = $event->getApplication();
 
         $this->app->prepend('app-global-menu', 'locale', array(

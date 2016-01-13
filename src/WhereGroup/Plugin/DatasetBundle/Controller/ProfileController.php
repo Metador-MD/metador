@@ -8,8 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\SearchBundle\Component\Paging;
 
+
+/**
+ * Class ProfileController
+ * @package WhereGroup\Plugin\DatasetBundle\Controller
+ */
 class ProfileController extends Controller
 {
     /**
@@ -52,6 +56,10 @@ class ProfileController extends Controller
         return $data;
     }
 
+    /**
+     * @param $data
+     * @return Response
+     */
     public function xmlAction($data)
     {
         $xml = $this->render("ProfileDatasetBundle:Export:metadata.xml.twig", array(
@@ -65,6 +73,9 @@ class ProfileController extends Controller
         return $response;
     }
 
+    /**
+     * @param $data
+     */
     public function pdfAction($data)
     {
         $html = $this->render("ProfileDatasetBundle:Export:pdf.html.twig", array(
@@ -89,7 +100,11 @@ class ProfileController extends Controller
         $pdf->writeHTML($html->getContent(), true, true, false, false, '');
         $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
     }
-    
+
+    /**
+     * @param $data
+     * @return Response
+     */
     public function htmlAction($data)
     {
         return $this->render("ProfileServiceBundle:Export:pdf.html.twig", array(

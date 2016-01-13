@@ -33,8 +33,7 @@ class ApplicationMenuListener
             'path'   => 'metador_profile_index',
             'params' => array()
         ));
-
-
+        
         // ADMIN AREA
         if ($app->routeStartsWith('metador_admin')) {
             // USER MENU
