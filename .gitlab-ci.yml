@@ -15,7 +15,7 @@ stages:
 test_job:
     stage: test
     script:
-        -- echo $CI_BUILD_REF_NAME
+        - echo $CI_BUILD_REF_NAME
         # Run unit tests
         - bin/phpunit -c app/
         # Check code for PSR2 convention
