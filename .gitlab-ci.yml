@@ -10,17 +10,21 @@ before_script:
 
 stages:
   - test
-  - build
+  - deploy
 
 test_job:
     stage: test
     script:
+        - echo $CI_BUILD_ID
+        # Run unit tests
         - bin/phpunit -c app/
+        # Check code for PSR2 convention
         - bin/phpcs -n --extensions=php --standard=PSR2 src/
+        # Run the copy paste detector
         # - bin/phpcpd src/
 
 build_job:
-    stage: build
+    stage: deploy
     only:
         - master
     script:
