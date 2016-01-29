@@ -8,10 +8,7 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 ROOTPATH=$SCRIPTPATH/../../../.
 
-if [ -z "$1" ] || [ -z "$2" ]; then
-    echo "No argument supplied"
-    exit 1
-fi
+echo "Building package for $PROJECTNAME version $CI_BUILD_REF_NAME build $CI_BUILD_ID";
 
 cd $TEMPPATH
 
@@ -43,7 +40,7 @@ fi
 
 zip -q -r $PROJECTNAME.zip $PROJECTNAME
 
-mv $PROJECTNAME.zip $PACKAGES/$PROJECTNAME-$1-$2.zip
+mv $PROJECTNAME.zip $PACKAGES/$PROJECTNAME-$CI_BUILD_REF_NAME-$CI_BUILD_ID.zip
 
 # Cleanup
 rm -rf "$TEMPPATH/$PROJECTNAME"

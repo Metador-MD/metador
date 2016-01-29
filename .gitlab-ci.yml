@@ -28,4 +28,4 @@ deploy_job:
         - master
     script:
         - chmod +x app/Resources/scripts/build.sh
-        - app/Resources/scripts/build.sh $CI_BUILD_REF_NAME $CI_BUILD_ID
+        - app/Resources/scripts/build.sh
