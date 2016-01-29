@@ -15,7 +15,7 @@ stages:
 test_job:
     stage: test
     script:
-        - echo $CI_BUILD_REF_NAME
+        - ls /srv/packages
         # Run unit tests
         - bin/phpunit -c app/
         # Check code for PSR2 convention
@@ -23,10 +23,10 @@ test_job:
         # Run the copy paste detector
         # - bin/phpcpd src/
 
-build_job:
+deploy_job:
     stage: deploy
     only:
         - master
     script:
         - chmod +x app/Resources/scripts/build.sh
-        - app/Resources/scripts/build.sh $CI_BUILD_ID
+        - app/Resources/scripts/build.sh $CI_BUILD_REF_NAME $CI_BUILD_ID
