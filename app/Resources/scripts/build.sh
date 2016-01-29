@@ -19,30 +19,36 @@ if [ -d "$TEMPPATH/$PROJECTNAME" ]; then
 fi
 
 # Create temp folder
+echo "Creating $TEMPPATH/$PROJECTNAME folder"
 mkdir $TEMPPATH/$PROJECTNAME
 
 # Copy project to temp folder
+echo "Copy project to $TEMPPATH/$PROJECTNAME"
 cp -R $ROOTPATH/* $TEMPPATH/$PROJECTNAME
 
 
 cd $TEMPPATH/$PROJECTNAME
 
 # Remove all .git folders
+echo "Cleanup the project"
 rm -rf `find . -type d -name .git`
-
 
 # Zip the project
 cd $TEMPPATH
 
 if [ -f "$TEMPPATH/$PROJECTNAME.zip" ]; then
+    echo "Removing old zip file"
     rm "$TEMPPATH/$PROJECTNAME.zip"
 fi
 
+echo "Zip project"
 zip -q -r $PROJECTNAME.zip $PROJECTNAME
 
-mv $PROJECTNAME.zip $PACKAGES/$PROJECTNAME-$CI_BUILD_REF_NAME-$CI_BUILD_ID.zip
+echo "Move project to $PACKAGES_FOLDER"
+mv $PROJECTNAME.zip $PACKAGES_FOLDER/$PROJECTNAME-$CI_BUILD_REF_NAME-$CI_BUILD_ID.zip
 
 # Cleanup
+echo "Cleanup"
 rm -rf "$TEMPPATH/$PROJECTNAME"
 
-exit
+exit 0
