@@ -15,7 +15,8 @@ stages:
 test_job:
     stage: test
     script:
-        - ls /srv/packages
+        - touch /packages/test.txt
+        - ls /packages
         # Run unit tests
         - bin/phpunit -c app/
         # Check code for PSR2 convention
