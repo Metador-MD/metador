@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECTNAME=metador
-PACKAGES_FOLDER=/packages/metador2
+PACKAGES_FOLDER=/packages/build/metador2
 
 TEMPPATH=/tmp
 SCRIPT=$(readlink -f "$0")

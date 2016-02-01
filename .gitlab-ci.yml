@@ -15,12 +15,8 @@ stages:
 test_job:
     stage: test
     script:
-        # Run unit tests
-        - bin/phpunit -c app/
-        # Check code for PSR2 convention
-        - bin/phpcs -n --extensions=php --standard=PSR2 src/
-        # Run the copy paste detector
-        # - bin/phpcpd src/
+        - chmod +x app/Resources/scripts/test.sh
+        - app/Resources/scripts/test.sh
 
 deploy_job:
     stage: deploy

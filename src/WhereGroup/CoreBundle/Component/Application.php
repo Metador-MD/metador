@@ -54,10 +54,11 @@ class Application
 
     private function updateInformation()
     {
+        // TODO: get origin request!
         $request = $this->requestStack->getCurrentRequest();
 
         if (is_null($this->route) && is_object($request)) {
-
+            // TODO: remove this and the methods below
             $this->parameter = $request->attributes->all();
             $this->route     = $request->get('_route');
             $controllerInfo  = $request->get('_controller');
