@@ -99,7 +99,7 @@ class PluginController extends Controller
     {
         $kernelPath = $this->get('kernel')->getRootDir();
 
-        $pluginPath = $kernelPath . '/../src/User/Plugin/';
+        $pluginPath = $kernelPath . '/../src/Plugins/';
         $tempPath   = $kernelPath . '/../var/temp/';
 
         $form = $this->createFormBuilder(new Plugin())

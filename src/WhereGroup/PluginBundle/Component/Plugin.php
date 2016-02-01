@@ -25,8 +25,13 @@ class Plugin
     protected $plugins = array();
     protected $routing = array();
 
-    public function __construct($rootDir, $cacheDir, $environment, $configFolder = '../var/plugins/', $pluginPaths = null)
-    {
+    public function __construct(
+        $rootDir,
+        $cacheDir,
+        $environment,
+        $configFolder = '../var/plugins/',
+        $pluginPaths = null
+    ) {
         // get plugin path's
         $this->rootDir           = $rootDir . '/';
         $this->cacheDir          = $cacheDir;
@@ -38,7 +43,7 @@ class Plugin
         if (is_null($this->pluginPaths)) {
             $this->pluginPaths       = array(
                 $this->rootDir . '../src/WhereGroup/Plugin/',
-                $this->rootDir . '../src/User/Plugin/'
+                $this->rootDir . '../src/Plugins/'
             );
         }
 
