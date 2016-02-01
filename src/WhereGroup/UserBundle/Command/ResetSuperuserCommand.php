@@ -10,8 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-class ResetSuperuserCommand extends ContainerAwareCommand {
-    protected function configure() {
+class ResetSuperuserCommand extends ContainerAwareCommand
+{
+    protected function configure()
+    {
         $this->setDefinition(array(
             new InputOption('username', '', InputOption::VALUE_REQUIRED, "Username"),
             new InputOption('password', '', InputOption::VALUE_REQUIRED, "Password")))
@@ -20,7 +22,8 @@ class ResetSuperuserCommand extends ContainerAwareCommand {
         ->setName('metador:reset:superuser');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $doctrine = $this->getContainer()->get('doctrine');
         $encoder = $this->getContainer()->get('security.encoder_factory');
 
@@ -32,12 +35,13 @@ class ResetSuperuserCommand extends ContainerAwareCommand {
 
         $user = $doctrine->getRepository('WhereGroupUserBundle:User')->find(1);
 
-        if($user) {
+        if ($user) {
             $output->writeln('Benutzer ' . $user->getUsername() . ' schon vorhanden. Nur Kennwort geändert.');
 
             $user->setPassword(
                 $encoder->getEncoder($user)->encodePassword(
-                    trim($password), $user->getSalt()
+                    trim($password),
+                    $user->getSalt()
                 )
             );
         } else {
@@ -45,13 +49,14 @@ class ResetSuperuserCommand extends ContainerAwareCommand {
             $user->setUsername(trim($username));
             $user->setPassword(
                 $encoder->getEncoder($user)->encodePassword(
-                    trim($password), $user->getSalt()
+                    trim($password),
+                    $user->getSalt()
                 )
             );
 
             $group = $doctrine->getRepository('WhereGroupUserBundle:Group')->findOneByRole('ROLE_SUPERUSER');
 
-            if(!$group) {
+            if (!$group) {
                 $group = new Group();
                 $group->setRole("ROLE_SUPERUSER");
                 $em = $doctrine->getManager();
@@ -64,7 +69,7 @@ class ResetSuperuserCommand extends ContainerAwareCommand {
             $output->writeln('Benutzer ' . $username . ' eingetragen.');
         }
 
-        if(is_object($user)) {
+        if (is_object($user)) {
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();

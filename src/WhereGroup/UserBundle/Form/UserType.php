@@ -5,6 +5,8 @@ namespace WhereGroup\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Class UserType
@@ -20,11 +22,11 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password', 'password', array('required' => false))
+            ->add('password', PasswordType::class, array('required' => false))
             ->add('email', null, array('required' => false))
             ->add(
                 'groups',
-                'entity',
+                EntityType::class,
                 array(
                     'class'        =>  'WhereGroupUserBundle:Group',
                     'multiple'     => true,
@@ -46,13 +48,5 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'WhereGroup\UserBundle\Entity\User'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'wheregroup_userbundle_usertype';
     }
 }

@@ -1,0 +1,27 @@
+image: wg-ubuntu-14-04-basic
+
+cache:
+    paths:
+        - bin/
+        - vendor/
+
+before_script:
+  - composer update --no-progress
+
+stages:
+  - test
+  - deploy
+
+test_job:
+    stage: test
+    script:
+        - chmod +x app/Resources/scripts/test.sh
+        - app/Resources/scripts/test.sh
+
+deploy_job:
+    stage: deploy
+    only:
+        - master
+    script:
+        - chmod +x app/Resources/scripts/build.sh
+        - app/Resources/scripts/build.sh

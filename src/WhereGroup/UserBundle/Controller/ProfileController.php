@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         return array(
             'form' => $this
-                ->createForm(new ProfileType(), $user)
+                ->createForm(ProfileType::class, $user)
                 ->createView(),
             'user' => $user
         );
@@ -49,7 +49,7 @@ class ProfileController extends Controller
             $oldPassword = $user->getPassword();
 
             $form = $this
-                ->createForm(new ProfileType(), $user)
+                ->createForm(ProfileType::class, $user)
                 ->submit($request);
 
             if ($form->isValid()) {

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use WhereGroup\CoreBundle\Entity\Address;
 
 /**
@@ -69,7 +70,7 @@ class AddressController extends Controller
                 $em->remove($address);
                 $em->flush();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->get('session')->getFlashBag()->add('error', $e->getMessage());
         }
 

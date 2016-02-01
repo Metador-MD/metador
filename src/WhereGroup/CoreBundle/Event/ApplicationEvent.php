@@ -24,6 +24,14 @@ class ApplicationEvent extends Event
         $this->config      = $config;
     }
 
+    public function __destruct()
+    {
+        unset(
+            $this->application,
+            $this->config
+        );
+    }
+
     /**
      * @return Application
      */

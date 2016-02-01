@@ -1,40 +1,46 @@
 <?php
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-
+/**
+ * Class MetadorExtension
+ * @package WhereGroup\CoreBundle\Twig\Extension
+ */
 class MetadorExtension extends \Twig_Extension
 {
-    public function __construct(ContainerInterface $container)
-    {
-        if ($container->isScopeActive('request')) {
-        }
-
-    }
-
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
-            'md_select' => new \Twig_Function_Method($this, 'isSelected'),
+            new \Twig_SimpleFunction('md_select', array($this, 'isSelected'))
         );
     }
 
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return array(
-            'md_id' => new \Twig_Filter_Method($this, 'getId', array('is_safe' => array('html'))),
-            'md_obj_id' => new \Twig_Filter_Method($this, 'getObjectId', array('is_safe' => array('html'))),
-            'md_data_obj' => new \Twig_Filter_Method($this, 'getDataObject', array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_id', array($this, 'getId'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_obj_id', array($this, 'getObjectId'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'metador_extension';
     }
 
-
+    /**
+     * @param $string
+     * @return string
+     */
     public function getId($string)
     {
         $string = str_replace(array('[', ']'), array('_','_'), strtolower($string));
@@ -42,6 +48,10 @@ class MetadorExtension extends \Twig_Extension
         return ltrim(rtrim($string, "_"), "_");
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function getObjectId($string)
     {
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
@@ -50,6 +60,10 @@ class MetadorExtension extends \Twig_Extension
         return ltrim(rtrim($string, "_"), "_");
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function getDataObject($string)
     {
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
@@ -58,6 +72,11 @@ class MetadorExtension extends \Twig_Extension
         return 'data-obj-id="' . rtrim($string, "_") . '"';
     }
 
+    /**
+     * @param $value
+     * @param $option
+     * @return string
+     */
     public function isSelected($value, $option)
     {
         return $value == $option ? 'selected="selected"' : '';

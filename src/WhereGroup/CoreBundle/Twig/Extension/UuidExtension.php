@@ -2,25 +2,35 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Rhumsaa\Uuid\Uuid;
-use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
 
+/**
+ * Class UuidExtension
+ * @package WhereGroup\CoreBundle\Twig\Extension
+ */
 class UuidExtension extends \Twig_Extension
 {
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
-            'uuid' => new \Twig_Function_Method($this, 'uuid'),
+            new \Twig_SimpleFunction('uuid', array($this, 'uuid')),
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'uuid_extension';
     }
 
-
+    /**
+     * @return string
+     */
     public function uuid()
     {
         $uuid4 = Uuid::uuid4();

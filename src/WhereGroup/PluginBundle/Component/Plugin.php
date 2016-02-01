@@ -2,7 +2,6 @@
 
 namespace WhereGroup\PluginBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -17,29 +16,31 @@ use Symfony\Component\Process\Process;
  */
 class Plugin
 {
-    protected $container;
     protected $rootDir;
+    protected $cacheDir;
+    protected $env;
     protected $configurationFile;
     protected $routingFile;
     protected $pluginPaths = array();
     protected $plugins = array();
     protected $routing = array();
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct($rootDir, $cacheDir, $environment, $configFolder = '../var/plugins/', $pluginPaths = null)
     {
-        $this->container = $container;
-
         // get plugin path's
-        $this->rootDir           = $this->container->get('kernel')->getRootDir() . '/';
-        $this->configurationFile = $this->rootDir . '../var/plugins/plugins.yml';
-        $this->routingFile       = $this->rootDir . '../var/plugins/plugins_routing.yml';
-        $this->pluginPaths       = array(
-            $this->rootDir . '../src/WhereGroup/Plugin/',
-            $this->rootDir . '../src/User/Plugin/'
-        );
+        $this->rootDir           = $rootDir . '/';
+        $this->cacheDir          = $cacheDir;
+        $this->env               = $environment;
+        $this->configurationFile = $this->rootDir . $configFolder . 'plugins.yml';
+        $this->routingFile       = $this->rootDir . $configFolder . 'plugins_routing.yml';
+        $this->pluginPaths       = $pluginPaths;
+
+        if (is_null($this->pluginPaths)) {
+            $this->pluginPaths       = array(
+                $this->rootDir . '../src/WhereGroup/Plugin/',
+                $this->rootDir . '../src/User/Plugin/'
+            );
+        }
 
         // load configuration
         $configuration = $this->getPluginConfiguration();
@@ -77,14 +78,6 @@ class Plugin
         $this->saveConfiguration();
 
         unset($configuration, $plugins);
-    }
-
-    /**
-     *
-     */
-    public function __destruct()
-    {
-        unset($this->container);
     }
 
     /**
@@ -261,7 +254,7 @@ class Plugin
             return true;
         }
 
-        // todo: exception
+        // TODO: exception
     }
 
     /**
@@ -362,13 +355,12 @@ class Plugin
      */
     public function assetsInstall()
     {
-        $env     = $this->container->get('kernel')->getEnvironment();
         $console = $this->rootDir . 'console';
 
-        if ($env === 'dev') {
-            $command = "$console assets:install --symlink --no-debug --env=$env $this->rootDir../web/";
+        if ($this->env === 'dev') {
+            $command = "$console assets:install --symlink --no-debug --env=$this->env $this->rootDir../web/";
         } else {
-            $command = "$console assets:install --no-debug --env=$env $this->rootDir../web/";
+            $command = "$console assets:install --no-debug --env=$this->env $this->rootDir../web/";
         }
 
         $process = new Process($command);
@@ -400,7 +392,7 @@ class Plugin
     public function clearCache()
     {
         $fs  = new Filesystem();
-        $fs->remove($this->container->getParameter('kernel.cache_dir'));
+        $fs->remove($this->cacheDir);
 
         return array(
             'output' => 'done'

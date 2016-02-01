@@ -1,4 +1,5 @@
 <?php
+
 namespace WhereGroup\CoreBundle\Component;
 
 /**
@@ -81,6 +82,10 @@ class XmlParserFunctions
         return is_array($data) ? $data : array($data);
     }
 
+    /**
+     * @param $data
+     * @param null $args
+     */
     protected function debug($data, $args = null)
     {
         echo '<pre>' . print_r($data, 1) . '</pre>';

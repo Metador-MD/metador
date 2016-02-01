@@ -2,13 +2,10 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\SearchBundle\Component\Paging;
 
 /**
  * @Route("/metador")
@@ -29,7 +26,7 @@ class ExportController extends Controller
             $p = $data->getObject();
 
             if ($granted === true || $data->getPublic() === true) {
-                
+
                 return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
                     'data' => array(
                         'p' => $p,
@@ -94,12 +91,10 @@ class ExportController extends Controller
                 ));
             }
 
-
             return new Response('Zugriff verweigert.');
-
-        } else {
-            return new Response('Datensatz nicht gefunden.');
         }
+
+        return new Response('Datensatz nicht gefunden.');
     }
 
     /**
@@ -111,12 +106,11 @@ class ExportController extends Controller
         $granted = $this
             ->get('security.authorization_checker')
             ->isGranted('ROLE_USER');
-        
+
         if ($data = $this->get('metadata')->getById($id)) {
             $p = $data->getObject();
 
             if ($granted === true || $data->getPublic() === true) {
-//                die('<pre>'.print_r($p, 1).'</pre>');
                 return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
                     'data' => array(
                         'p' => $p,
@@ -125,9 +119,8 @@ class ExportController extends Controller
             }
 
             return new Response('Zugriff verweigert.');
-
-        } else {
-            return new Response('Datensatz nicht gefunden.');
         }
+
+        return new Response('Datensatz nicht gefunden.');
     }
 }

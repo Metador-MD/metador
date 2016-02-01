@@ -97,7 +97,7 @@ class UserController extends Controller
 
         return array(
             'form' => $this
-                ->createForm(new UserType(), $user)
+                ->createForm(UserType::class, $user)
                 ->createView(),
         );
     }

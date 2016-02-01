@@ -144,7 +144,6 @@ class ImportController extends Controller
 
         foreach ($services as $uuid => $service) {
             if (isset($service['override']) && $service['override'] == 1) {
-
                 if (!($p = $wmsImport->isGetCapabilitiesUrl($service['url']))) {
                     $this->get('session')->getFlashBag()->add(
                         'error',
@@ -227,8 +226,4 @@ class ImportController extends Controller
 
         return $this->redirect($this->generateUrl('metador_dashboard'));
     }
-
-
-
-
 }

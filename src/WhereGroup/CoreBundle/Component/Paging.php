@@ -8,11 +8,18 @@ namespace WhereGroup\CoreBundle\Component;
  */
 class Paging
 {
-    private $count = 0;
-    private $limit = 0;
+    private $count  = 0;
+    private $limit  = 0;
     private $offset = 0;
     private $length = 10;
 
+    /**
+     * Paging constructor.
+     * @param $count
+     * @param $limit
+     * @param null $page
+     * @param null $offset
+     */
     public function __construct($count, $limit, $page = null, $offset = null)
     {
         $this->count = (int)$count;
@@ -25,6 +32,10 @@ class Paging
         }
     }
 
+    /**
+     * @param $length
+     * @return $this
+     */
     public function length($length)
     {
         $this->length = (int)$length;
@@ -32,6 +43,9 @@ class Paging
         return $this;
     }
 
+    /**
+     * @return \stdClass
+     */
     public function calculate()
     {
         $response = new \stdClass();

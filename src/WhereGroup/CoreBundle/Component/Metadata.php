@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\UserBundle\Component\UserInterface;
+use WhereGroup\UserBundle\Entity\User;
 
 /**
  * Class Metadata
@@ -33,6 +34,14 @@ class Metadata implements MetadataInterface
     ) {
         $this->container = $container;
         $this->metadorUser = $metadorUser;
+    }
+
+    public function __destruct()
+    {
+        unset(
+            $this->container,
+            $this->metadorUser
+        );
     }
 
     /**
@@ -79,6 +88,12 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
+    /**
+     * @param $limit
+     * @param $page
+     * @param $profile
+     * @return array
+     */
     public function getMetadata($limit, $page, $profile)
     {
         $paging = new Paging($this->getMetadataCount($profile), $limit, $page);
@@ -113,8 +128,8 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $type
-     * @return integer
+     * @param string $profile
+     * @return mixed
      */
     public function getMetadataCount($profile)
     {
@@ -142,6 +157,7 @@ class Metadata implements MetadataInterface
      */
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
+        /** @var User $user */
         if (is_null($username)) {
             $user = $this->metadorUser->getUserFromSession();
         } else {

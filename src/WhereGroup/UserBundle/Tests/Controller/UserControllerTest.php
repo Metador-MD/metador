@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
+    public function testCompleteScenario()
+    {
+        $this->assertTrue(true);
+    }
     /*
     public function testCompleteScenario()
     {
@@ -49,7 +53,5 @@ class UserControllerTest extends WebTestCase
 
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
-    }
-
-    */
+    }*/
 }

@@ -86,125 +86,152 @@ class Address
      */
     private $onlineResource;
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getOrganisationName() {
+    public function getOrganisationName()
+    {
         return $this->organisationName;
     }
 
-    public function getElectronicMailAddress() {
+    public function getElectronicMailAddress()
+    {
         return $this->electronicMailAddress;
     }
 
-    public function getRole() {
+    public function getRole()
+    {
         return $this->role;
     }
 
-    public function getPositionName() {
+    public function getPositionName()
+    {
         return $this->positionName;
     }
 
-    public function getIndividualName() {
+    public function getIndividualName()
+    {
         return $this->individualName;
     }
 
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
-    public function getAdministrativeArea() {
+    public function getAdministrativeArea()
+    {
         return $this->administrativeArea;
     }
 
-    public function getDeliveryPoint() {
+    public function getDeliveryPoint()
+    {
         return $this->deliveryPoint;
     }
 
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
 
-    public function getPostalCode() {
+    public function getPostalCode()
+    {
         return $this->postalCode;
     }
 
-    public function getVoice() {
+    public function getVoice()
+    {
         return $this->voice;
     }
 
-    public function getFacsimile() {
+    public function getFacsimile()
+    {
         return $this->facsimile;
     }
 
-    public function getOnlineResource() {
+    public function getOnlineResource()
+    {
         return $this->onlineResource;
     }
 
-    public function setOrganisationName($organisationName) {
+    public function setOrganisationName($organisationName)
+    {
         $this->organisationName = $organisationName;
         return $this->organisationName;
     }
 
-    public function setElectronicMailAddress($electronicMailAddress) {
+    public function setElectronicMailAddress($electronicMailAddress)
+    {
         $this->electronicMailAddress = $electronicMailAddress;
         return $this->electronicMailAddress;
     }
 
-    public function setRole($role) {
+    public function setRole($role)
+    {
         $this->role = $role;
         return $this->role;
     }
 
-    public function setPositionName($positionName) {
+    public function setPositionName($positionName)
+    {
         $this->positionName = is_null($positionName)
             ? '' : $positionName;
 
         return $this->positionName;
     }
 
-    public function setIndividualName($individualName) {
+    public function setIndividualName($individualName)
+    {
         $this->individualName = $individualName;
         return $this->individualName;
     }
 
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this->country;
     }
 
-    public function setAdministrativeArea($administrativeArea) {
+    public function setAdministrativeArea($administrativeArea)
+    {
         $this->administrativeArea = $administrativeArea;
         return $this->administrativeArea;
     }
 
-    public function setDeliveryPoint($deliveryPoint) {
+    public function setDeliveryPoint($deliveryPoint)
+    {
         $this->deliveryPoint = $deliveryPoint;
         return $this->deliveryPoint;
     }
 
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this->city;
     }
 
-    public function setPostalCode($postalCode) {
+    public function setPostalCode($postalCode)
+    {
         $this->postalCode = $postalCode;
         return $this->postalCode;
     }
 
-    public function setVoice($voice) {
+    public function setVoice($voice)
+    {
         $this->voice = $voice;
         return $this->voice;
     }
 
-    public function setFacsimile($facsimile) {
+    public function setFacsimile($facsimile)
+    {
         $this->facsimile = $facsimile;
         return $this->facsimile;
     }
 
-    public function setOnlineResource($onlineResource) {
+    public function setOnlineResource($onlineResource)
+    {
         $this->onlineResource = $onlineResource;
         return $this->onlineResource;
     }

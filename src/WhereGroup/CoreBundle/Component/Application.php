@@ -2,7 +2,10 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -11,56 +14,80 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class Application
 {
-    private $container;
-    private $data;
-    private $bundle;
-    private $controller;
-    private $action;
-    private $route;
-    private $parameter;
-    private $env;
+    private $data                 = array();
+    private $bundle               = null;
+    private $controller           = null;
+    private $action               = null;
+    private $route                = null;
+    private $parameter            = null;
+    private $env                  = null;
+    private $requestStack         = null;
+    private $authorizationChecker = null;
 
     const POSITION_PREPEND = 0;
     const POSITION_NORMAL  = 1;
     const POSITION_APPEND  = 2;
 
     /**
-     * @param ContainerInterface $container
+     * Application constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param RequestStack $requestStack
+     * @param $env
      */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-        $controllerInfo  = $container->get('request')->get('_controller');
-        $this->parameter = $container->get('request')->attributes->all();
-        $this->route     = $container->get('request')->get('_route');
-        $this->data      = array();
-        $this->env       = $container->get('kernel')->getEnvironment();
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizationCheckerInterface $authorizationChecker,
+        RequestStack $requestStack,
+        $env
+    ) {
+        try {
+            $this->env                  = $env;
+            $this->authorizationChecker = $authorizationChecker;
+            $this->requestStack         = $requestStack;
 
-        // Forward to controller generates a different controller information
-        if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
-            $this->bundle     = $match[1];
-            $this->controller = $match[2];
-            $this->action     = $match[3];
-        } else {
-            $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
-            $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
-            $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+            // dispatch event
+            $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
+        } catch (\Exception $e) {
         }
-
-        unset($controllerInfo);
-
-        // dispatch event
-        $event = new ApplicationEvent($this, array());
-        $container->get('event_dispatcher')->dispatch('application.loading', $event);
     }
 
+    private function updateInformation()
+    {
+        // TODO: get origin request!
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (is_null($this->route) && is_object($request)) {
+            // TODO: remove this and the methods below
+            $this->parameter = $request->attributes->all();
+            $this->route     = $request->get('_route');
+            $controllerInfo  = $request->get('_controller');
+
+            // Forward to controller generates a different controller information
+            if (preg_match("/^([a-z0-9]+)Bundle:([^:]+):(.+)$/i", $controllerInfo, $match)) {
+                $this->bundle     = $match[1];
+                $this->controller = $match[2];
+                $this->action     = $match[3];
+            } else {
+                $this->bundle     = $this->parse("/\\\([\w]*)Bundle\\\/i", $controllerInfo);
+                $this->controller = $this->parse("/Controller\\\([\w]*)Controller/i", $controllerInfo);
+                $this->action     = $this->parse("/\:([\w]*)Action/i", $controllerInfo);
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function debug()
     {
+        $this->updateInformation();
+
         return
             "\n<br/>Bundle     : " . $this->bundle .
             "\n<br/>Controller : " . $this->controller .
             "\n<br/>Action     : " . $this->action .
-            "\n<br/>Route       : " . $this->route .
+            "\n<br/>Route      : " . $this->route .
             'Data: <pre>' . print_r($this->data, 1) . '</pre>' .
             'Parameter:<pre>' . print_r($this->parameter, 1) . '</pre>';
     }
@@ -70,15 +97,21 @@ class Application
      * @param $key
      * @param $data
      * @param null $role
+     * @param int $position
      * @return $this
      */
     public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
-        if (!is_null($role) && false === $this->container->get('security.authorization_checker')->isGranted($role)) {
+        $this->updateInformation();
+
+        try {
+            if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
+                return $this;
+            }
+        } catch (\Exception $e) {
             return $this;
         }
 
-        //$data['active'] = false;
         if (isset($data['path']) && $data['path'] === $this->route) {
             $data['active'] = true;
         }
@@ -88,11 +121,25 @@ class Application
         return $this;
     }
 
+    /**
+     * @param $type
+     * @param $key
+     * @param $data
+     * @param null $role
+     * @return Application
+     */
     public function prepend($type, $key, $data, $role = null)
     {
         return $this->add($type, $key, $data, $role, self::POSITION_PREPEND);
     }
 
+    /**
+     * @param $type
+     * @param $key
+     * @param $data
+     * @param null $role
+     * @return Application
+     */
     public function append($type, $key, $data, $role = null)
     {
         return $this->add($type, $key, $data, $role, self::POSITION_APPEND);
@@ -122,8 +169,15 @@ class Application
             : (is_null($default) ? '' : $default);
     }
 
+    /**
+     * @param null $parameter
+     * @param null $default
+     * @return null
+     */
     public function getParameter($parameter = null, $default = null)
     {
+        $this->updateInformation();
+
         if (!is_null($parameter)) {
             return isset($this->parameter[$parameter])
                 ? $this->parameter[$parameter]
@@ -133,6 +187,10 @@ class Application
         return $this->parameter;
     }
 
+    /**
+     * @param $env
+     * @return bool
+     */
     public function isEnv($env)
     {
         return ($this->env === $env);
@@ -144,11 +202,18 @@ class Application
      */
     public function isBundle($bundle)
     {
+        $this->updateInformation();
+
         return ($this->bundle === $bundle);
     }
 
+    /**
+     * @return null
+     */
     public function getBundle()
     {
+        $this->updateInformation();
+
         return $this->bundle;
     }
 
@@ -158,6 +223,8 @@ class Application
      */
     public function isController($controller)
     {
+        $this->updateInformation();
+
         return ($this->controller === $controller);
     }
 
@@ -167,6 +234,8 @@ class Application
      */
     public function isAction($action)
     {
+        $this->updateInformation();
+
         if (is_array($action)) {
             return in_array($this->action, $action);
         }
@@ -180,6 +249,8 @@ class Application
      */
     public function isRoute($route)
     {
+        $this->updateInformation();
+
         if (is_array($route)) {
             return in_array($this->route, $route);
         }
@@ -187,13 +258,25 @@ class Application
         return ($this->route === $route);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public function routeStartsWith($string)
     {
+        $this->updateInformation();
+
         return (strncmp($this->route, $string, strlen($string)) === 0);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public function bundleStartsWith($string)
     {
+        $this->updateInformation();
+
         return (strncmp($this->bundle, $string, strlen($string)) === 0);
     }
 

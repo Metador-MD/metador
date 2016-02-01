@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use JMS\TranslationBundle\Annotation\Ignore;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -37,7 +36,6 @@ abstract class ProfileApplicationMenuListener
          * Profile Menu
          ***********************************************************************/
         $app->add('app-profile-menu', $this->profile, array(
-            /** @Ignore */
             'label'  => $this->name,
             'path'   => 'metadata_index',
             'params' => array('profile' => $this->profile)
@@ -81,11 +79,11 @@ abstract class ProfileApplicationMenuListener
                 ));
             } else {
                 $data = array();
-                
+
                 if ($app->isAction('new') || $app->isAction('edit')) {
                     $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
                 }
-                
+
                 $app->add('app-plugin-menu', 'index', array(
                     'label'  => 'zurück',
                     'icon'   => 'icon-redo2',
@@ -96,6 +94,7 @@ abstract class ProfileApplicationMenuListener
             }
 
             if ($app->isAction('edit')) {
+                // TODO: get parameter from origin request.
                 $id = $app->getParameter('id', 0);
 
                 $app->add('app-plugin-menu', 'xml', array(
