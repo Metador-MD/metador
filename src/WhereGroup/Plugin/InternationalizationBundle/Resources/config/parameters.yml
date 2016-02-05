@@ -1,7 +1,0 @@
-parameters:
-    i18n_locales:
-        - en
-    i18n_import:
-        en: ~
-    i18n_bundles:
-

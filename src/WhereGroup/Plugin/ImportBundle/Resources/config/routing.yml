@@ -1,4 +1,0 @@
-wheregroup_import:
-    resource: "@WhereGroupImportBundle/Controller/"
-    type:     annotation
-    prefix:   /

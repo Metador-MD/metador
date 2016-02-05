@@ -1,7 +1,0 @@
-wheregroup-address:
-    origin: WhereGroup
-    name: Adressen
-    description: Legt automatisch Adressen in der Datenbank ab
-    class_path: WhereGroup\Plugin\AddressBundle
-    class_name: WhereGroupAddressBundle
-    version: 1.0

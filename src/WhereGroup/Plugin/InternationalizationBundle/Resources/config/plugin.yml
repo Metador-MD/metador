@@ -1,7 +1,0 @@
-wheregroup-internationalization:
-    origin: WhereGroup
-    name: Internationalisierung
-    description: Ermöglicht das wechseln der Sprache in der Oberfläche
-    class_path: WhereGroup\Plugin\InternationalizationBundle
-    class_name: WhereGroupInternationalizationBundle
-    version: 1.0
