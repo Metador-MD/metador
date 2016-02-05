@@ -42,7 +42,6 @@ class Plugin
 
         if (is_null($this->pluginPaths)) {
             $this->pluginPaths       = array(
-                $this->rootDir . '../src/WhereGroup/Plugin/',
                 $this->rootDir . '../src/Plugins/'
             );
         }

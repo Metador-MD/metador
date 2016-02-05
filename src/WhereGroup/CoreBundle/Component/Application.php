@@ -19,7 +19,6 @@ class Application
     private $controller           = null;
     private $action               = null;
     private $route                = null;
-    private $parameter            = null;
     private $env                  = null;
     private $requestStack         = null;
     private $authorizationChecker = null;
@@ -54,12 +53,13 @@ class Application
 
     private function updateInformation()
     {
-        // TODO: get origin request!
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getParentRequest();
+
+        if ($request === null) {
+            $request = $this->requestStack->getCurrentRequest();
+        }
 
         if (is_null($this->route) && is_object($request)) {
-            // TODO: remove this and the methods below
-            $this->parameter = $request->attributes->all();
             $this->route     = $request->get('_route');
             $controllerInfo  = $request->get('_controller');
 
@@ -88,8 +88,7 @@ class Application
             "\n<br/>Controller : " . $this->controller .
             "\n<br/>Action     : " . $this->action .
             "\n<br/>Route      : " . $this->route .
-            'Data: <pre>' . print_r($this->data, 1) . '</pre>' .
-            'Parameter:<pre>' . print_r($this->parameter, 1) . '</pre>';
+            'Data: <pre>' . print_r($this->data, 1) . '</pre>';
     }
 
     /**
@@ -167,24 +166,6 @@ class Application
         return isset($merged[$type][$key])
             ? $merged[$type][$key]
             : (is_null($default) ? '' : $default);
-    }
-
-    /**
-     * @param null $parameter
-     * @param null $default
-     * @return null
-     */
-    public function getParameter($parameter = null, $default = null)
-    {
-        $this->updateInformation();
-
-        if (!is_null($parameter)) {
-            return isset($this->parameter[$parameter])
-                ? $this->parameter[$parameter]
-                : $default;
-        }
-
-        return $this->parameter;
     }
 
     /**

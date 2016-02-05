@@ -51,41 +51,73 @@ class Logger
     /**
      * @param $message
      * @param array $parameters
-     * @param bool $display
      */
-    public function info($message, $parameters = array(), $display = true)
+    public function flashInfo($message, $parameters = array())
     {
-        $this->log('info', $message, $parameters, $display);
+        $this->log('info', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
-     * @param bool $display
      */
-    public function success($message, $parameters = array(), $display = true)
+    public function flashSuccess($message, $parameters = array())
     {
-        $this->log('success', $message, $parameters, $display);
+        $this->log('success', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
-     * @param bool $display
      */
-    public function warning($message, $parameters = array(), $display = true)
+    public function flashWarning($message, $parameters = array())
     {
-        $this->log('warning', $message, $parameters, $display);
+        $this->log('warning', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
-     * @param bool $display
      */
-    public function error($message, $parameters = array(), $display = true)
+    public function flashError($message, $parameters = array())
     {
-        $this->log('error', $message, $parameters, $display);
+        $this->log('error', $message, $parameters, true);
+    }
+
+    /**
+     * @param $message
+     * @param array $parameters
+     */
+    public function info($message, $parameters = array())
+    {
+        $this->log('info', $message, $parameters, false);
+    }
+
+    /**
+     * @param $message
+     * @param array $parameters
+     */
+    public function success($message, $parameters = array())
+    {
+        $this->log('success', $message, $parameters, false);
+    }
+
+    /**
+     * @param $message
+     * @param array $parameters
+     */
+    public function warning($message, $parameters = array())
+    {
+        $this->log('warning', $message, $parameters, false);
+    }
+
+    /**
+     * @param $message
+     * @param array $parameters
+     */
+    public function error($message, $parameters = array())
+    {
+        $this->log('error', $message, $parameters, false);
     }
 
     /**

@@ -64,7 +64,10 @@ class ApplicationMenuListener extends ApplicationIntegration
             }
 
             if (!is_dir($this->pluginFolder) || !is_writeable($this->pluginFolder)) {
-                $this->addToWarnings('icon-notification', 'Order "' . basename($this->pluginFolder) . '" nicht beschreibbar!');
+                $this->addToWarnings(
+                    'icon-notification',
+                    'Order "' . basename($this->pluginFolder) . '" nicht beschreibbar!'
+                );
             }
         }
     }

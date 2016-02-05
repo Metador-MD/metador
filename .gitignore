@@ -6,7 +6,7 @@
 *.TODO
 *.lock
 *.sublime-workspace
-*Test*
+#*Test*
 
 .sass-cache
 .idea
