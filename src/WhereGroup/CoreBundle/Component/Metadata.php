@@ -22,7 +22,7 @@ class Metadata implements MetadataInterface
     /** @var UserInterface  */
     protected $metadorUser;
 
-    const REPOSITORY = "WhereGroupCoreBundle:Metadata";
+    private $repository = "WhereGroupCoreBundle:Metadata";
 
     /**
      * @param ContainerInterface $container
@@ -45,16 +45,16 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $id
+     * @param $metadataId
      * @return mixed
      */
-    public function getById($id)
+    public function getById($metadataId)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
             ->getManager()
-            ->getRepository(self::REPOSITORY)
-            ->findOneById($id);
+            ->getRepository($this->repository)
+            ->findOneById($metadataId);
 
         $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
 
@@ -65,6 +65,7 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
+
   /**
      * @param $uuid
      * @return mixed
@@ -74,7 +75,7 @@ class Metadata implements MetadataInterface
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
             ->getManager()
-            ->getRepository(self::REPOSITORY)
+            ->getRepository($this->repository)
             ->findOneByUuid($uuid);
 
         if ($metadata) {
@@ -104,7 +105,7 @@ class Metadata implements MetadataInterface
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->container
             ->get('doctrine')
-            ->getRepository(self::REPOSITORY)
+            ->getRepository($this->repository)
             ->createQueryBuilder('m')
             ->orderBy('m.updateTime', 'DESC')
             ->setFirstResult(($page * $limit) - $limit)
@@ -139,7 +140,7 @@ class Metadata implements MetadataInterface
         /** @var QueryBuilder $queryBuilderC */
         $queryBuilderC = $this->container
             ->get('doctrine')
-            ->getRepository(self::REPOSITORY)
+            ->getRepository($this->repository)
             ->createQueryBuilder('m')
             ->select('count(m)')
             ->where('m.profile = :profile')
@@ -191,7 +192,7 @@ class Metadata implements MetadataInterface
             $metadata->setGroups($user->getRoles());
 
             // FIND UUID IN DATABASE
-            $uuid = $em->getRepository(self::REPOSITORY)->findByUuid($p['fileIdentifier']);
+            $uuid = $em->getRepository($this->repository)->findByUuid($p['fileIdentifier']);
 
             if ($uuid) {
                 $this->container->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
@@ -206,22 +207,7 @@ class Metadata implements MetadataInterface
             return false;
         }
 
-        $date = "";
-
-        if (empty($p['revisionDate'])) {
-            if (empty($p['publicationDate'])) {
-                if (empty($p['creationDate']) && !empty($p['dateStamp'])) {
-                    $date = $p['dateStamp'];
-                } elseif (!empty($p['creationDate'])) {
-                    $date = $p['creationDate'];
-                }
-            } else {
-                $date = $p['publicationDate'];
-            }
-        } else {
-            $date = $p['revisionDate'];
-        }
-
+        $date = $this->findDate($p);
 
         $searchfield = @$p['_searchfield'] .
             ' ' . strtolower(@$p['title']) .
@@ -274,14 +260,36 @@ class Metadata implements MetadataInterface
                 'success',
                 $title . ' bearbeitet.'
             );
-        } else {
-            $this->container->get('session')->getFlashBag()->add(
-                'success',
-                $title . ' eingetragen.'
-            );
+            return true;
         }
 
+        $this->container->get('session')->getFlashBag()->add(
+            'success',
+            $title . ' eingetragen.'
+        );
+
         return true;
+    }
+
+    private function findDate($metadataObject)
+    {
+        if (!empty($metadataObject['revisionDate'])) {
+            return $metadataObject['revisionDate'];
+        }
+
+        if (!empty($metadataObject['publicationDate'])) {
+            return $metadataObject['publicationDate'];
+        }
+
+        if (!empty($metadataObject['creationDate'])) {
+            return $metadataObject['creationDate'];
+        }
+
+        if (empty($metadataObject['dateStamp'])) {
+            throw new \Exception("dateStamp empty!");
+        }
+
+        return $metadataObject['dateStamp'];
     }
 
     /**
@@ -322,7 +330,6 @@ class Metadata implements MetadataInterface
      */
     public function save($entity)
     {
-        $em = $this->container->get('doctrine')->getManager();
         $event  = new MetadataChangeEvent($entity, array());
 
         // EVENT PRE SAVE
@@ -334,8 +341,9 @@ class Metadata implements MetadataInterface
         }
 
         // SAVE TO DATABASE
-        $em->persist($entity);
-        $em->flush();
+        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager->persist($entity);
+        $entityManager->flush();
 
         // EVENT POST SAVE
         try {

@@ -1,0 +1,31 @@
+%input {
+    border-color: silver;
+    border-style: solid;
+    font-size: 12px;
+    color: #333;
+    float:left;
+    display: block;
+    height: 30px;
+    padding: 5px;
+    background-color: white;
+    box-shadow: lighten(#3D3F44, 60%) 1px 1px 3px;
+
+    &.no-value {
+        color: #666;
+        background-color: #DFE8FF;
+        text-shadow: white 1px 1px 0;
+    }
+}
+
+%label {
+    display: block;
+    font-size: 14px;
+    //font-weight: bold;
+    color: #666;
+    margin: 3px 0;
+}
+
+%inlineBlock {
+    display: inline-block;
+    zoom: 1;  *display: inline;  /* IE7 Hack */
+}

@@ -1,0 +1,124 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+@import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+
+$plugin-blue: #5077AE;
+$plugin-new: #F1FFB3;
+
+.plugin-table {
+    width: 100%;
+
+    .plugin-row {
+        font-size: 18px;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #DDD;
+
+        &.new {
+            background-color: $plugin-new;
+
+            &:hover {
+                background-color: darken($plugin-new, 10%);
+            }
+        }
+
+        &:hover {
+            background-color: #EEE;
+
+        }
+    }
+
+    .plugin-mark {
+        cursor: pointer;
+    }
+
+    .plugin-col-mark {
+        width: 5%;
+        padding-left: 10px;
+
+        .icon-checkmark {
+            color: $plugin-blue;
+        }
+
+        .icon-checkmark2 {
+            color: lighten($plugin-blue, 30%);
+            text-shadow: none;
+        }
+    }
+
+    .plugin-col-name {
+        width: 85%;
+        padding-left: 10px;
+
+        & > a {
+            display: block;
+            text-decoration: none;
+        }
+    }
+
+    .plugin-col-origin {
+        width: 10%;
+        padding-right: 10px;
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .plugin-col-status {
+        width: 30px;
+
+    }
+
+}
+
+.plugin-code, .plugin-code-header {
+    background-color: $primary;
+    margin-bottom: 0;
+    padding: 10px 20px;
+}
+
+.plugin-code-header {
+    border-top: 5px solid darken($primary, 10%);
+    color: darken($primary-contrast, 20%);
+    font-weight: bold;
+}
+
+.plugin-code {
+    color: $primary-contrast;
+    white-space: wrap;
+    border-top: 5px solid darken($primary, 10%);
+    padding: 20px;
+
+    &.small {
+        font-size: 10px;
+    }
+
+    &.header {
+        margin-top: 0;
+        border-top: 1px solid darken($primary, 10%);
+    }
+}
+
+.plugin-view .icon-circle {
+    color: $plugin-blue;
+}
+
+.plugin-code .comment {
+    color: #999;
+}
+
+.plugin-install-title {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    color: $plugin-blue;
+
+    &.done {
+        color: $primary;
+    }
+}
+
+#plugin-reload {
+    float: right;
+    display: none;
+}

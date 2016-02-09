@@ -23,7 +23,7 @@ class ApplicationMenuListener extends ApplicationIntegration
     public function __construct($kernelRootDir)
     {
         $this->tempFolder = rtrim($kernelRootDir, '/') . '/../var/temp/';
-        $this->pluginFolder = rtrim($kernelRootDir, '/') . '/../src/User/Plugin/';
+        $this->pluginFolder = rtrim($kernelRootDir, '/') . '/../src/Plugins/';
     }
 
     /**
@@ -64,7 +64,10 @@ class ApplicationMenuListener extends ApplicationIntegration
             }
 
             if (!is_dir($this->pluginFolder) || !is_writeable($this->pluginFolder)) {
-                $this->addToWarnings('icon-notification', 'Order "/src/User/Plugin/" nicht beschreibbar!');
+                $this->addToWarnings(
+                    'icon-notification',
+                    'Order "' . basename($this->pluginFolder) . '" nicht beschreibbar!'
+                );
             }
         }
     }

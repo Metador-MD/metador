@@ -4,7 +4,6 @@ namespace WhereGroup\UserBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
-use WhereGroup\CoreBundle\Component\MetadataInterface;
 
 class ApplicationMenuListener
 {
@@ -27,13 +26,6 @@ class ApplicationMenuListener
     {
         $app = $event->getApplication();
 
-        $app->add('app-global-menu', 'profile', array(
-            'icon'   => 'icon-user',
-            'label'  => 'Benutzerprofil',
-            'path'   => 'metador_profile_index',
-            'params' => array()
-        ));
-        
         // ADMIN AREA
         if ($app->routeStartsWith('metador_admin')) {
             // USER MENU

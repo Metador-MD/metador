@@ -3,10 +3,15 @@
 {% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/datepicker/zebra_datepicker_metallic.css') }}">
-    {# <link rel="stylesheet" href="http://i.icomoon.io/public/temp/2f06e8fb92/Metador21/style.css"> #}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style/datepicker/zebra_datepicker_metallic.css') }}">
+
+    {% stylesheets 'bundles/wheregrouptheme/style/sass/*.scss'
+        filter='sass,uglifycss' output='bundles/wheregrouptheme/css/metador.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}

@@ -6,7 +6,7 @@
 *.TODO
 *.lock
 *.sublime-workspace
-*Test*
+#*Test*
 
 .sass-cache
 .idea
@@ -21,3 +21,4 @@
 /bin
 /vendor
 /web/bundles
+/src/WhereGroup/ThemeBundle/Resources/public/css/metador*.css

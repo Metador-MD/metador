@@ -1,8 +1,14 @@
 {% extends 'WhereGroupThemeBundle::base.html.twig' %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/screen.css') }}">
+
+    {% stylesheets 'bundles/wheregrouptheme/style/sass/*.scss'
+        filter='sass,uglifycss' output='bundles/wheregrouptheme/css/metador.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}

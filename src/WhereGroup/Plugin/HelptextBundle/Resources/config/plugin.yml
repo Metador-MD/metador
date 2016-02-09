@@ -1,7 +1,0 @@
-wheregroup-helptext:
-    origin: WhereGroup
-    name: Hilfetexte
-    description: Schreiben und abrufen von Hilfetexten
-    class_path: WhereGroup\Plugin\HelptextBundle
-    class_name: WhereGroupHelptextBundle
-    version: 1.0

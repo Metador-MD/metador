@@ -8,6 +8,13 @@
             "SymfonyStandard\\": "app/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://package.wheregroup.com/satis/",
+            "packagist": false
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.8",
