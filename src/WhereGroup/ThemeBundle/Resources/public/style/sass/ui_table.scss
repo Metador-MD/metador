@@ -21,7 +21,7 @@
             font-weight: bold;
             border-right: 1px solid #DDD;
             background-color: #EEE;
-            color: lighten($fontColor, 10%);
+            color: lighten($font-color, 10%);
 
             &.right {
                 text-align: right;
@@ -50,7 +50,7 @@
             padding: 2px 5px;
             border-top: 1px solid #DDD;
             border-right: 1px solid #DDD;
-            color: lighten($fontColor, 10%);
+            color: lighten($font-color, 10%);
 
             &.right {
                 text-align: right;

@@ -38,6 +38,10 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on('click', '[data-toggle="result"]', function() {
+        $(this).next().toggle();
+    });
+
     var pluginElement = $('[data-cmd="update-plugins"]');
 
     if ($(pluginElement).length === 1) {
@@ -53,8 +57,7 @@ $(document).ready(function() {
                     request('database', function(data) {
                         check('database', data);
 
-                        $('.plugin-wait').hide();
-                        $('#plugin-reload').show();
+                        $('[data-plugin="reload-page"]').removeClass('hidden');
                     });
                 });
             });

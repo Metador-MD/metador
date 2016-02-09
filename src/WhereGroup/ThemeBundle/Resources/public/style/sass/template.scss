@@ -1,26 +1,35 @@
 @import 'bundles/wheregrouptheme/style/sass-lib/config';
 @import 'bundles/wheregrouptheme/style/sass-lib/mixins';
 
+$shadow: rgba(0, 0, 0, .1);
+$link: #444;
+
 * {
     box-sizing: border-box;
-    text-shadow: rgba(0,0,0,0.1) 1px 1px 0px;
+    text-shadow: $shadow 1px 1px 0;
+}
+
+.hidden {
+    display: none;
 }
 
 a {
+    color: $link;
     text-decoration: none;
-    color: #444;
 
     &:hover {
         text-decoration: underline;
     }
 }
 
-html, body{
-    height:100%;
-    width:100%;
-    padding: 0;
+html,
+body {
+    @include pos(0, 0, 0, 0);
+
+    height: 100%;
     margin: 0;
-    @include pos(0,0,0,0);
+    padding: 0;
+    width: 100%;
 }
 
 .clear {
@@ -28,12 +37,11 @@ html, body{
 }
 
 .logo {
-    // @include pos(0,'','',50%);
-    margin-top: 40px;
-    margin-left:-($pageWidth/2);
     background-image: url($logo);
     background-repeat: no-repeat;
     height: 100px;
+    margin-left: - ($page-width / 2);
+    margin-top: 40px;
     width: 100px;
     z-index: 2;
 }
@@ -62,19 +70,12 @@ body {
     }
 
     & .page-center {
+        @include pos($page-top-height,0,0,0);
         background-color: $secondary-contrast;
-        // filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale');
-        // -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$background, sizingMethod='scale')";
-        // background: url($background) no-repeat center center fixed;
-        // -webkit-background-size: cover;
-        // -moz-background-size: cover;
-        // -o-background-size: cover;
-        // background-size: cover;
-        @include pos($pageTopHeight,0,0,0);
 
         & .page-left {
-            width: $pageLeftWidth;
-            margin-left:-($pageWidth/2);
+            width: $page-left-width;
+            margin-left:-($page-width/2);
             background-color: $bright;
             border-right: 1px solid lighten($dark, 50%);
             border-left: 1px solid darken($bright, 30%);
@@ -83,8 +84,8 @@ body {
 
         & .page-right {
             padding: 20px;
-            width: $pageWidth - $pageLeftWidth;
-            margin-left:-($pageWidth/2) + $pageLeftWidth;
+            width: $page-width - $page-left-width;
+            margin-left:-($page-width/2) + $page-left-width;
             background-color: lighten($bright, 10%);
             background-image: url('../img/noise.png');
             border-right: 1px solid darken($bright, 30%);
@@ -94,8 +95,8 @@ body {
 
         & .page-content {
             padding: 20px;
-            width: $pageWidth;
-            margin-left:-($pageWidth/2);
+            width: $page-width;
+            margin-left:-($page-width/2);
             background-color: lighten($bright, 10%);
             background-image: url('../img/noise.png');
             border-right: 1px solid darken($bright, 30%);

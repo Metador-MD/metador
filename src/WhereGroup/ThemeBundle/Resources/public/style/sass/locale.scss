@@ -5,14 +5,14 @@
     padding: 20px;
 
     .locale-word {
-        padding: 0 0 20px 0;
+        padding: 0 0 20px;
     }
 
     .locale-translation {
-        width: $pageWidth / 2;
-        height: 100px;
         float: left;
+        height: 100px;
         overflow: auto;
+        width: $page-width / 2;
     }
 
     .locale-add-existing {
@@ -29,7 +29,7 @@
     }
 
     .locale-existing {
-        width: ($pageWidth / 2) - 150px;
+        width: ($page-width / 2) - 150px;
         float: left;
         height: 100px;
         border-left: 1px solid #ddd;
