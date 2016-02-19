@@ -22,7 +22,7 @@ $ROOTPATH/bin/phpcs -n --extensions=php --standard=PSR2 $ROOTPATH/src/
 
 # Run the copy paste detector
 echo "Test - phpcpd"
-$ROOTPATH/bin/phpcpd $ROOTPATH/src/
+# $ROOTPATH/bin/phpcpd $ROOTPATH/src/
 
 # Test complexity
 echo "Test - pdepend"
@@ -33,11 +33,11 @@ bin/pdepend \
     src/
 
 # PHP mess detector
-echo "Test - phpmd"
+# echo "Test - phpmd"
 # xml, text, html
 # cleancode, codesize, controversial, design, naming, unusedcode
-bin/phpmd \
-    src/ \
-    html \
-    cleancode \
-    --reportfile $PACKAGES_FOLDER/report/$PROJECTNAME/index.html
+# bin/phpmd \
+#     src/ \
+#     html \
+#     cleancode \
+#     --reportfile $PACKAGES_FOLDER/report/$PROJECTNAME/index.html
