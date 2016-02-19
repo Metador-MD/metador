@@ -95,7 +95,7 @@ abstract class ProfileApplicationMenuListener
 
             if ($app->isAction('edit')) {
                 // TODO: get parameter from origin request.
-                $id = $app->getParameter('id', 0);
+//                $id = $app->getParameter('id', 0);
 
                 $app->add('app-plugin-menu', 'xml', array(
                     'label'  => 'XML',

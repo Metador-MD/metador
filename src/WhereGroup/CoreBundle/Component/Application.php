@@ -53,11 +53,7 @@ class Application
 
     private function updateInformation()
     {
-        $request = $this->requestStack->getParentRequest();
-
-        if ($request === null) {
-            $request = $this->requestStack->getCurrentRequest();
-        }
+        $request = $this->requestStack->getCurrentRequest();
 
         if (is_null($this->route) && is_object($request)) {
             $this->route     = $request->get('_route');
