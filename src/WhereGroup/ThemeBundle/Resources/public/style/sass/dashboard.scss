@@ -1,54 +1,54 @@
 @import 'bundles/wheregrouptheme/style/sass-lib/mixins';
 
+$preview-gb: #eee;
+$preview-border: #c0c0c0;
+$preview-shadow: rgba(100, 100, 100, .1);
+$preview-head: #444;
+$preview-table-row: #ddd;
+
 .preview {
+    background-color: $preview-gb;
+    border: 1px solid $preview-border;
+    border-radius: 5px;
+    box-shadow: inset -5px -5px 5px $preview-shadow;
     display: inline-block;
-    width: 285px;
-    // float: left;
-    border: 1px solid silver;
     margin: 5px;
     padding: 5px;
-    background-color: #EEE;
-    // margin: 0 auto;
-
-    border-radius: 5px;
-    box-shadow: inset -5px -5px 5px rgba(100,100,100,0.1);
+    width: 285px;
 
     & > .head {
-        border-bottom: 1px solid silver;
-        color: #444;
+        border-bottom: 1px solid $preview-border;
+        color: $preview-head;
         font-weight: bold;
         padding: 5px 0;
     }
 
     & > .body {
         height: 200px;
-        overflow: auto;
         margin-top: 10px;
+        overflow: auto;
+    }
+}
 
+.preview-table {
+    color: $preview-head;
+    font-size: 12px;
+    font-style: italic;
+    text-decoration: none;
+    width: 100%;
 
-        & > .preview-table {
-            width:100%;
+    & a  {
+        color: $preview-head;
+        font-size: 12px;
+        font-style: italic;
+        text-decoration: none;
+    }
 
+    & tr {
+        height: 20px;
 
-            color: #444;
-            font-style: italic;
-            font-size: 12px;
-            text-decoration: none;
-
-            & a  {
-                color: #444;
-                font-style: italic;
-                font-size: 12px;
-                text-decoration: none;
-            }
-
-            & tr {
-                height: 20px;
-
-                &:hover {
-                    background-color: #DDD;
-                }
-            }
+        &:hover {
+            background-color: $preview-table-row;
         }
     }
 }

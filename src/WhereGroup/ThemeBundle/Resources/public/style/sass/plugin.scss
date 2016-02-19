@@ -1,39 +1,22 @@
 @import 'bundles/wheregrouptheme/style/sass-lib/config';
 @import 'bundles/wheregrouptheme/style/sass-lib/mixins';
 
-$plugin-blue: #5077AE;
-$plugin-new: #F1FFB3;
+$plugin-blue: #5077ae;
+$plugin-new: #f1ffb3;
+$plugin-col: #666;
+$plugin-row-border: #ddd;
+$plugin-row-bg-hover: #eee;
 
 .plugin-table {
     width: 100%;
-
-    .plugin-row {
-        font-size: 18px;
-        height: 40px;
-        line-height: 40px;
-        border-bottom: 1px solid #DDD;
-
-        &.new {
-            background-color: $plugin-new;
-
-            &:hover {
-                background-color: darken($plugin-new, 10%);
-            }
-        }
-
-        &:hover {
-            background-color: #EEE;
-
-        }
-    }
 
     .plugin-mark {
         cursor: pointer;
     }
 
     .plugin-col-mark {
-        width: 5%;
         padding-left: 10px;
+        width: 5%;
 
         .icon-checkmark {
             color: $plugin-blue;
@@ -46,8 +29,8 @@ $plugin-new: #F1FFB3;
     }
 
     .plugin-col-name {
-        width: 85%;
         padding-left: 10px;
+        width: 85%;
 
         & > a {
             display: block;
@@ -56,21 +39,44 @@ $plugin-new: #F1FFB3;
     }
 
     .plugin-col-origin {
-        width: 10%;
+        color: $plugin-col;
+        font-size: 14px;
         padding-right: 10px;
         text-align: right;
-        font-size: 14px;
-        color: #666;
+        width: 10%;
     }
 
     .plugin-col-status {
         width: 30px;
-
     }
-
 }
 
-.plugin-code, .plugin-code-header {
+.plugin-row {
+    border-bottom: 1px solid $plugin-row-border;
+    cursor: pointer;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+
+    &.new {
+        background-color: $plugin-new;
+
+        &:hover {
+            background-color: darken($plugin-new, 10%);
+        }
+    }
+
+    &:hover {
+        background-color: $plugin-row-bg-hover;
+    }
+}
+
+.plugin-result {
+    display: none;
+}
+
+.plugin-code,
+.plugin-code-header {
     background-color: $primary;
     margin-bottom: 0;
     padding: 10px 20px;
@@ -83,42 +89,46 @@ $plugin-new: #F1FFB3;
 }
 
 .plugin-code {
-    color: $primary-contrast;
-    white-space: wrap;
     border-top: 5px solid darken($primary, 10%);
+    color: $primary-contrast;
     padding: 20px;
+    white-space: wrap;
 
     &.small {
         font-size: 10px;
     }
 
     &.header {
-        margin-top: 0;
         border-top: 1px solid darken($primary, 10%);
+        margin-top: 0;
+    }
+
+    $plugin-comment: #999;
+
+    &.comment {
+        color: $plugin-comment;
     }
 }
 
-.plugin-view .icon-circle {
-    color: $plugin-blue;
-}
-
-.plugin-code .comment {
-    color: #999;
+.plugin-view {
+    &.icon-circle {
+        color: $plugin-blue;
+    }
 }
 
 .plugin-install-title {
+    color: $plugin-blue;
     display: block;
+    font-size: 20px;
     height: 30px;
     line-height: 30px;
-    font-size: 20px;
-    color: $plugin-blue;
 
     &.done {
         color: $primary;
     }
 }
 
-#plugin-reload {
-    float: right;
+.plugin-reload {
     display: none;
+    float: right;
 }

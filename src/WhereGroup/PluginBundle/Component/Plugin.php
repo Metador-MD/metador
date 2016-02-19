@@ -188,11 +188,13 @@ class Plugin
      */
     protected function getPluginConfiguration()
     {
-        if (!file_exists($this->configurationFile)) {
-            $this->writeYaml($this->configurationFile, array('plugins' => array()));
+        $configuration = $this->readYaml($this->configurationFile);
+
+        if (!isset($configuration['plugins'])) {
+            $configuration['plugins'] = array();
         }
 
-        return $this->readYaml($this->configurationFile);
+        return $configuration;
     }
 
     /**

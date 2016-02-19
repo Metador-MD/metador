@@ -3,10 +3,22 @@
 PROJECTNAME=metador
 PACKAGES_FOLDER=/packages/build/metador2
 
+BUILD=[zip msi]
+
+# -------------------------------
+
 TEMPPATH=/tmp
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 ROOTPATH=$SCRIPTPATH/../../../.
+
+if [ -z "$CI_BUILD_REF_NAME" ]; then
+    CI_BUILD_REF_NAME=dev
+fi
+
+if [ -z "$CI_BUILD_ID" ]; then
+    CI_BUILD_ID=$(date +%s)
+fi
 
 echo "Building package for $PROJECTNAME version $CI_BUILD_REF_NAME build $CI_BUILD_ID";
 

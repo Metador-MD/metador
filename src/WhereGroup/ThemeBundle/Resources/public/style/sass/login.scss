@@ -63,12 +63,12 @@
                 background-color: white;
                 background-color: rgba(255, 255, 255, 0.5);
                 padding: 0 40px;
-                color: $fontColor;
+                color: $font-color;
 
-                &:-moz-placeholder { color: $fontColor; }
-                &::-moz-placeholder { color: $fontColor; }
-                &:-ms-input-placeholder { color: $fontColor; }
-                &::-webkit-input-placeholder { color: $fontColor; }
+                &:-moz-placeholder { color: $font-color; }
+                &::-moz-placeholder { color: $font-color; }
+                &:-ms-input-placeholder { color: $font-color; }
+                &::-webkit-input-placeholder { color: $font-color; }
 
                 border-radius: 4px;
             }

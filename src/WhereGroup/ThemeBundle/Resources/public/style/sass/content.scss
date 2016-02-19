@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .logo {
-    margin-left:-($pageWidth/2) + 20px;
+    margin-left:-($page-width/2) + 20px;
     @include pos(10px,'',0,50%);
 }
 

@@ -6,6 +6,10 @@ use Symfony\Component\Yaml\Yaml;
 
 class AppKernel extends Kernel
 {
+    private $plguinConfigFolder = '/../var/plugins/';
+    private $pluginConfigFile   = 'plugins.yml';
+    private $pluginRoutingFile  = 'plugins_routing.yml';
+
     public function registerBundles()
     {
         $bundles = array(
@@ -28,18 +32,17 @@ class AppKernel extends Kernel
 
         );
 
-        // LOAD PLUGINS
-        $pluginConfigFile = $this->rootDir . '/../var/plugins/plugins.yml';
+        // Check file exists
+        $this->checkPluginConfiguration($this->pluginRoutingFile);
 
-        if (file_exists($pluginConfigFile)) {
-            $array = Yaml::parse(file_get_contents($pluginConfigFile));
+        // Load plugins
+        $config = $this->getPluginConfiguration($this->pluginConfigFile);
 
-            if (isset($array['plugins'])) {
-                foreach ($array['plugins'] as $name => $plugin) {
-                    if ($plugin['active']) {
-                        $class = $plugin['class_path'] . '\\' . $plugin['class_name'];
-                        $bundles[] = new $class;
-                    }
+        if (isset($config['plugins'])) {
+            foreach ($config['plugins'] as $name => $plugin) {
+                if ($plugin['active']) {
+                    $class = $plugin['class_path'] . '\\' . $plugin['class_name'];
+                    $bundles[] = new $class;
                 }
             }
         }
@@ -67,5 +70,21 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+    }
+
+    private function checkPluginConfiguration($filename)
+    {
+        $file = $this->rootDir . $this->plguinConfigFolder . $filename;
+
+        if (!file_exists($file)) {
+            file_put_contents($file, Yaml::dump(array(), 2));
+        }
+    }
+
+    private function getPluginConfiguration($filename)
+    {
+        $this->checkPluginConfiguration($filename);
+
+        return Yaml::parse(file_get_contents($this->rootDir . $this->plguinConfigFolder . $filename));
     }
 }
