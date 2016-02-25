@@ -19,24 +19,16 @@ class SecurityController extends Controller
      * @Template(":Design:demo.html.twig")
      * @Method("GET")
      */
-    public function demoAction(Request $request)
+    public function demoAction()
     {
-        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
 
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-        return array(
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
-        );
+        return(array(
+            // last username entered by the user
+            'last_username' => $authenticationUtils->getLastUsername(),
+            // get the login error if there is one
+            'error'         => $authenticationUtils->getLastAuthenticationError()
+        ));
     }
 
     /**
@@ -45,23 +37,15 @@ class SecurityController extends Controller
      * @Method("GET")
      * @Template("WhereGroupThemeBundle:Template:login.html.twig")
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
-        $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
+        $authenticationUtils = $this->get('security.authentication_utils');
 
         return(array(
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
+            // last username entered by the user
+            'last_username' => $authenticationUtils->getLastUsername(),
+            // get the login error if there is one
+            'error'         => $authenticationUtils->getLastAuthenticationError()
         ));
     }
 
