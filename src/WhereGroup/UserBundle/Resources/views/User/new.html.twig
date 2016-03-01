@@ -10,11 +10,10 @@
     {% set params = {} %}
 {% endif %}
 
+{% block title %}{{ title }}{% endblock %}
 
 {# CONTENT #}
 {% block content %}
-    <h1>{{ title }}</h1>
-
     <div class="basic-form">
         {{ form_widget(form) }}
     </div>

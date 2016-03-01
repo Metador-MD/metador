@@ -27,6 +27,7 @@
         </ul>
     </div>
     <div class="page-right">
+        <h1>{% block title %}{% trans %}Übersicht{% endtrans %}{% endblock %}</h1>
         {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
         {% block content %}
             <ul class="app-information">

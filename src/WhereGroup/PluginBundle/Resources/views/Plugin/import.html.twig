@@ -1,11 +1,8 @@
 {% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
-{% block javascript %}
-
-{% endblock %}
+{% block title %}{% trans %}Plugin importieren{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans %}Plugin importieren{% endtrans %}</h1>
     {{ form_start(form, { 'action': path('metador_admin_plugin_upload'), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
@@ -13,4 +10,3 @@
     {{ form_widget(form, {'attr': {'class': 'plugin-import'}}) }}
     {{ form_end(form) }}
 {% endblock %}
-

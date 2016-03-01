@@ -1,15 +1,15 @@
 {% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
+{% block title %}{{ 'Gruppen'|trans }}{% endblock %}
+
 {% block content %}
-    <h1>{{ 'Gruppen'|trans }}</h1>
-    
     {% for group in groups %}
-        
+
     {% set class = '' %}
     {% if group.users|length == 0 %}
         {% set class = class ~ ' disabled' %}
     {% endif %}
-    
+
     <div class="title-box {{ class|trim }}">
         <div class="title-box-logo">
             <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">

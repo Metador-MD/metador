@@ -1,5 +1,7 @@
 {% extends 'WhereGroupThemeBundle:Template:admin.html.twig' %}
 
+{% block title %}{% trans %}Plugins werden konfiguriert{% endtrans %}{% endblock %}
+
 {% block content %}
     <div data-plugin="reload-page" class="hidden">
         <a class="btn success" class="plugin-reload" href="{{ path('metador_admin_plugin') }}">
