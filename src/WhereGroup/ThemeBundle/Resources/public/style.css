@@ -1,159 +1,165 @@
 @font-face {
-	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?kxoq9t');
-	src:url('fonts/icomoon.eot?kxoq9t#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?kxoq9t') format('truetype'),
-		url('fonts/icomoon.woff?kxoq9t') format('woff'),
-		url('fonts/icomoon.svg?kxoq9t#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'icomoon';
+    src:    url('fonts/icomoon.eot?6e9byq');
+    src:    url('fonts/icomoon.eot?6e9byq#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?6e9byq') format('truetype'),
+        url('fonts/icomoon.woff?6e9byq') format('woff'),
+        url('fonts/icomoon.svg?6e9byq#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-	font-family: 'icomoon' !important;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-wheregroup:before {
-	content: "\e600";
-}
-.icon-circle:before {
-	content: "\f111";
+    content: "\e600";
 }
 .icon-pencil:before {
-	content: "\e905";
+    content: "\e905";
 }
 .icon-file-text:before {
-	content: "\e922";
+    content: "\e922";
 }
 .icon-stack:before {
-	content: "\e92e";
+    content: "\e92e";
+}
+.icon-map:before {
+    content: "\e94b";
+}
+.icon-map2:before {
+    content: "\e94c";
 }
 .icon-clock:before {
-	content: "\e94e";
+    content: "\e94e";
 }
 .icon-calendar:before {
-	content: "\e953";
+    content: "\e953";
 }
 .icon-download:before {
-	content: "\e960";
+    content: "\e960";
 }
 .icon-upload:before {
-	content: "\e961";
+    content: "\e961";
 }
 .icon-floppy-disk:before {
-	content: "\e962";
+    content: "\e962";
 }
 .icon-database:before {
-	content: "\e964";
+    content: "\e964";
 }
 .icon-redo2:before {
-	content: "\e968";
+    content: "\e968";
 }
 .icon-user:before {
-	content: "\e971";
+    content: "\e971";
 }
 .icon-users:before {
-	content: "\e972";
+    content: "\e972";
 }
 .icon-hour-glass:before {
-	content: "\e979";
+    content: "\e979";
 }
 .icon-maximize:before {
-	content: "\e98b";
+    content: "\e98b";
 }
 .icon-minimize:before {
-	content: "\e98c";
+    content: "\e98c";
 }
 .icon-key:before {
-	content: "\e98d";
+    content: "\e98d";
 }
 .icon-cog:before {
-	content: "\e994";
+    content: "\e994";
 }
 .icon-magic-wand:before {
-	content: "\e997";
+    content: "\e997";
 }
 .icon-meter:before {
-	content: "\e9a6";
+    content: "\e9a6";
 }
 .icon-bin2:before {
-	content: "\e9ad";
+    content: "\e9ad";
 }
 .icon-accessibility:before {
-	content: "\e9b2";
+    content: "\e9b2";
+}
+.icon-target:before {
+    content: "\e9b3";
 }
 .icon-power:before {
-	content: "\e9b5";
+    content: "\e9b5";
 }
 .icon-switch:before {
-	content: "\e9b6";
+    content: "\e9b6";
 }
 .icon-power-cord:before {
-	content: "\e9b7";
+    content: "\e9b7";
 }
 .icon-clipboard:before {
-	content: "\e9b8";
+    content: "\e9b8";
 }
 .icon-earth:before {
-	content: "\e9ca";
+    content: "\e9ca";
 }
 .icon-flag:before {
-	content: "\e9cc";
+    content: "\e9cc";
 }
 .icon-eye:before {
-	content: "\e9ce";
+    content: "\e9ce";
 }
 .icon-warning:before {
-	content: "\ea07";
+    content: "\ea07";
 }
 .icon-notification:before {
-	content: "\ea08";
+    content: "\ea08";
 }
 .icon-question:before {
-	content: "\ea09";
+    content: "\ea09";
 }
 .icon-plus:before {
-	content: "\ea0a";
+    content: "\ea0a";
 }
 .icon-info:before {
-	content: "\ea0c";
+    content: "\ea0c";
 }
 .icon-checkmark:before {
-	content: "\ea10";
+    content: "\ea10";
 }
 .icon-checkmark2:before {
-	content: "\ea11";
+    content: "\ea11";
 }
 .icon-arrow-right:before {
-	content: "\ea34";
+    content: "\ea34";
 }
 .icon-arrow-left:before {
-	content: "\ea38";
+    content: "\ea38";
 }
 .icon-embed2:before {
-	content: "\ea80";
+    content: "\ea80";
 }
 .icon-terminal:before {
-	content: "\ea81";
+    content: "\ea81";
 }
 .icon-share2:before {
-	content: "\ea82";
+    content: "\ea82";
 }
 .icon-github4:before {
-	content: "\eab4";
+    content: "\eab4";
 }
 .icon-file-pdf:before {
-	content: "\eada";
+    content: "\eada";
 }
 
