@@ -12,6 +12,21 @@
         filter='sass,uglifycss' output='bundles/wheregrouptheme/css/metador.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+
+    {% for item in applicationGet('app-css') %}
+    {# RAW CONTENT #}
+    {% if item.raw is defined %}
+        {{ item.raw|raw }}
+
+    {# INCLUDE CONTENT #}
+    {% elseif item.template is defined %}
+        {{ include(item.template, item.params) }}
+
+    {# INCLUDE CONTENT #}
+    {% elseif item.file is defined %}
+        <link rel="stylesheet" href="{{ asset(item.file) }}">
+    {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}

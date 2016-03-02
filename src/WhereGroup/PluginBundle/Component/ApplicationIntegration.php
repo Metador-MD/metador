@@ -2,6 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Component;
 
+// TODO: REMOVE ME
 abstract class ApplicationIntegration
 {
     protected function addToWarnings($icon, $message)

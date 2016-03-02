@@ -17,6 +17,17 @@
         {% block css %}{% endblock %}
     </head>
     <body>
+        {% for item in applicationGet('app-body') %}
+        {# RAW CONTENT #}
+        {% if item.raw is defined %}
+            {{ item.raw|raw }}
+
+        {# INCLUDE CONTENT #}
+        {% elseif item.template is defined %}
+            {{ include(item.template, item.params) }}
+
+        {% endif %}
+        {% endfor %}
         {% block body %}{% endblock %}
         {% block javascript %}
             <script type="text/javascript">
