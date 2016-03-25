@@ -47,6 +47,6 @@ class ApplicationExtension extends \Twig_Extension
      */
     public function applicationGet($type, $key = null, $default = null)
     {
-        return $this->application->get($type, $key, $default);
+        return $this->application->getData($type, $key, $default);
     }
 }

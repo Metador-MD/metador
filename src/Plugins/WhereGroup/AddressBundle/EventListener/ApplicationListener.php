@@ -39,19 +39,19 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        $dashboard = new Dashboard($app, $this->prefix);
-        $dashboard
-            ->setTemplate('WhereGroupAddressBundle::dashboardPreview.html.twig')
-            ->setParams(array(
-                'address' => $this->address->get()
-            ))
-            ->add();
-
-        $script = new Script($app, $this->prefix);
-        $script
-            ->setFile('bundles/wheregroupaddress/address.js')
-            ->add();
-
-        unset($dashboard, $script);
+        // $dashboard = new Dashboard($app, $this->prefix);
+        // $dashboard
+        //     ->setTemplate('WhereGroupAddressBundle::dashboardPreview.html.twig')
+        //     ->setParams(array(
+        //         'address' => $this->address->get()
+        //     ))
+        //     ->add();
+        //
+        // $script = new Script($app, $this->prefix);
+        // $script
+        //     ->setFile('bundles/wheregroupaddress/address.js')
+        //     ->add();
+        //
+        // unset($dashboard, $script);
     }
 }

@@ -9,7 +9,7 @@
         <parameter key="metador.plugin.repository.class">WhereGroup\PluginBundle\Component\PluginRepository</parameter>
 
         <!-- EVENT LISTENER -->
-        <parameter key="metador.plugin.app.listener.class">WhereGroup\PluginBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.plugin.app.listener.class">WhereGroup\PluginBundle\EventListener\ApplicationListener</parameter>
      </parameters>
 
     <services>

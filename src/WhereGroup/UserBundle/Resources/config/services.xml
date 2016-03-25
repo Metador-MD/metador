@@ -5,7 +5,7 @@
         <parameter key="metador.user.class">WhereGroup\UserBundle\Component\User</parameter>
 
         <!-- EVENT LISTENER -->
-        <parameter key="metador.user.app.listener.class">WhereGroup\UserBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.user.app.listener.class">WhereGroup\UserBundle\EventListener\ApplicationListener</parameter>
     </parameters>
 
     <services>

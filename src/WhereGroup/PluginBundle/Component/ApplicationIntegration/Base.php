@@ -2,76 +2,58 @@
 
 namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
-use WhereGroup\CoreBundle\Component\Application;
-
 abstract class Base
 {
-    protected $app                = null;
-    protected $prefix             = null;
-    protected $role               = null;
-    protected $data               = array();
-    protected $conditionsComplied = true;
+    protected $data   = array();
+    protected $role   = null;
+    protected $prefix = null;
 
-    public function __construct(Application $app, $prefix = null)
+    public function __construct($prefix)
     {
-        $this->app = $app;
-
-        if (is_null($prefix)) {
-            $this->prefix = md5(microtime(true) . rand(0, 10000000));
-        }
+        $this->prefix = $prefix;
     }
 
-    public function __destruct()
+    protected function generatePrefix($prefix = null)
     {
-        unset($app);
+        return is_null($prefix)
+            ? md5(microtime(true) . rand(1000000, 9999999))
+            : $prefix;
     }
 
-    public function checkCondition($condition)
+    public function template($template, $params = array(), $prefix = null)
     {
-        if ($this->conditionsComplied === true) {
-            $this->conditionsComplied = (boolean)$condition;
-        }
+        $prefix = $this->generatePrefix($prefix);
+
+        $this->data[$prefix]['template'] = $template;
+        $this->data[$prefix]['params']   = $params;
+
+        return $this;
     }
 
-    public function add()
+    public function raw($raw, $prefix = null)
     {
-        if ($this->conditionsComplied === false) {
-            return false;
-        }
-
-        return $this->app->add(
-            $this->type,
-            $this->prefix,
-            $this->data,
-            $this->role
-        );
+        $this->data[$this->generatePrefix($prefix)]['raw'] = $raw;
+        return $this;
     }
 
-    public function prepend()
+    public function getData()
     {
-        if ($this->conditionsComplied === false) {
-            return false;
-        }
-
-        return $this->app->prepend(
-            $this->type,
-            $this->prefix,
-            $this->data,
-            $this->role
-        );
+        return $this->data;
     }
 
-    public function append()
+    public function getType()
     {
-        if ($this->conditionsComplied === false) {
-            return false;
-        }
+        return $this->type;
+    }
 
-        return $this->app->append(
-            $this->type,
-            $this->prefix,
-            $this->data,
-            $this->role
-        );
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 }

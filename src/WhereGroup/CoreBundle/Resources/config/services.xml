@@ -11,7 +11,7 @@
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
 
         <!-- EVENT LISTENER -->
-        <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
 
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>

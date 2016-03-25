@@ -2,7 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
-class Dashboard extends Base
+class AdminMenu extends GlobalMenu
 {
-    protected $type  = 'app-preview';
+    protected $type   = 'app-admin-menu';
 }

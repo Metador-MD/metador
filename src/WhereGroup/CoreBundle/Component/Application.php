@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+use WhereGroup\PluginBundle\Component\ApplicationIntegration as Integration;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -86,7 +87,26 @@ class Application
             "\n<br/>Route      : " . $this->route .
             'Data: <pre>' . print_r($this->data, 1) . '</pre>';
     }
+    public function register($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
+    {
+        $this->updateInformation();
 
+        try {
+            if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
+                return $this;
+            }
+        } catch (\Exception $e) {
+            return $this;
+        }
+
+        if (isset($data['path']) && $data['path'] === $this->route) {
+            $data['active'] = true;
+        }
+
+        $this->data[$position][$type][$key] = $data;
+
+        return $this;
+    }
     /**
      * @param $type
      * @param $key
@@ -114,6 +134,45 @@ class Application
         $this->data[$position][$type][$key] = $data;
 
         return $this;
+    }
+
+    public function newAdd(Integration\Base $class, $position = self::POSITION_NORMAL)
+    {
+        foreach ($class->getData() as $key => $data) {
+            $this->register(
+                $class->getType(),
+                $key,
+                $data,
+                $class->getRole(),
+                $position
+            );
+        }
+
+        return $this;
+    }
+
+    public function getClass($class, $prefix = null)
+    {
+        switch (strtolower($class)) {
+            case 'script':
+                return new Integration\Script($prefix);
+            case 'style':
+                return new Integration\Style($prefix);
+            case 'body':
+                return new Integration\Body($prefix);
+            case 'dashboard':
+                return new Integration\Dashboard($prefix);
+            case 'globalmenu':
+                return new Integration\GlobalMenu($prefix);
+            case 'adminmenu':
+                return new Integration\AdminMenu($prefix);
+            case 'pluginmenu':
+                return new Integration\PluginMenu($prefix);
+            case 'appinformation':
+                return new Integration\AppInformation($prefix);
+            default:
+                throw new \Exception("Class not found");
+        }
     }
 
     /**
@@ -145,7 +204,7 @@ class Application
      * @param null $key
      * @return array|string
      */
-    public function get($type, $key = null, $default = null)
+    public function getData($type, $key = null, $default = null)
     {
         $merged = array_merge_recursive(
             isset($this->data[self::POSITION_PREPEND]) ? $this->data[self::POSITION_PREPEND] : array(),

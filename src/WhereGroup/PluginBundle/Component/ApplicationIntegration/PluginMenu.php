@@ -2,7 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
-class Dashboard extends Base
+class PluginMenu extends GlobalMenu
 {
-    protected $type  = 'app-preview';
+    protected $type   = 'app-plugin-menu';
 }
