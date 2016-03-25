@@ -170,6 +170,8 @@ class Application
                 return new Integration\PluginMenu($prefix);
             case 'appinformation':
                 return new Integration\AppInformation($prefix);
+            case 'profiletable':
+                return new Integration\ProfileTable($prefix);
             default:
                 throw new \Exception("Class not found");
         }

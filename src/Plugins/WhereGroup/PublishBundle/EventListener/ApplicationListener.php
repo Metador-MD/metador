@@ -3,17 +3,14 @@
 namespace Plugins\WhereGroup\PublishBundle\EventListener;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
-use WhereGroup\PluginBundle\Component\ApplicationIntegration;
 
 /**
  * Class ApplicationListener
  * @package Plugins\WhereGroup\PublishBundle\EventListener
  * @author A.R.Pour
  */
-class ApplicationListener extends ApplicationIntegration
+class ApplicationListener
 {
-    protected $app     = null;
-    protected $prefix  = 'publish';
     protected $exportPath = null;
 
     /**
@@ -29,25 +26,25 @@ class ApplicationListener extends ApplicationIntegration
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $this->app = $event->getApplication();
+        $app = $event->getApplication();
 
-        $this->app->add('app-profile-table', $this->prefix, array(
-            'header' => array(
-                'label' => 'veröffentlichen',
-                'class' => 'right last-1',
-                'icon'  => 'icon-earth'
-            ),
-            'body' => array(
-                'template' => 'WhereGroupPublishBundle::publishColumn.html.twig',
-                'params'   => array()
-            )
-        ));
+        $app->newAdd(
+            $app->getClass('ProfileTable', 'publish')
+                ->headerLabel('veröffentlichen')
+                ->headerClass('right last-1')
+                ->headerIcon('icon-earth')
+                ->bodyTemplate('WhereGroupPublishBundle::publishColumn.html.twig')
+        )->newAdd(
+            $app->getClass('Script')
+                ->file('bundles/wheregrouppublish/publish.js')
+        );
 
-        $this->addToScripts('bundles/wheregrouppublish/publish.js');
-
-        if ($this->app->isRoute('metador_admin_index')) {
+        if ($app->isRoute('metador_admin_index')) {
             if (!is_writeable($this->exportPath)) {
-                $this->addToWarnings('icon-notification', 'Ordner zum veröffentlichen der Metadaten ist nicht beschreibbar!');
+                $app->newAdd(
+                    $app->getClass('AppInformation')
+                        ->warning('Ordner zum veröffentlichen der Metadaten ist nicht beschreibbar!')
+                );
             }
         }
     }
