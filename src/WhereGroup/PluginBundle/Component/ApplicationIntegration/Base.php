@@ -10,7 +10,7 @@ abstract class Base
 
     public function __construct($prefix)
     {
-        $this->prefix = $prefix;
+        $this->prefix = $this->generatePrefix($prefix);
     }
 
     protected function generatePrefix($prefix = null)

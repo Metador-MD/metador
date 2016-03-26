@@ -30,4 +30,16 @@ class GlobalMenu extends Base
         $this->data[$this->prefix]['active'] = $active;
         return $this;
     }
+
+    public function data($data)
+    {
+        $this->data[$this->prefix]['data'] = $data;
+        return $this;
+    }
+
+    public function target($target)
+    {
+        $this->target[$this->prefix]['target'] = $target;
+        return $this;
+    }
 }

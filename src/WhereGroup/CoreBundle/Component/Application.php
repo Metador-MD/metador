@@ -87,6 +87,7 @@ class Application
             "\n<br/>Route      : " . $this->route .
             'Data: <pre>' . print_r($this->data, 1) . '</pre>';
     }
+
     public function register($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
         $this->updateInformation();
@@ -107,36 +108,8 @@ class Application
 
         return $this;
     }
-    /**
-     * @param $type
-     * @param $key
-     * @param $data
-     * @param null $role
-     * @param int $position
-     * @return $this
-     */
-    public function add($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
-    {
-        $this->updateInformation();
 
-        try {
-            if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
-                return $this;
-            }
-        } catch (\Exception $e) {
-            return $this;
-        }
-
-        if (isset($data['path']) && $data['path'] === $this->route) {
-            $data['active'] = true;
-        }
-
-        $this->data[$position][$type][$key] = $data;
-
-        return $this;
-    }
-
-    public function newAdd(Integration\Base $class, $position = self::POSITION_NORMAL)
+    public function add(Integration\Base $class, $position = self::POSITION_NORMAL)
     {
         foreach ($class->getData() as $key => $data) {
             $this->register(
@@ -151,7 +124,17 @@ class Application
         return $this;
     }
 
-    public function getClass($class, $prefix = null)
+    public function append(Integration\Base $class)
+    {
+        return $this->add($class, self::POSITION_APPEND);
+    }
+
+    public function prepend(Integration\Base $class)
+    {
+        return $this->add($class, self::POSITION_PREPEND);
+    }
+
+    public function get($class, $prefix = null)
     {
         switch (strtolower($class)) {
             case 'script':
@@ -170,36 +153,17 @@ class Application
                 return new Integration\PluginMenu($prefix);
             case 'appinformation':
                 return new Integration\AppInformation($prefix);
+            case 'profile':
+                return new Integration\Profile($prefix);
             case 'profiletable':
                 return new Integration\ProfileTable($prefix);
+            case 'profilemenu':
+                return new Integration\ProfileMenu($prefix);
             default:
                 throw new \Exception("Class not found");
         }
     }
 
-    /**
-     * @param $type
-     * @param $key
-     * @param $data
-     * @param null $role
-     * @return Application
-     */
-    public function prepend($type, $key, $data, $role = null)
-    {
-        return $this->add($type, $key, $data, $role, self::POSITION_PREPEND);
-    }
-
-    /**
-     * @param $type
-     * @param $key
-     * @param $data
-     * @param null $role
-     * @return Application
-     */
-    public function append($type, $key, $data, $role = null)
-    {
-        return $this->add($type, $key, $data, $role, self::POSITION_APPEND);
-    }
 
     /**
      * @param $type

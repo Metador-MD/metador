@@ -28,21 +28,21 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        $app->newAdd(
-            $app->getClass('ProfileTable', 'publish')
+        $app->add(
+            $app->get('ProfileTable', 'publish')
                 ->headerLabel('veröffentlichen')
                 ->headerClass('right last-1')
                 ->headerIcon('icon-earth')
                 ->bodyTemplate('WhereGroupPublishBundle::publishColumn.html.twig')
-        )->newAdd(
-            $app->getClass('Script')
+        )->add(
+            $app->get('Script')
                 ->file('bundles/wheregrouppublish/publish.js')
         );
 
         if ($app->isRoute('metador_admin_index')) {
             if (!is_writeable($this->exportPath)) {
-                $app->newAdd(
-                    $app->getClass('AppInformation')
+                $app->add(
+                    $app->get('AppInformation')
                         ->warning('Ordner zum veröffentlichen der Metadaten ist nicht beschreibbar!')
                 );
             }

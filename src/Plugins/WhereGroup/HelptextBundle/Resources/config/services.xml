@@ -5,7 +5,7 @@
 
     <parameters>
         <!-- EVENT LISTENER -->
-        <parameter key="metador.helptext.app.listener.class">Plugins\WhereGroup\HelptextBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.helptext.app.listener.class">Plugins\WhereGroup\HelptextBundle\EventListener\ApplicationListener</parameter>
     </parameters>
 
     <services>

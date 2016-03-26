@@ -14,20 +14,20 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        $app->newAdd(
-            $app->getClass('GlobalMenu', 'dashboard')
+        $app->add(
+            $app->get('GlobalMenu', 'dashboard')
                 ->icon('icon-meter')
                 ->label('Dashboard')
                 ->path('metador_dashboard')
-        )->newAdd(
-            $app->getClass('GlobalMenu', 'admin')
+        )->add(
+            $app->get('GlobalMenu', 'admin')
                 ->icon('icon-cog')
                 ->label('Administration')
                 ->path('metador_admin_index')
                 ->active($app->routeStartsWith('metador_admin'))
                 ->setRole('ROLE_SUPERUSER')
-        )->newAdd(
-            $app->getClass('AdminMenu', 'index')
+        )->add(
+            $app->get('AdminMenu', 'index')
                 ->icon('icon-eye')
                 ->label('Übersicht')
                 ->path('metador_admin_index')

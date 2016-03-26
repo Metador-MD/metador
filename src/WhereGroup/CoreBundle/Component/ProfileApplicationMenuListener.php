@@ -35,11 +35,13 @@ abstract class ProfileApplicationMenuListener
         /***********************************************************************
          * Profile Menu
          ***********************************************************************/
-        $app->add('app-profile-menu', $this->profile, array(
-            'label'  => $this->name,
-            'path'   => 'metadata_index',
-            'params' => array('profile' => $this->profile)
-        ));
+        $app->add(
+            $app->get('ProfileMenu')
+                ->label($this->name)
+                ->path('metadata_index', array(
+                    'profile' => $this->profile
+                ))
+        );
 
         /***********************************************************************
          * Dashboard preview
@@ -47,36 +49,42 @@ abstract class ProfileApplicationMenuListener
         if ($app->isController('dashboard')) {
             $metadata = $this->metadata->getMetadata(10, 1, $this->profile);
 
-            $app->add('app-preview', $this->profile, array(
-                'template' => 'WhereGroupCoreBundle::dashboardPreview.html.twig',
-                'params'   => array(
-                    'title'   => $this->name,
-                    'profile' => $this->profile,
-                    'rows'    => $metadata['result']
-                )
-            ));
+            $app->add(
+                $app->get('Dashboard')
+                    ->template(
+                        'WhereGroupCoreBundle::dashboardPreview.html.twig',
+                        array(
+                            'title'   => $this->name,
+                            'profile' => $this->profile,
+                            'rows'    => $metadata['result']
+                        )
+                    )
+            );
+
+            unset($metadata);
         }
 
         if ($app->isBundle($this->bundle)) {
         /***********************************************************************
          * Profile Name
          ***********************************************************************/
-            $app->add('app-profile', 'profile', array(
-                'name'   => $this->name,
-                'active' => $app->isController('Profile')
-            ));
+            $app->add(
+                $app->get('Profile')
+                    ->name($this->name)
+                    ->active($app->isController('Profile'))
+            );
 
         /***********************************************************************
          * Plugin menu
          ***********************************************************************/
             if ($app->isAction('index')) {
-                $app->add('app-plugin-menu', 'new', array(
-                    'label'  => 'neu',
-                    'icon'   => 'icon-plus',
-                    'path'   => 'metadata_new',
-                    'params' => array('profile' => $this->profile),
-                    'active' => $app->isAction(array('new', 'use'))
-                ));
+                $app->add(
+                    $app->get('PluginMenu', 'new')
+                        ->label('neu')
+                        ->icon('icon-plus')
+                        ->path('metadata_new', array('profile' => $this->profile))
+                        ->active($app->isAction(array('new', 'use')))
+                );
             } else {
                 $data = array();
 
@@ -84,55 +92,50 @@ abstract class ProfileApplicationMenuListener
                     $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
                 }
 
-                $app->add('app-plugin-menu', 'index', array(
-                    'label'  => 'zurück',
-                    'icon'   => 'icon-redo2',
-                    'path'   => 'metadata_index',
-                    'data'   => $data,
-                    'params' => array('profile' => $this->profile)
-                ));
+                $app->add(
+                    $app->get('PluginMenu', 'index')
+                        ->label('zurück')
+                        ->icon('icon-redo2')
+                        ->path('metadata_index', array('profile' => $this->profile))
+                        ->active($app->isAction(array('new', 'use')))
+                        ->data($data)
+                );
             }
 
             if ($app->isAction('edit')) {
                 // TODO: get parameter from origin request.
-//                $id = $app->getParameter('id', 0);
+                $id = $app->getParameter('id', 0);
 
-                $app->add('app-plugin-menu', 'xml', array(
-                    'label'  => 'XML',
-                    'icon'   => 'icon-download',
-                    'path'   => 'metador_export_xml',
-                    'params' => array('id' => $id),
-                    'target' => '_BLANK'
-                ));
-
-                $app->add('app-plugin-menu', 'pdf', array(
-                    'label'  => 'PDF',
-                    'icon'   => 'icon-file-pdf',
-                    'path'   => 'metador_export_pdf',
-                    'params' => array('id' => $id)
-                ));
-
-                $app->add('app-plugin-menu', 'html', array(
-                    'label'  => 'HTML',
-                    'icon'   => 'icon-embed2',
-                    'path'   => 'metador_export_html',
-                    'params' => array('id' => $id)
-                ));
-
-
-                $app->add('app-plugin-menu', 'confirm', array(
-                    'label'  => 'löschen',
-                    'icon'   => 'icon-bin2',
-                    'path'   => 'metadata_confirm',
-                    'params' => array('profile' => $this->profile, 'id' => $id)
-                ));
+                $app->add(
+                    $app->get('PluginMenu', 'xml')
+                        ->label('XML')
+                        ->icon('icon-download')
+                        ->path('metador_export_xml', array('id' => $id))
+                        ->target('_BLANK')
+                )->add(
+                    $app->get('PluginMenu', 'pdf')
+                        ->label('PDF')
+                        ->icon('icon-file-pdf')
+                        ->path('metador_export_pdf', array('id' => $id))
+                )->add(
+                    $app->get('PluginMenu', 'html')
+                        ->label('HTML')
+                        ->icon('icon-embed2')
+                        ->path('metador_export_html', array('id' => $id))
+                )->add(
+                    $app->get('PluginMenu', 'confirm')
+                        ->label('löschen')
+                        ->icon('icon-bin2')
+                        ->path('metadata_confirm', array('profile' => $this->profile, 'id' => $id))
+                );
             }
 
             if ($app->isAction('new') || $app->isAction('edit')) {
-                $app->add('app-plugin-menu', 'save', array(
-                    'label'  => 'speichern',
-                    'icon'   => 'icon-floppy-disk'
-                ));
+                $app->add(
+                    $app->get('PluginMenu', 'save')
+                        ->label('speichern')
+                        ->icon('icon-floppy-disk')
+                );
             }
         }
     }

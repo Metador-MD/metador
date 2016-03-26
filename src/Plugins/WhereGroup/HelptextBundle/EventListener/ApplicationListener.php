@@ -4,7 +4,7 @@ namespace Plugins\WhereGroup\HelptextBundle\EventListener;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
-class ApplicationMenuListener
+class ApplicationListener
 {
     /**
      * @param ApplicationEvent $event
@@ -13,8 +13,8 @@ class ApplicationMenuListener
     {
         $app = $event->getApplication();
 
-        $app->newAdd(
-            $app->getClass('Script')
+        $app->add(
+            $app->get('Script')
                 ->file('bundles/wheregrouphelptext/helptext.js')
         );
     }

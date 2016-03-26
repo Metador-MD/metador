@@ -28,15 +28,15 @@ class ApplicationListener
 
         // ADMIN AREA
         if ($app->routeStartsWith('metador_admin')) {
-            $app->newAdd(
-                $app->getClass('AdminMenu', 'user')
+            $app->add(
+                $app->get('AdminMenu', 'user')
                     ->icon('icon-user')
                     ->label('Benutzer')
                     ->path('metador_admin_user')
                     ->active($app->isController('user'))
                     ->setRole('ROLE_SUPERUSER')
-            )->newAdd(
-                $app->getClass('AdminMenu', 'group')
+            )->add(
+                $app->get('AdminMenu', 'group')
                     ->icon('icon-users')
                     ->label('Gruppen')
                     ->path('metador_admin_group')
@@ -48,16 +48,16 @@ class ApplicationListener
         // GROUP CONTROLLER
         if ($app->isBundle('user') && $app->isController('group')) {
             if ($app->isAction('index')) {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'new')
+                $app->add(
+                    $app->get('PluginMenu', 'new')
                         ->icon('icon-users')
                         ->label('Neu')
                         ->path('metador_admin_group_new')
                 );
             // NOT GORUP INDEX
             } else {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'index')
+                $app->add(
+                    $app->get('PluginMenu', 'index')
                         ->icon('icon-redo2')
                         ->label('zurück')
                         ->path('metador_admin_group')
@@ -65,8 +65,8 @@ class ApplicationListener
             }
 
             if ($app->isAction('edit')) {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'delete')
+                $app->add(
+                    $app->get('PluginMenu', 'delete')
                         ->icon('icon-bin2')
                         ->label('löschen')
                         ->path(
@@ -86,8 +86,8 @@ class ApplicationListener
         if ($app->isBundle('user') && $app->isController('user')) {
             // USER INDEX
             if ($app->isAction('index')) {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'new')
+                $app->add(
+                    $app->get('PluginMenu', 'new')
                         ->icon('icon-user')
                         ->label('Neu')
                         ->path('metador_admin_user_new')
@@ -95,8 +95,8 @@ class ApplicationListener
 
             // NOT GORUP INDEX
             } else {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'index')
+                $app->add(
+                    $app->get('PluginMenu', 'index')
                         ->icon('icon-redo2')
                         ->label('zurück')
                         ->path('metador_admin_user')
@@ -105,8 +105,8 @@ class ApplicationListener
 
             // USER EDIT
             if ($app->isAction('edit')) {
-                $app->newAdd(
-                    $app->getClass('PluginMenu', 'delete')
+                $app->add(
+                    $app->get('PluginMenu', 'delete')
                         ->icon('icon-bin2')
                         ->label('löschen')
                         ->path(

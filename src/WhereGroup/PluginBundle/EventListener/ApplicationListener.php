@@ -25,8 +25,8 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        $app->newAdd(
-            $app->getClass('AdminMenu', 'plugin')
+        $app->add(
+            $app->get('AdminMenu', 'plugin')
                 ->icon('icon-power-cord')
                 ->label('Plugins')
                 ->path('metador_admin_plugin')
@@ -35,12 +35,12 @@ class ApplicationListener
         );
 
         if ($app->isBundle('plugin') && $app->isAction('index')) {
-            $app->newAdd(
-                $app->getClass('PluginMenu', 'save')
+            $app->add(
+                $app->get('PluginMenu', 'save')
                     ->icon('icon-floppy-disk')
                     ->label('speichern')
-            )->newAdd(
-                $app->getClass('PluginMenu', 'import')
+            )->add(
+                $app->get('PluginMenu', 'import')
                     ->icon('icon-upload')
                     ->label('importieren')
                     ->path('metador_admin_plugin_import')
@@ -49,15 +49,15 @@ class ApplicationListener
 
         if ($app->isRoute('metador_admin_index')) {
             if (!is_dir($this->tempFolder) || !is_writeable($this->tempFolder)) {
-                $app->newAdd(
-                    $app->getClass('AppInformation')
+                $app->add(
+                    $app->get('AppInformation')
                         ->warning('Order "/var/temp/" nicht beschreibbar!')
                 );
             }
 
             if (!is_dir($this->pluginFolder) || !is_writeable($this->pluginFolder)) {
-                $app->newAdd(
-                    $app->getClass('AppInformation')
+                $app->add(
+                    $app->get('AppInformation')
                         ->warning('Order "' . basename($this->pluginFolder) . '" nicht beschreibbar!')
                 );
             }
