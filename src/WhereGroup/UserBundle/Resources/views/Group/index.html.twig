@@ -23,7 +23,10 @@
                 </a>
             </div>
             <div class="alternate" title="{{ group.description }}">
-                {{ group.description |teaser(30) }}
+                {{ group.description|teaser(30) }}
+            </div>
+            <div class="count">
+                {{ group.users|length }}
             </div>
         </div>
     </div>

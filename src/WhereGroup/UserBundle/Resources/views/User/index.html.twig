@@ -28,6 +28,9 @@
             <div class="alternate">
                 {{ user.email }}
             </div>
+            <div class="count">
+                {{ user.groups|length }}
+            </div>
         </div>
     </div>
     {% endfor %}

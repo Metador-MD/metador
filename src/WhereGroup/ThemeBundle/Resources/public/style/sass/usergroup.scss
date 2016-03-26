@@ -2,6 +2,9 @@
 @import 'bundles/wheregrouptheme/style/sass-lib/mixins';
 @import 'bundles/wheregrouptheme/style/sass-lib/extensions';
 
+$silver: #c0c0c0;
+$white: #fff;
+
 .fs-view {
     border: 1px solid $primary;
     margin: 20px;
@@ -9,68 +12,94 @@
 }
 
 .title-box {
-    position: relative;
+    border-bottom: 4px solid $success;
     float: left;
     margin: 14px;
+    position: relative;
     width: ($page-width - $page-left-width) / 2 - 50;
-    border-bottom: 4px solid $success;
+
     &.disabled {
-        border-color: silver;
+        border-color: $silver;
     }
+
     &.superuser {
         border-color: $warning;
     }
+
     .title-box-logo {
-        text-align: center;
-        font-size: 60px;
         float: left;
+        font-size: 60px;
+        text-align: center;
         width: 80px;
+
         & > a:hover {
             text-decoration: none;
         }
     }
+
     .title-box-info {
         margin-left: 10px;
+
         .title {
+            @include pos(0, 0, '', 90px);
             font-size: 25px;
             font-weight: bold;
-            @include pos(0, 0, "", 90px);
         }
+
         .alternate {
-            font-style: italic;
+            @include pos(40px, 0, '', 90px);
             font-size: 12px;
-            @include pos(40px, 0, "", 90px);
+            font-style: italic;
+        }
+
+        .count {
+            color: darken($success, 30%);
+            border: 1px solid lighten($success, 10%);
+            background-color: lighten($success, 20%);
+            border-bottom-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 5px 10px;
+            position: absolute;
+            right: 0;
         }
     }
 }
 
 .basic-form {
     & > div {
+
         label {
             @extend %label;
             margin: 10px 0;
         }
-        input[type=text], input[type=password], select, textarea {
-            border-color: silver;
+
+        input[type=text],
+        input[type=password],
+        select,
+        textarea {
+            background-color: $white;
+            border: 1px solid $silver;
+            border-color: $silver;
+            border-radius: $radius;
             border-style: solid;
-            font-size: 12px;
+            box-shadow: lighten(#3d3f44, 60%) 1px 1px 3px;
             color: #333;
             display: block;
+            font-size: 12px;
             height: 30px;
-            padding: 5px;
-            background-color: white;
-            width: 100%;
-            border: 1px solid silver;
             padding: 10px 5px;
-            box-shadow: lighten(#3d3f44, 60%) 1px 1px 3px;
-            border-radius: $radius;
+            width: 100%;
+
             &[required=required] {
                 border-color: $warning;
             }
         }
+
         select {
             height: 80px;
         }
+
         textarea {
             height: 80px;
         }
