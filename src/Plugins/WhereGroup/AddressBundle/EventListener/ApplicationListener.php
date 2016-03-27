@@ -17,8 +17,7 @@ use Plugins\WhereGroup\AddressBundle\Component\AddressInterface;
 class ApplicationListener
 {
     protected $address = null;
-    protected $prefix  = 'address';
-
+    
     /**
      * @param AddressInterface $address
      */
@@ -39,19 +38,15 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        // $dashboard = new Dashboard($app, $this->prefix);
-        // $dashboard
-        //     ->setTemplate('WhereGroupAddressBundle::dashboardPreview.html.twig')
-        //     ->setParams(array(
-        //         'address' => $this->address->get()
-        //     ))
-        //     ->add();
-        //
-        // $script = new Script($app, $this->prefix);
-        // $script
-        //     ->setFile('bundles/wheregroupaddress/address.js')
-        //     ->add();
-        //
-        // unset($dashboard, $script);
+        $app->add(
+            $app->get('Dashboard')
+                ->template(
+                    'WhereGroupAddressBundle::dashboardPreview.html.twig',
+                    array('address' => $this->address->get())
+                )
+        )->add(
+            $app->get('Script')
+                ->file('bundles/wheregroupaddress/address.js')
+        );
     }
 }
