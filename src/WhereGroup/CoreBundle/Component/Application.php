@@ -52,6 +52,11 @@ class Application
         }
     }
 
+    public function getRequestStack()
+    {
+        return $this->requestStack;
+    }
+
     private function updateInformation()
     {
         $request = $this->requestStack->getCurrentRequest();
