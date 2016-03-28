@@ -5,14 +5,9 @@ namespace Plugins\WhereGroup\DatasetBundle\EventListener;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
 
-/**
- * Class ApplicationMenuListener
- * @package Plugins\WhereGroup\DatasetBundle\EventListener
- */
-class ApplicationMenuListener extends ProfileApplicationMenuListener
+class ApplicationListener extends ProfileApplicationMenuListener
 {
     protected $pluginId = 'profile-dataset';
-    protected $profile  = 'dataset'; // remove
     protected $name     = 'Geodaten';
     protected $bundle   = 'ProfileDataset';
 

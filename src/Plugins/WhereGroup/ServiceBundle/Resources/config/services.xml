@@ -5,7 +5,7 @@
     <parameters>
         <!-- EVENT LISTENER -->
         <parameter key="metador.profile.service.metadata.listener.class">Plugins\WhereGroup\ServiceBundle\EventListener\MetadorListener</parameter>
-        <parameter key="metador.profile.service.menu.listener.class">Plugins\WhereGroup\ServiceBundle\EventListener\ApplicationMenuListener</parameter>
+        <parameter key="metador.profile.service.menu.listener.class">Plugins\WhereGroup\ServiceBundle\EventListener\ApplicationListener</parameter>
     </parameters>
     <services>
         <!-- EVENT LISTENER -->

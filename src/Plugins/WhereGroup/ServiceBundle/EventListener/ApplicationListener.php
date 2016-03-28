@@ -6,11 +6,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
 
-class ApplicationMenuListener extends ProfileApplicationMenuListener
+class ApplicationListener extends ProfileApplicationMenuListener
 {
-    protected $profile = 'service';
-    protected $name    = 'Dienste';
-    protected $bundle  = 'ProfileService';
+    protected $pluginId = 'profile-service';
+    protected $name     = 'Dienste';
+    protected $bundle   = 'ProfileService';
 
     public function onLoading(ApplicationEvent $event)
     {

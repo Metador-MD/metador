@@ -8,13 +8,13 @@ class Profile extends Base
 
     public function name($name)
     {
-        $this->data[$this->prefix]['name'] = $name;
+        $this->data['name'] = $name;
         return $this;
     }
 
     public function active($active)
     {
-        $this->data[$this->prefix]['active'] = $active;
+        $this->data['active'] = $active;
         return $this;
     }
 }

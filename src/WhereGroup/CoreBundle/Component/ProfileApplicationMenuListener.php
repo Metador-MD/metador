@@ -138,6 +138,8 @@ abstract class ProfileApplicationMenuListener
                         ->icon('icon-floppy-disk')
                 );
             }
+
+            // die($app->debug());
         }
     }
 }

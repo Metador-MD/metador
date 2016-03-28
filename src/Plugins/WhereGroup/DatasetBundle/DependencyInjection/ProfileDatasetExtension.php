@@ -22,12 +22,4 @@ class ProfileDatasetExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
     }
-
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return 'profile_dataset';
-    }
 }
