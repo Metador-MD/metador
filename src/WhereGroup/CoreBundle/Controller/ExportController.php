@@ -18,37 +18,33 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        $granted = $this
-            ->get('security.authorization_checker')
-            ->isGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
 
-        if ($data = $this->get('metadata')->getById($id)) {
-            $p = $data->getObject();
-
-            if ($granted === true || $data->getPublic() === true) {
-
-                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:xml', array(
-                    'data' => array(
-                        'p' => $p,
-                    )
-                ));
-            }
-
+        if (!$data = $this->get('metadata')->getById($id)) {
             $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
-                "message" => "Zugriff verweigert."
+                "message" => "Datensatz nicht gefunden"
             ));
-
-        } else {
-            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
-                "message" => "Datensatz nicht gefunden."
-            ));
+            return $this->xmlResponse($xml->getContent());
         }
 
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml');
-        $response->setContent($xml->getContent());
+        if ($data->getReadonly()) {
+            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
+                "message" => "Zugriff auf Datensatz verweigert"
+            ));
+            return $this->xmlResponse($xml->getContent());
+        }
 
-        return $response;
+        $p = $data->getObject();
+
+        $className = $this
+            ->get('metador_plugin')
+            ->getPluginClassName($p['_profile']);
+
+        $xml = $this->render($className .":Export:metadata.xml.twig", array(
+            "p" => $p
+        ));
+
+        return $this->xmlResponse($xml->getContent());
     }
 
     /**
@@ -76,25 +72,43 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $granted = $this
-            ->get('security.authorization_checker')
-            ->isGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
 
-        if ($data = $this->get('metadata')->getById($id)) {
-            $p = $data->getObject();
-
-            if ($granted === true || $data->getPublic() === true) {
-                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:pdf', array(
-                    'data' => array(
-                        'p' => $p,
-                    )
-                ));
-            }
-
-            return new Response('Zugriff verweigert.');
+        if (!$data = $this->get('metadata')->getById($id)) {
+            return new Response('Datensatz nicht gefunden');
         }
 
-        return new Response('Datensatz nicht gefunden.');
+        if ($data->getReadonly()) {
+            return new Response('Zugriff auf Datensatz verweigert');
+        }
+
+        $p = $data->getObject();
+
+        $className = $this
+            ->get('metador_plugin')
+            ->getPluginClassName($p['_profile']);
+
+        $html = $this->render($className . ":Export:pdf.html.twig", array(
+            "p" => $p
+        ));
+
+        error_reporting(E_ERROR);
+
+        require_once __DIR__ . '/../../../../vendor/tecnick.com/tcpdf/tcpdf.php';
+
+        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Metador');
+        $pdf->SetTitle($p['title']);
+        $pdf->SetSubject('Metadaten');
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->SetMargins(20, 20, 15);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->setAutoPageBreak(true, 20);
+        $pdf->AddPage();
+        $pdf->writeHTML($html->getContent(), true, true, false, false, '');
+        $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
     }
 
     /**
@@ -103,24 +117,32 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-        $granted = $this
-            ->get('security.authorization_checker')
-            ->isGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
 
-        if ($data = $this->get('metadata')->getById($id)) {
-            $p = $data->getObject();
-
-            if ($granted === true || $data->getPublic() === true) {
-                return $this->forward('Profile' . ucfirst($p['_profile']) . 'Bundle:Profile:html', array(
-                    'data' => array(
-                        'p' => $p,
-                    )
-                ));
-            }
-
-            return new Response('Zugriff verweigert.');
+        if (!$data = $this->get('metadata')->getById($id)) {
+            return new Response('Datensatz nicht gefunden');
         }
 
-        return new Response('Datensatz nicht gefunden.');
+        if ($data->getReadonly()) {
+            return new Response('Zugriff auf Datensatz verweigert');
+        }
+
+        $p = $data->getObject();
+
+        $className = $this
+            ->get('metador_plugin')
+            ->getPluginClassName($p['_profile']);
+
+        return $this->render($className . ":Export:pdf.html.twig", array(
+            "p" => $p
+        ));
+    }
+
+    private function xmlResponse($xml)
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        $response->setContent($xml);
+        return $response;
     }
 }

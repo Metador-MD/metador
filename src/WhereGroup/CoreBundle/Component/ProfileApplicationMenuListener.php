@@ -39,7 +39,7 @@ abstract class ProfileApplicationMenuListener
             $app->get('ProfileMenu')
                 ->label($this->name)
                 ->path('metadata_index', array(
-                    'profile' => $this->profile
+                    'profile' => $this->pluginId
                 ))
         );
 
@@ -47,7 +47,7 @@ abstract class ProfileApplicationMenuListener
          * Dashboard preview
          ***********************************************************************/
         if ($app->isController('dashboard')) {
-            $metadata = $this->metadata->getMetadata(10, 1, $this->profile);
+            $metadata = $this->metadata->getMetadata(10, 1, $this->pluginId);
 
             $app->add(
                 $app->get('Dashboard')
@@ -55,7 +55,7 @@ abstract class ProfileApplicationMenuListener
                         'WhereGroupCoreBundle::dashboardPreview.html.twig',
                         array(
                             'title'   => $this->name,
-                            'profile' => $this->profile,
+                            'profile' => $this->pluginId,
                             'rows'    => $metadata['result']
                         )
                     )
@@ -82,7 +82,7 @@ abstract class ProfileApplicationMenuListener
                     $app->get('PluginMenu', 'new')
                         ->label('neu')
                         ->icon('icon-plus')
-                        ->path('metadata_new', array('profile' => $this->profile))
+                        ->path('metadata_new', array('profile' => $this->pluginId))
                         ->active($app->isAction(array('new', 'use')))
                 );
             } else {
@@ -96,7 +96,7 @@ abstract class ProfileApplicationMenuListener
                     $app->get('PluginMenu', 'index')
                         ->label('zurück')
                         ->icon('icon-redo2')
-                        ->path('metadata_index', array('profile' => $this->profile))
+                        ->path('metadata_index', array('profile' => $this->pluginId))
                         ->active($app->isAction(array('new', 'use')))
                         ->data($data)
                 );
@@ -127,7 +127,7 @@ abstract class ProfileApplicationMenuListener
                     $app->get('PluginMenu', 'confirm')
                         ->label('löschen')
                         ->icon('icon-bin2')
-                        ->path('metadata_confirm', array('profile' => $this->profile, 'id' => $id))
+                        ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
                 );
             }
 

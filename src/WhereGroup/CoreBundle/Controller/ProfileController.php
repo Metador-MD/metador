@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/metadata")
  */
-class MetadataController extends Controller
+class ProfileController extends Controller
 {
     /**
      * @Route("/{profile}/index", name="metadata_index")
@@ -25,7 +25,9 @@ class MetadataController extends Controller
             $profile
         );
 
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:index', array(
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
+        return $this->forward($className . ':Profile:index', array(
             'data' => array(
                 'profile' => $profile,
                 'rows'    => $metadata['result'],
@@ -47,11 +49,12 @@ class MetadataController extends Controller
         // SAVE
         } elseif (($p = $request->request->get('p', false))
             && $this->get('metadata')->saveObject($p)) {
-
             return $this->redirectToRoute('metadata_index', array('profile' => $profile));
         }
 
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:new', array(
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
+        return $this->forward($className . ':Profile:new', array(
             'data' => array(
                 'profile'   => $profile,
                 'p'         => $p,
@@ -74,7 +77,9 @@ class MetadataController extends Controller
             unset($p['fileIdentifier'], $p['identifier']);
         }
 
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:use', array(
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
+        return $this->forward($className . ':Profile:use', array(
             'data' => array(
                 'profile'   => $profile,
                 'p'         => $p,
@@ -107,7 +112,9 @@ class MetadataController extends Controller
             }
         }
 
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:edit', array(
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
+        return $this->forward($className . ':Profile:edit', array(
             'data' => array(
                 'profile'   => $profile,
                 'id'        => $id,
@@ -125,7 +132,7 @@ class MetadataController extends Controller
      */
     public function confirmAction($profile, $id)
     {
-        return $this->forward('Profile' . ucfirst($profile) . 'Bundle:Profile:confirm', array(
+        return $this->forward($this->getClassName($profile) . ':Profile:confirm', array(
             'data' => array(
                 'id'      => $id,
                 'profile' => $profile,
@@ -163,20 +170,16 @@ class MetadataController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
+        return $this->redirectToRoute('metadata_index', array('profile' => $profile));
     }
 
     private function getExample($profile)
     {
-        try {
-            $path = $this->container
-                ->get('kernel')
-                ->locateResource('@Profile' . ucfirst($profile) . 'Bundle/Resources/config/wizard/');
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
 
-        } catch (\Exception $e) {
-            // TODO: MESSAGE;
-            return array();
-        }
+        $path = $this
+            ->get('kernel')
+            ->locateResource('@' . $className . '/Resources/config/wizard/');
 
         return $this->container->get('metador_wizard')->getExamples($path);
     }

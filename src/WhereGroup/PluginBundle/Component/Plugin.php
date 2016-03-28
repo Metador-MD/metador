@@ -92,6 +92,34 @@ class Plugin
         return $this->plugins;
     }
 
+    public function getPlugin($plugin)
+    {
+        return isset($this->plugins[$plugin])
+            ? $this->plugins[$plugin]
+            : null;
+    }
+
+    public function hasPluginParameter($plugin, $parameter)
+    {
+        return isset($this->plugins[$plugin][$parameter])
+            ? true
+            : false;
+    }
+
+    public function getPluginParameter($plugin, $parameter)
+    {
+        if (!$this->hasPluginParameter($plugin, $parameter)) {
+            throw new \Exception("Unknown plugin or paramter");
+        }
+
+        return $this->plugins[$plugin][$parameter];
+    }
+
+    public function getPluginClassName($plugin)
+    {
+        return $this->getPluginParameter($plugin, 'class_name');
+    }
+
     /**
      * @param $request
      * @return array

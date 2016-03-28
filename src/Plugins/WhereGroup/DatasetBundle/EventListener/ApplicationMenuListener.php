@@ -11,9 +11,10 @@ use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
  */
 class ApplicationMenuListener extends ProfileApplicationMenuListener
 {
-    protected $profile = 'dataset';
-    protected $name    = 'Geodaten';
-    protected $bundle  = 'ProfileDataset';
+    protected $pluginId = 'profile-dataset';
+    protected $profile  = 'dataset'; // remove
+    protected $name     = 'Geodaten';
+    protected $bundle   = 'ProfileDataset';
 
     /**
      * @param ApplicationEvent $event
