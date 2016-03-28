@@ -132,7 +132,9 @@ class ProfileController extends Controller
      */
     public function confirmAction($profile, $id)
     {
-        return $this->forward($this->getClassName($profile) . ':Profile:confirm', array(
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
+        return $this->forward($className . ':Profile:confirm', array(
             'data' => array(
                 'id'      => $id,
                 'profile' => $profile,

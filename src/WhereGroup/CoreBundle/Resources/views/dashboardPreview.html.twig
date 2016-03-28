@@ -13,13 +13,6 @@
             <td>
                 <a href="{{ path('metadata_edit', {'profile': profile, 'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
             </td>
-            <td class="last-1">
-{% if row.readonly == 0 %}
-                <a href="{{ path('metadata_confirm', {'profile': profile, 'id':row.id}) }}">
-                    <span class="icon-bin2"></span>
-                </a>
-{% endif %}
-            </td>
         </tr>
         {% endfor %}
     </table>
