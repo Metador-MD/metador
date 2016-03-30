@@ -173,12 +173,13 @@
             border-top: 1px solid white;
         }
 
-        & a {
-            padding: 5px 0;
+        & a,
+        & > .profile-menu-label {
+            color: lighten($font-color, 15%);
             display: block;
             font-size: 14px;
+            padding: 5px 0;
             text-decoration: none;
-            color: lighten($font-color, 15%);
             text-shadow: lighten($font-color, 60%) 1px 1px 2px;
         }
     }

@@ -9,6 +9,7 @@
     {% if not user.isactive %}
         {% set class = class ~ ' disabled' %}
     {% endif %}
+
     {% if 'ROLE_SUPERUSER' in user.roles %}
         {% set class = class ~ ' superuser' %}
     {% endif %}
@@ -28,7 +29,7 @@
             <div class="alternate">
                 {{ user.email }}
             </div>
-            <div class="count">
+            <div class="count" title="{% for group in user.groups %}{{ group.role ~ "\n" }}{% endfor %}">
                 {{ user.groups|length }}
             </div>
         </div>
