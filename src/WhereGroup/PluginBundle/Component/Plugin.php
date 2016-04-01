@@ -245,7 +245,9 @@ class Plugin
         $plugins = array();
         $finder = new Finder();
 
-        $finder->files()
+        $finder
+            ->followLinks()
+            ->files()
             ->in($this->pluginPaths)
             ->path('Resources/config/')
             ->name('plugin.yml');
