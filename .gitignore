@@ -21,4 +21,5 @@
 /bin
 /vendor
 /web/bundles
+/web/public
 /src/WhereGroup/ThemeBundle/Resources/public/css/metador*.css
