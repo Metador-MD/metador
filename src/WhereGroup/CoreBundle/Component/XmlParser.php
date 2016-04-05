@@ -55,8 +55,8 @@ class XmlParser
     }
 
     /**
-     * Load JSON schema
-     * @param  string $json schema
+     * @param $json
+     * @return $this
      */
     public function loadSchema($json)
     {
@@ -72,6 +72,8 @@ class XmlParser
                 $array
             )
         ));
+
+        return $this;
     }
 
     /**
@@ -92,11 +94,11 @@ class XmlParser
     {
         if (isset($this->schema->cmd)) {
             foreach ($this->schema->cmd as $key => $val) {
-                if ($key === "addNamespaces") {
+                if ($key === "_addNamespaces") {
                     $this->registerNamespaces($val);
-                } elseif ($key === "removeEmptyValues") {
+                } elseif ($key === "_removeEmptyValues") {
                     $this->removeEmptyValues = $val ? true : false;
-                } elseif ($key === "sortResult") {
+                } elseif ($key === "_sortResult") {
                     $this->sort = $val ? true : false;
                 }
             }
@@ -123,28 +125,28 @@ class XmlParser
     {
         $result = array();
 
-        $commands['recursive'] = isset($commands['recursive']) ? $commands['recursive'] : false;
-        $commands['asArray']   = isset($commands['asArray']) ? $commands['asArray'] : false;
-        $commands['_function']  = isset($commands['_function']) ? $commands['_function'] : null;
+        $commands['_recursive'] = isset($commands['_recursive']) ? $commands['_recursive'] : false;
+        $commands['_asArray']   = isset($commands['_asArray'])   ? $commands['_asArray']   : false;
+        $commands['_function']  = isset($commands['_function'])  ? $commands['_function']  : null;
 
         foreach ($object as $key => $val) {
             switch ($key) {
                 case "_":
-                case "cmd":
+                case "_cmd":
                     break;
-                case "path":
+                case "_path":
                     $path .= $val;
                     break;
-                case "asArray":
-                    $commands['asArray'] = $val;
+                case "_asArray":
+                    $commands['_asArray'] = $val;
                     break;
-                case "recursive":
-                    $commands['recursive'] = $val;
+                case "_recursive":
+                    $commands['_recursive'] = $val;
                     break;
                 case "_function":
                     $commands['_function'] = $val;
                     break;
-                case "data":
+                case "_data":
                     if (is_string($val) && isset($this->cache[$val])) {
                         $result = $this->parseData($this->cache[$val], $name, $path, $context, $commands);
                     } else {
@@ -212,7 +214,7 @@ class XmlParser
             foreach ($nodes as $node) {
                 $dataRecTmp = array();
 
-                if ($commands['recursive']) {
+                if ($commands['_recursive']) {
                     $dataRecTmp = $this->parseData($data, $name, $path, $node, $commands);
                 }
 
@@ -225,7 +227,7 @@ class XmlParser
             }
         }
 
-        return $commands['asArray'] ? $tmp : $this->getCleanArray($tmp);
+        return $commands['_asArray'] ? $tmp : $this->getCleanArray($tmp);
     }
 
     /**
