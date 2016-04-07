@@ -27,16 +27,16 @@
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "tecnick.com/tcpdf": "dev-master",
-        "ramsey/uuid": "~2.8",
+        "tecnickcom/tcpdf": "dev-master",
+        "ramsey/uuid": "~2.8"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "~2.3",
         "phpunit/phpunit": "4.8.*",
         "squizlabs/php_codesniffer": "2.*",
         "sebastian/phpcpd": "2.*",
         "phpmd/phpmd": "^2.3",
         "pdepend/pdepend": "^2.2"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
         "post-root-package-install": [
