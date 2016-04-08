@@ -92,8 +92,8 @@ class XmlParser
      */
     public function parse()
     {
-        if (isset($this->schema->cmd)) {
-            foreach ($this->schema->cmd as $key => $val) {
+        if (isset($this->schema->_cmd)) {
+            foreach ($this->schema->_cmd as $key => $val) {
                 if ($key === "_addNamespaces") {
                     $this->registerNamespaces($val);
                 } elseif ($key === "_removeEmptyValues") {
@@ -240,6 +240,7 @@ class XmlParser
     private function getValue($xpath, $context = null)
     {
         $result = array();
+
         $nodes = $this->xp->query($xpath, $context);
 
         if ($nodes) {

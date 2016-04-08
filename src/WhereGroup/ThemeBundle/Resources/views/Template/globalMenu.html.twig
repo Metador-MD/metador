@@ -1,7 +1,7 @@
 <ul class="global-menu">
     {% if app.user.username is defined %}
     <li>
-        <a href="{{ path('logout') }}" title="{{ app.user.username }} {{ 'abmelden'|trans }}">
+        <a href="{{ path('logout') }}" title="{{ app.user.username }} {{ 'abmelden'|trans }}" class="global-menu-item">
             <span class="icon-switch"></span>
         </a>
     </li>
@@ -19,7 +19,7 @@
     {# USE TEMPLATE #}
     {% else %}
         <li class="{% if item.active is defined and item.active %}act{% endif %}">
-            <a href="{{ path(item.path, item.params) }}">
+            <a href="{{ path(item.path, item.params) }}" class="global-menu-item">
                 {% if item.icon is defined %}
                     <span class="{{ item.icon }}"></span>
                 {% endif %}

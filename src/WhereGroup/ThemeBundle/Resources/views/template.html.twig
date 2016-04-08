@@ -30,8 +30,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="page">
-    <div class="logo"></div>
+<div class="page" data-page="">
     <div class="page-top">
 	{% block global_menu %}
 	    {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
@@ -49,6 +48,17 @@
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="page-top-center">
+        {% for item in applicationGet('app-page-center') %}
+        {# RAW CONTENT #}
+        {% if item.raw is defined %}
+            {{ item.raw|raw }}
+        {# INCLUDE CONTENT #}
+        {% elseif item.template is defined %}
+            {{ include(item.template, item.params) }}
+        {% endif %}
+        {% endfor %}
     </div>
     <div class="page-center">
         {% block center %}{% endblock %}

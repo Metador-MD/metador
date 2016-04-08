@@ -1,39 +1,27 @@
 @import 'bundles/wheregrouptheme/style/sass-lib/config';
 @import 'bundles/wheregrouptheme/style/sass-lib/mixins';
+@import 'bundles/wheregrouptheme/style/sass-lib/extensions';
 
-.global-menu, .content-menu ul, .page-menu-list, .profile-list, .plugin-menu-list  {
-    margin: 0;
+.global-menu,
+.content-menu ul,
+.page-menu-list,
+.profile-list,
+.plugin-menu-list  {
     list-style: none;
+    margin: 0;
     z-index: 1;
 }
 
-.global-menu {
-    height: $global-menu-height;
-    width: $page-width;
-    margin-left:-($page-width/2);
-    @include pos(0,'','',50%);
-
-    & > li {
-        float: right;
-    }
-}
-
 .plugin-menu {
-    border: 1px solid darken($bright, 30%);
-    background-color: $secondary;
+    @include pos($page-top-height - 40px, 0, '', 0);
+    border-bottom: 1px solid darken($bright, 30%);
     height: 40px;
-    @include pos($page-top-height - 40px,0,'',0);
 }
 
 .plugin-menu-content {
-    padding: 0 10px;
+    @include pos(0, '', 0, 50%);
+    margin-left: -($page-width / 2);
     width: $page-width;
-    margin-left:-($page-width/2);
-    border-width: 0 1px 0 1px;
-    border-style: solid;
-    border-color: darken($secondary, 10%);
-
-    @include pos(0,'',0,50%);
 }
 
 .plugin-menu-content-left {
@@ -49,18 +37,18 @@
 }
 
 .profile-select > .profile-list {
-    display: none;
-    position: absolute;
-    // width: 150px;
-    text-align: left;
     background-color: $primary;
-    color: $primary-contrast;
-    padding: 10px;
-    border-width: 0 1px 1px 1px;
-    border-style: solid;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     border-color: darken($primary, 5%);
+    border-style: solid;
+    border-width: 0 1px 1px;
+    color: $primary-contrast;
+    display: none;
     margin-top: -5px;
-    border-bottom-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    text-align: left;
 
     & > li {
         height: 30px;
@@ -68,10 +56,10 @@
 
         & > a,
         & button {
+            border-radius: 8px;
             color: $primary-contrast;
             display: block;
             padding: 0 10px;
-            border-radius: 8px;
 
             &:hover {
                 background-color: lighten($primary, 5%);
@@ -87,9 +75,9 @@
 
 .profile-select.act > .profile-list {
     background-color: $primary-contrast;
-    border-width: 0 1px 1px 1px;
-    border-style: solid;
     border-color: darken($primary-contrast, 10%);
+    border-style: solid;
+    border-width: 0 1px 1px;
 
     & > li {
         & > a,
@@ -107,50 +95,70 @@
     display: block;
 }
 
-.global-menu > li > a,
-.global-menu > li button,
-.profile-list-label {
-    color: $primary-contrast;
-    font-size: 14px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    padding: 0 10px;
-    display: block;
-    border-width: 0 1px 0 1px;
-    border-style: solid;
+%list-label {
     border-color: $primary;
-}
-
-.global-menu > li:hover > a,
-// .global-menu > li:hover button,
-.global-menu > li:hover .profile-list-label {
-    color: $primary-contrast;
-}
-
-.global-menu > li.act > a,
-.global-menu > li.act .profile-list-label {
-    background-color: $primary-contrast;
-    color: $primary;
-    border-width: 0 1px 0 1px;
     border-style: solid;
-    border-color: $primary-contrast;
-    border-top-radius: 8px;
+    border-width: 0 1px;
+    color: $primary-contrast;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    padding: 0 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.profile-list-label {
+    @extend %list-label;
+}
+
+.global-menu {
+    @include pos(0, '', '', 50%);
+    height: $global-menu-height;
+    margin-left: -($page-width / 2);
+    width: $page-width;
+
+    & > li {
+        @extend %no-select;
+        float: right;
+
+        &.active {
+            border-bottom: 4px solid $success;
+        }
+
+        & .global-menu-item {
+            @extend %list-label;
+            border: 0;
+        }
+
+        & .profile-list-label {
+            color: $primary-contrast;
+        }
+
+        &.act > a,
+        &.act > .profile-list-label {
+            background-color: $primary-contrast;
+            border: 0;
+            color: $primary;
+        }
+    }
 }
 
 .page-menu-list {
-    padding: 0;
-    display: block;
     border-bottom: 1px solid lighten($bright, 10%);
+    display: block;
+    padding: 0;
 
     & > li {
-        padding: 0 10px;
-        border-top: 1px solid lighten($bright, 10%);
+        @extend %no-select;
+
         border-bottom: 1px solid darken($bright, 10%);
+        border-top: 1px solid lighten($bright, 10%);
+        color: lighten($font-color, 15%);
         cursor: pointer;
         font-size: 14px;
-        color: lighten($font-color, 15%);
-        text-shadow: lighten($font-color, 60%) 1px 1px 2px;
+        padding: 0 10px;
+        text-shadow: $white 1px 1px 2px;
 
         &:hover {
             background-color: lighten($bright, 65%);
@@ -158,15 +166,16 @@
 
         &.act {
             background-color: darken($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-bottom: 1px solid lighten($dark, 50%);
+            border-bottom-left-radius: 4px;
             border-left: 4px solid $primary;
             border-top: 1px solid lighten($dark, 50%);
-            border-bottom: 1px solid lighten($dark, 50%);
+            border-top-left-radius: 4px;
             color: $font-color;
             // Menuepunkt nach rechts und links gezogen um Border zu verdecken.
-            margin-right: -1px;
             margin-left: -4px;
-            background-image: url('../img/noise.png');
-            border-left-radius: 5px;
+            margin-right: -1px;
         }
 
         &:first-child {
@@ -180,7 +189,7 @@
             font-size: 14px;
             padding: 5px 0;
             text-decoration: none;
-            text-shadow: lighten($font-color, 60%) 1px 1px 2px;
+            text-shadow: $white 1px 1px 2px;
         }
     }
 
@@ -190,31 +199,26 @@
     float: right;
     padding: 0 5px;
 
-    & > button, & > a {
-        color: lighten($secondary, 40%);
-        text-shadow: darken($secondary, 20%) 1px 1px 2px;
-
-        &:hover {
-            color: lighten($secondary, 20%);
-        }
-    }
-
-    & > a {
+    & > .plugin-menu-item {
+        color: $secondary-origin;
+        cursor: pointer;
         display: block;
+        font-size: 14px;
+        margin-left: 5px;
+        text-shadow: $white 1px 1px 1px;
 
         &:hover {
+            color: $secondary;
             text-decoration: none;
         }
     }
 }
 
 .no-style-button {
-    padding: 0;
-    margin: 0;
-    display: block;
-    border: 0;
     background-color: transparent;
+    border: 0;
+    display: block;
     height: 40px;
-    // color: lighten($font-color, 5%);
-    // text-shadow: lighten($font-color, 60%) 1px 1px 2px;
+    margin: 0;
+    padding: 0;
 }

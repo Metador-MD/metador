@@ -30,3 +30,9 @@
     -ms-user-select: $select;
     user-select: $select;
 }
+
+@mixin calc($key, $value) {
+  #{$key}: -webkit-calc(#{$value});
+  #{$key}: -moz-calc(#{$value});
+  #{$key}: calc(#{$value});
+}

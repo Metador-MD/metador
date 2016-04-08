@@ -29,3 +29,10 @@
     display: inline-block;
     zoom: 1;  *display: inline;  /* IE7 Hack */
 }
+
+%no-select {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+}

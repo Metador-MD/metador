@@ -9,19 +9,23 @@ $secondary-origin: #69737d;
 $secondary: lighten($secondary-origin, 20%);
 $secondary-contrast: lighten($secondary, 20%);
 
+//
+$global-menu: $primary;
+$plugin-menu: $primary-contrast;
+
 // OTHER COLORS
 $error: #e68e8a;
 $warning: #fea500;
 $notice: #82acde;
 $success: #73c47f;
+$white: #fff;
 
-$logo: '';
 $background: '../img/background.jpg';
 
 // SIZES
 $page-width: 960px;
 $page-left-width: 180px;
-$page-top-height: 150px;
+$page-top-height: 85px;
 $page-bottom-hight: 20px;
 $global-menu-height: 40px;
 $bright: #e7e7e7;

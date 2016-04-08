@@ -31,13 +31,18 @@ class TeaserExtension extends \Twig_Extension
      * @param int $maxLen
      * @return string
      */
-    public function teaser($string, $maxLen = 100)
+    public function teaser($string, $maxLen = 100, $force = false)
     {
         $teaser = '';
         $count  = 0;
+
+        if ($force) {
+            $teaser = substr($string, 0, $maxLen);
+
+            return $teaser . (strlen($string) === strlen($teaser) ? '' : ' ...');
+        }
+
         $words  = explode(' ', $string);
-
-
 
         foreach ($words as $word) {
             $count += strlen($word);

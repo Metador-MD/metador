@@ -1,5 +1,5 @@
 {% for item in applicationGet('app-plugin-menu') %}
-    
+
 {% set class = item.active is defined and item.active ? 'act' : '' %}
 {% set data  = '' %}
 
@@ -15,20 +15,20 @@
 
 {# INCLUDE CONTENT #}
 {% elseif item.template is defined %}
-    {% include item.template %}
+    {% include item.template with item.params %}
 
 {# USE TEMPLATE #}
 {% else %}
     <li class="{{ class|trim }}" {{ data|trim|raw }}>
         {% if item.path is defined %}
-        <a href="{{ path(item.path, item.params) }}"{% if item.target is defined %} target="{{ item.target }}"{% endif %}>
+        <a href="{{ path(item.path, item.params) }}"{% if item.target is defined %} target="{{ item.target }}"{% endif %} class="plugin-menu-item">
             {% if item.icon is defined %}
                 <span class="{{ item.icon }}"></span>
             {% endif %}
             {{ item.label|trans }}
         </a>
         {% elseif item.label is defined %}
-        <button type="submit" class="no-style-button">
+        <button type="submit" class="no-style-button plugin-menu-item">
             {% if item.icon is defined %}
                 <span class="{{ item.icon }}"></span>
             {% endif %}
