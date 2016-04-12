@@ -1,0 +1,66 @@
+@import 'bundles/wheregrouptheme/style/sass-lib/config';
+
+.metadata-info {
+    background-color: lighten($success, 15%);
+    border-bottom: 1px solid $secondary;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+
+    .metadata-info-roles,
+    .metadata-info-public {
+        color: darken($success, 10%);
+        font-size: 20px;
+        text-shadow: darken($white, 10%) 1px 1px 0;
+        vertical-align: middle;
+
+        &:hover {
+            color: darken($success, 30%);
+        }
+    }
+
+    .metadata-info-public {
+        cursor: pointer;
+        float: left;
+    }
+
+    .metadata-info-public-title {
+        color: darken($notice, 10%);
+        display: none;
+        font-size: 14px;
+        text-shadow: darken($white, 10%) 1px 1px 0;
+        vertical-align: middle;
+    }
+
+    .metadata-info-public-title-private {
+        color: darken($success, 10%);
+        font-size: 14px;
+        text-shadow: darken($white, 10%) 1px 1px 0;
+        vertical-align: middle;
+    }
+
+    .metadata-info-roles {
+        float: right;
+    }
+
+    &.public {
+        background-color: lighten($notice, 15%);
+
+        .metadata-info-roles,
+        .metadata-info-public {
+            color: darken($notice, 10%);
+
+            &:hover {
+                color: darken($notice, 30%);
+            }
+        }
+
+        .metadata-info-public-title {
+            display: inline;
+        }
+
+        .metadata-info-public-title-private {
+            display: none;
+        }
+    }
+}

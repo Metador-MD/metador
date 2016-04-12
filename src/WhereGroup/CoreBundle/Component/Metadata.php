@@ -46,7 +46,8 @@ class Metadata implements MetadataInterface
 
     /**
      * @param $metadataId
-     * @return mixed
+     * @return EntityMetadata
+     * @throws \Exception
      */
     public function getById($metadataId)
     {
@@ -55,6 +56,10 @@ class Metadata implements MetadataInterface
             ->getManager()
             ->getRepository($this->repository)
             ->findOneById($metadataId);
+
+        if (is_null($metadata)) {
+            throw new \Exception('Datensatz existiert nicht.');
+        }
 
         $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
 
@@ -239,6 +244,7 @@ class Metadata implements MetadataInterface
         $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setProfile($p['_profile']);
+        $metadata->setPublic(isset($p['_public']) && $p['_public'] === '1' ? true : false);
         $metadata->setSearchfield(trim($searchfield));
         $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($date));

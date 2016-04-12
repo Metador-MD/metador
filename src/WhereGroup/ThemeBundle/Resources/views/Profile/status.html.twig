@@ -1,0 +1,9 @@
+<div class="metadata-info{% if public %} public{% endif %}" data-element="metadata-info">
+    <span class="icon-earth metadata-info-public" data-cmd="metadata-toggle-public"></span>
+
+    <span class="metadata-info-public-title">{% trans %}öffentlich{% endtrans %}</span>
+    <span class="metadata-info-public-title-private">{% trans %}privat{% endtrans %}</span>
+
+    <span class="icon-users metadata-info-roles" title="{% for group in groups %}{{ '\n' ~ group }}{% endfor %}"></span>
+    <input type="hidden" name="p[_public]" data-element="metadata-public" value="{% if public is defined and public == true %}1{% else %}0{% endif %}" />
+</div>

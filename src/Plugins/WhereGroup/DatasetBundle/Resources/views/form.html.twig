@@ -3,17 +3,39 @@
 {% block title %}Metador - {% trans %}Daten{% endtrans %}{% endblock %}
 
 {% block menu %}
+{% include 'WhereGroupThemeBundle:Profile:status.html.twig' %}
+
 <ul class="page-menu-list profile-menu">
-    <li data-tab="metadata" class="act">{% trans %}Metadatensatz{% endtrans %}</li>
-    <li data-tab="identification">{% trans %}Identifikation{% endtrans %}</li>
-    <li data-tab="classification">{% trans %}Klassifizierung{% endtrans %}</li>
-    <li data-tab="keyword">{% trans %}Schlüsselwort{% endtrans %}</li>
-    <li data-tab="geographic">{% trans %}Geografischer Standort{% endtrans %}</li>
-    <li data-tab="temporal">{% trans %}Zeitbezug{% endtrans %}</li>
-    <li data-tab="quality">{% trans %}Qualität{% endtrans %}</li>
-    <li data-tab="conformity">{% trans %}Übereinstimmung{% endtrans %}</li>
-    <li data-tab="constraints">{% trans %}Beschränkungen{% endtrans %}</li>
-    <li data-tab="responsibleparty">{% trans %}Zuständige Stelle{% endtrans %}</li>
+    <li data-tab="metadata" class="act">
+        <span class="profile-menu-label">{% trans %}Metadatensatz{% endtrans %}</span>
+    </li>
+    <li data-tab="identification">
+        <span class="profile-menu-label">{% trans %}Identifikation{% endtrans %}</span>
+    </li>
+    <li data-tab="classification">
+        <span class="profile-menu-label">{% trans %}Klassifizierung{% endtrans %}</span>
+    </li>
+    <li data-tab="keyword">
+        <span class="profile-menu-label">{% trans %}Schlüsselwort{% endtrans %}</span>
+    </li>
+    <li data-tab="geographic">
+        <span class="profile-menu-label">{% trans %}Geografischer Standort{% endtrans %}</span>
+    </li>
+    <li data-tab="temporal">
+        <span class="profile-menu-label">{% trans %}Zeitbezug{% endtrans %}</span>
+    </li>
+    <li data-tab="quality">
+        <span class="profile-menu-label">{% trans %}Qualität{% endtrans %}</span>
+    </li>
+    <li data-tab="conformity">
+        <span class="profile-menu-label">{% trans %}Übereinstimmung{% endtrans %}</span>
+    </li>
+    <li data-tab="constraints">
+        <span class="profile-menu-label">{% trans %}Beschränkungen{% endtrans %}</span>
+    </li>
+    <li data-tab="responsibleparty">
+        <span class="profile-menu-label">{% trans %}Zuständige Stelle{% endtrans %}</span>
+    </li>
 </ul>
 {% endblock %}
 

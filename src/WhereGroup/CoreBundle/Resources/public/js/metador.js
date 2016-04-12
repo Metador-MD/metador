@@ -11,3 +11,19 @@ $(document).ajaxStart(function() {
 $(document).ajaxStop(function() {
     $('[data-element="metador-preloader"]').removeClass('active');
 });
+
+$('[data-cmd="metadata-toggle-public"]').click(function() {
+    $(this)
+        .closest('[data-element="metadata-info"]')
+        .toggleClass('public');
+
+    var value = $('[data-element="metadata-public"]').val();
+
+    if (value !== '1') {
+        $('[data-element="metadata-public"]').val('1');
+        return;
+    }
+
+    $('[data-element="metadata-public"]').val('0');
+    return;
+});

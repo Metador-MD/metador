@@ -120,7 +120,9 @@ class ProfileController extends Controller
                 'id'        => $id,
                 'p'         => $p,
                 'examples'  => $this->getExample($profile),
-                'hasAccess' => !$data->getReadonly()
+                'hasAccess' => !$data->getReadonly(),
+                'groups'    => $data->getGroups(),
+                'public'    => $data->getPublic()
             ),
             'id' => $id
         ));
@@ -175,6 +177,10 @@ class ProfileController extends Controller
         return $this->redirectToRoute('metadata_index', array('profile' => $profile));
     }
 
+    /**
+     * @param $profile
+     * @return array
+     */
     private function getExample($profile)
     {
         $className = $this->get('metador_plugin')->getPluginClassName($profile);
