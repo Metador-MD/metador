@@ -3,15 +3,45 @@
 namespace Plugins\WhereGroup\ServiceBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
+use WhereGroup\PluginBundle\Component\Plugin;
+use WhereGroup\CoreBundle\Component\MetadataInterface;
 
 class ApplicationListener extends ProfileApplicationMenuListener
 {
     protected $pluginId = 'profile-service';
     protected $name     = 'Dienste';
     protected $bundle   = 'ProfileService';
+    protected $metadata = null;
+    protected $plugin   = null;
 
+    /**
+     * ApplicationListener constructor.
+     * @param MetadataInterface $metadata
+     * @param Plugin $plugin
+     */
+    public function __construct(
+        MetadataInterface $metadata,
+        Plugin $plugin
+    ) {
+        $this->metadata = $metadata;
+        $this->plugin   = $plugin;
+    }
+
+    public function __destruct()
+    {
+        unset(
+            $this->metadata,
+            $this->plugin
+        );
+    }
+
+    /**
+     * @param ApplicationEvent $event
+     * @throws \Exception
+     */
     public function onLoading(ApplicationEvent $event)
     {
         parent::onLoading($event);
@@ -19,14 +49,28 @@ class ApplicationListener extends ProfileApplicationMenuListener
         $app = $event->getApplication();
 
         if ($app->isBundle($this->bundle) && $app->isAction('edit')) {
-            $id = $app->getRequestStack()->getMasterRequest()->get('id');
+            $plugins = $this->plugin->getPlugin('wheregroup-map');
+            $id      = $app->getRequestStack()->getMasterRequest()->get('id', null);
 
-            $app->add(
-                $app->get('PluginMenu', 'map')
-                    ->template('ProfileServiceBundle:Export:loadMap.html.twig', array(
-                        'url' => 'http://osm-demo.wheregroup.com/service?SERVICE=WMS&Version=1.1.1&REQUEST=getCapabilities'
-                    ))
-            );
+            // If map plugin is active
+            if(!is_null($plugins) && $plugins['active'] === true && !is_null($id)) {
+                /** @var Metadata $metadata */
+                $metadata = $this->metadata->getById($id);
+                $p = $metadata->getObject();
+
+                if ($p['serviceType'] === 'view'
+                    && isset($p['containsOperationsURL'])
+                    && $p['containsOperationsURL'] !== '') {
+
+                    $app->add(
+                        $app->get('PluginMenu', 'map')
+                            ->template('ProfileServiceBundle:Export:loadMap.html.twig', array(
+                                'url' => trim($p['containsOperationsURL'])
+                            ))
+                    );
+                }
+
+            }
         }
     }
 }
