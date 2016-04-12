@@ -32,7 +32,7 @@
 }
 
 @mixin calc($key, $value) {
-  #{$key}: -webkit-calc(#{$value});
-  #{$key}: -moz-calc(#{$value});
-  #{$key}: calc(#{$value});
+    #{$key}: -webkit-calc(#{$value});
+    #{$key}: -moz-calc(#{$value});
+    #{$key}: calc(#{$value});
 }

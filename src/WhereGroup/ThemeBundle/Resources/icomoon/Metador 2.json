@@ -1,8 +1,8 @@
 {
 	"metadata": {
-		"name": "Metador 2.1",
-		"lastOpened": 1456843330009,
-		"created": 1456843327679
+		"name": "Metador 2",
+		"lastOpened": 1459413124844,
+		"created": 1459413116406
 	},
 	"iconSets": [
 		{
@@ -1273,7 +1273,7 @@
 					"id": 245,
 					"prevSize": 28,
 					"code": 61713,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "mail-reply, reply",
@@ -9722,7 +9722,7 @@
 					"grid": 14
 				}
 			],
-			"invisible": true
+			"invisible": false
 		},
 		{
 			"selection": [
@@ -9776,7 +9776,7 @@
 					"order": 6,
 					"prevSize": 32,
 					"code": 59653,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "pencil, write",
 					"name": "pencil"
 				},
@@ -10037,7 +10037,7 @@
 					"order": 4,
 					"prevSize": 32,
 					"code": 59682,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "file-text, file",
 					"name": "file-text"
 				},
@@ -10145,7 +10145,7 @@
 					"order": 31,
 					"prevSize": 32,
 					"code": 59694,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "stack, layers",
 					"name": "stack"
 				},
@@ -10406,7 +10406,7 @@
 					"order": 60,
 					"prevSize": 32,
 					"code": 59723,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "map, guide",
 					"name": "map"
 				},
@@ -10415,7 +10415,7 @@
 					"order": 61,
 					"prevSize": 32,
 					"code": 59724,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "map2, guide2",
 					"name": "map2"
 				},
@@ -10433,7 +10433,7 @@
 					"order": 19,
 					"prevSize": 32,
 					"code": 59726,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "clock, time2",
 					"name": "clock"
 				},
@@ -10478,7 +10478,7 @@
 					"order": 20,
 					"prevSize": 32,
 					"code": 59731,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "calendar, date",
 					"name": "calendar"
 				},
@@ -10595,7 +10595,7 @@
 					"order": 16,
 					"prevSize": 32,
 					"code": 59744,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "download, save",
 					"name": "download"
 				},
@@ -10604,7 +10604,7 @@
 					"order": 50,
 					"prevSize": 32,
 					"code": 59745,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "upload, load",
 					"name": "upload"
 				},
@@ -10613,7 +10613,7 @@
 					"order": 14,
 					"prevSize": 32,
 					"code": 59746,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "floppy-disk, save2",
 					"name": "floppy-disk"
 				},
@@ -10631,7 +10631,7 @@
 					"order": 39,
 					"prevSize": 32,
 					"code": 59748,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "database, db",
 					"name": "database"
 				},
@@ -10667,7 +10667,7 @@
 					"order": 18,
 					"prevSize": 32,
 					"code": 59752,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "redo2, right",
 					"name": "redo2"
 				},
@@ -10748,7 +10748,7 @@
 					"id": 1628,
 					"prevSize": 32,
 					"code": 59761,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "user, profile2",
 					"name": "user"
 				},
@@ -10757,7 +10757,7 @@
 					"order": 26,
 					"prevSize": 32,
 					"code": 59762,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "users, group",
 					"name": "users"
 				},
@@ -10820,7 +10820,7 @@
 					"order": 42,
 					"prevSize": 32,
 					"code": 59769,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "hour-glass, loading",
 					"name": "hour-glass"
 				},
@@ -10853,10 +10853,10 @@
 				},
 				{
 					"id": 513,
-					"order": 0,
+					"order": 63,
 					"prevSize": 32,
 					"code": 59773,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "spinner4, loading5",
 					"name": "spinner4"
 				},
@@ -10982,7 +10982,7 @@
 					"order": 36,
 					"prevSize": 32,
 					"code": 59787,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "enlarge2, expand2",
 					"name": "maximize"
 				},
@@ -10991,7 +10991,7 @@
 					"order": 35,
 					"prevSize": 32,
 					"code": 59788,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "shrink2, collapse2",
 					"name": "minimize"
 				},
@@ -11000,7 +11000,7 @@
 					"order": 46,
 					"prevSize": 32,
 					"code": 59789,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "key, password",
 					"name": "key"
 				},
@@ -11063,7 +11063,7 @@
 					"order": 7,
 					"prevSize": 32,
 					"code": 59796,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "cog, gear",
 					"name": "cog"
 				},
@@ -11090,7 +11090,7 @@
 					"order": 22,
 					"prevSize": 32,
 					"code": 59799,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "magic-wand, wizard",
 					"name": "magic-wand"
 				},
@@ -11225,7 +11225,7 @@
 					"order": 3,
 					"prevSize": 32,
 					"code": 59814,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "meter, gauge",
 					"name": "meter"
 				},
@@ -11288,7 +11288,7 @@
 					"order": 2,
 					"prevSize": 32,
 					"code": 59821,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "bin2, trashcan2",
 					"name": "bin2"
 				},
@@ -11333,7 +11333,7 @@
 					"order": 52,
 					"prevSize": 32,
 					"code": 59826,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "accessibility",
 					"name": "accessibility"
 				},
@@ -11342,7 +11342,7 @@
 					"order": 62,
 					"prevSize": 32,
 					"code": 59827,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "target, goal",
 					"name": "target"
 				},
@@ -11360,7 +11360,7 @@
 					"order": 40,
 					"prevSize": 32,
 					"code": 59829,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "power, lightning",
 					"name": "power"
 				},
@@ -11369,7 +11369,7 @@
 					"order": 8,
 					"prevSize": 32,
 					"code": 59830,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "switch",
 					"name": "switch"
 				},
@@ -11378,7 +11378,7 @@
 					"order": 55,
 					"prevSize": 32,
 					"code": 59831,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "power-cord, plugin",
 					"name": "power-cord"
 				},
@@ -11387,7 +11387,7 @@
 					"order": 56,
 					"prevSize": 32,
 					"code": 59832,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "clipboard, board",
 					"name": "clipboard"
 				},
@@ -11549,7 +11549,7 @@
 					"id": 1423,
 					"prevSize": 32,
 					"code": 59850,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "earth, globe2",
 					"name": "earth"
 				},
@@ -11567,7 +11567,7 @@
 					"order": 37,
 					"prevSize": 32,
 					"code": 59852,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "flag, report",
 					"name": "flag"
 				},
@@ -11585,7 +11585,7 @@
 					"order": 32,
 					"prevSize": 32,
 					"code": 59854,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "eye, views",
 					"name": "eye"
 				},
@@ -12098,7 +12098,7 @@
 					"order": 57,
 					"prevSize": 32,
 					"code": 59911,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "warning, sign",
 					"name": "warning"
 				},
@@ -12107,7 +12107,7 @@
 					"order": 49,
 					"prevSize": 32,
 					"code": 59912,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "notification, warning2",
 					"name": "notification"
 				},
@@ -12116,7 +12116,7 @@
 					"order": 24,
 					"prevSize": 32,
 					"code": 59913,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "question, help",
 					"name": "question"
 				},
@@ -12125,25 +12125,25 @@
 					"order": 15,
 					"prevSize": 32,
 					"code": 59914,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "plus, add",
 					"name": "plus"
 				},
 				{
 					"id": 985,
-					"order": 0,
+					"order": 65,
 					"prevSize": 32,
 					"code": 59915,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "minus, subtract",
-					"name": ""
+					"name": "minus"
 				},
 				{
 					"id": 965,
 					"order": 48,
 					"prevSize": 32,
 					"code": 59916,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "info, information",
 					"name": "info"
 				},
@@ -12179,7 +12179,7 @@
 					"order": 33,
 					"prevSize": 32,
 					"code": 59920,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark, tick",
 					"name": "checkmark"
 				},
@@ -12188,7 +12188,7 @@
 					"order": 34,
 					"prevSize": 32,
 					"code": 59921,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "checkmark2, tick2",
 					"name": "checkmark2"
 				},
@@ -12503,7 +12503,7 @@
 					"order": 54,
 					"prevSize": 32,
 					"code": 59956,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "arrow-right, right3",
 					"name": "arrow-right"
 				},
@@ -12539,7 +12539,7 @@
 					"order": 53,
 					"prevSize": 32,
 					"code": 59960,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "arrow-left, left3",
 					"name": "arrow-left"
 				},
@@ -13187,7 +13187,7 @@
 					"order": 59,
 					"prevSize": 32,
 					"code": 60032,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "embed2, code2",
 					"name": "embed2"
 				},
@@ -13196,7 +13196,7 @@
 					"order": 38,
 					"prevSize": 32,
 					"code": 60033,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "terminal, console",
 					"name": "terminal"
 				},
@@ -13205,7 +13205,7 @@
 					"order": 41,
 					"prevSize": 32,
 					"code": 60034,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "share2, social",
 					"name": "share2"
 				},
@@ -13655,7 +13655,7 @@
 					"order": 43,
 					"prevSize": 32,
 					"code": 60084,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "github4, brand43",
 					"name": "github4"
 				},
@@ -13997,7 +13997,7 @@
 					"order": 58,
 					"prevSize": 32,
 					"code": 60122,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "file-pdf, file10",
 					"name": "file-pdf"
 				},
@@ -22120,6 +22120,5 @@
 		"gridSize": 16,
 		"showCodes": true
 	},
-	"uid": -1,
-	"time": 1456850544070
+	"uid": -1
 }

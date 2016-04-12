@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?hqehqf');
-    src:    url('fonts/icomoon.eot?hqehqf#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?hqehqf') format('truetype'),
-        url('fonts/icomoon.woff?hqehqf') format('woff'),
-        url('fonts/icomoon.svg?hqehqf#icomoon') format('svg');
+    src:    url('fonts/icomoon.eot?d20dzb');
+    src:    url('fonts/icomoon.eot?d20dzb#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?d20dzb') format('truetype'),
+        url('fonts/icomoon.woff?d20dzb') format('woff'),
+        url('fonts/icomoon.svg?d20dzb#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -75,6 +75,9 @@
 .icon-hour-glass:before {
     content: "\e979";
 }
+.icon-spinner4:before {
+    content: "\e97d";
+}
 .icon-maximize:before {
     content: "\e98b";
 }
@@ -134,6 +137,9 @@
 }
 .icon-plus:before {
     content: "\ea0a";
+}
+.icon-minus:before {
+    content: "\ea0b";
 }
 .icon-info:before {
     content: "\ea0c";
