@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -31,7 +32,7 @@ abstract class ProfileApplicationMenuListener
     public function onLoading(ApplicationEvent $event)
     {
         $app = $event->getApplication();
-
+        $request = $app->getRequestStack()->getMasterRequest();
         /***********************************************************************
          * Profile Menu
          ***********************************************************************/
@@ -132,11 +133,17 @@ abstract class ProfileApplicationMenuListener
             }
 
             if ($app->isAction('new') || $app->isAction('edit')) {
-                $app->add(
-                    $app->get('PluginMenu', 'save')
-                        ->label('speichern')
-                        ->icon('icon-floppy-disk')
-                );
+                $id = $app->getRequestStack()->getCurrentRequest()->get('id');
+
+                /** @var Metadata $entity */
+                $entity = $this->metadata->getById($id);
+                if (!$entity->getReadonly()) {
+                    $app->add(
+                        $app->get('PluginMenu', 'save')
+                            ->label('speichern')
+                            ->icon('icon-floppy-disk')
+                    );
+                }
             }
 
             // die($app->debug());

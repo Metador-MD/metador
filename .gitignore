@@ -1,3 +1,5 @@
+# FILES
+
 *~
 *.db
 *.db3
@@ -5,21 +7,33 @@
 *.phar
 *.TODO
 *.lock
-*.sublime-workspace
-#*Test*
 
+# IDE'S
+
+*.sublime-workspace
 .sass-cache
 .idea
 .project
 
-/app/config/parameters.yml
-/app/config/plugins.yml
-/app/config/plugins_routing.yml
-/app/SymfonyRequirements.php
-/app/Resources/translations/user
-/app/tmp
-/bin
-/vendor
-/web/bundles
-/web/public
-/src/WhereGroup/ThemeBundle/Resources/public/css/metador*.css
+# PROJECT FOLDERS
+
+app/config/parameters.yml
+bin
+vendor
+web/bundles
+web/public
+
+
+# Ignore or allow Plugins
+
+src/Plugins/*
+
+!src/Plugins/WhereGroup
+src/Plugins/WhereGroup/*
+
+!src/Plugins/WhereGroup/AddressBundle
+!src/Plugins/WhereGroup/DatasetBundle
+!src/Plugins/WhereGroup/HelptextBundle
+!src/Plugins/WhereGroup/ImportBundle
+!src/Plugins/WhereGroup/PublishBundle
+!src/Plugins/WhereGroup/ServiceBundle
