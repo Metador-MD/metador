@@ -34,5 +34,4 @@ src/Plugins/WhereGroup/*
 !src/Plugins/WhereGroup/AddressBundle
 !src/Plugins/WhereGroup/DatasetBundle
 !src/Plugins/WhereGroup/HelptextBundle
-!src/Plugins/WhereGroup/PublishBundle
 !src/Plugins/WhereGroup/ServiceBundle
