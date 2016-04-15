@@ -166,6 +166,8 @@ class Application
                 return new Integration\ProfileTable($prefix);
             case 'profilemenu':
                 return new Integration\ProfileMenu($prefix);
+            case 'configuration':
+                return new Integration\Configuration($prefix);
             default:
                 throw new \Exception("Class not found");
         }
