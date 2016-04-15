@@ -177,7 +177,7 @@ class XmlParser
 
                     if ($this->removeEmptyValues
                         && ($tmp === "" || $tmp === array())
-                        && (is_array($val) && isset($val[1]) && $val[1] !== 'asArray')) {
+                        && (is_array($val) && isset($val[1]) && $val[1] !== '_asArray')) {
                         continue;
                     }
 

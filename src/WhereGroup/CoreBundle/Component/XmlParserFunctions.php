@@ -30,7 +30,7 @@ class XmlParserFunctions
      * @param null $args
      * @return array
      */
-    protected function replaceKey($data, $args = null)
+    protected function _replaceKey($data, $args = null)
     {
         $array = array();
 
@@ -57,7 +57,7 @@ class XmlParserFunctions
      * @param null $args
      * @return bool
      */
-    protected function boolean($data, $args = null)
+    protected function _boolean($data, $args = null)
     {
         return empty($data) ? false : true;
     }
@@ -67,7 +67,7 @@ class XmlParserFunctions
      * @param null $args
      * @return string
      */
-    protected function asText($data, $args = null)
+    protected function _asText($data, $args = null)
     {
         return is_array($data) ? trim(implode(" ", $data)) : $data;
     }
@@ -77,7 +77,7 @@ class XmlParserFunctions
      * @param null $args
      * @return array
      */
-    protected function asArray($data, $args = null)
+    protected function _asArray($data, $args = null)
     {
         return is_array($data) ? $data : array($data);
     }
@@ -86,7 +86,7 @@ class XmlParserFunctions
      * @param $data
      * @param null $args
      */
-    protected function debug($data, $args = null)
+    protected function _debug($data, $args = null)
     {
         echo '<pre>' . print_r($data, 1) . '</pre>';
         die('<pre>' . print_r($args, 1) . '</pre>');
@@ -97,7 +97,7 @@ class XmlParserFunctions
      * @param null $args
      * @return string
      */
-    protected function commaSeparated($data, $args = null)
+    protected function _commaSeparated($data, $args = null)
     {
         return is_array($data) ? implode(", ", $data) : $data;
     }
@@ -107,7 +107,7 @@ class XmlParserFunctions
      * @param null $args
      * @return mixed
      */
-    protected function replace($data, $args = null)
+    protected function _replace($data, $args = null)
     {
         return str_replace($args[0], $args[1], $data);
     }
@@ -118,7 +118,7 @@ class XmlParserFunctions
      * @param  array $args
      * @return string
      */
-    protected function string($data, $args = null)
+    protected function _string($data, $args = null)
     {
         return $args[0];
     }
@@ -128,7 +128,7 @@ class XmlParserFunctions
      * @param  array $args
      * @return string
      */
-    protected function date($data, $args = null)
+    protected function _date($data, $args = null)
     {
         return date(
             $args[0],
