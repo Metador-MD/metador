@@ -116,6 +116,7 @@
     @include pos(0, '', '', 50%);
     height: $global-menu-height;
     margin-left: -($page-width / 2);
+    padding: 0;
     width: $page-width;
 
     & > li {

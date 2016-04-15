@@ -27,7 +27,7 @@
         <label>
             <div class="icon mandatory icon-circle"></div>{{'W Längengrad'|trans}}:
         </label>
-        <input id="bboxw" type="text" value="" class="twoCol1 no-value"/>
+        <input id="bboxw" type="text" value="" class="twoCol1 no-value" data-element="map-wlong"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
                 <div class="icon icon-question"></div>
@@ -45,7 +45,7 @@
                     <div class="icon icon-question"></div>
                 </div>
             </div>
-            <input id="bboxs" type="text" value="" class="twoCol1 no-value"/>
+            <input id="bboxs" type="text" value="" class="twoCol1 no-value" data-element="map-slat"/>
         </div>
     </div>
     <div class="clear"></div>
@@ -55,7 +55,7 @@
         <label>
             <div class="icon mandatory icon-circle"></div>{{'E Längengrad'|trans}}:
         </label>
-        <input id="bboxe" type="text" value="" class="twoCol1 no-value"/>
+        <input id="bboxe" type="text" value="" class="twoCol1 no-value" data-element="map-elong"/>
         <div class="btn-group">
             <div class="last showHelp" {{ id|md_data_obj }}>
                 <div class="icon icon-question"></div>
@@ -73,7 +73,7 @@
                     <div class="icon icon-question"></div>
                 </div>
             </div>
-            <input id="bboxn" type="text" value="" class="twoCol1 no-value"/>
+            <input id="bboxn" type="text" value="" class="twoCol1 no-value" data-element="map-nlat"/>
         </div>
 
     </div>
@@ -105,7 +105,7 @@
     <div class="singleResult" id="result_{{ id|md_id }}" data-count="{{ length }}">
         {% if p['bbox'] is defined %}
         {% for key, value in p['bbox'] %}
-        <div>
+        <div data-cmd-map-show-bbox-hover="" data-cmd-zoom-to-bbox="" data-wlon="{{ value['wLongitude'] }}" data-slat="{{ value['sLatitude'] }}" data-elong="{{ value['eLongitude'] }}" data-nlat="{{ value['nLatitude'] }}">
             <input type="hidden" name="p[bbox][{{ key }}][nLatitude]" value="{{ value['nLatitude'] }}" />
             <input type="hidden" name="p[bbox][{{ key }}][eLongitude]" value="{{ value['eLongitude'] }}" />
             <input type="hidden" name="p[bbox][{{ key }}][sLatitude]" value="{{ value['sLatitude'] }}" />

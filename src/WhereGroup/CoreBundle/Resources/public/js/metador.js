@@ -27,3 +27,9 @@ $('[data-cmd="metadata-toggle-public"]').click(function() {
     $('[data-element="metadata-public"]').val('0');
     return;
 });
+
+$('[data-cmd="metadata-toggle-roles"]').click(function() {
+    $(this)
+        .closest('[data-element="metadata-info"]')
+        .toggleClass('groups');
+});

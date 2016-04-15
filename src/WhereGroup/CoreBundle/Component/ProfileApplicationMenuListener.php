@@ -31,8 +31,18 @@ abstract class ProfileApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app = $event->getApplication();
-        $request = $app->getRequestStack()->getMasterRequest();
+        $app      = $event->getApplication();
+        $request  = $app->getRequestStack()->getMasterRequest();
+        $id       = null;
+        $metadata = null;
+
+        if ($request && $request->get('id', null)) {
+            $id       = $request->get('id', null);
+
+            /** @var Metadata $metadata */
+            $metadata = $this->metadata->getById($id);
+        }
+
         /***********************************************************************
          * Profile Menu
          ***********************************************************************/
@@ -48,7 +58,7 @@ abstract class ProfileApplicationMenuListener
          * Dashboard preview
          ***********************************************************************/
         if ($app->isController('dashboard')) {
-            $metadata = $this->metadata->getMetadata(10, 1, $this->pluginId);
+            $response = $this->metadata->getMetadata(10, 1, $this->pluginId);
 
             $app->add(
                 $app->get('Dashboard')
@@ -57,12 +67,12 @@ abstract class ProfileApplicationMenuListener
                         array(
                             'title'   => $this->name,
                             'profile' => $this->pluginId,
-                            'rows'    => $metadata['result']
+                            'rows'    => $response['result']
                         )
                     )
             );
 
-            unset($metadata);
+            unset($response);
         }
 
         if ($app->isBundle($this->bundle)) {
@@ -103,11 +113,7 @@ abstract class ProfileApplicationMenuListener
                 );
             }
 
-            if ($app->isAction('edit')) {
-                $request = $app->getRequestStack()->getCurrentRequest();
-
-                $id = $request->get('id');
-
+            if ($app->isAction('edit') && !is_null($id)) {
                 $app->add(
                     $app->get('PluginMenu', 'xml')
                         ->label('XML')
@@ -124,29 +130,25 @@ abstract class ProfileApplicationMenuListener
                         ->label('HTML')
                         ->icon('icon-embed2')
                         ->path('metador_export_html', array('id' => $id))
-                )->add(
-                    $app->get('PluginMenu', 'confirm')
-                        ->label('löschen')
-                        ->icon('icon-bin2')
-                        ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
                 );
-            }
 
-            if ($app->isAction('new') || $app->isAction('edit')) {
-                $id = $app->getRequestStack()->getCurrentRequest()->get('id');
-
-                /** @var Metadata $entity */
-                $entity = $this->metadata->getById($id);
-                if (!$entity->getReadonly()) {
+                if (!is_null($id) && !$metadata->getReadonly()) {
                     $app->add(
-                        $app->get('PluginMenu', 'save')
-                            ->label('speichern')
-                            ->icon('icon-floppy-disk')
+                        $app->get('PluginMenu', 'confirm')
+                            ->label('löschen')
+                            ->icon('icon-bin2')
+                            ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
                     );
                 }
             }
 
-            // die($app->debug());
+            if ($app->isAction('new') || ($app->isAction('edit') && !is_null($id) && !$metadata->getReadonly())) {
+                $app->add(
+                    $app->get('PluginMenu', 'save')
+                        ->label('speichern')
+                        ->icon('icon-floppy-disk')
+                );
+            }
         }
     }
 }

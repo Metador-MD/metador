@@ -32,6 +32,14 @@
         {% block javascript %}
             <script type="text/javascript">
                 var BASEDIR = '{{ BASEDIR }}';
+                var Metador = {
+                    'basedir': '{{ BASEDIR }}',
+                    'parameters': {
+                        {% for key, value in applicationGet('app-configuration') %}
+                            '{{ key }}': '{{ value }}'{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    }
+                };
             </script>
         {% endblock %}
     </body>

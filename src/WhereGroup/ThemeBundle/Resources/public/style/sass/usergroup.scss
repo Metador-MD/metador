@@ -18,6 +18,10 @@ $white: #fff;
     position: relative;
     width: ($page-width - $page-left-width) / 2 - 50;
 
+    &:hover {
+        background-color: darken($white, 5%);
+    }
+
     &.disabled {
         border-color: $silver;
     }
@@ -44,6 +48,10 @@ $white: #fff;
             @include pos(0, 0, '', 90px);
             font-size: 25px;
             font-weight: bold;
+
+            & > a {
+                text-decoration: none;
+            }
         }
 
         .alternate {

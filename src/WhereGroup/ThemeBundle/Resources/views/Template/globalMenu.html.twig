@@ -1,5 +1,8 @@
 <ul class="global-menu">
     {% if app.user.username is defined %}
+    <li style="float:left;color:white;padding: 0 10px;" title="">
+        <span class="icon-user"></span> {{ app.user.username }}
+    </li>
     <li>
         <a href="{{ path('logout') }}" title="{{ app.user.username }} {{ 'abmelden'|trans }}" class="global-menu-item">
             <span class="icon-switch"></span>

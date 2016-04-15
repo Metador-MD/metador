@@ -17,9 +17,9 @@
             </a>
         </div>
         <div class="title-box-info">
-            <div class="title">
+            <div class="title" title="{{ group.role|replace({'ROLE_': ''})|replace('_', ' ')|title }}">
                 <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
-                {{ group.role|replace({'ROLE_': ''})|title }}
+                {{ group.role|replace({'ROLE_': ''})|replace('_', ' ')|title|teaser(13, 1) }}
                 </a>
             </div>
             <div class="alternate" title="{{ group.description }}">

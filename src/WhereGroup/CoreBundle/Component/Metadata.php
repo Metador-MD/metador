@@ -24,6 +24,8 @@ class Metadata implements MetadataInterface
 
     private $repository = "WhereGroupCoreBundle:Metadata";
 
+    private $systemRoles = array();
+
     /**
      * @param ContainerInterface $container
      * @param UserInterface $metadorUser
@@ -32,8 +34,12 @@ class Metadata implements MetadataInterface
         ContainerInterface $container,
         UserInterface $metadorUser
     ) {
-        $this->container = $container;
+        $this->container   = $container;
         $this->metadorUser = $metadorUser;
+        $this->systemRoles = array(
+            'ROLE_SUPERUSER',
+            'ROLE_USER'
+        );
     }
 
     public function __destruct()
@@ -42,6 +48,14 @@ class Metadata implements MetadataInterface
             $this->container,
             $this->metadorUser
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getSystemRoles()
+    {
+        return $this->systemRoles;
     }
 
     /**
@@ -179,12 +193,15 @@ class Metadata implements MetadataInterface
             $metadata = $this->getById($id);
 
             if ($metadata->getReadonly()) {
-                $this->container->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
+                $this->container
+                    ->get('session')
+                    ->getFlashBag()
+                    ->add('error', 'Sie haben nicht die nötigen Rechte.');
                 return false;
             }
 
             if ($metadata->getInsertUser()->getId() === $user->getId()) {
-                $metadata->setGroups($user->getRoles());
+                $metadata->setGroups(array_diff($user->getRoles(), $this->systemRoles));
             }
 
         // INSERT
@@ -194,7 +211,7 @@ class Metadata implements MetadataInterface
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($now->getTimestamp());
             $metadata->setPublic($public);
-            $metadata->setGroups($user->getRoles());
+            $metadata->setGroups(array_diff($user->getRoles(), $this->systemRoles));
 
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository($this->repository)->findByUuid($p['fileIdentifier']);
@@ -277,6 +294,11 @@ class Metadata implements MetadataInterface
         return true;
     }
 
+    /**
+     * @param $metadataObject
+     * @return mixed
+     * @throws \Exception
+     */
     private function findDate($metadataObject)
     {
         if (!empty($metadataObject['revisionDate'])) {
