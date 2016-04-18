@@ -1,4 +1,0 @@
-wheregroup_publish:
-    resource: "@WhereGroupPublishBundle/Controller/"
-    type:     annotation
-    prefix:   /
