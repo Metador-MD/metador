@@ -76,14 +76,14 @@ class ImportHelptextCommand extends ContainerAwareCommand
         foreach ($helptexts as $helptext) {
             $newHelptext = $serializer->deserialize(
                 $helptext,
-                'WhereGroup\CoreBundle\Entity\Helptext',
+                'Plugins\WhereGroup\HelptextBundle\Entity\Helptext',
                 'json'
             );
 
             $existingHelptext = $this
                 ->getContainer()
                 ->get('doctrine')
-                ->getRepository('WhereGroupCoreBundle:Helptext')
+                ->getRepository('WhereGroupHelptextBundle:Helptext')
                 ->findById(
                     $newHelptext->getId()
                 );

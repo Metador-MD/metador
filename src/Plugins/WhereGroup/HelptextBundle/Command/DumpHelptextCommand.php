@@ -24,7 +24,7 @@ class DumpHelptextCommand extends ContainerAwareCommand
         $this->setDefinition(
             array()
         )
-        ->setDescription('Export helptext.')
+        ->setDescription('Export helptext into twig file.')
         ->setHelp('Export helptext.')
         ->setName('metador:dump:helptext');
     }

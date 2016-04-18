@@ -71,7 +71,7 @@ class ExportHelptextCommand extends ContainerAwareCommand
         $helptexts = $this
             ->getContainer()
             ->get('doctrine')
-            ->getRepository('WhereGroupCoreBundle:Helptext')
+            ->getRepository('WhereGroupHelptextBundle:Helptext')
             ->findAll();
 
         foreach ($helptexts as $helptext) {
