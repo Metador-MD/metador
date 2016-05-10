@@ -89,7 +89,8 @@ class User implements UserInterface
 
     public function getUserFromSession()
     {
-        return $this->tokenStorage->getToken()->getUser();
+        $token = $this->tokenStorage->getToken();
+        return is_object($token) ? $token->getUser() : null;
     }
 
     public function getUsernameFromSession()
