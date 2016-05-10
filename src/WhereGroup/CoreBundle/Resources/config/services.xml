@@ -18,6 +18,7 @@
         <parameter key="metador.twig.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
         <parameter key="metador.twig.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
         <parameter key="metador.twig.casttoarray.class">WhereGroup\CoreBundle\Twig\Extension\CastToArrayExtension</parameter>
+        <parameter key="metador.twig.jsondecode.class">WhereGroup\CoreBundle\Twig\Extension\JsonDecodeExtension</parameter>
         <parameter key="metador.twig.application.class">WhereGroup\CoreBundle\Twig\Extension\ApplicationExtension</parameter>
         <parameter key="metador.twig.uuid.class">WhereGroup\CoreBundle\Twig\Extension\UuidExtension</parameter>
         <parameter key="metador.twig.teaser.class">WhereGroup\CoreBundle\Twig\Extension\TeaserExtension</parameter>
@@ -60,6 +61,9 @@
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.casttoarray" class="%metador.twig.casttoarray.class%">
+            <tag name="twig.extension" />
+        </service>
+        <service id="metador.twig.jsondecode" class="%metador.twig.jsondecode.class%">
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.application" class="%metador.twig.application.class%">
