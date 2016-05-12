@@ -39,6 +39,7 @@ $preview-table-row: #ddd;
 
     & a  {
         color: $preview-head;
+        display: block;
         font-size: 12px;
         font-style: italic;
         text-decoration: none;
