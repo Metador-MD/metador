@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
