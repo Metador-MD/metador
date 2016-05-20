@@ -105,7 +105,7 @@
     <div class="singleResult" id="result_{{ id|md_id }}" data-count="{{ length }}">
         {% if p['bbox'] is defined %}
         {% for key, value in p['bbox'] %}
-        <div data-cmd-map-show-bbox-hover="" data-cmd-zoom-to-bbox=" data-wlon="{{ value['wLongitude'] }}" data-slat="{{ value['sLatitude'] }}" data-elong="{{ value['eLongitude'] }}" data-nlat="{{ value['nLatitude'] }}">
+        <div data-cmd-map-show-bbox-hover="" data-cmd-zoom-to-bbox="" data-wlon="{{ value['wLongitude'] }}" data-slat="{{ value['sLatitude'] }}" data-elong="{{ value['eLongitude'] }}" data-nlat="{{ value['nLatitude'] }}">
             <input type="hidden" name="p[bbox][{{ key }}][nLatitude]" value="{{ value['nLatitude'] }}" />
             <input type="hidden" name="p[bbox][{{ key }}][eLongitude]" value="{{ value['eLongitude'] }}" />
             <input type="hidden" name="p[bbox][{{ key }}][sLatitude]" value="{{ value['sLatitude'] }}" />
