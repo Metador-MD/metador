@@ -11,7 +11,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://package.wheregroup.com/satis/",
+            "url": "https://package.wheregroup.com/satis/",
             "packagist": false
         }
     ],
