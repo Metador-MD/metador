@@ -1,0 +1,134 @@
+@import 'config';
+@import 'mixins';
+
+$plugin-blue: #5077ae;
+$plugin-new: #f1ffb3;
+$plugin-col: #666;
+$plugin-row-border: #ddd;
+$plugin-row-bg-hover: #eee;
+
+.plugin-table {
+    width: 100%;
+
+    .plugin-mark {
+        cursor: pointer;
+    }
+
+    .plugin-col-mark {
+        padding-left: 10px;
+        width: 5%;
+
+        .icon-checkmark {
+            color: $plugin-blue;
+        }
+
+        .icon-checkmark2 {
+            color: lighten($plugin-blue, 30%);
+            text-shadow: none;
+        }
+    }
+
+    .plugin-col-name {
+        padding-left: 10px;
+        width: 85%;
+
+        & > a {
+            display: block;
+            text-decoration: none;
+        }
+    }
+
+    .plugin-col-origin {
+        color: $plugin-col;
+        font-size: 14px;
+        padding-right: 10px;
+        text-align: right;
+        width: 10%;
+    }
+
+    .plugin-col-status {
+        width: 30px;
+    }
+}
+
+.plugin-row {
+    border-bottom: 1px solid $plugin-row-border;
+    cursor: pointer;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+
+    &.new {
+        background-color: $plugin-new;
+
+        &:hover {
+            background-color: darken($plugin-new, 10%);
+        }
+    }
+
+    &:hover {
+        background-color: $plugin-row-bg-hover;
+    }
+}
+
+.plugin-result {
+    display: none;
+}
+
+.plugin-code,
+.plugin-code-header {
+    background-color: $primary;
+    margin-bottom: 0;
+    padding: 10px 20px;
+}
+
+.plugin-code-header {
+    border-top: 5px solid darken($primary, 10%);
+    color: darken($primary-contrast, 20%);
+    font-weight: bold;
+}
+
+.plugin-code {
+    border-top: 5px solid darken($primary, 10%);
+    color: $primary-contrast;
+    padding: 20px;
+    white-space: wrap;
+
+    &.small {
+        font-size: 10px;
+    }
+
+    &.header {
+        border-top: 1px solid darken($primary, 10%);
+        margin-top: 0;
+    }
+
+    $plugin-comment: #999;
+
+    &.comment {
+        color: $plugin-comment;
+    }
+}
+
+.plugin-view {
+    &.icon-circle {
+        color: $plugin-blue;
+    }
+}
+
+.plugin-install-title {
+    color: $plugin-blue;
+    display: block;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+
+    &.done {
+        color: $primary;
+    }
+}
+
+.plugin-reload {
+    display: none;
+    float: right;
+}

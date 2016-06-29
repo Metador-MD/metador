@@ -1,0 +1,56 @@
+@import 'config';
+@import 'mixins';
+
+$primary: #3D3F44;
+
+.modal {
+    z-index: 1;
+    background-color: black;
+    opacity: 0.6;
+    @include pos(0px,0px,0px,0px);
+}
+
+.dialog {
+    z-index: 2;
+    border: 1px solid $primary;
+    background-color: white;
+    @include posCenter(400px, 300px);
+    border-radius: 8px;
+    box-shadow: darken($primary, 10%) 2px 2px 15px;
+
+    .head {
+        height: 40px;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        font-style: italic;
+        background-color: lighten($primary, 70%);
+        border-bottom: 1px solid white;
+        color: lighten($primary, 20%);
+        @include pos(0px,0px,'',0px);
+        border-top-radius: 8px;
+        text-shadow: white 0 1px 1px;
+    }
+
+    .body {
+        overflow: auto;
+        border-top: 1px solid lighten($primary, 50%);
+        border-bottom: 1px solid lighten($primary, 50%);
+        @include pos(40px, 0px, 40px, 0px);
+    }
+
+    .foot {
+        height: 40px;
+        padding: 5px;
+        background-color: lighten($primary, 70%);
+        border-top: 1px solid white;
+        text-align: right;
+        @include pos('',0px,0px,0px);
+        border-bottom-radius: 8px;
+
+        .btn {
+            float: right;
+            margin-left: 10px;
+        }
+    }
+}

@@ -3,15 +3,10 @@
 {% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/app.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/metallic.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style/datepicker/zebra_datepicker_metallic.css') }}">
-
-    {% stylesheets 'bundles/wheregrouptheme/style/sass/*.scss'
-        filter='sass,uglifycss' output='bundles/wheregrouptheme/css/metador.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/theme.css') }}">
 
     {% for item in applicationGet('app-css') %}
     {# RAW CONTENT #}
@@ -73,8 +68,8 @@
 {% endblock %}
 {% block javascript %}
     {{ parent() }}
-    <script src="{{ asset('bundles/wheregrouptheme/js/jquery-1.8.3.min.js') }}"></script>
-    <script src="{{ asset('bundles/wheregrouptheme/js/datepicker/zebra_datepicker.js') }}"></script>
+    <script src="{{ asset('public/app.min.js') }}"></script>
+    <script src="{{ asset('public/javascript/zebra_datepicker.js') }}"></script>
     <script src="{{ asset('bundles/wheregroupcore/js/metador.js') }}"></script>
     <script src="{{ asset('bundles/wheregroupcore/js/ui.js') }}"></script>
     {% for plugin, src in applicationGet('app-javascript') %}

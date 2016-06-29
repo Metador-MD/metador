@@ -1,0 +1,196 @@
+@import 'config';
+@import 'mixins';
+@import 'extensions';
+
+$shadow: rgba(0, 0, 0, .1);
+$link: #444;
+
+* {
+    box-sizing: border-box;
+    text-shadow: $shadow 1px 1px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+a {
+    color: $link;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+html,
+body {
+    @include pos(0, 0, 0, 0);
+
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+body {
+    background-color: $secondary-contrast;
+    color: $primary;
+    font-family: Arial, Helvetica, Verdana,  sans-serif;
+    font-size: 16px;
+    height: 100%;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+$preloader-size: 30px;
+$preloader-color1: $secondary-origin;
+$preloader-color2: $secondary-contrast;
+
+.metador-preloader {
+    display: none;
+    left: 20px;
+    position: relative;
+    top: 20px;
+
+    &.active {
+        display: block;
+    }
+
+    & > span {
+        animation: metador-preloader 1.5s  infinite ease-in-out;
+        background: $preloader-color1;
+        bottom: 0;
+        display: block;
+        height: 5px;
+        position: absolute;
+        width: 9px;
+
+        &:nth-child(2) {
+            animation-delay: .2s;
+            left: 11px;
+        }
+
+        &:nth-child(3) {
+            animation-delay: .4s;
+            left: 22px;
+        }
+
+        &:nth-child(4) {
+            animation-delay: .6s;
+            left: 33px;
+        }
+
+        &:nth-child(5) {
+            animation-delay: .8s;
+            left: 44px;
+        }
+    }
+}
+
+@keyframes metador-preloader {
+    0% {height:5px;transform:translateY(0px);background:$preloader-color1;}
+    25% {height:30px;transform:translateY(15px);background:$preloader-color2;}
+    50% {height:5px;transform:translateY(0px);background:$preloader-color1;}
+    100% {height:5px;transform:translateY(0px);background:$preloader-color1;}
+}
+
+.page {
+    @include pos(0, 0, 0, 0);
+
+    background-color: $plugin-menu;
+
+    & > .page-top {
+        @include pos(0, 0, '', 0);
+        background-color: $global-menu;
+        border-bottom: 5px solid darken($primary, 5%);
+        height: 40px;
+        line-height: 40px; // ?
+    }
+
+    & .page-center,
+    & .page-top-center {
+        @include pos($page-top-height, 0, 0, 0);
+
+        background-color: $secondary-contrast;
+
+        & .page-left {
+            @include pos(0, '', 0, 50%);
+            background-color: $bright;
+            border-left: 1px solid darken($bright, 30%);
+            border-right: 1px solid lighten($dark, 50%);
+            margin-left: -($page-width / 2);
+            width: $page-left-width;
+        }
+
+        & .page-right {
+            @include pos(0, '', 0, 50%);
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-right: 1px solid darken($bright, 30%);
+            margin-left: -($page-width / 2) + $page-left-width;
+            overflow: auto;
+            padding: 20px;
+            width: $page-width - $page-left-width;
+        }
+
+        & .page-content {
+            @include pos(0, '', 0, 50%);
+            background-color: lighten($bright, 10%);
+            background-image: url('../img/noise.png');
+            border-left: 1px solid darken($bright, 30%);
+            border-right: 1px solid darken($bright, 30%);
+            margin-left: -($page-width / 2);
+            overflow: auto;
+            padding: 20px;
+            width: $page-width;
+        }
+    }
+
+    &.split-center {
+        & .page-top-center {
+            @include calc('bottom', '50% - #{$page-top-height / 2}');
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: $page-top-height;
+
+        }
+
+        & .page-center {
+            @include calc('top', '50% + #{$page-top-height / 2}');
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    & .page-top-center {
+        & .page-content {
+            border: 0;
+            padding: 0;
+            border-bottom: 1px solid lighten($dark, 50%);
+            overflow-x: hidden;
+        }
+
+        & .page-right {
+            padding: 0;
+        }
+    }
+}
+
+.last-1 {
+    & * {
+        padding: 0;
+        margin: 0;
+    }
+    width: 20px;
+    padding: 0;
+}

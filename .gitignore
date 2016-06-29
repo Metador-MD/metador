@@ -1,31 +1,27 @@
 # FILES
-
 *~
 *.db
 *.db3
 *.cache
 *.phar
 *.TODO
-*.lock
+app/SymfonyRequirements.php
 
 # IDE'S
-
 *.sublime-workspace
 .sass-cache
 .idea
 .project
 
 # PROJECT FOLDERS
-
 app/config/parameters.yml
 bin
 vendor
 web/bundles
-web/public
-
+bower_components
+node_modules
 
 # Ignore or allow Plugins
-
 src/Plugins/*
 
 !src/Plugins/WhereGroup
