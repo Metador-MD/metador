@@ -109,7 +109,7 @@ $(document).ready(function() {
 
     // DATEPICKER
     // TODO: add german months and days
-    $('.datepicker').live('mousedown', function() {
+    $(document).on('mousedown', '.datepicker', function() {
         var self = this;
         $(self).Zebra_DatePicker({
             show_icon: false,
@@ -160,7 +160,7 @@ $(document).ready(function() {
     });
 
     // REMOVE SINGLE VALUE
-    $('.cmdDeleteSingleValue').live('click', function() {
+    $(document).on('click', '.cmdDeleteSingleValue', function() {
         if(confirm("Eintrag löschen?")) {
             $(this).parent().remove();
         }
@@ -225,7 +225,7 @@ $(document).ready(function() {
     });
 
     // GENERATE UUID
-    $('.wizard_p_fileidentifier').live('click', function() {
+    $(document).live('click', '.wizard_p_fileidentifier', function() {
         var ident     = $('#p_fileidentifier');
         var identCode = $('#p_identifier_0_code');
         var uuid      = getUUID();
@@ -498,8 +498,8 @@ $(document).ready(function() {
 
         dialog.modalDialog('open');
     });
-    
-    $('[data-confirm-abort]').click(function() {       
+
+    $('[data-confirm-abort]').click(function() {
         if (!confirm($(this).attr('data-confirm-abort'))) {
             return false;
         }
