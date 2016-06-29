@@ -87,11 +87,31 @@ class Plugin
     /**
      * @return array
      */
+    public function getConfig()
+    {
+        return array(
+            'rootDir'           => $this->rootDir,
+            'cacheDir'          => $this->cacheDir,
+            'configurationFile' => $this->configurationFile,
+            'routingFile'       => $this->routingFile,
+            'pluginPaths'       => $this->pluginPaths,
+            'plugins'           => $this->plugins,
+            'routing'           => $this->routing,
+        );
+    }
+
+    /**
+     * @return array
+     */
     public function getPlugins()
     {
         return $this->plugins;
     }
 
+    /**
+     * @param $plugin
+     * @return mixed|null
+     */
     public function getPlugin($plugin)
     {
         return isset($this->plugins[$plugin])
@@ -99,6 +119,11 @@ class Plugin
             : null;
     }
 
+    /**
+     * @param $plugin
+     * @param $parameter
+     * @return bool
+     */
     public function hasPluginParameter($plugin, $parameter)
     {
         return isset($this->plugins[$plugin][$parameter])
@@ -106,6 +131,12 @@ class Plugin
             : false;
     }
 
+    /**
+     * @param $plugin
+     * @param $parameter
+     * @return mixed
+     * @throws \Exception
+     */
     public function getPluginParameter($plugin, $parameter)
     {
         if (!$this->hasPluginParameter($plugin, $parameter)) {
@@ -115,6 +146,11 @@ class Plugin
         return $this->plugins[$plugin][$parameter];
     }
 
+    /**
+     * @param $plugin
+     * @return mixed
+     * @throws \Exception
+     */
     public function getPluginClassName($plugin)
     {
         return $this->getPluginParameter($plugin, 'class_name');
@@ -205,7 +241,7 @@ class Plugin
     /**
      *
      */
-    protected function saveConfiguration()
+    public function saveConfiguration()
     {
         $this->writeYaml($this->configurationFile, array('plugins' => $this->sortPlugins()));
         $this->writeYaml($this->routingFile, $this->routing);
@@ -264,6 +300,10 @@ class Plugin
         return $plugins;
     }
 
+    /**
+     * @param $plugin
+     * @return bool|string
+     */
     public function locate($plugin)
     {
         $fs = new Filesystem();
@@ -278,7 +318,10 @@ class Plugin
         return false;
     }
 
-
+    /**
+     * @param $plugin
+     * @return bool
+     */
     public function delete($plugin)
     {
         $path = $this->locate($plugin);
@@ -296,7 +339,7 @@ class Plugin
     /**
      * @param $key
      */
-    protected function enable($key)
+    public function enable($key)
     {
         $this->plugins[$key]['active'] = true;
 
@@ -336,7 +379,7 @@ class Plugin
     /**
      * @param $key
      */
-    protected function disable($key)
+    public function disable($key)
     {
         $this->plugins[$key]['active'] = false;
 
