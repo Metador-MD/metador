@@ -17,14 +17,25 @@ app/console doctrine:database:create
 app/console doctrine:schema:create
 app/console assets:install web
 
-chmod o+rw app/cache
-chmod o+rw app/logs
+# The webserver user has to have write access to the following directories
+# see comments below
+chmod o+rw var
+chmod o+rw src/plugins
 
 # Create Superuser
 app/console metador:reset:superuser 
 
 #Create plugins_routing.yml
 touch var/plugins/plugins_routing.yml
+
+
+# ----------------------------------------------------------------------
+
+# Comment on directory-rights: An alternative of the chmod o+rw command may
+# be (on Ubuntu systems):
+chown -R www-data:www-data var
+chown -R www-data:www-data src/plugins
+
 ```
 
 <a href="../../../README.md">&laquo; back</a>
