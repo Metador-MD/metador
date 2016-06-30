@@ -10,6 +10,7 @@
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.plugin.app.listener.class">WhereGroup\PluginBundle\EventListener\ApplicationListener</parameter>
+        <parameter key="metador.plugin.health.listener.class">WhereGroup\PluginBundle\EventListener\HealthCheckListener</parameter>
      </parameters>
 
     <services>
@@ -27,7 +28,12 @@
         <!-- EVENT LISTENER -->
         <service id="metador.plugin.app.listener" class="%metador.plugin.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+        </service>
+        <service id="metador.plugin.health.listener" class="%metador.plugin.health.listener.class%">
+            <tag name="kernel.event_listener" event="application.health-check" method="onCheck"/>
             <argument>%kernel.root_dir%</argument>
+            <argument>%metador_temp_dir%</argument>
+            <argument>%metador_plugin_dir%</argument>
         </service>
     </services>
 </container>
