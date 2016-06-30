@@ -1,11 +1,9 @@
 Dashboard: Dashboard
 Administration: Administration
 Übersicht: Index
-healthcheck.success.message: "It all seems to be fine :)"
-healthcheck.error.message: "Some problems detected"
-healthcheck.title: "Health-Check"
-healthcheck.table.origin: "Origin"
-healthcheck.table.message: "Message"
-plugin.command.reset.title: "Reset plugin configuration"
-plugin.command.reset.confirm: "Reset plugin configuration?"
-plugin.command.reset.succsess: "Configuration successfully resetted!"
+healthcheck_success_message: "Everything seems file :)"
+healthcheck_error_message: "Some problems detected"
+healthcheck_title: "Health-Check"
+healthcheck_table_origin: "Origin"
+healthcheck_table_message: "Message"
+healthcheck_folder_not_writeable: "Folder '%path%' not writeable!"

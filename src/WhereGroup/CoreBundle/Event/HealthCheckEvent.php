@@ -12,7 +12,7 @@ use WhereGroup\CoreBundle\Entity\HealthCheck;
  */
 class HealthCheckEvent extends Event
 {
-    private $log = null;
+    private $log        = null;
     private $translator = null;
 
     /**
@@ -24,19 +24,20 @@ class HealthCheckEvent extends Event
         HealthCheck $log,
         TranslatorInterface $translator
     ) {
-        $this->log = $log;
+        $this->log        = $log;
         $this->translator = $translator;
     }
 
     /**
      * @param $origin
      * @param $message
+     * @param array $parameters
      */
-    public function addWarning($origin, $message)
+    public function addWarning($origin, $message, $parameters = array())
     {
         $this->log->addWarning(
             $origin,
-            $this->translator->trans($message)
+            $this->translator->trans($message, $parameters)
         );
     }
 }

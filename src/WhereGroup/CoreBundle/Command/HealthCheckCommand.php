@@ -35,16 +35,16 @@ class HealthCheckCommand extends ContainerAwareCommand
         $translator = $this->getContainer()->get('translator');
         $log        = $this->getContainer()->get('metador_healthcheck')->check();
 
-        $io->title($translator->trans('healthcheck.title'));
+        $io->title($translator->trans('healthcheck_title'));
 
         if (isset($log['warning']) && count($log['warning']) > 0) {
-            $io->warning($translator->trans("healthcheck.error.message"));
+            $io->warning($translator->trans("healthcheck_error_message"));
 
             $table = new Table($output);
             $table
                 ->setHeaders(array(
-                    $translator->trans('healthcheck.table.origin'),
-                    $translator->trans('healthcheck.table.message')
+                    $translator->trans('healthcheck_table_origin'),
+                    $translator->trans('healthcheck_table_message')
                 ))
                 ->setRows($log['warning'])
             ;
@@ -53,6 +53,6 @@ class HealthCheckCommand extends ContainerAwareCommand
             return;
         }
 
-        $io->success($translator->trans("healthcheck.success.message"));
+        $io->success($translator->trans("healthcheck_success_message"));
     }
 }
