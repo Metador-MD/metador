@@ -1,0 +1,11 @@
+Dashboard: Dashboard
+Administration: Administration
+Übersicht: Übersicht
+healthcheck.success.message: "Es scheint alles in Ordnung zu sein :)"
+healthcheck.error.message: "Es konnten einige Probleme festgestellt werden"
+healthcheck.title: "Health-Check"
+healthcheck.table.origin: "Herkunft"
+healthcheck.table.message: "Meldung"
+plugin.command.reset.title: "Plugin Konfiguration zurücksetzen"
+plugin.command.reset.confirm: "Plugin Konfiguration wirklich zurücksetzen?"
+plugin.command.reset.succsess: "Erfolgreich zurückgesetzt!"

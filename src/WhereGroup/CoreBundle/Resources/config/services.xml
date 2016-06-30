@@ -9,6 +9,7 @@
         <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
+        <parameter key="metador.healthcheck.class">WhereGroup\CoreBundle\Component\HealthCheck</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
@@ -41,6 +42,10 @@
             <argument type="service" id="session.flash_bag" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="security.token_storage" />
+            <argument type="service" id="translator.default" />
+        </service>
+        <service id="metador_healthcheck" class="%metador.healthcheck.class%">
+            <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
         </service>
 
