@@ -1,0 +1,16 @@
+'Bitte warten': 'Bitte warten'
+'Seite neu laden': 'Seite neu laden'
+Konfiguration: Konfiguration
+Cache: Cache
+Assets: Assets
+Datenbank: Datenbank
+Plugins: Plugins
+zurück: zurück
+plugin_command_reset_title: "Plugin Konfiguration zurücksetzen"
+plugin_command_reset_confirm: "Plugin Konfiguration wirklich zurücksetzen?"
+plugin_command_reset_succsess: "Erfolgreich zurückgesetzt!"
+plugin_command_disable_title: "Plugin deaktivieren"
+plugin_command_enable_title: "Plugin aktivieren"
+plugin_command_list_title: "Plugins"
+plugin_not_found: "Plugin existiert nicht!"
+finished_successfully: "Erfolgreich abgeschlossen"

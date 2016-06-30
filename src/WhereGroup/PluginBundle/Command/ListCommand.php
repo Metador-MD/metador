@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Class ListCommand
@@ -29,8 +30,12 @@ class ListCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->getContainer()->get('metador_plugin')->getConfig();
-        $plugins = array();
+        $io         = new SymfonyStyle($input, $output);
+        $config     = $this->getContainer()->get('metador_plugin')->getConfig();
+        $translator = $this->getContainer()->get('translator');
+        $plugins    = array();
+
+        $io->title($translator->trans('plugin_command_list_title'));
 
         foreach ($config['plugins'] as $key => $plugin) {
             $plugins[] = array(

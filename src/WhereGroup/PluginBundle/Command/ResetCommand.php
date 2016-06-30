@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Class ResetCommand
@@ -30,20 +30,26 @@ class ResetCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $plugin = $this->getContainer()->get('metador_plugin');
-        $config = $plugin->getConfig();
+        $io         = new SymfonyStyle($input, $output);
+        $translator = $this->getContainer()->get('translator');
+        $plugin     = $this->getContainer()->get('metador_plugin');
+        $config     = $plugin->getConfig();
 
-        if (isset($config['configurationFile']) && file_exists($config['configurationFile'])) {
-            file_put_contents($config['configurationFile'], Yaml::dump(array(), 2));
+        $io->title($translator->trans('plugin_command_reset_title'));
+
+        if ($io->confirm($translator->trans('plugin_command_reset_confirm'), false)) {
+            if (isset($config['configurationFile']) && file_exists($config['configurationFile'])) {
+                file_put_contents($config['configurationFile'], Yaml::dump(array(), 2));
+            }
+
+            if (isset($config['routingFile']) && file_exists($config['routingFile'])) {
+                file_put_contents($config['routingFile'], Yaml::dump(array(), 2));
+            }
+
+            $plugin->assetsInstall();
+            $plugin->clearCache();
+
+            $io->success($translator->trans('plugin_command_reset_succsess'));
         }
-
-        if (isset($config['routingFile']) && file_exists($config['routingFile'])) {
-            file_put_contents($config['routingFile'], Yaml::dump(array(), 2));
-        }
-
-        $plugin->assetsInstall();
-        $plugin->clearCache();
-
-        $output->writeln('Done');
     }
 }

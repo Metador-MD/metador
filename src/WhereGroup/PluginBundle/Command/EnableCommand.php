@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Class ResetSuperuserCommand
@@ -30,11 +31,15 @@ class EnableCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $plugin = $this->getContainer()->get('metador_plugin');
-        $key = $input->getArgument("key");
+        $io         = new SymfonyStyle($input, $output);
+        $plugin     = $this->getContainer()->get('metador_plugin');
+        $translator = $this->getContainer()->get('translator');
+        $key        = $input->getArgument("key");
+
+        $io->title($translator->trans('plugin_command_enable_title'));
 
         if (is_null($plugin->getPlugin($key))) {
-            $output->writeln('Plugin not found!');
+            $io->error($translator->trans('plugin_not_found'));
             return;
         }
 
@@ -44,6 +49,6 @@ class EnableCommand extends ContainerAwareCommand
         $plugin->doctrineUpdate();
         $plugin->clearCache();
 
-        $output->writeln('Done!');
+        $io->success($translator->trans('finished_successfully'));
     }
 }
