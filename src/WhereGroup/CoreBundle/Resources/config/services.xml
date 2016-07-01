@@ -13,6 +13,7 @@
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
+        <parameter key="metador.core.health.listener.class">WhereGroup\CoreBundle\EventListener\HealthCheckListener</parameter>
 
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
@@ -51,7 +52,18 @@
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
-            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading" />
+        </service>
+        <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">
+            <tag name="kernel.event_listener" event="application.health-check" method="onCheck" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>%database_driver%</argument>
+            <argument>%database_host%</argument>
+            <argument>%database_port%</argument>
+            <argument>%database_name%</argument>
+            <argument>%database_user%</argument>
+            <argument>%database_password%</argument>
+            <argument>%database_path%</argument>
         </service>
 
         <!-- TWIG EXTENSION -->
