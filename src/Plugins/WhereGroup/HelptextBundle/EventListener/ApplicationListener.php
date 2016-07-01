@@ -15,7 +15,7 @@ class ApplicationListener
 
         $app->add(
             $app->get('Script')
-                ->file('bundles/wheregrouphelptext/helptext.js')
+                ->file('bundles/metadorhelptext/helptext.js')
         );
     }
 }

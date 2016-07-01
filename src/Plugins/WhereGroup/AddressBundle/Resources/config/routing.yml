@@ -1,4 +1,4 @@
-wheregroup_heltext:
-    resource: "@WhereGroupAddressBundle/Controller/"
+metador_heltext:
+    resource: "@MetadorAddressBundle/Controller/"
     type:     annotation
     prefix:   /

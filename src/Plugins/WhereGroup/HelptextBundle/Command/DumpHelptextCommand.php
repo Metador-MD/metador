@@ -54,7 +54,7 @@ class DumpHelptextCommand extends ContainerAwareCommand
         $rows = $this
             ->getContainer()
             ->get('doctrine')
-            ->getRepository('WhereGroupHelptextBundle:Helptext')
+            ->getRepository('MetadorHelptextBundle:Helptext')
             ->findAll();
 
         foreach ($rows as $row) {

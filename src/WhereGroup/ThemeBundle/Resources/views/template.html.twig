@@ -1,12 +1,12 @@
-{% extends 'WhereGroupThemeBundle::base.html.twig' %}
+{% extends 'MetadorThemeBundle::base.html.twig' %}
 
 {% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('public/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/metallic.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/wheregrouptheme/css/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme.css') }}">
 
     {% for item in applicationGet('app-css') %}
     {# RAW CONTENT #}
@@ -28,7 +28,7 @@
 <div class="page" data-page="">
     <div class="page-top">
 	{% block global_menu %}
-	    {% include 'WhereGroupThemeBundle:Template:globalMenu.html.twig' %}
+	    {% include 'MetadorThemeBundle:Template:globalMenu.html.twig' %}
 	{% endblock %}
     </div>
     {% block form_start %}{% endblock %}
@@ -42,7 +42,7 @@
             <div class="plugin-menu-content-right">
                 <ul class="plugin-menu-list">
                     {% block plugin_menu %}
-                    {% include 'WhereGroupThemeBundle:Template:pluginMenu.html.twig' %}
+                    {% include 'MetadorThemeBundle:Template:pluginMenu.html.twig' %}
                     {% endblock %}
                 </ul>
             </div>
@@ -70,8 +70,8 @@
     {{ parent() }}
     <script src="{{ asset('public/app.min.js') }}"></script>
     <script src="{{ asset('public/javascript/zebra_datepicker.js') }}"></script>
-    <script src="{{ asset('bundles/wheregroupcore/js/metador.js') }}"></script>
-    <script src="{{ asset('bundles/wheregroupcore/js/ui.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/metador.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/ui.js') }}"></script>
     {% for plugin, src in applicationGet('app-javascript') %}
     <script src="{{ asset(src) }}"></script>
     {% endfor %}

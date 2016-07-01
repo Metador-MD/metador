@@ -1,4 +1,4 @@
-{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+{% extends 'MetadorThemeBundle::template.html.twig' %}
 
 {% block center %}
     <div class="page-left">
@@ -28,7 +28,7 @@
     </div>
     <div class="page-right">
         <h1>{% block title %}{% trans %}Übersicht{% endtrans %}{% endblock %}</h1>
-        {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+        {% include 'MetadorThemeBundle:Template:flashMessages.html.twig' %}
         {% block content %}
             <ul class="app-information">
             {% for item in applicationGet('app-information') %}

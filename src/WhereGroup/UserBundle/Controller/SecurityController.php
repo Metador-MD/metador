@@ -35,7 +35,7 @@ class SecurityController extends Controller
      *
      * @Route("/login", name="login")
      * @Method("GET")
-     * @Template("WhereGroupThemeBundle:Template:login.html.twig")
+     * @Template("MetadorThemeBundle:Template:login.html.twig")
      */
     public function loginAction()
     {

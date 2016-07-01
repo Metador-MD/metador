@@ -93,7 +93,7 @@ class PluginController extends Controller
     /**
      * @Route("/upload", name="metador_admin_plugin_upload")
      * @Method("POST")
-     * @Template("WhereGroupPluginBundle:Plugin:import.html.twig")
+     * @Template("MetadorPluginBundle:Plugin:import.html.twig")
      */
     public function uploadAction(Request $request)
     {

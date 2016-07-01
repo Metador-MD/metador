@@ -21,14 +21,14 @@ class ExportController extends Controller
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
 
         if (!$data = $this->get('metadata')->getById($id)) {
-            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
+            $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden"
             ));
             return $this->xmlResponse($xml->getContent());
         }
 
         if ($data->getReadonly()) {
-            $xml = $this->render("WhereGroupCoreBundle::exception.xml.twig", array(
+            $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
                 "message" => "Zugriff auf Datensatz verweigert"
             ));
             return $this->xmlResponse($xml->getContent());

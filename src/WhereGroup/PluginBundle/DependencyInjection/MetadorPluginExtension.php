@@ -9,11 +9,11 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class WhereGroupPluginExtension
+ * Class MetadorPluginExtension
  * @package WhereGroup\PluginBundle\DependencyInjection
  * @author A.R.Pour
  */
-class WhereGroupPluginExtension extends Extension
+class MetadorPluginExtension extends Extension
 {
     /**
      * Loads a specific configuration.

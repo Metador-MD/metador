@@ -15,7 +15,7 @@ class User implements UserInterface
     private $em;
     private $encoder;
     private $logger;
-    private $repository = 'WhereGroupUserBundle:User';
+    private $repository = 'MetadorUserBundle:User';
 
     public function __construct(
         TokenStorageInterface $tokenStorage,

@@ -31,7 +31,7 @@ class GroupType extends AbstractType
                 'users',
                 EntityType::class,
                 array(
-                    'class'        =>  'WhereGroupUserBundle:User',
+                    'class'        =>  'MetadorUserBundle:User',
                     'multiple'     => true,
                     'choice_label' => 'username',
                     'label'        => 'Benutzer',
@@ -55,6 +55,6 @@ class GroupType extends AbstractType
      */
     public function getName()
     {
-        return 'wheregroup_userbundle_grouptype';
+        return 'metador_userbundle_grouptype';
     }
 }

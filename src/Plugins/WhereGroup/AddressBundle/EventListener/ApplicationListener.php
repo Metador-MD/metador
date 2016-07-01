@@ -4,9 +4,6 @@ namespace Plugins\WhereGroup\AddressBundle\EventListener;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 use WhereGroup\CoreBundle\Controller\DashboardController;
-use WhereGroup\PluginBundle\Component\ApplicationIntegration;
-use WhereGroup\PluginBundle\Component\ApplicationIntegration\Script;
-use WhereGroup\PluginBundle\Component\ApplicationIntegration\Dashboard;
 use Plugins\WhereGroup\AddressBundle\Component\AddressInterface;
 
 /**
@@ -17,7 +14,7 @@ use Plugins\WhereGroup\AddressBundle\Component\AddressInterface;
 class ApplicationListener
 {
     protected $address = null;
-    
+
     /**
      * @param AddressInterface $address
      */
@@ -41,12 +38,12 @@ class ApplicationListener
         $app->add(
             $app->get('Dashboard')
                 ->template(
-                    'WhereGroupAddressBundle::dashboardPreview.html.twig',
+                    'MetadorAddressBundle::dashboardPreview.html.twig',
                     array('address' => $this->address->get())
                 )
         )->add(
             $app->get('Script')
-                ->file('bundles/wheregroupaddress/address.js')
+                ->file('bundles/metadoraddress/address.js')
         );
     }
 }

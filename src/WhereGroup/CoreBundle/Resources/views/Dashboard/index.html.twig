@@ -1,8 +1,8 @@
-{% extends 'WhereGroupThemeBundle::template.html.twig' %}
+{% extends 'MetadorThemeBundle::template.html.twig' %}
 
 {% block center %}
 <div class="page-content">
-    {% include 'WhereGroupThemeBundle:Template:flashMessages.html.twig' %}
+    {% include 'MetadorThemeBundle:Template:flashMessages.html.twig' %}
     {% for item in applicationGet('app-preview') %}
     <div class="preview">
         {{ include(item.template, item.params) }}

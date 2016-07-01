@@ -18,7 +18,7 @@ use WhereGroup\UserBundle\Form\GroupType;
  */
 class GroupController extends Controller
 {
-    const REPOSITORY = 'WhereGroupUserBundle:Group';
+    const REPOSITORY = 'MetadorUserBundle:Group';
 
     /**
      * @Route("/", name="metador_admin_group")
@@ -46,7 +46,7 @@ class GroupController extends Controller
                 ->createForm(new GroupType(), new Group())
                 ->createView(),
             'users' => $this
-                ->getRepository('WhereGroupUserBundle:User')
+                ->getRepository('MetadorUserBundle:User')
                 ->findAll()
         );
     }
@@ -54,7 +54,7 @@ class GroupController extends Controller
     /**
      * @Route("/create", name="metador_admin_group_create")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:Group:new.html.twig")
+     * @Template("MetadorUserBundle:Group:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -90,7 +90,7 @@ class GroupController extends Controller
     /**
      * @Route("/edit/{id}", name="metador_admin_group_edit")
      * @Method("GET")
-     * @Template("WhereGroupUserBundle:Group:new.html.twig")
+     * @Template("MetadorUserBundle:Group:new.html.twig")
      */
     public function editAction($id)
     {
@@ -99,7 +99,7 @@ class GroupController extends Controller
                 ->createForm(new GroupType(), $this->getGroup($id))
                 ->createView(),
             'users' => $this
-                ->getRepository('WhereGroupUserBundle:User')
+                ->getRepository('MetadorUserBundle:User')
                 ->findAll()
         );
     }
@@ -107,7 +107,7 @@ class GroupController extends Controller
     /**
      * @Route("/edit/{id}", name="metador_admin_group_update")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:Group:new.html.twig")
+     * @Template("MetadorUserBundle:Group:new.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

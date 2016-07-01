@@ -51,7 +51,7 @@ class UserController extends Controller
      *
      * @Route("/create", name="metador_admin_user_create")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:User:new.html.twig")
+     * @Template("MetadorUserBundle:User:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -84,7 +84,7 @@ class UserController extends Controller
     /**
      *
      * @Route("/edit/{id}", name="metador_admin_user_edit")
-     * @Template("WhereGroupUserBundle:User:new.html.twig")
+     * @Template("MetadorUserBundle:User:new.html.twig")
      */
     public function editAction($id)
     {
@@ -106,7 +106,7 @@ class UserController extends Controller
      *
      * @Route("/update/{id}", name="metador_admin_user_update")
      * @Method("POST")
-     * @Template("WhereGroupUserBundle:User:new.html.twig")
+     * @Template("MetadorUserBundle:User:new.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

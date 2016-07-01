@@ -28,7 +28,7 @@ class UserType extends AbstractType
                 'groups',
                 EntityType::class,
                 array(
-                    'class'        =>  'WhereGroupUserBundle:Group',
+                    'class'        =>  'MetadorUserBundle:Group',
                     'multiple'     => true,
                     'choice_label' => 'role',
                     'label'        => 'Gruppe',

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-    private $entity = 'WhereGroupUserBundle:User';
+    private $entity = 'MetadorUserBundle:User';
 
     public function findAllSorted()
     {

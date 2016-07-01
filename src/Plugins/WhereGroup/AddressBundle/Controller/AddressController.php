@@ -26,7 +26,7 @@ class AddressController extends Controller
 
         $array = array();
         $em = $this->getDoctrine()->getManager();
-        $addresses = $em->getRepository('WhereGroupAddressBundle:Address')->findAll();
+        $addresses = $em->getRepository('MetadorAddressBundle:Address')->findAll();
 
         foreach ($addresses as $address) {
             $array[] = array(
@@ -63,7 +63,7 @@ class AddressController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('WhereGroupAddressBundle:Address')->findOneById($id);
+        $address = $em->getRepository('MetadorAddressBundle:Address')->findOneById($id);
 
         try {
             if ($address) {

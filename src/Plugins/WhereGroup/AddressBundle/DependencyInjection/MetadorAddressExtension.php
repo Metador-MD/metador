@@ -8,11 +8,11 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class WhereGroupAddressExtension
+ * Class MetadorAddressExtension
  * @package Plugins\WhereGroup\AddressBundle\DependencyInjection
  * @author A.R.Pour
  */
-class WhereGroupAddressExtension extends Extension
+class MetadorAddressExtension extends Extension
 {
     /**
      * @param array $configs

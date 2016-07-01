@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class MetadataRepository extends EntityRepository
 {
-    private $entity = 'WhereGroupCoreBundle:Metadata';
+    private $entity = 'MetadorCoreBundle:Metadata';
 
     public function getAllByProfile($profile)
     {

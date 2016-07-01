@@ -4,11 +4,11 @@ namespace WhereGroup\PluginBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class WhereGroupPluginBundle
+ * Class MetadorPluginBundle
  * @package WhereGroup\PluginBundle
  * @author A.R.Pour
  */
-class WhereGroupPluginBundle extends Bundle
+class MetadorPluginBundle extends Bundle
 {
 
 }

@@ -60,15 +60,12 @@
             color: $primary-contrast;
             display: block;
             padding: 0 10px;
+            cursor:pointer;
 
             &:hover {
                 background-color: lighten($primary, 5%);
                 text-decoration: none;
             }
-        }
-
-        & button {
-            padding: 10px;
         }
     }
 }

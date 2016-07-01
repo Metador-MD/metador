@@ -33,7 +33,7 @@ class ResetSuperuserCommand extends ContainerAwareCommand
         $password = $input->getOption('password');
         $password = is_null($password) ? 'root' : $password;
 
-        $user = $doctrine->getRepository('WhereGroupUserBundle:User')->find(1);
+        $user = $doctrine->getRepository('MetadorUserBundle:User')->find(1);
 
         if ($user) {
             $output->writeln('Benutzer ' . $user->getUsername() . ' schon vorhanden. Nur Kennwort geändert.');
@@ -54,7 +54,7 @@ class ResetSuperuserCommand extends ContainerAwareCommand
                 )
             );
 
-            $group = $doctrine->getRepository('WhereGroupUserBundle:Group')->findOneByRole('ROLE_SUPERUSER');
+            $group = $doctrine->getRepository('MetadorUserBundle:Group')->findOneByRole('ROLE_SUPERUSER');
 
             if (!$group) {
                 $group = new Group();

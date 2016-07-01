@@ -83,7 +83,7 @@ class ImportHelptextCommand extends ContainerAwareCommand
             $existingHelptext = $this
                 ->getContainer()
                 ->get('doctrine')
-                ->getRepository('WhereGroupHelptextBundle:Helptext')
+                ->getRepository('MetadorHelptextBundle:Helptext')
                 ->findById(
                     $newHelptext->getId()
                 );

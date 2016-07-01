@@ -62,7 +62,7 @@ abstract class ProfileApplicationMenuListener
             $app->add(
                 $app->get('Dashboard')
                     ->template(
-                        'WhereGroupCoreBundle::dashboardPreview.html.twig',
+                        'MetadorCoreBundle::dashboardPreview.html.twig',
                         array(
                             'title'   => $this->name,
                             'profile' => $this->pluginId,

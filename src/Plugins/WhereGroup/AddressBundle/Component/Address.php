@@ -32,7 +32,7 @@ class Address implements AddressInterface
             ->getManager()
             ->createQueryBuilder('y')
             ->select('y.id, y.individualName')
-            ->from('WhereGroupAddressBundle:Address', 'y')
+            ->from('MetadorAddressBundle:Address', 'y')
             ->getQuery()
             ->getResult();
 

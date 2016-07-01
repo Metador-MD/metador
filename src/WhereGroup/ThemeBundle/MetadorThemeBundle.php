@@ -5,10 +5,10 @@ namespace WhereGroup\ThemeBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class WhereGroupThemeBundle
+ * Class MetadorThemeBundle
  * @package WhereGroup\ThemeBundle
  * @author A.R.Pour
  */
-class WhereGroupThemeBundle extends Bundle
+class MetadorThemeBundle extends Bundle
 {
 }

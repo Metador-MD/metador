@@ -25,7 +25,7 @@ class HelptextController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var Helptext $helptext */
-        $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
+        $helptext = $em->getRepository('MetadorHelptextBundle:Helptext')->findOneById($id);
 
         if ($helptext) {
             $text = trim($helptext->getText());
@@ -48,7 +48,7 @@ class HelptextController extends Controller
             $string = "Hilfetext nicht definiert.";
         }
 
-        $html = $this->render("WhereGroupThemeBundle:Template:helptext.html.twig", array(
+        $html = $this->render("MetadorThemeBundle:Template:helptext.html.twig", array(
             "html" => $string
         ));
 
@@ -78,7 +78,7 @@ class HelptextController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var Helptext $helptext */
-        $helptext = $em->getRepository('WhereGroupHelptextBundle:Helptext')->findOneById($id);
+        $helptext = $em->getRepository('MetadorHelptextBundle:Helptext')->findOneById($id);
 
         $html = str_replace(array('&gt;', '&lt;'), array('>', '<'), $html);
         $html = str_replace(

@@ -4,6 +4,6 @@ namespace Plugins\WhereGroup\HelptextBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class WhereGroupHelptextBundle extends Bundle
+class MetadorHelptextBundle extends Bundle
 {
 }

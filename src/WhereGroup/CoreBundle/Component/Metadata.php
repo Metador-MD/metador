@@ -22,7 +22,7 @@ class Metadata implements MetadataInterface
     /** @var UserInterface  */
     protected $metadorUser;
 
-    private $repository = "WhereGroupCoreBundle:Metadata";
+    private $repository = "MetadorCoreBundle:Metadata";
 
     private $systemRoles = array();
 

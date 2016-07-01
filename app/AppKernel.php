@@ -25,10 +25,10 @@ class AppKernel extends Kernel
             /******************************************************************
              * WhereGroup Metador Bundle's
              ******************************************************************/
-            new WhereGroup\CoreBundle\WhereGroupCoreBundle(),
-            new WhereGroup\ThemeBundle\WhereGroupThemeBundle(),
-            new WhereGroup\UserBundle\WhereGroupUserBundle(),
-            new WhereGroup\PluginBundle\WhereGroupPluginBundle(),
+            new WhereGroup\CoreBundle\MetadorCoreBundle(),
+            new WhereGroup\ThemeBundle\MetadorThemeBundle(),
+            new WhereGroup\UserBundle\MetadorUserBundle(),
+            new WhereGroup\PluginBundle\MetadorPluginBundle(),
 
         );
 

@@ -3,5 +3,5 @@ wheregroup-helptext:
     name: Hilfetexte
     description: Schreiben und abrufen von Hilfetexten
     class_path: Plugins\WhereGroup\HelptextBundle
-    class_name: WhereGroupHelptextBundle
+    class_name: MetadorHelptextBundle
     version: 1.0
