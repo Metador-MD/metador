@@ -225,7 +225,7 @@ $(document).ready(function() {
     });
 
     // GENERATE UUID
-    $(document).live('click', '.wizard_p_fileidentifier', function() {
+    $(document).on('click', '.wizard_p_fileidentifier', function() {
         var ident     = $('#p_fileidentifier');
         var identCode = $('#p_identifier_0_code');
         var uuid      = getUUID();

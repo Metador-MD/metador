@@ -1,6 +1,6 @@
-@import 'config';
-@import 'mixins';
-@import 'extensions';
+@import '../styleguide/config';
+@import '../styleguide/mixins';
+@import '../styleguide/extensions';
 
 $shadow: rgba(0, 0, 0, .1);
 $link: #444;

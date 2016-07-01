@@ -46,7 +46,7 @@ var conf = {
         dest   : '/../public/css/',
         options: {
             outputStyle  : 'compressed',
-            includePaths : ['src/WhereGroup/ThemeBundle/Resources/styleguide']
+            includePaths : [] //'src/WhereGroup/ThemeBundle/Resources/styleguide'
         }
     }
 }

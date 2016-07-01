@@ -6,5 +6,5 @@ profile-dataset:
     class_name: ProfileDatasetBundle
     version: 1.0
     require:
-        - wheregroup-helptext
-        - wheregroup-address
+        - metador-helptext
+        - metador-address

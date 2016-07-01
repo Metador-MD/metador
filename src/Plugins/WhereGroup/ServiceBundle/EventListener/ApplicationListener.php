@@ -49,7 +49,7 @@ class ApplicationListener extends ProfileApplicationMenuListener
         $app = $event->getApplication();
 
         if ($app->isBundle($this->bundle) && $app->isAction('edit')) {
-            $plugins = $this->plugin->getPlugin('wheregroup-map');
+            $plugins = $this->plugin->getPlugin('metador-map');
             $id      = $app->getRequestStack()->getMasterRequest()->get('id', null);
 
             // If map plugin is active

@@ -6,5 +6,5 @@ profile-service:
     class_name: ProfileServiceBundle
     version: 1.0
     require:
-        - wheregroup-helptext
-        - wheregroup-address
+        - metador-helptext
+        - metador-address
