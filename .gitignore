@@ -6,6 +6,7 @@
 *.phar
 *.TODO
 app/SymfonyRequirements.php
+app/check.php
 
 # IDE'S
 *.sublime-workspace
