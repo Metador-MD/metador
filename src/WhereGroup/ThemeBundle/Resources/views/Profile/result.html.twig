@@ -25,7 +25,7 @@
                     {{ row.object.alternateTitle }}
                 </div>
                 <div class="user-date" title="Zuletzt bearbeitet von {{ row.updateUser.username }} am {{ row.updateTime|date("d.m.Y") }} um {{ row.updateTime|date("H:i") }} Uhr">
-                    <span class="icon-user"></span> {{ row.updateUser.username }}
+                    <span class="icon-user"></span>
                 </div>
             </div>
             {% if row.abstract is defined and row.abstract is not empty %}
