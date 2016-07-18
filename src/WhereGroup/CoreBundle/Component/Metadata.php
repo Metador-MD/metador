@@ -109,6 +109,36 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * @param $params
+     * @return array
+     */
+    public function find($params)
+    {
+        /** @var \WhereGroup\CoreBundle\Entity\Metadata[] $result */
+        $repo = $this->container->get('doctrine')
+            ->getManager()
+            ->getRepository($this->repository);
+
+        $paging = array();
+
+        if (isset($params['page']) || isset($params['hits'])) {
+            $pagingClass = new Paging($repo->count($params), $params['hits'], $params['page']);
+            $paging = $pagingClass->calculate();
+        }
+
+        $result = $repo->findByParams($params);
+
+        for ($i=0,$iL=count($result); $i<$iL; $i++) {
+            $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
+        }
+        
+        return array(
+            'result' => $result,
+            'paging' => $paging
+        );
+    }
+
+    /**
      * @param $limit
      * @param $page
      * @param $profile

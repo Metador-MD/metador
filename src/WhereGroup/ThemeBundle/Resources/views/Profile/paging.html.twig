@@ -1,0 +1,13 @@
+<div class="searchfield-paging clearfix">
+    {#<div class="left">#}
+        {#<span class="icon-chevron-left"></span>#}
+    {#</div>#}
+    <div class="center">
+        {% if paging.currentPage is defined %}
+        Seite {{ paging.currentPage }}/{{ paging.pages }}
+        {% endif %}
+    </div>
+    {#<div class="right">#}
+        {#<span class="icon-chevron-right"></span>#}
+    {#</div>#}
+</div>

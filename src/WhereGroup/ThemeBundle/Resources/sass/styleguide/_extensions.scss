@@ -37,6 +37,11 @@
     user-select: none;          /* Likely future */
 }
 
+// on :focus
+%no-highlight {
+    outline: none;
+}
+
 %transition-all {
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;

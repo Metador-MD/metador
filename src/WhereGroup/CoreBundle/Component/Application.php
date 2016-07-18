@@ -162,8 +162,8 @@ class Application
                 return new Integration\AppInformation($prefix);
             case 'profile':
                 return new Integration\Profile($prefix);
-            case 'profiletable':
-                return new Integration\ProfileTable($prefix);
+            case 'searchmenu':
+                return new Integration\SearchMenu($prefix);
             case 'profilemenu':
                 return new Integration\ProfileMenu($prefix);
             case 'configuration':
@@ -172,7 +172,6 @@ class Application
                 throw new \Exception("Class not found");
         }
     }
-
 
     /**
      * @param $type

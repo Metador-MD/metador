@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,21 +15,42 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ProfileController extends Controller
 {
     /**
+     * @Route("/{profile}/find", name="metadata_find")
+     * @Method("GET")
+     * @Template("MetadorThemeBundle:Profile:result.html.twig")
+     */
+    public function findAction($profile) {
+        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
+
+        $params['profile'] = $profile;
+
+        $metadata = $this->get('metadata')->find(array(
+            $params
+        ));
+
+        return array(
+            'profile' => $profile,
+            'rows'    => $metadata['result'],
+            'paging'  => $metadata['paging']
+        );
+    }
+
+    /**
      * @Route("/{profile}/index", name="metadata_index")
      * @Method("GET")
      */
-    public function indexAction($profile, Request $request)
+    public function indexAction($profile)
     {
-        $metadata = $this->get('metadata')->getMetadata(
-            20,
-            $request->get('page', 1),
-            $profile
-        );
+        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
+        $params['profile'] = $profile;
+        $params['page'] = isset($params['page']) ? $params['page'] : 1;
+        $params['hits'] = isset($params['hits']) ? $params['hits'] : 10;
 
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+        $metadata = $this->get('metadata')->find($params);
 
-        return $this->forward($className . ':Profile:index', array(
+        return $this->forward($this->get('metador_plugin')->getPluginClassName($profile) . ':Profile:index', array(
             'data' => array(
+                'params'  => $params,
                 'profile' => $profile,
                 'rows'    => $metadata['result'],
                 'paging'  => $metadata['paging']

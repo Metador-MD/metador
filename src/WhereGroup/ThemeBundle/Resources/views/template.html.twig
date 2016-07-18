@@ -5,7 +5,13 @@
 {% block css %}
     <link rel="stylesheet" href="{{ asset('public/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/metallic.css') }}">
+
+    {% if app.environment == 'dev' %}
+    <link rel="stylesheet" href="https://i.icomoon.io/public/83c52ab735/Metador/style.css">
+    {% else %}
     <link rel="stylesheet" href="{{ asset('bundles/metadortheme/style.css') }}">
+    {% endif %}
+
     <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme.css') }}">
 
     {% for item in applicationGet('app-css') %}

@@ -94,7 +94,36 @@ abstract class ProfileApplicationMenuListener
                         ->icon('icon-plus')
                         ->path('metadata_new', array('profile' => $this->pluginId))
                         ->active($app->isAction(array('new', 'use')))
+                )->add(
+                    $app->get('SearchMenu', 'pdf')
+                        ->label('PDF')
+                        ->icon('icon-file-pdf')
+                        ->path('metador_export_pdf')
+                        ->target('_BLANK')
+                )->add(
+                    $app->get('SearchMenu', 'xml')
+                        ->label('XML')
+                        ->icon('icon-download')
+                        ->path('metador_export_xml')
+                        ->target('_BLANK')
+                )->add(
+                    $app->get('SearchMenu', 'html')
+                        ->label('HTML')
+                        ->icon('icon-embed2')
+                        ->path('metador_export_html')
+                        ->target('_BLANK')
                 );
+
+                if ($app->isEnv('dev')) {
+                    $app->add(
+                        $app->get('SearchMenu', 'obj')
+                            ->label('Objekt')
+                            ->icon('icon-embed')
+                            ->path('metador_export_obj')
+                            ->target('_BLANK')
+                    );
+                }
+
             } else {
                 $data = array();
 
@@ -113,24 +142,6 @@ abstract class ProfileApplicationMenuListener
             }
 
             if ($app->isAction('edit') && !is_null($id)) {
-                $app->add(
-                    $app->get('PluginMenu', 'xml')
-                        ->label('XML')
-                        ->icon('icon-download')
-                        ->path('metador_export_xml', array('id' => $id))
-                        ->target('_BLANK')
-                )->add(
-                    $app->get('PluginMenu', 'pdf')
-                        ->label('PDF')
-                        ->icon('icon-file-pdf')
-                        ->path('metador_export_pdf', array('id' => $id))
-                )->add(
-                    $app->get('PluginMenu', 'html')
-                        ->label('HTML')
-                        ->icon('icon-embed2')
-                        ->path('metador_export_html', array('id' => $id))
-                );
-
                 if (!is_null($id) && !$metadata->getReadonly()) {
                     $app->add(
                         $app->get('PluginMenu', 'confirm')
