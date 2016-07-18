@@ -94,21 +94,9 @@ gulp.task('browser-sync', () => {
     open('http://localhost:3000/app_dev.php');
 });
 
-gulp.task('serve', ['watch'], () => {
+gulp.task('default', ['watch'], () => {
     connect.server({base: 'web'});
     open('http://localhost:8000/app_dev.php');
-});
-
-gulp.task('clean-serve', () => {
-    runSequence('clean', 'init', () => {
-        setTimeout(() => {
-            runSequence('serve');
-        }, 10000)
-    });
-});
-
-gulp.task('test', () => {
-    // TODO mocha, maybe with Karma. Nightwatch, PHPUnit
 });
 
 gulp.task('transpile', ['sass'], () => {
