@@ -30,7 +30,7 @@ $width-paging-info: 100px;
         &:hover {
             background-color: lighten($secondary-contrast, 5%);
         }
-        
+
         &:focus {
             @extend %no-highlight;
         }
@@ -111,6 +111,10 @@ $width-paging-info: 100px;
             font-size: 20px;
             font-weight: bold;
             @include pos(0, '', '', 0);
+
+            &:hover a {
+                text-decoration: none;
+            }
         }
 
         & > .alternate-title {

@@ -1604,6 +1604,9 @@ textarea.code {
   top: 0;
   left: 0; }
 
+.metadata-row .metadata-row-head > .title:hover a {
+  text-decoration: none; }
+
 .metadata-row .metadata-row-head > .alternate-title {
   font-size: 12px;
   font-style: italic;
