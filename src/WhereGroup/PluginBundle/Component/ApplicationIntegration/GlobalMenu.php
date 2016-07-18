@@ -39,7 +39,7 @@ class GlobalMenu extends Base
 
     public function target($target)
     {
-        $this->target[$this->prefix]['target'] = $target;
+        $this->data[$this->prefix]['target'] = $target;
         return $this;
     }
 }
