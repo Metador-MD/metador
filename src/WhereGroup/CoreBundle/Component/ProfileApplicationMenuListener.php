@@ -33,13 +33,13 @@ abstract class ProfileApplicationMenuListener
         $app      = $event->getApplication();
         $request  = $app->getRequestStack()->getMasterRequest();
         $id       = null;
-        $metadata = null;
+        // $metadata = null;
 
         if ($request && $request->get('id', null)) {
             $id       = $request->get('id', null);
 
-            /** @var Metadata $metadata */
-            $metadata = $this->metadata->getById($id);
+            // /** @var Metadata $metadata */
+            // $metadata = $this->metadata->getById($id);
         }
 
         /***********************************************************************
@@ -141,24 +141,24 @@ abstract class ProfileApplicationMenuListener
                 );
             }
 
-            if ($app->isAction('edit') && !is_null($id)) {
-                if (!is_null($id) && !$metadata->getReadonly()) {
-                    $app->add(
-                        $app->get('PluginMenu', 'confirm')
-                            ->label('löschen')
-                            ->icon('icon-bin2')
-                            ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
-                    );
-                }
-            }
-
-            if ($app->isAction('new') || ($app->isAction('edit') && !is_null($id) && !$metadata->getReadonly())) {
-                $app->add(
-                    $app->get('PluginMenu', 'save')
-                        ->label('speichern')
-                        ->icon('icon-floppy-disk')
-                );
-            }
+            // if ($app->isAction('edit') && !is_null($id)) {
+            //     if (!is_null($id) && !$metadata->getReadonly()) {
+            //         $app->add(
+            //             $app->get('PluginMenu', 'confirm')
+            //                 ->label('löschen')
+            //                 ->icon('icon-bin2')
+            //                 ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
+            //         );
+            //     }
+            // }
+            //
+            // if ($app->isAction('new') || ($app->isAction('edit') && !is_null($id) && !$metadata->getReadonly())) {
+            //     $app->add(
+            //         $app->get('PluginMenu', 'save')
+            //             ->label('speichern')
+            //             ->icon('icon-floppy-disk')
+            //     );
+            // }
         }
     }
 }
