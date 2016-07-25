@@ -32,9 +32,9 @@ class Logger
         TokenStorageInterface $tokenStorage,
         TranslatorInterface $translatorInterface
     ) {
-        $this->flashBag = $flashBag;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->tokenStorage = $tokenStorage;
+        $this->flashBag            = $flashBag;
+        $this->eventDispatcher     = $eventDispatcher;
+        $this->tokenStorage        = $tokenStorage;
         $this->translatorInterface = $translatorInterface;
     }
 
@@ -51,73 +51,81 @@ class Logger
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function flashInfo($message, $parameters = array())
     {
-        $this->log('info', $message, $parameters, true);
+        return $this->log('info', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function flashSuccess($message, $parameters = array())
     {
-        $this->log('success', $message, $parameters, true);
+        return $this->log('success', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function flashWarning($message, $parameters = array())
     {
-        $this->log('warning', $message, $parameters, true);
+        return $this->log('warning', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function flashError($message, $parameters = array())
     {
-        $this->log('error', $message, $parameters, true);
+        return $this->log('error', $message, $parameters, true);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function info($message, $parameters = array())
     {
-        $this->log('info', $message, $parameters, false);
+        return $this->log('info', $message, $parameters, false);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function success($message, $parameters = array())
     {
-        $this->log('success', $message, $parameters, false);
+        return $this->log('success', $message, $parameters, false);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function warning($message, $parameters = array())
     {
-        $this->log('warning', $message, $parameters, false);
+        return $this->log('warning', $message, $parameters, false);
     }
 
     /**
      * @param $message
      * @param array $parameters
+     * @return Logger
      */
     public function error($message, $parameters = array())
     {
-        $this->log('error', $message, $parameters, false);
+        return $this->log('error', $message, $parameters, false);
     }
 
     /**
@@ -125,6 +133,7 @@ class Logger
      * @param $message
      * @param $parameters
      * @param $display
+     * @return Logger
      */
     public function log($type, $message, $parameters, $display)
     {
@@ -143,5 +152,7 @@ class Logger
                 new \DateTime()
             )
         );
+
+        return $this;
     }
 }

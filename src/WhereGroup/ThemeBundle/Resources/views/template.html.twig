@@ -1,5 +1,7 @@
 {% extends 'MetadorThemeBundle::base.html.twig' %}
 
+{% import "MetadorThemeBundle:Macro:plugin.html.twig" as plugin %}
+
 {% block title %}Metador 2.1{% endblock %}
 
 {% block css %}
@@ -48,7 +50,9 @@
             <div class="plugin-menu-content-right">
                 <ul class="plugin-menu-list">
                     {% block plugin_menu %}
-                    {% include 'MetadorThemeBundle:Template:pluginMenu.html.twig' %}
+                        {% for item in applicationGet('app-plugin-menu') %}
+                                {{ plugin.menu(item) }}
+                        {% endfor %}
                     {% endblock %}
                 </ul>
             </div>

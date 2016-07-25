@@ -1,4 +1,12 @@
-{% for item in applicationGet('app-plugin-menu') %}
+{#
+    Usage
+    {% import "MetadorThemeBundle:Macro:plugin.html.twig" as plugin %}
+
+    {{ plugin.menu({
+
+    }) }}
+#}
+{% macro menu(item) %}
     {% set class = item.active is defined and item.active ? 'act' : '' %}
     {% set data  = '' %}
 
@@ -36,4 +44,4 @@
             {% endif %}
         </li>
     {% endif %}
-{% endfor %}
+{% endmacro %}
