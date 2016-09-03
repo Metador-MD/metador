@@ -2,9 +2,12 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
+/**
+ * Class ApplicationListener
+ * @package WhereGroup\CoreBundle\EventListener
+ */
 class ApplicationListener
 {
     /**

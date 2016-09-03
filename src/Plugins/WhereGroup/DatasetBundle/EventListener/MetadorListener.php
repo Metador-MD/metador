@@ -2,18 +2,17 @@
 
 namespace Plugins\WhereGroup\DatasetBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
+/**
+ * Class MetadorListener
+ * @package Plugins\WhereGroup\DatasetBundle\EventListener
+ */
 class MetadorListener
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
+    /**
+     * @param MetadataChangeEvent $event
+     */
     public function onPreSave(MetadataChangeEvent $event)
     {
         $metadata = $event->getDataset();
