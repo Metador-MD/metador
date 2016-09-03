@@ -62,16 +62,16 @@ class ProfileController extends Controller
      * @Route("/{profile}/new", name="metadata_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction($profile, Request $request)
+    public function newAction($profile)
     {
-        // LOAD
-        if ($request->getMethod() == 'GET') {
-            $p = array('dateStamp' => date("Y-m-d"));
+        $request = $this->get('request_stack')->getCurrentRequest();
+        $p = $request->request->get('p', array());
+        $p['dateStamp'] = date("Y-m-d");
+
 
         // SAVE
-        } elseif (($p = $request->request->get('p', false))
-            && $this->get('metadata')->saveObject($p)) {
-            return $this->redirectToRoute('metadata_index', array('profile' => $profile));
+        if ($request->getMethod() == 'POST') {
+            $this->get('metadata')->saveObject($p);
         }
 
         $className = $this->get('metador_plugin')->getPluginClassName($profile);
@@ -116,22 +116,18 @@ class ProfileController extends Controller
      * @Route("/{profile}/edit/{id}", name="metadata_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction($profile, $id, Request $request)
+    public function editAction($profile, $id)
     {
+        $request = $this->get('request_stack')->getCurrentRequest();
         $metadata = $this->get('metadata');
         $data = $metadata->getById($id);
-
-        // LOAD
-        if ($request->getMethod() == 'GET') {
-            if (($p = $data->getObject())) {
-                $p['dateStamp'] = date("Y-m-d");
-            }
+        $p = $data->getObject();
+        $p['dateStamp'] = date("Y-m-d");
 
         // SAVE
-        } else {
-            if (($p = $request->request->get('p', false)) && $metadata->saveObject($p, $id)) {
-                return $this->redirect($this->generateUrl('metadata_index', array('profile' => $profile)));
-            }
+        if ($request->getMethod() == 'POST') {
+            $p = $request->request->get('p', false);
+            $metadata->saveObject($p, $id);
         }
 
         $className = $this->get('metador_plugin')->getPluginClassName($profile);
@@ -175,8 +171,9 @@ class ProfileController extends Controller
      * @Route("/{profile}/delete/{id}", name="metadata_delete")
      * @Method("POST")
      */
-    public function deleteAction($profile, $id, Request $request)
+    public function deleteAction($profile, $id)
     {
+        $request = $this->get('request_stack')->getCurrentRequest();
         $form = $this->createFormBuilder($this->get('metadata')->getById($id))
             ->add('delete', 'submit', array('label' => 'löschen'))
             ->getForm()
