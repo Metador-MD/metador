@@ -35,12 +35,9 @@ abstract class ProfileApplicationMenuListener
         $id       = null;
         // $metadata = null;
 
-        if ($request && $request->get('id', null)) {
-            $id       = $request->get('id', null);
-
-            // /** @var Metadata $metadata */
-            // $metadata = $this->metadata->getById($id);
-        }
+//        if ($request && $request->get('id', null)) {
+//            $id       = $request->get('id', null);
+//        }
 
         /***********************************************************************
          * Profile Menu
@@ -127,13 +124,27 @@ abstract class ProfileApplicationMenuListener
             } else {
                 $data = array();
 
-                if ($app->isAction('new') || $app->isAction('edit')) {
+                if ($app->isAction(array('new', 'edit'))) {
                     $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
+                }
+
+                if ($app->isAction('edit')) {
+                    $app->add(
+                        $app->get('PluginMenu', 'template')
+                            ->label('als Vorlage verwenden')
+                            ->icon('icon-files-empty')
+                            ->path('metadata_use', array(
+                                'profile' => $this->pluginId,
+                                'id' => $request->get('id', null))
+                            )
+                            ->active($app->isAction(array('new', 'use')))
+                            ->data($data)
+                    );
                 }
 
                 $app->add(
                     $app->get('PluginMenu', 'index')
-                        ->label('zurück')
+                        ->label('Übersicht')
                         ->icon('icon-redo2')
                         ->path('metadata_index', array('profile' => $this->pluginId))
                         ->active($app->isAction(array('new', 'use')))
