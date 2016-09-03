@@ -92,6 +92,9 @@ $width-paging-info: 100px;
 }
 
 .metadata-row {
+    margin-bottom: $padding * 2;
+    background-color: lighten($primary, 73%);
+    border-radius: 4px;
     padding: $padding * 2;
 
     & > .left {
@@ -145,8 +148,8 @@ $width-paging-info: 100px;
 
 .metadata-row-foot {
     margin-top: $padding * 2;
-    border-top: 1px solid lighten($primary, 40%);
-    background-color: lighten($primary, 70%);
+    //border-bottom: 1px solid lighten($primary, 65%);
+    background-color: lighten($primary, 74%);
     line-height: 30px;
     height: 30px;
     text-align: right;

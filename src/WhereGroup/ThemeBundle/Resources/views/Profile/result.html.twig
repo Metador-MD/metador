@@ -6,7 +6,8 @@
             {% if row.browserGraphic is defined and row.browserGraphic is not empty %}
                 <img src="{{ row.browserGraphic }}" class="browser-graphic" />
             {% else %}
-                <span class="icon-image browser-graphic"></span>
+                <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="browser-graphic" />
+                {#<span class="icon-image browser-graphic"></span>#}
             {% endif %}
         </div>
         <div class="right">

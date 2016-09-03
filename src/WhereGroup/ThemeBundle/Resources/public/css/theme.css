@@ -1584,6 +1584,9 @@ textarea.code {
   font-size: 16px; }
 
 .metadata-row {
+  margin-bottom: 12px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
   padding: 12px; }
 
 .metadata-row > .left {
@@ -1633,8 +1636,7 @@ textarea.code {
 
 .metadata-row-foot {
   margin-top: 12px;
-  border-top: 1px solid #9c9ca0;
-  background-color: #eaeaeb;
+  background-color: #f5f5f5;
   line-height: 30px;
   height: 30px;
   text-align: right;
