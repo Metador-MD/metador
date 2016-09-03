@@ -140,25 +140,6 @@ abstract class ProfileApplicationMenuListener
                         ->data($data)
                 );
             }
-
-            // if ($app->isAction('edit') && !is_null($id)) {
-            //     if (!is_null($id) && !$metadata->getReadonly()) {
-            //         $app->add(
-            //             $app->get('PluginMenu', 'confirm')
-            //                 ->label('löschen')
-            //                 ->icon('icon-bin2')
-            //                 ->path('metadata_confirm', array('profile' => $this->pluginId, 'id' => $id))
-            //         );
-            //     }
-            // }
-            //
-            // if ($app->isAction('new') || ($app->isAction('edit') && !is_null($id) && !$metadata->getReadonly())) {
-            //     $app->add(
-            //         $app->get('PluginMenu', 'save')
-            //             ->label('speichern')
-            //             ->icon('icon-floppy-disk')
-            //     );
-            // }
         }
     }
 }
