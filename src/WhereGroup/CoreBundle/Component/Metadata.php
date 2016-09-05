@@ -131,7 +131,7 @@ class Metadata implements MetadataInterface
         for ($i=0,$iL=count($result); $i<$iL; $i++) {
             $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
         }
-        
+
         return array(
             'result' => $result,
             'paging' => $paging
@@ -147,9 +147,6 @@ class Metadata implements MetadataInterface
     public function getMetadata($limit, $page, $profile)
     {
         $paging = new Paging($this->getMetadataCount($profile), $limit, $page);
-
-        /** @var QueryBuilder $qb */
-        $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
 
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->container
@@ -183,9 +180,6 @@ class Metadata implements MetadataInterface
      */
     public function getMetadataCount($profile)
     {
-        /** @var QueryBuilder $qb */
-        $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
-
         /** @var QueryBuilder $queryBuilderC */
         $queryBuilderC = $this->container
             ->get('doctrine')
@@ -313,7 +307,8 @@ class Metadata implements MetadataInterface
                 'success',
                 $title . ' bearbeitet.'
             );
-            return true;
+
+            return $metadata;
         }
 
         $this->container->get('session')->getFlashBag()->add(
@@ -321,7 +316,7 @@ class Metadata implements MetadataInterface
             $title . ' eingetragen.'
         );
 
-        return true;
+        return $metadata;
     }
 
     /**

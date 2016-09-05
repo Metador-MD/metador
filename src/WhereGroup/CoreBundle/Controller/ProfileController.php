@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
  * @Route("/metadata")
@@ -69,12 +70,28 @@ class ProfileController extends Controller
         $p['dateStamp'] = date("Y-m-d");
 
 
+        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+
         // SAVE
         if ($request->getMethod() == 'POST') {
-            $this->get('metadata')->saveObject($p);
+            /** @var Metadata $data */
+            $data = $this->get('metadata')->saveObject($p);
+
+
+            return $this->forward($className . ':Profile:edit', array(
+                'data' => array(
+                    'profile'   => $profile,
+                    'id'        => $data->getId(),
+                    'p'         => $p,
+                    'examples'  => $this->getExample($profile),
+                    'hasAccess' => !$data->getReadonly(),
+                    'groups'    => $data->getGroups(),
+                    'public'    => $data->getPublic()
+                ),
+                'id' => $data->getId()
+            ));
         }
 
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
 
         return $this->forward($className . ':Profile:new', array(
             'data' => array(
