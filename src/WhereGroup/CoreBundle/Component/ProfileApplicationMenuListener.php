@@ -33,7 +33,7 @@ abstract class ProfileApplicationMenuListener
         $app      = $event->getApplication();
         $request  = $app->getRequestStack()->getMasterRequest();
 
-        if (is_null($request->get('id', null))) {
+        if (is_null($request) || is_null($request->get('id', null))) {
             $request  = $app->getRequestStack()->getCurrentRequest();
         }
 
