@@ -3,9 +3,9 @@
 {% block title %}{% trans %}Plugin löschen{% endtrans %}{% endblock %}
 
 {% block content %}
-    <strong>{{ plugin }}</strong> {% trans %}Wirklich löschen{% endtrans %}?
+    <strong>{{ pluginKey }}</strong> {% trans %}Wirklich löschen{% endtrans %}?
 
-    <form action="{{ path('metador_admin_plugin_delete', { 'plugin': plugin }) }}" method="post">
+    <form action="{{ path('metador_admin_plugin_delete', { 'plugin': pluginKey }) }}" method="post">
         <button type="submit">{% trans %}löschen{% endtrans %}</button>
     </form>
 {% endblock %}

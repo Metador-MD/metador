@@ -190,7 +190,7 @@ class PluginController extends Controller
     public function confirmAction($plugin)
     {
         return array(
-            'plugin' => $plugin
+            'pluginKey' => $plugin
         );
     }
 
