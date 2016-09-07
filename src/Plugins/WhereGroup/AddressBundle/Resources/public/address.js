@@ -55,7 +55,6 @@ $(document).ready(function() {
     });
     
     $(document).on('click','.preview-table td.last-1 button.noStyle', function(event) {
-        event.preventDefault();
-        confirm("Adresse löschen?")
+        return confirm("Adresse löschen?");
     });
 });
