@@ -18,7 +18,7 @@ security:
             anonymous: ~
 
             form_login:
-                login_path: login
+                login_path: metador_home
                 check_path: login_check
 
             logout:
@@ -33,6 +33,7 @@ security:
         - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_SUPERUSER }
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:

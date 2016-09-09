@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/", name="metador_dashboard")
+     * @Route("/dashboard", name="metador_dashboard")
      * @Method("GET")
      * @Template()
      */

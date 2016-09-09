@@ -13,7 +13,7 @@
         <div class="right">
             <div class="metadata-row-head clearfix">
                 <div class="title">
-                    <a href="{{ path('metadata_edit', { 'profile' : profile, 'id' : row.id }) }}">
+                    <a href="{{ path('metadata_edit', { 'profile' : row.profile, 'id' : row.id }) }}">
                         {% if row.readonly %}
                         <span class="icon-lock"></span>
                         {% else %}

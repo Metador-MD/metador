@@ -18,6 +18,11 @@ class ApplicationListener
         $app = $event->getApplication();
 
         $app->add(
+            $app->get('GlobalMenu', 'home')
+                ->icon('icon-home')
+                ->label('Startseite')
+                ->path('metador_home')
+        )->add(
             $app->get('GlobalMenu', 'dashboard')
                 ->icon('icon-meter')
                 ->label('Dashboard')

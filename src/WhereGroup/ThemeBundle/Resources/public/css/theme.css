@@ -1194,6 +1194,27 @@ textarea.code {
   border: 0;
   color: #373739; }
 
+.global-menu-login {
+  height: 40px;
+  line-height: 40px;
+  float: left; }
+
+.global-menu-login .global-menu-login-btn, .global-menu-login .global-menu-login-input {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #555558;
+  font-size: 0.8em;
+  padding: 0 10px;
+  background-color: #505053;
+  color: #fff !important;
+  text-shadow: none; }
+
+.global-menu-login .global-menu-login-input {
+  width: 80px; }
+
+.global-menu-login .global-menu-login-btn {
+  vertical-align: middle; }
+
 .page-menu-list {
   border-bottom: 1px solid #fff;
   display: block;
