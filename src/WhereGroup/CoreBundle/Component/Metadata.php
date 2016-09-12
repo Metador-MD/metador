@@ -114,7 +114,7 @@ class Metadata implements MetadataInterface
      */
     public function find($params)
     {
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata[] $result */
+        /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $result */
         $repo = $this->container->get('doctrine')
             ->getManager()
             ->getRepository($this->repository);

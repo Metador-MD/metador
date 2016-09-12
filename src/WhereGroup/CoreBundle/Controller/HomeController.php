@@ -20,11 +20,13 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
+        $queryParams = $this->get('request_stack')->getCurrentRequest()->query->all();
 
-        $metadata = $this->get('metadata')->find(array(
-            $params
-        ));
+        $params = array(
+            'public' => 1
+        );
+
+        $metadata = $this->get('metadata')->find($params);
 
         return array(
             'rows'    => $metadata['result'],
