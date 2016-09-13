@@ -45,42 +45,12 @@ class Address implements AddressInterface
      */
     public function set($metadataObject)
     {
-        // SAVE NEW ADDRESSES
-        $addresses = array_merge(
-            isset($metadataObject['responsiblePartyMetadata'])
-            ? $metadataObject['responsiblePartyMetadata'] : array(),
-            isset($metadataObject['responsibleParty'])
-            ? $metadataObject['responsibleParty'] : array(),
-            isset($metadataObject['responsiblePartyDistributor'])
-            ? $metadataObject['responsiblePartyDistributor'] : array()
-        );
-
-        foreach ($addresses as $row) {
-            if (trim(@$row['organisationName']) == ""
-                || trim(@$row['individualName']) == ""
-                || trim(@$row['electronicMailAddress']) == ""
-            ) {
+        foreach ($this->getAddresses($metadataObject) as $row) {
+            if (!$this->conditionsComplied($row)) {
                 continue;
             }
 
-            /** @var QueryBuilder $qb */
-            $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
-            $em = $this->container->get('doctrine')->getManager();
-
-            $result = $qb
-                ->select('count(u)')
-                ->from('Plugins\WhereGroup\AddressBundle\Entity\Address', 'u')
-                ->where($qb->expr()->andx(
-                    $qb->expr()->eq('u.organisationName', '?1'),
-                    $qb->expr()->eq('u.individualName', '?2'),
-                    $qb->expr()->eq('u.electronicMailAddress', '?3')
-                ))->setParameters(array(
-                    1 => $row['organisationName'],
-                    2 => $row['individualName'],
-                    3 => $row['electronicMailAddress']
-                ))->getQuery()->getSingleScalarResult();
-
-            if ($result == 0) {
+            if (!$this->addressExists($row)) {
                 $address = new EntityAddress();
 
                 $address->setOrganisationName(
@@ -123,12 +93,79 @@ class Address implements AddressInterface
                     isset($row['positionName']) && !empty($row['positionName']) ? $row['positionName']: ""
                 );
 
-                $em->persist($address);
-                $em->flush();
+                $this->save($address);
+
                 unset($address, $result);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @param $address
+     * @return bool
+     */
+    protected function conditionsComplied($address)
+    {
+        if (
+            !isset($address['organisationName']) || $address['organisationName'] == "" ||
+            !isset($address['individualName']) || $address['individualName'] == "" ||
+            !isset($address['electronicMailAddress']) || $address['electronicMailAddress'] == ""
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $metadataObject
+     * @return array
+     */
+    protected function getAddresses($metadataObject) {
+        return array_merge(
+            isset($metadataObject['responsiblePartyMetadata'])
+                ? $metadataObject['responsiblePartyMetadata'] : array(),
+            isset($metadataObject['responsibleParty'])
+                ? $metadataObject['responsibleParty'] : array(),
+            isset($metadataObject['responsiblePartyDistributor'])
+                ? $metadataObject['responsiblePartyDistributor'] : array()
+        );
+    }
+
+    /**
+     * @param $address
+     * @return bool
+     */
+    protected function addressExists($address)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+
+        $result = $qb
+            ->select('count(u)')
+            ->from('Plugins\WhereGroup\AddressBundle\Entity\Address', 'u')
+            ->where($qb->expr()->andx(
+                $qb->expr()->eq('u.organisationName', '?1'),
+                $qb->expr()->eq('u.individualName', '?2'),
+                $qb->expr()->eq('u.electronicMailAddress', '?3')
+            ))->setParameters(array(
+                1 => $address['organisationName'],
+                2 => $address['individualName'],
+                3 => $address['electronicMailAddress']
+            ))->getQuery()->getSingleScalarResult();
+
+        return $result == 0 ? false : true;
+    }
+
+    /**
+     * @param $address
+     */
+    protected function save($address)
+    {
+        $em = $this->container->get('doctrine')->getManager();
+        $em->persist($address);
+        $em->flush();
     }
 }
