@@ -45,7 +45,7 @@ abstract class ProfileApplicationMenuListener
                 ->label($this->name)
                 ->path('metadata_index', array(
                     'profile' => $this->pluginId
-                ))
+                ))->setRole('ROLE_USER')
         );
 
         /***********************************************************************
@@ -70,85 +70,89 @@ abstract class ProfileApplicationMenuListener
         }
 
         if ($app->isBundle($this->bundle)) {
-        /***********************************************************************
-         * Profile Name
-         ***********************************************************************/
+            /***********************************************************************
+             * Profile Name
+             ***********************************************************************/
             $app->add(
                 $app->get('Profile')
                     ->name($this->name)
                     ->active($app->isController('Profile'))
             );
+        }
 
         /***********************************************************************
          * Plugin menu
          ***********************************************************************/
-            if ($app->isAction('index')) {
+
+        if ($app->isBundle($this->bundle) && $app->isAction('index')) {
+            $app->add(
+                $app->get('PluginMenu', 'new')
+                    ->label('neu')
+                    ->icon('icon-plus')
+                    ->path('metadata_new', array('profile' => $this->pluginId))
+                    ->active($app->isAction(array('new', 'use')))
+            );
+        }
+
+        if (($app->isBundle($this->bundle) && $app->isAction('index')) || $app->isRoute('metador_home')) {
+            $app->add(
+                $app->get('SearchMenu', 'pdf')
+                    ->label('PDF')
+                    ->icon('icon-file-pdf')
+                    ->path('metador_export_pdf')
+                    ->target('_BLANK')
+            )->add(
+                $app->get('SearchMenu', 'xml')
+                    ->label('XML')
+                    ->icon('icon-download')
+                    ->path('metador_export_xml')
+                    ->target('_BLANK')
+            )->add(
+                $app->get('SearchMenu', 'html')
+                    ->label('HTML')
+                    ->icon('icon-embed2')
+                    ->path('metador_export_html')
+                    ->target('_BLANK')
+            );
+
+            if ($app->isEnv('dev')) {
                 $app->add(
-                    $app->get('PluginMenu', 'new')
-                        ->label('neu')
-                        ->icon('icon-plus')
-                        ->path('metadata_new', array('profile' => $this->pluginId))
-                        ->active($app->isAction(array('new', 'use')))
-                )->add(
-                    $app->get('SearchMenu', 'pdf')
-                        ->label('PDF')
-                        ->icon('icon-file-pdf')
-                        ->path('metador_export_pdf')
-                        ->target('_BLANK')
-                )->add(
-                    $app->get('SearchMenu', 'xml')
-                        ->label('XML')
-                        ->icon('icon-download')
-                        ->path('metador_export_xml')
-                        ->target('_BLANK')
-                )->add(
-                    $app->get('SearchMenu', 'html')
-                        ->label('HTML')
-                        ->icon('icon-embed2')
-                        ->path('metador_export_html')
+                    $app->get('SearchMenu', 'obj')
+                        ->label('Objekt')
+                        ->icon('icon-embed')
+                        ->path('metador_export_obj')
                         ->target('_BLANK')
                 );
+            }
+        } else if ($app->isBundle($this->bundle)) {
+            $data = array();
 
-                if ($app->isEnv('dev')) {
-                    $app->add(
-                        $app->get('SearchMenu', 'obj')
-                            ->label('Objekt')
-                            ->icon('icon-embed')
-                            ->path('metador_export_obj')
-                            ->target('_BLANK')
-                    );
-                }
+            if ($app->isAction(array('new', 'edit'))) {
+                $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
+            }
 
-            } else {
-                $data = array();
-
-                if ($app->isAction(array('new', 'edit'))) {
-                    $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
-                }
-
-                if ($app->isAction('edit')) {
-                    $app->add(
-                        $app->get('PluginMenu', 'template')
-                            ->label('als Vorlage verwenden')
-                            ->icon('icon-files-empty')
-                            ->path('metadata_use', array(
-                                'profile' => $this->pluginId,
-                                'id' => $request->get('id', null))
-                            )
-                            ->active($app->isAction(array('new', 'use')))
-                            ->data($data)
-                    );
-                }
-
+            if ($app->isAction('edit')) {
                 $app->add(
-                    $app->get('PluginMenu', 'index')
-                        ->label('Übersicht')
-                        ->icon('icon-redo2')
-                        ->path('metadata_index', array('profile' => $this->pluginId))
+                    $app->get('PluginMenu', 'template')
+                        ->label('als Vorlage verwenden')
+                        ->icon('icon-files-empty')
+                        ->path('metadata_use', array(
+                            'profile' => $this->pluginId,
+                            'id' => $request->get('id', null))
+                        )
                         ->active($app->isAction(array('new', 'use')))
                         ->data($data)
                 );
             }
+
+            $app->add(
+                $app->get('PluginMenu', 'index')
+                    ->label('Übersicht')
+                    ->icon('icon-redo2')
+                    ->path('metadata_index', array('profile' => $this->pluginId))
+                    ->active($app->isAction(array('new', 'use')))
+                    ->data($data)
+            );
         }
     }
 }

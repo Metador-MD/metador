@@ -122,6 +122,14 @@ class Metadata implements MetadataInterface
         $paging = array();
 
         if (isset($params['page']) || isset($params['hits'])) {
+            if (!isset($params['page']) || !is_numeric($params['page'])) {
+                $params['page']  = 1;
+            }
+
+            if (!isset($params['hits']) || !is_numeric($params['hits'])) {
+                $params['hits']  = 10;
+            }
+
             $pagingClass = new Paging($repo->count($params), $params['hits'], $params['page']);
             $paging = $pagingClass->calculate();
         }

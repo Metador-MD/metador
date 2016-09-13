@@ -22,15 +22,26 @@ class HomeController extends Controller
     {
         $queryParams = $this->get('request_stack')->getCurrentRequest()->query->all();
 
-        $params = array(
-            'public' => 1
-        );
+        $params = array_merge($queryParams, array(
+
+        ));
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            $params = array_merge($queryParams, array(
+                'public' => 1
+            ));
+        }
+
+        if (!isset($params['page'])) {
+            $params['page'] = 1;
+        }
 
         $metadata = $this->get('metadata')->find($params);
 
         return array(
             'rows'    => $metadata['result'],
-            'paging'  => $metadata['paging']
+            'paging'  => $metadata['paging'],
+            'params'  => $params
         );
     }
 }

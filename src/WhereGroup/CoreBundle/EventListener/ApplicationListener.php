@@ -27,6 +27,7 @@ class ApplicationListener
                 ->icon('icon-meter')
                 ->label('Dashboard')
                 ->path('metador_dashboard')
+                ->setRole('ROLE_USER')
         )->add(
             $app->get('GlobalMenu', 'admin')
                 ->icon('icon-cog')

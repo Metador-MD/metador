@@ -6,8 +6,7 @@
 
         <div class="search-content">
             <div class="search-content-searchfield">
-                {#{{ path('metadata_index', { 'profile' :  profile }) }}#}
-                <form class="" action="" method="get">
+                <form class="" action="{{ path('metador_home') }}" method="get">
                     <input type="hidden" name="hits" value="{% if params.hits is defined %}{{ params.hits }}{% else %}10{% endif %}"/>
                     {# PREV PAGE #}
                     {% if paging.prevPage is defined %}
