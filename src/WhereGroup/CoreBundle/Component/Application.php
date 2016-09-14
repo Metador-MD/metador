@@ -52,6 +52,9 @@ class Application
         }
     }
 
+    /**
+     * @return null|RequestStack
+     */
     public function getRequestStack()
     {
         return $this->requestStack;
@@ -129,16 +132,30 @@ class Application
         return $this;
     }
 
+    /**
+     * @param Integration\Base $class
+     * @return Application
+     */
     public function append(Integration\Base $class)
     {
         return $this->add($class, self::POSITION_APPEND);
     }
 
+    /**
+     * @param Integration\Base $class
+     * @return Application
+     */
     public function prepend(Integration\Base $class)
     {
         return $this->add($class, self::POSITION_PREPEND);
     }
 
+    /**
+     * @param $class
+     * @param null $prefix
+     * @return Integration\Configuration|Integration\Profile|Integration\ProfileMenu|Integration\SearchMenu
+     * @throws \Exception
+     */
     public function get($class, $prefix = null)
     {
         switch (strtolower($class)) {
@@ -174,12 +191,17 @@ class Application
     }
 
     /**
-     * @param $type
+     * @param null $type
      * @param null $key
-     * @return array|string
+     * @param null $default
+     * @return array|null|string
      */
-    public function getData($type, $key = null, $default = null)
+    public function getData($type = null, $key = null, $default = null)
     {
+        if (is_null($type)) {
+            return $this->data;
+        }
+
         $merged = array_merge_recursive(
             isset($this->data[self::POSITION_PREPEND]) ? $this->data[self::POSITION_PREPEND] : array(),
             isset($this->data[self::POSITION_NORMAL])  ? $this->data[self::POSITION_NORMAL]  : array(),
