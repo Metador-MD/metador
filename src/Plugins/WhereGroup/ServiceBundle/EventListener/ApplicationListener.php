@@ -9,6 +9,10 @@ use WhereGroup\CoreBundle\Component\ProfileApplicationMenuListener;
 use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\CoreBundle\Component\MetadataInterface;
 
+/**
+ * Class ApplicationListener
+ * @package Plugins\WhereGroup\ServiceBundle\EventListener
+ */
 class ApplicationListener extends ProfileApplicationMenuListener
 {
     protected $pluginId = 'profile-service';
@@ -26,6 +30,8 @@ class ApplicationListener extends ProfileApplicationMenuListener
         MetadataInterface $metadata,
         Plugin $plugin
     ) {
+        parent::__construct($metadata);
+
         $this->metadata = $metadata;
         $this->plugin   = $plugin;
     }
@@ -53,7 +59,7 @@ class ApplicationListener extends ProfileApplicationMenuListener
             $id      = $app->getRequestStack()->getMasterRequest()->get('id', null);
 
             // If map plugin is active
-            if(!is_null($plugins) && $plugins['active'] === true && !is_null($id)) {
+            if (!is_null($plugins) && $plugins['active'] === true && !is_null($id)) {
                 /** @var Metadata $metadata */
                 $metadata = $this->metadata->getById($id);
                 $p = $metadata->getObject();
@@ -69,7 +75,6 @@ class ApplicationListener extends ProfileApplicationMenuListener
                             ))
                     );
                 }
-
             }
         }
     }

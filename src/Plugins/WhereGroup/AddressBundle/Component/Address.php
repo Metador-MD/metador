@@ -57,7 +57,9 @@ class Address implements AddressInterface
                     isset($row['organisationName']) && !empty($row['organisationName']) ? $row['organisationName'] : ""
                 );
                 $address->setElectronicMailAddress(
-                    isset($row['electronicMailAddress']) && !empty($row['electronicMailAddress']) ? $row['electronicMailAddress'] : ""
+                    isset($row['electronicMailAddress']) && !empty($row['electronicMailAddress'])
+                        ? $row['electronicMailAddress']
+                        : ""
                 );
                 $address->setRole(
                     isset($row['role']) && !empty($row['role']) ? $row['role'] : ""
@@ -69,7 +71,9 @@ class Address implements AddressInterface
                     isset($row['country']) && !empty($row['country']) ? $row['country'] : ""
                 );
                 $address->setAdministrativeArea(
-                    isset($row['administrativeArea']) && !empty($row['administrativeArea']) ? $row['administrativeArea'] : ""
+                    isset($row['administrativeArea']) && !empty($row['administrativeArea'])
+                        ? $row['administrativeArea']
+                        : ""
                 );
                 $address->setDeliveryPoint(
                     isset($row['deliveryPoint']) && !empty($row['deliveryPoint']) ? $row['deliveryPoint'] : ""
@@ -108,11 +112,9 @@ class Address implements AddressInterface
      */
     protected function conditionsComplied($address)
     {
-        if (
-            !isset($address['organisationName']) || $address['organisationName'] == "" ||
+        if (!isset($address['organisationName']) || $address['organisationName'] == "" ||
             !isset($address['individualName']) || $address['individualName'] == "" ||
-            !isset($address['electronicMailAddress']) || $address['electronicMailAddress'] == ""
-        ) {
+            !isset($address['electronicMailAddress']) || $address['electronicMailAddress'] == "") {
             return false;
         }
 
@@ -123,7 +125,8 @@ class Address implements AddressInterface
      * @param $metadataObject
      * @return array
      */
-    protected function getAddresses($metadataObject) {
+    protected function getAddresses($metadataObject)
+    {
         return array_merge(
             isset($metadataObject['responsiblePartyMetadata'])
                 ? $metadataObject['responsiblePartyMetadata'] : array(),

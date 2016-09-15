@@ -34,13 +34,13 @@ class HealthCheckListener
      */
     public function __construct(
         EntityManagerInterface $em,
-        $driver   = null,
-        $host     = null,
-        $port     = null,
-        $name     = null,
-        $user     = null,
+        $driver = null,
+        $host = null,
+        $port = null,
+        $name = null,
+        $user = null,
         $password = null,
-        $path     = null
+        $path = null
     ) {
         $this->em       = $em;
         $this->driver   = $driver;

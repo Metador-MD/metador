@@ -43,7 +43,6 @@ class HelptextController extends Controller
             } else {
                 $string = $this->get('translator')->trans($text);
             }
-
         } else {
             $string = "Hilfetext nicht definiert.";
         }

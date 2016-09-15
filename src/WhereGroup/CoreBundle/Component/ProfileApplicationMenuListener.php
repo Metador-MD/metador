@@ -124,7 +124,7 @@ abstract class ProfileApplicationMenuListener
                         ->target('_BLANK')
                 );
             }
-        } else if ($app->isBundle($this->bundle)) {
+        } elseif ($app->isBundle($this->bundle)) {
             $data = array();
 
             if ($app->isAction(array('new', 'edit'))) {
@@ -136,9 +136,12 @@ abstract class ProfileApplicationMenuListener
                     $app->get('PluginMenu', 'template')
                         ->label('als Vorlage verwenden')
                         ->icon('icon-files-empty')
-                        ->path('metadata_use', array(
-                            'profile' => $this->pluginId,
-                            'id' => $request->get('id', null))
+                        ->path(
+                            'metadata_use',
+                            array(
+                                'profile' => $this->pluginId,
+                                'id' => $request->get('id', null)
+                            )
                         )
                         ->active($app->isAction(array('new', 'use')))
                         ->data($data)

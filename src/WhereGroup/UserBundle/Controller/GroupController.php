@@ -79,7 +79,6 @@ class GroupController extends Controller
             } else {
                 $this->get('metador_logger')->success('Gruppe existiert bereits.');
             }
-
         } else {
             $this->addFlash('warning', 'Gruppe konnte nicht hinzugefügt werden!');
         }

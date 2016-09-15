@@ -20,7 +20,8 @@ class ProfileController extends Controller
      * @Method("GET")
      * @Template("MetadorThemeBundle:Profile:result.html.twig")
      */
-    public function findAction($profile) {
+    public function findAction($profile)
+    {
         $params = $this->get('request_stack')->getCurrentRequest()->query->all();
 
         $params['profile'] = $profile;

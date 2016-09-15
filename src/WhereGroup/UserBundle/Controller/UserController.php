@@ -137,8 +137,6 @@ class UserController extends Controller
 
                 return $this->redirectToRoute('metador_admin_user');
             }
-
-
         } catch (MetadorException $e) {
             $this->get('metador_logger')->warning($e->getMessage());
             return $this->redirectToRoute('metador_admin_user');

@@ -14,4 +14,4 @@ else
 fi
 
 echo "+ Composer update."
-./composer.phar update
+./composer.phar install

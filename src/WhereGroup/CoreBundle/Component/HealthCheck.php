@@ -44,11 +44,13 @@ class HealthCheck
     {
         $healthCheckEntity = new HealthCheckEntity();
 
-        $this->eventDispatcher
-            ->dispatch('application.health-check', new HealthCheckEvent(
+        $this->eventDispatcher->dispatch(
+            'application.health-check',
+            new HealthCheckEvent(
                 $healthCheckEntity,
                 $this->translatorInterface
-        ));
+            )
+        );
 
         return $healthCheckEntity->getResult();
     }

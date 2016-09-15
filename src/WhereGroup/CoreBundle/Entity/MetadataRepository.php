@@ -31,7 +31,8 @@ class MetadataRepository extends EntityRepository
      * @param $params
      * @return array
      */
-    public function findByParams($params) {
+    public function findByParams($params)
+    {
         $qb = $this
             ->createQueryBuilder('m')
             ->select('m');
