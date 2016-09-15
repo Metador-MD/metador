@@ -19,7 +19,7 @@
                         {% else %}
                         <span class="icon-file-text2"></span>
                         {% endif %}
-                        {{ row.title }}
+                        {{ row.title|teaser(75, true) }}
                     </a>
                 </div>
                 <div class="alternate-title">

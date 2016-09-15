@@ -11,7 +11,7 @@
         {% for row in rows %}
         <tr>
             <td>
-                <a href="{{ path('metadata_edit', {'profile': profile, 'id':row.id}) }}">{{ row.title ? row.title : 'noname' }}</a>
+                <a href="{{ path('metadata_edit', {'profile': profile, 'id':row.id}) }}" title="{{ row.title }}">{{ row.title ? row.title|teaser(40, true) : 'noname' }}</a>
             </td>
         </tr>
         {% endfor %}

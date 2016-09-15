@@ -45,7 +45,7 @@ class User implements UserInterface
 
     public function getByUsername($username)
     {
-        return $this->getRepository()->getOneByUsername($username);
+        return $this->getRepository()->findOneByUsername($username);
     }
 
     public function findAll()
