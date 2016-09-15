@@ -25,12 +25,12 @@ echo "Test - phpcpd"
 # $ROOTPATH/bin/phpcpd $ROOTPATH/src/
 
 # Test complexity
-echo "Test - pdepend"
-bin/pdepend \
-    --summary-xml=$PACKAGES_FOLDER/report/$PROJECTNAME/summary.xml \
-    --jdepend-chart=$PACKAGES_FOLDER/report/$PROJECTNAME/jdepend.svg \
-    --overview-pyramid=$PACKAGES_FOLDER/report/$PROJECTNAME/pyramid.svg \
-    src/
+#echo "Test - pdepend"
+#bin/pdepend \
+#    --summary-xml=$PACKAGES_FOLDER/report/$PROJECTNAME/summary.xml \
+#    --jdepend-chart=$PACKAGES_FOLDER/report/$PROJECTNAME/jdepend.svg \
+#    --overview-pyramid=$PACKAGES_FOLDER/report/$PROJECTNAME/pyramid.svg \
+#    src/
 
 # PHP mess detector
 # echo "Test - phpmd"
