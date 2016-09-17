@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Address
  * @package Plugins\WhereGroup\AddressBundle\Entity
- * @author A.R.Pour
- * @ORM\Table(name="metador_address")
+ * @ORM\Table(name="address")
  * @ORM\Entity
  */
 class Address

@@ -5,7 +5,7 @@ namespace Plugins\WhereGroup\HelptextBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="metador_helptext")
+ * @ORM\Table(name="helptext")
  * @ORM\Entity
  */
 class Helptext

@@ -4,6 +4,8 @@ namespace WhereGroup\UserBundle\Entity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use WhereGroup\UserBundle\Entity\User;
+use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
  * WhereGroup\UserBundle\Entity\User
@@ -31,6 +33,11 @@ class Group implements RoleInterface
     protected $users;
 
     /**
+     * @ORM\ManyToMany(targetEntity="WhereGroup\CoreBundle\Entity\Metadata", mappedBy="groups")
+     */
+    protected $metadata;
+
+    /**
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
@@ -38,6 +45,7 @@ class Group implements RoleInterface
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->metadata = new ArrayCollection();
     }
 
     /**
@@ -80,13 +88,7 @@ class Group implements RoleInterface
         return $this;
     }
 
-    /**
-     * Add users
-     *
-     * @param \WhereGroup\UserBundle\Entity\User $users
-     * @return Group
-     */
-    public function addUser(\WhereGroup\UserBundle\Entity\User $user)
+    public function addUser(User $user)
     {
         $user->addGroup($this);
         $this->users->add($user);
@@ -100,7 +102,7 @@ class Group implements RoleInterface
      *
      * @param \WhereGroup\UserBundle\Entity\User $users
      */
-    public function removeUser(\WhereGroup\UserBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->users->removeElement($users);
     }
@@ -125,6 +127,24 @@ class Group implements RoleInterface
         $this->description = $description;
 
         return $this;
+    }
+
+
+    public function addMetadata(Metadata $metadata)
+    {
+        $this->metadata[] = $metadata;
+
+        return $this;
+    }
+
+    public function removeMetadata(Metadata $metadata)
+    {
+        $this->metadata->removeElement($metadata);
+    }
+
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 
     public function __toString()

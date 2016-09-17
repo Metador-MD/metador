@@ -1,10 +1,10 @@
 {% extends 'MetadorThemeBundle::template.html.twig' %}
 
 {% if id is defined %}
-    {% set path = 'metadata_edit' %}
+    {% set path = 'metadata_update' %}
     {% set param = {'profile' : profile, 'id': id} %}
 {% else %}
-    {% set path = 'metadata_new' %}
+    {% set path = 'metadata_create' %}
     {% set param = {'profile' : profile} %}
 {% endif %}
 

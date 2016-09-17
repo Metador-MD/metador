@@ -10,13 +10,15 @@
         <span class="metadata-info-public-title">{% trans %}öffentlich{% endtrans %}</span>
         <span class="metadata-info-public-title-private">{% trans %}privat{% endtrans %}</span>
         <input type="hidden" name="p[_public]" data-element="metadata-public" value="{% if public %}1{% else %}0{% endif %}" />
-
         <span class="icon-users metadata-info-roles" data-cmd="metadata-toggle-roles"></span>
     </div>
     <ul class="metadata-info-roles-list" data-element="metadata-info-roles">
-        {% for group in groups %}
-        <li title="{{ group|replace({'ROLE_': ''})|replace('_', ' ')|title }}">
-            {{ group|replace({'ROLE_': ''})|replace('_', ' ')|title|teaser(22, 1) }}
+        {% for id, group in groups %}
+        <li title="{{ group.name|teaser(22, 1) }}">
+            {% if hasGroupAccess %}
+            <input type="checkbox" name="p[_group_id][]" value="{{ id }}" title="" {% if group.active %}checked="checked"{% endif %}/>
+            {% endif %}
+            {{ group.name|teaser(22, 1) }}
         </li>
         {% endfor %}
     </ul>

@@ -232,25 +232,52 @@ class Metadata implements MetadataInterface
                 return false;
             }
 
-            if ($metadata->getInsertUser()->getId() === $user->getId()) {
-                $metadata->setGroups(array_diff($user->getRoles(), $this->systemRoles));
+            if ($user->getId() == $metadata->getInsertUser()->getId()) {
+                if (empty($p['_group_id'])) {
+                    $p['_group_id'] = array();
+                }
+
+                $groups = array();
+
+                // remove groups
+                foreach ($metadata->getGroups() as $group) {
+                    $groups[] = $group->getId();
+
+                    if (!in_array($group->getId(), $p['_group_id'])) {
+                        $metadata->removeGroups($group);
+                    }
+                }
+
+                // add groups
+                foreach ($user->getGroups() as $group) {
+                    if (in_array($group->getId(), $p['_group_id']) && !in_array($group->getId(), $groups)) {
+                        $metadata->addGroups($group);
+                    }
+                }
             }
 
         // INSERT
         } else {
-            $update = false;
-            $metadata = new EntityMetadata();
-            $metadata->setInsertUser($user);
-            $metadata->setInsertTime($now->getTimestamp());
-            $metadata->setPublic($public);
-            $metadata->setGroups(array_diff($user->getRoles(), $this->systemRoles));
-
             // FIND UUID IN DATABASE
             $uuid = $em->getRepository($this->repository)->findByUuid($p['fileIdentifier']);
 
             if ($uuid) {
                 $this->container->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
                 return false;
+            }
+
+            $update = false;
+            $metadata = new EntityMetadata();
+            $metadata->setInsertUser($user);
+            $metadata->setInsertTime($now->getTimestamp());
+            $metadata->setPublic($public);
+
+            if (isset($p['_group_id'])) {
+                foreach ($user->getGroups() as $group) {
+                    if (in_array($group->getId(), $p['_group_id'])) {
+                        $metadata->addGroups($group);
+                    }
+                }
             }
         }
 

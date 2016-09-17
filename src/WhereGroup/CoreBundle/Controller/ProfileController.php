@@ -2,8 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,26 +13,11 @@ use WhereGroup\CoreBundle\Entity\Metadata;
  */
 class ProfileController extends Controller
 {
-    /**
-     * @Route("/{profile}/find", name="metadata_find")
-     * @Method("GET")
-     * @Template("MetadorThemeBundle:Profile:result.html.twig")
-     */
-    public function findAction($profile)
+    private $data = null;
+
+    public function __destruct()
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
-
-        $params['profile'] = $profile;
-
-        $metadata = $this->get('metadata')->find(array(
-            $params
-        ));
-
-        return array(
-            'profile' => $profile,
-            'rows'    => $metadata['result'],
-            'paging'  => $metadata['paging']
-        );
+        unset($this->data);
     }
 
     /**
@@ -43,65 +26,68 @@ class ProfileController extends Controller
      */
     public function indexAction($profile)
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
+        $this->init($profile);
+
+        $params = $this->data['request']->query->all();
         $params['profile'] = $profile;
         $params['page'] = isset($params['page']) ? $params['page'] : 1;
         $params['hits'] = isset($params['hits']) ? $params['hits'] : 10;
 
         $metadata = $this->get('metadata')->find($params);
 
-        return $this->forward($this->get('metador_plugin')->getPluginClassName($profile) . ':Profile:index', array(
-            'data' => array(
+        return $this->get('templating')->renderResponse(
+            $this->getTemplate('index'),
+            array(
                 'params'  => $params,
                 'profile' => $profile,
                 'rows'    => $metadata['result'],
                 'paging'  => $metadata['paging']
             )
-        ));
+        );
     }
 
     /**
      * @Route("/{profile}/new", name="metadata_new")
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      */
     public function newAction($profile)
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
-        $p = $request->request->get('p', array());
-        $p['dateStamp'] = date("Y-m-d");
+        $this->init($profile);
 
+        return $this->renderResponse($profile, 'form');
+    }
 
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+    /**
+     * @Route("/{profile}/create", name="metadata_create")
+     * @Method("POST")
+     */
+    public function createAction($profile)
+    {
+        $this->init($profile);
 
-        // SAVE
-        if ($request->getMethod() == 'POST') {
-            /** @var Metadata $data */
-            $data = $this->get('metadata')->saveObject($p);
+        return $this->renderResponse($profile, 'form', $this->get('metadata')->saveObject($this->data['p']));
+    }
 
+    /**
+     * @Route("/{profile}/edit/{id}", name="metadata_edit")
+     * @Method("GET")
+     */
+    public function editAction($profile, $id)
+    {
+        $this->init($profile);
 
-            return $this->forward($className . ':Profile:edit', array(
-                'data' => array(
-                    'profile'   => $profile,
-                    'id'        => $data->getId(),
-                    'p'         => $p,
-                    'examples'  => $this->getExample($profile),
-                    'hasAccess' => !$data->getReadonly(),
-                    'groups'    => $data->getGroups(),
-                    'public'    => $data->getPublic()
-                ),
-                'id' => $data->getId()
-            ));
-        }
+        return $this->renderResponse($profile, 'form', $this->get('metadata')->getById($id));
+    }
 
+    /**
+     * @Route("/{profile}/update/{id}", name="metadata_update")
+     * @Method("POST")
+     */
+    public function updateAction($profile, $id)
+    {
+        $this->init($profile);
 
-        return $this->forward($className . ':Profile:new', array(
-            'data' => array(
-                'profile'   => $profile,
-                'p'         => $p,
-                'examples'  => $this->getExample($profile),
-                'hasAccess' => true
-            )
-        ));
+        return $this->renderResponse($profile, 'form', $this->get('metadata')->saveObject($this->data['p'], $id));
     }
 
     /**
@@ -110,59 +96,21 @@ class ProfileController extends Controller
      */
     public function useAction($profile, $id)
     {
-        $data = $this->get('metadata')->getById($id);
+        $this->init($profile);
 
-        if (($p = $data->getObject())) {
-            $p['dateStamp'] = date("Y-m-d");
-            unset($p['fileIdentifier'], $p['identifier']);
-        }
+        $entity = $this->get('metadata')->getById($id);
 
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+        $this->data['p'] = $entity->getObject();
+        $this->data['p']['dateStamp'] = date("Y-m-d");
 
-        return $this->forward($className . ':Profile:use', array(
-            'data' => array(
-                'profile'   => $profile,
-                'p'         => $p,
-                'examples'  => $this->getExample($profile),
-                'hasAccess' => true
-            ),
-            'id' => $id
-        ));
+        unset(
+            $this->data['p']['fileIdentifier'],
+            $this->data['p']['identifier']
+        );
+
+        return $this->renderResponse($profile, 'form');
     }
 
-    /**
-     * @Route("/{profile}/edit/{id}", name="metadata_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction($profile, $id)
-    {
-        $request = $this->get('request_stack')->getCurrentRequest();
-        $metadata = $this->get('metadata');
-        $data = $metadata->getById($id);
-        $p = $data->getObject();
-        $p['dateStamp'] = date("Y-m-d");
-
-        // SAVE
-        if ($request->getMethod() == 'POST') {
-            $p = $request->request->get('p', false);
-            $metadata->saveObject($p, $id);
-        }
-
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
-
-        return $this->forward($className . ':Profile:edit', array(
-            'data' => array(
-                'profile'   => $profile,
-                'id'        => $id,
-                'p'         => $p,
-                'examples'  => $this->getExample($profile),
-                'hasAccess' => !$data->getReadonly(),
-                'groups'    => $data->getGroups(),
-                'public'    => $data->getPublic()
-            ),
-            'id' => $id
-        ));
-    }
 
     /**
      * @Route("/{profile}/confirm/{id}", name="metadata_confirm")
@@ -170,19 +118,23 @@ class ProfileController extends Controller
      */
     public function confirmAction($profile, $id)
     {
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+        $this->init($profile);
 
-        return $this->forward($className . ':Profile:confirm', array(
-            'data' => array(
-                'id'      => $id,
-                'profile' => $profile,
-                'form'    => $this->createFormBuilder($this->get('metadata')->getById($id))
-                    ->add('delete', 'submit', array('label' => 'löschen'))
-                    ->getForm()
-                    ->createView(),
-            ),
-            'id' => $id
-        ));
+        return $this->get('templating')->renderResponse(
+            $this->getTemplate('confirm'),
+            array(
+                'data' => array(
+                    'id'      => $id,
+                    'profile' => $profile,
+                    'form'    => $this
+                        ->createFormBuilder($this->get('metadata')->getById($id))
+                        ->add('delete', 'submit', array('label' => 'löschen'))
+                        ->getForm()
+                        ->createView(),
+                ),
+                'id' => $id
+            )
+        );
     }
 
     /**
@@ -191,24 +143,18 @@ class ProfileController extends Controller
      */
     public function deleteAction($profile, $id)
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
+        $this->init($profile);
+
         $form = $this->createFormBuilder($this->get('metadata')->getById($id))
             ->add('delete', 'submit', array('label' => 'löschen'))
             ->getForm()
-            ->submit($request);
+            ->submit($this->data['request']);
 
         if ($form->isValid()) {
             $this->get('metadata')->deleteById($id);
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                'Erfolgreich gelöscht.'
-            );
+            $this->get('session')->getFlashBag()->add('success', 'Erfolgreich gelöscht.');
         } else {
-            $this->get('session')->getFlashBag()->add(
-                'error',
-                'Eintrag konnte nicht gelöscht werden.'
-            );
+            $this->get('session')->getFlashBag()->add('error', 'Eintrag konnte nicht gelöscht werden.');
         }
 
         return $this->redirectToRoute('metadata_index', array('profile' => $profile));
@@ -216,16 +162,102 @@ class ProfileController extends Controller
 
     /**
      * @param $profile
+     */
+    private function init($profile)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+
+        $this->data['request'] = $this->get('request_stack')->getCurrentRequest();
+        $this->data['className'] = $this->get('metador_plugin')->getPluginClassName($profile);
+        $this->data['user'] = $this->get('metador_user')->getUserFromSession();
+        $this->data['template'] = $this->data['className'] . '::';
+        $this->data['p'] = $this->data['request']->request->get('p', array());
+        $this->data['p']['dateStamp'] = date("Y-m-d");
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getTemplate($name)
+    {
+        return $this->data['template'] . $name . '.html.twig';
+    }
+
+    /**
+     * @param $profile
+     * @param null $entity
      * @return array
      */
-    private function getExample($profile)
+    private function getParams($profile, $entity = null)
     {
-        $className = $this->get('metador_plugin')->getPluginClassName($profile);
+        $params = array();
+        $params['profile'] = $profile;
+        $params['examples'] = $this->getExample();
+        $params['hasGroupAccess'] = true;
+        $params['groups'] = array();
 
-        $path = $this
-            ->get('kernel')
-            ->locateResource('@' . $className . '/Resources/config/wizard/');
+        /** @var Metadata $entity */
+        if (!is_null($entity)) {
+            $this->data['p'] = $entity->getObject();
+            $this->data['p']['dateStamp'] = date("Y-m-d");
 
-        return $this->container->get('metador_wizard')->getExamples($path);
+            $params['id'] = $entity->getId();
+            $params['hasAccess'] = !$entity->getReadonly();
+            $params['public'] = $entity->getPublic();
+            $params['entity'] = $entity;
+            $params['hasGroupAccess'] = ($this->data['user']->getId() == $entity->getInsertUser()->getId());
+
+            foreach ($entity->getGroups() as $group) {
+                $params['groups'][$group->getId()] = array(
+                    'name'   => $group->getRole(),
+                    'active' => true
+                );
+            }
+        }
+
+        if ($params['hasGroupAccess']) {
+            foreach ($this->data['user']->getGroups() as $group) {
+                if (!isset($params['groups'][$group->getId()])) {
+                    $params['groups'][$group->getId()] = array(
+                        'name'   => $group->getRole(),
+                        'active' => false
+                    );
+                }
+            }
+        }
+
+        $params['p'] = $this->data['p'];
+
+        return $params;
+    }
+
+    /**
+     * @param $profile
+     * @param $template
+     * @param null $entity
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function renderResponse($profile, $template, $entity = null)
+    {
+        return $this->get('templating')->renderResponse(
+            $this->getTemplate($template),
+            $this->getParams($profile, $entity)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getExample()
+    {
+        return $this
+            ->container
+            ->get('metador_wizard')
+            ->getExamples(
+                $this
+                    ->get('kernel')
+                    ->locateResource('@' . $this->data['className'] . '/Resources/config/wizard/')
+            );
     }
 }

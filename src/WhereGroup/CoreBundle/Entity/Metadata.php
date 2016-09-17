@@ -1,13 +1,15 @@
 <?php
 namespace WhereGroup\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use WhereGroup\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use WhereGroup\UserBundle\Entity\Group;
 
 /**
  * WhereGroup\CoreBundle\Entity\Metadata
  *
- * @ORM\Table(name="metador_metadata")
+ * @ORM\Table(name="metadata")
  * @ORM\Entity
  * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass="WhereGroup\CoreBundle\Entity\MetadataRepository")
@@ -94,7 +96,8 @@ class Metadata
     private $public;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToMany(targetEntity="WhereGroup\UserBundle\Entity\Group", inversedBy="metadata")
+     * @ORM\JoinTable(name="metadata_groups")
      */
     private $groups;
 
@@ -127,6 +130,11 @@ class Metadata
      * @ORM\Column(type="float", nullable=true)
      */
     private $bboxw;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -297,18 +305,21 @@ class Metadata
         return $this;
     }
 
-    public function getGroups()
+    public function addGroups(Group $group)
     {
-        return explode(',', $this->groups);
+        $this->groups[] = $group;
+
+        return $this;
     }
 
-    public function setGroups($groups)
+    public function removeGroups(Group $group)
     {
-        $array = array_filter($groups);
-        sort($array);
+        $this->groups->removeElement($group);
+    }
 
-        $this->groups = implode(',', $array);
-        return $this;
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
     public function getReadonly()
