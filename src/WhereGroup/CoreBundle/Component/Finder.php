@@ -32,7 +32,7 @@ class Finder
         }
 
         // Sort
-        if ($count && is_null($this->order)) {
+        if ($count && !is_null($this->order)) {
             $qb->orderBy("m." . $this->order, 'ASC');
         }
 
