@@ -165,7 +165,7 @@ class ProfileController extends Controller
      */
     private function init($profile)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Unable to access this page!');
 
         $this->data['request'] = $this->get('request_stack')->getCurrentRequest();
         $this->data['className'] = $this->get('metador_plugin')->getPluginClassName($profile);
@@ -196,6 +196,7 @@ class ProfileController extends Controller
         $params['examples'] = $this->getExample();
         $params['hasGroupAccess'] = true;
         $params['groups'] = array();
+        $params['hasAccess'] = true;
 
         /** @var Metadata $entity */
         if (!is_null($entity)) {

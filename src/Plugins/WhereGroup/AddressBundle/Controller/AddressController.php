@@ -20,7 +20,7 @@ class AddressController extends Controller
      */
     public function addressGetAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_USER')) {
             throw new AccessDeniedException();
         }
 
@@ -58,7 +58,7 @@ class AddressController extends Controller
      */
     public function addressDeleteAction($id)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_USER')) {
             throw new AccessDeniedException();
         }
 

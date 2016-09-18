@@ -31,7 +31,7 @@ class PluginController extends Controller
      */
     public function indexAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SUPERUSER')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
             throw new AccessDeniedException();
         }
 
@@ -49,7 +49,7 @@ class PluginController extends Controller
      */
     public function updateAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SUPERUSER')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
             throw new AccessDeniedException();
         }
 
@@ -212,7 +212,7 @@ class PluginController extends Controller
      */
     public function viewAction($plugin)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SUPERUSER')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
             throw new AccessDeniedException();
         }
 

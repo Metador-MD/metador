@@ -26,10 +26,12 @@ class GroupController extends Controller
      */
     public function indexAction()
     {
+        $groups = $this
+            ->getRepository()
+            ->findAllSorted();
+
         return array(
-            'groups' => $this
-                ->getRepository()
-                ->findAllSorted(),
+            'groups' => $groups,
         );
     }
 
@@ -114,20 +116,10 @@ class GroupController extends Controller
             ->createForm(new GroupType(), $this->getGroup($id))
             ->submit($request);
 
-        // die('<pre>' . print_r($request->request->all(), 1) . '</pre>');
-
         if ($form->isValid()) {
             $group = $form->getData();
 
-            // See method documentation for Doctrine weirdness
-            // foreach ($group->getUsers() as $user) {
-            //     $user->addGroup($group);
-            // }
             $this->getDoctrine()->getManager()->persist($group);
-
-
-            // die("sd");
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('metador_admin_group');

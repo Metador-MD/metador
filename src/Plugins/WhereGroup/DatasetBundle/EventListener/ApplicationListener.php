@@ -9,7 +9,6 @@ class ApplicationListener extends ProfileApplicationMenuListener
 {
     protected $pluginId = 'profile-dataset';
     protected $name     = 'Geodaten';
-    protected $bundle   = 'ProfileDataset';
 
     /**
      * @param ApplicationEvent $event

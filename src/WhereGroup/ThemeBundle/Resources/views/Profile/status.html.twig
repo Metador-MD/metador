@@ -10,7 +10,7 @@
         <span class="metadata-info-public-title">{% trans %}öffentlich{% endtrans %}</span>
         <span class="metadata-info-public-title-private">{% trans %}privat{% endtrans %}</span>
         <input type="hidden" name="p[_public]" data-element="metadata-public" value="{% if public %}1{% else %}0{% endif %}" />
-        <span class="icon-users metadata-info-roles" data-cmd="metadata-toggle-roles"></span>
+        <span class="icon-cog metadata-info-roles" data-cmd="metadata-toggle-roles"></span>
     </div>
     <ul class="metadata-info-roles-list" data-element="metadata-info-roles">
         {% for id, group in groups %}

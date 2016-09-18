@@ -4,19 +4,27 @@ namespace WhereGroup\UserBundle\Component;
 
 use WhereGroup\UserBundle\Entity\User as UserEntity;
 use WhereGroup\CoreBundle\Component\MetadorException;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class User
+ * @package WhereGroup\UserBundle\Component
+ */
 class User implements UserInterface
 {
     private $tokenStorage;
     private $em;
     private $encoder;
-    private $logger;
     private $repository = 'MetadorUserBundle:User';
 
+    /**
+     * User constructor.
+     * @param TokenStorageInterface $tokenStorage
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EntityManagerInterface $em,
@@ -32,27 +40,44 @@ class User implements UserInterface
         unset($this->trokenStorage, $this->em, $this->encoder);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws MetadorException
+     */
     public function get($id)
     {
         $user = $this->getRepository()->findOneById($id);
 
         if (!$user) {
-            throw new MetadorException("Benutzer bereits vorhanden.");
+            throw new MetadorException("Benutzer nicht gefunden.");
         }
 
         return $user;
     }
 
+    /**
+     * @param $username
+     * @return mixed
+     */
     public function getByUsername($username)
     {
         return $this->getRepository()->findOneByUsername($username);
     }
 
+    /**
+     * @return array
+     */
     public function findAll()
     {
         return $this->getRepository()->findAllSorted();
     }
 
+    /**
+     * @param UserEntity $user
+     * @return $this
+     * @throws MetadorException
+     */
     public function insert(UserEntity $user)
     {
         if ($this->getRepository()->findOneByUsername($user->getUsername())) {
@@ -66,6 +91,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param UserEntity $user
+     * @return $this
+     */
     public function update(UserEntity $user)
     {
         $this->em->persist($user);
@@ -74,6 +103,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param UserEntity $user
+     * @return $this
+     */
     public function delete(UserEntity $user)
     {
         $this->em->remove($user);
@@ -82,17 +115,28 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param $user
+     * @param $password
+     * @return string
+     */
     public function encodePassword($user, $password)
     {
         return $this->encoder->encodePassword($user, $password);
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getUserFromSession()
     {
         $token = $this->tokenStorage->getToken();
         return is_object($token) ? $token->getUser() : null;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUsernameFromSession()
     {
         $user = $this->tokenStorage->getToken()->getUser();
@@ -123,8 +167,8 @@ class User implements UserInterface
 
         if (is_null($ignoreRole)) {
             $ignoreRole = array(
-                'ROLE_USER',
-                'ROLE_SUPERUSER',
+                'ROLE_SYSTEM_USER',
+                'ROLE_SYSTEM_SUPERUSER',
                 'ROLE_ADMIN',
                 'ROLE_HELPTEXT_ADMIN');
         }
@@ -140,6 +184,9 @@ class User implements UserInterface
         return false;
     }
 
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository
+     */
     private function getRepository()
     {
         return $this->em->getRepository($this->repository);

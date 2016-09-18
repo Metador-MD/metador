@@ -34,20 +34,6 @@ interface MetadataInterface
     public function getByUUID($uuid);
 
     /**
-     * @param $limit
-     * @param $page
-     * @param $profile
-     * @return mixed
-     */
-    public function getMetadata($limit, $page, $profile);
-
-    /**
-     * @param string $profile
-     * @return integer
-     */
-    public function getMetadataCount($profile);
-
-    /**
      * @param $p
      * @param bool $id
      * @param null $username

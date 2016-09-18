@@ -3,7 +3,9 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\QueryBuilder;
+use Rhumsaa\Uuid\Console\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\UserBundle\Component\UserInterface;
@@ -24,8 +26,6 @@ class Metadata implements MetadataInterface
 
     private $repository = "MetadorCoreBundle:Metadata";
 
-    private $systemRoles = array();
-
     /**
      * @param ContainerInterface $container
      * @param UserInterface $metadorUser
@@ -37,8 +37,8 @@ class Metadata implements MetadataInterface
         $this->container   = $container;
         $this->metadorUser = $metadorUser;
         $this->systemRoles = array(
-            'ROLE_SUPERUSER',
-            'ROLE_USER'
+            'ROLE_SYSTEM_SUPERUSER',
+            'ROLE_SYSTEM_USER'
         );
     }
 
@@ -48,14 +48,6 @@ class Metadata implements MetadataInterface
             $this->container,
             $this->metadorUser
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function getSystemRoles()
-    {
-        return $this->systemRoles;
     }
 
     /**
@@ -75,8 +67,6 @@ class Metadata implements MetadataInterface
             throw new \Exception('Datensatz existiert nicht.');
         }
 
-        $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
-
         // EVENT ON LOAD
         $event = new MetadataChangeEvent($metadata, array());
         $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
@@ -85,9 +75,10 @@ class Metadata implements MetadataInterface
     }
 
 
-  /**
-     * @param $uuid
-     * @return mixed
+    /**
+     * @param string $uuid
+     * @return EntityMetadata
+     * @throws \Exception
      */
     public function getByUUID($uuid)
     {
@@ -97,13 +88,13 @@ class Metadata implements MetadataInterface
             ->getRepository($this->repository)
             ->findOneByUuid($uuid);
 
-        if ($metadata) {
-            $metadata->setReadonly(!$this->metadorUser->checkMetadataAccess($metadata));
-
-            // EVENT ON LOAD
-            $event = new MetadataChangeEvent($metadata, array());
-            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        if (is_null($metadata)) {
+            throw new \Exception('Datensatz existiert nicht.');
         }
+
+        // EVENT ON LOAD
+        $event = new MetadataChangeEvent($metadata, array());
+        $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
 
         return $metadata;
     }
@@ -134,11 +125,8 @@ class Metadata implements MetadataInterface
             $paging = $pagingClass->calculate();
         }
 
+        /** @var MetadataRepository $repo */
         $result = $repo->findByParams($params);
-
-        for ($i=0,$iL=count($result); $i<$iL; $i++) {
-            $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
-        }
 
         return array(
             'result' => $result,
@@ -147,129 +135,46 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $limit
-     * @param $page
-     * @param $profile
-     * @return array
-     */
-    public function getMetadata($limit, $page, $profile)
-    {
-        $paging = new Paging($this->getMetadataCount($profile), $limit, $page);
-
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $this->container
-            ->get('doctrine')
-            ->getRepository($this->repository)
-            ->createQueryBuilder('m')
-            ->orderBy('m.updateTime', 'DESC')
-            ->setFirstResult(($page * $limit) - $limit)
-            ->setMaxResults($limit)
-            ->where('m.profile = :profile')
-            ->setParameter('profile', $profile);
-
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata[] $result */
-        $result = $queryBuilder
-            ->getQuery()
-            ->getResult();
-
-        for ($i=0,$iL=count($result); $i<$iL; $i++) {
-            $result[$i]->setReadonly(!$this->metadorUser->checkMetadataAccess($result[$i]));
-        }
-
-        return array(
-            'result' => $result,
-            'paging' => $paging->calculate()
-        );
-    }
-
-    /**
-     * @param string $profile
-     * @return mixed
-     */
-    public function getMetadataCount($profile)
-    {
-        /** @var QueryBuilder $queryBuilderC */
-        $queryBuilderC = $this->container
-            ->get('doctrine')
-            ->getRepository($this->repository)
-            ->createQueryBuilder('m')
-            ->select('count(m)')
-            ->where('m.profile = :profile')
-            ->setParameter('profile', $profile);
-
-        return $queryBuilderC->getQuery()->getSingleScalarResult();
-    }
-
-    /**
      * @param $p
      * @param bool $id
      * @param null $username
      * @param bool $public
-     * @return bool
+     * @return EntityMetadata
      */
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
+        $this->checkMandatoryFields($p);
+
         /** @var User $user */
-        if (is_null($username)) {
-            $user = $this->metadorUser->getUserFromSession();
+        $user     = $this->getUser($username);
+        $metadata = $this->getObject($id, $p['fileIdentifier']);
+
+
+        if ($id && $user->getId() == $metadata->getInsertUser()->getId()) {
+            if (empty($p['_group_id'])) {
+                $p['_group_id'] = array();
+            }
+
+            $groups = array();
+
+            // remove groups
+            foreach ($metadata->getGroups() as $group) {
+                $groups[] = $group->getId();
+
+                if (!in_array($group->getId(), $p['_group_id'])) {
+                    $metadata->removeGroups($group);
+                }
+            }
+
+            // add groups
+            foreach ($user->getGroups() as $group) {
+                if (in_array($group->getId(), $p['_group_id']) && !in_array($group->getId(), $groups)) {
+                    $metadata->addGroups($group);
+                }
+            }
         } else {
-            $user = $this->metadorUser->getByUsername($username);
-        }
-
-        $now  = new \DateTime();
-        $em   = $this->container->get('doctrine')->getManager();
-
-        // UPDATE
-        if ($id) {
-            $update = true;
-            $metadata = $this->getById($id);
-
-            if ($metadata->getReadonly()) {
-                $this->container
-                    ->get('session')
-                    ->getFlashBag()
-                    ->add('error', 'Sie haben nicht die nötigen Rechte.');
-                return false;
-            }
-
-            if ($user->getId() == $metadata->getInsertUser()->getId()) {
-                if (empty($p['_group_id'])) {
-                    $p['_group_id'] = array();
-                }
-
-                $groups = array();
-
-                // remove groups
-                foreach ($metadata->getGroups() as $group) {
-                    $groups[] = $group->getId();
-
-                    if (!in_array($group->getId(), $p['_group_id'])) {
-                        $metadata->removeGroups($group);
-                    }
-                }
-
-                // add groups
-                foreach ($user->getGroups() as $group) {
-                    if (in_array($group->getId(), $p['_group_id']) && !in_array($group->getId(), $groups)) {
-                        $metadata->addGroups($group);
-                    }
-                }
-            }
-
-        // INSERT
-        } else {
-            // FIND UUID IN DATABASE
-            $uuid = $em->getRepository($this->repository)->findByUuid($p['fileIdentifier']);
-
-            if ($uuid) {
-                $this->container->get('session')->getFlashBag()->add('error', "UUID existiert bereits!");
-                return false;
-            }
-
-            $update = false;
-            $metadata = new EntityMetadata();
             $metadata->setInsertUser($user);
-            $metadata->setInsertTime($now->getTimestamp());
+            $metadata->setInsertTime($this->getTimestamp());
             $metadata->setPublic($public);
 
             if (isset($p['_group_id'])) {
@@ -281,49 +186,20 @@ class Metadata implements MetadataInterface
             }
         }
 
-        // CHECK FOR UUID
-        if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
-            $this->container->get('session')->getFlashBag()->add('error', "UUID fehlt!");
-
-            return false;
-        }
-
-        $date = $this->findDate($p);
-
-        $searchfield = @$p['_searchfield'] .
-            ' ' . strtolower(@$p['title']) .
-            ' ' . strtolower(@$p['abstract']);
-
-        if (isset($p['keyword'])) {
-            foreach ($p['keyword'] as $value) {
-                if (isset($value['value']) && !empty($value['value'])) {
-                    foreach ($value['value'] as $keyword) {
-                        $searchfield .= ' ' . strtolower($keyword);
-                    }
-                }
-            }
-        }
-
-        if (!isset($p['hierarchyLevel'])) {
-            throw new \RuntimeException("Hierarchy level not found!");
-        }
-
-        $p['_profile'] = isset($p['_profile']) ? $p['_profile'] : $p['hierarchyLevel'];
-
         $metadata->setUpdateUser($user);
-        $metadata->setUpdateTime($now->getTimestamp());
+        $metadata->setUpdateTime($this->getTimestamp());
         $metadata->setUuid(isset($p['fileIdentifier']) ? $p['fileIdentifier'] : '');
         $metadata->setCodespace(isset($p['identifier'][0]['codespace']) ? $p['identifier'][0]['codespace'] : '');
         $metadata->setTitle(isset($p['title']) ? $p['title'] : '');
         $metadata->setAbstract(isset($p['abstract']) ? $p['abstract'] : '');
         $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
         $metadata->setObject($p);
-        $metadata->setHierarchyLevel($p['hierarchyLevel']);
+        $metadata->setHierarchyLevel(isset($p['hierarchyLevel']) ? $p['hierarchyLevel'] : '');
         $metadata->setProfile($p['_profile']);
         $metadata->setPublic(isset($p['_public']) && $p['_public'] === '1' ? true : false);
-        $metadata->setSearchfield(trim($searchfield));
+        $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setReadonly(false);
-        $metadata->setDate(new \DateTime($date));
+        $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
             $metadata->setBboxn($p['bbox'][0]['nLatitude']);
@@ -334,50 +210,12 @@ class Metadata implements MetadataInterface
 
         $this->save($metadata);
 
-        // SET FLASH
-        $title = isset($p['title']) ? $p['title'] : 'Datensatz';
-
-        if ($update) {
-            $this->container->get('session')->getFlashBag()->add(
-                'success',
-                $title . ' bearbeitet.'
-            );
-
-            return $metadata;
-        }
-
         $this->container->get('session')->getFlashBag()->add(
             'success',
-            $title . ' eingetragen.'
+            (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.'
         );
 
         return $metadata;
-    }
-
-    /**
-     * @param $metadataObject
-     * @return mixed
-     * @throws \Exception
-     */
-    private function findDate($metadataObject)
-    {
-        if (!empty($metadataObject['revisionDate'])) {
-            return $metadataObject['revisionDate'];
-        }
-
-        if (!empty($metadataObject['publicationDate'])) {
-            return $metadataObject['publicationDate'];
-        }
-
-        if (!empty($metadataObject['creationDate'])) {
-            return $metadataObject['creationDate'];
-        }
-
-        if (empty($metadataObject['dateStamp'])) {
-            throw new \Exception("dateStamp empty!");
-        }
-
-        return $metadataObject['dateStamp'];
     }
 
     /**
@@ -400,7 +238,7 @@ class Metadata implements MetadataInterface
                 $event = new MetadataChangeEvent($metadata, array());
                 $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
 
-                 // DELETE
+                // DELETE
                 $em->remove($metadata);
                 $em->flush();
             }
@@ -440,5 +278,121 @@ class Metadata implements MetadataInterface
             $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * @param $username
+     * @return mixed
+     */
+    private function getUser($username)
+    {
+        return is_null($username)
+            ? $this->metadorUser->getUserFromSession()
+            : $this->metadorUser->getByUsername($username);
+    }
+
+    /**
+     * @param $id
+     * @param $uuid
+     * @return EntityMetadata
+     * @throws \Exception
+     */
+    private function getObject($id, $uuid)
+    {
+        // Metadata exists
+        if ($id !== false) {
+            $entity = $this
+                ->container
+                ->get('doctrine')
+                ->getManager()
+                ->getRepository($this->repository)
+                ->findByUuid($uuid);
+
+            if ($entity) {
+                throw new \Exception("UUID existiert bereits!");
+            }
+
+            return $this->getById($id);
+
+        }
+
+        // New Metadata
+        return new EntityMetadata();
+    }
+
+    /**
+     * @return int
+     */
+    private function getTimestamp()
+    {
+        $dateTime = new \DateTime();
+
+        return $dateTime->getTimestamp();
+    }
+
+    /**
+     * @param $p
+     * @throws \Exception
+     */
+    private function checkMandatoryFields($p)
+    {
+        // Check for uuid
+        if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
+            throw new \Exception("fileIdentifier nicht gefunden");
+        }
+
+        if (!isset($p['_profile']) || empty($p['_profile'])) {
+            throw new \Exception("_profile nicht gefunden");
+        }
+    }
+
+    /**
+     * @param $p
+     * @return string
+     */
+    private function prepareSearchField($p)
+    {
+        $searchfield  = '';
+        $searchfield .= isset($p['_searchfield']) ? ' ' . strtolower($p['_searchfield']) : '';
+        $searchfield .= isset($p['title'])        ? ' ' . strtolower($p['title']) : '';
+        $searchfield .= isset($p['abstract'])     ? ' ' . strtolower($p['abstract']) : '';
+
+        if (isset($p['keyword'])) {
+            foreach ($p['keyword'] as $value) {
+                if (isset($value['value']) && !empty($value['value'])) {
+                    foreach ($value['value'] as $keyword) {
+                        $searchfield .= ' ' . strtolower($keyword);
+                    }
+                }
+            }
+        }
+
+        return trim($searchfield);
+    }
+
+    /**
+     * @param $metadataObject
+     * @return mixed
+     * @throws \Exception
+     */
+    private function findDate($metadataObject)
+    {
+        if (!empty($metadataObject['revisionDate'])) {
+            return $metadataObject['revisionDate'];
+        }
+
+        if (!empty($metadataObject['publicationDate'])) {
+            return $metadataObject['publicationDate'];
+        }
+
+        if (!empty($metadataObject['creationDate'])) {
+            return $metadataObject['creationDate'];
+        }
+
+        if (empty($metadataObject['dateStamp'])) {
+            throw new \Exception("dateStamp empty!");
+        }
+
+        return $metadataObject['dateStamp'];
     }
 }

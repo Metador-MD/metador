@@ -25,7 +25,7 @@ class HomeController extends Controller
 
         ));
 
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_USER')) {
             $params = array_merge($queryParams, array(
                 'public' => 1
             ));

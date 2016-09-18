@@ -23,7 +23,7 @@ class ApplicationListener
                 ->label('Plugins')
                 ->path('metador_admin_plugin')
                 ->active($app->isBundle('plugin'))
-                ->setRole('ROLE_SUPERUSER')
+                ->setRole('ROLE_SYSTEM_SUPERUSER')
         );
 
         if ($app->isBundle('plugin') && $app->isAction('index')) {

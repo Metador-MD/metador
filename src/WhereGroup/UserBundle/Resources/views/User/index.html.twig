@@ -10,7 +10,7 @@
         {% set class = class ~ ' disabled' %}
     {% endif %}
 
-    {% if 'ROLE_SUPERUSER' in user.roles %}
+    {% if 'ROLE_SYSTEM_SUPERUSER' in user.roles %}
         {% set class = class ~ ' superuser' %}
     {% endif %}
 

@@ -17,7 +17,6 @@ class ApplicationListener extends ProfileApplicationMenuListener
 {
     protected $pluginId = 'profile-service';
     protected $name     = 'Dienste';
-    protected $bundle   = 'ProfileService';
     protected $metadata = null;
     protected $plugin   = null;
 

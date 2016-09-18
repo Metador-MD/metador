@@ -64,6 +64,15 @@ class MetadataRepository extends EntityRepository
      */
     private function prepairFindByParams($qb, $params, $count = false)
     {
+        /**
+         * page
+         * hits
+         * order
+         * terms
+         * profile
+         * public
+         */
+
         // Set limit and offset
         if ($count === false && (isset($params['page']) || isset($params['hits']))) {
             $params['page'] = isset($params['page']) ? (int)$params['page'] : 1;

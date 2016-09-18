@@ -30,8 +30,9 @@ abstract class ProfileApplicationMenuListener
      */
     public function onLoading(ApplicationEvent $event)
     {
-        $app      = $event->getApplication();
-        $request  = $app->getRequestStack()->getMasterRequest();
+        $app       = $event->getApplication();
+        $request   = $app->getRequestStack()->getMasterRequest();
+        $isProfile = ($app->isBundle('core') && $app->isController('profile'));
 
         if (is_null($request) || is_null($request->get('id', null))) {
             $request  = $app->getRequestStack()->getCurrentRequest();
@@ -45,14 +46,18 @@ abstract class ProfileApplicationMenuListener
                 ->label($this->name)
                 ->path('metadata_index', array(
                     'profile' => $this->pluginId
-                ))->setRole('ROLE_USER')
+                ))->setRole('ROLE_SYSTEM_USER')
         );
 
         /***********************************************************************
          * Dashboard preview
          ***********************************************************************/
         if ($app->isController('dashboard')) {
-            $response = $this->metadata->getMetadata(10, 1, $this->pluginId);
+            $response = $this->metadata->find(array(
+                'page'    => 1,
+                'hits'    => 10,
+                'profile' => $this->pluginId
+            ));
 
             $app->add(
                 $app->get('Dashboard')
@@ -69,14 +74,14 @@ abstract class ProfileApplicationMenuListener
             unset($response);
         }
 
-        if ($app->isBundle($this->bundle)) {
+        if ($isProfile) {
             /***********************************************************************
              * Profile Name
              ***********************************************************************/
             $app->add(
                 $app->get('Profile')
                     ->name($this->name)
-                    ->active($app->isController('Profile'))
+                    ->active($app->isController('profile'))
             );
         }
 
@@ -84,7 +89,7 @@ abstract class ProfileApplicationMenuListener
          * Plugin menu
          ***********************************************************************/
 
-        if ($app->isBundle($this->bundle) && $app->isAction('index')) {
+        if ($isProfile && $app->isAction('index')) {
             $app->add(
                 $app->get('PluginMenu', 'new')
                     ->label('neu')
@@ -94,7 +99,7 @@ abstract class ProfileApplicationMenuListener
             );
         }
 
-        if (($app->isBundle($this->bundle) && $app->isAction('index')) || $app->isRoute('metador_home')) {
+        if (($isProfile && $app->isAction('index')) || $app->isRoute('metador_home')) {
             $app->add(
                 $app->get('SearchMenu', 'pdf')
                     ->label('PDF')
@@ -124,14 +129,14 @@ abstract class ProfileApplicationMenuListener
                         ->target('_BLANK')
                 );
             }
-        } elseif ($app->isBundle($this->bundle)) {
+        } elseif ($isProfile) {
             $data = array();
 
             if ($app->isAction(array('new', 'edit'))) {
                 $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
             }
 
-            if ($app->isAction('edit')) {
+            if ($app->isAction(array('edit', 'update'))) {
                 $app->add(
                     $app->get('PluginMenu', 'template')
                         ->label('als Vorlage verwenden')

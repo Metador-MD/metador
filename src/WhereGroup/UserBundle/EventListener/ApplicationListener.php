@@ -34,14 +34,14 @@ class ApplicationListener
                     ->label('Benutzer')
                     ->path('metador_admin_user')
                     ->active($app->isController('user'))
-                    ->setRole('ROLE_SUPERUSER')
+                    ->setRole('ROLE_SYSTEM_SUPERUSER')
             )->add(
                 $app->get('AdminMenu', 'group')
                     ->icon('icon-users')
                     ->label('Gruppen')
                     ->path('metador_admin_group')
                     ->active($app->isController('group'))
-                    ->setRole('ROLE_SUPERUSER')
+                    ->setRole('ROLE_SYSTEM_SUPERUSER')
             );
         }
 

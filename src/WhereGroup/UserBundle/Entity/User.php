@@ -96,8 +96,8 @@ class User implements AdvancedUserInterface, \Serializable
             $roles[] = $group->getRole();
         }
 
-        if (!in_array("ROLE_USER", $roles)) {
-            $roles[] = "ROLE_USER";
+        if (!in_array("ROLE_SYSTEM_USER", $roles)) {
+            $roles[] = "ROLE_SYSTEM_USER";
         }
 
         sort($roles);

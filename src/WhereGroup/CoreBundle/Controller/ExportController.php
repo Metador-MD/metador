@@ -18,7 +18,7 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
 
         if (!$data = $this->get('metadata')->getById($id)) {
             $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
@@ -72,7 +72,7 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
 
         if (!$data = $this->get('metadata')->getById($id)) {
             return new Response('Datensatz nicht gefunden');
@@ -117,7 +117,7 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Zugriff verweigert');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
 
         if (!$data = $this->get('metadata')->getById($id)) {
             return new Response('Datensatz nicht gefunden');
