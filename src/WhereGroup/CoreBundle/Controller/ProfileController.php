@@ -235,6 +235,10 @@ class ProfileController extends Controller
         if ($params['hasGroupAccess']) {
             foreach ($this->data['user']->getGroups() as $group) {
                 if (!isset($params['groups'][$group->getId()])) {
+                    if (substr($group->getRole(), 0, 12) === 'ROLE_SYSTEM_') {
+                        continue;
+                    }
+
                     $params['groups'][$group->getId()] = array(
                         'name'   => $group->getRole(),
                         'active' => false
