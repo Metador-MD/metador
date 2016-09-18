@@ -197,18 +197,12 @@ class Metadata implements MetadataInterface
                     $metadata->addGroups($group);
                 }
             }
-        } else {
+        }
+
+        if (!$id) {
             $metadata->setInsertUser($user);
             $metadata->setInsertTime($this->getTimestamp());
             $metadata->setPublic($public);
-
-            if (isset($p['_group_id'])) {
-                foreach ($user->getGroups() as $group) {
-                    if (in_array($group->getId(), $p['_group_id'])) {
-                        $metadata->addGroups($group);
-                    }
-                }
-            }
         }
 
         $metadata->setUpdateUser($user);
