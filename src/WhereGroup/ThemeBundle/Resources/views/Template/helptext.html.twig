@@ -1,5 +1,5 @@
-<div class="helptext" {% if is_granted('ROLE_HELPTEXT_ADMIN') %}contentEditable="true"{% endif %}>
-    {% if is_granted('ROLE_HELPTEXT_ADMIN') %}
+<div class="helptext" {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}contentEditable="true"{% endif %}>
+    {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
         {{ html }}
     {% else %}
         {{ html|raw }}

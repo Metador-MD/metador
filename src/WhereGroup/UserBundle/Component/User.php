@@ -165,21 +165,22 @@ class User implements UserInterface
             return true;
         }
 
-        if (is_null($ignoreRole)) {
-            $ignoreRole = array(
-                'ROLE_SYSTEM_USER',
-                'ROLE_SYSTEM_SUPERUSER',
-                'ROLE_ADMIN',
-                'ROLE_HELPTEXT_ADMIN');
-        }
-
-        foreach ($user->getRoles() as $userRole) {
-            foreach ($metadata->getGroups() as $group) {
-                if ($userRole === $group && !in_array($group, $ignoreRole)) {
-                    return true;
-                }
-            }
-        }
+        // todo: grant access with voter?
+//        if (is_null($ignoreRole)) {
+//            $ignoreRole = array(
+//                'ROLE_SYSTEM_USER',
+//                'ROLE_SYSTEM_SUPERUSER',
+//                'ROLE_ADMIN',
+//                'ROLE_SYSTEM_GEO_OFFICE');
+//        }
+//
+//        foreach ($user->getRoles() as $userRole) {
+//            foreach ($metadata->getGroups() as $group) {
+//                if ($userRole === $group && !in_array($group, $ignoreRole)) {
+//                    return true;
+//                }
+//            }
+//        }
 
         return false;
     }
