@@ -14,11 +14,11 @@
     </div>
     <ul class="metadata-info-roles-list" data-element="metadata-info-roles">
         {% for id, group in groups %}
-        <li title="{{ group.name|teaser(22, 1) }}">
+        <li title="{{ group.name|groupname|teaser(22, 1) }}">
             {% if hasGroupAccess %}
             <input type="checkbox" name="p[_group_id][]" value="{{ id }}" title="" {% if group.active %}checked="checked"{% endif %}/>
             {% endif %}
-            {{ group.name|teaser(22, 1) }}
+            {{ group.name|groupname|teaser(22, 1) }}
         </li>
         {% endfor %}
     </ul>
