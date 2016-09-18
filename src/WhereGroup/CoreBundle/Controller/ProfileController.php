@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
@@ -65,7 +66,12 @@ class ProfileController extends Controller
     {
         $this->init($profile);
 
-        $metadata = $this->get('metadata')->saveObject($this->data['p']);
+        try {
+            $metadata = $this->get('metadata')->saveObject($this->data['p']);
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->flashError($e->getMessage());
+            return $this->renderResponse($profile, 'form');
+        }
 
         return $this->redirectToRoute('metadata_edit', array(
             'profile' => $profile,
@@ -92,7 +98,14 @@ class ProfileController extends Controller
     {
         $this->init($profile);
 
-        return $this->renderResponse($profile, 'form', $this->get('metadata')->saveObject($this->data['p'], $id));
+        try {
+            $metadata = $this->get('metadata')->saveObject($this->data['p'], $id);
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->flashError($e->getMessage());
+            return $this->renderResponse($profile, 'form', $this->get('metadata')->getById($id));
+        }
+
+        return $this->renderResponse($profile, 'form', $metadata);
     }
 
     /**

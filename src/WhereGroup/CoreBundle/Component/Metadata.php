@@ -279,12 +279,7 @@ class Metadata implements MetadataInterface
         $event  = new MetadataChangeEvent($entity, array());
 
         // EVENT PRE SAVE
-        try {
-            $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
-        } catch (\Exception $e) {
-            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
-            return false;
-        }
+        $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
 
         // SAVE TO DATABASE
         $entityManager = $this->container->get('doctrine')->getManager();
@@ -292,12 +287,7 @@ class Metadata implements MetadataInterface
         $entityManager->flush();
 
         // EVENT POST SAVE
-        try {
-            $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
-        } catch (\Exception $e) {
-            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
-            return false;
-        }
+        $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
     }
 
     /**
