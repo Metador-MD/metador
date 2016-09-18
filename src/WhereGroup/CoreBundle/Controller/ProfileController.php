@@ -65,7 +65,12 @@ class ProfileController extends Controller
     {
         $this->init($profile);
 
-        return $this->renderResponse($profile, 'form', $this->get('metadata')->saveObject($this->data['p']));
+        $metadata = $this->get('metadata')->saveObject($this->data['p']);
+
+        return $this->redirectToRoute('metadata_edit', array(
+            'profile' => $profile,
+            'id'      => $metadata->getId()
+        ));
     }
 
     /**

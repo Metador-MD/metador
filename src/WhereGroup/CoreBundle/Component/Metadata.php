@@ -103,30 +103,55 @@ class Metadata implements MetadataInterface
      * @param $params
      * @return array
      */
-    public function find($params)
+    public function find($params, $force = false, $username = null)
     {
+        $finder = new Finder();
+        $finder->force = false;
+
         /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $result */
         $repo = $this->container->get('doctrine')
             ->getManager()
             ->getRepository($this->repository);
 
+
+        /** @var User $user */
+        $user = $this->getUser($username);
+
+        if (is_object($user)) {
+            $finder->userId = $user->getId();
+
+            foreach ($user->getGroups() as $group) {
+                $groupName = $group->getRole();
+
+                if ($groupName === 'ROLE_SYSTEM_GEO_OFFICE') {
+                    $finder->geoOffice = true;
+                }
+
+                if (substr($groupName, 0, 12) === 'ROLE_SYSTEM_') {
+                    continue;
+                }
+
+                $finder->groups[] = $group->getId();
+            }
+        }
+
         $paging = array();
 
         if (isset($params['page']) || isset($params['hits'])) {
-            if (!isset($params['page']) || !is_numeric($params['page'])) {
-                $params['page']  = 1;
-            }
+            $finder->page = (!isset($params['page']) || !is_numeric($params['page']))
+                ? 1 : $params['page'];
 
-            if (!isset($params['hits']) || !is_numeric($params['hits'])) {
-                $params['hits']  = 10;
-            }
+            $finder->hits = (!isset($params['hits']) || !is_numeric($params['hits']))
+                ? 10 : $params['hits'];
 
-            $pagingClass = new Paging($repo->count($params), $params['hits'], $params['page']);
+
+            $pagingClass = new Paging($repo->count($finder), $finder->hits, $finder->page);
             $paging = $pagingClass->calculate();
         }
 
+
         /** @var MetadataRepository $repo */
-        $result = $repo->findByParams($params);
+        $result = $repo->findByParams($finder);
 
         return array(
             'result' => $result,
@@ -227,18 +252,19 @@ class Metadata implements MetadataInterface
         $em = $this->container->get('doctrine')->getManager();
         $metadata = $this->getById($id);
 
-        if ($metadata->getReadonly()) {
-            $this->container->get('session')->getFlashBag()->add('error', 'Sie haben nicht die nötigen Rechte.');
-            return false;
-        }
-
         try {
             if ($metadata) {
                 // EVENT PRE DELETE
                 $event = new MetadataChangeEvent($metadata, array());
                 $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
 
+                foreach ($metadata->getGroups() as $group) {
+                    $metadata->removeGroups($group);
+                }
+
                 // DELETE
+                $em->persist($metadata);
+                $em->flush();
                 $em->remove($metadata);
                 $em->flush();
             }
@@ -301,19 +327,18 @@ class Metadata implements MetadataInterface
     {
         // Metadata exists
         if ($id !== false) {
-            $entity = $this
-                ->container
-                ->get('doctrine')
-                ->getManager()
-                ->getRepository($this->repository)
-                ->findByUuid($uuid);
-
-            if ($entity) {
-                throw new \Exception("UUID existiert bereits!");
-            }
-
             return $this->getById($id);
+        }
 
+        $entity = $this
+            ->container
+            ->get('doctrine')
+            ->getManager()
+            ->getRepository($this->repository)
+            ->findByUuid($uuid);
+
+        if ($entity) {
+            throw new \Exception("UUID existiert bereits!");
         }
 
         // New Metadata
