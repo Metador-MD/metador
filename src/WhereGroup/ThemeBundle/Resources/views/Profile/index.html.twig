@@ -3,7 +3,7 @@
 {% block center %}
 <div class="page-content">
     {% include 'MetadorThemeBundle:Template:flashMessages.html.twig' %}
-    
+
     <div class="search-content">
         <div class="search-content-searchfield">
             <form class="" action="{{ path('metadata_index', { 'profile' :  profile }) }}" method="get">
@@ -49,7 +49,9 @@
         </div>
 
         <div class="search-content-result">
+            {% block searchResult %}
             {% include 'MetadorThemeBundle:Profile:result.html.twig' %}
+            {% endblock %}
         </div>
     </div>
 </div>
