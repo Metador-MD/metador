@@ -123,16 +123,13 @@ class ProfileController extends Controller
         return $this->get('templating')->renderResponse(
             $this->getTemplate('confirm'),
             array(
-                'data' => array(
-                    'id'      => $id,
-                    'profile' => $profile,
-                    'form'    => $this
-                        ->createFormBuilder($this->get('metadata')->getById($id))
-                        ->add('delete', 'submit', array('label' => 'löschen'))
-                        ->getForm()
-                        ->createView(),
-                ),
-                'id' => $id
+                'id'      => $id,
+                'profile' => $profile,
+                'form'    => $this
+                    ->createFormBuilder($this->get('metadata')->getById($id))
+                    ->add('delete', 'submit', array('label' => 'löschen'))
+                    ->getForm()
+                    ->createView(),
             )
         );
     }
