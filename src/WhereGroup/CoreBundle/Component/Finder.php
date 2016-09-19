@@ -48,7 +48,7 @@ class Finder
         if (!is_null($this->profile)) {
             $qb
                 ->andWhere('m.profile = :profile')
-                ->setParameter('profile', $this->profile);
+                ->setParameter('profile', (string)$this->profile);
         }
 
         // Only public if no user logged in
@@ -60,13 +60,13 @@ class Finder
         if (!is_null($this->public)) {
             $qb
                 ->andWhere('m.public = :public')
-                ->setParameter('public', $this->public);
+                ->setParameter('public', (bool)$this->public);
         }
 
         // Owner or user in same group
         if (!$this->geoOffice && is_null($this->public) && !is_null($this->userId)) {
             $qb ->andWhere('m.insertUser = :userid')
-                ->setParameter('userid', $this->userId)
+                ->setParameter('userid', (int)$this->userId)
                 ->orWhere('m.public = 1');
 
             if (!empty($this->groups)) {
@@ -75,7 +75,7 @@ class Finder
                 foreach ($this->groups as $key => $groupId) {
                     $qb
                         ->orWhere('g.id = :group_' . $key)
-                        ->setParameter('group_' . $key, $groupId);
+                        ->setParameter('group_' . $key, (int)$groupId);
                 }
             }
         }
