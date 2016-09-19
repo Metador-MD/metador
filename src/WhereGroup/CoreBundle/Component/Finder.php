@@ -67,7 +67,7 @@ class Finder
         if (!$this->geoOffice && is_null($this->public) && !is_null($this->userId)) {
             $qb ->andWhere('m.insertUser = :userid')
                 ->setParameter('userid', (int)$this->userId)
-                ->orWhere('m.public = 1');
+                ->orWhere('m.public = true');
 
             if (!empty($this->groups)) {
                 $qb->leftJoin('m.groups', 'g', 'WITH');
