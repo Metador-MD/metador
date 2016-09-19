@@ -4,6 +4,10 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
+/**
+ * Class Finder
+ * @package WhereGroup\CoreBundle\Component
+ */
 class Finder
 {
     public $page = null;

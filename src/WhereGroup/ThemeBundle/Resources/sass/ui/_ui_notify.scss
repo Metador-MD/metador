@@ -2,35 +2,91 @@
 @import '../styleguide/mixins';
 
 .notify {
-    border-width: 1px;
+    position: relative;
+    border-width: 0 0 3px 0;
     border-style: solid;
     padding: 20px;
     min-height: 40px;
     font-weight: bold;
     font-size: 14px;
-    text-align: center;
-    margin: 10px;
+    text-shadow: 1px 1px 0 $white;
+    margin-bottom: 20px;
 
-    border-radius: 5px;
+    &.center {
+        text-align: center;
+    }
+
+    & > .notify-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        display: none
+    }
+
+    &.close {
+        & > .notify-close {
+            display: block;
+        }
+    }
+
 
     &.error {
-        border-color: $error darken($error, 10%) darken($error, 20%);
-        background-color: $error;
+        border-color: $error;
+        background-color: lighten($error, 20%);
+        color: darken($error, 25%);
+
+        & > .notify-close {
+            color: $error;
+            text-shadow: 1px 1px 0 $white;
+
+            &:hover {
+                color: darken($error, 25%);
+            }
+        }
     }
 
     &.warning {
-        border-color: $warning darken($warning, 10%) darken($warning, 20%);
-        background-color: $warning;
+        border-color: $warning;
+        background-color: lighten($warning, 30%);
+        color: darken($warning, 25%);
+
+
+        & > .notify-close {
+            color: $warning;
+            text-shadow: 1px 1px 0 $white;
+
+            &:hover {
+                color: darken($warning, 25%);
+            }
+        }
     }
 
     &.success {
-        border-color: $success darken($success, 10%) darken($success, 20%);
-        background-color: $success;
+        border-color: $success;
+        background-color: lighten($success, 25%);
+        color: darken($success, 25%);
+
+        & > .notify-close {
+            color: $success;
+            text-shadow: 1px 1px 0 $white;
+            &:hover {
+                color: darken($success, 25%);
+            }
+        }
     }
 
-
     &.notice {
-        border-color: $notice darken($notice, 10%) darken($notice, 20%);
-        background-color: $notice;
+        border-color: $notice;
+        background-color: lighten($notice, 25%);
+        color: darken($notice, 25%);
+
+        & > .notify-close {
+            color: $notice;
+            text-shadow: 1px 1px 0 $white;
+            &:hover {
+                color: darken($notice, 25%);
+            }
+        }
     }
 }

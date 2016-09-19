@@ -33,3 +33,7 @@ $('[data-cmd="metadata-toggle-roles"]').click(function() {
         .closest('[data-element="metadata-info"]')
         .toggleClass('groups');
 });
+
+$(document).on('click', '.-js-close-notify', function () {
+    $(this).parent().remove();
+});
