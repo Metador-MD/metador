@@ -20,8 +20,9 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw new AccessDeniedException();
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
+            throw $this->createAccessDeniedException();
         }
 
         return array();

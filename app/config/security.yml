@@ -32,10 +32,10 @@ security:
         - { path: ^/metador/html, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: ROLE_SYSTEM_SUPERUSER }
+        - { path: ^/admin, roles: [ROLE_SYSTEM_SUPERUSER, ROLE_SYSTEM_GEO_OFFICE] }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_SYSTEM_USER }
 
     role_hierarchy:
-        ROLE_SYSTEM_SUPERUSER: [ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SYSTEM_SUPERUSER: [ROLE_SYSTEM_GEO_OFFICE, ROLE_ALLOWED_TO_SWITCH]

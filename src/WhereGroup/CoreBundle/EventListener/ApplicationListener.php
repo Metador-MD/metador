@@ -34,13 +34,13 @@ class ApplicationListener
                 ->label('Administration')
                 ->path('metador_admin_index')
                 ->active($app->routeStartsWith('metador_admin'))
-                ->setRole('ROLE_SYSTEM_SUPERUSER')
+                ->setRole('ROLE_SYSTEM_GEO_OFFICE')
         )->add(
             $app->get('AdminMenu', 'index')
                 ->icon('icon-eye')
                 ->label('Übersicht')
                 ->path('metador_admin_index')
-                ->setRole('ROLE_SYSTEM_SUPERUSER')
+                ->setRole('ROLE_SYSTEM_GEO_OFFICE')
         );
     }
 }
