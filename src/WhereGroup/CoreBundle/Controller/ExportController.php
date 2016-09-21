@@ -18,23 +18,18 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
+        $metadata = $this->get('metadata')->getById($id);
 
-        if (!$data = $this->get('metadata')->getById($id)) {
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        if (!$metadata) {
             $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
                 "message" => "Datensatz nicht gefunden"
             ));
             return $this->xmlResponse($xml->getContent());
         }
 
-        if ($data->getReadonly()) {
-            $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
-                "message" => "Zugriff auf Datensatz verweigert"
-            ));
-            return $this->xmlResponse($xml->getContent());
-        }
-
-        $p = $data->getObject();
+        $p = $metadata->getObject();
 
         $className = $this
             ->get('metador_plugin')
@@ -53,10 +48,12 @@ class ExportController extends Controller
      */
     public function objAction($id)
     {
-        $data = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metadata')->getById($id);
 
-        if ($data) {
-            $p = $data->getObject();
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        if ($metadata) {
+            $p = $metadata->getObject();
 
             ksort($p);
 
@@ -72,17 +69,15 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
+        $metadata = $this->get('metadata')->getById($id);
 
-        if (!$data = $this->get('metadata')->getById($id)) {
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        if ($metadata) {
             return new Response('Datensatz nicht gefunden');
         }
 
-        if ($data->getReadonly()) {
-            return new Response('Zugriff auf Datensatz verweigert');
-        }
-
-        $p = $data->getObject();
+        $p = $metadata->getObject();
 
         $className = $this
             ->get('metador_plugin')
@@ -117,17 +112,15 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER', null, 'Zugriff verweigert');
+        $metadata = $this->get('metadata')->getById($id);
 
-        if (!$data = $this->get('metadata')->getById($id)) {
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        if (!$metadata) {
             return new Response('Datensatz nicht gefunden');
         }
 
-        if ($data->getReadonly()) {
-            return new Response('Zugriff auf Datensatz verweigert');
-        }
-
-        $p = $data->getObject();
+        $p = $metadata->getObject();
 
         $className = $this
             ->get('metador_plugin')
@@ -138,6 +131,10 @@ class ExportController extends Controller
         ));
     }
 
+    /**
+     * @param $xml
+     * @return Response
+     */
     private function xmlResponse($xml)
     {
         $response = new Response();

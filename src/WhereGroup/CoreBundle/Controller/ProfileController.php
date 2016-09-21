@@ -85,9 +85,13 @@ class ProfileController extends Controller
      */
     public function editAction($profile, $id)
     {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted('view', $metadata);
+
         $this->init($profile);
 
-        return $this->renderResponse($profile, 'form', $this->get('metadata')->getById($id));
+        return $this->renderResponse($profile, 'form', $metadata);
     }
 
     /**
@@ -96,13 +100,17 @@ class ProfileController extends Controller
      */
     public function updateAction($profile, $id)
     {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+
         $this->init($profile);
 
         try {
             $metadata = $this->get('metadata')->saveObject($this->data['p'], $id);
         } catch (MetadorException $e) {
             $this->get('metador_logger')->flashError($e->getMessage());
-            return $this->renderResponse($profile, 'form', $this->get('metadata')->getById($id));
+            $this->redirectToRoute('metadata_edit', array('profile' => $profile, 'id' => $id));
         }
 
         return $this->renderResponse($profile, 'form', $metadata);
@@ -114,11 +122,13 @@ class ProfileController extends Controller
      */
     public function useAction($profile, $id)
     {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted('view', $metadata);
+
         $this->init($profile);
 
-        $entity = $this->get('metadata')->getById($id);
-
-        $this->data['p'] = $entity->getObject();
+        $this->data['p'] = $metadata->getObject();
         $this->data['p']['dateStamp'] = date("Y-m-d");
 
         unset(
@@ -136,6 +146,10 @@ class ProfileController extends Controller
      */
     public function confirmAction($profile, $id)
     {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+
         $this->init($profile);
 
         return $this->get('templating')->renderResponse(
@@ -144,7 +158,7 @@ class ProfileController extends Controller
                 'id'      => $id,
                 'profile' => $profile,
                 'form'    => $this
-                    ->createFormBuilder($this->get('metadata')->getById($id))
+                    ->createFormBuilder($metadata)
                     ->add('delete', 'submit', array('label' => 'löschen'))
                     ->getForm()
                     ->createView(),
@@ -158,9 +172,13 @@ class ProfileController extends Controller
      */
     public function deleteAction($profile, $id)
     {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+
         $this->init($profile);
 
-        $form = $this->createFormBuilder($this->get('metadata')->getById($id))
+        $form = $this->createFormBuilder($metadata)
             ->add('delete', 'submit', array('label' => 'löschen'))
             ->getForm()
             ->submit($this->data['request']);
@@ -219,7 +237,7 @@ class ProfileController extends Controller
             $this->data['p']['dateStamp'] = date("Y-m-d");
 
             $params['id'] = $entity->getId();
-            $params['hasAccess'] = !$entity->getReadonly();
+            $params['hasAccess'] = $this->isGranted('edit', $entity);
             $params['public'] = $entity->getPublic();
             $params['entity'] = $entity;
             $params['hasGroupAccess'] = ($this->data['user']->getId() == $entity->getInsertUser()->getId());

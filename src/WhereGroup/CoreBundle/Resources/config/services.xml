@@ -24,7 +24,10 @@
         <parameter key="metador.twig.application.class">WhereGroup\CoreBundle\Twig\Extension\ApplicationExtension</parameter>
         <parameter key="metador.twig.uuid.class">WhereGroup\CoreBundle\Twig\Extension\UuidExtension</parameter>
         <parameter key="metador.twig.teaser.class">WhereGroup\CoreBundle\Twig\Extension\TeaserExtension</parameter>
-     </parameters>
+
+        <!-- VOTER -->
+        <parameter key="metador.metadata.voter.class">WhereGroup\CoreBundle\Security\MetadataVoter</parameter>
+    </parameters>
 
     <services>
         <!-- SERVICE -->
@@ -92,6 +95,12 @@
         </service>
         <service id="metador.twig.teaser" class="%metador.twig.teaser.class%">
             <tag name="twig.extension" />
+        </service>
+
+        <!-- Voter -->
+        <service id="metador.metadata_voter" class="%metador.metadata.voter.class%" public="false">
+            <argument type="service" id="security.access.decision_manager"/>
+            <tag name="security.voter" />
         </service>
     </services>
 </container>

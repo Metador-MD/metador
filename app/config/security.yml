@@ -24,7 +24,8 @@ security:
             logout:
                 path: logout
                 target: /
-
+    access_decision_manager:
+        strategy: unanimous
     access_control:
         - { path: ^/bundles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/metador/xml, roles: IS_AUTHENTICATED_ANONYMOUSLY }
