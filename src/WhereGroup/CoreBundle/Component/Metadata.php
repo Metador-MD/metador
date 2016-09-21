@@ -149,6 +149,9 @@ class Metadata implements MetadataInterface
             $paging = $pagingClass->calculate();
         }
 
+        if (isset($params['terms']) && !empty($params['terms'])) {
+            $finder->terms = $params['terms'];
+        }
 
         /** @var MetadataRepository $repo */
         $result = $repo->findByParams($finder);
