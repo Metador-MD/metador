@@ -36,6 +36,8 @@ class Metadata implements MetadataInterface
     ) {
         $this->container   = $container;
         $this->metadorUser = $metadorUser;
+
+        // Todo: needed?
         $this->systemRoles = array(
             'ROLE_SYSTEM_SUPERUSER',
             'ROLE_SYSTEM_USER'
@@ -137,6 +139,10 @@ class Metadata implements MetadataInterface
 
         $paging = array();
 
+        if (isset($params['terms']) && !empty($params['terms'])) {
+            $finder->terms = $params['terms'];
+        }
+        
         if (isset($params['page']) || isset($params['hits'])) {
             $finder->page = (!isset($params['page']) || !is_numeric($params['page']))
                 ? 1 : $params['page'];
@@ -147,10 +153,6 @@ class Metadata implements MetadataInterface
 
             $pagingClass = new Paging($repo->count($finder), $finder->hits, $finder->page);
             $paging = $pagingClass->calculate();
-        }
-
-        if (isset($params['terms']) && !empty($params['terms'])) {
-            $finder->terms = $params['terms'];
         }
 
         /** @var MetadataRepository $repo */
