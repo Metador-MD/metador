@@ -118,6 +118,11 @@ abstract class ProfileApplicationMenuListener
                     ->icon('icon-embed2')
                     ->path('metador_export_html')
                     ->target('_BLANK')
+            )->add(
+                $app->get('SearchMenu', 'json')
+                    ->label('{JSON}')
+                    ->path('metador_export_json')
+                    ->target('_BLANK')
             );
 
             if ($app->isEnv('dev')) {

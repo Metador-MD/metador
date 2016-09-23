@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,6 +41,30 @@ class ExportController extends Controller
         ));
 
         return $this->xmlResponse($xml->getContent());
+    }
+
+    /**
+     * @Route("/json/{id}", name="metador_export_json")
+     * @Method("GET")
+     */
+    public function jsonAction($id)
+    {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        if ($metadata) {
+            $p = $metadata->getObject();
+
+            ksort($p);
+
+            return new JsonResponse($p);
+        }
+
+        return new JsonResponse(array(
+            'status'  => 'error',
+            'message' => 'Datensatz nicht gefunden.'
+        ));
     }
 
     /**
