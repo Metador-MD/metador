@@ -142,7 +142,7 @@ class Metadata implements MetadataInterface
         if (isset($params['terms']) && !empty($params['terms'])) {
             $finder->terms = $params['terms'];
         }
-        
+
         if (isset($params['page']) || isset($params['hits'])) {
             $finder->page = (!isset($params['page']) || !is_numeric($params['page']))
                 ? 1 : $params['page'];

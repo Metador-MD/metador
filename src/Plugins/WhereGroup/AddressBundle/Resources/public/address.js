@@ -4,7 +4,7 @@ $(document).ready(function() {
         var dialog = $('<div>');
 
         dialog.modalDialog({
-            title: 'Adresse',
+            title: 'Kontakt',
             height: 300,
             width: 350,
             html: '<div class="wizard-content"></div>',
@@ -53,8 +53,8 @@ $(document).ready(function() {
             }
         });
     });
-    
+
     $(document).on('click','.preview-table td.last-1 button.noStyle', function(event) {
-        return confirm("Adresse löschen?");
+        return confirm("Kontakt löschen?");
     });
 });
