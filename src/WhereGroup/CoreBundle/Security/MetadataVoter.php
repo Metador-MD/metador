@@ -17,6 +17,7 @@ class MetadataVoter extends Voter
 {
     const EDIT = 'edit';
     const VIEW = 'view';
+    
     private $decisionManager;
 
     /**
@@ -57,10 +58,6 @@ class MetadataVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
-            return false;
-        }
-
         switch ($attribute) {
             case self::VIEW:
                 return $this->canView($subject, $user, $token);
@@ -77,7 +74,7 @@ class MetadataVoter extends Voter
      * @param $token
      * @return bool
      */
-    private function canView(Metadata $entity, User $user, $token)
+    private function canView(Metadata $entity, $user, $token)
     {
         // is public
         if ($entity->getPublic() === true || $this->canEdit($entity, $user, $token)) {
@@ -93,8 +90,12 @@ class MetadataVoter extends Voter
      * @param $token
      * @return bool
      */
-    private function canEdit(Metadata $entity, User $user, $token)
+    private function canEdit(Metadata $entity, $user, $token)
     {
+        if (!$user instanceof User) {
+            return false;
+        }
+
         // can edit if user is owner
         if ($entity->getInsertUser()->getId() === $user->getId()) {
             return true;

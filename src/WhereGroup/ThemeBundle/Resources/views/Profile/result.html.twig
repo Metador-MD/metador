@@ -7,20 +7,25 @@
                 <img src="{{ row.browserGraphic }}" class="browser-graphic" />
             {% else %}
                 <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="browser-graphic" />
-                {#<span class="icon-image browser-graphic"></span>#}
             {% endif %}
         </div>
         <div class="right">
             <div class="metadata-row-head clearfix">
                 <div class="title">
+                    {% if app.user %}
                     <a href="{{ path('metadata_edit', { 'profile' : row.profile, 'id' : row.id }) }}">
-                        {% if row.readonly %}
-                        <span class="icon-lock"></span>
-                        {% else %}
-                        <span class="icon-file-text2"></span>
-                        {% endif %}
+                        {#{% if row.readonly %}#}
+                            {#<span class="icon-lock"></span>#}
+                        {#{% else %}#}
+                            {#<span class="icon-file-text2"></span>#}
+                        {#{% endif %}#}
                         {{ row.title|teaser(75, true) }}
                     </a>
+                    {% else %}
+                        <a href="{{ path('metador_export_html', { 'id' : row.id }) }}">
+                            {{ row.title|teaser(75, true) }}
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="alternate-title">
                     {{ row.object.alternateTitle }}
