@@ -98,7 +98,7 @@ class ExportController extends Controller
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
-        if ($metadata) {
+        if (!$metadata) {
             return new Response('Datensatz nicht gefunden');
         }
 
