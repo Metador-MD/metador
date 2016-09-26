@@ -159,7 +159,7 @@ class ProfileController extends Controller
                 'profile' => $profile,
                 'form'    => $this
                     ->createFormBuilder($metadata)
-                    ->add('delete', 'submit', array('label' => 'löschen'))
+                    ->add('delete', 'submit', array('label' => 'ok'))
                     ->getForm()
                     ->createView(),
             )
@@ -179,7 +179,7 @@ class ProfileController extends Controller
         $this->init($profile);
 
         $form = $this->createFormBuilder($metadata)
-            ->add('delete', 'submit', array('label' => 'löschen'))
+            ->add('delete', 'submit', array('label' => 'ok'))
             ->getForm()
             ->submit($this->data['request']);
 
