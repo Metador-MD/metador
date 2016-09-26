@@ -69,19 +69,19 @@ class Finder
 
         // Owner or user in same group
         if (!$this->geoOffice && is_null($this->public) && !is_null($this->userId)) {
-            $qb ->andWhere('m.insertUser = :userid')
-                ->setParameter('userid', (int)$this->userId)
-                ->orWhere('m.public = true');
+            $orx = $qb->expr()->orX();
+            $orx->add($qb->expr()->eq('m.insertUser', (int)$this->userId));
+            $orx->add($qb->expr()->eq('m.public', 'true'));
 
             if (!empty($this->groups)) {
                 $qb->leftJoin('m.groups', 'g', 'WITH');
 
                 foreach ($this->groups as $key => $groupId) {
-                    $qb
-                        ->orWhere('g.id = :group_' . $key)
-                        ->setParameter('group_' . $key, (int)$groupId);
+                    $orx->add($qb->expr()->eq('g.id', (int)$groupId));
                 }
             }
+
+            $qb->andWhere($orx);
         }
     }
 }
