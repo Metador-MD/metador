@@ -27,7 +27,7 @@ class Finder
     public function getFilter($qb, $count = false)
     {
         // Paging
-        if ($count && (!is_null($this->page) || !is_null($this->hits))) {
+        if (!$count && (!is_null($this->page) || !is_null($this->hits))) {
             $this->page = !is_null($this->page) ? (int)$this->page : 1;
             $this->hits = !is_null($this->hits) ? (int)$this->hits : 10;
 
@@ -36,7 +36,7 @@ class Finder
         }
 
         // Sort
-        if ($count && !is_null($this->order)) {
+        if (!$count && !is_null($this->order)) {
             $qb->orderBy("m." . $this->order, 'ASC');
         }
 

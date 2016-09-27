@@ -52,7 +52,7 @@ class MetadataRepository extends EntityRepository
     public function count($finder)
     {
         $qb = $this->createQueryBuilder('m');
-        
+
         $qb->select($qb->expr()->count('m'));
 
         $finder->getFilter($qb, true);

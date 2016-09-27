@@ -110,7 +110,7 @@ class Metadata implements MetadataInterface
         $finder = new Finder();
         $finder->force = false;
 
-        /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $result */
+        /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $repo */
         $repo = $this->container->get('doctrine')
             ->getManager()
             ->getRepository($this->repository);
@@ -151,7 +151,9 @@ class Metadata implements MetadataInterface
                 ? 10 : $params['hits'];
 
 
+
             $pagingClass = new Paging($repo->count($finder), $finder->hits, $finder->page);
+
             $paging = $pagingClass->calculate();
         }
 
