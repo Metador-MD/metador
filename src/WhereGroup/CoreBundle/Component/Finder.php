@@ -43,8 +43,8 @@ class Finder
         // Search
         if (!is_null($this->terms)) {
             foreach (explode(" ", $this->terms) as $term) {
-                $qb ->andWhere('m.searchfield LIKE :term')
-                    ->setParameter('term', "%" . $term . "%");
+                $qb ->andWhere('LOWER(m.searchfield) LIKE :term')
+                    ->setParameter('term', "%" . strtolower($term) . "%");
             }
         }
 
