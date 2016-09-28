@@ -19,7 +19,7 @@ class ListCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setDescription('Uninstall all plugins')
+            ->setDescription('Lists all available plugins')
             ->setName('metador:list:plugins');
     }
 
