@@ -25,6 +25,14 @@ class Plugin
     protected $plugins = array();
     protected $routing = array();
 
+    /**
+     * Plugin constructor.
+     * @param $rootDir
+     * @param $cacheDir
+     * @param $environment
+     * @param string $configFolder
+     * @param null $pluginPaths
+     */
     public function __construct(
         $rootDir,
         $cacheDir,

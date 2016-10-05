@@ -10,11 +10,20 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
 
+/**
+ * Class PluginRepository
+ * @package WhereGroup\PluginBundle\Component
+ */
 class PluginRepository
 {
     private $repositories;
     private $version;
 
+    /**
+     * PluginRepository constructor.
+     * @param $repositories
+     * @param $version
+     */
     public function __construct($repositories, $version)
     {
         $this->repositories = $repositories;
