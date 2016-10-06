@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
+use WhereGroup\CoreBundle\Component\Finder;
 
 /**
  * Class ProfileApplicationMenuListener
@@ -32,10 +33,25 @@ abstract class ProfileApplicationMenuListener
     {
         $app       = $event->getApplication();
         $request   = $app->getRequestStack()->getMasterRequest();
-        $isProfile = ($app->isBundle('core') && $app->isController('profile'));
+        $isProfile = (
+            $app->isBundle('core')
+            && $app->isController('profile')
+            && $request->attributes->get('profile') === $this->pluginId
+        );
 
         if (is_null($request) || is_null($request->get('id', null))) {
             $request  = $app->getRequestStack()->getCurrentRequest();
+        }
+
+        if ($isProfile) {
+            /***********************************************************************
+             * Profile Name
+             ***********************************************************************/
+            $app->add(
+                $app->get('Profile')
+                    ->name($this->name)
+                    ->active($app->isController('profile'))
+            );
         }
 
         /***********************************************************************
@@ -53,11 +69,11 @@ abstract class ProfileApplicationMenuListener
          * Dashboard preview
          ***********************************************************************/
         if ($app->isController('dashboard')) {
-            $response = $this->metadata->find(array(
-                'page'    => 1,
-                'hits'    => 10,
-                'profile' => $this->pluginId
-            ));
+            $filter = new Finder();
+            $filter->page = 1;
+            $filter->hits = 10;
+            $filter->profile = $this->pluginId;
+            $response = $this->metadata->find($filter);
 
             $app->add(
                 $app->get('Dashboard')
@@ -72,17 +88,6 @@ abstract class ProfileApplicationMenuListener
             );
 
             unset($response);
-        }
-
-        if ($isProfile) {
-            /***********************************************************************
-             * Profile Name
-             ***********************************************************************/
-            $app->add(
-                $app->get('Profile')
-                    ->name($this->name)
-                    ->active($app->isController('profile'))
-            );
         }
 
         /***********************************************************************
