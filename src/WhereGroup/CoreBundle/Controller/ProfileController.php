@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
+use WhereGroup\CoreBundle\Component\Finder;
 
 /**
  * @Route("/metadata")
@@ -30,11 +31,14 @@ class ProfileController extends Controller
         $this->init($profile);
 
         $params = $this->data['request']->query->all();
-        $params['profile'] = $profile;
-        $params['page'] = isset($params['page']) ? $params['page'] : 1;
-        $params['hits'] = isset($params['hits']) ? $params['hits'] : 10;
 
-        $metadata = $this->get('metadata')->find($params);
+        $filter = new Finder();
+        $filter->page = isset($params['page']) ? $params['page'] : 1;
+        $filter->hits = isset($params['hits']) ? $params['hits'] : 10;
+        $filter->terms = isset($params['terms']) ? $params['terms'] : '';
+        $filter->profile = $profile;
+
+        $metadata = $this->get('metadata')->find($filter);
 
         return $this->get('templating')->renderResponse(
             $this->getTemplate('index'),

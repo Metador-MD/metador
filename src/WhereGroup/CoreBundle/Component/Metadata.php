@@ -102,63 +102,50 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $params
+     * @param $filter
+     * @param bool $force
+     * @param null $username
      * @return array
      */
-    public function find($params, $force = false, $username = null)
+    public function find($filter, $force = false, $username = null)
     {
-        $finder = new Finder();
-        $finder->force = false;
+        $filter->force = $force;
 
         /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $repo */
         $repo = $this->container->get('doctrine')
             ->getManager()
             ->getRepository($this->repository);
 
-
         /** @var User $user */
         $user = $this->getUser($username);
 
         if (is_object($user)) {
-            $finder->userId = $user->getId();
+            $filter->userId = $user->getId();
 
             foreach ($user->getGroups() as $group) {
                 $groupName = $group->getRole();
 
                 if ($groupName === 'ROLE_SYSTEM_GEO_OFFICE') {
-                    $finder->geoOffice = true;
+                    $filter->geoOffice = true;
                 }
 
                 if (substr($groupName, 0, 12) === 'ROLE_SYSTEM_') {
                     continue;
                 }
 
-                $finder->groups[] = $group->getId();
+                $filter->groups[] = $group->getId();
             }
         }
 
         $paging = array();
 
-        if (isset($params['terms']) && !empty($params['terms'])) {
-            $finder->terms = $params['terms'];
-        }
-
-        if (isset($params['page']) || isset($params['hits'])) {
-            $finder->page = (!isset($params['page']) || !is_numeric($params['page']))
-                ? 1 : $params['page'];
-
-            $finder->hits = (!isset($params['hits']) || !is_numeric($params['hits']))
-                ? 10 : $params['hits'];
-
-
-
-            $pagingClass = new Paging($repo->count($finder), $finder->hits, $finder->page);
-
+        if (!empty($this->page) && !empty($this->hits)) {
+            $pagingClass = new Paging($repo->count($filter), $filter->hits, $filter->page);
             $paging = $pagingClass->calculate();
         }
 
         /** @var MetadataRepository $repo */
-        $result = $repo->findByParams($finder);
+        $result = $repo->findByParams($filter);
 
         return array(
             'result' => $result,

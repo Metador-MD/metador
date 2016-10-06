@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use WhereGroup\CoreBundle\Component\Finder;
 
 /**
  * @Route("/")
@@ -19,23 +20,19 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $queryParams = $this->get('request_stack')->getCurrentRequest()->query->all();
-
-        $params = array_merge($queryParams, array(
-
-        ));
+        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
+        $filter = new Finder();
 
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_USER')) {
-            $params = array_merge($queryParams, array(
-                'public' => 1
-            ));
+            $filter->public = true;
         }
 
         if (!isset($params['page'])) {
-            $params['page'] = 1;
+            $filter->page = 1;
+            $filter->hits = 10;
         }
 
-        $metadata = $this->get('metadata')->find($params);
+        $metadata = $this->get('metadata')->find($filter);
 
         return array(
             'rows'    => $metadata['result'],
