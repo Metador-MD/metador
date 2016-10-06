@@ -43,6 +43,7 @@ class ApplicationExtension extends \Twig_Extension
     /**
      * @param $type
      * @param null $key
+     * @param null $default
      * @return mixed
      */
     public function applicationGet($type, $key = null, $default = null)

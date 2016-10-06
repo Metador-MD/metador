@@ -96,6 +96,14 @@ class Application
             'Data: <pre>' . print_r($this->data, 1) . '</pre>';
     }
 
+    /**
+     * @param $type
+     * @param $key
+     * @param $data
+     * @param null $role
+     * @param int $position
+     * @return $this
+     */
     public function register($type, $key, $data, $role = null, $position = self::POSITION_NORMAL)
     {
         $this->updateInformation();
@@ -117,6 +125,11 @@ class Application
         return $this;
     }
 
+    /**
+     * @param Integration\Base $class
+     * @param int $position
+     * @return $this
+     */
     public function add(Integration\Base $class, $position = self::POSITION_NORMAL)
     {
         foreach ($class->getData() as $key => $data) {
@@ -153,7 +166,7 @@ class Application
     /**
      * @param $class
      * @param null $prefix
-     * @return Integration\Configuration|Integration\Profile|Integration\ProfileMenu|Integration\SearchMenu
+     * @return mixed
      * @throws \Exception
      */
     public function get($class, $prefix = null)
