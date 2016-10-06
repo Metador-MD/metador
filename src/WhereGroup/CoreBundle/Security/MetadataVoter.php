@@ -17,7 +17,7 @@ class MetadataVoter extends Voter
 {
     const EDIT = 'edit';
     const VIEW = 'view';
-    
+
     private $decisionManager;
 
     /**
@@ -114,7 +114,7 @@ class MetadataVoter extends Voter
             }
 
             /** @var Group $userGroup */
-            foreach ($user->getRoles() as $userGroup) {
+            foreach ($user->getGroups() as $userGroup) {
                 if ($this->isSystemGroup($userGroup->getRole())) {
                     continue;
                 }
