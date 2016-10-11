@@ -27,10 +27,9 @@ class HomeController extends Controller
             $filter->public = true;
         }
 
-        if (!isset($params['page'])) {
-            $filter->page = 1;
-            $filter->hits = 10;
-        }
+        $filter->page  = isset($params['page'])  ? $params['page']  : 1;
+        $filter->hits  = isset($params['hits'])  ? $params['hits']  : 10;
+        $filter->terms = isset($params['terms']) ? $params['terms'] : '';
 
         $metadata = $this->get('metadata')->find($filter);
 

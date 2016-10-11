@@ -139,7 +139,7 @@ class Metadata implements MetadataInterface
 
         $paging = array();
 
-        if (!empty($this->page) && !empty($this->hits)) {
+        if (!empty($filter->page) && !empty($filter->hits)) {
             $pagingClass = new Paging($repo->count($filter), $filter->hits, $filter->page);
             $paging = $pagingClass->calculate();
         }
