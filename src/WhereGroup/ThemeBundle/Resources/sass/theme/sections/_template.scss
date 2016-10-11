@@ -1,0 +1,101 @@
+@import '../config';
+@import '../mixins';
+
+body {
+    background-color: #f1f2f6;
+    font-size: 1em;
+}
+
+.md-2 {
+    width: $page-width;
+    margin: 0 auto;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    border-color: darken($content, 20%);
+
+    @include pos(0, 0, 0, 0);
+
+    & > .top {
+        background-color: $primary;
+        height: $page-top-height;
+        line-height: $page-top-height;
+        color: $content;
+    }
+
+    & > .center {
+        background-color: $content;
+        @include pos($page-top-height, 0, 0, 0);
+    }
+
+    .top-left {
+        float: left;
+        padding-left: 20px;
+    }
+
+    .top-right {
+        float: right;
+    }
+
+    .center-top {
+        display: none;
+    }
+
+    .center-left {
+        display: none;
+    }
+
+    .center-right {
+        @include pos(0, 0, 0, 0);
+    }
+
+    &.has-title {
+        .center-top {
+            display: block;
+            height: $center-top-height;
+            line-height: $center-top-height;
+            background-color: white;
+            height: $center-top-height;
+            border-bottom: 1px solid darken($content, 10%);
+            @include pos(0, 0, '', 0);
+        }
+
+        .center-right {
+            top: $center-top-height;
+        }
+    }
+
+    &.has-menu {
+        .center-top {
+            left: $center-left-width;
+        }
+
+        .center-left {
+            display: block;
+            width: $center-left-width;
+            border-right: 1px solid darken($content, 20%);
+            background-color: $center-left-color;
+            @include pos(0, '', 0, 0);
+        }
+
+        .center-right {
+            left: $center-left-width;
+        }
+    }
+
+    .center-top-left {
+        float: left;
+    }
+
+    .center-top-right {
+        float: right;
+    }
+}
+
+.content {
+    padding: 0 20px;
+}
+
+h1.page-title {
+    color: darken($content, 40%);
+    font-weight: bold;
+}

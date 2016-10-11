@@ -1,0 +1,33 @@
+@import '../config';
+
+.top-right-user {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 20px;
+
+    &:hover {
+        background-color: darken($primary, 3%);
+    }
+}
+
+.top-right-userimage {
+    display: inline-block;
+
+    & > .user-image {
+        vertical-align: middle;
+        padding: 8px;
+        background-color: darken($primary, 5%);
+        border-radius: 50%;
+    }
+}
+
+.top-right-menu {
+    display: inline-block;
+}
+
+.top-right-username {
+    clear: both;
+    padding: 0 5px;
+    display: inline-block;
+    font-size: 0.8em;
+}

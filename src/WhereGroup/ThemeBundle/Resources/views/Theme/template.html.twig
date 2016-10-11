@@ -1,0 +1,65 @@
+{% extends 'MetadorThemeBundle:Theme:base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('public/app.min.css') }}">
+
+    {% if app.environment == 'dev' %}
+        <link rel="stylesheet" href="https://i.icomoon.io/public/83c52ab735/Metador/style.css">
+    {% else %}
+        <link rel="stylesheet" href="{{ asset('bundles/metadortheme/style.css') }}">
+    {% endif %}
+
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme-v2.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="md-2 has-menu has-title">
+    <div class="top">
+        <div class="top-left"></div>
+        <div class="top-right">
+            <div class="top-right-user">
+                <div class="top-right-userimage">
+                    <span class="icon-user user-image"></span>
+                </div>
+                <div class="top-right-username">{{ app.user.username }}</div>
+                <div class="top-right-menu">
+                    <span class="icon-sort-desc"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="center-top">
+            <div class="center-top-left"></div>
+            <div class="center-top-right">
+                {#<ul class="center-top-right-menu">#}
+                    {#<li>#}
+                        {#<span class="icon-user"></span> Übersicht#}
+                    {#</li>#}
+                    {#<li class="act">#}
+                        {#<span class="icon-user"></span> Benutzer#}
+                    {#</li>#}
+                    {#<li>Gruppen</li>#}
+                {#</ul>#}
+            </div>
+        </div>
+        <div class="center-left">
+            <ul class="center-left-menu">
+                <li>
+                    <span class="icon-user"></span> Übersicht
+                </li>
+                <li class="act">
+                    <span class="icon-user"></span> Benutzer
+                </li>
+                <li>Gruppen</li>
+            </ul>
+        </div>
+        <div class="center-right">
+            <div class="content">
+                <h1 class="page-title">Hello</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
