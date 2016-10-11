@@ -4,12 +4,18 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class AppKernel
+ */
 class AppKernel extends Kernel
 {
     private $plguinConfigFolder = '/../var/plugins/';
     private $pluginConfigFile   = 'plugins.yml';
     private $pluginRoutingFile  = 'plugins_routing.yml';
 
+    /**
+     * @return array
+     */
     public function registerBundles()
     {
         $bundles = array(
@@ -57,21 +63,33 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
+    /**
+     * @return string
+     */
     public function getCacheDir()
     {
         return $this->rootDir . '/../var/cache/' . $this->environment;
     }
 
+    /**
+     * @return string
+     */
     public function getLogDir()
     {
         return $this->rootDir . '/../var/logs';
     }
 
+    /**
+     * @param LoaderInterface $loader
+     */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 
+    /**
+     * @param $filename
+     */
     private function checkPluginConfiguration($filename)
     {
         $file = $this->rootDir . $this->plguinConfigFolder . $filename;
@@ -81,6 +99,10 @@ class AppKernel extends Kernel
         }
     }
 
+    /**
+     * @param $filename
+     * @return mixed
+     */
     private function getPluginConfiguration($filename)
     {
         $this->checkPluginConfiguration($filename);

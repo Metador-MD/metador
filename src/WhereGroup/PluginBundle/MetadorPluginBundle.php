@@ -1,4 +1,5 @@
 <?php
+
 namespace WhereGroup\PluginBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -10,5 +11,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class MetadorPluginBundle extends Bundle
 {
-
 }

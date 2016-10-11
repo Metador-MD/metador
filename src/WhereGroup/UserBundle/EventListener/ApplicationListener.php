@@ -5,10 +5,18 @@ namespace WhereGroup\UserBundle\EventListener;
 use Symfony\Component\HttpFoundation\RequestStack;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
+/**
+ * Class ApplicationListener
+ * @package WhereGroup\UserBundle\EventListener
+ */
 class ApplicationListener
 {
     protected $requestStack;
 
+    /**
+     * ApplicationListener constructor.
+     * @param RequestStack $requestStack
+     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;

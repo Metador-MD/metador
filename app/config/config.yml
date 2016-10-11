@@ -48,10 +48,10 @@ assetic:
     use_controller: false
     #bundles:        [ ]
     #java: /usr/bin/java
-    filters:
-        sass: ~
-        uglifycss: ~
-        uglifyjs2: ~
+#    filters:
+#        sass: ~
+#        uglifycss: ~
+#        uglifyjs2: ~
         #cssrewrite: ~
         #autoprefixer: ~
 
