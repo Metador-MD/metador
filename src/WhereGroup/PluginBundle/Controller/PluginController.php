@@ -35,8 +35,6 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        // $plugins = $this->get('metador_plugin_repository')->getPlugins();
-
         return array(
             'plugins' => $this->get('metador_plugin')->getPlugins()
         );

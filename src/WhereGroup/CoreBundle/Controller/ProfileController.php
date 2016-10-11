@@ -38,6 +38,10 @@ class ProfileController extends Controller
         $filter->terms = isset($params['terms']) ? $params['terms'] : '';
         $filter->profile = $profile;
 
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
+            $filter->geoOffice = true;
+        }
+
         $metadata = $this->get('metadata')->find($filter);
 
         return $this->get('templating')->renderResponse(

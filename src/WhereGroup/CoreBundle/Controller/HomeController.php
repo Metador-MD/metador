@@ -23,8 +23,8 @@ class HomeController extends Controller
         $params = $this->get('request_stack')->getCurrentRequest()->query->all();
         $filter = new Finder();
 
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_USER')) {
-            $filter->public = true;
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
+            $filter->geoOffice = true;
         }
 
         $filter->page  = isset($params['page'])  ? $params['page']  : 1;
