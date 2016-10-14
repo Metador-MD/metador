@@ -97,6 +97,29 @@ function addBBOX(w, s, e, n) {
     result.attr('data-count', parseInt(result.attr('data-count')) + 1);
 }
 
+function addReferenceSystem(code, codespace, version) {
+    var result = $('#result_p_referencesysteminfo');
+    var count = result.attr('data-count');
+
+    result.prepend(
+        $('<div></div>').append(
+            $('<input/>').attr("type", "hidden").attr("name", "p[referencesysteminfo][" + count + "][code]").val(code),
+            $('<input/>').attr("type", "hidden").attr("name", "p[referencesysteminfo][" + count + "][codespace]").val(codespace),
+            $('<input/>').attr("type", "hidden").attr("name", "p[referencesysteminfo][" + count + "][version]").val(version),
+            $('<table></table>').append(
+                $('<tr></tr>').append(
+                    $('<td></td>').html(code),
+                    $('<td></td>').html(codespace),
+                    $('<td></td>').html(version)
+                )
+            ),
+            $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
+        )
+    );
+
+    result.attr('data-count', parseInt(result.attr('data-count')) + 1);
+}
+
 $(document).ready(function() {
     // LEFT MENU CLICK
     $('.profile-menu li').click(function() {
@@ -250,6 +273,20 @@ $(document).ready(function() {
         $(this).val('');
     });
 
+    $('#p_servicetypeversion_b').change(function() {
+        $('#result_p_servicetypeversion').prepend(
+            $('<div></div>').append(
+                $('<input/>').attr("type", "hidden").attr("name", "p[serviceTypeVersion][]").val($(this).val()),
+                $('<label></label>')
+                    .html($(this).val()),
+                $('<div></div>')
+                    .addClass("btn cmdDeleteSingleValue")
+                    .append($('<div></div>').addClass('icon icon-bin2'))
+                )
+        );
+        $(this).val('');
+    });
+
     $('#add_p_bbox').click(function() {
         addBBOX(
             $('#bboxw').val(),
@@ -263,6 +300,18 @@ $(document).ready(function() {
         $('#bboxe').val('');
         $('#bboxs').val('');
         $('#bboxw').val('');
+    });
+
+    $('#add_p_referencesysteminfo').click(function() {
+        addReferenceSystem(
+            $('#p_referencesysteminfo_code').val(),
+            $('#p_referencesysteminfo_codespace').val(),
+            $('#p_referencesysteminfo_version').val()
+        );
+
+        $('#p_referencesysteminfo_code').val(''),
+        $('#p_referencesysteminfo_codespace').val(''),
+        $('#p_referencesysteminfo_version').val('')
     });
 
     if($('#p_browsergraphic').val() !== "") {
