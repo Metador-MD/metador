@@ -216,3 +216,99 @@
         <div class="clear"></div>
     </div>
 </div>
+
+{#
+    REFERENCE SYSTEM INFO
+#}
+<h2>{% trans %}Koordinatenreferenzsystem{% endtrans %}</h2>
+<div class="twoColBox">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="clear"></div>
+    <div class="left">
+        {% set id = 'p[referenceSystemInfo][code]' %}
+        <label>
+            <div class="icon mandatory icon-circle"></div>{{'Referenzsystem-Code'|trans}}:
+        </label>
+        <input id="{{ id|md_obj_id }}" type="text" value="" class="twoCol1 no-value" data-element="map-wlong"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon icon-question"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        {% set id = 'p[referenceSystemInfo][codespace]' %}
+        <label>
+            <div class="icon mandatory icon-circle"></div>{{'Codespace'|trans}}:
+        </label>
+        <div class="fr">
+            <div class="btn-group">
+                <div class="last showHelp" {{ id|md_data_obj }}>
+                    <div class="icon icon-question"></div>
+                </div>
+            </div>
+            <input id="{{ id|md_obj_id }}" type="text" value="" class="twoCol1 no-value" data-element="map-slat"/>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="left">
+        {% set id = 'p[referenceSystemInfo][version]' %}
+        <label>
+            <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
+        </label>
+        <input id="{{ id|md_obj_id }}" type="text" value="" class="twoCol1 no-value" data-element="map-elong"/>
+        <div class="btn-group">
+            <div class="last showHelp" {{ id|md_data_obj }}>
+                <div class="icon icon-question"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right"></div>
+    <div class="clear"></div>
+
+    {% set id = 'p[referenceSystemInfo]' %}
+    <div class="fr" style="clear:right;">
+        <div class="btn" id="add_{{ id|md_id }}"><div class="icon icon-plus"></div></div>
+    </div>
+    <div class="clear"></div>
+    <hr/>
+
+    {% if p['referenceSystemInfo'] is defined %}
+        {% set length = p['referenceSystemInfo']|length %}
+    {% else %}
+        {% set length = 0 %}
+    {% endif %}
+
+    <div class="clear"></div>
+        <table class="bbox-label">
+        <tr>
+            <td><label>{{'Ref.-Code'|trans}}</label></td>
+            <td><label>{{'Codespace'|trans}}</label></td>
+            <td><label>{{'Version'|trans}}</label></td>
+        </tr>
+    </table>
+    <div class="singleResult" id="result_{{ id|md_id }}" data-count="{{ length }}">
+        {% if p['referencesysteminfo'] is defined %}
+        {% for key, value in p['referencesysteminfo'] %}
+        <div data-cmd-map-show-bbox-hover="" data-cmd-zoom-to-bbox="" {#data-wlon="{{ value['wLongitude'] }}" data-slat="{{ value['sLatitude'] }}" data-elong="{{ value['eLongitude'] }}" data-nlat="{{ value['nLatitude'] }}"#}>
+            <input type="hidden" name="p[referencesysteminfo][{{ key }}][code]" value="{{ value['code'] }}" />
+            <input type="hidden" name="p[referencesysteminfo][{{ key }}][codespace]" value="{{ value['codespace'] }}" />
+            <input type="hidden" name="p[referencesysteminfo][{{ key }}][version]" value="{{ value['version'] }}" />
+            <table>
+                <tr>
+                    <td>{{ value['code'] }}</td>
+                    <td>{{ value['codespace'] }}</td>
+                    <td>{{ value['version'] }}</td>
+                </tr>
+            </table>
+            <div class="btn cmdDeleteSingleValue">
+                <div class="icon icon-bin2"></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
