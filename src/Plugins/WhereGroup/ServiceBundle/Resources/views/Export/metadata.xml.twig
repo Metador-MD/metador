@@ -184,23 +184,18 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/
                </gmd:CI_Date>
              </gmd:date>
            {% endif %}
-
-           {% for identifier in p['identifier'] %}
-             <gmd:identifier>
-               <gmd:RS_Identifier>
-                 {% if identifier['code'] is defined %}
-                   <gmd:code>
-                     <gco:CharacterString>{{ identifier['code'] }}</gco:CharacterString>
-                   </gmd:code>
-                 {% endif %}
-                 {% if identifier['codespace'] is defined %}
-                   <gmd:codeSpace>
-                     <gco:CharacterString>{{ identifier['codespace'] }}</gco:CharacterString>
-                   </gmd:codeSpace>
-                 {% endif %}
-               </gmd:RS_Identifier>
-             </gmd:identifier>
-           {% endfor %}
+            {% for identifier in p['identifier'] %}
+                {% if identifier['code'] is defined and identifier['code'] is not empty
+                   and identifier['codespace'] is defined and identifier['codespace'] is not empty %}
+                <gmd:identifier>
+                  <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>{{ identifier['codespace'] }}{{ identifier['code'] }}</gco:CharacterString>
+                      </gmd:code>
+                  </gmd:MD_Identifier>
+                </gmd:identifier>
+                {% endif %}
+            {% endfor %}
          </gmd:CI_Citation>
        </gmd:citation>
 
