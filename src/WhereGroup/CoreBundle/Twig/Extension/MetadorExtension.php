@@ -13,7 +13,7 @@ class MetadorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('md_select', array($this, 'isSelected'))
+            new \Twig_SimpleFunction('md_select', array($this, 'isSelected')),
         );
     }
 
@@ -26,6 +26,7 @@ class MetadorExtension extends \Twig_Extension
             new \Twig_SimpleFilter('md_id', array($this, 'getId'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('md_obj_id', array($this, 'getObjectId'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('md_boolean', array($this, 'booleanFilter')),
         );
     }
 
@@ -70,6 +71,21 @@ class MetadorExtension extends \Twig_Extension
         $string = str_replace(array('[', ']'), array('_','_'), $string);
         $string = str_replace("__", "_", $string);
         return 'data-obj-id="' . rtrim($string, "_") . '"';
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function booleanFilter($value) {
+
+        if( $value === "1" ||
+            $value === true ||
+            $value === 1) {
+            return "Ja";
+        } else {
+            return "Nein";
+        }
     }
 
     /**

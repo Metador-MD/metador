@@ -6,6 +6,30 @@
 <fieldset class="oneColBox">
     <legend>{{'Schlüsselwort'|trans}}</legend>
 
+    {% set id = 'p[keyword][inspire_identified]' %}
+    {% set values = p['keyword']['0']['value'] is defined? p['keyword']['0']['value'] : [] %}
+
+    {% if 'inspireidentifiziert' in values %}
+        {% set inspireIdentified = true %}
+    {% else %}
+        {% set inspireIdentified = false %}
+    {% endif %}
+
+    <label>
+        <div class="icon optional icon-circle"></div>{{'Inspireidentifiziert'|trans}}:
+    </label>
+    <select id="p_keyword_inspire_identified" class="oneCol1 no-value" name="p[inspire_identified]" data-title="inspireidentifiziert">
+        {% for inspireidentify in 0..1 %}
+            <option value="{{ inspireidentify }}" {{ md_select(inspireIdentified, inspireidentify) }}>{{ inspireidentify|md_boolean }}</option>
+        {% endfor %}
+    </select>
+    <div class="btn-group">
+        <div class="last showHelp" {{ id|md_data_obj }}>
+            <div class="icon icon-question"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
     {% set id = 'p[keyword][value]' %}
 
     <label>
@@ -99,7 +123,7 @@
         </label>
         <select class="twoCol1 keywordRepo no-value">
             {% for repo, data in examples['keywords'] %}
-            <option value="{{ loop.index }}">{{ repo }}</option>
+                <option value="{{ loop.index }}">{{ repo }}</option>
             {% endfor %}
         </select>
         <div class="btn-group">
@@ -114,16 +138,16 @@
         </label>
         <div class="fr">
             {% for repo, data in examples['keywords'] %}
-            <select data-id="{{ loop.index }}"
-                    data-title="{{ repo }}"
-                    data-date="{{ data.date }}"
-                    data-type="{{ data.type }}"
-                class="twoCol0 keywordRepoValue no-value {{ loop.index == 1 ? 'act' : '' }}" title="{{ repo }}">
-                <option></option>
-                {% for option in data.value %}
-                <option>{{ option }}</option>
-                {% endfor %}
-            </select>
+                <select data-id="{{ loop.index }}"
+                        data-title="{{ repo }}"
+                        data-date="{{ data.date }}"
+                        data-type="{{ data.type }}"
+                        class="twoCol0 keywordRepoValue no-value {{ loop.index == 1 ? 'act' : '' }}" title="{{ repo }}">
+                    <option></option>
+                    {% for option in data.value %}
+                        <option>{{ option }}</option>
+                    {% endfor %}
+                </select>
             {% endfor %}
         </div>
     </div>
@@ -137,19 +161,32 @@
 <div class="oneColBox">
     <div class="singleResult" id="result_{{ id|md_obj_id }}">
         {% if p['keyword'] is defined %}
-        {% for repo, data in p['keyword'] %}
-        {% for keyword in data.value %}
-        <div>
-            <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date }}" />
-            <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type }}" />
-            <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
-            <label>{{ repo }} - {{ keyword }}</label>
-            <div class="btn cmdDeleteSingleValue">
-                <div class="icon icon-bin2"></div>
-            </div>
-        </div>
-        {% endfor %}
-        {% endfor %}
+            {% for repo, data in p['keyword'] %}
+                {% if data.value is defined %}
+                    {% for key, keyword in data.value %}
+                        <div>
+                            <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date|default("") }}" />
+                            <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type|default("") }}" />
+                            <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword|default("") }}" />
+                            {% if repo is same as(0) %}
+                                {% if keyword == "inspireidentifiziert" %}
+                                    <label>{{ keyword }}</label>
+                                {% else %}
+                                    <label>{{ keyword }}</label>
+                                    <div class="btn cmdDeleteSingleValue">
+                                        <div class="icon icon-bin2"></div>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <label>{{ repo }} - {{ keyword }}</label>
+                                <div class="btn cmdDeleteSingleValue">
+                                    <div class="icon icon-bin2"></div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         {% endif %}
         <div class="clear"></div>
     </div>

@@ -280,21 +280,22 @@ $(document).ready(function() {
         );
     });
 
-
     // KEYWORD REPO
     $('.keywordRepo').change(function() {
         $('.keywordRepoValue').removeClass('act');
         $(".keywordRepoValue[data-id='" + $(this).val() + "']").addClass('act');
     });
 
-    $('.keywordRepoValue').change(function() {
+    $('.keywordRepoValue').change(function(){
+
         var result = $('#result_p_keyword');
+        var dataTitle = $(this).attr('data-title');
 
         result.prepend(
             $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][date]").val($(this).attr('data-date')),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][type]").val($(this).attr('data-type')),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][value][]").val($(this).val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + dataTitle + "][date]").val($(this).attr('data-date')),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + dataTitle + "][type]").val($(this).attr('data-type')),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + dataTitle + "][value][]").val($(this).val()),
                 $('<label></label>').text($(this).attr('data-title') + ' - ' + $(this).val()),
                 $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
             )
@@ -305,20 +306,76 @@ $(document).ready(function() {
 
     $('#add_keyword').click(function() {
         var result = $('#result_p_keyword');
+        var $keywordTitle = $('#p_keyword_title');
+        var $keywordDate  = $('#p_keyword_date');
+        var $keywordType  = $('#p_keyword_type');
+        var $keywordValue = $('#p_keyword_value');
+        var val = $('#p_keyword_value').val();
 
-        result.prepend(
-            $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][date]").val($('#p_keyword_date').val()),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][type]").val($('#p_keyword_type').val()),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][value][]").val($('#p_keyword_value').val()),
-                $('<label></label>').text($('#p_keyword_title').val() + ' - ' + $('#p_keyword_value').val()),
-                $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
-            )
-        );
+        if ($keywordTitle.val() !== '') {
+            result.prepend(
+                $('<div></div>').append(
+                    $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $keywordTitle.val() + "][date]").val($keywordDate.val()),
+                    $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $keywordTitle.val() + "][type]").val($keywordType.val()),
+                    $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $keywordTitle.val() + "][value][]").val(val),
+                    $('<label></label>').text($keywordTitle.val() + ' - ' + val),
+                    $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
+                )
+            );
+        } else {
+            result.prepend(
+                $('<div></div>').append(
+                    $('<input/>').attr("type", "hidden").attr("name", "p[keyword][][value][]").val(val),
+                    $('<label></label>').text($keywordTitle.val() + ' - ' + val),
+                    $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
+                )
+            );
+        }
 
-        $('#p_keyword_value').val('');
+        $keywordValue.val('');
+        $keywordTitle.val('');
+        $keywordDate.val('');
+        $keywordType.val('');
     });
 
+    // INSPIRE IDENTIFY
+    $('#p_keyword_inspire_identified').on('change', function () {
+        var selected = $(this).val();
+        var result = $('#result_p_keyword');
+        var regexInspire = /inspireidentifiziert/;
+        var inspireIdentified = false;
+
+        if( selected === "1") {
+            var $this = $(this);
+            var val = $this.val();
+            var dataTitle = $this.attr('data-title');
+            //var alreadySet = regexInspire.test("inspireidentifiziert");
+
+            result.find('input').each(function(){
+                if ( $(this).val() === "inspireidentifiziert") {
+                    //already inspire identified
+                    inspireIdentified = true;
+                }
+            });
+
+            if(!inspireIdentified) {
+                result.prepend(
+                    $('<div></div>').append(
+                        $('<input/>').attr("type", "hidden").attr("name", "p[keyword][][value][]").val( dataTitle ),
+                        $('<label></label>').text(dataTitle)
+                        //$('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
+                    )
+                );
+                $this.val('');
+            }
+        } else {
+            result.find('input').each(function(){
+                if ( $(this).val() === "inspireidentifiziert") {
+                    $(this).parent().remove();
+                }
+            });
+        }
+    });
 
     $('#wizard_p_otherconstraints').click(function() {
         var dialog = $('<div>');
