@@ -375,19 +375,18 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/
            {% endif %}
          </gmd:MD_LegalConstraints>
        </gmd:resourceConstraints>
-
-       {% if p['serviceType'] is defined %}
-         <srv:serviceType>
-           <gco:LocalName>{{ p['serviceType'] }}</gco:LocalName>
-         </srv:serviceType>
-       {% endif %}
-
-       {% if p['serviceTypeVersion'] is defined %}
-         <srv:serviceTypeVersion>
-           <gco:CharacterString>{{ p['serviceTypeVersion'] }}</gco:CharacterString>
-         </srv:serviceTypeVersion>
-       {% endif %}
-
+        {% if p['serviceType'] is defined %}
+            <srv:serviceType>
+                <gco:LocalName>{{ p['serviceType'] }}</gco:LocalName>
+            </srv:serviceType>
+        {% endif %}
+        {% if p['serviceTypeVersion'] is defined %}
+            {% for version in p['serviceTypeVersion'] %}
+            <srv:serviceTypeVersion>
+                <gco:CharacterString>{{ version }}</gco:CharacterString>
+            </srv:serviceTypeVersion>
+            {% endfor %}
+        {% endif %}
        <srv:extent>
          <gmd:EX_Extent>
            {% if p['bbox'] is defined %}

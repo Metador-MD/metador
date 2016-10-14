@@ -250,6 +250,20 @@ $(document).ready(function() {
         $(this).val('');
     });
 
+    $('#p_servicetypeversion_b').change(function() {
+        $('#result_p_servicetypeversion').prepend(
+            $('<div></div>').append(
+                $('<input/>').attr("type", "hidden").attr("name", "p[serviceTypeVersion][]").val($(this).val()),
+                $('<label></label>')
+                    .html($(this).val()),
+                $('<div></div>')
+                    .addClass("btn cmdDeleteSingleValue")
+                    .append($('<div></div>').addClass('icon icon-bin2'))
+                )
+        );
+        $(this).val('');
+    });
+
     $('#add_p_bbox').click(function() {
         addBBOX(
             $('#bboxw').val(),
