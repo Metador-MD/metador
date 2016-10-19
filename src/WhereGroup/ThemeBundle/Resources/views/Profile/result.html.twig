@@ -12,13 +12,8 @@
         <div class="right">
             <div class="metadata-row-head clearfix">
                 <div class="title">
-                    {% if app.user %}
+                    {% if app.user and is_granted('edit', row) %}
                     <a href="{{ path('metadata_edit', { 'profile' : row.profile, 'id' : row.id }) }}">
-                        {#{% if row.readonly %}#}
-                            {#<span class="icon-lock"></span>#}
-                        {#{% else %}#}
-                            {#<span class="icon-file-text2"></span>#}
-                        {#{% endif %}#}
                         {{ row.title|teaser(75, true) }}
                     </a>
                     {% else %}

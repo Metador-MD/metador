@@ -45,6 +45,11 @@ class Application
             $this->env                  = $env;
             $this->authorizationChecker = $authorizationChecker;
             $this->requestStack         = $requestStack;
+            $route = $this->requestStack->getCurrentRequest()->attributes->get('_route');
+
+            if ($this->env === 'dev' && $route === '_wdt') {
+                return;
+            }
 
             // dispatch event
             $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
