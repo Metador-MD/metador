@@ -69,6 +69,7 @@ class Finder
 
         // Owner or user in same group
         if (!$this->geoOffice && is_null($this->public) && !is_null($this->userId)) {
+
             $orx = $qb->expr()->orX();
             $orx->add($qb->expr()->eq('m.insertUser', (int)$this->userId));
             $orx->add($qb->expr()->eq('m.public', 'true'));
