@@ -147,6 +147,10 @@ $width-paging-info: 100px;
     }
 }
 
+.metadata-row-head-right {
+    float: right;
+}
+
 .metadata-row-abstract {
     border-top: 1px solid lighten($primary, 40%);
     font-size: 12px;

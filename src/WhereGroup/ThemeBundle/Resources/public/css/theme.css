@@ -1701,6 +1701,9 @@ textarea.code {
   top: 0;
   right: 0; }
 
+.metadata-row-head-right {
+  float: right; }
+
 .metadata-row-abstract {
   border-top: 1px solid #9c9ca0;
   font-size: 12px;
