@@ -9,10 +9,9 @@ body {
 
 .md-2 {
   width: 1024px;
-  margin: 0 auto;
-  border-width: 0 1px 0 1px;
-  border-style: solid;
-  border-color: #c4c4c4;
+  margin: 5px auto;
+  border: 1px solid #c4c4c4;
+  border-top-width: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -20,7 +19,7 @@ body {
   bottom: 0; }
 
 .md-2 > .top {
-  background-color: #373739;
+  background-color: #293E6A;
   height: 50px;
   line-height: 50px;
   color: #f7f7f7; }
@@ -103,7 +102,7 @@ h1.page-title {
   padding: 0 20px; }
 
 .top-right-user:hover {
-  background-color: #2f2f31; }
+  background-color: #25385f; }
 
 .top-right-userimage {
   display: inline-block; }
@@ -111,7 +110,7 @@ h1.page-title {
 .top-right-userimage > .user-image {
   vertical-align: middle;
   padding: 8px;
-  background-color: #2a2a2c;
+  background-color: #223358;
   border-radius: 50%; }
 
 .top-right-menu {
@@ -146,11 +145,11 @@ h1.page-title {
   padding: 6px;
   background-color: #f2f2f2;
   border-radius: 4px;
-  color: #373739; }
+  color: #293E6A; }
 
 .center-left-menu > li:hover {
   background-color: #fff; }
 
 .center-left-menu > li.act {
   background-color: #fff;
-  box-shadow: inset 3px 0 0 #373739; }
+  box-shadow: inset 3px 0 0 #293E6A; }
