@@ -1637,7 +1637,8 @@ textarea.code {
   float: left;
   line-height: 30px;
   height: 28px;
-  padding-left: 10px; }
+  padding-left: 10px;
+  text-shadow: none; }
 
 .search-content-searchfield .paging-info {
   width: 100px;

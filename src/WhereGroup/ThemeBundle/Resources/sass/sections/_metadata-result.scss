@@ -72,6 +72,7 @@ $width-paging-info: 100px;
         line-height: 30px;
         height: 28px;
         padding-left: 10px;
+        text-shadow: none;
 
         &:focus {
             @extend %no-highlight;
