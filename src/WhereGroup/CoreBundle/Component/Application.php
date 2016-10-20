@@ -45,9 +45,9 @@ class Application
             $this->env                  = $env;
             $this->authorizationChecker = $authorizationChecker;
             $this->requestStack         = $requestStack;
-            $route = $this->requestStack->getCurrentRequest()->attributes->get('_route');
+            $request = $this->requestStack->getCurrentRequest();
 
-            if ($this->env === 'dev' && $route === '_wdt') {
+            if ($request && $this->env === 'dev' && $request->attributes->get('_route') === '_wdt') {
                 return;
             }
 
