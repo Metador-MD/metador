@@ -48,13 +48,10 @@ class Paging
      */
     public function calculate()
     {
-        $response = new \stdClass();
-        $response->limit  = $this->limit;
-        $response->count  = (int)$this->count;
-        $response->rowsOnCurrentPage = $response->count < $response->limit
-            ? $response->count
-            : $response->limit;
 
+        $response = new \stdClass();
+        $response->limit  = (int)$this->limit;
+        $response->count  = (int)$this->count;
         $response->offset = (int)$this->offset;
         $response->pages  = (int)$this->limit > 0
             ? (int)ceil($response->count / $this->limit)

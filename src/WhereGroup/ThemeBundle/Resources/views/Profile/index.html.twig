@@ -47,7 +47,7 @@
                 {% endif %}
 
                 {# PAGE INFO #}
-                <div class="paging-info" title="{{ paging.rowsOnCurrentPage }} von {{ paging.count }} Datensätze">
+                <div class="paging-info" title="{{ rows|length }} von {{ paging.count }} Datensätze">
                     {% if paging.currentPage is defined %}
                     <span class="icon-files-empty"></span>
                     {{ paging.currentPage }}/{{ paging.pages }}
