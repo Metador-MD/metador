@@ -61,7 +61,7 @@ class Finder
         }
 
         // Public
-        if (!is_null($this->public)) {
+        if (!is_null($this->public) && !$this->geoOffice) {
             $qb
                 ->andWhere('m.public = :public')
                 ->setParameter('public', (bool)$this->public);
