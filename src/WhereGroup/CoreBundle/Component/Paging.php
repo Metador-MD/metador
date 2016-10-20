@@ -49,32 +49,38 @@ class Paging
     public function calculate()
     {
         $response = new \stdClass();
+        $response->limit  = $this->limit;
+        $response->count  = (int)$this->count;
+        $response->rowsOnCurrentPage = $response->count < $response->limit
+            ? $response->count
+            : $response->limit;
 
-        $response->count = $this->count;
-        $response->offset = $this->offset;
-        $response->pages = $this->limit > 0
-            ? ceil($response->count / $this->limit)
+        $response->offset = (int)$this->offset;
+        $response->pages  = (int)$this->limit > 0
+            ? (int)ceil($response->count / $this->limit)
             : 0;
-        $response->currentPage = floor(($response->offset / $this->limit)) + 1;
+
+        $response->currentPage = (int)floor(($response->offset / $this->limit)) + 1;
 
         if ($response->pages >= 1) {
             // INDEX START
             if ($response->currentPage > ($this->length / 2)) {
-                $response->startPage = $response->currentPage - floor($this->length / 2);
+                $response->startPage = (int)$response->currentPage - floor($this->length / 2);
             } else {
                 $response->startPage = 1;
             }
 
             // INDEX END
-            if (($response->startPage + $this->length - 1) > $response->pages && $response->pages > ($this->length - 1)) {
-                $response->endPage = ceil($response->pages);
+            if (($response->startPage + $this->length - 1) > $response->pages
+                && $response->pages > ($this->length - 1)) {
+                $response->endPage = (int)ceil($response->pages);
             } else {
-                $response->endPage = $response->startPage + $this->length - 1;
+                $response->endPage = (int)$response->startPage + $this->length - 1;
             }
 
             // END OF LIST?
             if ($response->endPage - $response->startPage < $this->length) {
-                $response->startPage = $response->startPage
+                $response->startPage = (int)$response->startPage
                     - ($this->length - ($response->endPage - $response->startPage));
             }
 
@@ -83,11 +89,11 @@ class Paging
             }
 
             if ($response->currentPage < $response->pages) {
-                $response->nextPage = $response->currentPage + 1;
+                $response->nextPage = (int)$response->currentPage + 1;
             }
 
             if ($response->currentPage > 1) {
-                $response->prevPage = $response->currentPage - 1;
+                $response->prevPage = (int)$response->currentPage - 1;
             }
         }
         return $response;
