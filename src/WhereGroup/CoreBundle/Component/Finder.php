@@ -20,6 +20,8 @@ class Finder
     public $geoOffice = false;
     public $userId = null;
     public $force = null;
+    public $hierarchyLevel = array();
+    public $title = null;
 
     /**
      * @param QueryBuilder $qb
@@ -77,12 +79,21 @@ class Finder
             if (!empty($this->groups)) {
                 $qb->leftJoin('m.groups', 'g', 'WITH');
 
-                foreach ($this->groups as $key => $groupId) {
-                    $orx->add($qb->expr()->eq('g.id', (int)$groupId));
-                }
+                $orx->add($qb->expr()->in('g.id', $this->groups));
             }
 
             $qb->andWhere($orx);
+            unset($orx);
+        }
+
+        // Hierarchy Level
+        if (!empty($this->hierarchyLevel)) {
+            $qb->andWhere($qb->expr()->in('m.hierarchyLevel', (array)$this->hierarchyLevel));
+        }
+
+        // Title
+        if (!is_null($this->title)) {
+            $qb->expr()->like('u.title', $qb->expr()->literal('%' . $this->title . '%'));
         }
     }
 }

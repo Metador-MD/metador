@@ -515,9 +515,9 @@ $(document).ready(function() {
                             var find = $(this).val();
 
                             $.ajax({
-                                url: BASEDIR + "metador/service/coupled",
+                                url: BASEDIR + "metadata/profile-service/coupled/",
                                 type: "get",
-                                data: {'find': find},
+                                data: { 'title': find },
                                 dataType: "json",
                                 success:  function(data) {
                                     $('.wizard-content').children().remove();

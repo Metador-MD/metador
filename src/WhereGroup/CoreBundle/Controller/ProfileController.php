@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
@@ -101,6 +102,39 @@ class ProfileController extends Controller
             'profile' => $profile,
             'id'      => $metadata->getId()
         ));
+    }
+
+    /**
+     * @Route("/{profile}/coupled/", name="metadata_coupled")
+     * @Method("GET")
+     */
+    public function coupledAction($profile)
+    {
+        $data = array();
+
+        $filter = new Finder();
+        $filter->hierarchyLevel = array('series', 'dataset');
+        $filter->profile = 'profile-dataset';
+
+        $title = $this->get('request_stack')->getCurrentRequest()->get('title');
+        if (!empty($title)) {
+            $filter->title = $title;
+        }
+        unset($title);
+
+        $metadata = $this->get('metadata')->find($filter);
+
+        /** @var Metadata $obj */
+        foreach ($metadata['result'] as $obj) {
+            $data[] = array(
+                'label' => $obj->getTitle(),
+                'value' => ($obj->getCodespace() != "")
+                    ? $obj->getCodespace() . '#' . $obj->getUuid()
+                    : $obj->getUuid()
+            );
+        }
+
+        return new JsonResponse($data);
     }
 
     /**
