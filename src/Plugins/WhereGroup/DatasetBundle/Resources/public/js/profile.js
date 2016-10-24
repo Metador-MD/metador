@@ -160,6 +160,12 @@ $(document).ready(function() {
         var result = $('#result_' + $(this).attr("data-obj-id"));
         var name = $(this).attr("data-name");
 
+        var prefix = source.attr("data-prefix");
+
+        if (prefix === undefined) {
+            prefix = "";
+        }
+
         if(source.val() === "") {
             alert("Eingabe leer.");
             return false;
@@ -170,9 +176,9 @@ $(document).ready(function() {
                 $('<input/>')
                     .attr("type", "hidden")
                     .attr("name", name)
-                    .val(source.val()),
+                    .val(prefix+""+source.val()),
                 $('<label></label>')
-                    .html(source.val()),
+                    .html(prefix+""+source.val()),
                 $('<div></div>')
                     .addClass("btn cmdDeleteSingleValue")
                     .append($('<div></div>').addClass('icon icon-bin2'))
@@ -259,10 +265,10 @@ $(document).ready(function() {
         }
     });
 
-    $('#p_uselimitation_b').change(function() {
-        $('#result_p_uselimitation').prepend(
+    $('#p_useconstraints_b').change(function() {
+        $('#result_p_useconstraints').prepend(
             $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[uselimitation][]").val($(this).val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[useconstraints][]").val($(this).val()),
                 $('<label></label>')
                     .html($(this).val()),
                 $('<div></div>')
