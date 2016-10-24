@@ -1637,7 +1637,8 @@ textarea.code {
   float: left;
   line-height: 30px;
   height: 28px;
-  padding-left: 10px; }
+  padding-left: 10px;
+  text-shadow: none; }
 
 .search-content-searchfield .paging-info {
   width: 100px;
@@ -1673,8 +1674,21 @@ textarea.code {
   top: 0;
   left: 0; }
 
-.metadata-row .metadata-row-head > .title:hover a {
+.metadata-row .metadata-row-head a {
   text-decoration: none; }
+
+.metadata-row .metadata-row-head span[class^='icon-'] {
+  color: #9c9ca0;
+  vertical-align: middle;
+  font-size: 14px;
+  border: 1px solid #eaeaeb;
+  background-color: #f7f7f7;
+  padding: 5px;
+  border-radius: 4px; }
+
+.metadata-row .metadata-row-head span[class^='icon-']:hover {
+  border: 1px solid #ddddde;
+  background-color: #eaeaeb; }
 
 .metadata-row .metadata-row-head > .alternate-title {
   font-size: 12px;
@@ -1687,6 +1701,9 @@ textarea.code {
   position: absolute;
   top: 0;
   right: 0; }
+
+.metadata-row-head-right {
+  float: right; }
 
 .metadata-row-abstract {
   border-top: 1px solid #9c9ca0;

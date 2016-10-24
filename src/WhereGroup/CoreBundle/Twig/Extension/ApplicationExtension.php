@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Component\Application;
 
 /**

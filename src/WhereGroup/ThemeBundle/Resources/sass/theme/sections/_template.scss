@@ -8,10 +8,9 @@ body {
 
 .md-2 {
     width: $page-width;
-    margin: 0 auto;
-    border-width: 0 1px 0 1px;
-    border-style: solid;
-    border-color: darken($content, 20%);
+    margin: 5px auto;
+    border: 1px solid darken($content, 20%);
+    border-top-width: 0;
 
     @include pos(0, 0, 0, 0);
 

@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\UserBundle\Entity\User;
 
 /**
  * @Route("/metadata")
@@ -42,7 +44,18 @@ class ProfileController extends Controller
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
             $filter->geoOffice = true;
-            $filter->public = false;
+            $filter->public = null;
+        }
+
+        /** @var UsernamePasswordToken $token */
+        $token = $this->get('security.token_storage')->getToken();
+
+        /** @var User $user */
+        $user = $token->getUser();
+
+        if (is_object($user)) {
+            $filter->userId = $user->getId();
+            $filter->public = null;
         }
 
         $metadata = $this->get('metadata')->find($filter);
