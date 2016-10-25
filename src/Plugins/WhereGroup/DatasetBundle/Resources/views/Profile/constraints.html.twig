@@ -8,7 +8,7 @@
     <label>
         <div class="icon mandatory icon-circle"></div>{{'Nutzungseinschränkungen'|trans}}:
     </label>
-    <textarea id="source_{{ id|md_id }}" data-prefix="{{'Nutzungseinschränkungen'|trans}}: " class="oneCol2 no-value"></textarea>
+    <textarea id="source_{{ id|md_id }}" data-prefix="" class="oneCol2 no-value"></textarea>
     <div class="btn-group">
         <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon icon-plus"></div></div>
         <div class="last showHelp"  data-obj-id="{{ id|md_id }}">
@@ -31,80 +31,77 @@
         <div class="clear"></div>
     </div>
 </div>
-        
+
 {#
     USE CONSTRAINTS
 #}
-{% set id = 'p[useconstraints][]' %}
-<div class="oneColBox">
-    <label class="displayLeft">
-        <div class="icon mandatory icon-circle"></div>{{'Nutzungsbedingungen'|trans}}:
-    </label>
-    <div class="clear"></div>
-    <label for="{{ id|md_id }}_b">
-        {{'Auswahl'|trans}}:
-    </label>
-    <select name="useconstraints_b" id="{{ id|md_id }}_b" class="oneCol1  no-value">
-        <option value=""></option>
-        <option value="copyright">copyright</option>
-        <option value="patent">patent</option>
-        <option value="trademark">trademark</option>
-        <option value="license">license</option>
-        <option value="intellectualPropertyRights">intellectualPropertyRights</option>
-        <option value="restricted">restricted</option>
-        <option value="otherRestrictions">otherRestrictions</option>
-    </select>
-    <div class="btn-group">
-        <div class="last showHelp"  data-obj-id="{{ id|md_id }}_b">
-            <div class="icon icon-question"></div>
-        </div>
-    </div>
-    <div class="clear"></div>
-    <div class="singleResult" id="result_{{ id|md_id }}">
-        {% if p['useconstraints'] is defined %}
-        {% for value in p['useconstraints'] %}
-        <div>
-            <input type="hidden" name="{{ id }}" value="{{ value }}" />
-            <label>{{ value }}</label>
-            <div class="btn cmdDeleteSingleValue">
-                <div class="icon icon-bin2"></div>
-            </div>
-        </div>
+
+{% set id = 'p[useconstraints]' %}
+
+{% if p['useconstraints'] is not defined %}
+    {% set p = p|merge({'useconstraints': [{'useconstraints':'','otherconstraints':''}]}) %}
+{% endif %}
+
+{% set length = p['useconstraints']|length -1 %}
+
+<h2>{% trans %}Nutzungsbedingungen{% endtrans %}</h2>
+
+<div class="duplicatable" data-count="{{ length }}">
+    <ul>
+        {% for key, value in p['useconstraints'] %}
+            <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
         {% endfor %}
-        {% endif %}
-        <div class="clear"></div>
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+    </ul>
+    <div class="content">
+        {% for key, value in p['useconstraints'] %}
+            <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
+                <div class="oneColBox">
+                    {% set id = 'p[useconstraints][' ~ key ~ '][useconstraints]' %}
+                    {% set val = value['useconstraints'] is defined ? value['useconstraints'] : '' %}
+
+                    <label for="{{ id|md_id }}">
+                        <div class="icon optional icon-circle"></div>{{'Auswahl'|trans}}:
+                    </label>
+
+                    <select name="{{ id }}" id="{{ id|md_id }}" class="oneCol1">
+                        <option {{ md_select(val, '') }} value=""></option>
+                        <option {{ md_select(val, 'copyright') }} value="copyright">copyright</option>
+                        <option {{ md_select(val, 'patent') }} value="patent">patent</option>
+                        <option {{ md_select(val, 'patentPending') }} value="patentPending">patentPending</option>
+                        <option {{ md_select(val, 'trademark') }} value="trademark">trademark</option>
+                        <option {{ md_select(val, 'license') }} value="license">license</option>
+                        <option {{ md_select(val, 'intellectualPropertyRights') }} value="intellectualPropertyRights">intellectualPropertyRights</option>
+                        <option {{ md_select(val, 'restricted') }} value="restricted">restricted</option>
+                    </select>
+
+                    <div class="btn-group">
+                        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="oneColBox">
+                    {% set id = 'p[useconstraints][' ~ key ~ '][otherconstraints]' %}
+                    {% set val = value['useconstraints'] is defined ? value['otherconstraints'] : '' %}
+
+                    <label class="displayLeft" for="{{ id|md_id }}">
+                        <div class="icon optional icon-circle"></div>{{'Freitext'|trans}}:
+                    </label>
+
+                    <div class="btn-group displayRight">
+                        <div class="single showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                    </div>
+
+                    <textarea name="{{ id }}" id="{{ id|md_id }}" class="oneCol0">{{ val }}</textarea>
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    <div class="clear"></div>
 </div>
 
-{#
-    OTHER CCONSTRAINTS
-#}
-{% set id = 'p[otherconstraints][]' %}
-<div class="oneColBox">
-    <label for="{{ id|md_id }}_b">
-        {{'Freitext'|trans}}:
-    </label>
-    <textarea id="source_{{ id|md_id }}" data-prefix="{{'Nutzungsbedingungen'|trans}}: " class="oneCol2 no-value"></textarea>
-    <div class="btn-group">
-        <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon icon-plus"></div></div>
-        <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
-            <div class="icon icon-question"></div>
-        </div>
-    </div>
-    <div class="clear"></div>
-    <div class="singleResult" id="result_{{ id|md_id }}">
-        {% if p['otherconstraints'] is defined %}
-        {% for value in p['otherconstraints'] %}
-        <div>
-            <input type="hidden" name="{{ id }}" value="{{ value }}" />
-            <label>{{ value }}</label>
-            <div class="btn cmdDeleteSingleValue">
-                <div class="icon icon-bin2"></div>
-            </div>
-        </div>
-        {% endfor %}
-        {% endif %}
-        <div class="clear"></div>
-    </div>
-</div>

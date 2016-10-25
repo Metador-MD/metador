@@ -358,51 +358,46 @@
                <gmd:resourceConstraints>
                    <gmd:MD_LegalConstraints>
                        <gmd:useLimitation>
-                           <gco:CharacterString>{{ uselimitation }}</gco:CharacterString>
+                           <gco:CharacterString>Nutzungseinschränkungen: {{ uselimitation }}</gco:CharacterString>
                        </gmd:useLimitation>
                    </gmd:MD_LegalConstraints>
                </gmd:resourceConstraints>
              {% endfor %}
              {% endif %}
 
-            <gmd:resourceConstraints>
-                <gmd:MD_LegalConstraints>
-                    <!-- i.S.v. ISO 19115 -->
-                     <!-- i.S.v. INSPIRE -->
-                    {% if p['accessConstraints'] is defined %}
-                    <gmd:accessConstraints>
-                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions"></gmd:MD_RestrictionCode>
-                    </gmd:accessConstraints>
-                    {% endif %}
-                    {% if p['useconstraints'] is defined %}
-                    {% for useconstraints in p['useconstraints'] if useconstraints != "otherRestrictions" %}
-                    <gmd:useConstraints>
-                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode>"
-                        codeListValue="{{ useconstraints }}"/>
-                    </gmd:useConstraints>
-                    {% endfor %}
-                    {% endif %}
-                    {% if p['otherconstraints'][0] is defined and p['otherconstraints'][0] is not empty %}
-                    <gmd:useConstraints>
-                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode>"
-                        codeListValue="otherRestrictions" />
-                    </gmd:useConstraints>
-                    {% endif %}
-                    <!-- i.S.v. ISO 19115 -->
-                    {% if p['otherconstraints'] is defined %}
-                    {% for otherconstraints in p['otherconstraints'] %}
-                    <gmd:otherConstraints>
-                        <gco:CharacterString>{{ otherconstraints }}</gco:CharacterString>
-                    </gmd:otherConstraints>
-                    {% endfor %}
-                    {% endif %}
-                </gmd:MD_LegalConstraints>
-            </gmd:resourceConstraints>
+             <!-- Nutzungsbedingungen -->
+             {% if p['useconstraints'] is defined %}
+                 {% for row in p['useconstraints'] %}
+                     <gmd:resourceConstraints>
+                         <gmd:MD_LegalConstraints>
+                             {% if row.useconstraints is defined %}
+                                 <gmd:useConstraints>
+                                     <gmd:MD_RestrictionCode
+                                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
+                                         codeListValue="{{ row.useconstraints }}" />
+                                 </gmd:useConstraints>
+                             {% endif %}
+                             {% if row.otherconstraints is defined %}
+                                 <gmd:useConstraints>
+                                     <gmd:MD_RestrictionCode
+                                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
+                                         codeListValue="otherConstraints" />
+                                 </gmd:useConstraints>
+                                 <gmd:otherConstraints>
+                                     <gco:CharacterString>Nutzungsbedingungen: {{ row.otherconstraints }}</gco:CharacterString>
+                                 </gmd:otherConstraints>
+                             {% endif %}
+                         </gmd:MD_LegalConstraints>
+                     </gmd:resourceConstraints>
+                 {% endfor %}
+             {% endif %}
+
             {% if p['serviceType'] is defined %}
                 <srv:serviceType>
                     <gco:LocalName>{{ p['serviceType'] }}</gco:LocalName>
                 </srv:serviceType>
             {% endif %}
+
             {% if p['serviceTypeVersion'] is defined %}
                 {% for version in p['serviceTypeVersion'] %}
                 <srv:serviceTypeVersion>
@@ -410,6 +405,7 @@
                 </srv:serviceTypeVersion>
                 {% endfor %}
             {% endif %}
+
            <srv:extent>
              <gmd:EX_Extent>
                {% if p['bbox'] is defined %}
