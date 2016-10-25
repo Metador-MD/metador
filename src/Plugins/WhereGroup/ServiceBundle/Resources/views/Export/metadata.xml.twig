@@ -501,7 +501,7 @@
 
        {% if p['coupledResource'] is defined %}
          {% for coupledResource in p['coupledResource'] %}
-           <srv:operatesOn xlink:href="{{ coupledResource }}"/>
+           <srv:operatesOn xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ coupledResource }}"/>
          {% endfor %}
        {% endif %}
 
