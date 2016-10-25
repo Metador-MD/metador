@@ -321,7 +321,7 @@
        {% endif %}
 
        {% if p['keyword'] is defined %}
-           {% for title,keywords in p['keyword'] %}
+           {% for title, keywords in p['keyword'] %}
            <gmd:descriptiveKeywords>
              <gmd:MD_Keywords>
                {% for keyword in keywords.value %}
@@ -329,7 +329,7 @@
                    <gco:CharacterString>{{ keyword }}</gco:CharacterString>
                  </gmd:keyword>
                {% endfor %}
-                 {% if title is defined and title %}
+               {% if title is defined and title is not empty and title != '_noRepo' %}
                <gmd:thesaurusName>
                  <gmd:CI_Citation>
                    <gmd:title>
@@ -347,7 +347,7 @@
                    </gmd:date>
                  </gmd:CI_Citation>
                </gmd:thesaurusName>
-                 {% endif %}
+               {% endif %}
              </gmd:MD_Keywords>
            </gmd:descriptiveKeywords>
          {% endfor %}

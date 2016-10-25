@@ -320,7 +320,7 @@
          </gmd:graphicOverview>
        {% endif %}
        {% if p['keyword'] is defined %}
-         {% for title,keywords in p['keyword'] %}
+         {% for title, keywords in p['keyword'] %}
            <gmd:descriptiveKeywords>
              <gmd:MD_Keywords>
                {% for keyword in keywords.value %}
@@ -328,23 +328,25 @@
                    <gco:CharacterString>{{ keyword }}</gco:CharacterString>
                  </gmd:keyword>
                {% endfor %}
-               <gmd:thesaurusName>
-                 <gmd:CI_Citation>
-                   <gmd:title>
-                     <gco:CharacterString>{{ title }}</gco:CharacterString>
-                   </gmd:title>
-                   <gmd:date>
-                     <gmd:CI_Date>
-                       <gmd:date>
-                         <gco:Date>{{ keywords.date }}</gco:Date>
-                       </gmd:date>
-                       <gmd:dateType>
-                         <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ keywords.type }}">{{ keywords.type }}</gmd:CI_DateTypeCode>
-                       </gmd:dateType>
-                     </gmd:CI_Date>
-                   </gmd:date>
-                 </gmd:CI_Citation>
-               </gmd:thesaurusName>
+               {% if title is defined and title is not empty and title != '_noRepo' %}
+                   <gmd:thesaurusName>
+                       <gmd:CI_Citation>
+                           <gmd:title>
+                               <gco:CharacterString>{{ title }}</gco:CharacterString>
+                           </gmd:title>
+                           <gmd:date>
+                               <gmd:CI_Date>
+                                   <gmd:date>
+                                       <gco:Date>{{ keywords.date }}</gco:Date>
+                                   </gmd:date>
+                                   <gmd:dateType>
+                                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ keywords.type }}">{{ keywords.type }}</gmd:CI_DateTypeCode>
+                                   </gmd:dateType>
+                               </gmd:CI_Date>
+                           </gmd:date>
+                       </gmd:CI_Citation>
+                   </gmd:thesaurusName>
+               {% endif %}
              </gmd:MD_Keywords>
            </gmd:descriptiveKeywords>
          {% endfor %}

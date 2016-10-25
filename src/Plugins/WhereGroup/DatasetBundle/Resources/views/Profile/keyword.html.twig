@@ -6,30 +6,6 @@
 <fieldset class="oneColBox">
     <legend>{{'Schlüsselwort'|trans}}</legend>
 
-    {% set id = 'p[keyword][inspire_identified]' %}
-    {% set values = p['keyword']['0']['value'] is defined? p['keyword']['0']['value'] : [] %}
-
-    {% if 'inspireidentifiziert' in values %}
-        {% set inspireIdentified = true %}
-    {% else %}
-        {% set inspireIdentified = false %}
-    {% endif %}
-
-    <label>
-        <div class="icon optional icon-circle"></div>{{'Inspireidentifiziert'|trans}}:
-    </label>
-    <select id="p_keyword_inspire_identified" class="oneCol1 no-value" name="p[inspire_identified]" data-title="inspireidentifiziert">
-        {% for inspireidentify in 0..1 %}
-            <option value="{{ inspireidentify }}" {{ md_select(inspireIdentified, inspireidentify) }}>{{ inspireidentify|md_boolean }}</option>
-        {% endfor %}
-    </select>
-    <div class="btn-group">
-        <div class="last showHelp" {{ id|md_data_obj }}>
-            <div class="icon icon-question"></div>
-        </div>
-    </div>
-    <div class="clear"></div>
-
     {% set id = 'p[keyword][value]' %}
 
     <label>
@@ -52,7 +28,7 @@
 
         <div class="left">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Titel'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 no-value"/>
             <div class="btn-group">
@@ -66,7 +42,7 @@
 
         <div class="center">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Datum'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 datepicker no-value"/>
             <div class="btn-group">
@@ -80,7 +56,7 @@
 
         <div class="right">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum der'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Datum der'|trans}}:
             </label>
             <div class="fr">
                 <div class="btn-group">
@@ -108,7 +84,6 @@
     <div id="add_keyword" class="btn right"><div class="icon icon-plus"></div></div>
     <div class="clear"></div>
 </fieldset>
-
 {% set id = 'p[keyword][repo]' %}
 
 <div class="twoColBox">
@@ -165,24 +140,13 @@
                 {% if data.value is defined %}
                     {% for key, keyword in data.value %}
                         <div>
-                            <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date|default("") }}" />
-                            <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type|default("") }}" />
-                            <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword|default("") }}" />
-                            {% if repo is same as(0) %}
-                                {% if keyword == "inspireidentifiziert" %}
-                                    <label>{{ keyword }}</label>
-                                {% else %}
-                                    <label>{{ keyword }}</label>
-                                    <div class="btn cmdDeleteSingleValue">
-                                        <div class="icon icon-bin2"></div>
-                                    </div>
-                                {% endif %}
-                            {% else %}
-                                <label>{{ repo }} - {{ keyword }}</label>
-                                <div class="btn cmdDeleteSingleValue">
-                                    <div class="icon icon-bin2"></div>
-                                </div>
-                            {% endif %}
+                            <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date }}" />
+                            <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type }}" />
+                            <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
+                            <label>{% if repo != '_noRepo' %}{{ repo }} -{% endif %}{{ keyword }}</label>
+                            <div class="btn cmdDeleteSingleValue">
+                                <div class="icon icon-bin2"></div>
+                            </div>
                         </div>
                     {% endfor %}
                 {% endif %}

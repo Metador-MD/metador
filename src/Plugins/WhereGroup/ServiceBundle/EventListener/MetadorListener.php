@@ -5,15 +5,26 @@ namespace Plugins\WhereGroup\ServiceBundle\EventListener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
+/**
+ * Class MetadorListener
+ * @package Plugins\WhereGroup\ServiceBundle\EventListener
+ */
 class MetadorListener
 {
     protected $container;
 
+    /**
+     * MetadorListener constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @param MetadataChangeEvent $event
+     */
     public function onPreSave(MetadataChangeEvent $event)
     {
         $metadata = $event->getDataset();

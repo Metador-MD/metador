@@ -159,9 +159,9 @@ $(document).ready(function() {
         var source = $('#source_' + $(this).attr("data-obj-id"));
         var result = $('#result_' + $(this).attr("data-obj-id"));
         var name = $(this).attr("data-name");
-        
+
         var prefix = source.attr("data-prefix");
-        
+
         if (prefix === undefined) {
             prefix = "";
         }
@@ -342,15 +342,19 @@ $(document).ready(function() {
         $(".keywordRepoValue[data-id='" + $(this).val() + "']").addClass('act');
     });
 
+
     $('.keywordRepoValue').change(function() {
-        var result = $('#result_p_keyword');
+        var result  = $('#result_p_keyword');
+        var repoKey = ($(this).attr('data-title') == '') ? '_noRepo' : $(this).attr('data-title');
 
         result.prepend(
             $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][date]").val($(this).attr('data-date')),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][type]").val($(this).attr('data-type')),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $(this).attr('data-title') + "][value][]").val($(this).val()),
-                $('<label></label>').text($(this).attr('data-title') + ' - ' + $(this).val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][date]").val($(this).attr('data-date')),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][type]").val($(this).attr('data-type')),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][value][]").val($(this).val()),
+                $('<label></label>').text($(this).attr('data-title')
+                    + (($(this).attr('data-title') == '') ? '' : ' - ')
+                    + $(this).val()),
                 $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
             )
         );
@@ -359,14 +363,17 @@ $(document).ready(function() {
     });
 
     $('#add_keyword').click(function() {
-        var result = $('#result_p_keyword');
+        var result  = $('#result_p_keyword');
+        var repoKey = ($('#p_keyword_title').val() == '') ? '_noRepo' : $('#p_keyword_title').val();
 
         result.prepend(
             $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][date]").val($('#p_keyword_date').val()),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][type]").val($('#p_keyword_type').val()),
-                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + $('#p_keyword_title').val() + "][value][]").val($('#p_keyword_value').val()),
-                $('<label></label>').text($('#p_keyword_title').val() + ' - ' + $('#p_keyword_value').val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][date]").val($('#p_keyword_date').val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][type]").val($('#p_keyword_type').val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[keyword][" + repoKey + "][value][]").val($('#p_keyword_value').val()),
+                $('<label></label>').text($('#p_keyword_title').val()
+                    + (($('#p_keyword_title').val() == '') ? '' : ' - ')
+                    + $('#p_keyword_value').val()),
                 $('<div></div>').addClass("btn cmdDeleteSingleValue").append($('<div></div>').addClass('icon icon-bin2'))
             )
         );

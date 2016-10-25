@@ -28,7 +28,7 @@
 
         <div class="left">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Titel'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Titel'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 no-value"/>
             <div class="btn-group">
@@ -42,7 +42,7 @@
 
         <div class="center">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Datum'|trans}}:
             </label>
             <input id="{{ id|md_id }}" type="text" value="" class="threeCol1 datepicker no-value"/>
             <div class="btn-group">
@@ -56,7 +56,7 @@
 
         <div class="right">
             <label>
-                <div class="icon mandatory icon-circle"></div>{{'Datum der'|trans}}:
+                <div class="icon conditional icon-circle"></div>{{'Datum der'|trans}}:
             </label>
             <div class="fr">
                 <div class="btn-group">
@@ -136,19 +136,21 @@
 <div class="oneColBox">
     <div class="singleResult" id="result_{{ id|md_obj_id }}">
         {% if p['keyword'] is defined %}
-        {% for repo, data in p['keyword'] %}
-        {% for keyword in data.value %}
-        <div>
-            <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date }}" />
-            <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type }}" />
-            <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
-            <label>{{ repo }} - {{ keyword }}</label>
-            <div class="btn cmdDeleteSingleValue">
-                <div class="icon icon-bin2"></div>
-            </div>
-        </div>
-        {% endfor %}
-        {% endfor %}
+            {% for repo, data in p['keyword'] %}
+                {% for keyword in data.value %}
+                    {% if data.value is defined %}
+                    <div>
+                        <input type="hidden" name="p[keyword][{{ repo }}][date]" value="{{ data.date }}" />
+                        <input type="hidden" name="p[keyword][{{ repo }}][type]" value="{{ data.type }}" />
+                        <input type="hidden" name="p[keyword][{{ repo }}][value][]" value="{{ keyword }}" />
+                        <label>{% if repo != '_noRepo' %}{{ repo }} -{% endif %}{{ keyword }}</label>
+                        <div class="btn cmdDeleteSingleValue">
+                            <div class="icon icon-bin2"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         {% endif %}
         <div class="clear"></div>
     </div>
