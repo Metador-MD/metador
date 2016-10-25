@@ -601,7 +601,7 @@
                            <gco:Boolean>{{ dataquality['result'] }}</gco:Boolean>
                          </gmd:pass>
                        {% else %}
-                         <gmd:pass/>
+                         <gmd:pass nilReason="unknown" />
                        {% endif %}
                      </gmd:DQ_ConformanceResult>
                    </gmd:result>
