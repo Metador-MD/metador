@@ -378,7 +378,7 @@
                                     codeListValue="{{ row.useconstraints }}" />
                             </gmd:useConstraints>
                         {% endif %}
-                        {% if row.otherconstraints is defined %}
+                        {% if row.otherconstraints is defined and row.otherconstraints is not empty %}
                             <gmd:useConstraints>
                                 <gmd:MD_RestrictionCode
                                     codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
@@ -393,6 +393,28 @@
             {% endfor %}
         {% endif %}
 
+         <!-- Zugriffseinschränkungen -->
+         {% if p['accessConstraints'] is defined %}
+             {% for row in p['accessConstraints'] %}
+                 <gmd:resourceConstraints>
+                     <gmd:MD_LegalConstraints>
+                         {% if row.accessConstraints is defined %}
+                         <gmd:accessConstraints>
+                             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="{{ row.accessConstraints }}" />
+                         </gmd:accessConstraints>
+                         {% endif %}
+                         {% if row.otherconstraints is defined and row.otherconstraints is not empty %}
+                         <gmd:accessConstraints>
+                             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+                         </gmd:accessConstraints>
+                         <gmd:otherConstraints>
+                             <gco:CharacterString>{{ row.otherconstraints }}</gco:CharacterString>
+                         </gmd:otherConstraints>
+                         {% endif %}
+                     </gmd:MD_LegalConstraints>
+                 </gmd:resourceConstraints>
+             {% endfor %}
+         {% endif %}
 
        {% if p['serviceType'] is defined %}
          <srv:serviceType>
