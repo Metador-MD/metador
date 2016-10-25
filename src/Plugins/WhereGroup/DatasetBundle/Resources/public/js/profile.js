@@ -232,7 +232,7 @@ $(document).ready(function() {
         var list    = element.find('ul').eq(0).find('.act');
         var content = element.find('div.content').eq(0).find('> div.act');
 
-        if(list.attr('data-id') !== 0) {
+        if(list.attr('data-id') != 0) {
             list.remove();
             content.remove();
 
