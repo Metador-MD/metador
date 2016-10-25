@@ -352,6 +352,20 @@
            </gmd:descriptiveKeywords>
          {% endfor %}
        {% endif %}
+
+        <!-- Nutzungseinschränkungen -->
+        {% if p['uselimitation'] is defined %}
+         {% for uselimitation in p['uselimitation'] %}
+             <gmd:resourceConstraints>
+                 <gmd:MD_LegalConstraints>
+                     <gmd:useLimitation>
+                         <gco:CharacterString>{{ uselimitation }}</gco:CharacterString>
+                     </gmd:useLimitation>
+                 </gmd:MD_LegalConstraints>
+             </gmd:resourceConstraints>
+         {% endfor %}
+        {% endif %}
+
        <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
                 <!-- i.S.v. ISO 19115 -->
