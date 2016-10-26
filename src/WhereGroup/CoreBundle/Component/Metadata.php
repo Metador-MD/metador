@@ -398,4 +398,16 @@ class Metadata implements MetadataInterface
 
         return $metadataObject['dateStamp'];
     }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function getQueryBuilder($name)
+    {
+        return $this->container->get('doctrine')
+            ->getManager()
+            ->getRepository($this->repository)
+            ->createQueryBuilder($name);
+    }
 }
