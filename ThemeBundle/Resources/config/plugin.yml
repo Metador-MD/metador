@@ -1,0 +1,7 @@
+lvermgeo-theme:
+    origin: LVermGeo
+    name: LVermGeo Theme
+    description: LVermGeo Theme
+    class_path: Plugins\LVermGeo\ThemeBundle
+    class_name: LVermGeoThemeBundle
+    version: 1.0

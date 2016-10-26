@@ -1,0 +1,33 @@
+// FONT COLORS
+$font-color: #333;
+$dark: #34323d;
+
+// BASE COLORS
+$primary: #373739;
+$primary-contrast: #f5f4f2;
+$secondary-origin: #69737d;
+$secondary: lighten($secondary-origin, 20%);
+$secondary-contrast: lighten($secondary, 20%);
+
+//
+$global-menu: #70182A;
+$plugin-menu: $primary-contrast;
+
+// OTHER COLORS
+$error: #e68e8a;
+$warning: #fea500;
+$notice: #82acde;
+$success: #73c47f;
+$white: #fff;
+
+$background: '../img/background.jpg';
+
+// SIZES
+$page-width: 960px;
+$page-left-width: 180px;
+$page-top-height: 85px;
+$page-bottom-hight: 20px;
+$global-menu-height: 40px;
+$bright: #e7e7e7;
+
+$radius: 5px;

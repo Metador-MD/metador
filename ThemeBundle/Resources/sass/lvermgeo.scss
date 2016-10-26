@@ -1,0 +1,37 @@
+@import "main";
+
+@import "ui/_ui_button";
+@import "ui/_ui_dialog";
+@import "ui/_ui_icon";
+@import "ui/_ui_notify";
+@import "ui/_ui_paging";
+@import "ui/_ui_table";
+
+@import "sections/admin";
+@import "sections/content";
+@import "sections/dashboard";
+@import "sections/form";
+@import "sections/gdide";
+@import "sections/locale";
+@import "sections/login";
+@import "sections/menu";
+@import "sections/metadata-import";
+@import "sections/metadata-info";
+@import "sections/plugin";
+
+@import "sections/metadata-result";
+@import "sections/template";
+@import "sections/usergroup";
+
+
+.lvermgeo-logo {
+    @include pos(0, '', '', 50%);
+    background-color: white;
+    margin-left: -($page-width / 2);
+    padding: 5px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: lighten($global-menu, 60%);
+}
