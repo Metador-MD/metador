@@ -35,9 +35,11 @@
 {% block body %}
 <div class="page" data-page="">
     <div class="page-top">
-    <div class="lvermgeo-logo">
-        <img src="{{ asset("bundles/lvermgeotheme/rlp-logo.png") }}" />
-    </div>
+    {% if app.user %}
+        <div class="lvermgeo-logo">
+            <img src="{{ asset("bundles/lvermgeotheme/rlp-logo.png") }}" />
+        </div>
+    {% endif %}
 	{% block global_menu %}
 	    {% include 'MetadorThemeBundle:Template:globalMenu.html.twig' %}
 	{% endblock %}
