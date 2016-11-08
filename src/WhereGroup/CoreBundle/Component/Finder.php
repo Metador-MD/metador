@@ -59,7 +59,7 @@ class Finder
         }
 
         // Only public if no user logged in
-        if (is_null($this->userId)) {
+        if (is_null($this->userId) && !$this->force) {
             $this->public = true;
         }
 

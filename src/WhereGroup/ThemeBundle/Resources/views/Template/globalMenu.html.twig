@@ -1,16 +1,21 @@
 <ul class="global-menu">
     {% if app.user.username is defined %}
+    <li style="float: left; color: white;">
+        <span class="icon-user"></span> {{ app.user.username }}
+    </li>
     <li>
         <a href="{{ path('logout') }}" title="{{ app.user.username }} {{ 'abmelden'|trans }}" class="global-menu-item">
             <span class="icon-switch"></span>
         </a>
     </li>
     {% else %}
+    <li style="float: left;">
         <form action="{{ path('login_check') }}" method="post" class="global-menu-login" autocomplete="off">
             <input type="text" class="global-menu-login-input" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" placeholder="{% trans %}Benutzer{% endtrans %}" autocomplete="off" />
             <input type="password" class="global-menu-login-input" id="password" name="_password" placeholder="{% trans %}Kennwort{% endtrans %}" />
             <button type="submit" class="global-menu-login-btn">{% trans %}login{% endtrans %}</button>
         </form>
+    </li>
     {% endif %}
 
     {% for item in applicationGet('app-global-menu') %}
