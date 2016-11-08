@@ -36,12 +36,12 @@ class ProfileController extends Controller
         $params = $this->data['request']->query->all();
 
         $filter = new Finder();
-        $filter->page = isset($params['page']) ? $params['page'] : 1;
-        $filter->hits = isset($params['hits']) ? $params['hits'] : 10;
-        $filter->terms = isset($params['terms']) ? $params['terms'] : '';
+        $filter->page    = isset($params['page']) ? $params['page'] : 1;
+        $filter->hits    = isset($params['hits']) ? $params['hits'] : 10;
+        $filter->terms   = isset($params['terms']) ? $params['terms'] : '';
+        $filter->userEntries = isset($params['user_entries']) ? $params['user_entries'] : null;
         $filter->profile = $profile;
-
-        $filter->public = true;
+        $filter->public  = true;
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
             $filter->geoOffice = true;
@@ -64,10 +64,10 @@ class ProfileController extends Controller
         return $this->get('templating')->renderResponse(
             $this->getTemplate('index'),
             array(
-                'params'  => $params,
-                'profile' => $profile,
-                'rows'    => $metadata['result'],
-                'paging'  => $metadata['paging']
+                'params'       => $params,
+                'profile'      => $profile,
+                'rows'         => $metadata['result'],
+                'paging'       => $metadata['paging']
             )
         );
     }

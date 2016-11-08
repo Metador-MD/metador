@@ -32,9 +32,10 @@ class HomeController extends Controller
             $filter->public = null;
         }
 
-        $filter->page  = isset($params['page'])  ? $params['page']  : 1;
-        $filter->hits  = isset($params['hits'])  ? $params['hits']  : 10;
-        $filter->terms = isset($params['terms']) ? $params['terms'] : '';
+        $filter->page        = isset($params['page'])  ? $params['page']  : 1;
+        $filter->hits        = isset($params['hits'])  ? $params['hits']  : 10;
+        $filter->terms       = isset($params['terms']) ? $params['terms'] : '';
+        $filter->userEntries = isset($params['user_entries']) ? $params['user_entries'] : null;
 
         /** @var UsernamePasswordToken $token */
         $token = $this->get('security.token_storage')->getToken();
@@ -50,9 +51,9 @@ class HomeController extends Controller
         $metadata = $this->get('metadata')->find($filter);
 
         return array(
-            'rows'    => $metadata['result'],
-            'paging'  => $metadata['paging'],
-            'params'  => $params
+            'rows'         => $metadata['result'],
+            'paging'       => $metadata['paging'],
+            'params'       => $params
         );
     }
 }
