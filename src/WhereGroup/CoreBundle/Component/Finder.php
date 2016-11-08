@@ -22,6 +22,7 @@ class Finder
     public $force = null;
     public $hierarchyLevel = array();
     public $title = null;
+    public $userEntries = null;
 
     /**
      * @param QueryBuilder $qb
@@ -94,6 +95,10 @@ class Finder
         // Title
         if (!is_null($this->title)) {
             $qb->expr()->like('u.title', $qb->expr()->literal('%' . $this->title . '%'));
+        }
+
+        if (!is_null($this->userEntries) && !is_null($this->userId)) {
+            $qb->andWhere($qb->expr()->eq('m.insertUser', (int)$this->userId));
         }
     }
 }
