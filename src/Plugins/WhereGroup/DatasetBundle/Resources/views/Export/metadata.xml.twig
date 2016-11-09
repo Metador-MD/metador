@@ -148,7 +148,7 @@
     {% endfor%}
     {% endif %}
    <gmd:identificationInfo>
-     <srv:SV_ServiceIdentification>
+     <gmd:DataIdentification>
        <gmd:citation>
          <gmd:CI_Citation>
            {% if p['title'] is defined %}
@@ -427,8 +427,8 @@
            <gco:CharacterString>{{ p['serviceTypeVersion'] }}</gco:CharacterString>
          </srv:serviceTypeVersion>
        {% endif %}
-
-       <srv:extent>
+       <gmd:LanguageCode codeListValue="ger" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">ger</gmd:LanguageCode>
+       <gmd:extent>
          <gmd:EX_Extent>
            {% if p['bbox'] is defined %}
              {% for bbox in p['bbox'] %}
@@ -464,9 +464,8 @@
                </gmd:temporalElement>
              {% endfor %}
            {% endif %}
-
          </gmd:EX_Extent>
-       </srv:extent>
+       </gmd:extent>
        {# TODO: prüfen.
        {% if p['coupledResource'] is defined %}
          {% for coupledResource in p['coupledResource'] %}
@@ -525,7 +524,7 @@
          {% endfor %}
        {% endif %}
 
-     </srv:SV_ServiceIdentification>
+     </gmd:DataIdentification>
    </gmd:identificationInfo>
 
    <gmd:distributionInfo>
