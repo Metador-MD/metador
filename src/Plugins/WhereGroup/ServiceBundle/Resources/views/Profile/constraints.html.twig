@@ -63,7 +63,7 @@
                     {% set val = value['useconstraints'] is defined ? value['useconstraints'] : '' %}
 
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional icon-circle"></div>{{'Auswahl'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Auswahl'|trans}}:
                     </label>
 
                     <select name="{{ id }}" id="{{ id|md_id }}" class="oneCol1">
@@ -136,7 +136,7 @@
                     {% set val = value['accessConstraints'] is defined ? value['accessConstraints'] : '' %}
 
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional icon-circle"></div>{{'Auswahl'|trans}}:
+                        <div class="icon mandatory icon-circle"></div>{{'Auswahl'|trans}}:
                     </label>
 
                     <select name="{{ id }}" id="{{ id|md_id }}" class="oneCol1">
