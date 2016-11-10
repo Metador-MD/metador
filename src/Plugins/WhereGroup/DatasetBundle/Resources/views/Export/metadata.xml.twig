@@ -487,16 +487,6 @@
             </gmd:spatialResolution>
             {% endif %}
 
-            {% if p['coupledResource'] is defined and p['coupledResource'] is not empty %}
-                <srv:couplingType>
-                    <SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="tight"/>
-                </srv:couplingType>
-            {% else %}
-                <srv:couplingType>
-                    <SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="loose"/>
-                </srv:couplingType>
-            {% endif %}
-
             {% if p['containsOperationsURL'] is defined %}
                 <srv:containsOperations>
                     <srv:SV_OperationMetadata>
