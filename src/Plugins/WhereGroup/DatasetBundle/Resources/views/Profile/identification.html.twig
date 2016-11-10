@@ -11,7 +11,7 @@
 {% set length = p['identifier']|length -1 %}
 
 <h2>{% trans %}Bezeichner{% endtrans %}</h2>
-<div class="duplicatable" data-count="{{ length }}">
+<div id="{{ id|md_id }}" class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['identifier'] %}
         <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
@@ -34,7 +34,7 @@
                     </label>
                     <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol2"/>
                     <div class="btn-group">
-                        <div class="wizard_p_fileidentifier" data-obj-id="{{ id|md_id }}"><div class="icon icon-magic-wand"></div></div>
+                        <div class="wizard_p_identifiercode" data-obj-id="{{ id|md_id }}"><div class="icon icon-magic-wand"></div></div>
                         <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
