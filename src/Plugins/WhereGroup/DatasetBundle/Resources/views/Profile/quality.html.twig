@@ -25,8 +25,13 @@
     {% set p = p|merge({'resolution': [{'denominator':'','distance':'','uom':'', 'ground': ''}]}) %}
 {% endif %}
 {% set length = p['resolution']|length -1 %}
-
-<h2>{% trans %}Räumliche Auflösung{% endtrans %}</h2>
+<div class="twoColBox">
+    <h2>{% trans %}Räumliche Auflösung{% endtrans %}</h2>
+    <label>
+        <div class="icon mandatory icon-circle"></div>({% trans %}mindestens eine Angabe verpflichtend{% endtrans %})
+    </label>
+    <div class="clear"></div>
+</div>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['resolution'] %}
