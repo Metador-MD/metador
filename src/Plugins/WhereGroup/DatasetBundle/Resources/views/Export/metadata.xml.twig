@@ -486,6 +486,14 @@
                 {% endfor %}
             </gmd:spatialResolution>
             {% endif %}
+            <!-- Themenkategorie -->
+            {% if p['topicCategory'] is defined %}
+                {% for topicCategory in p['topicCategory'] %}
+                <gmd:topicCategory>
+                    <gmd:MD_TopicCategoryCode>{{ topicCategory }}</gmd:MD_TopicCategoryCode>
+                </gmd:topicCategory>
+                {% endfor %}
+            {% endif %}
         </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
 
