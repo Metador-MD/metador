@@ -416,9 +416,11 @@
                     </gmd:resourceConstraints>
                 {% endfor %}
             {% endif %}
+            {% for language in p['language'] %}
             <gmd:language>
-                <gmd:LanguageCode codeListValue="{{ p['language']}}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ p['language']}}</gmd:LanguageCode>
+                <gmd:LanguageCode codeListValue="{{ language }}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ language }}</gmd:LanguageCode>
             </gmd:language>
+            {% endfor %}
             <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode"/>
             <gmd:extent>
                 <gmd:EX_Extent>
