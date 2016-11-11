@@ -471,18 +471,20 @@
             {% if p['resolution'] is defined %}
             <gmd:spatialResolution>
                 {% for resolution in p['resolution'] %}
-                <gmd:MD_Resolution>
-                <gmd:equivalentScale>
-                    <gmd:MD_RepresentativeFraction>
-                        <gmd:denominator>
-                            <gco:Integer>{{ resolution.denominator }}</gco:Integer>
-                        </gmd:denominator>
-                    </gmd:MD_RepresentativeFraction>
-                </gmd:equivalentScale>
-                <gmd:distance>
-                    <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ resolution.ground }}</gco:Distance>
-                </gmd:distance>
-                </gmd:MD_Resolution>
+                    {% if resolution['denominator'] is defined or resolution['ground'] is defined and resolution['denominator'] is not empty  or resolution['ground'] is not empty %}
+                    <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                        <gmd:MD_RepresentativeFraction>
+                            <gmd:denominator>
+                                <gco:Integer>{{ resolution.denominator }}</gco:Integer>
+                            </gmd:denominator>
+                        </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                    <gmd:distance>
+                        <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ resolution.ground }}</gco:Distance>
+                    </gmd:distance>
+                    </gmd:MD_Resolution>
+                    {% endif %}
                 {% endfor %}
             </gmd:spatialResolution>
             {% endif %}
