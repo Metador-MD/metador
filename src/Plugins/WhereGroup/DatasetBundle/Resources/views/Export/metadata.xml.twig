@@ -446,9 +446,14 @@
                             </gmd:geographicElement>
                         {% endfor %}
                     {% endif %}
-                    {% if p['temporalExtent'] is defined and p['temporalExtent'] is not empty %}
-                        {% for temporalExtent in p['temporalExtent'] %}
-                            <gmd:temporalElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+            <gmd:extent>
+                <gmd:EX_Extent>
+                {% if p['temporalExtent'] is defined %}
+                    {% for temporalExtent in p['temporalExtent'] %}
+                        {% if temporalExtent['begin'] is defined and temporalExtent['begin'] is not empty %}
+                        <gmd:temporalElement>
                                 <gmd:EX_TemporalExtent>
                                     <gmd:extent>
                                         <gml:TimePeriod gml:id="ID_{{ loop.index }}" xsi:type="gml:TimePeriodType">
@@ -458,11 +463,11 @@
                                     </gmd:extent>
                                 </gmd:EX_TemporalExtent>
                             </gmd:temporalElement>
-                        {% endfor %}
-                    {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 </gmd:EX_Extent>
             </gmd:extent>
-
             {% if p['resolution'] is defined %}
             <gmd:spatialResolution>
                 {% for resolution in p['resolution'] %}
