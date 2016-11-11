@@ -555,7 +555,6 @@
                     </gmd:level>
                 </gmd:DQ_Scope>
             </gmd:scope>
-
             {% if p['dataquality'] is defined %}
                 {% for dataquality in p['dataquality'] %}
                     <gmd:report>
@@ -595,6 +594,13 @@
                     </gmd:report>
                 {% endfor %}
             {% endif %}
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:statement>
+                        <gco:CharacterString>{{ p['lineage'] }}</gco:CharacterString>
+                    </gmd:statement>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
         </gmd:DQ_DataQuality>
     </gmd:dataQualityInfo>
 </gmd:MD_Metadata>
