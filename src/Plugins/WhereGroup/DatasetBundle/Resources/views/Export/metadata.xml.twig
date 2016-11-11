@@ -416,7 +416,7 @@
                     </gmd:resourceConstraints>
                 {% endfor %}
             {% endif %}
-            {% for language in p['language'] %}
+            {% for language in p['resourceLanguage'] %}
             <gmd:language>
                 <gmd:LanguageCode codeListValue="{{ language }}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ language }}</gmd:LanguageCode>
             </gmd:language>
@@ -463,8 +463,8 @@
 
             {% if p['resolution'] is defined %}
             <gmd:spatialResolution>
-            <gmd:MD_Resolution>
                 {% for resolution in p['resolution'] %}
+                <gmd:MD_Resolution>
                 <gmd:equivalentScale>
                     <gmd:MD_RepresentativeFraction>
                         <gmd:denominator>
@@ -475,43 +475,10 @@
                 <gmd:distance>
                     <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ resolution.ground }}</gco:Distance>
                 </gmd:distance>
+                </gmd:MD_Resolution>
                 {% endfor %}
-            </gmd:MD_Resolution>
             </gmd:spatialResolution>
             {% endif %}
-
-            {% if p['containsOperationsURL'] is defined %}
-                <srv:containsOperations>
-                    <srv:SV_OperationMetadata>
-                        {% if p['containsOperationsName'] is defined %}
-                            <srv:operationName>
-                                <gco:CharacterString>{{ p['containsOperationsName'] }}</gco:CharacterString>
-                            </srv:operationName>
-                        {% endif %}
-                        {% if p['containsOperationsDCP'] is defined %}
-                            <srv:DCP>
-                                <srv:DCPList codeList="DCPList" codeListValue="{{ p['containsOperationsDCP'] }}">{{ p['containsOperationsDCP'] }}</srv:DCPList>
-                            </srv:DCP>
-                        {% endif %}
-                        {% if p['containsOperationsURL'] is defined %}
-                            <srv:connectPoint>
-                                <gmd:CI_OnlineResource>
-                                    <gmd:linkage>
-                                        <gmd:URL>{{ p['containsOperationsURL'] }}</gmd:URL>
-                                    </gmd:linkage>
-                                </gmd:CI_OnlineResource>
-                            </srv:connectPoint>
-                        {% endif %}
-                    </srv:SV_OperationMetadata>
-                </srv:containsOperations>
-            {% endif %}
-
-            {% if p['coupledResource'] is defined %}
-                {% for coupledResource in p['coupledResource'] %}
-                    <srv:operatesOn xlink:href="{{ coupledResource }}"/>
-                {% endfor %}
-            {% endif %}
-
         </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
 
