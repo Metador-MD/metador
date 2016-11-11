@@ -416,11 +416,13 @@
                     </gmd:resourceConstraints>
                 {% endfor %}
             {% endif %}
-            {% for language in p['resourceLanguage'] %}
-            <gmd:language>
-                <gmd:LanguageCode codeListValue="{{ language }}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ language }}</gmd:LanguageCode>
-            </gmd:language>
-            {% endfor %}
+            {% if p['resourceLanguage'] is defined %}
+                {% for language in p['resourceLanguage'] %}
+                <gmd:language>
+                    <gmd:LanguageCode codeListValue="{{ language }}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ language }}</gmd:LanguageCode>
+                </gmd:language>
+                {% endfor %}
+            {% endif %}
             <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode"/>
             <gmd:extent>
                 <gmd:EX_Extent>
@@ -444,7 +446,7 @@
                             </gmd:geographicElement>
                         {% endfor %}
                     {% endif %}
-                    {% if p['temporalExtent'] is defined %}
+                    {% if p['temporalExtent'] is defined and p['temporalExtent'] is not empty %}
                         {% for temporalExtent in p['temporalExtent'] %}
                             <gmd:temporalElement>
                                 <gmd:EX_TemporalExtent>

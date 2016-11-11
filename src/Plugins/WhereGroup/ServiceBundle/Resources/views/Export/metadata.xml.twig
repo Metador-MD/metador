@@ -451,7 +451,7 @@
                             </gmd:geographicElement>
                         {% endfor %}
                     {% endif %}
-                    {% if p['temporalExtent'] is defined %}
+                    {% if p['temporalExtent'] is defined and p['temporalExtent'] is not empty %}
                         {% for temporalExtent in p['temporalExtent'] %}
                             <gmd:temporalElement>
                                 <gmd:EX_TemporalExtent>
@@ -465,25 +465,8 @@
                             </gmd:temporalElement>
                         {% endfor %}
                     {% endif %}
-
                 </gmd:EX_Extent>
             </srv:extent>
-            {# TODO: prüfen.
-            {% if p['coupledResource'] is defined %}
-              {% for coupledResource in p['coupledResource'] %}
-                <srv:coupledResource>
-                  <srv:SV_CoupledResource>
-                    <srv:operationName>
-                      <gco:CharacterString/>
-                    </srv:operationName>
-                    <srv:identifier>
-                      <gco:CharacterString>{{ coupledResource }}</gco:CharacterString>
-                    </srv:identifier>
-                  </srv:SV_CoupledResource>
-                </srv:coupledResource>
-              {% endfor %}
-            {% endif %}
-            #}
             {% if p['coupledResource'] is defined and p['coupledResource'] is not empty %}
                 <srv:couplingType>
                     <SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="tight"/>
