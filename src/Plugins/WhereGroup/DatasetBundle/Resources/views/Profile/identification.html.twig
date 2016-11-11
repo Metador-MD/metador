@@ -173,7 +173,7 @@
         </div>
     </div>
 
-    {% set id = 'p[language][]' %}
+    {% set id = 'p[resourceLanguage][]' %}
 
     <div class="right">
         <label for="{{ id|md_id }}_b">
@@ -200,8 +200,8 @@
     <div class="clear"></div>
 
     <div class="singleResult" id="result_{{ id|md_id }}">
-        {% if p['language'] is defined %}
-        {% for value in p['language'] %}
+        {% if p['resourceLanguage'] is defined %}
+        {% for value in p['resourceLanguage'] %}
         {% if value is not empty %}
         <div>
             <input type="hidden" name="{{ id }}" value="{{ value }}" />
