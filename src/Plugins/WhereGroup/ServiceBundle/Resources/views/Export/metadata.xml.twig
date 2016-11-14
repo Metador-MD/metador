@@ -451,8 +451,9 @@
                             </gmd:geographicElement>
                         {% endfor %}
                     {% endif %}
-                    {% if p['temporalExtent'] is defined and p['temporalExtent'] is not empty %}
+                    {% if p['temporalExtent'] is defined %}
                         {% for temporalExtent in p['temporalExtent'] %}
+                            {% if temporalExtent['begin'] is defined and temporalExtent['begin'] is not empty %}
                             <gmd:temporalElement>
                                 <gmd:EX_TemporalExtent>
                                     <gmd:extent>
@@ -463,6 +464,7 @@
                                     </gmd:extent>
                                 </gmd:EX_TemporalExtent>
                             </gmd:temporalElement>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 </gmd:EX_Extent>
@@ -584,7 +586,7 @@
                                             <gco:Boolean>{{ dataquality['result'] }}</gco:Boolean>
                                         </gmd:pass>
                                     {% else %}
-                                        <gmd:pass nilReason="unknown" />
+                                        <gmd:pass gco:nilReason="unknown" />
                                     {% endif %}
                                 </gmd:DQ_ConformanceResult>
                             </gmd:result>
