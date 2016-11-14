@@ -110,3 +110,6 @@ Verwalter: Administrator
 'Mindestens eine Angabe verpflichtend.': 'At least one statement compulsory.'
 Geodaten: Geodata
 'Metadatenprofil für Daten': 'Metadata Profile for Data'
+'Darstellung geographischer Informationen': 'Represent geographic information'
+Vektor: Vector
+Raster: Grid

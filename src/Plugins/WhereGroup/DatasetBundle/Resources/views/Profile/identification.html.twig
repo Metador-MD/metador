@@ -218,6 +218,29 @@
 </div>
 
 {#
+    SPATIAL REPRESENTATION TYPE
+#}
+{% set id = 'p[spatialRepresentationType]' %}
+
+<div class="oneColBox">
+    <label for="{{ id|md_id }}">
+        <div class="icon mandatory icon-circle"></div>{{'Darstellung geographischer Informationen'|trans}}:
+    </label>
+    <select name="{{ id }}" id="{{ id|md_id }}" class="oneCol1">
+        <option value="vector" {{ md_select(val, 'vector') }}>
+            {% trans %}Vektor{% endtrans %}
+        </option>
+        <option value="grid" {{ md_select(val, 'grid') }}>
+            {% trans %}Raster{% endtrans %}
+        </option>
+    </select>
+    <div class="btn-group">
+        <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{#
     REFERENCE SYSTEM INFO
 #}
 <h2>{% trans %}Koordinatenreferenzsystem{% endtrans %}</h2>
