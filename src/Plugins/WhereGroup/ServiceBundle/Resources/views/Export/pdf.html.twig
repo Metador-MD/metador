@@ -60,10 +60,12 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
                 <td>{{rpm.facsimile}}</td>
             </tr>
-            <tr>
-                <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
-                <td>{{rpm.onlineResource}}</td>
-            </tr>
+            {% if rpm.onlineResource is defined and rpm.onlineResource is not empty %}
+                <tr>
+                    <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+                    <td>{{rpm.onlineResource}}</td>
+                </tr>
+            {% endif %}
             {% if loop != loop.last %}
                 <tr>
                     <td class="last"></td>
@@ -86,7 +88,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
     {% if p['browserGraphic'] is defined %}
     <tr>
         <td class="label">{% trans %}Browser Bild{% endtrans %}:</td>
-        <td>{{p['browserGraphic']}}</td>
+        <td><img src="{{p['browserGraphic']}}" /></td>
     </tr>
     {% endif %}
 </table>
@@ -102,7 +104,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             <td class="label">{% trans %}Namensraum{% endtrans %}:</td>
             <td>{{identifier['codespace']}}</td>
         </tr>
-        {% if loop != loop.last%}
+        {% if loop != loop.last %}
             <tr>
                 <td class="last"></td>
                 <td></td>
@@ -110,7 +112,6 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         {% endif %}
     {% endfor %}
 </table>
-<p></p>
 <table>
     <tr>
         <td class="label">{% trans %}Titel{% endtrans %}:</td>
@@ -124,44 +125,111 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         <td class="label">{% trans %}Kurzbeschreibung{% endtrans %}:</td>
         <td>{{p['abstract']}}</td>
     </tr>
-   {% if p['onlineResource'] is defined and p['onlineResource'] is not empty %}
+    {% if p['onlineResource'] is defined and p['onlineResource'] is not empty %}
         <tr>
             <td class="label">{% trans %}Ressourcenverweis{% endtrans %}:</td>
             <td>
                 {% for onlineResource in p['onlineResource']%}
-                    {{onlineResource}}
+                    {{onlineResource}} <br />
                 {% endfor %}
             </td>
         </tr>
-   {% endif %}
+    {% endif %}
     <tr>
         <td class="label">{% trans %}Ressourcenart{% endtrans %}</td>
         <td>{{p['hierarchyLevel']}}</td>
     </tr>
-    {% if p['language'] is defined and p['language'] is not empty %}
+    {% if p['resourceLanguage'] is defined and p['resourceLanguage'] is not empty %}
         <tr>
             <td class="label">{% trans %}Sprache der Ressource{% endtrans %}</td>
             <td>
-                {% for language in p['language'] %}
+                {% for language in p['resourceLanguage'] %}
                     {{language}}{% if loop != loop.last %},{% endif %}
                 {% endfor %}
             </td>
         </tr>
     {% endif %}
-</table>
-{% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
-    <h1>{% trans %}Klassifizierung{% endtrans %}</h1>
-    <table>
+    {% if p['coupledResource'] is defined and p['coupledResource'] is not empty %}
         <tr>
-            <td class="label">{% trans %}Themenkategorie{% endtrans %}:</td>
+            <td class="label">{% trans %}Gekoppelte Ressource{% endtrans %}:</td>
             <td>
-                {% for topicCategory in p['topicCategory']%}
-                    {{topicCategory}}{% if loop != loop.last %},{% endif %}
+                {% for coupledResource in p['coupledResource']%}
+                    {{coupledResource}} <br />
                 {% endfor %}
             </td>
         </tr>
+    {% endif %}
+</table>
+{% if p['referencesysteminfo'] is defined and p['referencesysteminfo'] is not empty %}
+    <h3>{% trans %}Koordinatenreferenzsystem{% endtrans %}</h3>
+    <table>
+        {% for referencesysteminfo in p['referencesysteminfo']%}
+            <tr>
+                <td class="label">{% trans %}Code{% endtrans %}:</td>
+                <td>{{referencesysteminfo['code']}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Namensraum{% endtrans %}:</td>
+                <td>{{referencesysteminfo['codespace']}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Version{% endtrans %}:</td>
+                <td>{{referencesysteminfo['version']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
     </table>
 {% endif %}
+
+{% if p['containsOperationsURL'] is defined and p['containsOperationsURL'] is not empty %}
+    <h3>{% trans %}Dienste Operationen{% endtrans %}</h3>
+    <table>
+        {% if p['containsOperationsName'] is defined %}
+            <tr>
+                <td class="label">{% trans %}Operation{% endtrans %}:</td>
+                <td>{{p['containsOperationsName']}}</td>
+            </tr>
+        {% endif %}
+        {% if p['containsOperationsDCP'] is defined %}
+            <tr>
+                <td class="label">{% trans %}Platform{% endtrans %}:</td>
+                <td>{{p['containsOperationsDCP']}}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td class="label">{% trans %}URL{% endtrans %}:</td>
+            <td>{{p['containsOperationsURL']}}</td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if p['hierarchyLevelName'] is defined and  p['hierarchyLevelName'] is not empty %}
+    <h1>{% trans %}Klassifizierung{% endtrans %}</h1>
+    <table>
+        <tr>
+            <td class="label">{% trans %}Geodatendienst{% endtrans %}:</td>
+            <td>
+                {{p['hierarchyLevelName']}}
+            </td>
+        </tr>
+        {% if p['serviceTypeVersion'] is defined and p['serviceTypeVersion'] is not empty %}
+            <tr>
+                <td class="label">{% trans %}Version{% endtrans %}:</td>
+                <td>
+                    {% for serviceTypeVersion in p['serviceTypeVersion']%}
+                        {{serviceTypeVersion}} <br />
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
+    </table>
+{% endif %}
+
 {% if p['keyword'] is defined and p['keyword'] is not empty %}
     <h1>{% trans %}Schlüsselwort{% endtrans %}</h1>
     <table>
@@ -175,7 +243,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 <td>{{value['date']}}</td>
             </tr>
             <tr>
-                <td>{% trans %}Datum der{% endtrans %}:</td>
+                <td>{% trans %}Datumstyp{% endtrans %}:</td>
                 <td>{{value['type']}}</td>
             </tr>
             <tr>
@@ -282,11 +350,11 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 <td>{{dataquality['date']}}</td>
             </tr>
             <tr>
-                <td>{% trans %}Datum der{% endtrans %}:</td>
+                <td>{% trans %}Datumstyp{% endtrans %}:</td>
                 <td>{{dataquality['type']}}</td>
             </tr>
             <tr>
-                <td>{% trans %}Grad{% endtrans %}:</td>
+                <td>{% trans %}Konformitätsgrad{% endtrans %}:</td>
                 <td>{{dataquality['result']}}</td>
             </tr>
             {% if loop != loop.last %}
@@ -298,11 +366,14 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         {% endfor %}
     </table>
 {% endif %}
+
+
+
 {% if (p['uselimitation'] is defined and p['uselimitation'] is not empty) or (p['otherconstraints'] is defined and p['otherconstraints'] is not empty)%}
     <h1>{% trans %}Beschränkungen{% endtrans %}</h1>
 {% endif %}
 {% if p['uselimitation'] is defined and p['uselimitation'] is not empty %}
-    <h3>{% trans %}Bedingungen für den Zugang und die Nutzung{% endtrans %}:</h3>
+    <h3>{% trans %}Nutzungseinschränkungen{% endtrans %}:</h3>
     <table>
         {% for uselimitation in p['uselimitation'] %}
             <tr>
@@ -311,16 +382,31 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         {% endfor %}
     </table>
 {% endif %}
-{% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
-    <h3>{% trans %}Beschränkungen des öffentlichen Zugangs{% endtrans %}:</h3>
+
+{% if p['useconstraints'] is defined and p['useconstraints'] is not empty %}
+    <h3>{% trans %}Nutzungsbedingungen{% endtrans %}:</h3>
     <table>
-        {% for otherconstraints in p['otherconstraints'] %}
+        {% for useconstraints in p['useconstraints'] %}
             <tr>
-                <td>{{otherconstraints}}</td>
+                <td class="label">{{useconstraints['useconstraints'] }}</td>
+                <td>{{useconstraints['otherconstraints']}}</td>
             </tr>
         {% endfor %}
     </table>
 {% endif %}
+
+{% if p['accessConstraints'] is defined and p['accessConstraints'] is not empty %}
+    <h3>{% trans %}Nutzungsbedingungen{% endtrans %}:</h3>
+    <table>
+        {% for accessConstraints in p['accessConstraints'] %}
+            <tr>
+                <td class="label">{{accessConstraints['accessConstraints'] }}</td>
+                <td>{{accessConstraints['otherconstraints']}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
 {%
     if p['responsibleParty'][0]['organisationName'] is defined
     and p['responsibleParty'][0]['organisationName'] is not empty
@@ -373,10 +459,12 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
             <td>{{rp['facsimile']}}</td>
         </tr>
-        <tr>
-            <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
-            <td>{{rp['onlineResource']}}</td>
-        </tr>
+        {% if rp['onlineResource'] is defined and rp['onlineResource'] is not empty %}
+            <tr>
+                <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+                <td>{{rp['onlineResource']}}</td>
+            </tr>
+        {% endif %}
         {% if loop != loop.last %}
             <tr>
                 <td class="last"></td>
