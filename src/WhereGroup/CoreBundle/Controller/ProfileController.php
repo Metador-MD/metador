@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\UserBundle\Entity\User;
 
 /**
@@ -185,6 +186,12 @@ class ProfileController extends Controller
         $this->denyAccessUnlessGranted('view', $metadata);
 
         $this->init($profile);
+
+        // EVENT PRE USE
+        $this->container->get('event_dispatcher')->dispatch(
+            'metador.pre_use',
+            new MetadataChangeEvent($metadata, array())
+        );
 
         $this->data['p'] = $metadata->getObject();
         $this->data['p']['dateStamp'] = date("Y-m-d");

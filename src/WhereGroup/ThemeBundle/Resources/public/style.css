@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?qfbaz9');
-  src:  url('fonts/icomoon.eot?qfbaz9#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?qfbaz9') format('woff2'),
-    url('fonts/icomoon.ttf?qfbaz9') format('truetype'),
-    url('fonts/icomoon.woff?qfbaz9') format('woff'),
-    url('fonts/icomoon.svg?qfbaz9#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?xosszp');
+  src:  url('fonts/icomoon.eot?xosszp#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?xosszp') format('woff2'),
+    url('fonts/icomoon.ttf?xosszp') format('truetype'),
+    url('fonts/icomoon.woff?xosszp') format('woff'),
+    url('fonts/icomoon.svg?xosszp#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-inspire:before {
+  content: "\e901";
+}
 .icon-wheregroup:before {
   content: "\e600";
 }
@@ -34,8 +37,17 @@
 .icon-chevron-right:before {
   content: "\f054";
 }
+.icon-sort-desc:before {
+  content: "\f0dd";
+}
+.icon-sort-down:before {
+  content: "\f0dd";
+}
 .icon-circle:before {
   content: "\f111";
+}
+.icon-puzzle-piece:before {
+  content: "\f12e";
 }
 .icon-home:before {
   content: "\e900";
@@ -54,6 +66,9 @@
 }
 .icon-file-text2:before {
   content: "\e926";
+}
+.icon-copy:before {
+  content: "\e92c";
 }
 .icon-stack:before {
   content: "\e92e";
