@@ -259,10 +259,20 @@ $(document).ready(function() {
         var identCode = $('#p_identifier_0_code');
         var uuid      = getUUID();
 
-        if (ident.val() === "" && identCode.val() === "") {
+        if (ident.val() === "") {
             ident.val(uuid);
-            identCode.val(uuid);
+            if (identCode.val() === ""){
+                identCode.val(uuid);
+            }
         }
+    });
+
+    $(document).on('click', '.wizard_p_identifiercode', function() {
+        console.log();
+        var id = $($('#p_identifier').find('li.act')).attr('data-id');
+        var identCode = $('#p_identifier_' + id + '_code');
+        var uuid      = getUUID();
+        identCode.val(uuid);
     });
 
     $('#p_useconstraints_b').change(function() {

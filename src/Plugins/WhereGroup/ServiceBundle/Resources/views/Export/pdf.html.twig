@@ -138,11 +138,11 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         <td class="label">{% trans %}Ressourcenart{% endtrans %}</td>
         <td>{{p['hierarchyLevel']}}</td>
     </tr>
-    {% if p['language'] is defined and p['language'] is not empty %}
+    {% if p['resourceLanguage'] is defined and p['resourceLanguage'] is not empty %}
         <tr>
             <td class="label">{% trans %}Sprache der Ressource{% endtrans %}</td>
             <td>
-                {% for language in p['language'] %}
+                {% for language in p['resourceLanguage'] %}
                     {{language}}{% if loop != loop.last %},{% endif %}
                 {% endfor %}
             </td>

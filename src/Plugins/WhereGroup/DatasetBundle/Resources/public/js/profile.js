@@ -259,10 +259,20 @@ $(document).ready(function() {
         var identCode = $('#p_identifier_0_code');
         var uuid      = getUUID();
 
-        if (ident.val() === "" && identCode.val() === "") {
+        if (ident.val() === "") {
             ident.val(uuid);
-            identCode.val(uuid);
+            if (identCode.val() === ""){
+                identCode.val(uuid);
+            }
         }
+    });
+
+    $(document).on('click', '.wizard_p_identifiercode', function() {
+        console.log();
+        var id = $($('#p_identifier').find('li.act')).attr('data-id');
+        var identCode = $('#p_identifier_' + id + '_code');
+        var uuid      = getUUID();
+        identCode.val(uuid);
     });
 
     $('#p_useconstraints_b').change(function() {
@@ -452,10 +462,10 @@ $(document).ready(function() {
         });
     });
 
-    $('#select_p_language').change(function() {
-        $('#result_p_language').prepend(
+    $('#select_p_resourcelanguage').change(function() {
+        $('#result_p_resourcelanguage').prepend(
             $('<div></div>').append(
-                $('<input/>').attr("type", "hidden").attr("name", "p[language][]").val($(this).val()),
+                $('<input/>').attr("type", "hidden").attr("name", "p[resourceLanguage][]").val($(this).val()),
                 $('<label></label>')
                     .html($(this).val()),
                 $('<div></div>')
@@ -489,66 +499,6 @@ $(document).ready(function() {
                 'public': $(this).is(':checked') ? 1 : 0
             }
         });
-    });
-
-    $('#wizard_p_coupledresource').click(function() {
-        var that = this;
-        var dialog = $('<div>');
-
-        dialog.modalDialog({
-            title: 'Metadaten',
-            height: 300,
-            width: 350,
-            html: '<div class="wizard-coupled-content"></div>',
-            buttons: {
-                'abort': {
-                    'label': 'Abbrechen', 'type': 'info',
-                    'click': function(result) {
-                        $(this).modalDialog('close', false);
-                    }
-                }
-            },
-            onOpen: function() {
-                $('.wizard-coupled-content').append(
-                    $('<input />')
-                        .attr('id', 'find_coupled_data')
-                        .attr('name', 'coupled')
-                        .css('width', '100%')
-                        .keyup(function() {
-                            var find = $(this).val();
-
-                            $.ajax({
-                                url: BASEDIR + "metador/service/coupled",
-                                type: "get",
-                                data: {'find': find},
-                                dataType: "json",
-                                success:  function(data) {
-                                    $('.wizard-content').children().remove();
-                                    for(var i in data) {
-                                        $('.wizard-content').append(
-                                            $('<p></p>')
-                                                .addClass('wizard-content-value')
-                                                .text(data[i].label)
-                                                .attr('data-value', data[i].value)
-                                                .click(function() {
-                                                    $('#source_p_coupledresource').val(
-                                                        $(this).attr('data-value')
-                                                    );
-                                                    dialog.modalDialog('close', true);
-                                                })
-                                        );
-                                    }
-                                }
-                            });
-                        }),
-                    $('<div></div>').addClass('wizard-content')
-                ).css('padding', '5px');
-
-                $('#find_coupled_data').focus().keyup();
-            }
-        });
-
-        dialog.modalDialog('open');
     });
 
     $('[data-confirm-abort]').click(function() {

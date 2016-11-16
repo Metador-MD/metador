@@ -7,7 +7,7 @@
 {% set val = p['lineage'] is defined ? p['lineage'] : '' %}
 <div class="oneColBox">
     <label class="displayLeft" for="{{ id|md_id }}">
-        <div class="icon optional icon-circle"></div>{{'Herkunft'|trans}}:
+        <div class="icon mandatory icon-circle"></div>{{'Herkunft'|trans}}:
     </label>
     <div class="btn-group displayRight">
         <div class="single showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
@@ -22,11 +22,16 @@
 {% set id = 'p[resolution]' %}
 
 {% if p['resolution'] is not defined %}
-    {% set p = p|merge({'resolution': [{'denominator':'','distance':'','uom':''}]}) %}
+    {% set p = p|merge({'resolution': [{'denominator':'','distance':'','uom':'', 'ground': ''}]}) %}
 {% endif %}
 {% set length = p['resolution']|length -1 %}
-
-<h2>{% trans %}Räumliche Auflösung{% endtrans %}</h2>
+<div class="twoColBox">
+    <h2>{% trans %}Räumliche Auflösung{% endtrans %}</h2>
+    <label>
+        <div class="icon mandatory icon-circle"></div>({% trans %}mindestens eine Angabe verpflichtend{% endtrans %})
+    </label>
+    <div class="clear"></div>
+</div>
 <div class="duplicatable" data-count="{{ length }}">
     <ul>
         {% for key,value in p['resolution'] %}
@@ -47,15 +52,29 @@
 
                 <div class="left">
                     <label for="{{ id|md_id }}">
-                        <div class="icon optional icon-circle"></div>{{'Äquivalenter Maßstab'|trans}}:
+                        <div class="icon conditional icon-circle"></div>{{'Äquivalenter Maßstab'|trans}}:
                     </label>
-                    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
+                    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
                     <div class="btn-group">
                         <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
                     </div>
                 </div>
 
-                <div class="right"></div>
+                {% set id = 'p[resolution][' ~ key ~ '][ground]' %}
+                {% set val = value['ground'] is defined ? value['ground'] : '' %}
+
+                <div class="right">
+                    <label for="{{ id|md_id }}">
+                        <div class="icon conditional icon-circle"></div>{{'Bodenauflösung'|trans}}:
+                    </label>
+                    <div class="fr">
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="twoCol1"/>
+                    </div>
+                </div>
+
                 <div class="clear"></div>
             </div>
         </div>

@@ -46,6 +46,7 @@ Enddatum: 'End date'
 'Qualität und Gültigkeit': 'Quality and validity'
 Herkunft: Source
 'Räumliche Auflösung': 'Spatial resolution'
+'Bodenauflösung': 'Ground resolutiuon'
 'Äquivalenter Maßstab': 'Equivalent scale'
 Übereinstimmung: Accordance
 'Datum der': 'Date of'
@@ -109,3 +110,6 @@ Verwalter: Administrator
 'Mindestens eine Angabe verpflichtend.': 'At least one statement compulsory.'
 Geodaten: Geodata
 'Metadatenprofil für Daten': 'Metadata Profile for Data'
+'Darstellung geographischer Informationen': 'Represent geographic information'
+Vektor: Vector
+Raster: Grid

@@ -42,20 +42,9 @@
 {#
     SERVICE TYPE VERSION
 #}
+
 {% set id = 'p[serviceTypeVersion][]' %}
-{#
-<div class="oneColBox">
-    <label>
-        <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
-    </label>
-    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}" class="oneCol1"/>
-    <div class="btn-group">
-        <div class="last showHelp"  {{ id|md_data_obj }}>
-            <div class="icon icon-question"></div>
-        </div>
-    </div>
-    <div class="clear"></div>
-</div>#}
+
 <div class="twoColBox">
     <label class="displayLeft">
         <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
@@ -65,10 +54,10 @@
         <label for="{{ id|md_id }}_a">
             <div class="icon"></div>{{'Freitext'|trans}}:
         </label>
-        <input type="text" name="serviceTypeVersion_a" id="source_{{ id|md_id }}" class="twoCol2  no-value" />
+        <input type="text" name="serviceTypeVersion_a" id="source_{{ id|md_id }}" class="twoCol2 no-value" />
         <div class="btn-group">
             <div class="cmdAddSingleValue" data-obj-id="{{ id|md_id }}" data-name="{{ id }}"><div class="icon icon-plus"></div></div>
-            <div class="last showHelp"  data-obj-id="{{ id|md_id }}_a">
+            <div class="last showHelp" data-obj-id="{{ id|md_id }}_a">
                 <div class="icon icon-question"></div>
             </div>
         </div>
