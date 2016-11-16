@@ -164,7 +164,7 @@ class ExportController extends Controller
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
-        $response->setContent($xml);
+        $response->setContent("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" . $xml);
         return $response;
     }
 }
