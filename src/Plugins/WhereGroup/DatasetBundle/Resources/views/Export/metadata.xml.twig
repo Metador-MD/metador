@@ -28,6 +28,11 @@
             <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
         </gmd:hierarchyLevelName>
     {% endif %}
+    {% if p['hierarchyLevel'] == 'series' and p['hierarchyLevelName'] is not defined %}
+        <gmd:hierarchyLevelName>
+            <gco:CharacterString>Produkt</gco:CharacterString>
+        </gmd:hierarchyLevelName>
+    {% endif %}
     {% if p['responsiblePartyMetadata'] is defined %}
         {% for contact in p['responsiblePartyMetadata'] %}
             {% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
