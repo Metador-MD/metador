@@ -61,10 +61,12 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
                 <td>{{rpm.facsimile}}</td>
             </tr>
-            <tr>
-                <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
-                <td>{{rpm.onlineResource}}</td>
-            </tr>
+            {% if rpm.onlineResource is defined and rpm.onlineResource is not empty %}
+                <tr>
+                    <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+                    <td>{{rpm.onlineResource}}</td>
+                </tr>
+            {% endif %}
             {% if loop != loop.last %}
                 <tr>
                     <td class="last"></td>
