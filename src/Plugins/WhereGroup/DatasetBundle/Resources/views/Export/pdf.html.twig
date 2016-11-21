@@ -358,16 +358,30 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
     </table>
 {% endif %}
 
-{% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
-    <h3>{% trans %}Beschränkungen des öffentlichen Zugangs{% endtrans %}:</h3>
+{% if p['useconstraints'] is defined and p['useconstraints'] is not empty %}
+    <h3>{% trans %}Nutzungsbedingungen{% endtrans %}:</h3>
     <table>
-        {% for otherconstraints in p['otherconstraints'] %}
+        {% for useconstraints in p['useconstraints'] %}
             <tr>
-                <td>{{otherconstraints}}</td>
+                <td class="label">{{useconstraints['useconstraints'] }}</td>
+                <td>{{useconstraints['otherconstraints']}}</td>
             </tr>
         {% endfor %}
     </table>
 {% endif %}
+
+{% if p['accessConstraints'] is defined and p['accessConstraints'] is not empty %}
+    <h3>{% trans %}Zugriffseinschränkungen{% endtrans %}:</h3>
+    <table>
+        {% for accessConstraints in p['accessConstraints'] %}
+            <tr>
+                <td class="label">{{accessConstraints['accessConstraints'] }}</td>
+                <td>{{accessConstraints['otherconstraints']}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
 {%
     if p['responsibleParty'][0]['organisationName'] is defined
     and p['responsibleParty'][0]['organisationName'] is not empty
