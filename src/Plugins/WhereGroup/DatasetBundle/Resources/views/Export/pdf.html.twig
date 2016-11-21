@@ -296,7 +296,19 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
                 <td class="label">{% trans %}Äquivalenter Maßstab{% endtrans %}:</td>
                 <td>
                     {% for resolution in p['resolution']%}
-                        {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
+                        {% if resolution['denominator'] is not empty %}
+                            {{resolution['denominator']}} <br />
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Bodenauflösung{% endtrans %}:</td>
+                <td>
+                    {% for resolution in p['resolution']%}
+                        {% if resolution['ground'] is not empty %}
+                            {{resolution['ground']}}  <br />
+                        {% endif %}
                     {% endfor %}
                 </td>
             </tr>
@@ -336,7 +348,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
     <h1>{% trans %}Beschränkungen{% endtrans %}</h1>
 {% endif %}
 {% if p['uselimitation'] is defined and p['uselimitation'] is not empty %}
-    <h3>{% trans %}Bedingungen für den Zugang und die Nutzung{% endtrans %}:</h3>
+    <h3>{% trans %}Nutzungseinschränkungen{% endtrans %}:</h3>
     <table>
         {% for uselimitation in p['uselimitation'] %}
             <tr>
@@ -345,6 +357,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         {% endfor %}
     </table>
 {% endif %}
+
 {% if p['otherconstraints'] is defined and p['otherconstraints'] is not empty %}
     <h3>{% trans %}Beschränkungen des öffentlichen Zugangs{% endtrans %}:</h3>
     <table>
