@@ -434,10 +434,12 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             <td class="label">{% trans %}Faxnummer{% endtrans %}:</td>
             <td>{{rp['facsimile']}}</td>
         </tr>
-        <tr>
-            <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
-            <td>{{rp['onlineResource']}}</td>
-        </tr>
+        {% if rp['onlineResource'] is defined and rp['onlineResource'] is not empty %}
+            <tr>
+                <td class="label">{% trans %}Internetadresse{% endtrans %}:</td>
+                <td>{{rp['onlineResource']}}</td>
+            </tr>
+        {% endif %}
         {% if loop != loop.last %}
             <tr>
                 <td class="last"></td>
