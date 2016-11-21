@@ -151,6 +151,10 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             </td>
         </tr>
     {% endif %}
+    <tr>
+        <td class="label">{% trans %}Spatial Representation Type{% endtrans %}:</td>
+        <td>{{p['spatialRepresentationType']}}</td>
+    </tr>
 </table>
 {% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
     <h1>{% trans %}Klassifizierung{% endtrans %}</h1>
