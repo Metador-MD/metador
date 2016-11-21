@@ -89,7 +89,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
     {% if p['browserGraphic'] is defined %}
     <tr>
         <td class="label">{% trans %}Browser Bild{% endtrans %}:</td>
-        <td>{{p['browserGraphic']}}</td>
+        <td><img src="{{p['browserGraphic']}}" /></td>
     </tr>
     {% endif %}
 </table>
@@ -132,7 +132,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
             <td class="label">{% trans %}Ressourcenverweis{% endtrans %}:</td>
             <td>
                 {% for onlineResource in p['onlineResource']%}
-                    {{onlineResource}}
+                    {{onlineResource}} <br />
                 {% endfor %}
             </td>
         </tr>
