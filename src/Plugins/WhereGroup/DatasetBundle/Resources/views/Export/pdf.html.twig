@@ -156,6 +156,33 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         <td>{{p['spatialRepresentationType']}}</td>
     </tr>
 </table>
+
+{% if p['referencesysteminfo'] is defined and p['referencesysteminfo'] is not empty %}
+    <h3>{% trans %}Koordinatenreferenzsystem{% endtrans %}</h3>
+    <table>
+        {% for referencesysteminfo in p['referencesysteminfo']%}
+            <tr>
+                <td class="label">{% trans %}Code{% endtrans %}:</td>
+                <td>{{referencesysteminfo['code']}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Namensraum{% endtrans %}:</td>
+                <td>{{referencesysteminfo['codespace']}}</td>
+            </tr>
+            <tr>
+                <td class="label">{% trans %}Version{% endtrans %}:</td>
+                <td>{{referencesysteminfo['version']}}</td>
+            </tr>
+            {% if loop != loop.last %}
+                <tr>
+                    <td class="last"></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+
 {% if p['topicCategory'] is defined and  p['topicCategory'] is not empty %}
     <h1>{% trans %}Klassifizierung{% endtrans %}</h1>
     <table>
