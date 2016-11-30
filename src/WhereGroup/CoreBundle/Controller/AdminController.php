@@ -25,6 +25,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        return array();
+        return array(
+            'log' => $this->get('metador_healthcheck')->check()
+        );
     }
 }
