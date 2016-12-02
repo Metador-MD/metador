@@ -521,10 +521,18 @@
             <gmd:distributionFormat>
                 <gmd:MD_Format>
                     <gmd:name>
-                        <gco:CharacterString>unknown</gco:CharacterString>
+                        {% if p['metadataStandardName'] is defined and p['metadataStandardName'] is not empty %}
+                            <gco:CharacterString>{{ p['metadataStandardName'] }}</gco:CharacterString>
+                        {% else %}
+                            <gco:CharacterString>unknown</gco:CharacterString>
+                        {% endif %}
                     </gmd:name>
                     <gmd:version>
-                        <gco:CharacterString>unknown</gco:CharacterString>
+                        {% if p['metadataStandardVersion'] is defined and p['metadataStandardVersion'] is not empty %}
+                            <gco:CharacterString>{{ p['metadataStandardVersion'] }}</gco:CharacterString>
+                        {% else %}
+                            <gco:CharacterString>unknown</gco:CharacterString>
+                        {% endif %}
                     </gmd:version>
                 </gmd:MD_Format>
             </gmd:distributionFormat>
