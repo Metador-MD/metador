@@ -520,24 +520,24 @@
 
     <gmd:distributionInfo>
         <gmd:MD_Distribution>
+            {% if p['format'] is defined %}
             <gmd:distributionFormat>
+                {% for format in p['format'] %}
                 <gmd:MD_Format>
+                    {% if format.name is defined and format.name is not empty %}
                     <gmd:name>
-                        {% if p['metadataStandardName'] is defined and p['metadataStandardName'] is not empty %}
-                            <gco:CharacterString>{{ p['metadataStandardName'] }}</gco:CharacterString>
-                        {% else %}
-                            <gco:CharacterString>unknown</gco:CharacterString>
-                        {% endif %}
+                            <gco:CharacterString>{{ format.name }}</gco:CharacterString>
                     </gmd:name>
+                    {% endif %}
+                    {% if format.version is defined and format.version is not empty %}
                     <gmd:version>
-                        {% if p['metadataStandardVersion'] is defined and p['metadataStandardVersion'] is not empty %}
-                            <gco:CharacterString>{{ p['metadataStandardVersion'] }}</gco:CharacterString>
-                        {% else %}
-                            <gco:CharacterString>unknown</gco:CharacterString>
-                        {% endif %}
+                            <gco:CharacterString>{{ format.version  }}</gco:CharacterString>
                     </gmd:version>
+                    {% endif %}
                 </gmd:MD_Format>
+                {% endfor %}
             </gmd:distributionFormat>
+            {% endif %}
 
             <gmd:transferOptions>
                 <gmd:MD_DigitalTransferOptions>
