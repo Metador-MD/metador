@@ -426,30 +426,32 @@
             </gmd:spatialRepresentationType>
             {% endif %}
             <!-- Räumliche Auflösung -->
-            {% for resolution in p['resolution'] %}
-            {% if (resolution['ground'] is defined and resolution['ground'] is not empty)
-            or (resolution['denominator'] is defined and resolution['denominator'] is not empty)
+            {% if (p['resolutionGround'] is defined and p['resolutionGround'] is not empty)
+               or (p['resolutionDenominator'] is defined and p['resolutionDenominator'] is not empty)
             %}
-            <gmd:spatialResolution>
-                <gmd:MD_Resolution>
-                {% if resolution['denominator'] is defined and resolution['denominator'] is not empty %}
-                <gmd:equivalentScale>
-                    <gmd:MD_RepresentativeFraction>
-                        <gmd:denominator>
-                            <gco:Integer>{{ resolution.denominator }}</gco:Integer>
-                        </gmd:denominator>
-                    </gmd:MD_RepresentativeFraction>
-                </gmd:equivalentScale>
+                {% if p['resolutionDenominator'] is defined and p['resolutionDenominator'] is not empty %}
+                <gmd:spatialResolution>
+                    <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                        <gmd:MD_RepresentativeFraction>
+                            <gmd:denominator>
+                                <gco:Integer>{{ p['resolutionDenominator'] }}</gco:Integer>
+                            </gmd:denominator>
+                        </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                    </gmd:MD_Resolution>
+                </gmd:spatialResolution>
                 {% endif %}
-                {% if resolution['ground'] is defined and resolution['ground'] is not empty %}
-                <gmd:distance>
-                    <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ resolution.ground }}</gco:Distance>
-                </gmd:distance>
+                {% if p['resolutionGround'] is defined and p['resolutionGround'] is not empty %}
+                <gmd:spatialResolution>
+                    <gmd:MD_Resolution>
+                    <gmd:distance>
+                        <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ p['resolutionGround'] }}</gco:Distance>
+                    </gmd:distance>
+                    </gmd:MD_Resolution>
+                </gmd:spatialResolution>
                 {% endif %}
-                </gmd:MD_Resolution>
-            </gmd:spatialResolution>
             {% endif %}
-            {% endfor %}
             <!-- Sprache der Ressource -->
             {% if p['resourceLanguage'] is defined %}
                 {% for language in p['resourceLanguage'] %}
@@ -565,7 +567,7 @@
                     <gmd:levelDescription>
                         <gmd:MD_ScopeDescription>
                             <gmd:other>
-                                <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
+                                <gco:CharacterString>{{ p['hierarchyLevelName']|default("") }}</gco:CharacterString>
                             </gmd:other>
                         </gmd:MD_ScopeDescription>
                     </gmd:levelDescription>

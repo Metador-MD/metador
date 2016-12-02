@@ -21,19 +21,14 @@
 #}
 {% set id = 'p[resolution]' %}
 
-{% if p['resolution'] is not defined %}
-    {% set p = p|merge({'resolution': [{'denominator':'','distance':'','uom':'', 'ground': ''}]}) %}
-{% endif %}
-{% set length = p['resolution']|length -1 %}
 <div class="twoColBox">
     <h2>{% trans %}Räumliche Auflösung{% endtrans %}</h2>
     <label>
         <div class="icon mandatory icon-circle"></div>({% trans %}mindestens eine Angabe verpflichtend{% endtrans %})
     </label>
 
-    {% set key = 0 %}
-    {% set id = 'p[resolution][' ~ key ~ '][denominator]' %}
-    {% set val = value['denominator'] is defined ? value['denominator'] : '' %}
+    {% set id = 'p[resolutionDenominator]' %}
+    {% set val = p['resolutionDenominator'] is defined ? p['resolutionDenominator'] : '' %}
 
     <div class="left">
         <label for="{{ id|md_id }}">
@@ -45,8 +40,8 @@
         </div>
     </div>
 
-    {% set id = 'p[resolution][' ~ key ~ '][ground]' %}
-    {% set val = value['ground'] is defined ? value['ground'] : '' %}
+    {% set id = 'p[resolutionGround]' %}
+    {% set val = p['resolutionGround'] is defined ? p['resolutionGround'] : '' %}
 
     <div class="right">
         <label for="{{ id|md_id }}">
