@@ -29,6 +29,27 @@ class MetadataRepository extends EntityRepository
     }
 
     /**
+     * @param $id
+     * @return bool|mixed
+     */
+    public function getDataObject($id)
+    {
+        $json = $this->getEntityManager()->createQuery(
+            "SELECT p.object AS object FROM $this->entity p WHERE p.id = :id"
+        )->setParameter('id', $id)->getResult();
+
+        if (isset($json[0]['object'])) {
+            $object = json_decode($json[0]['object'], true);
+
+            if (is_array($object)) {
+                return $object;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param Finder $finder
      * @return array
      */
