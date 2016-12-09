@@ -313,30 +313,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
         {% endfor %}
     </table>
 {% endif %}
-{% if (p['lineage'] is defined and p['lineage'] is not empty) or (p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty) %}
-    <h1>{% trans %}Qualität und Gültigkeit{% endtrans %}</h1>
-        {% if p['lineage'] is defined and p['lineage'] is not empty%}
-            <table>
-                <tr>
-                    <td class="label">{% trans %}Herkunft{% endtrans %}</td>
-                    <td>{{p['lineage']}}</td>
-                </tr>
-            </table>
-        {% endif %}
-    {% if p['resolution'][0]['denominator'] is defined and p['resolution'][0]['denominator'] is not empty %}
-        <h3>{% trans %}Räumliche Auflösung{% endtrans %}</h3>
-        <table>
-            <tr>
-                <td class="label">{% trans %}Äquivalenter Maßstab{% endtrans %}:</td>
-                <td>
-                    {% for resolution in p['resolution']%}
-                        {{resolution['denominator']}}{% if loop != loop.last %},{% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-    {% endif %}
-{% endif %}
+
 {% if p['dataquality'][0]['date'] is defined and p['dataquality'][0]['date'] is not empty %}
     <h1>{% trans %}Übereinstimmung{% endtrans %}</h1>
     <table>
@@ -396,7 +373,7 @@ and p['responsiblePartyMetadata'][0]['organisationName'] is not empty %}
 {% endif %}
 
 {% if p['accessConstraints'] is defined and p['accessConstraints'] is not empty %}
-    <h3>{% trans %}Nutzungsbedingungen{% endtrans %}:</h3>
+    <h3>{% trans %}Zugriffseinschränkungen{% endtrans %}:</h3>
     <table>
         {% for accessConstraints in p['accessConstraints'] %}
             <tr>
