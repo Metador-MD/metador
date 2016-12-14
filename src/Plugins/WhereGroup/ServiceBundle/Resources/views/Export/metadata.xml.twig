@@ -518,10 +518,10 @@
             <gmd:distributionFormat>
                 <gmd:MD_Format>
                     <gmd:name gco:nilReason="inapplicable">
-                        <gco:CharacterString>unknown</gco:CharacterString>
+                        <gco:CharacterString>inapplicable</gco:CharacterString>
                     </gmd:name>
                     <gmd:version gco:nilReason="inapplicable">
-                        <gco:CharacterString>unknown</gco:CharacterString>
+                        <gco:CharacterString>inapplicable</gco:CharacterString>
                     </gmd:version>
                 </gmd:MD_Format>
             </gmd:distributionFormat>
@@ -549,8 +549,17 @@
             <gmd:scope>
                 <gmd:DQ_Scope>
                     <gmd:level>
-                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"  codeListValue="{{ p['hierarchyLevel'] }}">{{ p['hierarchyLevel'] }}</gmd:MD_ScopeCode>
+                        <gmd:MD_ScopeCode
+                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                            codeListValue="service">service</gmd:MD_ScopeCode>
                     </gmd:level>
+                    <gmd:levelDescription>
+                        <gmd:MD_ScopeDescription>
+                            <gmd:other>
+                                <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
+                            </gmd:other>
+                        </gmd:MD_ScopeDescription>
+                    </gmd:levelDescription>
                 </gmd:DQ_Scope>
             </gmd:scope>
 

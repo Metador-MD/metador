@@ -56,3 +56,62 @@
     </div>
 </div>
 
+{#
+    FORMATS
+#}
+{% set id = 'p[format]' %}
+
+{% if p['format'] is not defined %}
+    {% set p = p|merge({'format': [{'name':'','version':''}]}) %}
+{% endif %}
+{% set length = p['format']|length -1 %}
+
+<h2>{% trans %}Formate{% endtrans %}</h2>
+<div id="{{ id|md_id }}" class="duplicatable" data-count="{{ length }}">
+    <ul>
+        {% for key,value in p['format'] %}
+            <li data-id="{{ key }}" class="tab {% if key == 0 %}act{% endif %}">{{ key }}</li>
+        {% endfor %}
+        <li class="duplicate"><div class="icon icon-plus"></div></li>
+        <li class="menu delete"><div class="icon icon-bin2"></div></li>
+        <li class="menu showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></li>
+    </ul>
+    <div class="content">
+        {% for key,value in p['format'] %}
+
+            <div class="nr{{ key }} {% if key == 0 %}act{% endif %}">
+                <div class="twoColBox">
+                    {% set id = 'p[format][' ~ key ~ '][name]' %}
+                    {% set val = value['name'] is defined ? value['name'] : '' %}
+
+                    <div class="left">
+                        <label for="{{ id|md_id }}">
+                            <div class="icon mandatory icon-circle"></div>{{'Name'|trans}}:
+                        </label>
+                        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
+                        <div class="btn-group">
+                            <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                        </div>
+                    </div>
+
+                    {% set id = 'p[format][' ~ key ~ '][version]' %}
+                    {% set val = value['version'] is defined ? value['version'] : '' %}
+
+                    <div class="right">
+                        <label for="{{ id|md_id }}">
+                            <div class="icon mandatory icon-circle"></div>{{'Version'|trans}}:
+                        </label>
+                        <div class="fr">
+                            <div class="btn-group">
+                                <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
+                            </div>
+                            <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ val }}"  class="twoCol1"/>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
