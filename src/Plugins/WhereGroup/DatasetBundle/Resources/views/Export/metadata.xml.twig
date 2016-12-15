@@ -523,18 +523,18 @@
             {% if p['format'] is defined %}
             <gmd:distributionFormat>
                 {% for format in p['format'] %}
-                <gmd:MD_Format>
                     {% if format.name is defined and format.name is not empty %}
-                    <gmd:name>
-                            <gco:CharacterString>{{ format.name }}</gco:CharacterString>
-                    </gmd:name>
+                        <gmd:MD_Format>
+                            <gmd:name>
+                                <gco:CharacterString>{{ format.name }}</gco:CharacterString>
+                            </gmd:name>
+                            {% if format.version is defined and format.version is not empty %}
+                                <gmd:version>
+                                    <gco:CharacterString>{{ format.version  }}</gco:CharacterString>
+                                </gmd:version>
+                            {% endif %}
+                        </gmd:MD_Format>
                     {% endif %}
-                    {% if format.version is defined and format.version is not empty %}
-                    <gmd:version>
-                            <gco:CharacterString>{{ format.version  }}</gco:CharacterString>
-                    </gmd:version>
-                    {% endif %}
-                </gmd:MD_Format>
                 {% endfor %}
             </gmd:distributionFormat>
             {% endif %}
