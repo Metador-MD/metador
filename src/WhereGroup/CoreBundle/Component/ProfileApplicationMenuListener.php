@@ -140,12 +140,6 @@ abstract class ProfileApplicationMenuListener
                 );
             }
         } elseif ($isProfile) {
-            $data = array();
-
-            if ($app->isAction(array('new', 'edit'))) {
-                $data['confirm-abort'] = "Nicht gespeicherte Daten gehen verloren.";
-            }
-
             if ($app->isAction(array('edit', 'update'))) {
                 $app->add(
                     $app->get('PluginMenu', 'template')
@@ -159,7 +153,6 @@ abstract class ProfileApplicationMenuListener
                             )
                         )
                         ->active($app->isAction(array('new', 'use')))
-                        ->data($data)
                 );
             }
 
@@ -169,7 +162,6 @@ abstract class ProfileApplicationMenuListener
                     ->icon('icon-redo2')
                     ->path('metadata_index', array('profile' => $this->pluginId))
                     ->active($app->isAction(array('new', 'use')))
-                    ->data($data)
             );
         }
     }
