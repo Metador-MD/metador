@@ -14,3 +14,4 @@ parameters:
 
     metador_temp_dir: '%kernel.root_dir%/../var/temp/'
     metador_plugin_dir: '%kernel.root_dir%/../src/Plugins/'
+    operates_on_url: ''

@@ -130,7 +130,7 @@ class ProfileController extends Controller
             $data[] = array(
                 'label' => $obj->getTitle(),
                 'value' => ($obj->getCodespace() != "")
-                    ? $obj->getCodespace() . '#' . $obj->getUuid()
+                    ? $obj->getCodespace() . $obj->getUuid()
                     : $obj->getUuid()
             );
         }

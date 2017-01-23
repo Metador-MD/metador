@@ -506,7 +506,7 @@
 
             {% if p['coupledResource'] is defined %}
                 {% for coupledResource in p['coupledResource'] %}
-                    <srv:operatesOn xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ coupledResource }}"/>
+                    {{ generate_operates_on(coupledResource) }}
                 {% endfor %}
             {% endif %}
 
@@ -553,6 +553,7 @@
                             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
                             codeListValue="service">service</gmd:MD_ScopeCode>
                     </gmd:level>
+                    {% if p['hierarchyLevelName'] is defined %}
                     <gmd:levelDescription>
                         <gmd:MD_ScopeDescription>
                             <gmd:other>
@@ -560,6 +561,7 @@
                             </gmd:other>
                         </gmd:MD_ScopeDescription>
                     </gmd:levelDescription>
+                    {% endif %}
                 </gmd:DQ_Scope>
             </gmd:scope>
 
