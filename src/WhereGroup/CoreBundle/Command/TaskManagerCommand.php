@@ -33,18 +33,21 @@ class TaskManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $user     = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
+        if ($user === null) {
+            $output->writeln("<error>Anwender wurde nicht gefunden!</error>");
+            return 128;
+        }
 
         $fs       = new Filesystem();
         $fileName = 'TASKMANAGER_LOCK.LOCK';
         $basePath = $this->getContainer()->get("kernel")->getRootDir();
         $filePath = $basePath.'/../var/config/'.$fileName;
 
-        $user     = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
         $event    = new TaskManagerEvent($user);
         $forced   = $input->getOption('force');
 
         if ($forced || !$fs->exists($filePath)) {
-            $event->addMessage($event->__toString() . ($forced? ' forced ' : '') . " run");
             $fs->touch($filePath);
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
             $fs->remove($filePath);

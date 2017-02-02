@@ -4,10 +4,6 @@ namespace WhereGroup\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class TaskManagerEvent
- * @package WhereGroup\CoreBundle\Event
- */
 class TaskManagerEvent extends Event
 {
     private $user;
@@ -32,10 +28,5 @@ class TaskManagerEvent extends Event
     public function getUser()
     {
         return $this->user;
-    }
-
-    public function __toString()
-    {
-        return "TaskManagerEvent";
     }
 }
