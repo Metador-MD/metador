@@ -77,7 +77,8 @@ class MetadorExtension extends \Twig_Extension
      * @param $value
      * @return string
      */
-    public function booleanFilter($value) {
+    public function booleanFilter($value)
+    {
 
         if( $value === "1" ||
             $value === true ||
