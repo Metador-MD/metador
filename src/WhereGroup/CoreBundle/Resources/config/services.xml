@@ -14,7 +14,6 @@
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
         <parameter key="metador.core.health.listener.class">WhereGroup\CoreBundle\EventListener\HealthCheckListener</parameter>
-        <parameter key="metador.core.taskmanager.listener.class">WhereGroup\CoreBundle\EventListener\TaskManagerListener</parameter>
 
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
@@ -56,9 +55,6 @@
         </service>
 
         <!-- EVENT LISTENER -->
-        <service id="metador.taskmanger.listener" class="%metador.core.taskmanager.listener.class%">
-            <tag name="kernel.event_listener" event="metador.taskmanager" method="onRun" />
-        </service>
         <service id="metador.app.listener" class="%metador.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading" />
         </service>

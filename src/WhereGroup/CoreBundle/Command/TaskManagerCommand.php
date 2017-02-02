@@ -16,7 +16,6 @@ use WhereGroup\CoreBundle\Event\TaskManagerEvent;
  */
 class TaskManagerCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -33,18 +32,17 @@ class TaskManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $fs = new Filesystem();
+        $filePath = $this->getContainer()->get("kernel")->getRootDir()
+            . '/../var/config/TASKMANAGER.LOCK';
 
-        $fs       = new Filesystem();
-        $fileName = 'TASKMANAGER_LOCK.LOCK';
-        $basePath = $this->getContainer()->get("kernel")->getRootDir();
-        $filePath = $basePath.'/../var/config/'.$fileName;
+        $user = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
+        $event = new TaskManagerEvent($user);
+        $forced = $input->getOption('force');
 
-        $user     = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
-        $event    = new TaskManagerEvent($user);
-        $forced   = $input->getOption('force');
+        $this->getContainer()->get('metador_logger')->info('Taskmanager started');
 
         if ($forced || !$fs->exists($filePath)) {
-            $event->addMessage($event->__toString() . ($forced? ' forced ' : '') . " run");
             $fs->touch($filePath);
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
             $fs->remove($filePath);
@@ -54,5 +52,6 @@ class TaskManagerCommand extends ContainerAwareCommand
             $output->writeln($message);
         }
 
+        $this->getContainer()->get('metador_logger')->info('Taskmanager finished');
     }
 }
