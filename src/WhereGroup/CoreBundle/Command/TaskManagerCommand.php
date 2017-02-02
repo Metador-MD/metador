@@ -33,16 +33,21 @@ class TaskManagerCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $fs = new Filesystem();
-        $filePath = $this->getContainer()->get("kernel")->getRootDir()
-            . '/../var/config/TASKMANAGER.LOCK';
+
+        $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
 
         $user = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
+
+        if ($user === null) {
+            $output->writeln("<error>Anwender wurde nicht gefunden!</error>");
+            return 128;
+        }
+
+        $this->getContainer()->get('metador_logger')->info('Taskmanager gestartet');
+
         $event = new TaskManagerEvent($user);
-        $forced = $input->getOption('force');
 
-        $this->getContainer()->get('metador_logger')->info('Taskmanager started');
-
-        if ($forced || !$fs->exists($filePath)) {
+        if ($input->getOption('force') || !$fs->exists($filePath)) {
             $fs->touch($filePath);
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
             $fs->remove($filePath);
@@ -52,6 +57,6 @@ class TaskManagerCommand extends ContainerAwareCommand
             $output->writeln($message);
         }
 
-        $this->getContainer()->get('metador_logger')->info('Taskmanager finished');
+        $this->getContainer()->get('metador_logger')->info('Taskmanager beendet');
     }
 }

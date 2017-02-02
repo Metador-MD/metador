@@ -5,10 +5,6 @@ namespace WhereGroup\CoreBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use WhereGroup\UserBundle\Component\UserInterface;
 
-/**
- * Class TaskManagerEvent
- * @package WhereGroup\CoreBundle\Event
- */
 class TaskManagerEvent extends Event
 {
     /** @var  UserInterface $user */
