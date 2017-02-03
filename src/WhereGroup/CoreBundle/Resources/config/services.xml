@@ -10,6 +10,7 @@
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
         <parameter key="metador.healthcheck.class">WhereGroup\CoreBundle\Component\HealthCheck</parameter>
+        <parameter key="metador.configuration.class">WhereGroup\CoreBundle\Component\ConfigurationManager</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
@@ -52,6 +53,9 @@
         <service id="metador_healthcheck" class="%metador.healthcheck.class%">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
+        </service>
+        <service id="metador.configuration" class="%metador.configuration.class%">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
         <!-- EVENT LISTENER -->
