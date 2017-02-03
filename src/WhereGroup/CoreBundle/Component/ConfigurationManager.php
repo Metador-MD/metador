@@ -38,7 +38,7 @@ class ConfigurationManager
      */
     public function set($key, $value, $filterType = null, $filterValue = null)
     {
-        //->set($key, $value, $filterType, $filterValue);
+        $this->em->getRepository($this->repository)->set($key, $value, $filterType, $filterValue);
     }
 
     /**
@@ -48,7 +48,7 @@ class ConfigurationManager
      */
     public function get($key, $filterType = null, $filterValue = null)
     {
-        //return $this->em->getRepository($this->repository)->get($key, $filterType, $filterValue);
+        return $this->em->getRepository($this->repository)->get($key, $filterType, $filterValue);
     }
 
 }

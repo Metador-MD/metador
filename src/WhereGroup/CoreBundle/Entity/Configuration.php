@@ -42,6 +42,21 @@ class Configuration
     private $value;
 
     /**
+     * Configuration constructor.
+     * @param $filterType
+     * @param $filterValue
+     * @param $key
+     * @param $value
+     */
+    public function __construct($filterType, $filterValue, $key, $value)
+    {
+        $this->filterType = $filterType;
+        $this->filterValue = $filterValue;
+        $this->key = $key;
+        $this->value = $value;
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
