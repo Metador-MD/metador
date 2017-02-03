@@ -205,7 +205,7 @@ class PluginController extends Controller
 
     /**
      * @Route("/view/{plugin}", name="metador_admin_plugin_view")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function viewAction($plugin)
