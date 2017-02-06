@@ -22,17 +22,11 @@ class LoggingEvent extends Event
     private $dateTime;
 
     /**
-     * @param $type
-     * @param $message
-     * @param $user
-     * @param $dateTime
+     * LoggingEvent constructor.
      */
-    public function __construct($type, $message, $user, $dateTime)
+    public function __construct()
     {
-        $this->type     = $type;
-        $this->message  = $message;
-        $this->user     = $user;
-        $this->dateTime = $dateTime;
+        $this->dateTime = new \DateTime();
     }
 
     public function __destruct()
@@ -54,6 +48,16 @@ class LoggingEvent extends Event
     }
 
     /**
+     * @param $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getMessage()
@@ -62,11 +66,31 @@ class LoggingEvent extends Event
     }
 
     /**
+     * @param $message
+     * @return $this
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    /**
      * @return User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @param $user
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
     }
 
     /**

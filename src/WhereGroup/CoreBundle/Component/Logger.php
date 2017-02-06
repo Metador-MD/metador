@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
+use WhereGroup\UserBundle\Component\UserInterface;
 
 /**
  * Class Logging
@@ -23,19 +24,19 @@ class Logger
      * Logger constructor.
      * @param FlashBagInterface $flashBag
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TokenStorageInterface $tokenStorage
-     * @param TranslatorInterface $translatorInterface
+     * @param TranslatorInterface $translator
+     * @param UserInterface $userService
      */
     public function __construct(
         FlashBagInterface $flashBag,
         EventDispatcherInterface $eventDispatcher,
-        TokenStorageInterface $tokenStorage,
-        TranslatorInterface $translatorInterface
+        TranslatorInterface $translator,
+        UserInterface $userService
     ) {
         $this->flashBag            = $flashBag;
         $this->eventDispatcher     = $eventDispatcher;
-        $this->tokenStorage        = $tokenStorage;
-        $this->translatorInterface = $translatorInterface;
+        $this->translator          = $translator;
+        $this->userService         = $userService;
     }
 
     public function __destruct()
@@ -135,23 +136,27 @@ class Logger
      * @param $display
      * @return Logger
      */
-    public function log($type, $message, $parameters, $display)
+    public function log($type, $category, $subcategory, $operation, $identifier, $message, $parameters, $display, $username = null)
     {
-        $message = $this->translatorInterface->trans($message, $parameters);
+        $message = $this->translator->trans($message, $parameters);
+
+        if (!empty($username)) {
+            $user = $this->userService->getByUsername($username);
+        } else {
+            $user = $this->userService->getUserFromSession();
+        }
 
         if ($display) {
             $this->flashBag->add($type, $message);
         }
 
-        $this->eventDispatcher->dispatch(
-            'metador.log',
-            new LoggingEvent(
-                $type,
-                $message,
-                $this->tokenStorage->getToken()->getUser(),
-                new \DateTime()
-            )
-        );
+        $event = new LoggingEvent();
+        $event
+            ->setType($type)
+            ->setMessage($message)
+            ->setUser($user);
+
+        $this->eventDispatcher->dispatch('metador.log', $event);
 
         return $this;
     }

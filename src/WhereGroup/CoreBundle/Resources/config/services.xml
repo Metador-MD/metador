@@ -46,8 +46,8 @@
         <service id="metador_logger" class="%metador.logger.class%">
             <argument type="service" id="session.flash_bag" />
             <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="security.token_storage" />
             <argument type="service" id="translator.default" />
+            <argument type="service" id="metador_user" />
         </service>
         <service id="metador_healthcheck" class="%metador.healthcheck.class%">
             <argument type="service" id="event_dispatcher" />
