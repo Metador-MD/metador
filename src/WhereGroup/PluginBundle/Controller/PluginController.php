@@ -118,7 +118,7 @@ class PluginController extends Controller
             $file = $form['attachment']->getData();
 
             if (!$file instanceof UploadedFile) {
-                $this->get('session')->getFlashBag()->add('error', 'Datei-Upload ist fehlgeschlagen.');
+                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Datei-Upload ist fehlgeschlagen.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -126,7 +126,7 @@ class PluginController extends Controller
             $extension = $file->guessExtension();
 
             if (!$extension || $extension !== 'zip') {
-                $this->get('session')->getFlashBag()->add('error', 'Hochgeladene Datei ist kein Metador Plugin.');
+                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Hochgeladene Datei ist kein Metador Plugin.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -138,7 +138,7 @@ class PluginController extends Controller
             $zip = new \ZipArchive;
 
             if ($zip->open($pluginFile->getRealPath()) !== true) {
-                $this->get('session')->getFlashBag()->add('error', 'Entpacken fehlgeschlagen.');
+                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Entpacken fehlgeschlagen.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -164,7 +164,7 @@ class PluginController extends Controller
                 }
 
                 if ($fs->exists($copyPath . '/' . $folder->getFilename())) {
-                    $this->get('session')->getFlashBag()->add('error', 'Plugin ist existiert bereits.');
+                    $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Plugin ist existiert bereits.');
                 } else {
                     $fs->mirror($folder->getRealPath(), $copyPath . $folder->getFilename());
                 }

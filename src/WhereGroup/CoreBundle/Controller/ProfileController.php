@@ -95,7 +95,7 @@ class ProfileController extends Controller
         try {
             $metadata = $this->get('metadata')->saveObject($this->data['p']);
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->flashError($e->getMessage());
+            $this->get('metador_logger')->flashError('metadata', 'profile', 'create', 'source', $this->data['p']['uuid'], $e->getMessage());
             return $this->renderResponse($profile, 'form');
         }
 
@@ -168,7 +168,7 @@ class ProfileController extends Controller
         try {
             $metadata = $this->get('metadata')->saveObject($this->data['p'], $id);
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->flashError($e->getMessage());
+            $this->get('metador_logger')->flashError('metadata', 'profile', 'update', 'source', $this->data['p']['uuid'], $e->getMessage());
             $this->redirectToRoute('metadata_edit', array('profile' => $profile, 'id' => $id));
         }
 
@@ -250,9 +250,9 @@ class ProfileController extends Controller
 
         if ($form->isValid()) {
             $this->get('metadata')->deleteById($id);
-            $this->get('session')->getFlashBag()->add('success', 'Erfolgreich gelöscht.');
+            $this->get('metador_logger')->flashSuccess('metadata', 'profile', 'delete', 'source', 'identifier', 'Erfolgreich gelöscht.');
         } else {
-            $this->get('session')->getFlashBag()->add('error', 'Eintrag konnte nicht gelöscht werden.');
+            $this->get('metador_logger')->flashError('metadata', 'profile', 'delete', 'source', 'identifier', 'Eintrag konnte nicht gelöscht werden.');
         }
 
         return $this->redirectToRoute('metadata_index', array('profile' => $profile));
