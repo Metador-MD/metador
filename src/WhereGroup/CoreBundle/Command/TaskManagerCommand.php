@@ -43,7 +43,7 @@ class TaskManagerCommand extends ContainerAwareCommand
             return 128;
         }
 
-        $this->getContainer()->get('metador_logger')->info('Taskmanager gestartet');
+        $this->getContainer()->get('metador_logger')->info($category, $subcategory, $operation, $source, $identifier, 'Taskmanager gestartet', $username);
 
         $event = new TaskManagerEvent($user);
 
@@ -56,7 +56,6 @@ class TaskManagerCommand extends ContainerAwareCommand
         foreach ($event->getMessages() as $message) {
             $output->writeln($message);
         }
-
-        $this->getContainer()->get('metador_logger')->info('Taskmanager beendet');
+        $this->getContainer()->get('metador_logger')->info($category, $subcategory, $operation, $source, $identifier, 'Taskmanager beendet', $username);
     }
 }

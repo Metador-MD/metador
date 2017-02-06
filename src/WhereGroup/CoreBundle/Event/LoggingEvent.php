@@ -13,6 +13,16 @@ class LoggingEvent extends Event
 {
     private $type;
 
+    private $category;
+
+    private $subcategory;
+
+    private $operation;
+
+    private $source;
+
+    private $identifier;
+
     private $message;
 
     /** @var  User */
@@ -56,6 +66,101 @@ class LoggingEvent extends Event
         $this->type = $type;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param $category
+     * @return $this
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubcategory()
+    {
+        return $this->subcategory;
+    }
+
+    /**
+     * @param subcategory
+     * @return $this
+     */
+    public function setSubcategory($subcategory)
+    {
+        $this->subcategory = $subcategory;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
+    /**
+     * @param operation
+     * @return $this
+     */
+    public function setOperation($operation)
+    {
+        $this->operation = $operation;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param source;
+
+     * @return $this
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param identifier;
+
+     * @return $this
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+        return $this;
+    }
+
+
+//    private $identifier;
 
     /**
      * @return mixed

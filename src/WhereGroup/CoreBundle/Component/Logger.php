@@ -17,7 +17,7 @@ class Logger
 {
     private $flashBag;
     private $eventDispatcher;
-    private $tokenStorage;
+    private $userService;
     private $translatorInterface;
 
     /**
@@ -44,101 +44,180 @@ class Logger
         unset(
             $this->flashbag,
             $this->eventDispatcher,
-            $this->tokenStorage,
+            $this->userService,
             $this->translatorInterface
         );
     }
 
     /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function flashInfo($message, $parameters = array())
-    {
-        return $this->log('info', $message, $parameters, true);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function flashSuccess($message, $parameters = array())
-    {
-        return $this->log('success', $message, $parameters, true);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function flashWarning($message, $parameters = array())
-    {
-        return $this->log('warning', $message, $parameters, true);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function flashError($message, $parameters = array())
-    {
-        return $this->log('error', $message, $parameters, true);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function info($message, $parameters = array())
-    {
-        return $this->log('info', $message, $parameters, false);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function success($message, $parameters = array())
-    {
-        return $this->log('success', $message, $parameters, false);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function warning($message, $parameters = array())
-    {
-        return $this->log('warning', $message, $parameters, false);
-    }
-
-    /**
-     * @param $message
-     * @param array $parameters
-     * @return Logger
-     */
-    public function error($message, $parameters = array())
-    {
-        return $this->log('error', $message, $parameters, false);
-    }
-
-    /**
+     *
      * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
-     * @param $parameters
+     * @param array $parameters
      * @param $display
+     * @param $username
      * @return Logger
      */
-    public function log($type, $category, $subcategory, $operation, $identifier, $message, $parameters, $display, $username = null)
+    public function flashInfo($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        $message = $this->translator->trans($message, $parameters);
+        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function flashSuccess($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function flashWarning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function flashError($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+    }
+
+     /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function info($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function success($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+    }
+
+     /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function warning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function error($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+    {
+        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, flase, $username);
+    }
+
+    /**
+     *
+     * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
+     * @param $message
+     * @param array $parameters
+     * @param $display
+     * @param $username
+     * @return Logger
+     */
+    public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
+    {
+        $translatedMessage = $this->translator->trans($message, $parameters);
 
         if (!empty($username)) {
             $user = $this->userService->getByUsername($username);
@@ -153,7 +232,12 @@ class Logger
         $event = new LoggingEvent();
         $event
             ->setType($type)
-            ->setMessage($message)
+            ->setCategory($category)
+            ->setSubcategory($subcategory)
+            ->setOperation($operation)
+            ->setSource($source)
+            ->setIdentifier($identifier)
+            ->setMessage($translatedMessage)
             ->setUser($user);
 
         $this->eventDispatcher->dispatch('metador.log', $event);
