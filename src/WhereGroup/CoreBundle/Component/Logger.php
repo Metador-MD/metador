@@ -218,7 +218,7 @@ class Logger
     public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
     {
         $translatedMessage = $this->translator->trans($message, $parameters);
-
+//        die('<pre>'.print_r($translatedMessage, 1).'</pre>');
         if (!empty($username)) {
             $user = $this->userService->getByUsername($username);
         } else {
@@ -226,7 +226,7 @@ class Logger
         }
 
         if ($display) {
-            $this->flashBag->add($type, $message);
+            $this->flashBag->add($type, $translatedMessage);
         }
 
         $event = new LoggingEvent();

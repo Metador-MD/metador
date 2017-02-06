@@ -71,7 +71,8 @@ class UserController extends Controller
                     'source',
                     'identifier',
                     'Benutzer %username% wurde erstellt.',
-                    array('%username%' => $user->getUsername())
+                    array('%username%' => $user->getUsername()),
+                    $user
                 );
             // todo eigene Exception
             } catch (MetadorException $e) {
@@ -97,7 +98,6 @@ class UserController extends Controller
             $user = $this->get('metador_user')->get($id);
         } catch (MetadorException $e) {
             $this->get('metador_logger')->warning('application', 'user', 'edit', 'source', 'identifier', $e->getMessage());
-
             return $this->redirectToRoute('metador_admin_user');
         }
 
@@ -143,7 +143,8 @@ class UserController extends Controller
                     'source',
                     'identifier',
                     'Benutzer %username% wurde bearbeitet.',
-                    array('%username%' => $user->getUsername())
+                    array('%username%' => $user->getUsername()),
+                    $user
                 );
 
                 return $this->redirectToRoute('metador_admin_user');
