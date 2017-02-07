@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
+use WhereGroup\UserBundle\Component\UserInterface;
 
 /**
  * Class Logging
@@ -16,26 +17,26 @@ class Logger
 {
     private $flashBag;
     private $eventDispatcher;
-    private $tokenStorage;
+    private $userService;
     private $translatorInterface;
 
     /**
      * Logger constructor.
      * @param FlashBagInterface $flashBag
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TokenStorageInterface $tokenStorage
-     * @param TranslatorInterface $translatorInterface
+     * @param TranslatorInterface $translator
+     * @param UserInterface $userService
      */
     public function __construct(
         FlashBagInterface $flashBag,
         EventDispatcherInterface $eventDispatcher,
-        TokenStorageInterface $tokenStorage,
-        TranslatorInterface $translatorInterface
+        TranslatorInterface $translator,
+        UserInterface $userService
     ) {
         $this->flashBag            = $flashBag;
         $this->eventDispatcher     = $eventDispatcher;
-        $this->tokenStorage        = $tokenStorage;
-        $this->translatorInterface = $translatorInterface;
+        $this->translator          = $translator;
+        $this->userService         = $userService;
     }
 
     public function __destruct()
@@ -43,115 +44,182 @@ class Logger
         unset(
             $this->flashbag,
             $this->eventDispatcher,
-            $this->tokenStorage,
+            $this->userService,
             $this->translatorInterface
         );
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function flashInfo($message, $parameters = array())
+    public function flashInfo($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('info', $message, $parameters, true);
+        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function flashSuccess($message, $parameters = array())
+    public function flashSuccess($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('success', $message, $parameters, true);
+        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function flashWarning($message, $parameters = array())
+    public function flashWarning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('warning', $message, $parameters, true);
+        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function flashError($message, $parameters = array())
+    public function flashError($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('error', $message, $parameters, true);
+        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function info($message, $parameters = array())
+    public function info($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('info', $message, $parameters, false);
+        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function success($message, $parameters = array())
+    public function success($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('success', $message, $parameters, false);
+        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function warning($message, $parameters = array())
+    public function warning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('warning', $message, $parameters, false);
+        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
     }
 
     /**
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
      * @param array $parameters
+     * @param null $username
      * @return Logger
      */
-    public function error($message, $parameters = array())
+    public function error($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
     {
-        return $this->log('error', $message, $parameters, false);
+        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, flase, $username);
     }
 
     /**
+     *
      * @param $type
+     * @param $category
+     * @param $subcategory
+     * @param $operation
+     * @param $source
+     * @param $identifier
      * @param $message
-     * @param $parameters
+     * @param array $parameters
      * @param $display
+     * @param $username
      * @return Logger
      */
-    public function log($type, $message, $parameters, $display)
+    public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
     {
-        $message = $this->translatorInterface->trans($message, $parameters);
+        $translatedMessage = $this->translator->trans($message, $parameters);
 
-        if ($display) {
-            $this->flashBag->add($type, $message);
+        if ($username instanceof UserInterface) {
+            $user = $username;
+            unset($username);
+        } elseif (!empty($username)) {
+            $user = $this->userService->getByUsername($username);
+        } else {
+            $user = $this->userService->getUserFromSession();
         }
 
-        $this->eventDispatcher->dispatch(
-            'metador.log',
-            new LoggingEvent(
-                $type,
-                $message,
-                $this->tokenStorage->getToken()->getUser(),
-                new \DateTime()
-            )
-        );
+        if ($display) {
+            $this->flashBag->add($type, $translatedMessage);
+        }
+
+        $event = new LoggingEvent();
+        $event
+            ->setType($type)
+            ->setCategory($category)
+            ->setSubcategory($subcategory)
+            ->setOperation($operation)
+            ->setSource($source)
+            ->setIdentifier($identifier)
+            ->setMessage($translatedMessage)
+            ->setUser($user);
+
+        $this->eventDispatcher->dispatch('metador.log', $event);
 
         return $this;
     }

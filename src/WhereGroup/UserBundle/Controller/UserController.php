@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
-        $user  = new User();
+        $user = new User();
 
         $form = $this
             ->createForm(new UserType(), $user)
@@ -65,12 +65,17 @@ class UserController extends Controller
             try {
                 $this->get('metador_user')->insert($user);
                 $this->get('metador_logger')->success(
+                    'application',
+                    'user',
+                    'create',
+                    'source',
+                    'identifier',
                     'Benutzer %username% wurde erstellt.',
                     array('%username%' => $user->getUsername())
                 );
             // todo eigene Exception
             } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning($e->getMessage());
+                $this->get('metador_logger')->warning('application', 'user', 'create', 'source', 'identifier', $e->getMessage());
             }
 
             return $this->redirectToRoute('metador_admin_user');
@@ -91,7 +96,7 @@ class UserController extends Controller
         try {
             $user = $this->get('metador_user')->get($id);
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->warning($e->getMessage());
+            $this->get('metador_logger')->warning('application', 'user', 'edit', 'source', 'identifier', $e->getMessage());
             return $this->redirectToRoute('metador_admin_user');
         }
 
@@ -131,14 +136,20 @@ class UserController extends Controller
                 $this->get('metador_user')->update($user);
 
                 $this->get('metador_logger')->success(
+                    'application',
+                    'user',
+                    'update',
+                    'source',
+                    'identifier',
                     'Benutzer %username% wurde bearbeitet.',
-                    array('%username%' => $user->getUsername())
+                    array('%username%' => $user->getUsername()),
+                    $user
                 );
 
                 return $this->redirectToRoute('metador_admin_user');
             }
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->warning($e->getMessage());
+            $this->get('metador_logger')->warning('application', 'user', 'update', 'source', 'identifier', $e->getMessage());
             return $this->redirectToRoute('metador_admin_user');
         }
 
@@ -176,11 +187,16 @@ class UserController extends Controller
                 $user = $this->get('metador_user')->get($id);
                 $this->get('metador_user')->delete($user);
                 $this->get('metador_logger')->success(
+                    'application',
+                    'user',
+                    'delete',
+                    'source',
+                    'identifier',
                     'Benutzer %username% wurde gelöscht.',
                     array('%username%' => $user->getUsername())
                 );
             } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning($e->getMessage());
+                $this->get('metador_logger')->warning('application', 'user', 'delete', 'source', 'identifier',$e->getMessage());
                 return $this->redirectToRoute('metador_admin_user');
             }
         }

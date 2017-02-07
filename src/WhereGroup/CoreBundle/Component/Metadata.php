@@ -223,11 +223,7 @@ class Metadata implements MetadataInterface
 
         $this->save($metadata);
 
-        $this->container->get('session')->getFlashBag()->add(
-            'success',
-            (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.'
-        );
-
+        $this->container->get('metador_logger')->flashSuccess('system', 'plugin', 'upload', 'source', 'identifier', (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.');
         return $metadata;
     }
 
@@ -257,7 +253,7 @@ class Metadata implements MetadataInterface
                 $em->flush();
             }
         } catch (\Exception $e) {
-            $this->container->get('session')->getFlashBag()->add('error', $e->getMessage());
+            $this->container->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', $e->getMessage());
             return false;
         }
 
