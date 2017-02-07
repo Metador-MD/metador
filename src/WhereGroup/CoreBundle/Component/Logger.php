@@ -195,7 +195,10 @@ class Logger
     {
         $translatedMessage = $this->translator->trans($message, $parameters);
 
-        if (!empty($username)) {
+        if ($username instanceof UserInterface) {
+            $user = $username;
+            unset($username);
+        } elseif (!empty($username)) {
             $user = $this->userService->getByUsername($username);
         } else {
             $user = $this->userService->getUserFromSession();

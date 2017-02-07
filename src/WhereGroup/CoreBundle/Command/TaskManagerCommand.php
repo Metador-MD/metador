@@ -32,10 +32,6 @@ class TaskManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fs = new Filesystem();
-
-        $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
-
         $user = $this->getContainer()->get('metador_user')->getByUsername($input->getArgument('username'));
 
         if ($user === null) {
@@ -43,9 +39,21 @@ class TaskManagerCommand extends ContainerAwareCommand
             return 128;
         }
 
-        $this->getContainer()->get('metador_logger')->info('system', 'taskmanager', 'execute', 'source', 'identifier', 'Taskmanager gestartet', array(), $user);
+        $this->getContainer()->get('metador_logger')->info(
+            'system',
+            'taskmanager',
+            'execute',
+            null,
+            null,
+            'Taskmanager gestartet',
+            array(),
+            $user
+        );
 
         $event = new TaskManagerEvent($user);
+
+        $fs = new Filesystem();
+        $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
 
         if ($input->getOption('force') || !$fs->exists($filePath)) {
             $fs->touch($filePath);
@@ -56,6 +64,16 @@ class TaskManagerCommand extends ContainerAwareCommand
         foreach ($event->getMessages() as $message) {
             $output->writeln($message);
         }
-        $this->getContainer()->get('metador_logger')->info('system', 'taskmanger', 'execute', 'source', 'identifier', 'Taskmanager beendet', array(), $user);
+
+        $this->getContainer()->get('metador_logger')->info(
+            'system',
+            'taskmanger',
+            'execute',
+            null,
+            null,
+            'Taskmanager beendet',
+            array(),
+            $user
+        );
     }
 }
