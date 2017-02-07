@@ -12,20 +12,28 @@ class ConfigurationRepository extends EntityRepository
 {
     private $entity = 'MetadorCoreBundle:Configuration';
 
-    public function get($key, $filterType, $filterValue)
+    public function all($filterType, $filterValue)
     {
-        $config = $this->createQueryBuilder('c')
-            ->where('c.key = :key')
-            ->orWhere('c.filterType = :filterType')
-            ->orWhere('c.filterValue = :filterValue')
-            ->setParameter('key', $key)
+        return $this->createQueryBuilder('c')
+            ->where('c.filterType = :filterType')
+            ->andWhere('c.filterValue = :filterValue')
             ->setParameter('filterType', $filterType)
             ->setParameter('filterValue', $filterValue)
-            ->orderBy('c.key', 'ASC')
+            ->orderBy('c.filterType', 'ASC')
             ->getQuery()
-            ->getResult()
+            ->getResult(1)
         ;
-        return $config;
+    }
+
+    public function get($key, $filterType, $filterValue)
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT c FROM $this->entity c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
+        )
+        ->setParameter('key', $key)
+        ->setParameter('filterType', $filterType)
+        ->setParameter('filterValue', $filterValue)
+        ->getSingleResult();
     }
 
     public function set($key, $value, $filterType, $filterValue)
@@ -45,26 +53,16 @@ class ConfigurationRepository extends EntityRepository
         if ($config) {
 
             try{
+                $em->persist($config);
                 $em->flush();
                 $em->commit();
             } catch (\Exception $e) {
                 $em->rollBack();
-                $em->close();
                 throw $e;
             }
         }
-        else{
 
-            try{
-                $em->persist(new Configuration($filterType, $filterValue, $key, $value));
-                $em->flush();
-                $em->commit();
-            } catch (\Exception $e) {
-                $em->rollBack();
-                $em->close();
-                throw $e;
-            }
-        }
+        $em->close();
     }
 
 }

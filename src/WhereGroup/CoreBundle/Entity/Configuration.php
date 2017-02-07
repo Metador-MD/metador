@@ -73,11 +73,13 @@ class Configuration
     }
 
     /**
-     * @param mixed $filterType
+     * @param $filterType
+     * @return $this
      */
     public function setFilterType($filterType)
     {
         $this->filterType = $filterType;
+        return $this;
     }
 
     /**
@@ -89,11 +91,13 @@ class Configuration
     }
 
     /**
-     * @param mixed $filterValue
+     * @param $filterValue
+     * @return $this
      */
     public function setFilterValue($filterValue)
     {
         $this->filterValue = $filterValue;
+        return $this;
     }
 
     /**
@@ -105,11 +109,13 @@ class Configuration
     }
 
     /**
-     * @param mixed $key
+     * @param $key
+     * @return $this
      */
     public function setKey($key)
     {
         $this->key = $key;
+        return $this;
     }
 
     /**
@@ -121,11 +127,13 @@ class Configuration
     }
 
     /**
-     * @param mixed $value
+     * @param $value
+     * @return $this
      */
     public function setValue($value)
     {
         $this->value = $value;
+        return $this;
     }
 
 }
