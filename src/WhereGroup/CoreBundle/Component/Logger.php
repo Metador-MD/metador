@@ -50,8 +50,6 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -59,8 +57,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function flashInfo($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -69,8 +66,6 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -78,8 +73,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function flashSuccess($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -88,17 +82,14 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
      * @param $source
      * @param $identifier
      * @param $message
-     * @param array parameters
-     * @param $display
-     * @param $username
+     * @param array $parameters
+     * @param null $username
      * @return Logger
      */
     public function flashWarning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -107,8 +98,6 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -116,8 +105,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function flashError($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -125,9 +113,7 @@ class Logger
         return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
     }
 
-     /**
-     *
-     * @param $type
+    /**
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -135,8 +121,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function info($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -145,8 +130,6 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -154,8 +137,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function success($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -163,9 +145,7 @@ class Logger
         return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
     }
 
-     /**
-     *
-     * @param $type
+    /**
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -173,8 +153,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function warning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -183,8 +162,6 @@ class Logger
     }
 
     /**
-     *
-     * @param $type
      * @param $category
      * @param $subcategory
      * @param $operation
@@ -192,8 +169,7 @@ class Logger
      * @param $identifier
      * @param $message
      * @param array $parameters
-     * @param $display
-     * @param $username
+     * @param null $username
      * @return Logger
      */
     public function error($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
@@ -218,7 +194,7 @@ class Logger
     public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
     {
         $translatedMessage = $this->translator->trans($message, $parameters);
-//        die('<pre>'.print_r($translatedMessage, 1).'</pre>');
+
         if (!empty($username)) {
             $user = $this->userService->getByUsername($username);
         } else {

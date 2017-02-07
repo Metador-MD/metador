@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
-        $user  = new User();
+        $user = new User();
 
         $form = $this
             ->createForm(new UserType(), $user)
@@ -71,8 +71,7 @@ class UserController extends Controller
                     'source',
                     'identifier',
                     'Benutzer %username% wurde erstellt.',
-                    array('%username%' => $user->getUsername()),
-                    $user
+                    array('%username%' => $user->getUsername())
                 );
             // todo eigene Exception
             } catch (MetadorException $e) {

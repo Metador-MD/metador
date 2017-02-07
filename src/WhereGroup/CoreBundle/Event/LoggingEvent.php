@@ -25,7 +25,7 @@ class LoggingEvent extends Event
 
     private $message;
 
-    /** @var  User */
+    /** @var User $user */
     private $user;
 
     /** @var  \DateTime */
@@ -159,9 +159,6 @@ class LoggingEvent extends Event
         return $this;
     }
 
-
-//    private $identifier;
-
     /**
      * @return mixed
      */
@@ -189,7 +186,7 @@ class LoggingEvent extends Event
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return $this
      */
     public function setUser($user)
