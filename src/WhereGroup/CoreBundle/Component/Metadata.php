@@ -2,8 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Doctrine\ORM\QueryBuilder;
-use Rhumsaa\Uuid\Console\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
