@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Class ConfigurationRepository
@@ -10,25 +11,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class ConfigurationRepository extends EntityRepository
 {
-    private $entity = 'MetadorCoreBundle:Configuration';
+    const ENTITY = 'MetadorCoreBundle:Configuration';
 
+    /**
+     * @param $filterType
+     * @param $filterValue
+     * @return array
+     */
     public function all($filterType, $filterValue)
     {
         return $this->createQueryBuilder('c')
+            ->select('c.key, c.value')
             ->where('c.filterType = :filterType')
             ->andWhere('c.filterValue = :filterValue')
             ->setParameter('filterType', $filterType)
             ->setParameter('filterValue', $filterValue)
             ->orderBy('c.filterType', 'ASC')
             ->getQuery()
-            ->getResult(1)
-        ;
+            ->getResult();
     }
 
+    /**
+     * @param $key
+     * @param $filterType
+     * @param $filterValue
+     * @return mixed
+     */
     public function get($key, $filterType, $filterValue)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT c FROM $this->entity c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
+            "SELECT c FROM " . self::ENTITY .
+            " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
         )
         ->setParameter('key', $key)
         ->setParameter('filterType', $filterType)
@@ -36,33 +49,30 @@ class ConfigurationRepository extends EntityRepository
         ->getSingleResult();
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @param $filterType
+     * @param $filterValue
+     */
     public function set($key, $value, $filterType, $filterValue)
     {
-        $em = $this->getEntityManager();
-
-        $config = $this->createQueryBuilder('c')
-            ->where('c.key = :key')
-            ->setParameter('key', $key)
-            ->orderBy('c.key', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $em->beginTransaction();
-
-        if ($config) {
-
-            try{
-                $em->persist($config);
-                $em->flush();
-                $em->commit();
-            } catch (\Exception $e) {
-                $em->rollBack();
-                throw $e;
-            }
+        /** @var Configuration $entity */
+        try {
+            $entity = $this->get($key, $filterType, $filterValue);
+            $entity->setValue($value);
+        } catch (NoResultException $e) {
+            $entity = new Configuration();
+            $entity
+                ->setKey($key)
+                ->setValue($value)
+                ->setFilterType($filterType)
+                ->setFilterValue($filterValue);
         }
 
-        $em->close();
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
     }
 
 }
+

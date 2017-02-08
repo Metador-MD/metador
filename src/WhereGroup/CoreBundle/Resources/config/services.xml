@@ -10,7 +10,7 @@
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
         <parameter key="metador.healthcheck.class">WhereGroup\CoreBundle\Component\HealthCheck</parameter>
-        <parameter key="metador.configuration.class">WhereGroup\CoreBundle\Component\ConfigurationManager</parameter>
+        <parameter key="metador.configuration.class">WhereGroup\CoreBundle\Component\Configuration</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
