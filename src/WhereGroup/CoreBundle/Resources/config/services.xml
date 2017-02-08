@@ -54,7 +54,7 @@
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
         </service>
-        <service id="metador.configuration" class="%metador.configuration.class%">
+        <service id="metador_configuration" class="%metador.configuration.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
