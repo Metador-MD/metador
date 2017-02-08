@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
 use WhereGroup\UserBundle\Component\UserInterface;

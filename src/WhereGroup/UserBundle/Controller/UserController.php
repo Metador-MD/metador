@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use WhereGroup\UserBundle\Entity\User;
-use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Form\UserType;
 use WhereGroup\CoreBundle\Component\MetadorException;
 
@@ -75,7 +74,14 @@ class UserController extends Controller
                 );
             // todo eigene Exception
             } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning('application', 'user', 'create', 'source', 'identifier', $e->getMessage());
+                $this->get('metador_logger')->warning(
+                    'application',
+                    'user',
+                    'create',
+                    'source',
+                    'identifier',
+                    $e->getMessage()
+                );
             }
 
             return $this->redirectToRoute('metador_admin_user');
@@ -96,7 +102,14 @@ class UserController extends Controller
         try {
             $user = $this->get('metador_user')->get($id);
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->warning('application', 'user', 'edit', 'source', 'identifier', $e->getMessage());
+            $this->get('metador_logger')->warning(
+                'application',
+                'user',
+                'edit',
+                'source',
+                'identifier',
+                $e->getMessage()
+            );
             return $this->redirectToRoute('metador_admin_user');
         }
 
@@ -142,14 +155,20 @@ class UserController extends Controller
                     'source',
                     'identifier',
                     'Benutzer %username% wurde bearbeitet.',
-                    array('%username%' => $user->getUsername()),
-                    $user
+                    array('%username%' => $user->getUsername())
                 );
 
                 return $this->redirectToRoute('metador_admin_user');
             }
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->warning('application', 'user', 'update', 'source', 'identifier', $e->getMessage());
+            $this->get('metador_logger')->warning(
+                'application',
+                'user',
+                'update',
+                'source',
+                'identifier',
+                $e->getMessage()
+            );
             return $this->redirectToRoute('metador_admin_user');
         }
 
@@ -196,7 +215,14 @@ class UserController extends Controller
                     array('%username%' => $user->getUsername())
                 );
             } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning('application', 'user', 'delete', 'source', 'identifier',$e->getMessage());
+                $this->get('metador_logger')->warning(
+                    'application',
+                    'user',
+                    'delete',
+                    'source',
+                    'identifier',
+                    $e->getMessage()
+                );
                 return $this->redirectToRoute('metador_admin_user');
             }
         }
