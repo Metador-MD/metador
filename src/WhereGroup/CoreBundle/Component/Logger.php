@@ -4,8 +4,8 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
 use WhereGroup\UserBundle\Component\UserInterface;
 
@@ -195,7 +195,7 @@ class Logger
     {
         $translatedMessage = $this->translator->trans($message, $parameters);
 
-        if ($username instanceof UserInterface) {
+        if (is_object($username)) {
             $user = $username;
             unset($username);
         } elseif (!empty($username)) {
@@ -208,16 +208,17 @@ class Logger
             $this->flashBag->add($type, $translatedMessage);
         }
 
-        $event = new LoggingEvent();
-        $event
-            ->setType($type)
+        $log = new Log();
+        $log->setType($type)
             ->setCategory($category)
             ->setSubcategory($subcategory)
             ->setOperation($operation)
             ->setSource($source)
             ->setIdentifier($identifier)
             ->setMessage($translatedMessage)
-            ->setUser($user);
+            ->setUsername($user->getUsername());
+
+        $event = new LoggingEvent($log);
 
         $this->eventDispatcher->dispatch('metador.log', $event);
 
