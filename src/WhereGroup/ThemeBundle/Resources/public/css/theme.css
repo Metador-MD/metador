@@ -2010,6 +2010,13 @@ body {
   text-align: center;
   width: 80px; }
 
+.title-box .title-box-img {
+  float: left;
+  padding-left: 10px;
+  height: 70px;
+  width: 80px; }
+
+
 .title-box .title-box-logo > a:hover {
   text-decoration: none; }
 
