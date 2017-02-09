@@ -2,6 +2,7 @@
 
 namespace WhereGroup\UserBundle\Component;
 
+use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User as UserEntity;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,10 +15,23 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class User implements UserInterface
 {
+    /**
+     * @var TokenStorageInterface
+     */
     private $tokenStorage;
+
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
+
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $encoder;
-    private $repository = 'MetadorUserBundle:User';
+
+    const USER_ENTITY = 'MetadorUserBundle:User';
+    const GROUP_ENTITY = 'MetadorUserBundle:Group';
 
     /**
      * User constructor.
@@ -47,7 +61,7 @@ class User implements UserInterface
      */
     public function get($id)
     {
-        $user = $this->getRepository()->findOneById($id);
+        $user = $this->getUserRepository()->findOneById($id);
 
         if (!$user) {
             throw new MetadorException("Benutzer nicht gefunden.");
@@ -58,11 +72,20 @@ class User implements UserInterface
 
     /**
      * @param $username
-     * @return mixed
+     * @return \WhereGroup\UserBundle\Entity\User
      */
     public function getByUsername($username)
     {
-        return $this->getRepository()->findOneByUsername($username);
+        return $this->getUserRepository()->findOneByUsername($username);
+    }
+
+    /**
+     * @param $groupname
+     * @return Group
+     */
+    public function getGroupByName($groupname)
+    {
+        return $this->getGroupRepository()->findOneByRole($groupname);
     }
 
     /**
@@ -70,7 +93,7 @@ class User implements UserInterface
      */
     public function findAll()
     {
-        return $this->getRepository()->findAllSorted();
+        return $this->getUserRepository()->findAllSorted();
     }
 
     /**
@@ -80,7 +103,7 @@ class User implements UserInterface
      */
     public function insert(UserEntity $user)
     {
-        if ($this->getRepository()->findOneByUsername($user->getUsername())) {
+        if ($this->getUserRepository()->findOneByUsername($user->getUsername())) {
             throw new MetadorException("Benutzer bereits vorhanden.");
         }
 
@@ -166,30 +189,39 @@ class User implements UserInterface
         }
 
         // todo: grant access with voter?
-//        if (is_null($ignoreRole)) {
-//            $ignoreRole = array(
-//                'ROLE_SYSTEM_USER',
-//                'ROLE_SYSTEM_SUPERUSER',
-//                'ROLE_ADMIN',
-//                'ROLE_SYSTEM_GEO_OFFICE');
-//        }
-//
-//        foreach ($user->getRoles() as $userRole) {
-//            foreach ($metadata->getGroups() as $group) {
-//                if ($userRole === $group && !in_array($group, $ignoreRole)) {
-//                    return true;
-//                }
-//            }
-//        }
-
         return false;
+    }
+
+    /**
+     * @param int $length
+     * @return string
+     */
+    public function generatePassword($length = 10)
+    {
+        $password = "";
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        srand((double)microtime()*1000000);
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= substr($chars, rand() % strlen($chars), 1);
+        }
+
+        return $password;
     }
 
     /**
      * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository
      */
-    private function getRepository()
+    private function getUserRepository()
     {
-        return $this->em->getRepository($this->repository);
+        return $this->em->getRepository(self::USER_ENTITY);
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository
+     */
+    private function getGroupRepository()
+    {
+        return $this->em->getRepository(self::GROUP_ENTITY);
     }
 }
