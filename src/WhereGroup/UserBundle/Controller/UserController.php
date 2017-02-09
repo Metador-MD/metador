@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Form\UserType;
 use WhereGroup\CoreBundle\Component\MetadorException;
+use WhereGroup\CoreBundle\Component\ProfilePictureTransformation;
 
 /**
  * User controller.
@@ -59,6 +60,12 @@ class UserController extends Controller
         $form = $this
             ->createForm(new UserType(), $user)
             ->submit($request);
+
+        if ($user->getProfilepicture() !== null) {
+            $profilePicture = new ProfilePictureTransformation($user->getProfilepicture());
+            $profilePicture->resizeProfilePicture(60, 60);
+            $user->setProfilepicture($profilePicture->getImageBase64Encode());
+        }
 
         if ($form->isValid()) {
             try {
@@ -116,7 +123,7 @@ class UserController extends Controller
         return array(
             'form' => $this
                 ->createForm(UserType::class, $user)
-                ->createView(),
+                ->createView()
         );
     }
 
@@ -132,6 +139,7 @@ class UserController extends Controller
             $user = $this->get('metador_user')->get($id);
 
             $oldPassword = $user->getPassword();
+            $oldProfilepicture = $user->getProfilepicture();
 
             $form = $this
                 ->createForm(new UserType(), $user)
@@ -144,6 +152,14 @@ class UserController extends Controller
                     );
                 } else {
                     $user->setPassword($oldPassword);
+                }
+
+                if ($user->getProfilepicture() !== "" &&  $oldProfilepicture !== $user->getProfilepicture()) {
+                    $profilePicture = new ProfilePictureTransformation($user->getProfilepicture());
+                    $profilePicture->resizeProfilePicture(60, 60);
+                    $user->setProfilepicture($profilePicture->getImageBase64Encode());
+                } else {
+                    $user->setProfilepicture($oldProfilepicture);
                 }
 
                 $this->get('metador_user')->update($user);

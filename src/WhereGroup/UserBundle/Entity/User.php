@@ -44,6 +44,11 @@ class User implements AdvancedUserInterface, \Serializable
     protected $email;
 
     /**
+     * @ORM\Column(name="profile_picture", type="text", nullable=true)
+     */
+    protected $profilepicture;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     protected $isActive;
@@ -53,6 +58,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\JoinTable(name="users_groups")
      */
     protected $groups;
+
+
 
     public function __construct()
     {
@@ -195,6 +202,19 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Set profilepicture
+     *
+     * @param string $profilepicture
+     * @return User
+     */
+    public function setProfilepicture($profilepicture)
+    {
+        $this->profilepicture = $profilepicture;
+
+        return $this;
+    }
+
+    /**
      * Get email
      *
      * @return string
@@ -202,6 +222,16 @@ class User implements AdvancedUserInterface, \Serializable
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Get profilepicture
+     *
+     * @return string
+     */
+    public function getProfilepicture()
+    {
+        return $this->profilepicture;
     }
 
     /**
