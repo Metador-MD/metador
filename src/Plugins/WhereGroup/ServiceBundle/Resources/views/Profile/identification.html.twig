@@ -158,24 +158,24 @@
     <label>
         <div class="icon mandatory icon-circle"></div>{{'Gekoppelte Ressource'|trans}}:
     </label>
-    <input name="coupledResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol3 no-value" value="" />
+    <input name="coupledResource" id="source_{{ id|md_obj_id }}" type="text" class="oneCol2 no-value" value="" />
     <div class="btn-group">
         <div id="wizard_{{ id|md_obj_id }}">
             <div class="icon icon-magic-wand"></div>
-        </div>
-        <div class="cmdAddSingleValue" {{ id|md_data_obj }} data-name="{{ id }}">
-            <div class="icon icon-plus"></div>
         </div>
         <div class="last showHelp" {{ id|md_data_obj }}><div class="icon icon-question"></div></div>
     </div>
     <div class="clear"></div>
     <div class="singleResult" id="result_{{ id|md_obj_id }}">
         {% if p['coupledResource'] is defined %}
-        {% for value in p['coupledResource'] %}
+        {% for key, value in p['coupledResource'] %}
         {% if value is not empty %}
         <div>
-            <input type="hidden" name="{{ id }}" value="{{ value }}" />
-            <label>{{ value }}</label>
+            <input type="hidden" name="p[coupledResource][{{ key }}][title]" value="{{ value['title'] }}" />
+            <input type="hidden" name="p[coupledResource][{{ key }}][uuid]" value="{{ key }}" />
+            <input type="hidden" name="p[coupledResource][{{ key }}][code]" value="{{ value['code'] }}" />
+            <input type="hidden" name="p[coupledResource][{{ key }}][codespace]" value="{{ value['codespace'] }}" />
+            <label>{{ value['title'] }}</label>
             <div class="btn cmdDeleteSingleValue">
                 <div class="icon icon-bin2"></div>
             </div>

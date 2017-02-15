@@ -505,8 +505,8 @@
             {% endif %}
 
             {% if p['coupledResource'] is defined %}
-                {% for coupledResource in p['coupledResource'] %}
-                    {{ generate_operates_on(coupledResource) }}
+                {% for uuid, coupledResource in p['coupledResource'] %}
+                    {{ generate_operates_on(uuid, coupledResource) }}
                 {% endfor %}
             {% endif %}
 
