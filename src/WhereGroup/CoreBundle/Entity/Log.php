@@ -8,15 +8,26 @@ namespace WhereGroup\CoreBundle\Entity;
  */
 class Log
 {
-    protected $type;
-    protected $message;
-    protected $username;
-    protected $category;
-    protected $subcategory;
-    protected $operation;
-    protected $source;
-    protected $identifier;
-    protected $dateTime;
+    protected $type = 'info';
+    protected $category = 'system';
+    protected $subcategory = '';
+    protected $operation = '';
+    protected $source = '';
+    protected $identifier = '';
+    protected $message = '';
+    protected $messageParameter = array();
+    protected $user = null;
+    protected $username = null;
+    protected $dateTime = null;
+    protected $flashMessage = false;
+
+    /**
+     * Log constructor.
+     */
+    public function __construct()
+    {
+        $this->dateTime = new \DateTime();
+    }
 
     /**
      * @return mixed
@@ -51,6 +62,42 @@ class Log
     public function setMessage($message)
     {
         $this->message = $message;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMessageParameter()
+    {
+        return $this->messageParameter;
+    }
+
+    /**
+     * @param $messageParameter
+     * @return $this
+     */
+    public function setMessageParameter($messageParameter)
+    {
+        $this->messageParameter = $messageParameter;
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
         return $this;
     }
 
@@ -177,6 +224,24 @@ class Log
     public function setDateTime($dateTime)
     {
         $this->dateTime = $dateTime;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFlashMessage()
+    {
+        return $this->flashMessage;
+    }
+
+    /**
+     * @param $flashMessage
+     * @return $this
+     */
+    public function setFlashMessage($flashMessage)
+    {
+        $this->flashMessage = (boolean)$flashMessage;
         return $this;
     }
 }

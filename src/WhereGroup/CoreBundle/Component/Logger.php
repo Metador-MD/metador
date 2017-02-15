@@ -50,6 +50,48 @@ class Logger
     }
 
     /**
+     * @return Log
+     */
+    public function newLog()
+    {
+        return new Log();
+    }
+
+    /**
+     * @param Log $log
+     * @return $this
+     */
+    public function set(Log $log)
+    {
+        // Find user
+        /** @var UserInterface $user */
+        $user = $log->getUser();
+
+        if (is_null($user) && is_null($log->getUsername())) {
+            $user = $this->userService->getUserFromSession();
+        } elseif (is_null($user)) {
+            $user = $this->userService->getByUsername($log->getUsername());
+        }
+
+        if (is_null($user)) {
+            $log->setUser($user);
+        }
+
+        // Translate message
+        $log->setMessage($this->translator->trans($log->getMessage(), $log->getMessageParameter()));
+
+        // Set flash message
+        if ($log->isFlashMessage()) {
+            $this->flashBag->add($log->getType(), $log->getMessage());
+        }
+
+        // Throw event
+        $this->eventDispatcher->dispatch('metador.log', new LoggingEvent($log));
+
+        return $this;
+    }
+
+    /**
      * @param $category
      * @param $subcategory
      * @param $operation
