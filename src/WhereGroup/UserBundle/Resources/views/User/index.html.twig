@@ -15,17 +15,19 @@
     {% endif %}
     
     <div class="title-box {{ class|trim }}">
-        <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
             {% if user.profilepicture is defined and user.profilepicture is not empty %}
                 <div class="title-box-img">
-                    <img src="data:image/jpeg;base64,{{ user.profilepicture }}"/>
+                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                        <img src="data:image/jpeg;base64,{{ user.profilepicture }}"/>
+                    </a>
                 </div>
             {% else %}
                 <div class="title-box-logo">
-                    <span class="icon-user"></span>
+                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                        <span class="icon-user"></span>
+                    </a>
                 </div>
             {% endif %}
-        </a>
         <div class="title-box-info">
             <div class="title">
                 <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
