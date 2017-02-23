@@ -95,7 +95,15 @@ class ProfileController extends Controller
         try {
             $metadata = $this->get('metadata')->saveObject($this->data['p']);
         } catch (MetadorException $e) {
-            $this->get('metador_logger')->flashError('metadata', 'profile', 'create', 'source', $this->data['p']['uuid'], $e->getMessage());
+            $this->get('metador_logger')->flashError(
+                'metadata',
+                'profile',
+                'create',
+                'source',
+                $this->data['p']['uuid'],
+                $e->getMessage()
+            );
+
             return $this->renderResponse($profile, 'form');
         }
 
@@ -127,12 +135,16 @@ class ProfileController extends Controller
 
         /** @var Metadata $obj */
         foreach ($metadata['result'] as $obj) {
-            $data[] = array(
-                'label' => $obj->getTitle(),
-                'value' => ($obj->getCodespace() != "")
-                    ? $obj->getCodespace() . $obj->getUuid()
-                    : $obj->getUuid()
-            );
+            $p = $obj->getObject();
+
+            if (isset($p['identifier'][0]['codespace']) && isset($p['identifier'][0]['code'])) {
+                $data[] = array(
+                    'title'     => $obj->getTitle(),
+                    'code'      => $p['identifier'][0]['code'],
+                    'codespace' => $p['identifier'][0]['codespace'],
+                    'uuid'      =>  $obj->getUuid()
+                );
+            }
         }
 
         return new JsonResponse($data);

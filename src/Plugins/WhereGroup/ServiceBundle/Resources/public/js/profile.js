@@ -544,16 +544,38 @@ $(document).ready(function() {
                                 dataType: "json",
                                 success:  function(data) {
                                     $('.wizard-content').children().remove();
+
                                     for(var i in data) {
                                         $('.wizard-content').append(
                                             $('<p></p>')
                                                 .addClass('wizard-content-value')
-                                                .text(data[i].label)
-                                                .attr('data-value', data[i].value)
+                                                .text(data[i].title)
+                                                .attr('data-uuid', data[i].uuid)
+                                                .attr('data-code', data[i].code)
+                                                .attr('data-codespace', data[i].codespace)
                                                 .click(function() {
-                                                    $('#source_p_coupledresource').val(
-                                                        $(this).attr('data-value')
+                                                    $('#result_p_coupledresource').prepend(
+                                                        $('<div></div>').append(
+                                                            $('<input/>')
+                                                                .attr("type", "hidden")
+                                                                .attr("name", "p[coupledResource][" + $(this).attr('data-uuid') + "][title]")
+                                                                .val($(this).text()),
+                                                            $('<input/>')
+                                                                .attr("type", "hidden")
+                                                                .attr("name", "p[coupledResource][" + $(this).attr('data-uuid') + "][code]")
+                                                                .val($(this).attr('data-code')),
+                                                            $('<input/>')
+                                                                .attr("type", "hidden")
+                                                                .attr("name", "p[coupledResource][" + $(this).attr('data-uuid') + "][codespace]")
+                                                                .val($(this).attr('data-codespace')),
+                                                            $('<label></label>')
+                                                                .html($(this).text()),
+                                                            $('<div></div>')
+                                                                .addClass("btn cmdDeleteSingleValue")
+                                                                .append($('<div></div>').addClass('icon icon-bin2'))
+                                                        )
                                                     );
+
                                                     dialog.modalDialog('close', true);
                                                 })
                                         );

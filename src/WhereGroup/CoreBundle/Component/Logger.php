@@ -5,6 +5,7 @@ namespace WhereGroup\CoreBundle\Component;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
 use WhereGroup\UserBundle\Component\UserInterface;
 
@@ -46,6 +47,48 @@ class Logger
             $this->userService,
             $this->translatorInterface
         );
+    }
+
+    /**
+     * @return Log
+     */
+    public function newLog()
+    {
+        return new Log();
+    }
+
+    /**
+     * @param Log $log
+     * @return $this
+     */
+    public function set(Log $log)
+    {
+        // Find user
+        /** @var UserInterface $user */
+        $user = $log->getUser();
+
+        if (is_null($user) && is_null($log->getUsername())) {
+            $user = $this->userService->getUserFromSession();
+        } elseif (is_null($user)) {
+            $user = $this->userService->getByUsername($log->getUsername());
+        }
+
+        if (is_null($user)) {
+            $log->setUser($user);
+        }
+
+        // Translate message
+        $log->setMessage($this->translator->trans($log->getMessage(), $log->getMessageParameter()));
+
+        // Set flash message
+        if ($log->isFlashMessage()) {
+            $this->flashBag->add($log->getType(), $log->getMessage());
+        }
+
+        // Throw event
+        $this->eventDispatcher->dispatch('metador.log', new LoggingEvent($log));
+
+        return $this;
     }
 
     /**
@@ -194,7 +237,7 @@ class Logger
     {
         $translatedMessage = $this->translator->trans($message, $parameters);
 
-        if ($username instanceof UserInterface) {
+        if (is_object($username)) {
             $user = $username;
             unset($username);
         } elseif (!empty($username)) {
@@ -207,16 +250,17 @@ class Logger
             $this->flashBag->add($type, $translatedMessage);
         }
 
-        $event = new LoggingEvent();
-        $event
-            ->setType($type)
+        $log = new Log();
+        $log->setType($type)
             ->setCategory($category)
             ->setSubcategory($subcategory)
             ->setOperation($operation)
             ->setSource($source)
             ->setIdentifier($identifier)
             ->setMessage($translatedMessage)
-            ->setUser($user);
+            ->setUsername($user->getUsername());
+
+        $event = new LoggingEvent($log);
 
         $this->eventDispatcher->dispatch('metador.log', $event);
 

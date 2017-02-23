@@ -44,16 +44,12 @@ class CoupledResourceExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function operatesOn($coupledResource)
+    public function operatesOn($uuid, $coupledResource)
     {
-        preg_match(
-            '/([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/',
-            $coupledResource,
-            $matches
-        );
+        $coupledResource = $coupledResource['codespace'] . $coupledResource['code'];
 
-        $href = urlencode($this->operatesOnUrl . (isset($matches[1]) ? $matches[1] : '') . '#' . $coupledResource);
-
-        return "\n" . '<srv:operatesOn xlink:href="' . $href . '" uuidref="' . $coupledResource . '" />';
+        return "\n" . '<srv:operatesOn xlink:href="'
+            . urlencode($this->operatesOnUrl . $uuid . '#' . $coupledResource)
+            . '" uuidref="' . $coupledResource . '" />';
     }
 }
