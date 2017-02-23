@@ -44,9 +44,9 @@ class User implements AdvancedUserInterface, \Serializable
     protected $email;
 
     /**
-     * @ORM\Column(name="profile_picture", type="text", nullable=true)
+     * @ORM\Column(name="picture", type="text", nullable=true)
      */
-    protected $profilepicture;
+    protected $picture;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
@@ -207,7 +207,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @param string $profilepicture
      * @return User
      */
-    public function setProfilepicture($profilepicture)
+    public function setPicture($profilepicture)
     {
         $this->profilepicture = $profilepicture;
 
@@ -229,7 +229,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return string
      */
-    public function getProfilepicture()
+    public function getPicture()
     {
         return $this->profilepicture;
     }

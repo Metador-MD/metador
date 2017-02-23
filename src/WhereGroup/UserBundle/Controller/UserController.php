@@ -139,7 +139,7 @@ class UserController extends Controller
             $user = $this->get('metador_user')->get($id);
 
             $oldPassword = $user->getPassword();
-            $oldProfilepicture = $user->getProfilepicture();
+            $oldPicture = $user->getPicture();
 
             $form = $this
                 ->createForm(new UserType(), $user)
@@ -154,12 +154,12 @@ class UserController extends Controller
                     $user->setPassword($oldPassword);
                 }
 
-                if ($user->getProfilepicture() !== "" &&  $oldProfilepicture !== $user->getProfilepicture()) {
-                    $profilePicture = new ProfilePictureTransformation($user->getProfilepicture());
-                    $profilePicture->resizeProfilePicture(60, 60);
-                    $user->setProfilepicture($profilePicture->getImageBase64Encode());
+                if ($user->getProfilepicture() !== "" &&  $oldPicture !== $user->getProfilepicture()) {
+                    $profilePicture = new ProfilePictureTransformation($user->getPicture());
+                    $profilePicture->resizeProfilePicture(40, 40);
+                    $user->setPicture($picture->getImageBase64Encode());
                 } else {
-                    $user->setProfilepicture($oldProfilepicture);
+                    $user->setPicture($oldPicture);
                 }
 
                 $this->get('metador_user')->update($user);
