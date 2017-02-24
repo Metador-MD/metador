@@ -39,7 +39,7 @@ class UserType extends AbstractType
                 )
             )
             ->add(
-                'profilepicture',
+                'picture',
                 FileType::class,
                 array(
                     'label'=>'Profile Picture',

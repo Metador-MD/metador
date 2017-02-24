@@ -2,31 +2,31 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-class ProfilePictureTransformation
+class PictureTransformation
 {
-    private $profilePicture;
+    private $picture;
     
-    public function __construct($profilePicture)
+    public function __construct($picture)
     {
-        $this->profilePicture = $profilePicture;
+        $this->picture = $picture;
     }
 
     public function getImageBase64Encode()
     {
-        return base64_encode($this->profilePicture);
+        return base64_encode($this->picture);
     }
     
     
     public function resizeProfilePicture($width, $height)
     {
         $destImage = imagecreatetruecolor($width, $height);
-        $srcImage = imagecreatefromstring(file_get_contents($this->profilePicture));
+        $srcImage = imagecreatefromstring(file_get_contents($this->picture));
 
         imagecopyresized($destImage, $srcImage, 0, 0, 0, 0, $width, $height, imagesx($srcImage), imagesy($srcImage));
 
         ob_start();
         imagejpeg($destImage);
-        $this->profilePicture = ob_get_contents();
+        $this->picture = ob_get_contents();
         ob_end_clean();
 
         imagedestroy($destImage);

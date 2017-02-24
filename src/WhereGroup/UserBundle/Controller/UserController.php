@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Form\UserType;
 use WhereGroup\CoreBundle\Component\MetadorException;
-use WhereGroup\CoreBundle\Component\ProfilePictureTransformation;
+use WhereGroup\CoreBundle\Component\PictureTransformation;
 
 /**
  * User controller.
@@ -61,10 +61,10 @@ class UserController extends Controller
             ->createForm(new UserType(), $user)
             ->submit($request);
 
-        if ($user->getProfilepicture() !== null) {
-            $profilePicture = new ProfilePictureTransformation($user->getProfilepicture());
-            $profilePicture->resizeProfilePicture(60, 60);
-            $user->setProfilepicture($profilePicture->getImageBase64Encode());
+        if ($user->getPicture() !== null) {
+            $picture = new PictureTransformation($user->getPicture());
+            $picture->resizeProfilePicture(60, 60);
+            $user->setPicture($picture->getImageBase64Encode());
         }
 
         if ($form->isValid()) {
@@ -154,9 +154,9 @@ class UserController extends Controller
                     $user->setPassword($oldPassword);
                 }
 
-                if ($user->getProfilepicture() !== "" &&  $oldPicture !== $user->getProfilepicture()) {
-                    $profilePicture = new ProfilePictureTransformation($user->getPicture());
-                    $profilePicture->resizeProfilePicture(40, 40);
+                if ($user->getPicture() !== "" &&  $oldPicture !== $user->getPicture()) {
+                    $picture = new PictureTransformation($user->getPicture());
+                    $picture->resizeProfilePicture(60, 60);
                     $user->setPicture($picture->getImageBase64Encode());
                 } else {
                     $user->setPicture($oldPicture);

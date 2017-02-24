@@ -202,14 +202,14 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set profilepicture
+     * Set picture
      *
-     * @param string $profilepicture
+     * @param string $picture
      * @return User
      */
-    public function setPicture($profilepicture)
+    public function setPicture($picture)
     {
-        $this->profilepicture = $profilepicture;
+        $this->picture = $picture;
 
         return $this;
     }
@@ -225,13 +225,13 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get profilepicture
+     * Get picture
      *
      * @return string
      */
     public function getPicture()
     {
-        return $this->profilepicture;
+        return $this->picture;
     }
 
     /**

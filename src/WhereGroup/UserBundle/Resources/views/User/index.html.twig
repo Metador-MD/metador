@@ -15,10 +15,10 @@
     {% endif %}
     
     <div class="title-box {{ class|trim }}">
-            {% if user.profilepicture is defined and user.profilepicture is not empty %}
+            {% if user.picture is defined and user.picture is not empty %}
                 <div class="title-box-img">
                     <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                        <img src="data:image/jpeg;base64,{{ user.profilepicture }}"/>
+                        <img src="data:image/jpeg;base64,{{ user.picture }}"/>
                     </a>
                 </div>
             {% else %}
