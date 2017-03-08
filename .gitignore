@@ -21,6 +21,8 @@ vendor
 web/bundles
 bower_components
 node_modules
+var/cache
+var/logs
 
 # Ignore or allow Plugins
 src/Plugins/*

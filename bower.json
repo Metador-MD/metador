@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-css": "^4.1.1",
+    "normalize-css": "^5.0.0",
     "zebra_datepicker": "^1.9.5"
   }
 }

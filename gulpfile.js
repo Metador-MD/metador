@@ -57,7 +57,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('init', ['clean'], () => {
-    composer();
+    composer({ "optimize-autoloader": true });
     return bower();
 });
 
