@@ -1,6 +1,5 @@
 @import '../config';
 
-
 .center-left-menu {
     list-style: none;
     padding: 0;
@@ -10,32 +9,43 @@
         height: $center-left-menu-height;
         line-height: $center-left-menu-height;
         margin: 0;
-        padding: 0 20px;
-        background-color: $center-left-menu-color;
-        border-bottom: 1px solid darken($center-left-menu-color, 5%);
+        padding: 0 $padding;
+        //background-color: $center-left-menu-color;
+        //border-bottom: 1px solid darken($center-left-menu-color, 5%);
         cursor: pointer;
         color: $center-left-menu-font-color;
         display: block;
 
         & > span {
             //display: inline-block;
-            height: $center-left-menu-height;
-            line-height: $center-left-menu-height;
-            //vertical-align: middle;
+            //height: $center-left-menu-height;
+            //line-height: $center-left-menu-height;
+            vertical-align: middle;
             font-size: 20px;
-            padding: 6px;
-            background-color: darken($center-left-menu-color, 2%);
-            border-radius: 4px;
-            color: $primary;
+            //margin: auto;
+            //border: 1px solid red;
         }
 
+        //& > span {
+        //    //display: inline-block;
+        //    height: $center-left-menu-height;
+        //    line-height: $center-left-menu-height;
+        //    //vertical-align: middle;
+        //    font-size: 20px;
+        //    padding: 6px;
+        //    background-color: darken($center-left-menu-color, 2%);
+        //    border-radius: 4px;
+        //    color: $primary;
+        //}
+
         &:hover {
-            background-color: #fff;
+            background-color: darken($content, 5%)
+            //background-color: #fff;
         }
 
         &.act {
-            background-color: #fff;
-            box-shadow: inset 3px 0 0 $primary;
+            //background-color: #fff;
+            //box-shadow: inset 3px 0 0 $primary;
         }
     }
 }

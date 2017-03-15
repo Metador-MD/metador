@@ -13,13 +13,19 @@
 {% endblock %}
 
 {% block body %}
-<div class="md-2 has-menu has-title">
+<div class="md has-menu">
     <div class="top">
         <div class="top-left">
-            <img src="{{ asset('bundles/metadortheme/img/logo.png') }}" style="vertical-align: middle;" alt="">
+            <span class="logo">
+                <img src="{{ asset('bundles/metadortheme/img/logo.png') }}" />
+            </span>
         </div>
         <div class="top-right">
-            <div class="top-right-user">
+            <div class="top-right-item">
+                <span class="icon-cog"></span> Administration
+            </div>
+
+            <div class="top-right-item top-right-user">
                 <div class="top-right-userimage">
                     <span class="icon-user user-image"></span>
                 </div>
@@ -27,14 +33,13 @@
                 <div class="top-right-menu">
                     <span class="icon-sort-desc"></span>
                 </div>
-
             </div>
         </div>
     </div>
     <div class="center">
-        <div class="center-top">
-            <div class="center-top-left"></div>
-            <div class="center-top-right">
+        {#<div class="center-top">#}
+            {#<div class="center-top-left"></div>#}
+            {#<div class="center-top-right">#}
                 {#<ul class="center-top-right-menu">#}
                     {#<li>#}
                         {#<span class="icon-user"></span> Übersicht#}
@@ -44,8 +49,8 @@
                     {#</li>#}
                     {#<li>Gruppen</li>#}
                 {#</ul>#}
-            </div>
-        </div>
+            {#</div>#}
+        {#</div>#}
         <div class="center-left">
             <ul class="center-left-menu">
                 <li>

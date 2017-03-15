@@ -1,4 +1,4 @@
-@mixin pos($top, $right, $bottom, $left, $pos : absolute){
+@mixin pos($top, $right, $bottom, $left, $pos : absolute) {
     position: $pos;
 
     @if($top != ''){top:$top;}
@@ -7,7 +7,7 @@
     @if($bottom != ''){bottom:$bottom;}
 }
 
-@mixin posCenter($width, $height){
+@mixin posCenter($width, $height) {
     width: $width;
     height: $height;
     margin-left: -($width/2);
@@ -15,7 +15,7 @@
     @include pos(50%, '', '', 50%);
 }
 
-@mixin userSelect($select){
+@mixin userSelect($select) {
     -webkit-user-select: $select;
     -moz-user-select: $select;
     -ms-user-select: $select;

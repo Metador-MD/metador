@@ -2,37 +2,60 @@
 @import '../mixins';
 
 body {
-    background-color: #f1f2f6;
+    font-family: Arial, Helvetica, Verdana,  sans-serif;
     font-size: 1em;
+    color: $font;
+    background-color: $background;
 }
 
-.md-2 {
+.md {
+    margin: 0 auto;
     width: $page-width;
-    margin: 5px auto;
-    border: 1px solid darken($content, 20%);
-    border-top-width: 0;
+    position: absolute;
 
     @include pos(0, 0, 0, 0);
 
     & > .top {
-        background-color: $primary;
-        height: $page-top-height;
-        line-height: $page-top-height;
-        color: $content;
-    }
 
-    & > .center {
-        background-color: $content;
-        @include pos($page-top-height, 0, 0, 0);
     }
 
     .top-left {
+        //position: relative;
+        width: $center-left-width;
         float: left;
-        padding-left: 20px;
+        //padding-left: 20px;
+        //border: 1px solid red;
+        height: $page-top-height + $padding * 2;
+        //line-height: $page-top-height + $padding * 2;
+
+        & > .logo {
+            //text-align: center;
+            //display: block;
+            //margin: 10px auto;
+            //display:table-cell;
+            //vertical-align: middle;
+            //border: 1px solid green;
+        }
     }
 
     .top-right {
+        height: $page-top-height;
+        line-height: $page-top-height;
         float: right;
+    }
+
+    .top-right-item {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0 10px;
+
+        &:hover {
+            background-color: darken($background, 3%);
+        }
+    }
+
+    & > .center {
+        @include pos($page-top-height + $padding * 2, 0, 0, 0);
     }
 
     .center-top {
@@ -47,22 +70,6 @@ body {
         @include pos(0, 0, 0, 0);
     }
 
-    &.has-title {
-        .center-top {
-            display: block;
-            height: $center-top-height;
-            line-height: $center-top-height;
-            background-color: white;
-            height: $center-top-height;
-            border-bottom: 1px solid darken($content, 10%);
-            @include pos(0, 0, '', 0);
-        }
-
-        .center-right {
-            top: $center-top-height;
-        }
-    }
-
     &.has-menu {
         .center-top {
             left: $center-left-width;
@@ -71,8 +78,6 @@ body {
         .center-left {
             display: block;
             width: $center-left-width;
-            border-right: 1px solid darken($content, 20%);
-            background-color: $center-left-color;
             @include pos(0, '', 0, 0);
         }
 
@@ -92,9 +97,39 @@ body {
 
 .content {
     padding: 0 20px;
+    border: 1px solid darken($content, 10%);
+    background-color: $content;
+    @include pos(0, 0, 0, 0);
 }
 
 h1.page-title {
-    color: darken($content, 40%);
+    color: lighten($font, 10%);
     font-weight: bold;
 }
+
+
+//.md-2 {
+//
+//
+//
+//
+//    &.has-title {
+//        .center-top {
+//            display: block;
+//            height: $center-top-height;
+//            line-height: $center-top-height;
+//            background-color: white;
+//            height: $center-top-height;
+//            border-bottom: 1px solid darken($content, 10%);
+//            @include pos(0, 0, '', 0);
+//        }
+//
+//        .center-right {
+//            top: $center-top-height;
+//        }
+//    }
+//
+//
+//}
+
+

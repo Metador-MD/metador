@@ -1,14 +1,16 @@
+$background: #f7f7f7;
+$font: #444;
+$content: #fefefe;
+
 $primary: #293E6A;
-//$primary: #373739;
-$content: #f7f7f7;
-$center-left-color: #fefefe;
 $center-left-menu-color: #f7f7f7;
 $center-left-menu-font-color: darken($center-left-menu-color, 60%);
 
 //$title-background: #e1e1e1;
 
+$padding: 20px;
 $page-width: 1024px;
 $page-top-height: 50px;
 $center-left-width: 200px;
-$center-top-height: 40px;
+//$center-top-height: 40px;
 $center-left-menu-height: 40px;
