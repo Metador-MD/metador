@@ -1,0 +1,52 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+
+$icon-color: darken($background, 30%);
+
+.input-wrapper {
+    position: relative;
+    display: block;
+    border: 1px solid darken($background, 10%);
+    border-radius: 2px;
+    background-color: $background;
+    @extend .clearfix;
+
+    & > .input {
+        border: 0;
+        outline: none;
+        color: $font;
+        background-color: $background;
+        @extend .input-properties;
+        @include calc('width', '100% - #{$input-height * 3}');
+    }
+
+    & > span[class^="icon-"] {
+        &.left {
+            float: left;
+        }
+
+        &.right {
+            float: right;
+        }
+
+        font-size: 1.1em;
+        color: $icon-color;
+        cursor: pointer;
+        vertical-align: baseline;
+        text-align: center;
+        display: inline-block;
+        width: $input-height;
+        @extend .input-properties;
+
+        &:hover {
+            color: darken($icon-color, 10%);
+            background-color: darken($background, 5%);
+        }
+    }
+}
+
+.input-wrapper-label {
+    @extend .input-properties;
+}

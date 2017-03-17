@@ -1,0 +1,100 @@
+@import '../config';
+@import '../mixins';
+
+$space: $padding;
+
+@mixin col($selector, $width) {
+    #{$selector} {
+        width: #{$width};
+
+        @at-root .md .grid.space .row.r-2 #{$selector} {
+            @include calc('width', '#{$width} - #{$space/2}');
+        }
+
+        @at-root .md .grid.space .row.r-3 #{$selector} {
+            @include calc('width', '#{$width} - #{$space*2/3}');
+        }
+
+        @at-root .md .grid.space .row.r-4 #{$selector} {
+            @include calc('width', '#{$width} - #{$space*3/4}');
+        }
+
+        @at-root .md .grid.space .row.r-8 #{$selector} {
+            @include calc('width', '#{$width} - #{$space*7/8}');
+        }
+    }
+
+
+    @media screen and (max-width: $break-small) {
+        #{$selector} {
+            width: 100% !important;
+        }
+    }
+}
+
+
+.md .grid {
+    .row {
+        display: block;
+
+        @extend .clearfix;
+
+        @include col('.c-1', '100%');
+        @include col('.c-1-2', '50%');
+        @include col('.c-1-3', '33.333%');
+        @include col('.c-2-3', '66.666%');
+        @include col('.c-1-4', '25%');
+        @include col('.c-3-4', '75%');
+        @include col('.c-1-8', '12.5%');
+
+
+        & > .col {
+            float: left;
+
+            &:last-child {
+                float: right;
+            }
+        }
+    }
+
+    &.space > .row {
+        margin-bottom: $padding;
+
+        & > .col {
+            &:not(:first-child):not(:last-child) {
+                margin: 0 #{$space / 2};
+            }
+
+            &:first-child {
+                margin: 0 #{$space / 2} 0 0;
+            }
+
+            &:last-child {
+                margin: 0 0 0 #{$space / 2};
+            }
+
+            @media screen and (max-width: $break-small) {
+                &:not(:first-child):not(:last-child) {
+                    margin: 0;
+                }
+
+                &:first-child {
+                    margin: 0 ;
+                }
+
+                &:last-child {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    &.base-style > .row > .col {
+        background-color: #dadada;
+        border: 1px solid silver;
+    }
+
+    &.padding > .row > .col {
+        padding: $padding/2;
+    }
+}

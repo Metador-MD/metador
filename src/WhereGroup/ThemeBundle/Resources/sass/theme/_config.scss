@@ -1,16 +1,32 @@
-$background: #f7f7f7;
+$background: #f7f8fa;
 $font: #444;
 $content: #fefefe;
 
-$primary: #293E6A;
-$center-left-menu-color: #f7f7f7;
-$center-left-menu-font-color: darken($center-left-menu-color, 60%);
+$primary: #008ec0;
+$secondary: #ccd32a;
 
 //$title-background: #e1e1e1;
 
 $padding: 20px;
 $page-width: 1024px;
 $page-top-height: 50px;
-$center-left-width: 200px;
+$center-left-width: 230px;
 //$center-top-height: 40px;
 $center-left-menu-height: 40px;
+
+// Forms
+$input-height: 35px;
+$input-menu-height: 30px;
+
+// Media queries
+$break-small: 768px;
+$break-large: 1200px;
+
+//@media screen and (max-width: $break-small) {
+//    width: 100px;
+//    float: none;
+//}
+//
+//@media screen and (min-width: $break-large) {
+//    float: right;
+//}

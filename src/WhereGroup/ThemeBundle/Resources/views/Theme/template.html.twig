@@ -53,18 +53,70 @@
         {#</div>#}
         <div class="center-left">
             <ul class="center-left-menu">
-                <li>
-                    <span class="icon-user"></span> Übersicht
-                </li>
-                <li class="act">
-                    <span class="icon-user"></span> Benutzer
-                </li>
-                <li>Gruppen</li>
+                <li>Metadatensatz</li>
+                <li>Indentifikation</li>
+                <li>Klassifizierung</li>
+                <li>Schlüsselwort</li>
+                <li class="act">Geografischer Standort</li>
+                <li>Zeitbezug</li>
+                <li>Qualität</li>
+                <li>Übereinstimmung</li>
+                <li>Beschränkungen</li>
+                <li>Zuständige Stelle</li>
             </ul>
         </div>
         <div class="center-right">
             <div class="content">
-                <h1 class="page-title">Hello</h1>
+
+                {# Form #}
+                <h1 class="page-title">Form</h1>
+
+                <div class="grid space">
+                    <div class="row r-2">
+                        <div class="col c-1-4">
+                            <span class="icon-circle"></span>
+                            <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                        </div>
+                        <div class="col c-3-4">
+                            <div class="input-wrapper">
+                                <span class="icon-warning left"></span>
+                                <input id="abc" class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                                <span class="icon-download right"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid space">
+                    <div class="row r-2">
+                        <div class="col c-1-2">
+                            <div>
+                                <span class="icon-circle"></span>
+                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="icon-warning left"></span>
+                                <input class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                                <span class="icon-download right"></span>
+                            </div>
+                        </div>
+                        <div class="col c-1-2">
+                            <div>
+                                <span class="icon-circle"></span>
+                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="icon-none left"></span>
+                                <input class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                                <span class="icon-download right"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ body {
 
 .md {
     margin: 0 auto;
-    width: $page-width;
+    max-width: $page-width;
     position: absolute;
 
     @include pos(0, 0, 0, 0);
@@ -20,22 +20,9 @@ body {
     }
 
     .top-left {
-        //position: relative;
         width: $center-left-width;
         float: left;
-        //padding-left: 20px;
-        //border: 1px solid red;
         height: $page-top-height + $padding * 2;
-        //line-height: $page-top-height + $padding * 2;
-
-        & > .logo {
-            //text-align: center;
-            //display: block;
-            //margin: 10px auto;
-            //display:table-cell;
-            //vertical-align: middle;
-            //border: 1px solid green;
-        }
     }
 
     .top-right {
@@ -99,37 +86,13 @@ body {
     padding: 0 20px;
     border: 1px solid darken($content, 10%);
     background-color: $content;
-    @include pos(0, 0, 0, 0);
+    overflow-y: scroll;
+    z-index: 1;
+
+    @include pos(0, 0, 10px, 0);
 }
 
 h1.page-title {
     color: lighten($font, 10%);
     font-weight: bold;
 }
-
-
-//.md-2 {
-//
-//
-//
-//
-//    &.has-title {
-//        .center-top {
-//            display: block;
-//            height: $center-top-height;
-//            line-height: $center-top-height;
-//            background-color: white;
-//            height: $center-top-height;
-//            border-bottom: 1px solid darken($content, 10%);
-//            @include pos(0, 0, '', 0);
-//        }
-//
-//        .center-right {
-//            top: $center-top-height;
-//        }
-//    }
-//
-//
-//}
-
-
