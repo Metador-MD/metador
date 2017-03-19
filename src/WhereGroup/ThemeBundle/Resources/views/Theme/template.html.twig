@@ -17,7 +17,7 @@
     <div class="top">
         <div class="top-left">
             <span class="logo">
-                <img src="{{ asset('bundles/metadortheme/img/logo.png') }}" />
+                <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
             </span>
         </div>
         <div class="top-right">
@@ -74,8 +74,8 @@
                 <div class="grid space">
                     <div class="row r-2">
                         <div class="col c-1-4">
-                            <span class="icon-circle"></span>
-                            <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                            {#<span class="icon-circle"></span>#}
+                            <label class="input-wrapper-label" for="abc">Verantwortliche Stelle:</label>
                         </div>
                         <div class="col c-3-4">
                             <div class="input-wrapper">
@@ -92,8 +92,8 @@
                     <div class="row r-2">
                         <div class="col c-1-2">
                             <div>
-                                <span class="icon-circle"></span>
-                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                                {#<span class="icon-circle"></span>#}
+                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle:</label>
                             </div>
                             <div class="input-wrapper">
                                 <span class="icon-warning left"></span>
@@ -104,17 +104,68 @@
                         </div>
                         <div class="col c-1-2">
                             <div>
-                                <span class="icon-circle"></span>
-                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle</label>
+                                {#<span class="icon-circle"></span>#}
+                                <label class="input-wrapper-label" for="abc">Verantwortliche Stelle:</label>
                             </div>
-                            <div class="input-wrapper">
-                                <span class="icon-none left"></span>
+                            <div class="input-wrapper error">
+                                <span class="icon-exclamation left"></span>
                                 <input class="input" type="text" name="" value="" placeholder="test" />
                                 <span class="icon-question right"></span>
                                 <span class="icon-download right"></span>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="grid space">
+                    <div class="row r-3">
+                        <div class="col c-1-3">
+                            <div>
+                                <label class="input-wrapper-label" for="abc">Datum:</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="icon-optional left"></span>
+                                <input class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                            </div>
+                        </div>
+                        <div class="col c-1-3">
+                            <div>
+                                <label class="input-wrapper-label" for="abc">Datum:</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="icon-conditional left"></span>
+                                <input class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                            </div>
+                        </div>
+                        <div class="col c-1-3">
+                            <div>
+                                <span class="icon-mandatory left"></span>
+                                <label class="input-wrapper-label" for="abc">Datum:</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="icon-mandatory left"></span>
+                                <input class="input" type="text" name="" value="" placeholder="test" />
+                                <span class="icon-question right"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="grid space">
+                    <div class="row r-1">
+                        <div class="col c-1">
+                            <div class="input-wrapper">
+                                <span class="icon-mandatory left"></span>
+                                <textarea class="textarea" name=""></textarea>
+                                <span class="icon-question right"></span>
+                                <span class="icon-download right"></span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

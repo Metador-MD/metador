@@ -1,4 +1,4 @@
-.input-properties, .input-wrapper > .input, .input-wrapper > span[class^="icon-"], .input-wrapper-label {
+.input-properties, .input-wrapper > span[class^="icon-"], .input-wrapper > .input, .input-wrapper-label {
   height: 35px;
   line-height: 35px; }
 
@@ -9,11 +9,11 @@
 * {
   box-sizing: border-box; }
 
-.clearfix:before, .md .grid .row:before, .input-wrapper:before, .clearfix:after, .md .grid .row:after, .input-wrapper:after {
+.clearfix:before, .md .grid .row:before, .input-wrapper:before, .md > .top:before, .clearfix:after, .md .grid .row:after, .input-wrapper:after, .md > .top:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .md .grid .row:after, .input-wrapper:after {
+.clearfix:after, .md .grid .row:after, .input-wrapper:after, .md > .top:after {
   clear: both; }
 
 ::-webkit-scrollbar {
@@ -251,7 +251,7 @@
 .md .grid.padding > .row > .col {
   padding: 10px; }
 
-.input-properties, .input-wrapper > .input, .input-wrapper > span[class^="icon-"], .input-wrapper-label {
+.input-properties, .input-wrapper > span[class^="icon-"], .input-wrapper > .input, .input-wrapper-label {
   height: 35px;
   line-height: 35px; }
 
@@ -262,26 +262,18 @@
 .input-wrapper {
   position: relative;
   display: block;
-  border: 1px solid #d8dde6;
-  border-radius: 2px;
-  background-color: #f7f8fa; }
+  border: 1px solid #e5e5e5;
+  border-radius: 2px; }
 
-.input-wrapper > .input {
-  border: 0;
-  outline: none;
-  color: #444;
-  background-color: #f7f8fa;
-  width: -webkit-calc(100% - 105px);
-  width: -moz-calc(100% - 105px);
-  width: calc(100% - 105px); }
+.input-wrapper.error {
+  border-color: #fdc5bf;
+  background-color: #fff2f0; }
 
 .input-wrapper > span[class^="icon-"] {
   font-size: 1.1em;
-  color: #99a6bf;
-  cursor: pointer;
-  vertical-align: baseline;
+  color: #b2b2b2;
   text-align: center;
-  display: inline-block;
+  display: block;
   width: 35px; }
 
 .input-wrapper > span[class^="icon-"].left {
@@ -290,9 +282,67 @@
 .input-wrapper > span[class^="icon-"].right {
   float: right; }
 
-.input-wrapper > span[class^="icon-"]:hover {
-  color: #798aac;
+.input-wrapper > span[class^="icon-"]:last-child, .input-wrapper > span[class^="icon-"]:not(:first-child):not(:last-child) {
+  border-left: 1px solid #e5e5e5; }
+
+.input-wrapper > span[class^="icon-"]:not(:first-child) {
+  cursor: pointer;
+  background-color: #f7f8fa; }
+
+.input-wrapper > span[class^="icon-"].success {
+  color: #8bdb85;
+  background-color: #d6f2d4; }
+
+.input-wrapper > span[class^="icon-"].error {
+  color: #fb6b5b;
+  background-color: #fff2f0; }
+
+.input-wrapper > span[class^="icon-"]:hover:not(:first-child) {
+  color: #989898;
   background-color: #e7eaf0; }
+
+.input-wrapper > span[class^="icon-"].icon-optional {
+  color: #b0e7ac;
+  background-color: transparent;
+  border: 0; }
+
+.input-wrapper > span[class^="icon-"].icon-conditional {
+  color: #ffd99b;
+  background-color: transparent;
+  border: 0; }
+
+.input-wrapper > span[class^="icon-"].icon-mandatory {
+  color: #fdc5bf;
+  background-color: transparent;
+  border: 0; }
+
+.input-wrapper > span[class^="icon-"].icon-exclamation {
+  color: #fb6b5b;
+  background-color: transparent;
+  border: 0; }
+
+.input-wrapper > .input {
+  border: 0;
+  outline: none;
+  color: #444;
+  padding: 0 10px 0 0;
+  background-color: transparent;
+  width: -webkit-calc(100% - 105px);
+  width: -moz-calc(100% - 105px);
+  width: calc(100% - 105px); }
+
+.input-wrapper > .textarea {
+  border: 0;
+  outline: none;
+  color: #444;
+  padding: 10px 10px 10px 0;
+  resize: vertical;
+  width: -webkit-calc(100% - 70px);
+  width: -moz-calc(100% - 70px);
+  width: calc(100% - 70px); }
+
+.input-wrapper-label {
+  color: #008ec0; }
 
 body {
   font-family: Arial, Helvetica, Verdana,  sans-serif;
@@ -313,7 +363,7 @@ body {
 .md .top-left {
   width: 230px;
   float: left;
-  height: 90px; }
+  height: 80px; }
 
 .md .top-right {
   height: 50px;
@@ -330,7 +380,7 @@ body {
 
 .md > .center {
   position: absolute;
-  top: 90px;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0; }
@@ -401,7 +451,7 @@ h1.page-title {
   display: inline-block;
   font-size: 0.8em; }
 
-.input-properties, .input-wrapper > .input, .input-wrapper > span[class^="icon-"], .input-wrapper-label {
+.input-properties, .input-wrapper > span[class^="icon-"], .input-wrapper > .input, .input-wrapper-label {
   height: 35px;
   line-height: 35px; }
 

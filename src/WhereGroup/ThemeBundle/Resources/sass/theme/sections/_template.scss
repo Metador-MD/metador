@@ -16,18 +16,18 @@ body {
     @include pos(0, 0, 0, 0);
 
     & > .top {
-
+        @extend .clearfix;
     }
 
     .top-left {
         width: $center-left-width;
         float: left;
-        height: $page-top-height + $padding * 2;
+        height: $header-height;
     }
 
     .top-right {
-        height: $page-top-height;
-        line-height: $page-top-height;
+        height: $global-menu-height;
+        line-height: $global-menu-height;
         float: right;
     }
 
@@ -42,7 +42,7 @@ body {
     }
 
     & > .center {
-        @include pos($page-top-height + $padding * 2, 0, 0, 0);
+        @include pos($header-height, 0, 0, 0);
     }
 
     .center-top {
@@ -84,7 +84,7 @@ body {
 
 .content {
     padding: 0 20px;
-    border: 1px solid darken($content, 10%);
+    border: 1px solid $border;
     background-color: $content;
     overflow-y: scroll;
     z-index: 1;

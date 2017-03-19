@@ -1,17 +1,27 @@
+// COLOR'S
 $background: #f7f8fa;
 $font: #444;
 $content: #fefefe;
+$border: darken($content, 10%);
 
 $primary: #008ec0;
 $secondary: #ccd32a;
 
-//$title-background: #e1e1e1;
+$info: #6e98e8;
+$info-bg: lighten($info, 20%);
+$success: #8bdb85;
+$success-bg: lighten($success, 20%);
+$warning: #ffc668;
+$warning-bg: lighten($warning, 20%);
+$error: #fb6b5b;
+$error-bg: lighten($error, 30%);
+
 
 $padding: 20px;
 $page-width: 1024px;
-$page-top-height: 50px;
+$header-height: 80px;
+$global-menu-height: 50px;
 $center-left-width: 230px;
-//$center-top-height: 40px;
 $center-left-menu-height: 40px;
 
 // Forms

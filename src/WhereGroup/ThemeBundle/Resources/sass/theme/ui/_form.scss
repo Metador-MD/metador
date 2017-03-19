@@ -3,26 +3,28 @@
 @import '../extensions';
 
 
-$icon-color: darken($background, 30%);
+$icon-color: darken($border, 20%);
 
 .input-wrapper {
     position: relative;
     display: block;
-    border: 1px solid darken($background, 10%);
-    border-radius: 2px;
-    background-color: $background;
-    @extend .clearfix;
+    border: 1px solid $border;
 
-    & > .input {
-        border: 0;
-        outline: none;
-        color: $font;
-        background-color: $background;
-        @extend .input-properties;
-        @include calc('width', '100% - #{$input-height * 3}');
+    &.error {
+        border-color: lighten($error, 20%);
+        background-color: $error-bg;
     }
 
+    border-radius: 2px;
+    @extend .clearfix;
+
     & > span[class^="icon-"] {
+        font-size: 1.1em;
+        color: $icon-color;
+        text-align: center;
+        display: block;
+        width: $input-height;
+
         &.left {
             float: left;
         }
@@ -31,22 +33,79 @@ $icon-color: darken($background, 30%);
             float: right;
         }
 
-        font-size: 1.1em;
-        color: $icon-color;
-        cursor: pointer;
-        vertical-align: baseline;
-        text-align: center;
-        display: inline-block;
-        width: $input-height;
-        @extend .input-properties;
+        &:last-child,
+        &:not(:first-child):not(:last-child) {
+            border-left: 1px solid $border;
+        }
 
-        &:hover {
+        &:not(:first-child) {
+            cursor: pointer;
+            background-color: $background;
+        }
+
+        &.success {
+            color: $success;
+            background-color: $success-bg;
+        }
+
+        &.error {
+            color: $error;
+            background-color: $error-bg;
+        }
+
+        &:hover:not(:first-child) {
             color: darken($icon-color, 10%);
             background-color: darken($background, 5%);
         }
+
+        &.icon-optional {
+            color: lighten($success, 10%);
+            background-color: transparent;
+            border: 0;
+        }
+
+        &.icon-conditional {
+            color: lighten($warning, 10%);
+            background-color: transparent;
+            border: 0;
+        }
+
+        &.icon-mandatory {
+            color: lighten($error, 20%);
+            background-color: transparent;
+            border: 0;
+        }
+
+        &.icon-exclamation {
+            color: lighten($error, 0%);
+            background-color: transparent;
+            border: 0;
+        }
+
+        @extend .input-properties;
     }
 }
 
+.input-wrapper > .input {
+    border: 0;
+    outline: none;
+    color: $font;
+    padding: 0 10px 0 0;
+    background-color: transparent;
+    @extend .input-properties;
+    @include calc('width', '100% - #{$input-height * 3}');
+}
+
+.input-wrapper > .textarea {
+    border: 0;
+    outline: none;
+    color: $font;
+    padding: 10px 10px 10px 0;
+    resize: vertical;
+    @include calc('width', '100% - #{$input-height * 2}');
+}
+
 .input-wrapper-label {
+    color: $primary;
     @extend .input-properties;
 }
