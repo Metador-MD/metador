@@ -13,13 +13,21 @@
     {% if 'ROLE_SYSTEM_SUPERUSER' in user.roles %}
         {% set class = class ~ ' superuser' %}
     {% endif %}
-
+    
     <div class="title-box {{ class|trim }}">
-        <div class="title-box-logo">
-            <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                <span class="icon-user"></span>
-            </a>
-        </div>
+            {% if user.picture is defined and user.picture is not empty %}
+                <div class="title-box-img">
+                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                        <img src="data:image/jpeg;base64,{{ user.picture }}"/>
+                    </a>
+                </div>
+            {% else %}
+                <div class="title-box-logo">
+                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                        <span class="icon-user"></span>
+                    </a>
+                </div>
+            {% endif %}
         <div class="title-box-info">
             <div class="title">
                 <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
