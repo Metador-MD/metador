@@ -24,14 +24,12 @@ $space: $padding;
         }
     }
 
-
     @media screen and (max-width: $break-small) {
         #{$selector} {
             width: 100% !important;
         }
     }
 }
-
 
 .md .grid {
     .row {
@@ -58,7 +56,9 @@ $space: $padding;
     }
 
     &.space > .row {
-        margin-bottom: $padding;
+        &:not(:last-child) {
+            margin-bottom: $padding;
+        }
 
         & > .col {
             &:not(:first-child):not(:last-child) {

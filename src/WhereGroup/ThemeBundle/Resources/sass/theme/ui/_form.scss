@@ -23,7 +23,7 @@ $icon-color: darken($border, 20%);
         color: $icon-color;
         text-align: center;
         display: block;
-        width: $input-height;
+        width: $normal-item-height;
 
         &.left {
             float: left;
@@ -82,18 +82,46 @@ $icon-color: darken($border, 20%);
             border: 0;
         }
 
-        @extend .input-properties;
+        @extend .normal-item;
     }
 }
 
-.input-wrapper > .input {
-    border: 0;
-    outline: none;
-    color: $font;
-    padding: 0 10px 0 0;
-    background-color: transparent;
-    @extend .input-properties;
-    @include calc('width', '100% - #{$input-height * 3}');
+.input-wrapper {
+    & > .input {
+        border: 0;
+        outline: none;
+        color: $font;
+        padding: 0 10px 0 0;
+        background-color: transparent;
+        @extend .normal-text-item;
+        width: 100%;
+
+        &.i-1 {
+            @include calc('width', '100% - #{$normal-item-height}');
+        }
+
+        &.i-2 {
+            @include calc('width', '100% - #{$normal-item-height * 2}');
+        }
+
+        &.i-3 {
+            @include calc('width', '100% - #{$normal-item-height * 3}');
+        }
+    }
+
+
+
+    &.small > .input {
+        @extend .small-text-item;
+    }
+
+    &.medium > .input {
+        @extend .medium-text-item;
+    }
+
+    &.large > .input {
+        @extend .large-text-item;
+    }
 }
 
 .input-wrapper > .textarea {
@@ -102,10 +130,10 @@ $icon-color: darken($border, 20%);
     color: $font;
     padding: 10px 10px 10px 0;
     resize: vertical;
-    @include calc('width', '100% - #{$input-height * 2}');
+    @include calc('width', '100% - #{$normal-item-height * 2}');
 }
 
 .input-wrapper-label {
     color: $primary;
-    @extend .input-properties;
+    @extend .normal-item;
 }

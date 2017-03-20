@@ -2,7 +2,7 @@
 $background: #f7f8fa;
 $font: #444;
 $content: #fefefe;
-$border: darken($content, 10%);
+$border: darken($content, 15%);
 
 $primary: #008ec0;
 $secondary: #ccd32a;
@@ -16,7 +16,7 @@ $warning-bg: lighten($warning, 20%);
 $error: #fb6b5b;
 $error-bg: lighten($error, 30%);
 
-
+// General
 $padding: 20px;
 $page-width: 1024px;
 $header-height: 80px;
@@ -24,19 +24,17 @@ $global-menu-height: 50px;
 $center-left-width: 230px;
 $center-left-menu-height: 40px;
 
-// Forms
-$input-height: 35px;
-$input-menu-height: 30px;
+// UI
+$small-item-height: 20px;
+$medium-item-height: 30px;
+$normal-item-height: 35px;
+$large-item-height: 40px;
+
+$small-item-padding: 5px;
+$medium-item-padding: 10px;
+$normal-item-padding: 20px;
+$large-item-padding: 30px;
 
 // Media queries
 $break-small: 768px;
 $break-large: 1200px;
-
-//@media screen and (max-width: $break-small) {
-//    width: 100px;
-//    float: none;
-//}
-//
-//@media screen and (min-width: $break-large) {
-//    float: right;
-//}

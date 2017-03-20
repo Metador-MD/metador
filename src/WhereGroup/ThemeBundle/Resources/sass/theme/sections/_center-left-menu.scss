@@ -7,11 +7,6 @@
     margin: 0;
     z-index: 2;
 
-    @media screen and (max-width: $break-small) {
-        display: none;
-    }
-
-
     & > li {
         position: relative;
         margin: 0 $padding 0 0;
@@ -22,11 +17,10 @@
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
         border: 1px solid $background;
-        //font-size: 0.9em;
-        @extend .input-menu-properties;
+        @extend .medium-item;
 
         & > span[class^="icon-"] {
-            @extend .input-menu-properties;
+            @extend .medium-item;
         }
 
         &:hover {

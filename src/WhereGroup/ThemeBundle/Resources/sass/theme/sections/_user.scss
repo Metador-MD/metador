@@ -1,6 +1,29 @@
 @import '../config';
+@import '../mixins';
 
-.top-right-userimage {
+.user {
+    position: relative;
+    z-index: 2;
+
+    .user-menu {
+        display: none;
+        width: 300px;
+        background-color: white;
+        line-height: 35px;
+        padding: $padding;
+        border: 1px solid $border;
+        border-radius: 2px;
+        @include pos('', 0, '', '');
+    }
+
+    &.active {
+        .user-menu {
+            display: block;
+        }
+    }
+}
+
+.user-image {
     display: inline-block;
 
     & > .user-image {
@@ -11,13 +34,13 @@
     }
 }
 
+.user-name {
+    clear: both;
+    display: inline-block;
+    font-size: 0.8em;
+}
+
 .top-right-menu {
     display: inline-block;
 }
 
-.top-right-username {
-    clear: both;
-    //padding: 0 5px;
-    display: inline-block;
-    font-size: 0.8em;
-}

@@ -1,9 +1,43 @@
-.input-properties {
-    height: $input-height;
-    line-height: $input-height;
+.small-item {
+    height: $small-item-height;
+    line-height: $small-item-height;
 }
 
-.input-menu-properties {
-    height: $input-menu-height;
-    line-height: $input-menu-height;
+.medium-item {
+    height: $medium-item-height;
+    line-height: $medium-item-height;
+}
+
+.normal-item {
+    height: $normal-item-height;
+    line-height: $normal-item-height;
+}
+
+.large-item {
+    height: $large-item-height;
+    line-height: $large-item-height;
+}
+
+.small-text-item {
+    font-size: 0.8em;
+    padding: 0 10px;
+    @extend .small-item;
+}
+
+.medium-text-item {
+    font-size: 0.9em;
+    padding: 0 15px;
+    @extend .medium-item;
+}
+
+.normal-text-item {
+    font-size: 1em;
+    padding: 0 20px;
+    @extend .normal-item;
+}
+
+.large-text-item {
+    font-size: 1.1em;
+    padding: 0 25px;
+    @extend .large-item;
 }

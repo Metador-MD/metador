@@ -11,11 +11,13 @@ body {
 .md {
     margin: 0 auto;
     max-width: $page-width;
+    min-width: 500px;
     position: absolute;
 
     @include pos(0, 0, 0, 0);
 
     & > .top {
+        z-index: 2;
         @extend .clearfix;
     }
 
@@ -35,6 +37,7 @@ body {
         cursor: pointer;
         display: inline-block;
         padding: 0 10px;
+        @include userSelect(none);
 
         &:hover {
             background-color: darken($background, 3%);
@@ -42,6 +45,7 @@ body {
     }
 
     & > .center {
+        z-index: 1;
         @include pos($header-height, 0, 0, 0);
     }
 
