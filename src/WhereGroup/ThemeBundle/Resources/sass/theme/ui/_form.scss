@@ -2,21 +2,19 @@
 @import '../mixins';
 @import '../extensions';
 
-
 $icon-color: darken($border, 20%);
 
 .input-wrapper {
     position: relative;
     display: block;
     border: 1px solid $border;
+    border-radius: 2px;
+    @extend .clearfix;
 
     &.error {
         border-color: lighten($error, 20%);
         background-color: $error-bg;
     }
-
-    border-radius: 2px;
-    @extend .clearfix;
 
     & > span[class^="icon-"] {
         font-size: 1.1em;
@@ -93,8 +91,8 @@ $icon-color: darken($border, 20%);
         color: $font;
         padding: 0 10px 0 0;
         background-color: transparent;
-        @extend .normal-text-item;
         width: 100%;
+        @extend .normal-text-item;
 
         &.i-1 {
             @include calc('width', '100% - #{$normal-item-height}');
@@ -108,8 +106,6 @@ $icon-color: darken($border, 20%);
             @include calc('width', '100% - #{$normal-item-height * 3}');
         }
     }
-
-
 
     &.small > .input {
         @extend .small-text-item;

@@ -24,9 +24,11 @@ $space: $padding;
         }
     }
 
-    @media screen and (max-width: $break-small) {
-        #{$selector} {
-            width: 100% !important;
+    @at-root .md .grid.responsive {
+        @media screen and (max-width: $break-small) {
+            #{$selector} {
+                width: 100% !important;
+            }
         }
     }
 }
@@ -44,7 +46,6 @@ $space: $padding;
         @include col('.c-1-4', '25%');
         @include col('.c-3-4', '75%');
         @include col('.c-1-8', '12.5%');
-
 
         & > .col {
             float: left;
@@ -72,19 +73,21 @@ $space: $padding;
             &:last-child {
                 margin: 0 0 0 #{$space / 2};
             }
+        }
+    }
 
-            @media screen and (max-width: $break-small) {
-                &:not(:first-child):not(:last-child) {
-                    margin: 0;
-                }
+    &.space.responsive > .row > .col {
+        @media screen and (max-width: $break-small) {
+            &:not(:first-child):not(:last-child) {
+                margin: 0;
+            }
 
-                &:first-child {
-                    margin: 0 ;
-                }
+            &:first-child {
+                margin: 0;
+            }
 
-                &:last-child {
-                    margin: 0;
-                }
+            &:last-child {
+                margin: 0;
             }
         }
     }
