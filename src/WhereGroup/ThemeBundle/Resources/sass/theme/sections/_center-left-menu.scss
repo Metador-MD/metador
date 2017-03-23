@@ -17,14 +17,17 @@
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
         border: 1px solid $background;
-        @extend .medium-item;
+        background-color: darken($background, 2%);
+
+        @include medium-item(false, false);
 
         & > span[class^="icon-"] {
-            @extend .medium-item;
+            @include medium-item(false, false);
         }
 
         &:hover {
-            color: lighten($font, 30%);
+            color: darken($font, 30%);
+            background-color: darken($background, 5%);
         }
 
         &.act {

@@ -7,6 +7,14 @@ $space: $padding;
     #{$selector} {
         width: #{$width};
 
+        &.text-right {
+            text-align: right;
+        }
+
+        &.text-center {
+            text-align: center;
+        }
+
         @at-root .md .grid.space .row.r-2 #{$selector} {
             @include calc('width', '#{$width} - #{$space/2}');
         }

@@ -4,22 +4,64 @@
 .user {
     position: relative;
     z-index: 2;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+
+    @include userSelect(none);
+
 
     .user-menu {
+        $menu-width: 300px;
         display: none;
-        width: 300px;
-        background-color: white;
-        line-height: 35px;
+        width: $menu-width;
+        background-color: $white;
+        line-height: 30px;
         padding: $padding;
         border: 1px solid $border;
         border-radius: 2px;
-        @include pos('', 0, '', '');
+        box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.1);
+
+        @include pos('', -1px, '', '');
+
+        &:after, &:before {
+            position: absolute;
+            bottom: 100%;
+            left: $menu-width - 40px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            pointer-events: none;
+        }
+
+        &:after {
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #ffffff;
+            border-width: 8px;
+            margin-left: -8px;
+        }
+
+        &:before {
+            border-color: rgba(82, 82, 82, 0);
+            border-bottom-color: $border;
+            border-width: 9px;
+            margin-left: -9px;
+        }
     }
 
     &.active {
         .user-menu {
             display: block;
         }
+    }
+}
+
+.user-btn {
+    padding: 0 10px;
+
+    &:hover {
+        background-color: darken($background, 3%);
     }
 }
 

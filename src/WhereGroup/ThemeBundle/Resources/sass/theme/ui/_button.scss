@@ -3,8 +3,6 @@
 @import '../extensions';
 
 .btn {
-    background-color: transparent;
-    border: 1px solid $border;
     border-radius: 2px;
     margin: 0;
     padding: 0 $padding;
@@ -16,62 +14,35 @@
         width: 100%;
     }
 
-    &:hover {
-        border-color: darken($background, 8%);
-        background-color: darken($background, 3%);
-    }
+    @extend .dark-normal;
 
     &.info {
-        border-color: darken($info-bg, 6%);
-        background-color: $info-bg;
-
-        &:hover {
-            border-color: darken($info-bg, 11%);
-            background-color: darken($info-bg, 5%);
-        }
+        @extend .dark-info;
     }
 
     &.success {
-        border-color: darken($success-bg, 6%);
-        background-color: $success-bg;
-
-        &:hover {
-            border-color: darken($success-bg, 11%);
-            background-color: darken($success-bg, 5%);
-        }
+        @extend .dark-success;
     }
 
     &.warning {
-        border-color: darken($warning-bg, 6%);
-        background-color: $warning-bg;
-
-        &:hover {
-            border-color: darken($warning-bg, 11%);
-            background-color: darken($warning-bg, 5%);
-        }
+        @extend .dark-warning
     }
 
     &.error {
-        border-color: darken($error-bg, 4%);
-        background-color: $error-bg;
-
-        &:hover {
-            border-color: darken($error-bg, 8%);
-            background-color: darken($error-bg, 4%);
-        }
+        @extend .dark-error;
     }
 
-    @extend .normal-text-item;
+    @include normal-item();
 
     &.small {
-        @extend .small-text-item;
+        @include small-item();
     }
 
     &.medium {
-        @extend .medium-text-item;
+        @include medium-item();
     }
 
     &.large {
-        @extend .large-text-item;
+        @include large-item();
     }
 }

@@ -4,132 +4,291 @@
 
 $icon-color: darken($border, 20%);
 
-.input-wrapper {
+.form-wrapper {
+    position: relative;
+    display: block;
+    @extend .clearfix;
+
+    & > .form-label {
+        padding: $padding;
+    }
+
+    & > .check {
+        height: 100%;
+        border: 0;
+        background-color: transparent;
+        outline: none;
+        color: $font;
+        display: block;
+        float: left;
+
+        @include normal-item(true, false);
+    }
+
+    & > .form-label {
+        @include normal-item();
+    }
+
+    &.small {
+        @include small-item(false, false);
+
+        & > .check {
+            @include small-item(true, false);
+        }
+
+        & > .form-label {
+            @include small-item();
+        }
+    }
+
+    &.medium {
+        @include medium-item(false, false);
+
+        & > .check {
+            @include medium-item(true, false);
+        }
+
+        & > .form-label {
+            @include medium-item();
+        }
+    }
+
+    &.large {
+        @include large-item(false, false);
+
+        & > .check {
+            @include large-item(true, false);
+        }
+
+        & > .form-label {
+            @include large-item();
+        }
+    }
+}
+
+.form-field-wrapper {
+    &.small {
+        & > .input, & > .select {
+            @include small-item();
+        }
+    }
+
+    &.medium {
+        & > .input, & > .select {
+            @include medium-item();
+        }
+    }
+
+    &.large {
+        & > .input, & > .select {
+            @include large-item();
+        }
+    }
+}
+
+.form-field-wrapper {
     position: relative;
     display: block;
     border: 1px solid $border;
     border-radius: 2px;
+    background-color: lighten($background, 1%);
     @extend .clearfix;
 
-    &.error {
-        border-color: lighten($error, 20%);
-        background-color: $error-bg;
-    }
-
-    & > span[class^="icon-"] {
-        font-size: 1.1em;
-        color: $icon-color;
-        text-align: center;
-        display: block;
-        width: $normal-item-height;
-
-        &.left {
-            float: left;
-        }
-
-        &.right {
-            float: right;
-        }
-
-        &:last-child,
-        &:not(:first-child):not(:last-child) {
-            border-left: 1px solid $border;
-        }
-
-        &:not(:first-child) {
-            cursor: pointer;
-            background-color: $background;
-        }
-
-        &.success {
-            color: $success;
-            background-color: $success-bg;
-        }
-
-        &.error {
-            color: $error;
-            background-color: $error-bg;
-        }
-
-        &:hover:not(:first-child) {
-            color: darken($icon-color, 10%);
-            background-color: darken($background, 5%);
-        }
-
-        &.icon-optional {
-            color: lighten($success, 10%);
-            background-color: transparent;
-            border: 0;
-        }
-
-        &.icon-conditional {
-            color: lighten($warning, 10%);
-            background-color: transparent;
-            border: 0;
-        }
-
-        &.icon-mandatory {
-            color: lighten($error, 20%);
-            background-color: transparent;
-            border: 0;
-        }
-
-        &.icon-exclamation {
-            color: lighten($error, 0%);
-            background-color: transparent;
-            border: 0;
-        }
-
-        @extend .normal-item;
-    }
-}
-
-.input-wrapper {
-    & > .input {
+    & > .input, & > .select, & > .textarea {
+        width: 100%;
+        height: 100%;
         border: 0;
+        background-color: transparent;
         outline: none;
         color: $font;
-        padding: 0 10px 0 0;
-        background-color: transparent;
-        width: 100%;
-        @extend .normal-text-item;
+        display: block;
+        float: left;
 
-        &.i-1 {
+        &:hover {
+            background-color: darken($background, 1%);
+        }
+
+        &:focus {
+            background-color: darken($background, 1%);
+        }
+
+        @include normal-item();
+    }
+
+    &.i1 {
+        & > .input, & > .select, & > .textarea {
             @include calc('width', '100% - #{$normal-item-height}');
         }
+    }
 
-        &.i-2 {
+    &.i2 {
+        & > .input, & > .select, & > .textarea {
             @include calc('width', '100% - #{$normal-item-height * 2}');
         }
+    }
 
-        &.i-3 {
+    &.i3 {
+        & > .input, & > .select, & > .textarea {
             @include calc('width', '100% - #{$normal-item-height * 3}');
         }
     }
 
-    &.small > .input {
-        @extend .small-text-item;
+    & > .select {
+        padding-right: 60px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        background-image:
+            linear-gradient(45deg, transparent 50%, gray 50%),
+            linear-gradient(135deg, gray 50%, transparent 50%);
+        background-position:
+            calc(100% - 20px) calc(1em + 2px),
+            calc(100% - 15px) calc(1em + 2px);
+        background-size:
+            5px 5px,
+            5px 5px;
+        background-repeat: no-repeat;
+
+        &::-ms-expand {
+            display: none;
+        }
+
+        &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+        }
     }
 
-    &.medium > .input {
-        @extend .medium-text-item;
+    & > .textarea {
+        line-height: normal;
+        padding: $padding/2 $padding;
+        resize: vertical;
+        min-height: 70px;
     }
 
-    &.large > .input {
-        @extend .large-text-item;
+    &.error {
+        @extend .light-error;
+
+        & > .input, & > .select, & > .textarea {
+            &:hover {
+                background-color: lighten($error, 35%);
+            }
+
+            &:focus {
+                background-color: lighten($error, 35%);
+            }
+
+            &::-webkit-input-placeholder {
+                color: lighten($error, 25%);
+            }
+
+            &::-moz-placeholder {
+                color: lighten($error, 25%);
+            }
+
+            &:-ms-input-placeholder {
+                color: lighten($error, 25%);
+            }
+
+            &:-moz-placeholder {
+                color: lighten($error, 25%);
+            }
+        }
+
+        & > .select {
+            background-image:
+                linear-gradient(45deg, transparent 50%, lighten($error, 10%) 50%),
+                linear-gradient(135deg, lighten($error, 10%) 50%, transparent 50%);
+            background-position:
+                calc(100% - 20px) calc(1em + 2px),
+                calc(100% - 15px) calc(1em + 2px);
+            background-size:
+                5px 5px,
+                5px 5px;
+            background-repeat: no-repeat;
+        }
+
+        & .form-icon,
+        & .form-icon-type {
+            color: $error;
+
+            &.rs {
+                box-shadow: 9px 1px 0px -8px lighten($error, 30%);
+            }
+
+            &.ls {
+                box-shadow: -9px 1px 0px -8px lighten($error, 30%);
+            }
+        }
+
+        & .form-icon:hover {
+            color: darken($error, 2%);
+            background-color: lighten($error, 35%);
+        }
+    }
+
+}
+
+.form-field-wrapper .form-icon,
+.form-field-wrapper .form-icon-type {
+    font-size: 1.1em;
+    color: $icon-color;
+    text-align: center;
+    display: block;
+    width: $normal-item-height;
+    background-color: transparent;
+
+    &.success {
+        @extend .light-success;
+    }
+
+    &.rs {
+        box-shadow: 9px 1px 0px -8px lighten($border, 8%);
+    }
+
+    &.ls {
+        box-shadow: -9px 1px 0px -8px lighten($border, 8%);
+    }
+
+    @include normal-item(false, false);
+}
+
+.form-field-wrapper .form-icon-type {
+    float: left;
+
+    &.icon-optional {
+        color: lighten($success, 20%);
+        background-color: transparent;
+    }
+
+    &.icon-conditional {
+        color: lighten($warning, 20%);
+        background-color: transparent;
+    }
+
+    &.icon-mandatory {
+        color: lighten($error, 20%);
+        background-color: transparent;
+    }
+
+    &.icon-exclamation {
+        color: $error;
+        background-color: transparent;
     }
 }
 
-.input-wrapper > .textarea {
-    border: 0;
-    outline: none;
-    color: $font;
-    padding: 10px 10px 10px 0;
-    resize: vertical;
-    @include calc('width', '100% - #{$normal-item-height * 2}');
+.form-field-wrapper .form-icon {
+    cursor: pointer;
+    float: right;
+
+    &:hover {
+        color: darken($icon-color, 10%);
+        background-color: darken($background, 2%);
+    }
 }
 
-.input-wrapper-label {
+.form-label {
     color: $primary;
-    @extend .normal-item;
+    @include normal-item(false, false);
 }

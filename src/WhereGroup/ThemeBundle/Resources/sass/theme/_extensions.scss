@@ -1,43 +1,175 @@
-.small-item {
-    height: $small-item-height;
-    line-height: $small-item-height;
-}
+@mixin normal-item($change-font-size: true, $set-padding: true) {
+    @if $change-font-size == true {
+        font-size: 1em;
+    }
 
-.medium-item {
-    height: $medium-item-height;
-    line-height: $medium-item-height;
-}
+    @if $set-padding == true {
+        padding: 0 $padding;
+    }
 
-.normal-item {
     height: $normal-item-height;
     line-height: $normal-item-height;
 }
 
-.large-item {
+@mixin small-item($change-font-size: true, $set-padding: true) {
+    @if $change-font-size == true {
+        font-size: 0.8em;
+    }
+
+    @if $set-padding == true {
+        padding: 0 10px;
+    }
+
+    height: $small-item-height;
+    line-height: $small-item-height;
+}
+
+@mixin medium-item($change-font-size: true, $set-padding: true) {
+    @if $change-font-size == true {
+        font-size: 0.9em;
+    }
+
+    @if $set-padding == true {
+        padding: 0 15px;
+    }
+
+    height: $medium-item-height;
+    line-height: $medium-item-height;
+}
+
+@mixin large-item($change-font-size: true, $set-padding: true) {
+    @if $change-font-size == true {
+        font-size: 1.1em;
+    }
+
+    @if $set-padding == true {
+        padding: 0 25px;
+    }
+
     height: $large-item-height;
     line-height: $large-item-height;
 }
 
-.small-text-item {
-    font-size: 0.8em;
-    padding: 0 10px;
-    @extend .small-item;
+// @mixin item-color($light: true, $type: 'normal') {
+//     @if $light == true or $type == 'normal' {
+//         color: $font;
+//     } @else if $light == false {
+//         color: $white;
+//     }
+//
+//     @if $type == 'normal' {
+//     } @else if $type == 'info' {
+//     } @else if $type == 'success' {
+//     } @else if $type == 'warning' {
+//     } @else if $type == 'error' {
+//     }
+// }
+
+.light-normal {
+    color: $font;
+    background-color: $background;
+    border: 1px solid $border;
+
+    &:hover {
+        background-color: darken($background, 1%);
+        border: 1px solid darken($border, 1%);
+    }
 }
 
-.medium-text-item {
-    font-size: 0.9em;
-    padding: 0 15px;
-    @extend .medium-item;
+.light-info {
+    color: $font;
+    background-color: lighten($info, 30%);
+    border: 1px solid lighten($info, 20%);
+
+    &:hover {
+        background-color: lighten($info, 29%);
+        border: 1px solid lighten($info, 19%);
+    }
 }
 
-.normal-text-item {
-    font-size: 1em;
-    padding: 0 20px;
-    @extend .normal-item;
+.light-warning {
+    background-color: lighten($warning, 30%);
+    border: 1px solid lighten($warning, 20%);
+
+    &:hover {
+        background-color: lighten($warning, 29%);
+        border: 1px solid lighten($warning, 19%);
+    }
 }
 
-.large-text-item {
-    font-size: 1.1em;
-    padding: 0 25px;
-    @extend .large-item;
+.light-success {
+    color: $font;
+    background-color: lighten($success, 30%);
+    border: 1px solid lighten($success, 20%);
+
+    &:hover {
+        background-color: lighten($success, 29%);
+        border: 1px solid lighten($success, 19%);
+    }
+}
+
+.light-error {
+    color: $font;
+    background-color: lighten($error, 40%);
+    border: 1px solid lighten($error, 30%);
+
+    &:hover {
+        background-color: lighten($error, 39%);
+        border: 1px solid lighten($error, 29%);
+    }
+}
+
+.dark-normal {
+    color: $font;
+    background-color: $background;
+    border: 1px solid $border;
+
+    &:hover {
+        background-color: darken($background, 5%);
+        border: 1px solid darken($border, 5%);
+    }
+}
+
+.dark-info {
+    color: $white;
+    background-color: $info;
+    border: 1px solid darken($info, 10%);
+
+    &:hover {
+        background-color: darken($info, 10%);
+        border: 1px solid darken($info, 15%);
+    }
+}
+
+.dark-success {
+    color: $white;
+    background-color: $success;
+    border: 1px solid darken($success, 10%);
+
+    &:hover {
+        background-color: darken($success, 10%);
+        border: 1px solid darken($success, 15%);
+    }
+}
+
+.dark-warning {
+    color: $white;
+    background-color: $warning;
+    border: 1px solid darken($warning, 10%);
+
+    &:hover {
+        background-color: darken($warning, 10%);
+        border: 1px solid darken($warning, 15%);
+    }
+}
+
+.dark-error {
+    color: $white;
+    background-color: $error;
+    border: 1px solid darken($error, 10%);
+
+    &:hover {
+        background-color: darken($error, 10%);
+        border: 1px solid darken($error, 15%);
+    }
 }

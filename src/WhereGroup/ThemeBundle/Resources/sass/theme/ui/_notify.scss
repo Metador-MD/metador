@@ -1,0 +1,51 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+@mixin set-notify-close-color($color, $lighten: 0%) {
+    $color: lighten($color, $lighten);
+
+    & > .close {
+        color: $color;
+
+        &:hover {
+            color: darken($color, 10%);
+        }
+    }
+}
+
+.notify {
+    border: 1px solid $border;
+    padding: $padding + $padding / 2;
+    margin: $padding 0;
+    border-radius: 2px;
+    position: relative;
+
+    @extend .light-normal;
+    @include set-notify-close-color($border);
+
+    & > .close {
+        cursor: pointer;
+        @include pos($padding / 2, $padding / 2, '', '');
+    }
+
+    &.info {
+        @extend .light-info;
+        @include set-notify-close-color($info, 5%);
+    }
+
+    &.success {
+        @extend .light-success;
+        @include set-notify-close-color($success);
+    }
+
+    &.warning {
+        @extend .light-warning;
+        @include set-notify-close-color($warning);
+    }
+
+    &.error {
+        @extend .light-error;
+        @include set-notify-close-color($error, 10%);
+    }
+}

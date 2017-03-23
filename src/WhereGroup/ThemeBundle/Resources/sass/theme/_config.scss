@@ -3,18 +3,15 @@ $background: #f7f8fa;
 $font: #444;
 $content: #fefefe;
 $border: darken($content, 15%);
+$white: #fff;
 
 $primary: #008ec0;
 $secondary: #ccd32a;
 
-$info: #6e98e8;
-$info-bg: lighten($info, 20%);
-$success: #8bdb85;
-$success-bg: lighten($success, 20%);
-$warning: #ffc668;
-$warning-bg: lighten($warning, 20%);
-$error: #fb6b5b;
-$error-bg: lighten($error, 30%);
+$info: #4dacfe;
+$success: #77ca60;
+$error: #e15b36;
+$warning: #f5c44e;
 
 // General
 $padding: 20px;
