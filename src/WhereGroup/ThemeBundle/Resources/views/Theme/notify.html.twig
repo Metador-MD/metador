@@ -1,0 +1,14 @@
+{% for type in ['error', 'warning', 'success', 'notice'] %}
+    {% set messages = app.session.flashbag.get(type) %}
+
+    {% if messages is not empty %}
+        <div class="notify {{ type }}">
+            <div class="close icon-cross -js-close-notify"></div>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endfor %}

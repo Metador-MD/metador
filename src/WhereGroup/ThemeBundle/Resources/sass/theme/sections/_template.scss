@@ -1,5 +1,6 @@
 @import '../config';
 @import '../mixins';
+@import '../extensions';
 
 body {
     font-family: Arial, Helvetica, Verdana,  sans-serif;
@@ -13,6 +14,12 @@ body {
     max-width: $page-width;
     min-width: 500px;
     position: absolute;
+
+    @media screen and (max-width: $break-large) {
+        max-width: none;
+        display: block;
+        margin: 0 20px;
+    }
 
     @include pos(0, 0, 0, 0);
 
@@ -28,8 +35,7 @@ body {
     }
 
     .top-right {
-        height: $global-menu-height;
-        line-height: $global-menu-height;
+        @include large-item(false, false);
         float: right;
     }
 
@@ -39,18 +45,37 @@ body {
         padding: 0 10px;
         @include userSelect(none);
 
+        & > .global-menu-item {
+            @include large-item(false, false);
+            font-size: 0.9em;
+            text-decoration: none;
+            color: $font;
+        }
+
         &:hover {
             background-color: darken($background, 3%);
+        }
+
+        &.active {
+            border-bottom: 4px solid $primary;
         }
     }
 
     & > .center {
         z-index: 1;
         @include pos($header-height, 0, 0, 0);
-    }
 
-    .center-top {
-        display: none;
+        &.menu {
+            .center-left {
+                display: block;
+                width: $center-left-width;
+                @include pos(0, '', 0, 0);
+            }
+
+            .center-right {
+                left: $center-left-width;
+            }
+        }
     }
 
     .center-left {
@@ -61,33 +86,10 @@ body {
         @include pos(0, 0, 0, 0);
     }
 
-    &.has-menu {
-        .center-top {
-            left: $center-left-width;
-        }
-
-        .center-left {
-            display: block;
-            width: $center-left-width;
-            @include pos(0, '', 0, 0);
-        }
-
-        .center-right {
-            left: $center-left-width;
-        }
-    }
-
-    .center-top-left {
-        float: left;
-    }
-
-    .center-top-right {
-        float: right;
-    }
 }
 
 .content {
-    padding: 0 20px;
+    padding: $padding $padding * 2;
     border: 1px solid $border;
     background-color: $content;
     overflow-y: scroll;
@@ -100,4 +102,5 @@ body {
 .title {
     color: lighten($font, 10%);
     font-weight: bold;
+    margin: 0;
 }

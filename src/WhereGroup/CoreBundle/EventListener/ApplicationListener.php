@@ -18,23 +18,17 @@ class ApplicationListener
         $app = $event->getApplication();
 
         $app->add(
-            $app->get('GlobalMenu', 'home')
-                ->icon('icon-home')
-                ->label('Startseite')
-                ->path('metador_home')
-        )->add(
-            $app->get('GlobalMenu', 'dashboard')
-                ->icon('icon-meter')
-                ->label('Dashboard')
-                ->path('metador_dashboard')
-                ->setRole('ROLE_SYSTEM_USER')
-        )->add(
             $app->get('GlobalMenu', 'admin')
                 ->icon('icon-cog')
                 ->label('Administration')
                 ->path('metador_admin_index')
                 ->active($app->routeStartsWith('metador_admin'))
                 ->setRole('ROLE_SYSTEM_GEO_OFFICE')
+        )->add(
+            $app->get('GlobalMenu', 'home')
+                ->icon('icon-home')
+                ->label('Startseite')
+                ->path('metador_home')
         )->add(
             $app->get('AdminMenu', 'index')
                 ->icon('icon-eye')

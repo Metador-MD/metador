@@ -64,7 +64,7 @@ $space: $padding;
         }
     }
 
-    &.space > .row {
+    &.space .row {
         &:not(:last-child) {
             margin-bottom: $padding;
         }
@@ -84,7 +84,7 @@ $space: $padding;
         }
     }
 
-    &.space.responsive > .row > .col {
+    &.space.responsive .row > .col {
         @media screen and (max-width: $break-small) {
             &:not(:first-child):not(:last-child) {
                 margin: 0;
@@ -100,12 +100,13 @@ $space: $padding;
         }
     }
 
-    &.base-style > .row > .col {
-        background-color: #dadada;
-        border: 1px solid silver;
+    &.base-style .row > .col {
+        background-color: $background;
+        border: 1px solid $border;
+        border-radius: 2px;
     }
 
-    &.padding > .row > .col {
+    &.padding .row > .col {
         padding: $padding/2;
     }
 }

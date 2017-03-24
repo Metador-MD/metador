@@ -1,4 +1,4 @@
-{% extends 'MetadorThemeBundle:Template:admin.html.twig' %}
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% do form.users.setRendered %}
 
@@ -12,35 +12,46 @@
     {% set params = {} %}
 {% endif %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {# CONTENT #}
 {% block content %}
-    <div class="basic-form">
-        {{ form_widget(form) }}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title">{{ title }}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_group') }}" class="btn medium">
+                    <span class="icon-th-list"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
     </div>
-{% endblock %}
 
-{# MENU #}
-{% block plugin_menu %}
-    {{ parent() }}
+    <hr class="line-separator" />
 
-    <li>
-        <button type="submit" class="no-style-button">
-            <span class="icon-floppy-disk"></span>
-            {% trans %}speichern{% endtrans %}
-        </button>
-    </li>
-{% endblock %}
-
-{# FORM START #}
-{% block form_start %}
     {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
-{% endblock %}
 
-{# FORM END #}
-{% block form_end %}
+    <div class="basic-form">
+        {{ form_widget(form) }}
+    </div>
+
+    <hr class="line-separator" />
+
+    <div class="grid space">
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+                {% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+                    <a href="{{ path('metador_admin_group_confirm', params) }}" class="btn error medium">
+                        <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

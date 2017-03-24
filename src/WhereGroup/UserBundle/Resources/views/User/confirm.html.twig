@@ -1,15 +1,30 @@
-{% extends 'MetadorThemeBundle:Template:admin.html.twig' %}
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block title %}{{ 'Benutzer löschen'|trans }}{% endblock %}
 
 {% block content %}
-    <div class="notify warning">
-        {% trans %}Benutzer wirklich löschen{% endtrans %}?
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title">{% trans %}Benutzer löschen{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_group') }}" class="btn medium">
+                    <span class="icon-th-list"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
     </div>
 
-    {{ form_start(form, { 'action': path('metador_admin_user_delete', { 'id': form.vars.value.id }), 'method': 'POST', 'attr': {
-        novalidate: 'novalidate', autocomplete: 'off'
-    }}) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <hr class="line-separator" />
+
+    <div class="notify error">
+        {% trans %}Benutzer wirklich löschen{% endtrans %}?
+
+        {{ form_start(form, { 'action': path('metador_admin_user_delete', { 'id': form.vars.value.id }), 'method': 'POST', 'attr': {
+            novalidate: 'novalidate', autocomplete: 'off'
+        }}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

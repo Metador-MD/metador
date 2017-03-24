@@ -4,7 +4,7 @@
 
 $icon-color: darken($border, 20%);
 
-.form-wrapper {
+.md .form-wrapper {
     position: relative;
     display: block;
     @extend .clearfix;
@@ -66,7 +66,7 @@ $icon-color: darken($border, 20%);
     }
 }
 
-.form-field-wrapper {
+.md .form-field-wrapper {
     &.small {
         & > .input, & > .select {
             @include small-item();
@@ -86,7 +86,7 @@ $icon-color: darken($border, 20%);
     }
 }
 
-.form-field-wrapper {
+.md .form-field-wrapper {
     position: relative;
     display: block;
     border: 1px solid $border;
@@ -230,8 +230,8 @@ $icon-color: darken($border, 20%);
 
 }
 
-.form-field-wrapper .form-icon,
-.form-field-wrapper .form-icon-type {
+.md .form-field-wrapper .form-icon,
+.md .form-field-wrapper .form-icon-type {
     font-size: 1.1em;
     color: $icon-color;
     text-align: center;
@@ -254,7 +254,7 @@ $icon-color: darken($border, 20%);
     @include normal-item(false, false);
 }
 
-.form-field-wrapper .form-icon-type {
+.md .form-field-wrapper .form-icon-type {
     float: left;
 
     &.icon-optional {
@@ -278,7 +278,7 @@ $icon-color: darken($border, 20%);
     }
 }
 
-.form-field-wrapper .form-icon {
+.md .form-field-wrapper .form-icon {
     cursor: pointer;
     float: right;
 
@@ -288,7 +288,7 @@ $icon-color: darken($border, 20%);
     }
 }
 
-.form-label {
+.md .form-label {
     color: $primary;
     @include normal-item(false, false);
 }

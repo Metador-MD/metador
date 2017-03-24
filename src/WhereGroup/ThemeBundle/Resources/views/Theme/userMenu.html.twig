@@ -1,0 +1,58 @@
+<div class="user -js-user">
+    <div class="-js-toggle-user-menu user-btn">
+        {% if app.user.username is defined %}
+        <div class="user-image">
+            {% if app.user.picture is defined and app.user.picture is not empty %}
+                <img src="data:image/jpeg;base64,{{ app.user.picture }}" class="image"/>
+            {% else %}
+                <span class="icon-user image"></span>
+            {% endif %}
+        </div>
+        <div class="user-name">
+            {% if app.user.username is defined %}
+                {{ app.user.username }}
+            {% endif %}
+            <span class="icon-sort-desc"></span>
+        </div>
+        {% else %}
+            <div class="user-name">
+                <span class="icon-lock"></span>
+                {% trans %}login{% endtrans %}
+                <span class="icon-sort-desc"></span>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="user-menu">
+        <div class="grid space">
+            {% if app.user.username is not defined %}
+            <form action="{{ path('login_check') }}" method="post" autocomplete="off">
+                <div class="row r-2">
+                    <div class="col c-1-3">Username</div>
+                    <div class="col c-2-3 form-field-wrapper medium">
+                        <input type="text" class="input" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="row r-2">
+                    <div class="col c-1-3">Password</div>
+                    <div class="col c-2-3 form-field-wrapper medium">
+                        <input type="password" class="input" id="password" name="_password" />
+                    </div>
+                </div>
+                <div class="row r-1">
+                    <div class="col c-1">
+                        <button type="submit" class="btn medium info full">{% trans %}login{% endtrans %}</button>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+                <div class="row r-1">
+                    <div class="col c-1">
+                        <a href="{{ path('logout') }}" class="btn medium info full">{% trans %}logout{% endtrans %}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>

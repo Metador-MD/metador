@@ -5,7 +5,7 @@ namespace WhereGroup\CoreBundle\Component;
 class PictureTransformation
 {
     private $picture;
-    
+
     public function __construct($picture)
     {
         $this->picture = $picture;
@@ -15,8 +15,8 @@ class PictureTransformation
     {
         return base64_encode($this->picture);
     }
-    
-    
+
+
     public function resizeProfilePicture($width, $height)
     {
         $destImage = imagecreatetruecolor($width, $height);

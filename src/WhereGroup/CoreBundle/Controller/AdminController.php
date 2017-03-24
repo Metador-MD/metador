@@ -16,7 +16,7 @@ class AdminController extends Controller
     /**
      * @Route("/", name="metador_admin_index")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Template:admin.html.twig")
+     * @Template()
      */
     public function indexAction()
     {

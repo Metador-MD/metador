@@ -1,8 +1,9 @@
-{% extends 'MetadorThemeBundle:Template:admin.html.twig' %}
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block title %}{% trans %}Plugins{% endtrans %}{% endblock %}
 
 {% block content %}
+<form action="{{ path('metador_admin_plugin_update') }}" method="post">
     <table class="plugin-table">
     {% for key, plugin in plugins %}
         <tr class="plugin-row{% if plugin['new'] is defined %} new{% endif %}">
@@ -25,14 +26,20 @@
         </tr>
     {% endfor %}
     </table>
-{% endblock %}
 
-{% block form_start %}
-    <form action="{{ path('metador_admin_plugin_update') }}" method="post">
-{% endblock %}
-
-{% block form_end %}
-    </form>
+    <div class="grid space">
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+                <a href="{{ path('metador_admin_plugin_import') }}" class="btn medium">
+                    <span class="icon-upload"></span> {% trans %}importieren{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}
 
 {% block javascript %}

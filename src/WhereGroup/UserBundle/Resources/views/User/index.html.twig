@@ -1,47 +1,60 @@
-{% extends 'MetadorThemeBundle:Template:admin.html.twig' %}
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block title %}{{ 'Benutzer'|trans }}{% endblock %}
 
 {% block content %}
-    {% for user in users %}
-
-    {% set class = '' %}
-    {% if not user.isactive %}
-        {% set class = class ~ ' disabled' %}
-    {% endif %}
-
-    {% if 'ROLE_SYSTEM_SUPERUSER' in user.roles %}
-        {% set class = class ~ ' superuser' %}
-    {% endif %}
-    
-    <div class="title-box {{ class|trim }}">
-            {% if user.picture is defined and user.picture is not empty %}
-                <div class="title-box-img">
-                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                        <img src="data:image/jpeg;base64,{{ user.picture }}"/>
-                    </a>
-                </div>
-            {% else %}
-                <div class="title-box-logo">
-                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                        <span class="icon-user"></span>
-                    </a>
-                </div>
-            {% endif %}
-        <div class="title-box-info">
-            <div class="title">
-                <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                {{ user.username|teaser(13, 1) }}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title">{% trans %}Übersicht{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_user_new') }}" class="btn info medium">
+                    <span class="icon-plus-circle"></span> {% trans %}Neu{% endtrans %}
                 </a>
-            </div>
-            <div class="alternate">
-                {{ user.email }}
-            </div>
-            <div class="count" title="{% for group in user.groups %}{{ group.role ~ "\n" }}{% endfor %}">
-                {{ user.groups|length }}
             </div>
         </div>
     </div>
+
+    <hr class="line-separator" />
+
+    {% for user in users %}
+        {% set class = '' %}
+        {% if not user.isactive %}
+            {% set class = class ~ ' disabled' %}
+        {% endif %}
+
+        {% if 'ROLE_SYSTEM_SUPERUSER' in user.roles %}
+            {% set class = class ~ ' superuser' %}
+        {% endif %}
+
+        <div class="title-box {{ class|trim }}">
+                {% if user.picture is defined and user.picture is not empty %}
+                    <div class="title-box-img">
+                        <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                            <img src="data:image/jpeg;base64,{{ user.picture }}"/>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="title-box-logo">
+                        <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                            <span class="icon-user"></span>
+                        </a>
+                    </div>
+                {% endif %}
+            <div class="title-box-info">
+                <div class="title">
+                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+                    {{ user.username|teaser(13, 1) }}
+                    </a>
+                </div>
+                <div class="alternate">
+                    {{ user.email }}
+                </div>
+                <div class="count" title="{% for group in user.groups %}{{ group.role ~ "\n" }}{% endfor %}">
+                    {{ user.groups|length }}
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    <br/>
 {% endblock %}

@@ -24,10 +24,10 @@ select {
     }
 }
 
-.logo {
-    @include pos(10px, '', 0, 50%);
-    margin-left: -($page-width / 2) + 20px;
-}
+//.logo {
+//    @include pos(10px, '', 0, 50%);
+//    margin-left: -($page-width / 2) + 20px;
+//}
 
 .plugin-import {
     .plugin-label {

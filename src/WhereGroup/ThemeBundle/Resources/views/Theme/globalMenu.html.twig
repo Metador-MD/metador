@@ -1,0 +1,24 @@
+{% for item in applicationGet('app-global-menu') %}
+    {# RAW CONTENT #}
+    {% if item.raw is defined %}
+        {{ item.raw|raw }}
+
+        {# INCLUDE CONTENT #}
+    {% elseif item.template is defined %}
+        {{ include(item.template, item.params) }}
+
+        {# USE TEMPLATE #}
+    {% else %}
+        <div class="top-right-item {% if item.active is defined and item.active %}active{% endif %}">
+            <a href="{{ path(item.path, item.params) }}" class="global-menu-item">
+                {% if item.icon is defined %}
+                    <span class="{{ item.icon }}"></span>
+                {% endif %}
+                {{ item.label|trans }}
+            </a>
+        </div>
+    {% endif %}
+{% endfor %}
+
+{% include 'MetadorThemeBundle:Theme:userMenu.html.twig' %}
+

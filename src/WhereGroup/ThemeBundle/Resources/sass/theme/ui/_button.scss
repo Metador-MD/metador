@@ -2,16 +2,19 @@
 @import '../mixins';
 @import '../extensions';
 
-.btn {
+.md .btn {
+    display: inline-block;
     border-radius: 2px;
     margin: 0;
     padding: 0 $padding;
     color: $font;
     cursor: pointer;
     outline: none;
+    text-decoration: none;
 
     &.full {
         width: 100%;
+        text-align: center;
     }
 
     @extend .dark-normal;
@@ -46,3 +49,20 @@
         @include large-item();
     }
 }
+
+
+.md span[class^="icon-spinner"] {
+    display: inline-block;
+    line-height: 1;
+    animation: anim-rotate 2s infinite linear;
+}
+
+@keyframes anim-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
