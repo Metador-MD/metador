@@ -26,6 +26,10 @@ body {
     & > .top {
         z-index: 2;
         @extend .clearfix;
+
+        @media screen and (max-width: $break-menu) {
+            display: none;
+        }
     }
 
     .top-left {
@@ -65,15 +69,27 @@ body {
         z-index: 1;
         @include pos($header-height, 0, 0, 0);
 
+        @media screen and (max-width: $break-menu) {
+            @include pos($padding, 0, 0, 0);
+        }
+
         &.menu {
             .center-left {
                 display: block;
                 width: $center-left-width;
                 @include pos(0, '', 0, 0);
+
+                @media screen and (max-width: $break-menu) {
+                    display: none;
+                }
             }
 
             .center-right {
                 left: $center-left-width;
+
+                @media screen and (max-width: $break-menu) {
+                    left: 0;
+                }
             }
         }
     }

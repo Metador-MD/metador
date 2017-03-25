@@ -17,7 +17,7 @@ class ThemeController extends Controller
     /**
      * @Route("/", name="metador_theme_index")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Theme:index.html.twig")
+     * @Template("MetadorThemeBundle:Theme:elements.html.twig")
      */
     public function indexAction()
     {

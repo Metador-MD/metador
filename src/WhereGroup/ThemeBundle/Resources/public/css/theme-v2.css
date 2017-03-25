@@ -1091,6 +1091,10 @@ body {
 .md > .top {
   z-index: 2; }
 
+@media screen and (max-width: 650px) {
+  .md > .top {
+    display: none; } }
+
 .md .top-left {
   width: 230px;
   float: left;
@@ -1131,6 +1135,14 @@ body {
   right: 0;
   bottom: 0; }
 
+@media screen and (max-width: 650px) {
+  .md > .center {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0; } }
+
 .md > .center.menu .center-left {
   display: block;
   width: 230px;
@@ -1139,8 +1151,16 @@ body {
   left: 0;
   bottom: 0; }
 
+@media screen and (max-width: 650px) {
+  .md > .center.menu .center-left {
+    display: none; } }
+
 .md > .center.menu .center-right {
   left: 230px; }
+
+@media screen and (max-width: 650px) {
+  .md > .center.menu .center-right {
+    left: 0; } }
 
 .md .center-left {
   display: none; }
