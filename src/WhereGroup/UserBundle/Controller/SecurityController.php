@@ -15,38 +15,20 @@ class SecurityController extends Controller
 {
     /**
      *
-     * @Route("/demo", name="demo")
-     * @Template(":Design:demo.html.twig")
+     * @Route("/login/failure", name="login_failure")
      * @Method("GET")
-     */
-    public function demoAction()
-    {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-        return(array(
-            // last username entered by the user
-            'last_username' => $authenticationUtils->getLastUsername(),
-            // get the login error if there is one
-            'error'         => $authenticationUtils->getLastAuthenticationError()
-        ));
-    }
-
-    /**
-     *
-     * @Route("/login", name="login")
-     * @Method("GET")
-     * @Template("MetadorThemeBundle:Template:login.html.twig")
+     * @Template("MetadorThemeBundle:Profile:index.html.twig")
      */
     public function loginAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return(array(
+        return array(
             // last username entered by the user
             'last_username' => $authenticationUtils->getLastUsername(),
             // get the login error if there is one
             'error'         => $authenticationUtils->getLastAuthenticationError()
-        ));
+        );
     }
 
     /**

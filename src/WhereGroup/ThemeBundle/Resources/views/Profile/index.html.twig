@@ -15,6 +15,7 @@
             {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
 
             <div class="search-content">
+                {% if rows is defined and paging is defined %}
                 <div class="search-content-searchfield">
                     <form class="" action="{{ path(formPath, formParams) }}" method="get">
                         <input type="hidden" name="hits" value="{% if params.hits is defined %}{{ params.hits }}{% else %}10{% endif %}"/>
@@ -57,6 +58,7 @@
                         </div>
                     </form>
                 </div>
+                {% endif %}
 
                 <div class="search-content-result">
                     {% block searchResult %}
