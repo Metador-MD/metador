@@ -6,7 +6,6 @@
     z-index: 2;
     cursor: pointer;
     display: inline-block;
-    margin-top: 5px;
 
     @include userSelect(none);
 
@@ -59,6 +58,7 @@
 
 .user-btn {
     padding: 0 10px;
+    @include large-item(false, false);
 
     &:hover {
         background-color: darken($background, 3%);

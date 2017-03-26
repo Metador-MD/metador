@@ -20,7 +20,7 @@ class TaskManagerCommand extends ContainerAwareCommand
     {
         $this
             ->setDescription('Runs the Taskmanager')
-            ->setName('metador:taskmanager-run')
+            ->setName('metador:taskmanager:run')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Ignore lock!', null)
             ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.');
     }
@@ -28,7 +28,7 @@ class TaskManagerCommand extends ContainerAwareCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

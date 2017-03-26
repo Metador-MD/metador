@@ -17,7 +17,7 @@ class SecurityController extends Controller
      *
      * @Route("/login/failure", name="login_failure")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Profile:index.html.twig")
+     * @Template("MetadorThemeBundle:Home:index.html.twig")
      */
     public function loginAction()
     {

@@ -1,9 +1,12 @@
 // COLOR'S
 $background: #f7f8fa;
+//$background: #fafafa;
+//$background: #f5f5f5;
 $font: #444;
 $content: #fefefe;
 $border: darken($content, 15%);
-$white: #fff;
+$white: rgba(255,255,255,1);
+$title: #f5f5f5;
 
 $primary: #008ec0;
 $secondary: #ccd32a;
@@ -13,10 +16,12 @@ $success: #77ca60;
 $error: #e15b36;
 $warning: #f5c44e;
 
+
 // General
+$border-radius: 2px;
 $padding: 20px;
-$page-width: 1224px;
-$header-height: 80px;
+$page-width: 1024px;
+$header-height: 65px;
 $global-menu-height: 50px;
 $center-left-width: 230px;
 $center-left-menu-height: 40px;
@@ -35,4 +40,4 @@ $large-item-padding: 30px;
 // Media queries
 $break-menu: 650px;
 $break-small: 950px;
-$break-large: 1400px;
+$break-large: $page-width;

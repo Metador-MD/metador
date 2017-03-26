@@ -12,13 +12,13 @@
             {% if app.user.username is defined %}
                 {{ app.user.username }}
             {% endif %}
-            <span class="icon-sort-desc"></span>
+            <span class="icon-sort-down"></span>
         </div>
         {% else %}
             <div class="user-name">
                 <span class="icon-lock"></span>
                 {% trans %}login{% endtrans %}
-                <span class="icon-sort-desc"></span>
+                <span class="icon-sort-down"></span>
             </div>
         {% endif %}
     </div>

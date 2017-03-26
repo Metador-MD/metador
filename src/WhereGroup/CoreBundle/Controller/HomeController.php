@@ -18,7 +18,7 @@ class HomeController extends Controller
     /**
      * @Route("/", name="metador_home")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Profile:index.html.twig")
+     * @Template("MetadorThemeBundle:Home:index.html.twig")
      */
     public function indexAction()
     {

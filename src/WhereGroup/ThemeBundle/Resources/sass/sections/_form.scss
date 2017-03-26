@@ -164,12 +164,12 @@ $threeColWidth: ($colBox / 3) - ($space/2) - $padding;
     }
 }
 
-.map {
-    border: 1px solid silver;
-    height: 290px;
-    margin-right: 20px;
-    border-radius: $radius;
-}
+//.map {
+//    border: 1px solid silver;
+//    height: 290px;
+//    margin-right: 20px;
+//    border-radius: $radius;
+//}
 
 .duplicatable .duplicatable {
     $correction: 50px;
