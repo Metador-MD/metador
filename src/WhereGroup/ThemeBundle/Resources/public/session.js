@@ -41,8 +41,11 @@ MetadorSession.prototype = {
 var parseResponse = function (data) {
     if (typeof data.methods !== 'undefined') {
         $(data.methods).each(function (index, params) {
-            console.log(params.class, params.method, params.argument);
-            window[params.class][params.method](params.argument);
+
+            if( typeof window[params.class][params.method] === 'function' ){
+                window[params.class][params.method](params.argument);
+            }
+
         });
 
     }
@@ -58,7 +61,7 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'dataType': 'json'
     })
     .done(function(data){
-        console.log(data);
+        //console.log(data);
         parseResponse(data);
     });
 });
