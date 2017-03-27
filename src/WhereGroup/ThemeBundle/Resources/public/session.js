@@ -38,12 +38,6 @@ MetadorSession.prototype = {
     }
 };
 
-window.logout = function () {
-    alert('penis');
-};
-
-
-
 var parseResponse = function (data) {
     if (typeof data.methods !== 'undefined') {
         $(data.methods).each(function (index, params) {
@@ -56,11 +50,6 @@ var parseResponse = function (data) {
 
 var session = new MetadorSession();
 session.setTimeout(Metador.maxlifetime);
-
-window.session.test = function (time) {
-    alert('test' + time);
-};
-
 
 $('.-js-timeout-dialog-heartbeat').on('click', function () {
     $.ajax({
