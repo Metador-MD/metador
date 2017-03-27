@@ -1,0 +1,42 @@
+@import '../config';
+@import '../mixins';
+
+.timeout-wrapper {
+    z-index: 1;
+    display: none;
+
+    & > .modal-background {
+        z-index: 1;
+        background-color: black;
+        opacity: 0.6;
+        @include pos(0px,0px,0px,0px);
+    }
+
+    & > .timeout-dialog {
+        border: 1px solid $border;
+        z-index: 2;
+        background-color: $white;
+        border-radius: 2px;
+        @include posCenter(300px, 200px);
+        margin-top: -300px;
+    }
+}
+
+.timeout-dialog-header {
+    background-color: $title;
+    @include large-item();
+    @include pos(0, 0, '', 0);
+}
+
+.timeout-dialog-content {
+    overflow-y: scroll;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    padding: $padding;
+    @include pos($large-item-height, 0, $large-item-height, 0);
+}
+
+.timeout-dialog-footer {
+    @include large-item();
+    @include pos('', 0, 0, 0);
+}

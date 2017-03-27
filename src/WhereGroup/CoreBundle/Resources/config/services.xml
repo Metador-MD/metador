@@ -18,8 +18,8 @@
 
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.class">WhereGroup\CoreBundle\Twig\Extension\MetadorExtension</parameter>
+        <parameter key="metador.twig.session.class">WhereGroup\CoreBundle\Twig\Extension\SessionExtension</parameter>
         <parameter key="metador.twig.controllerinfo.class">WhereGroup\CoreBundle\Twig\Extension\ControllerInfoExtension</parameter>
-        <parameter key="metador.twig.debug.class">WhereGroup\CoreBundle\Twig\Extension\DebugExtension</parameter>
         <parameter key="metador.twig.casttoarray.class">WhereGroup\CoreBundle\Twig\Extension\CastToArrayExtension</parameter>
         <parameter key="metador.twig.jsondecode.class">WhereGroup\CoreBundle\Twig\Extension\JsonDecodeExtension</parameter>
         <parameter key="metador.twig.application.class">WhereGroup\CoreBundle\Twig\Extension\ApplicationExtension</parameter>
@@ -82,7 +82,7 @@
             <argument type="service" id="request_stack" />
             <tag name="twig.extension" />
         </service>
-        <service id="metador.twig.debug" class="%metador.twig.debug.class%">
+        <service id="metador.twig.session" class="%metador.twig.session.class%">
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.casttoarray" class="%metador.twig.casttoarray.class%">

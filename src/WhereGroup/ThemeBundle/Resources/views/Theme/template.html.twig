@@ -16,8 +16,26 @@
                 {% endblock %}
             </div>
         </div>
-
         {% block center %}{% endblock %}
+    </div>
+    <div class="md timeout-wrapper -js-timeout-wrapper">
+        <div class="timeout-dialog -js-timeout-dialog" data-logut-path="{{ url('logout') }}">
+            <div class="timeout-dialog-header">{% trans %}session_timeout_title{% endtrans %}</div>
+            <div class="timeout-dialog-content">{% trans %}session_timeout_dialog{% endtrans %}</div>
+            <div class="timeout-dialog-footer">
+                <div class="grid">
+                    <div class="row r-2">
+                        <div class="col c-1-2">
+                            <button class="btn success medium">{% trans %}bleiben{% endtrans %}</button>
+                        </div>
+                        <div class="col c-1-2 text-right">
+                            <a href="{{ path('logout') }}" class="-js-timeout-dialog-logout btn medium">{% trans %}logout{% endtrans %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-background"></div>
     </div>
 {% endblock %}
 
@@ -53,8 +71,10 @@
 {% endblock %}
 
 {% block javascript %}
+    {{ parent() }}
     <script src="{{ asset('public/app.min.js') }}"></script>
     <script src="{{ asset('public/javascript/zebra_datepicker.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/session.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/ui.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/home.js') }}"></script>
     {% for plugin, src in applicationGet('app-javascript') %}
