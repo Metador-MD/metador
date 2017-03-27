@@ -61,7 +61,6 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'dataType': 'json'
     })
     .done(function(data){
-        //console.log(data);
         parseResponse(data);
     });
 });
