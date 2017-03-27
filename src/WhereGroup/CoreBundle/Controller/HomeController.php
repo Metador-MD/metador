@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Finder;
 use WhereGroup\UserBundle\Entity\User;
 
@@ -55,5 +56,20 @@ class HomeController extends Controller
             'paging'       => $metadata['paging'],
             'params'       => $params
         );
+    }
+
+    /**
+     * @Route("/heartbeat/", name="metador_heartbeat")
+     * @Method("GET")
+     */
+    public function heartbeatAction()
+    {
+        $array = array(
+            'functions' => array(
+                'logout' => true
+            )
+        );
+
+        return new AjaxResponse($array);
     }
 }
