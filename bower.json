@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "normalize-css": "^5.0.0",
-    "zebra_datepicker": "^1.9.5"
+    "zebra_datepicker": "^1.9.5",
+    "OpenLayers": "https://github.com/openlayers/openlayers/releases/download/v4.0.1/v4.0.1-dist.zip"
   }
 }

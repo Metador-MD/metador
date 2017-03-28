@@ -24,10 +24,12 @@ const gulp      = require('gulp'),
 var conf = {
     assets: {
         js: [
-            'web/assets/vendor/jquery/dist/jquery.min.js'
+            'web/assets/vendor/jquery/dist/jquery.min.js',
+            'web/assets/vendor/OpenLayers/ol.js'
         ],
         css: [
-            'web/assets/vendor/normalize-css/normalize.css'
+            'web/assets/vendor/normalize-css/normalize.css',
+            'web/assets/vendor/OpenLayers/ol.css'
         ],
         copy: [
             'web/assets/vendor/zebra_datepicker/public/**/*'
