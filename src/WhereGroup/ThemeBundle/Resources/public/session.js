@@ -38,17 +38,14 @@ MetadorSession.prototype = {
     }
 };
 
-window.logout = function () {
-    alert('penis');
-};
-
-
-
 var parseResponse = function (data) {
     if (typeof data.methods !== 'undefined') {
         $(data.methods).each(function (index, params) {
-            console.log(params.class, params.method, params.argument);
-            window[params.class][params.method](params.argument);
+
+            if( typeof window[params.class][params.method] === 'function' ){
+                window[params.class][params.method](params.argument);
+            }
+
         });
 
     }
@@ -57,11 +54,6 @@ var parseResponse = function (data) {
 var session = new MetadorSession();
 session.setTimeout(Metador.maxlifetime);
 
-window.session.test = function (time) {
-    alert('test' + time);
-};
-
-
 $('.-js-timeout-dialog-heartbeat').on('click', function () {
     $.ajax({
         'url': $(this).closest('.-js-timeout-dialog').attr('data-heartbeat-path'),
@@ -69,7 +61,6 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'dataType': 'json'
     })
     .done(function(data){
-        console.log(data);
         parseResponse(data);
     });
 });
