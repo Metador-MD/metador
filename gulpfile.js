@@ -19,7 +19,11 @@ const gulp      = require('gulp'),
     open        = require('open'),
     path        = require('path'),
     browserSync = require('browser-sync'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    ts          = require('gulp-typescript')
+    merge       = require('merge2');
+
+var tsProject   = ts.createProject('tsconfig.json');
 
 var conf = {
     assets: {
@@ -51,6 +55,10 @@ var conf = {
             outputStyle  : 'compressed',
             includePaths : [] //'src/WhereGroup/ThemeBundle/Resources/styleguide'
         }
+    },
+    ts: {
+        files  : 'src/**/*.ts',
+        dest   : '/../public/js/'
     }
 }
 
@@ -62,6 +70,13 @@ gulp.task('clean', () => {
 gulp.task('init', ['clean'], () => {
     composer({ "optimize-autoloader": true });
     return bower();
+});
+
+gulp.task('ts', function() {
+    var tsResult = gulp.src(conf.ts.files)
+        .pipe(tsProject());
+
+    return tsResult.js.pipe(gulp.dest(''));
 });
 
 gulp.task('sass', function() {
@@ -76,6 +91,7 @@ gulp.task('watch', () => {
     livereload.listen();
 
     gulp.watch(conf.sass.files, ['sass']);
+    gulp.watch(conf.ts.files, ['ts']);
     gulp.watch(conf.watch.files).on('change', function(file) {
         livereload.changed(file.path);
         browserSync.reload();
