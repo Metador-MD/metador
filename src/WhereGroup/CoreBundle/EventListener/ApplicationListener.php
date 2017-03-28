@@ -35,6 +35,12 @@ class ApplicationListener
                 ->label('Übersicht')
                 ->path('metador_admin_index')
                 ->setRole('ROLE_SYSTEM_GEO_OFFICE')
+        )->add(
+            $app->get('AdminMenu', 'settings')
+                ->icon('icon-wrench')
+                ->label('Einstellungen')
+                ->path('metador_admin_settings')
+                ->setRole('ROLE_SYSTEM_SUPERUSER')
         );
     }
 }

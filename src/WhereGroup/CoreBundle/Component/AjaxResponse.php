@@ -28,8 +28,8 @@ class AjaxResponse extends JsonResponse
             $data,
             array(
                 'methods'   => array(array(
-                    'class' => 'session',
-                    'method' => 'setTimeout',
+                    'class'    => 'session',
+                    'method'   => 'setTimeout',
                     'argument' => ini_get("session.gc_maxlifetime")
                 ))
             )

@@ -6,29 +6,22 @@ var MetadorSession = function() {
 
 MetadorSession.prototype = {
     timeOut: 0,
-    dialogTimeout: 1430,
+    dialogTimeout: 60,
     interval: null,
-
-    getTimeOut: function() {
-        return this.timeOut;
-    },
 
     setTimeout: function(timeout) {
         var self = this;
+
         clearInterval(self.interval);
         $('.-js-timeout-wrapper').hide();
         this.timeOut = parseInt(timeout);
 
-        if (this.timeOut === 0) return;
+        if (this.timeOut <= 0) return;
 
         self.interval = setInterval(function () {
-            console.log(self.timeOut);
-
-            if(self.timeOut === self.dialogTimeout){
+            if (self.timeOut === self.dialogTimeout){
                 $('.-js-timeout-wrapper').show();
-            }
-
-            if(self.timeOut === 1420){
+            } else if (self.timeOut <= 0){
                 clearInterval(self.interval);
                 window.location = $('.-js-timeout-dialog').attr('data-logout-path');
             }
@@ -39,19 +32,19 @@ MetadorSession.prototype = {
 };
 
 var parseResponse = function (data) {
-    if (typeof data.methods !== 'undefined') {
-        $(data.methods).each(function (index, params) {
-
-            if( typeof window[params.class][params.method] === 'function' ){
-                window[params.class][params.method](params.argument);
-            }
-
-        });
-
+    if (typeof data.methods === 'undefined') {
+        return false;
     }
+
+    $(data.methods).each(function (index, params) {
+        if(typeof window[params.class][params.method] === 'function'){
+            window[params.class][params.method](params.argument);
+        }
+    });
 };
 
 var session = new MetadorSession();
+
 session.setTimeout(Metador.maxlifetime);
 
 $('.-js-timeout-dialog-heartbeat').on('click', function () {
@@ -59,8 +52,7 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'url': $(this).closest('.-js-timeout-dialog').attr('data-heartbeat-path'),
         'type': 'GET',
         'dataType': 'json'
-    })
-    .done(function(data){
+    }).done(function(data){
         parseResponse(data);
     });
 });
