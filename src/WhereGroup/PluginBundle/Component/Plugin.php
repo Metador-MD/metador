@@ -8,6 +8,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
+use WhereGroup\CoreBundle\Component\ConfigurationInterface;
 
 /**
  * Class Plugin
@@ -24,9 +25,11 @@ class Plugin
     protected $pluginPaths = array();
     protected $plugins = array();
     protected $routing = array();
+    protected $configuration = null;
 
     /**
      * Plugin constructor.
+     * @param ConfigurationInterface $configuration
      * @param $rootDir
      * @param $cacheDir
      * @param $environment
@@ -34,6 +37,7 @@ class Plugin
      * @param null $pluginPaths
      */
     public function __construct(
+        ConfigurationInterface $configuration,
         $rootDir,
         $cacheDir,
         $environment,
@@ -47,6 +51,7 @@ class Plugin
         $this->configurationFile = $this->rootDir . $configFolder . 'plugins.yml';
         $this->routingFile       = $this->rootDir . $configFolder . 'plugins_routing.yml';
         $this->pluginPaths       = $pluginPaths;
+        $this->configuration = $configuration;
 
         if (is_null($this->pluginPaths)) {
             $this->pluginPaths       = array(
@@ -375,12 +380,26 @@ class Plugin
             }
         }
 
+        // Add routing
         $routing = $this->locateResource($this->plugins[$key]['class_path'], 'config/routing.yml');
 
         if ($routing) {
             $this->routing[trim(str_replace('-', '_', $key))] = array(
                 'resource' => '@' . $this->plugins[$key]['class_name'] . '/Resources/config/routing.yml'
             );
+        }
+
+        // Add default configuration to database
+        if (isset($this->plugins[$key]['settings'])) {
+            foreach ($this->plugins[$key]['settings'] as $settingKey => $setting) {
+                if (!isset($setting['default'])) {
+                    continue;
+                }
+
+                $this
+                    ->configuration
+                    ->set($settingKey, $setting['default'], 'plugin', $key);
+            }
         }
     }
 
@@ -393,6 +412,13 @@ class Plugin
 
         if (isset($this->routing[trim(str_replace('-', '_', $key))])) {
             unset($this->routing[trim(str_replace('-', '_', $key))]);
+        }
+
+        // Remove default configuration to database
+        if (isset($this->plugins[$key]['settings'])) {
+            foreach ($this->plugins[$key]['settings'] as $settingKey => $setting) {
+                $this->configuration->remove($settingKey, 'plugin', $key);
+            }
         }
     }
 

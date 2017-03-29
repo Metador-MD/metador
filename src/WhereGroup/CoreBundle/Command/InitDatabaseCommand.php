@@ -12,6 +12,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class InitDatabaseCommand
@@ -74,6 +75,25 @@ class InitDatabaseCommand extends ContainerAwareCommand
 
             $output->writeln('User     : <info>' . $rootUser . '</info>');
             $output->writeln('Password : <info>' . $password . '</info>');
+        }
+
+        // Add default configuration to database
+        $plugins = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
+
+        foreach ($plugins as $pluginKey => $pluginInfo) {
+            if (!isset($pluginInfo['settings'])) {
+                continue;
+            }
+
+            foreach ($pluginInfo['settings'] as $settingKey => $setting) {
+                if (!isset($setting['default'])) {
+                    continue;
+                }
+
+                $this->getContainer()
+                    ->get('metador_configuration')
+                    ->set($settingKey, $setting['default'], 'plugin', $pluginKey);
+            }
         }
     }
 

@@ -16,6 +16,7 @@
     <services>
         <!-- SERVICE -->
         <service id="metador_plugin" class="%metador.plugin.class%">
+            <argument type="service" id="metador_configuration" />
             <argument>%kernel.root_dir%</argument>
             <argument>%kernel.cache_dir%</argument>
             <argument>%kernel.environment%</argument>

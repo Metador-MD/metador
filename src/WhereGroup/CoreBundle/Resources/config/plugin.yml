@@ -1,0 +1,11 @@
+metador-core:
+    origin: WhereGroup
+    type: system
+    name: Hauptanwendung
+    settings:
+        session-timeout-popup:
+            default: 60
+            placeholder: 60
+            type: string
+            label: Session Timeout Meldung
+            description: Beschreibungstext

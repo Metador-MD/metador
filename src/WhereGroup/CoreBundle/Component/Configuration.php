@@ -9,7 +9,7 @@ use WhereGroup\CoreBundle\Entity\Configuration as ConfigurationEntity;
  * Class Configuration
  * @package WhereGroup\CoreBundle\Component
  */
-class Configuration
+class Configuration implements ConfigurationInterface
 {
     /** @var EntityManagerInterface $em */
     protected $em;
@@ -52,6 +52,29 @@ class Configuration
     }
 
     /**
+     * @param $key
+     * @param null $filterType
+     * @param null $filterValue
+     * @return mixed
+     */
+    public function remove($key, $filterType = null, $filterValue = null)
+    {
+        return $this->em->getRepository(self::ENTITY)->remove($key, $filterType, $filterValue);
+    }
+
+    /**
+     * @param $key
+     * @param null $filterType
+     * @param null $filterValue
+     * @param null $default
+     * @return mixed
+     */
+    public function getValue($key, $filterType = null, $filterValue = null, $default = null)
+    {
+        return $this->em->getRepository(self::ENTITY)->getValue($key, $filterType, $filterValue, $default);
+    }
+
+    /**
      * @param null $filterType
      * @param null $filterValue
      * @return mixed
@@ -60,5 +83,14 @@ class Configuration
     {
         return $this->em->getRepository(self::ENTITY)->all($filterType, $filterValue);
     }
-}
 
+    /**
+     * @param null $filterType
+     * @param null $filterValue
+     * @return mixed
+     */
+    public function removeAll($filterType = null, $filterValue = null)
+    {
+        return $this->em->getRepository(self::ENTITY)->removeAll($filterType, $filterValue);
+    }
+}

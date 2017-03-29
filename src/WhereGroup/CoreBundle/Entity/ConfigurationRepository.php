@@ -32,6 +32,23 @@ class ConfigurationRepository extends EntityRepository
     }
 
     /**
+     * @param null $filterType
+     * @param null $filterValue
+     * @return mixed
+     */
+    public function removeAll($filterType = null, $filterValue = null)
+    {
+        return $this->createQueryBuilder('c')
+            ->delete(self::ENTITY, 'c')
+            ->where('c.filterType = :filterType')
+            ->andWhere('c.filterValue = :filterValue')
+            ->setParameter('filterType', $filterType)
+            ->setParameter('filterValue', $filterValue)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @param $key
      * @param $filterType
      * @param $filterValue
@@ -47,6 +64,52 @@ class ConfigurationRepository extends EntityRepository
         ->setParameter('filterType', $filterType)
         ->setParameter('filterValue', $filterValue)
         ->getSingleResult();
+    }
+
+    /**
+     * @param $key
+     * @param $filterType
+     * @param $filterValue
+     * @return mixed
+     */
+    public function remove($key, $filterType, $filterValue)
+    {
+        return $this->createQueryBuilder('c')
+            ->delete(self::ENTITY, 'c')
+            ->where('c.key = :key')
+            ->andWhere('c.filterType = :filterType')
+            ->andWhere('c.filterValue = :filterValue')
+            ->setParameter('key', $key)
+            ->setParameter('filterType', $filterType)
+            ->setParameter('filterValue', $filterValue)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param $key
+     * @param $filterType
+     * @param $filterValue
+     * @param null $default
+     * @return mixed
+     */
+    public function getValue($key, $filterType, $filterValue, $default)
+    {
+        try {
+            return $this->getEntityManager()->createQuery(
+                "SELECT c.value FROM " . self::ENTITY .
+                " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
+            )
+                ->setParameter('key', $key)
+                ->setParameter('filterType', $filterType)
+                ->setParameter('filterValue', $filterValue)
+                ->getSingleScalarResult();
+
+        } catch (NoResultException $e) {
+
+        }
+
+        return $default;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use WhereGroup\CoreBundle\Component\ConfigurationInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -10,6 +11,22 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
+    private $configuration;
+
+    /**
+     * ApplicationListener constructor.
+     * @param ConfigurationInterface $configuration
+     */
+    public function __construct(ConfigurationInterface $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function __destruct()
+    {
+        unset($this->configuration);
+    }
+
     /**
      * @param ApplicationEvent $event
      */
@@ -41,6 +58,13 @@ class ApplicationListener
                 ->label('Einstellungen')
                 ->path('metador_admin_settings')
                 ->setRole('ROLE_SYSTEM_SUPERUSER')
+        )->add(
+            $app->get('Configuration', 'session')
+                ->parameter('session_dialog', $this->configuration->getValue(
+                    'session-timeout-popup',
+                    'plugin',
+                    'metador-core'
+                ))
         );
     }
 }

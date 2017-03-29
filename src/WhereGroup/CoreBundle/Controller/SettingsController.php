@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @Route("/admin")
@@ -24,40 +25,57 @@ class SettingsController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        /** @var  Configuration $configurationManager */
+        $configuration = $this->get('metador_configuration');
+
+        $settings = $this->get('metador_plugin')->getPlugins();
+
+        // Read system config
+        $coreSettings = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
+
+        $settings = array_merge_recursive($coreSettings, $settings);
+        unset($coreSettings);
+
+        $pluginConfiguration = array();
+
+        foreach ($settings as $pluginKey => $pluginInfo) {
+            if ((isset($pluginInfo['active']) && $pluginInfo['active'] === false) || !isset($pluginInfo['settings'])) {
+                continue;
+            }
+
+            foreach ($pluginInfo['settings'] as $settingKey => $setting) {
+                $pluginInfo['settings'][$settingKey]['value']
+                    = $configuration->getValue($settingKey, 'plugin', $pluginKey, '');
+            }
+
+            $pluginConfiguration[$pluginKey] = $pluginInfo;
+        }
+
+        return array(
+            'pluginConfiguration' => $pluginConfiguration
+        );
+    }
+
+    /**
+     * @Route("/settings/update", name="metador_admin_settings_update")
+     * @Method("POST")
+     */
+    public function updateAction()
+    {
         /** @var Request $request */
         $request = $this->get('request_stack')->getMasterRequest();
 
         /** @var  Configuration $configurationManager */
         $configuration = $this->get('metador_configuration');
 
-        $pluginConfiguration = array();
+        $params = $request->request->all();
 
-        foreach ($this->get('metador_plugin')->getPlugins() as $pluginKey => $pluginInfo) {
-            if ($pluginInfo['active'] === false || !isset($pluginInfo['config'])) {
-                continue;
+        foreach ($params as $plugin => $param) {
+            foreach ($param as $key => $value) {
+                $configuration->set($key, $value, 'plugin', $plugin);
             }
-
-            $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
-//        dump($pluginConfiguration);
-//        die;
-
-//        if ($request->getMethod() === 'POST') {
-//            $params = $request->request->get(self::PLUGIN_KEY);
-//
-//            foreach ($params as $key => $value) {
-//                $pluginConfiguration[$key] = $value;
-//                $configuration->set($key, $value, 'Plugin', self::PLUGIN_KEY);
-//            }
-//        } else {
-//            foreach ($configuration->findAll() as $config) {
-//                $pluginConfiguration[$config['key']] = $config['value'];
-//            }
-//        }
-
-        return array(
-            'pluginConfiguration' => $pluginConfiguration
-        );
+        return $this->redirectToRoute('metador_admin_settings');
     }
 }

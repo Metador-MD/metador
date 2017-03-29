@@ -4,46 +4,50 @@
     <h1 class="title">{% trans %}Einstellungen{% endtrans %}</h1>
     <hr class="line-separator">
     {% if pluginConfiguration is defined and pluginConfiguration is not empty %}
-        <form action="" method="post">
+        <form action="{{ path('metador_admin_settings_update') }}" method="post" autocomplete="off">
             {% for pluginKey, pluginData in pluginConfiguration %}
                 <h2 class="title text-right">{{ pluginData['name'] }}</h2>
 
-                <div class="grid space">
-                {% for configKey, config in pluginData['config'] %}
+                <div class="grid space responsive">
+                {% for configKey, config in pluginData['settings'] %}
+                    {% set placeholder = config['placeholder'] is defined ? config['placeholder'] : '' %}
+                    {% set id =  pluginKey ~ '-conf-' ~ configKey %}
+                    {% set name = pluginKey ~ '[' ~ configKey ~ ']' %}
+                    {% set default = config['default'] is defined ? config['default'] : '' %}
+                    {% set value = config['value'] is defined and config['value'] is not empty ? config['value'] : default %}
+                    {% set description = config['description'] is defined ? config['description'] : '' %}
+
                     <div class="row r-1">
                         <div class="col c-1">
                             <div>
-                                <label class="form-label" for="{{ pluginKey }}-conf-{{ configKey }}">{{ config['label'] }}:</label>
+                                <label class="form-label" for="{{ id }}">{{ config['label'] }}:</label>
                             </div>
-
-
-                            <div class="form-field-wrapper">
+                            <div class="form-field-wrapper i1">
                                 {% if config['type'] == 'choice' %}
-                                    <select class="select" id="{{ pluginKey }}-conf-{{ configKey }}" type="text" name="{{ pluginKey }}[{{ configKey }}]" placeholder="{{ config['default'] }}">
+                                    <select class="select" id="{{ id }}" type="text" name="{{ name }}">
                                         <option value=""></option>
                                         {% for option in config['options'] %}
-                                            <option value="{{ option }}"{% if config['value'] is defined and config['value'] == option %}selected="selected"{% endif %}>{{ option }}</option>
+                                            <option value="{{ option }}"{% if value == option %}selected="selected"{% endif %}>{{ option }}</option>
                                         {% endfor %}
                                     </select>
                                 {% elseif config['type'] == 'text' %}
-                                    <textarea class="textarea" id="{{ pluginKey }}-conf-{{ configKey }}" type="text" name="{{ pluginKey }}[{{ configKey }}]" placeholder="{{ config['default'] }}">{% if config['value'] is defined %}{{ config['value'] }}{% endif %}</textarea>
+                                    <textarea class="textarea" id="{{ id }}" type="text" name="{{ name }}" placeholder="{{ placeholder }}">{{ value }}</textarea>
                                 {% else %}
-                                    <input class="input" id="{{ pluginKey }}-conf-{{ configKey }}" type="text" name="{{ pluginKey }}[{{ configKey }}]" value="{% if config['value'] is defined %}{{ config['value'] }}{% endif %}" placeholder="{{ config['default'] }}">
+                                    <input class="input" id="{{ id }}" type="text" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}">
                                 {% endif %}
+                                <span class="form-icon icon-question2 ls right" title="{{ description }}"></span>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-                    <div class="col c-1 text-right">
-                        <button type="submit" class="btn info">{% trans %}Speichern{% endtrans %}</button>
-                    </div>
                 </div>
-                {#<label for="{{ pluginKey }}-conf-{{ key }}">{{ key }}</label>#}
-                {#<input type="text" id="{{ pluginKey }}-conf-{{ key }}" name="{{ pluginKey }}[{{ key }}]" value="{{ value }}">#}
-                {#<br>#}
             {% endfor %}
 
+            <div class="grid space">
+                <div class="col c-1 text-right">
+                    <button type="submit" class="btn info">{% trans %}Speichern{% endtrans %}</button>
+                </div>
+            </div>
         </form>
     {% endif %}
-
 {% endblock %}
