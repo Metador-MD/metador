@@ -59,6 +59,12 @@ class ApplicationListener
                 ->path('metador_admin_settings')
                 ->setRole('ROLE_SYSTEM_SUPERUSER')
         )->add(
+            $app->get('AdminMenu', 'source')
+                ->icon('icon-database')
+                ->label('Datenquellen')
+                ->path('metador_admin_source')
+                ->setRole('ROLE_SYSTEM_SUPERUSER')
+        )->add(
             $app->get('Configuration', 'session')
                 ->parameter('session_dialog', $this->configuration->getValue(
                     'session-timeout-popup',
