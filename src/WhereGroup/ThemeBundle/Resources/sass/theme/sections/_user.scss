@@ -1,7 +1,7 @@
 @import '../config';
 @import '../mixins';
 
-.user {
+.md .user {
     position: relative;
     z-index: 2;
     cursor: pointer;
@@ -56,7 +56,7 @@
     }
 }
 
-.user-btn {
+.md .user-btn {
     padding: 0 10px;
     @include large-item(false, false);
 
@@ -65,7 +65,7 @@
     }
 }
 
-.user-image {
+.md .user-image {
     display: inline-block;
 
     & > .image {
@@ -82,13 +82,13 @@
     }
 }
 
-.user-name {
+.md .user-name {
     clear: both;
     display: inline-block;
     font-size: 0.9em;
 }
 
-.top-right-menu {
+.md .top-right-menu {
     display: inline-block;
 }
 

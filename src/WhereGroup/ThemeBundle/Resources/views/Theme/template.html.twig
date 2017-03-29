@@ -4,38 +4,46 @@
 
 {% block body %}
     <div class="md">
-        <div class="top">
-            <div class="top-left">
-            <span class="logo">
-                <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
-            </span>
+        <div class="main">
+            <div class="top">
+                <div class="top-left">
+                <span class="logo">
+                    <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
+                </span>
+                </div>
+                <div class="top-right">
+                    {% block global_menu %}
+                        {% include 'MetadorThemeBundle:Theme:globalMenu.html.twig' %}
+                    {% endblock %}
+                </div>
             </div>
-            <div class="top-right">
-                {% block global_menu %}
-                    {% include 'MetadorThemeBundle:Theme:globalMenu.html.twig' %}
-                {% endblock %}
-            </div>
+            {% block center %}{% endblock %}
         </div>
-        {% block center %}{% endblock %}
-    </div>
-    <div class="md timeout-wrapper -js-timeout-wrapper">
-        <div class="timeout-dialog -js-timeout-dialog" data-logout-path="{{ url('logout') }}" data-heartbeat-path="{{ url('metador_heartbeat') }}" >
-            <div class="timeout-dialog-header">{% trans %}session_timeout_title{% endtrans %}</div>
-            <div class="timeout-dialog-content">{% trans %}session_timeout_dialog{% endtrans %}</div>
-            <div class="timeout-dialog-footer">
-                <div class="grid">
-                    <div class="row r-2">
-                        <div class="col c-1-2">
-                            <button class="btn success medium -js-timeout-dialog-heartbeat">{% trans %}bleiben{% endtrans %}</button>
-                        </div>
-                        <div class="col c-1-2 text-right">
-                            <a href="{{ path('logout') }}" class="-js-timeout-dialog-logout btn medium">{% trans %}logout{% endtrans %}</a>
+        <div class="timeout-wrapper -js-timeout-wrapper">
+            <div class="timeout-dialog -js-timeout-dialog" data-logout-path="{{ url('logout') }}" data-heartbeat-path="{{ url('metador_heartbeat') }}" >
+                <div class="timeout-dialog-header"><span class="icon-bell"></span> {% trans %}session_timeout_title{% endtrans %}</div>
+                <div class="timeout-dialog-content text-center">{% trans %}session_timeout_dialog{% endtrans %}</div>
+                <div class="timeout-dialog-footer">
+                    <div class="grid">
+                        <div class="row r-2">
+                            <div class="col c-1-2">
+                                <button class="btn success medium -js-timeout-dialog-heartbeat">
+                                    <span class="icon-checkmark"></span>
+                                    {% trans %}session_timeout_stay{% endtrans %}
+                                </button>
+                            </div>
+                            <div class="col c-1-2 text-right">
+                                <a href="{{ path('logout') }}" class="-js-timeout-dialog-logout btn medium">
+                                    <span class="icon-sign-out"></span>
+                                    {% trans %}session_timeout_logout{% endtrans %}
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-background"></div>
         </div>
-        <div class="modal-background"></div>
     </div>
 {% endblock %}
 
@@ -53,7 +61,6 @@
     <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme-v2.css') }}">
 
     {# Load plugin css #}
-
     {% for item in applicationGet('app-css') %}
         {# RAW CONTENT #}
         {% if item.raw is defined %}

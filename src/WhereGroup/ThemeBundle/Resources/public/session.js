@@ -6,8 +6,12 @@ var MetadorSession = function() {
 
 MetadorSession.prototype = {
     timeOut: 0,
-    dialogTimeout: 60,
+    dialogTime: 60,
     interval: null,
+
+    setDialogTime: function(time) {
+        this.dialogTime = parseInt(time);
+    },
 
     setTimeout: function(timeout) {
         var self = this;
@@ -19,7 +23,7 @@ MetadorSession.prototype = {
         if (this.timeOut <= 0) return;
 
         self.interval = setInterval(function () {
-            if (self.timeOut === self.dialogTimeout){
+            if (self.timeOut <= self.dialogTime) {
                 $('.-js-timeout-wrapper').show();
             } else if (self.timeOut <= 0){
                 clearInterval(self.interval);
@@ -45,6 +49,7 @@ var parseResponse = function (data) {
 
 var session = new MetadorSession();
 
+session.setDialogTime(Metador.parameters.session_dialog);
 session.setTimeout(Metador.maxlifetime);
 
 $('.-js-timeout-dialog-heartbeat').on('click', function () {

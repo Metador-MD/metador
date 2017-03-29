@@ -6,7 +6,7 @@ $home-top: 160px;
 $filter-height: 380px;
 $home-menu-height: 35px;
 
-.md > .home {
+.md .home {
     border: 1px solid $border;
     border-radius: $border-radius;
     background-color: $content;
@@ -16,7 +16,7 @@ $home-menu-height: 35px;
     @include pos($home-top, 0, 10px, 0);
 }
 
-.md > .home > .search-filter {
+.md .home > .search-filter {
     position: relative;
     height: $filter-height;
 
@@ -70,7 +70,7 @@ $home-menu-height: 35px;
     }
 }
 
-.md > .home > .search-content {
+.md .home > .search-content {
     padding: $padding $padding * 2;
     overflow-y: scroll;
     background-color: $white;
@@ -78,7 +78,7 @@ $home-menu-height: 35px;
     @include pos($filter-height, 0, 0, 0);
 }
 
-.md > .home > .search-filter > .map-menu {
+.md .home > .search-filter > .map-menu {
     border-bottom: 1px solid $border;
     z-index: 2;
     @extend .clearfix;

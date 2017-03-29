@@ -50,21 +50,6 @@
     line-height: $large-item-height;
 }
 
-// @mixin item-color($light: true, $type: 'normal') {
-//     @if $light == true or $type == 'normal' {
-//         color: $font;
-//     } @else if $light == false {
-//         color: $white;
-//     }
-//
-//     @if $type == 'normal' {
-//     } @else if $type == 'info' {
-//     } @else if $type == 'success' {
-//     } @else if $type == 'warning' {
-//     } @else if $type == 'error' {
-//     }
-// }
-
 .light-normal {
     color: $font;
     background-color: $background;
@@ -172,4 +157,8 @@
         background-color: darken($error, 10%);
         border: 1px solid darken($error, 15%);
     }
+}
+
+.md .text-center {
+    text-align: center;
 }

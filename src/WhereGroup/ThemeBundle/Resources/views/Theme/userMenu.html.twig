@@ -24,7 +24,7 @@
     </div>
 
     <div class="user-menu">
-        <div class="grid space">
+        <div class="grid space remove-last-space">
             {% if app.user.username is not defined %}
             <form action="{{ path('login_check') }}" method="post" autocomplete="off">
                 <div class="row r-2">

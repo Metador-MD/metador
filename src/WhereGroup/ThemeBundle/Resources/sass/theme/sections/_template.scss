@@ -2,14 +2,7 @@
 @import '../mixins';
 @import '../extensions';
 
-body {
-    font-family: Arial, Helvetica, Verdana,  sans-serif;
-    font-size: 1em;
-    color: $font;
-    background-color: $background;
-}
-
-.md {
+.md .main {
     margin: 0 auto;
     max-width: $page-width;
     min-width: 500px;
@@ -26,10 +19,8 @@ body {
     & > .top {
         z-index: 2;
         min-width: 600px;
-        @extend .clearfix;
-        //border-bottom: 1px solid lighten($border, 10%);
         margin-bottom: $padding;
-
+        @extend .clearfix;
     }
 
     .top-left {
@@ -53,10 +44,11 @@ body {
         @include large-item(false, false);
 
         & > .global-menu-item {
-            @include large-item(false, false);
+            display: inline-block;
             font-size: 0.9em;
             text-decoration: none;
             color: $font;
+            @include large-item(false, false);
         }
 
         &:hover {
@@ -109,7 +101,7 @@ body {
 
 }
 
-.md > .center > .center-right > .content {
+.md .center > .center-right > .content {
     padding: $padding $padding * 2;
     border: 1px solid $border;
     border-radius: $border-radius;
@@ -132,5 +124,5 @@ body {
 .md h5.title {
     color: lighten($font, 10%);
     font-weight: bold;
-    margin: 0;
+    //margin: 0;
 }

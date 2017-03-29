@@ -42,7 +42,7 @@ $space: $padding;
 }
 
 .md .grid {
-    .row {
+    & .row {
         display: block;
 
         @extend .clearfix;
@@ -64,10 +64,9 @@ $space: $padding;
         }
     }
 
+
     &.space .row {
-        &:not(:last-child) {
-            margin-bottom: $padding;
-        }
+        margin-bottom: $padding;
 
         & > .col {
             &:not(:first-child):not(:last-child) {
@@ -83,6 +82,11 @@ $space: $padding;
             }
         }
     }
+
+    &.space.remove-last-space .row:last-child {
+        margin-bottom: 0;
+    }
+
 
     &.space.responsive .row > .col {
         @media screen and (max-width: $break-small) {
