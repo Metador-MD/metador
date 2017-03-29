@@ -12,5 +12,7 @@ command_init_db_add_group: "Gruppe %group% erstellt"
 command_init_db_add_user: "Benutzer %user% mit Kennwort %password% erstellt"
 command_init_db_add_group_to_user: "Benutzer %user% zur Gruppe %group% hinzugefügt"
 command_init_db_user_exists: "Benutzer %user% bereits vorhanden"
-session_timeout_title: "Session läuft ab!"
-session_timeout_dialog: "Ihre Session läuft ab..."
+session_timeout_title: "Ihre Session läuft bald ab"
+session_timeout_dialog: "Nachdem Sie das System eine längere Zeit nicht benutzt haben, werden Sie in Kürze aus Sicherheitsgründen automatisch ausgeloggt."
+session_timeout_stay: angemeldet bleiben
+session_timeout_logout: abmelden
