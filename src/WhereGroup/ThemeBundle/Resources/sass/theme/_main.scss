@@ -5,7 +5,7 @@
 }
 
 a {
-    color: $font;
+    color: lighten($font, 10%);
     text-decoration: none;
 
     &:hover {

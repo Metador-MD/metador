@@ -22,12 +22,14 @@
         & > a {
             display: block;
             text-decoration: none;
+            font-size: 0.9em;
         }
 
         @include medium-item(false, false);
 
-        & > span[class^="icon-"] {
+        & span[class^="icon-"] {
             @include medium-item(false, false);
+            margin-right: $padding/2;
         }
 
         &:hover {

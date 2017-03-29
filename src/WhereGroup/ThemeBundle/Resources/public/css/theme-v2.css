@@ -94,7 +94,7 @@
   box-sizing: border-box; }
 
 a {
-  color: #444;
+  color: #5e5e5e;
   text-decoration: none; }
 
 a:hover {
@@ -1229,6 +1229,9 @@ html, body {
   color: #5e5e5e;
   font-weight: bold; }
 
+.md h1.title.dm, .md h2.title.dm, .md h3.title.dm, .md h4.title.dm, .md h5.title.dm {
+  margin: 0; }
+
 .md .user {
   position: relative;
   z-index: 2;
@@ -1420,11 +1423,13 @@ html, body {
 
 .md .left-menu > li > a {
   display: block;
-  text-decoration: none; }
+  text-decoration: none;
+  font-size: 0.9em; }
 
-.md .left-menu > li > span[class^="icon-"] {
+.md .left-menu > li span[class^="icon-"] {
   height: 30px;
-  line-height: 30px; }
+  line-height: 30px;
+  margin-right: 10px; }
 
 .md .left-menu > li:hover {
   color: #000;

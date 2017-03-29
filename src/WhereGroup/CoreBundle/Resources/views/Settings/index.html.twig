@@ -6,7 +6,7 @@
     {% if pluginConfiguration is defined and pluginConfiguration is not empty %}
         <form action="{{ path('metador_admin_settings_update') }}" method="post" autocomplete="off">
             {% for pluginKey, pluginData in pluginConfiguration %}
-                <h2 class="title text-right">{{ pluginData['name'] }}</h2>
+                <h2 class="title text-right dm">{{ pluginData['name'] }}</h2>
 
                 <div class="grid space responsive">
                 {% for configKey, config in pluginData['settings'] %}

@@ -124,5 +124,8 @@
 .md h5.title {
     color: lighten($font, 10%);
     font-weight: bold;
-    //margin: 0;
+
+    &.dm {
+        margin: 0;
+    }
 }
