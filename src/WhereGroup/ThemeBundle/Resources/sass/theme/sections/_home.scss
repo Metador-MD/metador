@@ -23,7 +23,7 @@ $home-menu-height: 35px;
     & > .map {
         //background-color: darken($background, 2%);
         z-index: 1;
-        @include pos($home-menu-height, 0, $home-menu-height, 0);
+        @include pos($home-menu-height + 10px, 0, $home-menu-height, 0);
     }
 
     & > .data-source-tabs {

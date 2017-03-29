@@ -1575,7 +1575,7 @@ html, body {
 .md .home > .search-filter > .map {
   z-index: 1;
   position: absolute;
-  top: 35px;
+  top: 45px;
   left: 0;
   right: 0;
   bottom: 35px; }
