@@ -239,7 +239,7 @@ class Log
      * @param $flashMessage
      * @return $this
      */
-    public function setFlashMessage($flashMessage)
+    public function setFlashMessage($flashMessage = true)
     {
         $this->flashMessage = (boolean)$flashMessage;
         return $this;

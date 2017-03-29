@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use WhereGroup\CoreBundle\Entity\Log;
 use Wheregroup\UserBundle\Entity\User;
 
 class SecurityController extends Controller
@@ -23,12 +24,22 @@ class SecurityController extends Controller
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return array(
-            // last username entered by the user
-            'last_username' => $authenticationUtils->getLastUsername(),
-            // get the login error if there is one
-            'error'         => $authenticationUtils->getLastAuthenticationError()
-        );
+        /** @var Log $log */
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('warning')
+            ->setCategory('application')
+            ->setSubcategory('user')
+            ->setOperation('login')
+            ->setMessage('login_failure')
+            ->setFlashMessage()
+            ->setUsername($authenticationUtils->getLastUsername());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
+
+        return $this->redirectToRoute('metador_home');
     }
 
     /**

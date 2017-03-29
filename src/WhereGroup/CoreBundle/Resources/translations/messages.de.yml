@@ -16,3 +16,4 @@ session_timeout_title: "Ihre Session läuft bald ab"
 session_timeout_dialog: "Nachdem Sie das System eine längere Zeit nicht benutzt haben, werden Sie in Kürze aus Sicherheitsgründen automatisch ausgeloggt."
 session_timeout_stay: angemeldet bleiben
 session_timeout_logout: abmelden
+login_failure: "Benutzername oder Passwort falsch"
