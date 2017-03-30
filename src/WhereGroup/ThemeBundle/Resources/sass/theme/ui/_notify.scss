@@ -49,3 +49,51 @@
         @include set-notify-close-color($error, 10%);
     }
 }
+
+.md .info-box {
+    $info-box-color: lighten($info, 33%);
+    position: relative;
+    min-height: 60px;
+    @extend .clearfix;
+
+    .info-box-content {
+        display: none;
+        padding: $padding;
+        margin: $padding 0;
+        border-width: 1px 10px;
+        border-style: solid;
+        border-radius: 2px;
+        color: $font;
+        font-weight: bold;
+        background-color: $info-box-color;
+        border-color: darken($info-box-color, 5%);
+
+        &.active {
+            display: block;
+        }
+
+        &:hover {
+            background-color: darken($info-box-color, 1%);
+            border-color: darken($info-box-color, 7%);
+        }
+    }
+
+    .info-box-button {
+        cursor: pointer;
+        color: darken($info-box-color, 10%);
+        font-size: 2em;
+        float: left;
+        background-color: $white;
+        border-radius: 50%;
+        padding: 3px 5px;
+        height: 40px;
+        width: 40px;
+
+        @include pos(0, -15px, '', '');
+
+        &:hover {
+            color: darken($info-box-color, 15%);
+        }
+    }
+
+}

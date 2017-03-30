@@ -23,11 +23,13 @@ MetadorSession.prototype = {
         if (this.timeOut <= 0) return;
 
         self.interval = setInterval(function () {
-            if (self.timeOut <= self.dialogTime) {
-                $('.-js-timeout-wrapper').show();
-            } else if (self.timeOut <= 0){
+            if (self.timeOut <= 0) {
                 clearInterval(self.interval);
                 window.location = $('.-js-timeout-dialog').attr('data-logout-path');
+            }
+
+            if (self.timeOut <= self.dialogTime) {
+                $('.-js-timeout-wrapper').show();
             }
 
             self.timeOut--;

@@ -115,11 +115,11 @@ html, body {
   right: 0;
   bottom: 0; }
 
-.clearfix:before, .md .grid .row:before, .md .form-wrapper:before, .md .form-field-wrapper:before, .md .main > .top:before, .md .home > .search-filter > .data-source-tabs:before, .md .home > .search-filter > .map-menu:before, .clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .main > .top:after, .md .home > .search-filter > .data-source-tabs:after, .md .home > .search-filter > .map-menu:after {
+.clearfix:before, .md .grid .row:before, .md .form-wrapper:before, .md .form-field-wrapper:before, .md .info-box:before, .md .main > .top:before, .md .home > .search-filter > .data-source-tabs:before, .md .home > .search-filter > .map-menu:before, .clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .md .main > .top:after, .md .home > .search-filter > .data-source-tabs:after, .md .home > .search-filter > .map-menu:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .main > .top:after, .md .home > .search-filter > .data-source-tabs:after, .md .home > .search-filter > .map-menu:after {
+.clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .md .main > .top:after, .md .home > .search-filter > .data-source-tabs:after, .md .home > .search-filter > .map-menu:after {
   clear: both; }
 
 ::-webkit-scrollbar {
@@ -1019,6 +1019,46 @@ html, body {
 .md .notify.error > .close:hover {
   color: #e15b36; }
 
+.md .info-box {
+  position: relative;
+  min-height: 60px; }
+
+.md .info-box .info-box-content {
+  display: none;
+  padding: 20px;
+  margin: 20px 0;
+  border-width: 1px 10px;
+  border-style: solid;
+  border-radius: 2px;
+  color: #444;
+  font-weight: bold;
+  background-color: #f4faff;
+  border-color: #dbeeff; }
+
+.md .info-box .info-box-content.active {
+  display: block; }
+
+.md .info-box .info-box-content:hover {
+  background-color: #eff8ff;
+  border-color: #d1e9ff; }
+
+.md .info-box .info-box-button {
+  cursor: pointer;
+  color: #c2e2ff;
+  font-size: 2em;
+  float: left;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 3px 5px;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 0;
+  right: -15px; }
+
+.md .info-box .info-box-button:hover {
+  color: #a8d7ff; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f8fa;
@@ -1231,6 +1271,9 @@ html, body {
 
 .md h1.title.dm, .md h2.title.dm, .md h3.title.dm, .md h4.title.dm, .md h5.title.dm {
   margin: 0; }
+
+.md h1.title {
+  font-size: 1.6em; }
 
 .md .user {
   position: relative;

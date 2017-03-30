@@ -1,5 +1,6 @@
 {% for type in ['error', 'warning', 'success', 'notice'] %}
     {% set messages = app.session.flashbag.get(type) %}
+    {% dump(messages) %}
 
     {% if messages is not empty %}
         <div class="notify {{ type }}">
@@ -12,9 +13,3 @@
         </div>
     {% endif %}
 {% endfor %}
-
-{% if error.message is defined %}
-    <div class="notify error">
-        {{ error.messageKey|trans(error.messageData, 'security') }}
-    </div>
-{% endif %}
