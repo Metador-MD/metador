@@ -42,7 +42,7 @@ $home-menu-height: 35px;
             border-width: 1px 1px 0 1px;
             border-color: $border;
             border-style: solid;
-            margin-left: $padding;
+            margin-left: 5px;
             background-color: $white;
             height: 35px;
             line-height: 35px;
@@ -50,6 +50,7 @@ $home-menu-height: 35px;
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
 
             &.active {
                 background-color: $title;

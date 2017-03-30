@@ -45,9 +45,9 @@
         </div>
         <div class="map -js-map" id="map"></div>
         <ul class="data-source-tabs">
-            <li>Inspire</li>
-            <li class="active">Intern</li>
-            <li>Extern</li>
+            {% for source in sources  %}
+                <li {% if loop.first %}class="active"{% endif %}>{{ source.name }}</li>
+            {% endfor %}
         </ul>
         <div class="data-source-menu">
             <span class="btn info medium">Neu</span>

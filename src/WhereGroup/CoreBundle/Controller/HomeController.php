@@ -54,7 +54,8 @@ class HomeController extends Controller
         return array(
             'rows'         => $metadata['result'],
             'paging'       => $metadata['paging'],
-            'params'       => $params
+            'params'       => $params,
+            'sources'      => $this->get('metador_source')->all()
         );
     }
 
@@ -64,12 +65,6 @@ class HomeController extends Controller
      */
     public function heartbeatAction()
     {
-        $array = array(
-            'functions' => array(
-                'logout' => true
-            )
-        );
-
-        return new AjaxResponse($array);
+        return new AjaxResponse(array());
     }
 }

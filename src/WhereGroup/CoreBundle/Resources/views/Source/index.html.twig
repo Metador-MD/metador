@@ -16,8 +16,28 @@
 
     <hr class="line-separator" />
 
-    {% for source in sources  %}
-        <a href="{{ path('metador_admin_source_edit', {'id': source.id }) }}">{{ source.name }}</a>
-        <br/>
-    {% endfor %}
+
+    <table class="table bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>System</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for source in sources  %}
+            <tr>
+                <td><a href="{{ path('metador_admin_source_edit', {'id': source.id }) }}">{{ source.name }}</a></td>
+                <td>{{ source.slug }}</td>
+                <td>{{ source.system }}</td>
+                <td class="text-right">#{{ source.id }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br/>
+
 {% endblock %}

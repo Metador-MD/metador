@@ -1,0 +1,55 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+
+.md .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    &.bordered {
+        border: 1px solid $border;
+    }
+
+    & > thead > tr > th {
+        border-bottom: 2px solid $primary;
+        background-color: darken($background, 3%);
+        height: $normal-item-height;
+        line-height: $normal-item-height;
+
+        &:not(:last-child) {
+            border-right: 1px solid $border;
+        }
+    }
+
+    & > tbody {
+        & > tr {
+            height: $normal-item-height;
+            line-height: $normal-item-height;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $border;
+            }
+
+            & > td {
+                padding: 0 $padding;
+
+                &:not(:last-child) {
+                    border-right: 1px solid $border;
+                }
+            }
+
+            &:nth-child(1n) {
+                & > td {
+                    background-color: $background;
+                }
+            }
+
+            &:nth-child(2n) {
+                & > td {
+                    background-color: lighten($background, 2%);
+                }
+            }
+        }
+    }
+}
