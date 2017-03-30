@@ -1,4 +1,5 @@
 <?php
+
 namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,6 +45,12 @@ class Metadata
      * @ORM\JoinColumn(name="updateuser_id", referencedColumnName="id")
      */
     private $updateUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WhereGroup\CoreBundle\Entity\Source")
+     * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
+     */
+    private $source;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)

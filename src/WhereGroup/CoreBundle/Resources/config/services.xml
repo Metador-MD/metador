@@ -11,6 +11,7 @@
         <parameter key="metador.logger.class">WhereGroup\CoreBundle\Component\Logger</parameter>
         <parameter key="metador.healthcheck.class">WhereGroup\CoreBundle\Component\HealthCheck</parameter>
         <parameter key="metador.configuration.class">WhereGroup\CoreBundle\Component\Configuration</parameter>
+        <parameter key="metador.source.class">WhereGroup\CoreBundle\Component\Source</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
@@ -55,6 +56,9 @@
             <argument type="service" id="translator.default" />
         </service>
         <service id="metador_configuration" class="%metador.configuration.class%">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+        <service id="metador_source" class="%metador.source.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 

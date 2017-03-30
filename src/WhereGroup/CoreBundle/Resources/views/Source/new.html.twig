@@ -1,0 +1,95 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+    {% set title  = 'Datenquelle bearbeiten'|trans %}
+    {% set path   = 'metador_admin_source_edit' %}
+    {% set params = {id: form.vars.value.id} %}
+{% else %}
+    {% set title  = 'Datenquelle erstellen'|trans %}
+    {% set path   = 'metador_admin_source_new' %}
+    {% set params = {} %}
+{% endif %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{{ title }}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_source') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.slug) }}
+            {{ form_errors(form.name) }}
+        </div>
+    {% endif %}
+
+    {% if form.vars.value.system %}
+        <div class="info-box">
+            <div class="info-box-button icon-info-circle -js-toggle-info-box"></div>
+            <div class="info-box-content -js-info-box-content active">
+                System Datenquellen können über die Oberfläche nicht gelöscht werden.
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="grid space responsive">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.slug, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.slug, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.name, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.name, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.description, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.description, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ form_widget(form.system) }}
+                {{ form_label(form.system, null, { 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+                {% if form.vars.value.id is defined and form.vars.value.id is not empty and not form.vars.value.system %}
+                    <a href="{{ path('metador_admin_source_confirm', params) }}" class="btn error medium">
+                        <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

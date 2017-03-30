@@ -20,28 +20,12 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER') &&
-            !$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
             throw $this->createAccessDeniedException();
         }
 
         return array(
             'log' => $this->get('metador_healthcheck')->check()
-        );
-    }
-
-    /**
-     * @Route("/source/", name="metador_admin_source")
-     * @Method("GET")
-     * @Template()
-     */
-    public function sourceAction()
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return array(
         );
     }
 }

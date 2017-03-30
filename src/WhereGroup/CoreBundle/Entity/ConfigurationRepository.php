@@ -136,6 +136,4 @@ class ConfigurationRepository extends EntityRepository
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
-
 }
-

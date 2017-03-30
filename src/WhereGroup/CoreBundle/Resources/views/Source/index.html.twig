@@ -7,7 +7,7 @@
                 <h1 class="title dm">{% trans %}Datenquellen{% endtrans %}</h1>
             </div>
             <div class="col c-1-2 text-right">
-                <a href="" class="btn info medium">
+                <a href="{{ path('metador_admin_source_new') }}" class="btn info medium">
                     <span class="icon-plus-circle"></span> {% trans %}Neu{% endtrans %}
                 </a>
             </div>
@@ -15,4 +15,9 @@
     </div>
 
     <hr class="line-separator" />
+
+    {% for source in sources  %}
+        <a href="{{ path('metador_admin_source_edit', {'id': source.id }) }}">{{ source.name }}</a>
+        <br/>
+    {% endfor %}
 {% endblock %}

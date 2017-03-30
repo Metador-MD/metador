@@ -63,6 +63,7 @@ class ApplicationListener
                 ->icon('icon-database')
                 ->label('Datenquellen')
                 ->path('metador_admin_source')
+                ->active($app->routeStartsWith('metador_admin_source'))
                 ->setRole('ROLE_SYSTEM_SUPERUSER')
         )->add(
             $app->get('Configuration', 'session')

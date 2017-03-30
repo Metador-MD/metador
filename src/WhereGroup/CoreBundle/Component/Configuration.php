@@ -3,7 +3,6 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
-use WhereGroup\CoreBundle\Entity\Configuration as ConfigurationEntity;
 
 /**
  * Class Configuration
@@ -11,21 +10,20 @@ use WhereGroup\CoreBundle\Entity\Configuration as ConfigurationEntity;
  */
 class Configuration implements ConfigurationInterface
 {
-    /** @var EntityManagerInterface $em */
-    protected $em;
+    protected $repo = null;
 
     const ENTITY = "MetadorCoreBundle:Configuration";
 
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
     {
-        $this->em = $em;
+        $this->repo = $em->getRepository(self::ENTITY);
     }
 
     public function __destruct()
     {
         unset(
-            $this->em
+            $this->repo
         );
     }
 
@@ -34,10 +32,12 @@ class Configuration implements ConfigurationInterface
      * @param $value
      * @param null $filterType
      * @param null $filterValue
+     * @return $this|mixed
      */
     public function set($key, $value, $filterType = null, $filterValue = null)
     {
-        $this->em->getRepository(self::ENTITY)->set($key, $value, $filterType, $filterValue);
+        $this->repo->set($key, $value, $filterType, $filterValue);
+        return $this;
     }
 
     /**
@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
      */
     public function get($key, $filterType = null, $filterValue = null)
     {
-        return $this->em->getRepository(self::ENTITY)->get($key, $filterType, $filterValue);
+        return $this->repo->get($key, $filterType, $filterValue);
     }
 
     /**
@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
      */
     public function remove($key, $filterType = null, $filterValue = null)
     {
-        return $this->em->getRepository(self::ENTITY)->remove($key, $filterType, $filterValue);
+        return $this->repo->remove($key, $filterType, $filterValue);
     }
 
     /**
@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getValue($key, $filterType = null, $filterValue = null, $default = null)
     {
-        return $this->em->getRepository(self::ENTITY)->getValue($key, $filterType, $filterValue, $default);
+        return $this->repo->getValue($key, $filterType, $filterValue, $default);
     }
 
     /**
@@ -81,7 +81,7 @@ class Configuration implements ConfigurationInterface
      */
     public function findAll($filterType = null, $filterValue = null)
     {
-        return $this->em->getRepository(self::ENTITY)->all($filterType, $filterValue);
+        return $this->repo->all($filterType, $filterValue);
     }
 
     /**
@@ -91,6 +91,6 @@ class Configuration implements ConfigurationInterface
      */
     public function removeAll($filterType = null, $filterValue = null)
     {
-        return $this->em->getRepository(self::ENTITY)->removeAll($filterType, $filterValue);
+        return $this->repo->removeAll($filterType, $filterValue);
     }
 }
