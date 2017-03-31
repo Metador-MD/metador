@@ -1,11 +1,26 @@
 {
     "version": "2.2.0",
     "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
+        "allowJs": true,
+        "module": "commonjs",
         "target": "es5",
-        "module": "system",
-        "outFile": "web/public/metador.js",
-        "noImplicitAny": true
-    }
+        "sourceMap": true,
+        "declaration": false,
+        "noImplicitAny": false,
+        "typeRoots": [
+            "./typings"
+        ]
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "app",
+        "bin",
+        "node_modules",
+        "testdata",
+        "var",
+        "vendor",
+        "web"
+    ]
 }

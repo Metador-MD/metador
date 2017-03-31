@@ -20,8 +20,11 @@ const gulp      = require('gulp'),
     path        = require('path'),
     browserSync = require('browser-sync'),
     runSequence = require('run-sequence'),
-    ts          = require('gulp-typescript')
-    merge       = require('merge2');
+    ts          = require('gulp-typescript'),
+    merge       = require('merge2'),
+    browserify = require("browserify"),
+    tsify = require("tsify"),
+    source = require('vinyl-source-stream');
 
 var tsProject   = ts.createProject('tsconfig.json');
 
@@ -57,8 +60,13 @@ var conf = {
         }
     },
     ts: {
-        files  : 'src/**/*.ts',
-        dest   : '/../public/js/'
+        files  : 'src/**/ts/*.ts',
+        dest   : '/../public/js/',
+        entries: ['src/WhereGroup/ThemeBundle/Resources/ts/app.ts'],
+        target: {
+            dir: 'web/public',
+            file: 'metador.js'
+        }
     }
 }
 
@@ -72,11 +80,25 @@ gulp.task('init', ['clean'], () => {
     return bower();
 });
 
-gulp.task('ts', function() {
+gulp.task('ts-old', function() {
     var tsResult = gulp.src(conf.ts.files)
         .pipe(tsProject());
 
     return tsResult.js.pipe(gulp.dest(''));
+});
+
+gulp.task('ts', function() {
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: conf.ts.entries,
+        cache: {},
+        packageCache: {}
+    })
+        .plugin(tsify)
+        .bundle()
+        .pipe(source(conf.ts.target.file))
+        .pipe(gulp.dest(conf.ts.target.dir));
 });
 
 gulp.task('sass', function() {
