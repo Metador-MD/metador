@@ -1,9 +1,3 @@
-<<<<<<< 4f7f91fa668e0dc8f27e5432ed9ea11c0dc6df7a
-class Ol4MapI {
-    protected olMap: any;
-    constructor(options: any){
-        // @TODO
-=======
 /// <reference path="../../../../../typings/ol.d.ts"/> // for only NetBeans
 
 declare class proj4 {
@@ -148,6 +142,5 @@ export class Ol4Map {
             visible: true
         });
         this.olMap.addLayer(sourceWms);
->>>>>>> deactivate map.js, add browserify, add map.ts
     }
 }
