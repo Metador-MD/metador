@@ -11,7 +11,7 @@ var metadorMapConfig = {
     },
     view: {
         projection: 'EPSG:4326',
-        maxExtent: [-180.0, -85.0511287798, 180.0, 85.0511287798], // prevent scales maxExtent?
+        maxExtent: [-60.0, 20.0, 60.0, 81.0], // prevent scales maxExtent?
         startExtent: [9, 49, 11, 53],
         scales: [5000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000, 2000000, 5000000, 10000000, 20000000, 50000000]
     },
