@@ -120,6 +120,10 @@ export class Ol4Map {
             }
         }
         this.olMap.addControl(new ol.control.ScaleLine());
+        
+        this.olMap.addControl(new ol.control.ZoomToExtent( {
+            extent: this.maxExtent.getExtent(proj)
+        }));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
     }
 
