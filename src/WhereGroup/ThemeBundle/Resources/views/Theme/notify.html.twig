@@ -1,6 +1,5 @@
 {% for type in ['error', 'warning', 'success', 'notice'] %}
     {% set messages = app.session.flashbag.get(type) %}
-    {% dump(messages) %}
 
     {% if messages is not empty %}
         <div class="notify {{ type }}">
