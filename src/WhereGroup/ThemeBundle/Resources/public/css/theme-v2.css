@@ -874,7 +874,7 @@ html, body {
 
 .md .line-separator {
   border: 0;
-  border-top: 1px solid #d8d8d8;
+  border-top: 1px solid #f1f1f1;
   padding: 0;
   margin: 20px 0; }
 
@@ -1186,6 +1186,31 @@ html, body {
 .md .table > tbody > tr:nth-child(2n) > td {
   background-color: #fdfdfe; }
 
+.md .text-small {
+  font-size: 0.8em; }
+
+.md .text-medium {
+  font-size: 0.9em; }
+
+.md .text-normal {
+  font-size: 1em; }
+
+.md .text-large {
+  font-size: 1.1em; }
+
+.md .text-right {
+  text-align: right; }
+
+.md h1.title, .md h2.title, .md h3.title, .md h4.title, .md h5.title {
+  color: #5e5e5e;
+  font-weight: bold; }
+
+.md h1.title.dm, .md h2.title.dm, .md h3.title.dm, .md h4.title.dm, .md h5.title.dm {
+  margin: 0; }
+
+.md h1.title {
+  font-size: 1.6em; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f8fa;
@@ -1388,19 +1413,6 @@ html, body {
   left: 0;
   right: 0;
   bottom: 10px; }
-
-.md .text-right {
-  text-align: right; }
-
-.md h1.title, .md h2.title, .md h3.title, .md h4.title, .md h5.title {
-  color: #5e5e5e;
-  font-weight: bold; }
-
-.md h1.title.dm, .md h2.title.dm, .md h3.title.dm, .md h4.title.dm, .md h5.title.dm {
-  margin: 0; }
-
-.md h1.title {
-  font-size: 1.6em; }
 
 .md .user {
   position: relative;

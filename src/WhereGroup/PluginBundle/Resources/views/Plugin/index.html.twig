@@ -3,29 +3,88 @@
 {% block title %}{% trans %}Plugins{% endtrans %}{% endblock %}
 
 {% block content %}
+<div class="grid content-title">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            <h1 class="title dm">{% trans %}Plugins{% endtrans %}</h1>
+        </div>
+        <div class="col c-1-2 text-right">
+            <a href="{{ path('metador_admin_plugin_import') }}" class="btn medium">
+                <span class="icon-upload"></span> {% trans %}importieren{% endtrans %}
+            </a>
+        </div>
+    </div>
+</div>
+
+<hr class="line-separator" />
 <form action="{{ path('metador_admin_plugin_update') }}" method="post">
-    <table class="plugin-table">
-    {% for key, plugin in plugins %}
-        <tr class="plugin-row{% if plugin['new'] is defined %} new{% endif %}">
-            <td class="plugin-col-mark">
-                <span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>
-                <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
-            </td>
-            <td class="plugin-col-name" {% if plugin['description'] is defined %}title="{{ plugin['description']|trans }}"{% endif %}>
-                {% if plugin['active'] %}
-                <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
-                    {{ plugin['name']|trans }}
-                </a>
-                {% else %}
-                <a href="{{ path('metador_admin_plugin_confirm', { 'plugin': key }) }}">
-                    {{ plugin['name']|trans }}
-                </a>
-                {% endif %}
-            </td>
-            <td class="plugin-col-origin">{{ plugin['origin'] }}</td>
-        </tr>
+    {% for origin, originPlugins in plugins %}
+    <h2 class="title text-right dm">{{ origin }}</h2>
+
+        {% for key, plugin in originPlugins %}
+        {{ dump(plugin) }}
+        <div class="grid space">
+            <div class="row r-3">
+                <div class="col c-1-8">
+                    {% if plugin['active'] %}
+                    <a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">
+                        <span class="icon-toggle-on text-large"></span>
+                    </a>
+                    {% else %}
+                    <a href="{{ path('metador_admin_plugin_confirm', { 'plugin': key }) }}">
+                        <span class="icon-toggle-off text-large"></span>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col c-3-4">{{ plugin['name']|trans }}</div>
+                <div class="col c-1-8 text-small text-right">v {{ plugin['version'] }}</div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1">{{ plugin['description']|trans }}</div>
+            </div>
+            <div class="row r-2">
+                <div class="col c-3-4">
+                    {% for tag in plugin['tags'] %}
+                        {{ tag }}
+                    {% endfor %}
+                </div>
+                <div class="col c-1-4">
+                    {% if plugins['settings'] is defined %}
+                        <span class="icon-gear"></span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
     {% endfor %}
-    </table>
+
+
+    {#<table class="plugin-table">#}
+    {#{% for key, plugin in plugins %}#}
+        {#<tr class="plugin-row{% if plugin['new'] is defined %} new{% endif %}">#}
+            {#<td class="plugin-col-mark">#}
+                {#<span class="plugin-mark{% if plugin['active'] %} icon-checkmark{% else %} icon-checkmark2{% endif %}" data-id="{{ key }}"></span>#}
+                {#<input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />#}
+            {#</td>#}
+            {#<td class="plugin-col-name" {% if plugin['description'] is defined %}title="{{ plugin['description']|trans }}"{% endif %}>#}
+                {#{% if plugin['active'] %}#}
+                {#<a href="{{ path('metador_admin_plugin_view', { 'plugin': plugin['class_name'] }) }}">#}
+                    {#{{ plugin['name']|trans }}#}
+                {#</a>#}
+                {#{% else %}#}
+                {#<a href="{{ path('metador_admin_plugin_confirm', { 'plugin': key }) }}">#}
+                    {#{{ plugin['name']|trans }}#}
+                {#</a>#}
+                {#{% endif %}#}
+            {#</td>#}
+            {#<td class="plugin-col-origin">{{ plugin['origin'] }}</td>#}
+        {#</tr>#}
+    {#{% endfor %}#}
+    {#</table>#}
+
+    <hr class="line-separator" />
 
     <div class="grid space">
         <div class="row r-1">
@@ -33,9 +92,6 @@
                 <button class="btn success medium">
                     <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
                 </button>
-                <a href="{{ path('metador_admin_plugin_import') }}" class="btn medium">
-                    <span class="icon-upload"></span> {% trans %}importieren{% endtrans %}
-                </a>
             </div>
         </div>
     </div>

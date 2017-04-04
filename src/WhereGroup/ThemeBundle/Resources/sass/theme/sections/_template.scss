@@ -112,24 +112,3 @@
 
     @include pos(0, 0, 10px, 0);
 }
-
-.md .text-right {
-    text-align: right;
-}
-
-.md h1.title,
-.md h2.title,
-.md h3.title,
-.md h4.title,
-.md h5.title {
-    color: lighten($font, 10%);
-    font-weight: bold;
-
-    &.dm {
-        margin: 0;
-    }
-}
-
-.md h1.title {
-    font-size: 1.6em;
-}

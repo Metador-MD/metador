@@ -1,0 +1,36 @@
+.md .text-small {
+    font-size: 0.8em;
+}
+
+.md .text-medium {
+    font-size: 0.9em;
+}
+
+.md .text-normal {
+    font-size: 1em;
+}
+
+.md .text-large {
+    font-size: 1.1em;
+}
+
+.md .text-right {
+    text-align: right;
+}
+
+.md h1.title,
+.md h2.title,
+.md h3.title,
+.md h4.title,
+.md h5.title {
+    color: lighten($font, 10%);
+    font-weight: bold;
+
+    &.dm {
+        margin: 0;
+    }
+}
+
+.md h1.title {
+    font-size: 1.6em;
+}

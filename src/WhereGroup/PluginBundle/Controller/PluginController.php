@@ -36,7 +36,7 @@ class PluginController extends Controller
         }
 
         return array(
-            'plugins' => $this->get('metador_plugin')->getPlugins()
+            'plugins' => $this->get('metador_plugin')->getPlugins('origin')
         );
     }
 

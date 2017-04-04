@@ -116,8 +116,18 @@ class Plugin
     /**
      * @return array
      */
-    public function getPlugins()
+    public function getPlugins($groupBy = null)
     {
+        if ($groupBy === 'origin') {
+            $result = array();
+
+            foreach ($this->plugins as $key => $plugin) {
+                $result[$plugin['origin']][$key] = $plugin;
+            }
+
+            return $result;
+        }
+
         return $this->plugins;
     }
 
