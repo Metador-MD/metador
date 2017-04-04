@@ -1,10 +1,10 @@
-profile-service:
-    origin: WhereGroup
-    name: Dienste
-    description: Metadatenprofil für Dienste
-    class_path: Plugins\WhereGroup\ServiceBundle
-    class_name: ProfileServiceBundle
-    version: 1.0
-    require:
-        - metador-helptext
-        - metador-address
+#profile-service:
+#    origin: WhereGroup
+#    name: Dienste
+#    description: Metadatenprofil für Dienste
+#    class_path: Plugins\WhereGroup\ServiceBundle
+#    class_name: ProfileServiceBundle
+#    version: 1.0
+#    require:
+#        - metador-helptext
+#        - metador-address
