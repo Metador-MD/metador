@@ -26,22 +26,4 @@ class SourceType extends AbstractType
                 'required' => false,
             ));
     }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-//    public function configureOptions(OptionsResolver $resolver)
-//    {
-//        $resolver->setDefaults(array(
-//            'data_class' => 'WhereGroup\UserBundle\Entity\Group'
-//        ));
-//    }
-
-    /**
-     * @return string
-     */
-//    public function getName()
-//    {
-//        return 'metador_userbundle_grouptype';
-//    }
 }
