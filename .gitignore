@@ -34,3 +34,6 @@ src/Plugins/WhereGroup/*
 !src/Plugins/WhereGroup/DatasetBundle
 !src/Plugins/WhereGroup/HelptextBundle
 !src/Plugins/WhereGroup/ServiceBundle
+!src/Plugins/WhereGroup/BasicProfileBundle
+!src/Plugins/WhereGroup/DatasetProfileBundle
+!src/Plugins/WhereGroup/ServiceProfileBundle

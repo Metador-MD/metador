@@ -1,0 +1,11 @@
+metador-dataset-profile:
+    origin: WhereGroup
+    name: Datensatz-Profil
+    description: Metadatensatz-Profil für Geodatensätze
+    class_path: Plugins\WhereGroup\DatasetProfileBundle
+    class_name: MetadorDatasetProfileBundle
+    version: 1.0
+    tags:
+        - profile
+    require:
+        - metador-basic-profile
