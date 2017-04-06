@@ -78,8 +78,7 @@ select option {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
@@ -696,8 +695,7 @@ textarea.code {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
@@ -947,8 +945,7 @@ textarea.code {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
@@ -1157,8 +1154,7 @@ textarea.code {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
@@ -1331,8 +1327,7 @@ textarea.code {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;
@@ -1350,8 +1345,7 @@ textarea.code {
   outline: none; }
 
 * {
-  box-sizing: border-box;
-  text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0; }
+  box-sizing: border-box; }
 
 .hidden {
   display: none; }
@@ -1553,8 +1547,7 @@ body {
 
 .metadataForm input.no-value[type='text'], .metadataForm input.no-value[type='password'], .metadataForm select.no-value, .metadataForm textarea.no-value, .form > .left input.no-value[type='text'], .form > .left input.no-value[type='password'], .form > .left select.no-value, .form > .left textarea.no-value, .form > .right input.no-value[type='text'], .form > .right input.no-value[type='password'], .form > .right select.no-value, .form > .right textarea.no-value {
   color: #666;
-  background-color: #DFE8FF;
-  text-shadow: white 1px 1px 0; }
+  background-color: #DFE8FF; }
 
 .metadataForm .metadataFormPages label, .metadataForm .metadataFormPages legend, .form > .left label, .form > .right label, .basic-form > div label {
   display: block;

@@ -4,8 +4,7 @@ metador-dataset-profile:
     description: Metadatensatz-Profil für Geodatensätze
     class_path: Plugins\WhereGroup\DatasetProfileBundle
     class_name: MetadorDatasetProfileBundle
-    version: 1.0
-    tags:
-        - profile
+    version: '1.0'
+    type: profile
     require:
         - metador-basic-profile

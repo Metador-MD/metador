@@ -1,0 +1,114 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.md span[class^="icon-"] {
+    vertical-align: middle;
+}
+
+.md a {
+    text-decoration: none;
+}
+
+.md .plugin {
+    border: 1px solid $border;
+    border-radius: 2px;
+    margin-bottom: $padding;
+
+    @extend .clearfix;
+}
+
+.md .plugin.active {
+    & .plugin-header {
+        background-color: $background;
+    }
+
+    & .plugin-description {
+        background-color: lighten($background, 1%);
+    }
+
+    & .plugin-footer {
+        background-color: $background;
+    }
+}
+
+.md .plugin-header {
+    border-bottom: 1px solid $border;
+    //background-color: $background;
+    @include normal-item(false, false);
+
+    & > .plugin-switch {
+        float: left;
+        display: block;
+        cursor: pointer;
+        &:hover {
+            color: $info;
+        }
+        @extend .rs;
+        @include normal-item();
+
+        & > span[class^="icon-"] {
+            font-size: 1.1em;
+
+            &.icon-toggle-on {
+                color: darken($info, 15%);
+            }
+        }
+    }
+
+    & > .plugin-name {
+        float: left;
+        display: block;
+        @include normal-item();
+    }
+
+    & > .plugin-settings {
+        float: right;
+        color: darken($border, 15%);
+        @extend .ls;
+        @include normal-item();
+    }
+}
+
+.md .plugin-description {
+    padding: $padding;
+    //background-color: lighten($background, 1%);
+}
+
+.md .plugin-footer {
+    border-top: 1px solid $border;
+    //background-color: $background;
+
+    @include normal-item(false, false);
+
+    & > .plugin-type {
+        float: left;
+        font-weight: bold;
+        font-size: 0.8em;
+
+        @extend .rs;
+        @include normal-item(false);
+    }
+
+    & > .plugin-tags {
+        float: left;
+        @include normal-item();
+
+        & > .plugin-tag {
+            border: 1px solid $border;
+            background-color: lighten($background, 10%);
+            border-radius: 4px;
+
+            @include medium-item();
+        }
+    }
+
+    & > .plugin-version {
+        float: right;
+        font-size: 0.8em;
+        display: block;
+        @extend .ls;
+        @include normal-item(false, true);
+    }
+}
+

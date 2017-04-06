@@ -27,17 +27,20 @@ function check(id, data) {
         );
 }
 
+$('.-js-toggle-plugin').on('click', function() {
+    var icon  = $(this).children('span').eq(0);
+    var input = $('#' + $(this).attr('data-id'));
+
+    icon.toggleClass('icon-toggle-on icon-toggle-off');
+
+    input.val('0');
+
+    if (icon.hasClass('icon-toggle-on')) {
+        input.val('1');
+    }
+});
+
 $(document).ready(function() {
-    $('.plugin-mark').click(function() {
-        $(this).toggleClass('icon-checkmark icon-checkmark2');
-
-        if ($(this).hasClass('icon-checkmark')) {
-            $('#' + $(this).attr('data-id')).val(1);
-        } else {
-            $('#' + $(this).attr('data-id')).val(0);
-        }
-    });
-
     $(document).on('click', '[data-toggle="result"]', function() {
         $(this).next().toggle();
     });

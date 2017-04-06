@@ -4,7 +4,7 @@ metador-basic-profile:
     description: -
     class_path: Plugins\WhereGroup\BasicProfileBundle
     class_name: MetadorBasicProfileBundle
-    version: 1.0
+    version: '1.0'
+    type: system
     tags:
-        - system
         - profile

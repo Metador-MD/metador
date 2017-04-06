@@ -4,8 +4,7 @@ metador-service-profile:
     description: Metadatensatz-Profil für Geodienste
     class_path: Plugins\WhereGroup\ServiceProfileBundle
     class_name: MetadorServiceProfileBundle
-    version: 1.0
-    tags:
-        - profile
+    version: '1.0'
+    type: profile
     require:
         - metador-basic-profile
