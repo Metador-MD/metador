@@ -51,6 +51,9 @@
             "@symfony-scripts"
         ]
     },
+    "platform": {
+        "php": "5.5"
+    },
     "config": {
         "bin-dir": "bin",
         "sort-packages": true
