@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Yaml\Yaml;
+use WhereGroup\CoreBundle\Entity\Source;
 
 /**
  * @Route("/admin")
@@ -43,9 +44,34 @@ class SettingsController extends Controller
                 continue;
             }
 
+            // normalize
+
             foreach ($pluginInfo['settings'] as $settingKey => $setting) {
+                $pluginInfo['settings'][$settingKey]['id'] = $pluginKey . '-config-' . $settingKey;
+                $pluginInfo['settings'][$settingKey]['name'] = $pluginKey . '[' . $settingKey . ']';
+                $pluginInfo['settings'][$settingKey]['placeholder']
+                    = isset($setting['placeholder']) ? $setting['placeholder'] : '';
+                $pluginInfo['settings'][$settingKey]['default']
+                    = isset($setting['default']) ? $setting['default'] : '';
+                $pluginInfo['settings'][$settingKey]['description']
+                    = isset($setting['description']) ? $setting['description'] : '';
+                $pluginInfo['settings'][$settingKey]['options']
+                    = isset($setting['options']) ? $setting['options'] : array();
+
+                // Set active profiles as options
+                if (isset($setting['optionSource']) && $setting['optionSource'] === 'source') {
+                    $sources = $this->get('metador_source')->all();
+
+                    /** @var Source $source */
+                    foreach ($sources as $source) {
+                        $pluginInfo['settings'][$settingKey]['options'][$source->getSlug()] = $source->getName();
+                    }
+                }
+
+                $value = $configuration->getValue($settingKey, 'plugin', $pluginKey, '');
+
                 $pluginInfo['settings'][$settingKey]['value']
-                    = $configuration->getValue($settingKey, 'plugin', $pluginKey, '');
+                    = !empty($value) ? $value : $pluginInfo['settings'][$settingKey]['default'];
             }
 
             $pluginConfiguration[$pluginKey] = $pluginInfo;

@@ -56,14 +56,18 @@ class ConfigurationRepository extends EntityRepository
      */
     public function get($key, $filterType, $filterValue)
     {
-        return $this->getEntityManager()->createQuery(
-            "SELECT c FROM " . self::ENTITY .
-            " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
-        )
-        ->setParameter('key', $key)
-        ->setParameter('filterType', $filterType)
-        ->setParameter('filterValue', $filterValue)
-        ->getSingleResult();
+        try {
+            return $this->getEntityManager()->createQuery(
+                "SELECT c FROM " . self::ENTITY .
+                " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
+            )
+                ->setParameter('key', $key)
+                ->setParameter('filterType', $filterType)
+                ->setParameter('filterValue', $filterValue)
+                ->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 
     /**
@@ -121,10 +125,11 @@ class ConfigurationRepository extends EntityRepository
     public function set($key, $value, $filterType, $filterValue)
     {
         /** @var Configuration $entity */
-        try {
-            $entity = $this->get($key, $filterType, $filterValue);
+        $entity = $this->get($key, $filterType, $filterValue);
+
+        if ($entity) {
             $entity->setValue($value);
-        } catch (NoResultException $e) {
+        } else {
             $entity = new Configuration();
             $entity
                 ->setKey($key)

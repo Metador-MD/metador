@@ -42,6 +42,11 @@ class Configuration
     private $value;
 
     /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $json;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -108,7 +113,7 @@ class Configuration
      */
     public function getValue()
     {
-        return $this->value;
+        return $this->getJson() ? json_decode($this->value, true) : $this->value;
     }
 
     /**
@@ -117,7 +122,31 @@ class Configuration
      */
     public function setValue($value)
     {
+        if (is_array($value)) {
+            $value = json_encode($value);
+            $this->setJson(true);
+        }
+
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJson()
+    {
+        return $this->json;
+    }
+
+    /**
+     * @param mixed $json
+     * @return Configuration
+     */
+    public function setJson($json)
+    {
+        $this->json = $json;
         return $this;
     }
 }
