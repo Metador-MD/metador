@@ -9,116 +9,31 @@
 {% endif %}
 
 {% block center %}
-<div class="search grid space responsive">
-    <div class="row r-3">
-        <div class="col c-1-4">&nbsp;</div>
-        <div class="col c-1-2">
-            <div class="form-field-wrapper i2">
-                <span class="form-icon-type left icon-search2"></span>
-                <input class="input ls" type="text" name="terms" value="{% if params.terms is defined %}{{ params.terms }}{% endif %}" placeholder="{{ 'Suchbegriff eingeben'|trans }}" autocomplete="off" />
-                <span class="form-icon right icon-caret-down ls -js-toggle-map" title="{% trans %}mehr{% endtrans %}"></span>
-            </div>
-        </div>
-        <div class="col c-1-4">
-            {#<button class="btn info">suchen</button>#}
-        </div>
+
+<div class="map-dialog -js-map-dialog">
+    <div class="map-menu">
+        <span class="btn medium">
+            <span class="icon-location"></span> Neu
+        </span>
+        <span class="btn medium">
+            <span class="icon-map"></span> Karte
+        </span>
     </div>
+    <div class="map -js-map" id="map"></div>
 </div>
 
-<div class="home -js-home"> {# search-filter-closed #}
-    <div class="search-filter">
-        <div class="map-menu">
-            <div class="map-menu-left">
-                <span class="title rs">
-                    {% trans %}Karte{% endtrans %}
-                </span>
-                <span class="btn medium">
-                    <span class="icon-location"></span> Neu
-                </span>
-                <span class="btn medium">
-                    <span class="icon-map"></span> Karte
-                </span>
-            </div>
-            <div class="map-menu-toggle-btn ls -js-toggle-map">
-                <span class="icon-cross"></span>
-            </div>
-        </div>
-        <div class="map -js-map" id="map"></div>
-        <ul class="data-source-tabs">
-            {% for source in sources  %}
-                <li {% if loop.first %}class="active"{% endif %}>{{ source.name }}</li>
-            {% endfor %}
+<div class="home -js-home">
+    <div class="source">
+        <ul class="source-list">
+        {% for slug, source in sourceConfig  %}
+            <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}" data-id="source-{{ slug }}">{{ source['name'] }}</li>
+        {% endfor %}
         </ul>
-        <div class="data-source-menu">
-            <span class="btn info medium">Neu</span>
-        </div>
+        {% include 'MetadorThemeBundle:Home:new-profile.html.twig' %}
     </div>
     <div class="search-content">
         {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
         {% include 'MetadorThemeBundle:Home:result.html.twig' %}
     </div>
 </div>
-
-
-
-{#<div class="center">#}
-    {#<div class="center-right">#}
-        {#<div class="content">#}
-            {#{% include 'MetadorThemeBundle:Theme:notify.html.twig' %}#}
-
-            {#<div class="search-content">#}
-                {#{% if rows is defined and paging is defined %}#}
-                {#<div class="search-content-searchfield">#}
-                    {#<form class="" action="{{ path(formPath, formParams) }}" method="get">#}
-                        {#<input type="hidden" name="hits" value="{% if params.hits is defined %}{{ params.hits }}{% else %}10{% endif %}"/>#}
-                         {#PREV PAGE #}
-                        {#{% if paging.prevPage is defined %}#}
-                            {#<button class="paging-btn-left" type="submit" name="page" value="{{ paging.prevPage }}">#}
-                                {#<span class="icon-chevron-left"></span>#}
-                            {#</button>#}
-                        {#{% else %}#}
-                            {#<div class="paging-btn-left disabled">#}
-                                {#<span class="icon-chevron-left"></span>#}
-                            {#</div>#}
-                        {#{% endif %}#}
-
-                         {#SEARCH ICON #}
-                        {#<button class="search-icon" type="submit">#}
-                            {#<span class="icon-search"></span>#}
-                        {#</button>#}
-
-                         {#SEARCH FIELD #}
-                        {#<input class="searchfield" type="text" name="terms" value="{% if params.terms is defined %}{{ params.terms }}{% endif %}" placeholder="Suchbegriff eingeben" />#}
-
-                         {#NEXT PAGE #}
-                        {#{% if paging.nextPage is defined %}#}
-                            {#<button class="paging-btn-right" type="submit" name="page" value="{{ paging.nextPage }}">#}
-                                {#<span class="icon-chevron-right"></span>#}
-                            {#</button>#}
-                        {#{% else %}#}
-                            {#<div class="paging-btn-right disabled">#}
-                                {#<span class="icon-chevron-right"></span>#}
-                            {#</div>#}
-                        {#{% endif %}#}
-
-                         {#PAGE INFO #}
-                        {#<div class="paging-info" title="{{ rows|length }} von {{ paging.count }} Datensätze">#}
-                            {#{% if paging.currentPage is defined %}#}
-                                {#<span class="icon-files-empty"></span>#}
-                                {#{{ paging.currentPage }}/{{ paging.pages }}#}
-                            {#{% endif %}#}
-                        {#</div>#}
-                    {#</form>#}
-                {#</div>#}
-                {#{% endif %}#}
-
-                {#<div class="search-content-result">#}
-                    {#{% block searchResult %}#}
-                        {#{% include 'MetadorThemeBundle:Home:result.html.twig' %}#}
-                    {#{% endblock %}#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-{#</div>#}
 {% endblock %}

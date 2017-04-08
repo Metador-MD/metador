@@ -17,3 +17,6 @@ session_timeout_dialog: "Nachdem Sie das System eine längere Zeit nicht benutzt
 session_timeout_stay: angemeldet bleiben
 session_timeout_logout: abmelden
 login_failure: "Benutzername oder Passwort falsch"
+profile: Profil
+new_profile: "%profile% erstellen"
+new_profiles: "erstellen"

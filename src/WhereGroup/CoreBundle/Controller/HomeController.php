@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Entity\Configuration;
 use WhereGroup\UserBundle\Entity\User;
 
 /**
@@ -50,12 +51,38 @@ class HomeController extends Controller
         }
 
         $metadata = $this->get('metadata')->find($filter);
+        $profileConfig = array();
+        $sourceConfig = array();
+
+        foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
+            $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
+
+            $profileConfig[$key] = array(
+                'name'   => $profile['name'],
+                'source' => is_null($configuration) ? array() : $configuration->getValue()
+            );
+        }
+
+        foreach ($this->get('metador_source')->all() as $source) {
+            $sourceConfigProfiles = array();
+
+            foreach ($profileConfig as $key => $profile) {
+                if (in_array($source->getSlug(), $profile['source'])) {
+                    $sourceConfigProfiles[$key] = $profile['name'];
+                }
+            }
+
+            $sourceConfig[$source->getSlug()] = array(
+                'name' => $source->getName(),
+                'profiles' => $sourceConfigProfiles
+            );
+        }
 
         return array(
             'rows'         => $metadata['result'],
             'paging'       => $metadata['paging'],
             'params'       => $params,
-            'sources'      => $this->get('metador_source')->all()
+            'sourceConfig' => $sourceConfig
         );
     }
 

@@ -2,9 +2,28 @@
 @import '../mixins';
 @import '../extensions';
 
-$home-top: 160px;
-$filter-height: 380px;
+$home-top: $header-height + $padding;
+$map-height: 400px;
 $home-menu-height: 35px;
+
+.md .map-dialog {
+    position: relative;
+    height: $map-height;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    background-color: $content;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.03);
+    display: none;
+
+    & > .map-menu {
+        border-bottom: 1px solid $border;
+        @include large-item(false);
+    }
+
+    & > .map {
+        @include pos($large-item-height, 0, 0, 0);
+    }
+}
 
 .md .home {
     border: 1px solid $border;
@@ -14,36 +33,32 @@ $home-menu-height: 35px;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.03);
 
     @include pos($home-top, 0, 10px, 0);
+
+    &.map-enabled {
+        @include pos($home-top + $map-height + $padding, 0, 10px, 0);
+    }
 }
 
-.md .home > .search-filter {
-    position: relative;
-    height: $filter-height;
+.md .source {
+    display: block;
 
-    & > .map {
-        //background-color: darken($background, 2%);
-        z-index: 1;
-        @include pos($home-menu-height + 10px, 0, $home-menu-height, 0);
-    }
-
-    & > .data-source-tabs {
-        border-bottom: 1px solid $border;
-        list-style: none;
+    & > .source-list {
         margin: 0;
         padding: 0;
-        z-index: 2;
-
+        list-style: none;
+        border-bottom: 1px solid $border;
+        background-color: $background;
         @extend .clearfix;
-        @include pos('', 0, 35px, 0);
 
-        & > li {
+        & > .source-liste-item {
             display: block;
             float: left;
             border-width: 1px 1px 0 1px;
             border-color: $border;
             border-style: solid;
             margin-left: 5px;
-            background-color: $white;
+            margin-top: 5px;
+            background-color: $title;
             height: 35px;
             line-height: 35px;
             padding: 0 $padding;
@@ -51,87 +66,46 @@ $home-menu-height: 35px;
             border-top-right-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            @include userSelect(none);
 
             &.active {
-                background-color: $title;
+                background-color: $content;
                 position: relative;
                 bottom: -1px;
             }
         }
     }
-
-    & > .data-source-menu {
-        border-bottom: 1px solid $border;
-        height: 35px;
-        line-height: 35px;
-        text-align: right;
-        padding: 0 $padding;
-        background-color: $title;
-        @include pos('', 0, 0, 0);
-    }
 }
 
-.md .home > .search-content {
-    padding: $padding $padding * 2;
-    overflow-y: scroll;
-    background-color: $white;
-
-    @include pos($filter-height, 0, 0, 0);
-}
-
-.md .home > .search-filter > .map-menu {
+.md .profile-menu {
+    text-align: right;
     border-bottom: 1px solid $border;
-    z-index: 2;
-    @extend .clearfix;
-    height: $home-menu-height + 10px;
-    line-height: $home-menu-height + 10px;
+    display: none;
 
-    & > .map-menu-left {
-        float: left;
+    @include large-item(false);
 
-        & > .title {
-            font-weight: bold;
-            color: lighten($font, 20%);
-            float: left;
-            margin-right: $padding;
-            padding: 0 $padding;
-            height: $home-menu-height + 9px;
-            line-height: $home-menu-height + 9px;
+    &.active {
+        display: block;
+    }
+
+    & > .profile-menu-btn {
+        position: relative;
+        display: inline-block;
+
+        & > .profile-menu-dialog {
+            display: none;
+            min-width: 200px;
+            padding: $padding/2 $padding;
+            background-color: $white;
+            border: 1px solid $border;
+            border-radius: 2px;
+
+            @include pos($medium-item-height, -1px, '', '');
+        }
+
+        &:hover > .profile-menu-dialog {
+            display: block;
+            z-index: 1;
         }
     }
-
-    & > .map-menu-toggle-btn {
-        float: right;
-        text-align: right;
-        cursor: pointer;
-        color: lighten($font, 20%);
-        height: $home-menu-height + 9px;
-        line-height: $home-menu-height + 9px;
-        padding: 0 $padding;
-
-        &:hover {
-            background-color: $background;
-        }
-    }
-}
-.md .home.search-filter-closed {
-    background-color: $background;
-}
-
-.md .home.search-filter-closed > .search-filter {
-    height: $home-menu-height * 2 + 10px;
-
-
-    & > .map-menu {
-        border: 0;
-        display: none;
-    }
-
-    & > .map {
-        display: none;
-    }
-}
-
-.md .home.search-filter-closed > .search-content {
-    @include pos($home-menu-height * 2 + 10px, 0, 0, 0);
 }

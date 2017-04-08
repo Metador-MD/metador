@@ -7,11 +7,13 @@
         <div class="main">
             <div class="top">
                 <div class="top-left">
-                <span class="logo">
-                    <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
-                </span>
+                    <span class="logo">
+                        <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
+                    </span>
                 </div>
                 <div class="top-right">
+                    {% include 'MetadorThemeBundle:Home:search-field.html.twig' %}
+
                     {% block global_menu %}
                         {% include 'MetadorThemeBundle:Theme:globalMenu.html.twig' %}
                     {% endblock %}

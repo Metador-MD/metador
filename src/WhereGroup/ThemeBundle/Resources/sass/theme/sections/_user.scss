@@ -5,10 +5,11 @@
     position: relative;
     z-index: 2;
     cursor: pointer;
-    display: inline-block;
+    display: block;
+    float: left;
+    margin: 10px 5px;
 
     @include userSelect(none);
-
 
     .user-menu {
         $menu-width: 300px;

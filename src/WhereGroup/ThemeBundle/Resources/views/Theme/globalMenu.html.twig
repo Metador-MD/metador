@@ -9,14 +9,12 @@
 
         {# USE TEMPLATE #}
     {% else %}
-        <div class="top-right-item {% if item.active is defined and item.active %}active{% endif %}">
-            <a href="{{ path(item.path, item.params) }}" class="global-menu-item">
-                {% if item.icon is defined %}
-                    <span class="{{ item.icon }}"></span>
-                {% endif %}
-                {{ item.label|trans }}
-            </a>
-        </div>
+        <a href="{{ path(item.path, item.params) }}" class="header-menu-item button {% if item.active is defined and item.active %}active{% endif %}">
+            {% if item.icon is defined %}
+                <span class="{{ item.icon }}"></span>
+            {% endif %}
+            {{ item.label|trans }}
+        </a>
     {% endif %}
 {% endfor %}
 

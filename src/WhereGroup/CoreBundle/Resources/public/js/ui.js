@@ -1,8 +1,14 @@
+$(document).on('click', '.-js-close-notify', function () {
+    $(this).parent().remove();
+});
+
+
+
 (function($) {
-    
+
     var dialog = {
         opts: null,
-        
+
         init: function(options) {
             dialog.opts = $.extend({
                 modal: true,
@@ -30,7 +36,7 @@
                 }
             }, options);
         },
-        
+
         open: function() {
             if(dialog.opts.modal) {
                 $('<div>', {'class': 'modal'}).appendTo("body");
@@ -63,14 +69,14 @@
 
             dialog.opts.onOpen();
         },
-        
+
         close: function(result) {
             $('.dialog').remove();
             $('.modal').remove();
             dialog.opts.onClose(result);
         }
     };
-    
+
     $.fn.modalDialog = function(options) {
         if(dialog[options] ) {
             return dialog[options].apply( this, Array.prototype.slice.call( arguments, 1 ));
@@ -79,9 +85,9 @@
         } else {
             $.error( 'Method ' +  options + ' does not exist.' );
         }
-        
+
         return this.each(function() {
         });
     };
-    
+
 })(jQuery);

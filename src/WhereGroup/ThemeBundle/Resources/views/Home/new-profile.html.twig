@@ -1,0 +1,26 @@
+{% for slug, source in sourceConfig  %}
+<div class="profile-menu -js-profile-menu {% if loop.first %}active{% endif %}" id="source-{{ slug }}">
+    {% if app.user.username is defined %}
+    <div class="profile-menu-btn">
+        {% if source['profiles']|length == 1 %}
+
+            <div class="btn info medium">
+            {{ 'new_profile'|trans({'%profile%': source['profiles']|first}) }}
+        </div>
+        {% elseif source['profiles']|length > 1 %}
+        <div class="btn info medium">
+            {% trans %}new_profiles{% endtrans %}
+            <span class="icon-sort-desc"></span>
+        </div>
+        <div class="profile-menu-dialog">
+            {% for profile in source['profiles'] %}
+            <div>
+                <a href="" class="">{{ profile }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}

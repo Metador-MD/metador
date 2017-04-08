@@ -2,9 +2,9 @@
 @import '../mixins';
 @import '../extensions';
 
-.md span[class^="icon-"] {
-    vertical-align: middle;
-}
+//.md span[class^="icon-"] {
+//    vertical-align: middle;
+//}
 
 .md a {
     text-decoration: none;
@@ -41,11 +41,12 @@
         float: left;
         display: block;
         cursor: pointer;
+        @extend .rs;
+        @include normal-item();
+
         &:hover {
             color: $info;
         }
-        @extend .rs;
-        @include normal-item();
 
         & > span[class^="icon-"] {
             font-size: 1.1em;

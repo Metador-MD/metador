@@ -16,52 +16,6 @@
 
     @include pos(0, 0, 0, 0);
 
-    & > .top {
-        z-index: 2;
-        min-width: 600px;
-        margin-bottom: $padding;
-        @extend .clearfix;
-    }
-
-    .top-left {
-        width: $center-left-width;
-        float: left;
-        height: $header-height;
-        line-height: $header-height;
-    }
-
-    .top-right {
-        float: right;
-        height: $header-height;
-        line-height: $header-height;
-    }
-
-    .top-right-item {
-        cursor: pointer;
-        display: inline-block;
-        padding: 0 10px;
-        @include userSelect(none);
-        @include large-item(false, false);
-
-        & > .global-menu-item {
-            display: inline-block;
-            font-size: 0.9em;
-            text-decoration: none;
-            color: $font;
-            @include large-item(false, false);
-        }
-
-        &:hover {
-            background-color: darken($background, 3%);
-        }
-
-        &.active {
-            border: 1px solid darken($background, 6%);
-            border-radius: 4px;
-            background-color: darken($background, 3%);
-        }
-    }
-
     & > .center {
         z-index: 1;
         @include pos($header-height + $padding, 0, 0, 0);

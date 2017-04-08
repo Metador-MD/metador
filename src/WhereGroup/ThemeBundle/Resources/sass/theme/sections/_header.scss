@@ -1,0 +1,58 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.header-height {
+    height: $header-height;
+    line-height: $header-height;
+}
+
+.top {
+    z-index: 2;
+    min-width: 600px;
+    margin-bottom: $padding;
+    display: block;
+    @extend .header-height;
+    @extend .clearfix;
+}
+
+.top-left {
+    float: left;
+    display: block;
+    @extend .header-height;
+}
+
+.top-right {
+    float: right;
+    display: block;
+    @extend .header-height;
+}
+
+.header-menu-item {
+    display: block;
+    float: left;
+    margin: 10px 5px;
+
+    @include large-item(false, false);
+
+    &.button {
+        cursor: pointer;
+        padding: 0 10px;
+        font-size: 0.9em;
+        @include userSelect(none);
+
+        &:hover {
+            background-color: darken($background, 3%);
+        }
+
+        &.active {
+            border: 1px solid darken($background, 6%);
+            border-radius: 4px;
+            background-color: darken($background, 3%);
+        }
+    }
+
+    & .icon-map.active {
+        color: $info;
+    }
+}
