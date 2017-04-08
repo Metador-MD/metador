@@ -41,7 +41,7 @@ class Plugin
         $rootDir,
         $cacheDir,
         $environment,
-        $configFolder = '../var/plugins/',
+        $configFolder = '../var/config/',
         $pluginPaths = null
     ) {
         // get plugin path's
@@ -129,6 +129,23 @@ class Plugin
         }
 
         return $this->plugins;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActiveProfiles()
+    {
+        $result = array();
+
+        foreach ($this->plugins as $key => $plugin) {
+            if (isset($plugin['type']) && strtolower($plugin['type']) === 'profile' &&
+                isset($plugin['active']) && $plugin['active']) {
+                $result[$key] = $plugin;
+            }
+        }
+
+        return $result;
     }
 
     /**

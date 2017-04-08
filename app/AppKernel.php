@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class AppKernel extends Kernel
 {
-    private $plguinConfigFolder = '/../var/plugins/';
+    private $plguinConfigFolder = '/../var/config/';
     private $pluginConfigFile   = 'plugins.yml';
     private $pluginRoutingFile  = 'plugins_routing.yml';
 

@@ -11,4 +11,4 @@ where_group_plugin:
     type:     annotation
 
 _plugins:
-    resource: "../../var/plugins/plugins_routing.yml"
+    resource: "../../var/config/plugins_routing.yml"
