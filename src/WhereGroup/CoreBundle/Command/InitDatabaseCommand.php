@@ -85,7 +85,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
     {
         $sourceService = $this->getContainer()->get('metador_source');
 
-        if ($sourceService->count() === '0') {
+        if ($sourceService->count() === 0) {
             $sourceService->set('default', 'Metadaten');
         }
     }

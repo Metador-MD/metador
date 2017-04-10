@@ -30,6 +30,14 @@ class Source implements SourceInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return (int)$this->repo->count();
+    }
+
+    /**
      * @param $id
      */
     public function get($id)
