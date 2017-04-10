@@ -77,6 +77,21 @@ class InitDatabaseCommand extends ContainerAwareCommand
             $output->writeln('Password : <info>' . $password . '</info>');
         }
 
+        $this->addSettingsToDatabase();
+        $this->addSourceAndProfilesToDatabase();
+    }
+
+    private function addSourceAndProfilesToDatabase()
+    {
+        $sourceService = $this->getContainer()->get('metador_source');
+
+        if ($sourceService->count() === '0') {
+            $sourceService->set('default', 'Metadaten');
+        }
+    }
+
+    private function addSettingsToDatabase()
+    {
         // Add default configuration to database
         $plugins = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
 

@@ -11,6 +11,19 @@ use Doctrine\ORM\EntityRepository;
 class SourceRepository extends EntityRepository
 {
     /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this
+            ->getEntityManager()
+            ->getRepository("MetadorCoreBundle:Source")
+            ->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    /**
      * @param $entity
      * @return $this
      */

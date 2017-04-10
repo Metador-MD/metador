@@ -17,6 +17,7 @@ $home-menu-height: 35px;
 
     & > .map-menu {
         border-bottom: 1px solid $border;
+        background-color: $dialog-head;
         @include large-item(false);
     }
 
@@ -47,18 +48,19 @@ $home-menu-height: 35px;
         padding: 0;
         list-style: none;
         border-bottom: 1px solid $border;
-        background-color: $background;
+        background-color: $dialog-head;
         @extend .clearfix;
 
         & > .source-liste-item {
             display: block;
             float: left;
             border-width: 1px 1px 0 1px;
-            border-color: $border;
+            border-color: darken(#f3f5f6, 10%);
             border-style: solid;
             margin-left: 5px;
             margin-top: 5px;
             background-color: $title;
+
             height: 35px;
             line-height: 35px;
             padding: 0 $padding;
@@ -69,6 +71,7 @@ $home-menu-height: 35px;
             @include userSelect(none);
 
             &.active {
+                border-color:$border;
                 background-color: $content;
                 position: relative;
                 bottom: -1px;

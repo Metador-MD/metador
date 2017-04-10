@@ -14,13 +14,14 @@
     border: 1px solid $border;
     border-radius: 2px;
     margin-bottom: $padding;
+    background-color: $background;
 
     @extend .clearfix;
 }
 
 .md .plugin.active {
     & .plugin-header {
-        background-color: $background;
+        background-color: $dialog-head;
     }
 
     & .plugin-description {
@@ -28,7 +29,8 @@
     }
 
     & .plugin-footer {
-        background-color: $background;
+        //background-color: $title;
+        background-color: $white;
     }
 }
 
