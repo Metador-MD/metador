@@ -5,6 +5,7 @@
 
     <parameters>
         <!-- SERVICE -->
+        <parameter key="metador.core.class">WhereGroup\CoreBundle\Component\Core</parameter>
         <parameter key="metador.application.class">WhereGroup\CoreBundle\Component\Application</parameter>
         <parameter key="metador.metadata.class">WhereGroup\CoreBundle\Component\Metadata</parameter>
         <parameter key="metador.wizard.class">WhereGroup\CoreBundle\Component\Wizard</parameter>
@@ -34,6 +35,12 @@
 
     <services>
         <!-- SERVICE -->
+        <service id="metador_core" class="%metador.core.class%">
+            <argument type="service" id="twig" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="translator.default" />
+            <argument type="service" id="security.authorization_checker" />
+        </service>
         <service id="metador.application" class="%metador.application.class%">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="security.authorization_checker" />
