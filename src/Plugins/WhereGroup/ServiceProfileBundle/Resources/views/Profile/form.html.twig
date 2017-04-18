@@ -1,0 +1,29 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+    <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
+    <input type="hidden" name="p[hierarchyLevel]" value="service" />
+
+    <div class="center menu">
+        <div class="center-left">
+            <ul class="left-menu">
+                <li class="act"><span>{% trans %}Metadatensatz{% endtrans %}</span></li>
+                <li><span>{% trans %}Identifikation{% endtrans %}</span></li>
+                <li><span>{% trans %}Klassifizierung{% endtrans %}</span></li>
+                <li><span>{% trans %}Schlüsselwort{% endtrans %}</span></li>
+                <li><span>{% trans %}Geografischer{% endtrans %}</span></li>
+                <li><span>{% trans %}Zeitbezug{% endtrans %}</span></li>
+                <li><span>{% trans %}Übereinstimmung{% endtrans %}</span></li>
+                <li><span>{% trans %}Beschränkungen{% endtrans %}</span></li>
+                <li><span>{% trans %}Zuständige{% endtrans %}</span></li>
+            </ul>
+        </div>
+        <div class="center-right">
+            <div class="content">
+                {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
+
+                {% include 'MetadorServiceProfileBundle:Profile:metadata.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

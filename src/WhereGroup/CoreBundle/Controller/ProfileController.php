@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
@@ -74,14 +75,21 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{profile}/new", name="metadata_new")
+     * @Route("/{source}/{profile}/new", name="metadata_new")
      * @Method("GET")
      */
-    public function newAction($profile)
+    public function newAction($source, $profile)
     {
-        $this->init($profile);
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
 
-        return $this->renderResponse($profile, 'form');
+        $template = $this
+                ->get('metador_plugin')
+                ->getPluginClassName($profile) . ':Profile:form.html.twig';
+
+        return new Response($this->get('metador_core')->render($template, array(
+            'metadataSource'  => $source,
+            'metadataProfil' => $profile
+        )));
     }
 
     /**
