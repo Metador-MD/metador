@@ -122,6 +122,8 @@ class Configuration
      */
     public function setValue($value)
     {
+        $this->setJson(false);
+
         if (is_array($value)) {
             $value = json_encode($value);
             $this->setJson(true);

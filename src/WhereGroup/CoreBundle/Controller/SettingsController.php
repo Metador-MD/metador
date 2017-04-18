@@ -22,30 +22,15 @@ class SettingsController extends Controller
      */
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         /** @var  Configuration $configurationManager */
         $configuration = $this->get('metador_configuration');
 
-        $settings = $this->get('metador_plugin')->getPlugins();
-
-        // Read system config
-        $coreSettings = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
-
-        $settings = array_merge_recursive($coreSettings, $settings);
-        unset($coreSettings);
-
         $pluginConfiguration = array();
 
-        foreach ($settings as $pluginKey => $pluginInfo) {
-            if ((isset($pluginInfo['active']) && $pluginInfo['active'] === false) || !isset($pluginInfo['settings'])) {
-                continue;
-            }
-
+        foreach ($this->getSettings() as $pluginKey => $pluginInfo) {
             // normalize
-
             foreach ($pluginInfo['settings'] as $settingKey => $setting) {
                 $pluginInfo['settings'][$settingKey]['id'] = $pluginKey . '-config-' . $settingKey;
                 $pluginInfo['settings'][$settingKey]['name'] = $pluginKey . '[' . $settingKey . ']';
@@ -96,12 +81,44 @@ class SettingsController extends Controller
 
         $params = $request->request->all();
 
-        foreach ($params as $plugin => $param) {
-            foreach ($param as $key => $value) {
-                $configuration->set($key, $value, 'plugin', $plugin);
+        foreach ($this->getSettings() as $pluginKey => $pluginInfo) {
+            foreach ($pluginInfo['settings'] as $settingKey => $setting) {
+                if (!isset($params[$pluginKey][$settingKey])) {
+                    $configuration->remove($settingKey, 'plugin', $pluginKey);
+                    continue;
+                }
+
+                $configuration->set($settingKey, $params[$pluginKey][$settingKey], 'plugin', $pluginKey);
             }
         }
 
         return $this->redirectToRoute('metador_admin_settings');
+    }
+
+    /**
+     * @return array
+     */
+    private function getSettings()
+    {
+        $result = array();
+
+        $settings = $this->get('metador_plugin')->getPlugins();
+
+        // Read system config
+        $coreSettings = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
+
+        $settings = array_merge_recursive($coreSettings, $settings);
+
+        unset($coreSettings);
+
+        foreach ($settings as $pluginKey => $pluginInfo) {
+            if ((isset($pluginInfo['active']) && $pluginInfo['active'] === false) || !isset($pluginInfo['settings'])) {
+                continue;
+            }
+
+            $result[$pluginKey] = $pluginInfo;
+        }
+
+        return $result;
     }
 }
