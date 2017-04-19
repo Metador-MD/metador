@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\MetadorException;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Component\Finder;
@@ -88,8 +89,42 @@ class ProfileController extends Controller
 
         return new Response($this->get('metador_core')->render($template, array(
             'metadataSource'  => $source,
-            'metadataProfil' => $profile
+            'metadataProfil'  => $profile
         )));
+    }
+
+    /**
+     * @Route("/{source}/{profile}/save", name="metadata_save")
+     * @Method("POST")
+     */
+    public function saveAction($source, $profile)
+    {
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+        $request = $this->get('request_stack')->getCurrentRequest()->request;
+        $p = $request->get('p');
+
+        if (isset($p['_id'])) {
+            $metadata = $this->get('metadata')->getById((int)$p['_id']);
+            $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+        }
+
+        $response = array();
+
+        if ($request->get('submit') === 'close') {
+            $response = array(
+                'METADOR' => array(
+                    'runMethod' => array(
+                        array(
+                            'class'    => 'metador',
+                            'method'   => 'redirect',
+                            'argument' => $this->generateUrl('metador_home')
+                        )
+                    )
+                )
+            );
+        }
+
+        return new AjaxResponse($response);
     }
 
     /**

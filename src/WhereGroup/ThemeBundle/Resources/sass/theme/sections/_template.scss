@@ -16,7 +16,7 @@
 
     @include pos(0, 0, 0, 0);
 
-    & > .center {
+    & .center {
         z-index: 1;
         @include pos($header-height + $padding, 0, 0, 0);
 

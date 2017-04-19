@@ -1,0 +1,13 @@
+@import '../config';
+
+.md .mdtab-content {
+    display: none;
+
+    &.act {
+        display: block;
+    }
+}
+
+.md .left-menu-content {
+    margin-right: $padding;
+}

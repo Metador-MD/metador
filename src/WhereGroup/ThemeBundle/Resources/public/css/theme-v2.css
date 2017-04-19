@@ -1211,6 +1211,12 @@ html, body {
 .md h1.title {
   font-size: 1.6em; }
 
+.md h2.title {
+  font-size: 1.4em; }
+
+.md h2.title {
+  font-size: 1.2em; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
@@ -1320,7 +1326,7 @@ html, body {
     display: block;
     margin: 0 20px; } }
 
-.md .main > .center {
+.md .main .center {
   z-index: 1;
   position: absolute;
   top: 70px;
@@ -1328,7 +1334,7 @@ html, body {
   right: 0;
   bottom: 0; }
 
-.md .main > .center.menu .center-left {
+.md .main .center.menu .center-left {
   display: block;
   width: 230px;
   position: absolute;
@@ -1337,14 +1343,14 @@ html, body {
   bottom: 0; }
 
 @media screen and (max-width: 650px) {
-  .md .main > .center.menu .center-left {
+  .md .main .center.menu .center-left {
     display: none; } }
 
-.md .main > .center.menu .center-right {
+.md .main .center.menu .center-right {
   left: 230px; }
 
 @media screen and (max-width: 650px) {
-  .md .main > .center.menu .center-right {
+  .md .main .center.menu .center-right {
     left: 0; } }
 
 .md .main .center-left {
@@ -1683,7 +1689,8 @@ html, body {
   list-style: none;
   padding: 0;
   margin: 0;
-  z-index: 2; }
+  z-index: 2;
+  margin-bottom: 20px; }
 
 .md .left-menu > li {
   position: relative;
@@ -2192,3 +2199,12 @@ html, body {
   padding: 0 20px;
   height: 35px;
   line-height: 35px; }
+
+.md .mdtab-content {
+  display: none; }
+
+.md .mdtab-content.act {
+  display: block; }
+
+.md .left-menu-content {
+  margin-right: 20px; }

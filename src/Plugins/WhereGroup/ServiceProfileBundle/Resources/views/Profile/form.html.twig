@@ -1,29 +1,54 @@
 {% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
 
 {% block center %}
+<form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
+    <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
     <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
     <input type="hidden" name="p[hierarchyLevel]" value="service" />
 
     <div class="center menu">
         <div class="center-left">
             <ul class="left-menu">
-                <li class="act"><span>{% trans %}Metadatensatz{% endtrans %}</span></li>
-                <li><span>{% trans %}Identifikation{% endtrans %}</span></li>
-                <li><span>{% trans %}Klassifizierung{% endtrans %}</span></li>
-                <li><span>{% trans %}Schlüsselwort{% endtrans %}</span></li>
-                <li><span>{% trans %}Geografischer{% endtrans %}</span></li>
-                <li><span>{% trans %}Zeitbezug{% endtrans %}</span></li>
-                <li><span>{% trans %}Übereinstimmung{% endtrans %}</span></li>
-                <li><span>{% trans %}Beschränkungen{% endtrans %}</span></li>
-                <li><span>{% trans %}Zuständige{% endtrans %}</span></li>
+                <li data-mdtab="metadata" class="act"><span>{% trans %}Metadatensatz{% endtrans %}</span></li>
+                <li data-mdtab="identification"><span>{% trans %}Identifikation{% endtrans %}</span></li>
+                <li data-mdtab="classification"><span>{% trans %}Klassifizierung{% endtrans %}</span></li>
+                <li data-mdtab="keyword"><span>{% trans %}Schlüsselwort{% endtrans %}</span></li>
+                <li data-mdtab="geographic"><span>{% trans %}Geografischer{% endtrans %}</span></li>
+                <li data-mdtab="temporal"><span>{% trans %}Zeitbezug{% endtrans %}</span></li>
+                <li data-mdtab="conformity"><span>{% trans %}Übereinstimmung{% endtrans %}</span></li>
+                <li data-mdtab="constraints"><span>{% trans %}Beschränkungen{% endtrans %}</span></li>
+                <li data-mdtab="responsibleparty"><span>{% trans %}Zuständige{% endtrans %}</span></li>
             </ul>
+            <div class="left-menu-content">
+                <button class="btn -js-metadata-button full" type="submit" name="submit" value="save" disabled>
+                    <span class="icon-download -js-metadata-button-status"></span> {% trans %}speichern{% endtrans %}
+                </button>
+
+                <button class="btn info full" type="submit" name="submit" value="close">
+                    <span class="icon-checkmark"></span> {% trans %}freigeben{% endtrans %}
+                </button>            </div>
         </div>
         <div class="center-right">
             <div class="content">
                 {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
 
                 {% include 'MetadorServiceProfileBundle:Profile:metadata.html.twig' %}
+
+                <div class="mdtab-content" data-mdtab-content="identification"></div>
+                <div class="mdtab-content" data-mdtab-content="classification"></div>
+                <div class="mdtab-content" data-mdtab-content="keyword"></div>
+                <div class="mdtab-content" data-mdtab-content="geographic"></div>
+                <div class="mdtab-content" data-mdtab-content="temporal"></div>
+                <div class="mdtab-content" data-mdtab-content="conformity"></div>
+                <div class="mdtab-content" data-mdtab-content="constraints"></div>
+                <div class="mdtab-content" data-mdtab-content="responsibleparty"></div>
             </div>
         </div>
     </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
 {% endblock %}
