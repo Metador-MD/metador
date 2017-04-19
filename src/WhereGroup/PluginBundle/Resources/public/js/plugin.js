@@ -4,7 +4,7 @@ function request(path, callback, plugins) {
     }
 
     $.ajax({
-        url: BASEDIR + "admin/plugin/command/" + path,
+        url: Configuration.basedir + "admin/plugin/command/" + path,
         type: "post",
         data: {
             'plugins': plugins

@@ -23,7 +23,7 @@ $(document).ready(function() {
         dialog.modalDialog('open');
 
         $.ajax({
-            url: BASEDIR + "metador/address/get",
+            url: Configuration.basedir + "metador/address/get",
             type: "get",
             dataType: "json",
             success:  function(data) {

@@ -1,7 +1,7 @@
 {% if app.environment == 'dev' %}
-    {% set BASEDIR = app.request.basepath ~ '/app_dev.php/' %}
+    {% set Configuration.basedir = app.request.basepath ~ '/app_dev.php/' %}
 {% else %}
-    {% set BASEDIR = app.request.basepath ~ '/app.php/' %}
+    {% set Configuration.basedir = app.request.basepath ~ '/app.php/' %}
 {% endif %}
 <!DOCTYPE html>
 <html>
@@ -29,9 +29,9 @@
         {% block body %}{% endblock %}
         {% block javascript %}
             <script type="text/javascript">
-                var BASEDIR = '{{ BASEDIR }}';
+                var Configuration.basedir = '{{ Configuration.basedir }}';
                 var Metador = {
-                    'basedir': '{{ BASEDIR }}',
+                    'basedir': '{{ Configuration.basedir }}',
                     'parameters': {
                         {% for key, value in applicationGet('app-configuration') %}
                             '{{ key }}': '{{ value }}'{% if not loop.last %},{% endif %}

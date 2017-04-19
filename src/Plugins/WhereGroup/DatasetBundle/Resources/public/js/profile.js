@@ -492,7 +492,7 @@ $(document).ready(function() {
 
     $('.shareMetadata').click(function() {
         $.ajax({
-            url: BASEDIR + "metador/share/",
+            url: Configuration.basedir + "metador/share/",
             type: "POST",
             data: {
                 'id': $(this).attr('name'),

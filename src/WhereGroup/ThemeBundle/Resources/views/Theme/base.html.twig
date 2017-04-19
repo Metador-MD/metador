@@ -18,8 +18,7 @@
     {% block body %}{% endblock %}
     {% block javascript %}
         <script type="text/javascript">
-            var BASEDIR = '{{ BASEDIR }}';
-            var Metador = {
+            var Configuration = {
                 'basedir': '{{ BASEDIR }}',
                 'maxlifetime': '{% if app.user %}{{ session_maxlifetime() }}{% else %}0{% endif %}',
                 'parameters': {

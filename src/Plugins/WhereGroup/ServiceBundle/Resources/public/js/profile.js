@@ -502,7 +502,7 @@ $(document).ready(function() {
 
     $('.shareMetadata').click(function() {
         $.ajax({
-            url: BASEDIR + "metador/share/",
+            url: Configuration.basedir + "metador/share/",
             type: "POST",
             data: {
                 'id': $(this).attr('name'),
@@ -538,7 +538,7 @@ $(document).ready(function() {
                             var find = $(this).val();
 
                             $.ajax({
-                                url: BASEDIR + "metadata/profile-service/coupled/",
+                                url: Configuration.basedir + "metadata/profile-service/coupled/",
                                 type: "get",
                                 data: { 'title': find },
                                 dataType: "json",

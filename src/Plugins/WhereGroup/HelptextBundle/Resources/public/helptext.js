@@ -4,7 +4,7 @@ $(document).ready(function() {
         var id = $(this).attr('data-obj-id');
 
         $.ajax({
-            url: BASEDIR + "metador/help/get",
+            url: Configuration.basedir + "metador/help/get",
             data: {
                 "id" : id
             },
@@ -22,7 +22,7 @@ $(document).ready(function() {
                             'click': function() {
                                 if($('.helptext').attr("contentEditable")) {
                                     $.ajax({
-                                        url: BASEDIR + "metador/help/set",
+                                        url: Configuration.basedir + "metador/help/set",
                                         data: {
                                             "id" : id,
                                             "html": $('.helptext').html()
