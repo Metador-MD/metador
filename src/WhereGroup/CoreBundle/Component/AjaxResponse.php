@@ -27,11 +27,15 @@ class AjaxResponse extends JsonResponse
         $data = array_merge_recursive(
             $data,
             array(
-                'methods'   => array(array(
-                    'class'    => 'session',
-                    'method'   => 'setTimeout',
-                    'argument' => ini_get("session.gc_maxlifetime")
-                ))
+                'METADOR' => array(
+                    'runMethod' => array(
+                        array(
+                            'class'    => 'session',
+                            'method'   => 'setTimeout',
+                            'argument' => ini_get("session.gc_maxlifetime")
+                        )
+                    )
+                )
             )
         );
 

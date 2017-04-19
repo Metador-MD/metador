@@ -1,8 +1,6 @@
 'use strict';
 
-var MetadorSession = function() {
-
-};
+var MetadorSession = function() {};
 
 MetadorSession.prototype = {
     timeOut: 0,
@@ -37,22 +35,10 @@ MetadorSession.prototype = {
     }
 };
 
-var parseResponse = function (data) {
-    if (typeof data.methods === 'undefined') {
-        return false;
-    }
-
-    $(data.methods).each(function (index, params) {
-        if(typeof window[params.class][params.method] === 'function'){
-            window[params.class][params.method](params.argument);
-        }
-    });
-};
-
 var session = new MetadorSession();
 
-session.setDialogTime(Metador.parameters.session_dialog);
-session.setTimeout(Metador.maxlifetime);
+session.setDialogTime(Configuration.parameters.session_dialog);
+session.setTimeout(Configuration.maxlifetime);
 
 $('.-js-timeout-dialog-heartbeat').on('click', function () {
     $.ajax({
@@ -60,6 +46,6 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'type': 'GET',
         'dataType': 'json'
     }).done(function(data){
-        parseResponse(data);
+        metador.parseResponse(data);
     });
 });

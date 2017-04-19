@@ -8,17 +8,15 @@ Metador.prototype = {
     },
 
     parseResponse: function (data) {
-        console.log(data);
-
-        if (typeof data.methods === 'undefined') {
-            return false;
+        if (typeof data.METADOR.runMethod !== 'undefined') {
+            $(data.METADOR.runMethod).each(function (index, params) {
+                  if(typeof window[params.class][params.method] === 'function'){
+                    window[params.class][params.method](params.argument);
+                }
+            });
         }
 
-        $(data.methods).each(function (index, params) {
-            if(typeof window[params.class][params.method] === 'function'){
-                window[params.class][params.method](params.argument);
-            }
-        });
+        return false;
     }
 };
 
