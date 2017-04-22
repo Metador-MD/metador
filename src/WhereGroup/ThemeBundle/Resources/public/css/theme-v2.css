@@ -1201,11 +1201,14 @@ html, body {
 .md .text-right {
   text-align: right; }
 
+.md .margin-b {
+  margin-bottom: 20px; }
+
 .md h1.title, .md h2.title, .md h3.title, .md h4.title, .md h5.title {
   color: #5e5e5e;
   font-weight: bold; }
 
-.md h1.title.dm, .md h2.title.dm, .md h3.title.dm, .md h4.title.dm, .md h5.title.dm {
+.md h1.title.dm, .md h1.title.no-m, .md h2.title.dm, .md h2.title.no-m, .md h3.title.dm, .md h3.title.no-m, .md h4.title.dm, .md h4.title.no-m, .md h5.title.dm, .md h5.title.no-m {
   margin: 0; }
 
 .md h1.title {

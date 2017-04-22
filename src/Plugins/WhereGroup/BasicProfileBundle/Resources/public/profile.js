@@ -22,7 +22,7 @@ MetadataForm.prototype = {
 
     disableSubmitButton: function() {
         this.setUserinput(false);
-        this.submitButton.prop('disabled', false).removeClass('success');
+        this.submitButton.prop('disabled', true).removeClass('success');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
@@ -59,11 +59,20 @@ $('form').ajaxForm({
         metadata.activateSubmitButton();
     },
     success: function(data) {
+        if (typeof data.metadata.id !== 'undefined') {
+            $('[name="p[_id]"]').val(data.metadata.id);
+        }
+
+        if (typeof data.metadata.uuid !== 'undefined') {
+            $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
+        }
+
         metador.parseResponse(data);
         metadata.disableSubmitButton();
     },
     error: function() {
-        // Todo: message?
+        metador.displayError($('#error-messages').attr('data-default'));
+        metadata.disableSubmitButton();
     }
 });
 

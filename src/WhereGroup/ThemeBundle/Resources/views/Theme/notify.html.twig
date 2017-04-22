@@ -1,3 +1,4 @@
+<div id="error-messages" data-default="{% trans %}Es ist ein unbekannter Fehler aufgetreten{% endtrans %}.">
 {% for type in ['error', 'warning', 'success', 'notice'] %}
     {% set messages = app.session.flashbag.get(type) %}
 
@@ -12,3 +13,4 @@
         </div>
     {% endif %}
 {% endfor %}
+</div>

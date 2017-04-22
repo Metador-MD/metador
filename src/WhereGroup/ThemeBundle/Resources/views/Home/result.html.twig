@@ -11,6 +11,7 @@
         </div>
         <div class="right">
             <div class="metadata-row-head clearfix">
+                {% if row.title is defined and row.title is not empty %}
                 <div class="title">
                     {% if app.user and is_granted('edit', row) %}
                     <a href="{{ path('metadata_edit', { 'profile' : row.profile, 'id' : row.id }) }}">
@@ -22,9 +23,12 @@
                         </a>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if row.object.alternateTitle is defined and row.object.alternateTitle is not empty %}
                 <div class="alternate-title">
                     {{ row.object.alternateTitle }}
                 </div>
+                {% endif %}
                 <div class="user-date" title="Zuletzt bearbeitet von {{ row.updateUser.username }} am {{ row.updateTime|date("d.m.Y") }} um {{ row.updateTime|date("H:i") }} Uhr">
                     <span class="icon-user"></span>
                 </div>

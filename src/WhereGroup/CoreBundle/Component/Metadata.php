@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Rhumsaa\Uuid\Uuid;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
@@ -160,6 +161,14 @@ class Metadata implements MetadataInterface
      */
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
+        if (empty($p['fileIdentifier'])) {
+            $uuid4 = Uuid::uuid4();
+            $p['fileIdentifier'] = $uuid4->toString();
+        }
+
+        $dateStamp = new \DateTime();
+        $p['dateStamp'] = $dateStamp->format('Y-m-d');
+
         $this->checkMandatoryFields($p);
 
         /** @var User $user */
@@ -197,6 +206,7 @@ class Metadata implements MetadataInterface
             $metadata->setPublic($public);
         }
 
+        $metadata->setLocked(true);
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($this->getTimestamp());
         $metadata->setUuid(isset($p['fileIdentifier']) ? $p['fileIdentifier'] : '');
@@ -221,7 +231,16 @@ class Metadata implements MetadataInterface
 
         $this->save($metadata);
 
-        $this->container->get('metador_logger')->flashSuccess('system', 'plugin', 'upload', 'source', 'identifier', (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.');
+        $this->container
+            ->get('metador_logger')
+            ->success(
+                'system',
+                'plugin',
+                'upload',
+                'source',
+                'identifier',
+                (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.'
+            );
         return $metadata;
     }
 

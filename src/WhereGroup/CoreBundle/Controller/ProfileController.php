@@ -78,6 +78,9 @@ class ProfileController extends Controller
     /**
      * @Route("/{source}/{profile}/new", name="metadata_new")
      * @Method("GET")
+     * @param $source
+     * @param $profile
+     * @return Response
      */
     public function newAction($source, $profile)
     {
@@ -103,25 +106,46 @@ class ProfileController extends Controller
         $request = $this->get('request_stack')->getCurrentRequest()->request;
         $p = $request->get('p');
 
-        if (isset($p['_id'])) {
-            $metadata = $this->get('metadata')->getById((int)$p['_id']);
+        $id = empty($p['_id']) ? false : (int)$p['_id'];
+        $uuid = false;
+
+        if ($id !== false) {
+            $metadata = $this->get('metadata')->getById($id);
             $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
         }
 
-        $response = array();
-
         if ($request->get('submit') === 'close') {
-            $response = array(
-                'METADOR' => array(
-                    'runMethod' => array(
-                        array(
-                            'class'    => 'metador',
-                            'method'   => 'redirect',
-                            'argument' => $this->generateUrl('metador_home')
-                        )
-                    )
-                )
+            $p['_remove_lock'] = true;
+        }
+
+        try {
+            $metadata = $this->get('metadata')->saveObject($p, $id);
+            $id = $metadata->getId();
+            $uuid = $metadata->getUuid();
+
+        } catch (MetadorException $e) {
+            $this->get('metador_logger')->error(
+                'metadata',
+                'profile',
+                'update',
+                'source',
+                $this->data['p']['uuid'],
+                $e->getMessage()
             );
+        }
+
+        $response = array(
+            'metadata' => array(
+                'id'   => $id,
+                'uuid' => $uuid
+            )
+        );
+
+        // Add redirect command to response
+        if ($request->get('submit') === 'close') {
+            $this
+                ->get('metador_frontend_command')
+                ->redirect($this->generateUrl('metador_home'), $response);
         }
 
         return new AjaxResponse($response);
@@ -156,42 +180,42 @@ class ProfileController extends Controller
         ));
     }
 
-    /**
-     * @Route("/{profile}/coupled/", name="metadata_coupled")
-     * @Method("GET")
-     */
-    public function coupledAction($profile)
-    {
-        $data = array();
-
-        $filter = new Finder();
-        $filter->hierarchyLevel = array('series', 'dataset');
-        $filter->profile = 'profile-dataset';
-
-        $title = $this->get('request_stack')->getCurrentRequest()->get('title');
-        if (!empty($title)) {
-            $filter->title = $title;
-        }
-        unset($title);
-
-        $metadata = $this->get('metadata')->find($filter);
-
-        /** @var Metadata $obj */
-        foreach ($metadata['result'] as $obj) {
-            $p = $obj->getObject();
-
-            if (isset($p['identifier'][0]['codespace']) && isset($p['identifier'][0]['code'])) {
-                $data[] = array(
-                    'title'     => $obj->getTitle(),
-                    'code'      => $p['identifier'][0]['code'],
-                    'codespace' => $p['identifier'][0]['codespace'],
-                    'uuid'      =>  $obj->getUuid()
-                );
-            }
-        }
-
-        return new JsonResponse($data);
-    }
+//    /**
+//     * @Route("/{profile}/coupled/", name="metadata_coupled")
+//     * @Method("GET")
+//     */
+//    public function coupledAction($profile)
+//    {
+//        $data = array();
+//
+//        $filter = new Finder();
+//        $filter->hierarchyLevel = array('series', 'dataset');
+//        $filter->profile = 'profile-dataset';
+//
+//        $title = $this->get('request_stack')->getCurrentRequest()->get('title');
+//        if (!empty($title)) {
+//            $filter->title = $title;
+//        }
+//        unset($title);
+//
+//        $metadata = $this->get('metadata')->find($filter);
+//
+//        /** @var Metadata $obj */
+//        foreach ($metadata['result'] as $obj) {
+//            $p = $obj->getObject();
+//
+//            if (isset($p['identifier'][0]['codespace']) && isset($p['identifier'][0]['code'])) {
+//                $data[] = array(
+//                    'title'     => $obj->getTitle(),
+//                    'code'      => $p['identifier'][0]['code'],
+//                    'codespace' => $p['identifier'][0]['codespace'],
+//                    'uuid'      =>  $obj->getUuid()
+//                );
+//            }
+//        }
+//
+//        return new JsonResponse($data);
+//    }
 
     /**
      * @Route("/{profile}/edit/{id}", name="metadata_edit")

@@ -2,6 +2,8 @@
 
 {% block center %}
 <form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
+    <input type="hidden" name="p[_id]" value="{% if p['metadataLanguage'] is defined and p['metadataLanguage'] is not empty %}{{ p['metadataLanguage'] }}{% endif %}" />
+    <input type="hidden" name="p[fileIdentifier]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
     <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
     <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
     <input type="hidden" name="p[hierarchyLevel]" value="service" />
@@ -20,13 +22,14 @@
                 <li data-mdtab="responsibleparty"><span>{% trans %}Zuständige{% endtrans %}</span></li>
             </ul>
             <div class="left-menu-content">
-                <button class="btn -js-metadata-button full" type="submit" name="submit" value="save" disabled>
+                <button class="btn margin-b -js-metadata-button full" type="submit" name="submit" value="save" disabled>
                     <span class="icon-download -js-metadata-button-status"></span> {% trans %}speichern{% endtrans %}
                 </button>
 
                 <button class="btn info full" type="submit" name="submit" value="close">
                     <span class="icon-checkmark"></span> {% trans %}freigeben{% endtrans %}
-                </button>            </div>
+                </button>
+            </div>
         </div>
         <div class="center-right">
             <div class="content">
