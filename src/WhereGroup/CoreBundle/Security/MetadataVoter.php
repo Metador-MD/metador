@@ -44,7 +44,6 @@ class MetadataVoter extends Voter
         if (!$subject instanceof Metadata) {
             return false;
         }
-
         return true;
     }
 
@@ -96,6 +95,16 @@ class MetadataVoter extends Voter
             return false;
         }
 
+        if ($entity->getLocked()) {
+            $lastUser = $entity->getUpdateUser();
+            $dateTime = new \DateTime();
+            $timeout = ($dateTime->getTimestamp() - $entity->getUpdateTime()) > (int)ini_get("session.gc_maxlifetime");
+
+            if (!$timeout && $lastUser->getId() !== $user->getId()) {
+                return false;
+            }
+        }
+
         // can edit if user is owner
         if ($entity->getInsertUser()->getId() === $user->getId()) {
             return true;
@@ -124,6 +133,8 @@ class MetadataVoter extends Voter
                 }
             }
         }
+
+        dump("test");
 
         return false;
     }

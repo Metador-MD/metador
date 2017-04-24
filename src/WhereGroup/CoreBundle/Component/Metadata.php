@@ -161,7 +161,7 @@ class Metadata implements MetadataInterface
      */
     public function saveObject($p, $id = false, $username = null, $public = false)
     {
-        if (empty($p['fileIdentifier'])) {
+        if (empty($p['fileIdentifier']) && strlen($p['fileIdentifier']) !== 36) {
             $uuid4 = Uuid::uuid4();
             $p['fileIdentifier'] = $uuid4->toString();
         }
@@ -174,7 +174,6 @@ class Metadata implements MetadataInterface
         /** @var User $user */
         $user     = $this->getUser($username);
         $metadata = $this->getObject($id, $p['fileIdentifier']);
-
 
         if ($id && $user->getId() == $metadata->getInsertUser()->getId()) {
             if (empty($p['_group_id'])) {
@@ -206,7 +205,7 @@ class Metadata implements MetadataInterface
             $metadata->setPublic($public);
         }
 
-        $metadata->setLocked(true);
+        $metadata->setLocked(isset($p['_remove_lock']) ? false : true);
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($this->getTimestamp());
         $metadata->setUuid(isset($p['fileIdentifier']) ? $p['fileIdentifier'] : '');
@@ -219,6 +218,7 @@ class Metadata implements MetadataInterface
         $metadata->setProfile($p['_profile']);
         $metadata->setPublic(isset($p['_public']) && $p['_public'] === '1' ? true : false);
         $metadata->setSearchfield($this->prepareSearchField($p));
+        $metadata->setSource($p['_source']);
         $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($this->findDate($p)));
 

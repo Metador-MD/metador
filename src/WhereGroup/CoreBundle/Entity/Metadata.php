@@ -52,8 +52,7 @@ class Metadata
     private $locked;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WhereGroup\CoreBundle\Entity\Source")
-     * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $source;
 
@@ -73,7 +72,7 @@ class Metadata
     private $hierarchyLevel;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $profile;
 

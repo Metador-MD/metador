@@ -1,0 +1,34 @@
+<div class="mdtab-content" data-mdtab-content="identification">
+    <h1 class="title">{% trans %}Identifizierung{% endtrans %}</h1>
+
+    <div class="grid space responsive">
+        <div class="row r-1">
+            <div class="col c-1">
+                <h2 class="title no-m">{% trans %}Bezeichner{% endtrans %}</h2>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'identifierCode', '', 'Code', 'mandatory') }}
+            </div>
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'identifierCodespace', '', 'Namensraum', 'optional') }}
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ profileForm.input(p, 'title', '', 'Titel', 'mandatory') }}
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ profileForm.input(p, 'alternateTitle', '', 'Alternativtitel', 'optional') }}
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ profileForm.text(p, 'abstract', '', 'Kurzbeschreibung', 'mandatory') }}
+            </div>
+        </div>
+    </div>
+</div>

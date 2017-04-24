@@ -1,0 +1,33 @@
+<div class="mdtab-content act" data-mdtab-content="metadata">
+    <h1 class="title">{% trans %}Metadaten{% endtrans %}</h1>
+
+    <div class="grid space responsive">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                {{ profileForm.select(p, 'metadataLanguage', 'ger', {
+                    'ger': 'Deutsch',
+                    'eng': 'Englisch'
+                }, 'Sprache der Metadaten', 'mandatory') }}
+            </div>
+            <div class="col c-1-2"></div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <h2 class="title">{% trans %}Angaben zur Metadatenspezifikation{% endtrans %}</h2>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'metadataStandardName', 'ISO 19119', 'Spezifikation', 'mandatory') }}
+            </div>
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'metadataStandardVersion', '2005/PDAM 1', 'Version', 'mandatory') }}
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ profileForm.input(p, 'browserGraphic', '', 'Browser Bild', 'optional') }}
+            </div>
+        </div>
+    </div>
+</div>

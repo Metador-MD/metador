@@ -13,15 +13,15 @@
             <div class="metadata-row-head clearfix">
                 {% if row.title is defined and row.title is not empty %}
                 <div class="title">
-                    {% if app.user and is_granted('edit', row) %}
-                    <a href="{{ path('metadata_edit', { 'profile' : row.profile, 'id' : row.id }) }}">
+                    <a href="{{ path('metadata_edit', { 'source': row.source,'profile' : row.profile, 'id' : row.id }) }}">
                         {{ row.title|teaser(75, true) }}
                     </a>
-                    {% else %}
-                        <a href="{{ path('metador_export_html', { 'id' : row.id }) }}">
-                            {{ row.title|teaser(75, true) }}
-                        </a>
-                    {% endif %}
+                    {#{% if app.user and is_granted('edit', row) %}#}
+                    {#{% else %}#}
+                        {#<a href="{{ path('metador_export_html', { 'id' : row.id }) }}">#}
+                            {#{{ row.title|teaser(75, true) }}#}
+                        {#</a>#}
+                    {#{% endif %}#}
                 </div>
                 {% endif %}
                 {% if row.object.alternateTitle is defined and row.object.alternateTitle is not empty %}

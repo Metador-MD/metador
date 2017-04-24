@@ -91,8 +91,33 @@ class ProfileController extends Controller
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
         return new Response($this->get('metador_core')->render($template, array(
-            'metadataSource'  => $source,
-            'metadataProfil'  => $profile
+            'metadataSource' => $source,
+            'metadataProfil' => $profile,
+            'p'              => array()
+        )));
+    }
+
+    /**
+     * @Route("/{source}/{profile}/edit/{id}", name="metadata_edit")
+     * @Method("GET")
+     */
+    public function editAction($source, $profile, $id)
+    {
+        $metadata = $this->get('metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted('view', $metadata);
+
+        $template = $this
+                ->get('metador_plugin')
+                ->getPluginClassName($profile) . ':Profile:form.html.twig';
+
+        // Todo: hasGroups
+
+        return new Response($this->get('metador_core')->render($template, array(
+            'metadataSource' => $source,
+            'metadataProfil' => $profile,
+            'metadata'       => $metadata,
+            'p'              => $metadata->getObject()
         )));
     }
 
@@ -216,21 +241,6 @@ class ProfileController extends Controller
 //
 //        return new JsonResponse($data);
 //    }
-
-    /**
-     * @Route("/{profile}/edit/{id}", name="metadata_edit")
-     * @Method("GET")
-     */
-    public function editAction($profile, $id)
-    {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        $this->init($profile);
-
-        return $this->renderResponse($profile, 'form', $metadata);
-    }
 
     /**
      * @Route("/{profile}/update/{id}", name="metadata_update")
