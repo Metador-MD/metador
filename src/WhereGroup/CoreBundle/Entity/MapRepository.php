@@ -1,12 +1,12 @@
 <?php
 
-namespace WhereGroup\ThemeBundle\Entity;
+namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Class MapRepository
- * @package WhereGroup\ThemeBundle\Entity
+ * @package WhereGroup\CoreBundle\Entity
  */
 class MapRepository extends EntityRepository
 {
@@ -28,7 +28,7 @@ class MapRepository extends EntityRepository
      */
     public function remove($entity)
     {
-        foreach ($entity->getWmslist() as $wms) {
+        foreach ($entity->getWms() as $wms) {
             $this->getEntityManager()->getRepository(get_class($wms))->remove($wms);
         }
         $this->getEntityManager()->remove($entity);
