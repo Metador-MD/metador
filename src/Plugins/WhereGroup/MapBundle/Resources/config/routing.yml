@@ -1,0 +1,4 @@
+metador_map:
+    resource: "@MetadorMapBundle/Controller/"
+    type:     annotation
+    prefix:   /

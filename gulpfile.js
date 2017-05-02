@@ -29,7 +29,6 @@ const gulp      = require('gulp'),
 var tsProject   = ts.createProject('tsconfig.json');
 var tsconf = {
     files  : 'src/**/ts/*.ts',
-    dest   : '/../public/js/',
     entries: ['src/WhereGroup/ThemeBundle/Resources/ts/app.ts'],
     target: {
         dir: 'web/public/',

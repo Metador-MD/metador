@@ -1,0 +1,32 @@
+map:
+    origin: WhereGroup
+    name: Map
+    description: Kartenkomponente
+    class_path: Plugins\WhereGroup\MapBundle
+    class_name: MetadorMapBundle
+    version: '1.0'
+    settings:
+        crs:
+            type: choice
+            label: CRS default
+            default: 'EPSG:4326'
+            description: Liste der unterstützten Koordinatenreferenzsystemen
+            options:
+                'EPSG:4326': 'EPSG:4326'
+                'EPSG:4258': 'EPSG:4258'
+                'EPSG:31466': 'EPSG:31466'
+                'EPSG:31467': 'EPSG:31467'
+                'EPSG:31468': 'EPSG:31468'
+                'EPSG:31469': 'EPSG:31469'
+                'EPSG:25832': 'EPSG:25832'
+                'EPSG:25833': 'EPSG:25833'
+        bbox_start:
+            type: string
+            label: BBOX start extend
+            default: 'test'
+            description: asdf
+        bbox_max:
+            type: string
+            label: BBOX max extend
+            default: 'test'
+            description: asdf
