@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Entity;
+namespace WhereGroup\MapBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Description of Map
  *
  * @author Paul Schmidt<panadium@gmx.de>
- * @ORM\Table(name="map")
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="WhereGroup\CoreBundle\Entity\MapRepository")
+ * @ ORM\Table(name="map")
+ * @ ORM\Entity
+ * @ ORM\Entity(repositoryClass="WhereGroup\MapBundle\Entity\MapRepository")
  */
 class Map
 {

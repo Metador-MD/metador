@@ -72,13 +72,6 @@ class Wms
     protected $opacity = true;
 
     /**
-     * @var \WhereGroup\CoreBundle\Entity\Map $map a map
-     * @ORM\ManyToOne(targetEntity="Map", inversedBy="wmslist", cascade={"refresh"})
-     * @ORM\JoinColumn(name="wmslist", referencedColumnName="id")
-     */
-    protected $map;
-
-    /**
      * @var integer $priority a priority value
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -283,28 +276,5 @@ class Wms
     public function getPriority()
     {
         return $this->priority;
-    }
-
-    /**
-     * Set map
-     *
-     * @param \WhereGroup\CoreBundle\Entity\Map $map
-     * @return Wms
-     */
-    public function setMap(\WhereGroup\CoreBundle\Entity\Map $map = null)
-    {
-        $this->map = $map;
-
-        return $this;
-    }
-
-    /**
-     * Get map
-     *
-     * @return \WhereGroup\CoreBundle\Entity\Map 
-     */
-    public function getMap()
-    {
-        return $this->map;
     }
 }
