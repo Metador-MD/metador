@@ -52,9 +52,10 @@ class ConfigurationRepository extends EntityRepository
      * @param $key
      * @param $filterType
      * @param $filterValue
+     * @param null $default
      * @return mixed
      */
-    public function get($key, $filterType, $filterValue)
+    public function get($key, $filterType, $filterValue, $default = null)
     {
         try {
             return $this->getEntityManager()->createQuery(
@@ -66,7 +67,7 @@ class ConfigurationRepository extends EntityRepository
                 ->setParameter('filterValue', $filterValue)
                 ->getSingleResult();
         } catch (NoResultException $e) {
-            return null;
+            return $default;
         }
     }
 
@@ -110,10 +111,8 @@ class ConfigurationRepository extends EntityRepository
                 ->getSingleScalarResult();
 
         } catch (NoResultException $e) {
-
+            return $default;
         }
-
-        return $default;
     }
 
     /**

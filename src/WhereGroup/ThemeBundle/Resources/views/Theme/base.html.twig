@@ -22,7 +22,7 @@
                 'basedir': '{{ BASEDIR }}',
                 'maxlifetime': '{% if app.user %}{{ session_maxlifetime() }}{% else %}0{% endif %}',
                 'parameters': {
-                    {% for key, value in applicationGet('app-configuration') %}
+                    {% for key, value in get_configuration() %}
                     '{{ key }}': '{{ value }}'{% if not loop.last %},{% endif %}
                     {% endfor %}
                 }

@@ -134,6 +134,22 @@ class Plugin
     /**
      * @return array
      */
+    public function getActivePlugins()
+    {
+        $result = array();
+
+        foreach ($this->plugins as $key => $plugin) {
+            if (isset($plugin['active']) && $plugin['active']) {
+                $result[$key] = $plugin;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
     public function getActiveProfiles()
     {
         $result = array();

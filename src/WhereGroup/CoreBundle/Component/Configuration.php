@@ -44,11 +44,12 @@ class Configuration implements ConfigurationInterface
      * @param $key
      * @param null $filterType
      * @param null $filterValue
+     * @param null $default
      * @return mixed
      */
-    public function get($key, $filterType = null, $filterValue = null)
+    public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
-        return $this->repo->get($key, $filterType, $filterValue);
+        return $this->repo->get($key, $filterType, $filterValue, $default);
     }
 
     /**

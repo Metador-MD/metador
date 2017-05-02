@@ -6,7 +6,8 @@ map:
     class_name: MetadorMapBundle
     version: '1.0'
     settings:
-        crs:
+        map_crs:
+            frontend: true
             type: choice
             label: CRS default
             default: 'EPSG:4326'
@@ -20,12 +21,14 @@ map:
                 'EPSG:31469': 'EPSG:31469'
                 'EPSG:25832': 'EPSG:25832'
                 'EPSG:25833': 'EPSG:25833'
-        bbox_start:
+        map_bbox_start:
+            frontend: true
             type: string
             label: BBOX start extend
             default: 'test'
             description: asdf
-        bbox_max:
+        map_bbox_max:
+            frontend: true
             type: string
             label: BBOX max extend
             default: 'test'

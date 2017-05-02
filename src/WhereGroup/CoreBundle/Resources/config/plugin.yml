@@ -4,6 +4,7 @@ metador-core:
     name: Hauptanwendung
     settings:
         session-timeout-popup:
+            frontend: true
             default: 60
             placeholder: 60
             type: string
