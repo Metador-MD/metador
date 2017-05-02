@@ -2,6 +2,7 @@ $('.-js-toggle-map').on('click', function() {
     $(this).toggleClass('active');
     $('.-js-map-dialog').show();
     $('.-js-home').toggleClass('map-enabled');
+    Window.metador.metadorMap.updateMap();
 });
 
 $('.-js-source').on('click', function() {

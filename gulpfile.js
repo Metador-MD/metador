@@ -27,7 +27,15 @@ const gulp      = require('gulp'),
     source = require('vinyl-source-stream');
 
 var tsProject   = ts.createProject('tsconfig.json');
-
+var tsconf = {
+    files  : 'src/**/ts/*.ts',
+    dest   : '/../public/js/',
+    entries: ['src/WhereGroup/ThemeBundle/Resources/ts/app.ts'],
+    target: {
+        dir: 'web/public/',
+        file: 'metador.js'
+    }
+};
 var conf = {
     assets: {
         js: [
@@ -47,7 +55,10 @@ var conf = {
         filename: 'app.min'
     },
     watch: {
-        files: 'src/**/*.{php,twig,js,css}'
+        files: [
+            'src/**/*.{php,twig,js,css}',
+            tsconf.target.dir + tsconf.target.file
+        ]
     },
     clean: {
         folders: ['web/public', 'web/assets/vendor', 'var/cache', 'vendor']
@@ -60,15 +71,7 @@ var conf = {
             includePaths : [] //'src/WhereGroup/ThemeBundle/Resources/styleguide'
         }
     },
-    ts: {
-        files  : 'src/**/ts/*.ts',
-        dest   : '/../public/js/',
-        entries: ['src/WhereGroup/ThemeBundle/Resources/ts/app.ts'],
-        target: {
-            dir: 'web/public',
-            file: 'metador.js'
-        }
-    }
+    ts: tsconf
 }
 
 gulp.task('clean', () => {
