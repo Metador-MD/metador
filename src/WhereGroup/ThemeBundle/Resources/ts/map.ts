@@ -14,9 +14,11 @@ export class Ol4Utils {
         let inchesPerMeter = 39.37;
         return mpu * inchesPerMeter * dpi;
     }
+
     public static resolutionForScale(scale: number, factor: number): number {
         return scale / factor;
     }
+
     public static resolutionsForScales(scales: number[], units: string): number[] {
         let resolutions = [];
         let factor = Ol4Utils.resolutionScaleFactor(units);
@@ -25,9 +27,11 @@ export class Ol4Utils {
         }
         return resolutions;
     }
+
     public static scaleForResolution(resolution: number, factor: number): number {
         return resolution * factor;
     }
+
     public static scalesForResolutions(resolutions: number[], units: string): number[] {
         let scales = [];
         let factor = Ol4Utils.resolutionScaleFactor(units);
@@ -36,12 +40,13 @@ export class Ol4Utils {
         }
         return scales;
     }
+
     public static initProj4Defs(proj4Defs: any): void {
         for (const name in proj4Defs) {
             proj4.defs(name, proj4Defs[name]);
         }
     }
-    
+
     public static getProj(projCode: string): ol.proj.Projection {
         return ol.proj.get(projCode);
     }
@@ -114,8 +119,8 @@ export class Ol4Map {
             }
         }
         this.olMap.addControl(new ol.control.ScaleLine());
-        
-        this.olMap.addControl(new ol.control.ZoomToExtent( {
+
+        this.olMap.addControl(new ol.control.ZoomToExtent({
             extent: this.maxExtent.getExtent(proj)
         }));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
@@ -128,8 +133,8 @@ export class Ol4Map {
         return Ol4Map._instance;
     }
 
-    getMap(): ol.Map {
-        return this.olMap;
+    updateMap(): void {
+        this.olMap.updateSize();
     }
 
     addWmsSource(options: any, proj: ol.proj.Projection): void {
