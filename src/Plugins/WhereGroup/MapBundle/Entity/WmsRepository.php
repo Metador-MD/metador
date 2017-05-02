@@ -1,12 +1,12 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Entity;
+namespace Plugins\WhereGroup\MapBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Class WmsRepository
- * @package WhereGroup\CoreBundle\Entity
+ * @package Plugins\WhereGroup\MapBundle\Entity
  */
 class WmsRepository extends EntityRepository
 {

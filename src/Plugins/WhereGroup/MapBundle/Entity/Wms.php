@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Entity;
+namespace Plugins\WhereGroup\MapBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Paul Schmidt<panadium@gmx.de>
  * @ORM\Table(name="wms")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="WhereGroup\ThemeBundle\Entity\WmsRepository")
+ * @ORM\Entity(repositoryClass="Plugins\WhereGroup\MapBundle\Entity\WmsRepository")
  */
 class Wms
 {
@@ -54,10 +54,22 @@ class Wms
     protected $format;
 
     /**
-     * @var array $formatList a list of supported image formats
-     * @ORM\Column(type="string", nullable=false)
+     * @var array $formats a list of supported image formats
+     * @ORM\Column(type="array", nullable=false)
      */
-    protected $formatList = array();
+    protected $formats = array();
+
+    /**
+     * @var string $layers a csv of selected layers
+     * @ORM\Column(type="array", nullable=false)
+     */
+    protected $layers;
+
+    /**
+     * @var array $layerList all available layers
+     * @ORM\Column(type="array", nullable=false)
+     */
+    protected $layerList = array();
 
     /**
      * @var string $version a WMS version
@@ -79,7 +91,8 @@ class Wms
 
     public function __construct()
     {
-        $this->formatList = array();
+        $this->formats = array();
+        $this->layerList = array();
         $this->opacity = 1;
         $this->proority = 0;
     }
@@ -210,6 +223,65 @@ class Wms
     }
 
     /**
+     * Set layers
+     *
+     * @param string $layers
+     * @return Wms
+     */
+    public function setLayers($layers)
+    {
+        $this->layers = $layers;
+
+        return $this;
+    }
+
+    /**
+     * Get layers
+     *
+     * @return string 
+     */
+    public function getLayers()
+    {
+        return $this->layers;
+    }
+
+    /**
+     * Set layerList
+     *
+     * @param array $layerList
+     * @return Wms
+     */
+    public function setLayerList($layerList)
+    {
+        $this->layerList = $layerList;
+
+        return $this;
+    }
+
+    /**
+     * Add to layerList
+     *
+     * @param string $layer
+     * @return Wms
+     */
+    public function addToLayerList($layer)
+    {
+        $this->layerList[] = $layer;
+
+        return $this;
+    }
+
+    /**
+     * Get layerList
+     *
+     * @return array 
+     */
+    public function getLayerList()
+    {
+        return $this->layerList;
+    }
+
+    /**
      * Set version
      *
      * @param string $version
@@ -276,5 +348,40 @@ class Wms
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * Set formats
+     *
+     * @param array $formats
+     * @return Wms
+     */
+    public function setFormats($formats)
+    {
+        $this->formats = $formats;
+
+        return $this;
+    }
+
+    /**
+     * Get formats
+     *
+     * @return array 
+     */
+    public function getFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
+     * Get formats
+     *
+     * @return array
+     */
+    public function addFormat($format)
+    {
+        $this->formats[] = $format;
+
+        return $this;
     }
 }
