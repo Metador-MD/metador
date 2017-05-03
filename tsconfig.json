@@ -8,11 +8,15 @@
         "declaration": false,
         "noImplicitAny": false,
         "typeRoots": [
-            "./typings"
+            "./typings/"
+        ],
+        "types": [
+            "ol"
         ]
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "typings/*.d.ts"
     ],
     "exclude": [
         "app",
