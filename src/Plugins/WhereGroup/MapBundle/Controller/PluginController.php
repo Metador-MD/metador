@@ -58,6 +58,36 @@ class PluginController extends Controller
         );
     }
 
+
+
+    /**
+     * @Route("map/updatewms/{id}", name="map_wms_update")
+     * @Method({"GET", "POST"})
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateWmsAction($id)
+    {
+        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $form = $this
+            ->createForm(WmsNewType::class, $this->get('map_wms')->get($id))
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
+//           TODO check: entity exists?
+            $this->get('map_wms')->save($entity);
+//            $this->setFlashSuccess(
+//                'edit',
+//                $entity->getId(),
+//                'Wms %wms% erfolgreich erstellt.',
+//                array('%wms%' => $entity->getName())
+//            );
+            return $this->redirectToRoute('map_wms_index');
+        }
+        return array(
+            'form' => $form->createView()
+        );
+    }
+
     /**
      * @Route("map/editwms/{id}", name="map_wms_edit")
      * @Method({"GET", "POST"})
