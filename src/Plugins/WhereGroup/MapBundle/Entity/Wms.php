@@ -225,7 +225,7 @@ class Wms
     /**
      * Set layers
      *
-     * @param string $layers
+     * @param array $layers
      * @return Wms
      */
     public function setLayers($layers)
@@ -238,7 +238,7 @@ class Wms
     /**
      * Get layers
      *
-     * @return string 
+     * @return array
      */
     public function getLayers()
     {

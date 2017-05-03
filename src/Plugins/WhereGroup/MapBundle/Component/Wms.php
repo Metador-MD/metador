@@ -11,7 +11,7 @@ use Plugins\WhereGroup\MapBundle\Entity\Wms as WmsEntity;
  */
 class Wms implements WmsInterface
 {
-    /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository  */
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository */
     protected $repo = null;
 
     const ENTITY = "MetadorMapBundle:Wms";
@@ -73,11 +73,12 @@ class Wms implements WmsInterface
      * @param WmsEntity $wms wms eintity to update from given url
      * @return WmsEntity
      */
-    public function update($url, WmsEntity $wms)
+    public function update($url, WmsEntity &$wms)
     {
         $url_ = Wms::getValidGcUrl($url);
         $doc = WmsCapabilitiesParser::createDocument($this->getContent($url_));
         $parser = WmsCapabilitiesParser::getParser($doc);
+
         return $parser->parse($wms);
     }
 
@@ -91,8 +92,9 @@ class Wms implements WmsInterface
     {
         $content = @file_get_contents($url);
         if ($content === false) {
-            throw new \Exception('Kein Content von ' . $url);
+            throw new \Exception('Kein Content von '.$url);
         }
+
         return $content;
     }
 
@@ -133,14 +135,32 @@ class Wms implements WmsInterface
             $pos = strpos($url, '?');
             $query = http_build_query($getParams);
             if ($pos === false) {
-                $urlNew = $url . '?' . $query;
+                $urlNew = $url.'?'.$query;
             } else {
-                $urlNew = substr($url, 0, $pos + 1) . $query;
+                $urlNew = substr($url, 0, $pos + 1).$query;
             }
+
             return $urlNew;
         } else {
             return null;
         }
     }
 
+    /**
+     * Returns a OpanLayers 4 representation for a given wms.
+     * @param WmsEntity $wms
+     * @return array
+     */
+    public function toOl4(WmsEntity $wms)
+    {
+        return array(
+            'type' => $wms::$type,
+            'url' => $wms->$this->getGmUrl(),
+            'params' => array(
+                'LAYERS' => implode(',', $wms->getLayers()),
+                'VERSION' => $wms->getVersion(),
+                'FORMAT' => $wms->getFormat(),
+            ),
+        );
+    }
 }

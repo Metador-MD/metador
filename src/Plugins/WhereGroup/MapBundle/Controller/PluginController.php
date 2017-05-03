@@ -26,7 +26,7 @@ class PluginController extends Controller
         $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
 
         return array(
-            'sources' => $this->get('map_wms')->all()
+            'sources' => $this->get('map_wms')->all(),
         );
     }
 
@@ -43,21 +43,25 @@ class PluginController extends Controller
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-//           TODO check: entity exists?
-            $this->get('map_wms')->save($entity);
+            try {
+                $this->get('map_wms')->update($entity->getGcUrl(), $entity);
+                $this->get('map_wms')->save($entity);
 //            $this->setFlashSuccess(
 //                'edit',
 //                $entity->getId(),
 //                'Wms %wms% erfolgreich erstellt.',
 //                array('%wms%' => $entity->getName())
 //            );
-            return $this->redirectToRoute('map_wms_index');
+                return $this->redirectToRoute('map_wms_index');
+            } catch (\Exception $e) {
+//                TODO flash error
+            }
         }
+
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
-
 
 
     /**
@@ -73,18 +77,23 @@ class PluginController extends Controller
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-//           TODO check: entity exists?
-            $this->get('map_wms')->save($entity);
+            try {
+                $this->get('map_wms')->update($entity->getGcUrl(), $entity);
+                $this->get('map_wms')->save($entity);
 //            $this->setFlashSuccess(
 //                'edit',
 //                $entity->getId(),
 //                'Wms %wms% erfolgreich erstellt.',
 //                array('%wms%' => $entity->getName())
 //            );
-            return $this->redirectToRoute('map_wms_index');
+                return $this->redirectToRoute('map_wms_index');
+            } catch (\Exception $e) {
+//                TODO flash error
+            }
         }
+
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
@@ -111,8 +120,9 @@ class PluginController extends Controller
 //            );
             return $this->redirectToRoute('map_wms_index');
         }
+
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
@@ -128,15 +138,15 @@ class PluginController extends Controller
 
         $form = $this->createFormBuilder($this->get('map_wms')->get($id))
             ->add('delete', 'submit', array(
-                'label' => 'löschen'
+                'label' => 'löschen',
             ))
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $name   = $entity->getTitle();
-            $id     = $entity->getId();
+            $name = $entity->getTitle();
+            $id = $entity->getId();
 
             $this->get('metador_source')->remove($entity);
 
@@ -151,11 +161,39 @@ class PluginController extends Controller
         }
 
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
+    /**
+     * @return Response
+     * @Route("map/getwms", name="map_wms_getwms")
+     * @Method({"GET", "POST"})
+     */
+    public function getWmsAction()
+    {
+//        TODO checkAuthorizationFor for a start site user
+//        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $form = $this
+            ->createForm(WmsNewType::class, new Wms())
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
+            try {
+                $this->get('map_wms')->update($entity->getGcUrl(), $entity);
 
+                return new JsonResponse(
+                    $this->get('map_wms')->toOl4($entity)
+                );
+            } catch (\Exception $e) {
+//                TODO flash error
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 
     /**
      * @return Response
@@ -168,6 +206,7 @@ class PluginController extends Controller
         $url = 'http://osm-demo.wheregroup.com/service?';
         $wms = $this->get('map_wms')->update($url, new Wms());
         $response = new Response();
+
         return $response;
     }
 }
