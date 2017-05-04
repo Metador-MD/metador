@@ -114,6 +114,7 @@ class Plugin
     }
 
     /**
+     * @param null $groupBy
      * @return array
      */
     public function getPlugins($groupBy = null)
@@ -137,8 +138,10 @@ class Plugin
     public function getActivePlugins()
     {
         $result = array();
+        $plugins = $this->plugins;
+        $core = Yaml::parse(__DIR__ . '/../../CoreBundle/Resources/config/plugin.yml');
 
-        foreach ($this->plugins as $key => $plugin) {
+        foreach (array_merge_recursive($core, $plugins) as $key => $plugin) {
             if (isset($plugin['active']) && $plugin['active']) {
                 $result[$key] = $plugin;
             }

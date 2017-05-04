@@ -20,14 +20,16 @@ Metador.prototype = {
     },
 
     displayError: function (message) {
-        var dialog = $('#error-messages');
-
-        dialog.append(
+        $('#error-messages').append(
             $('<div></div>')
                 .addClass('notify error')
                 .append($('<div></div>').addClass('close icon-cross -js-close-notify'))
                 .append($('<ul></ul>').append($('<li></li>').text(message)))
         )
+    },
+
+    changeLocation: function (url) {
+        window.history.pushState("", null, url);
     }
 };
 

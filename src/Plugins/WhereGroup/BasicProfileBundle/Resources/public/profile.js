@@ -82,8 +82,6 @@ window.onbeforeunload = function () {
     }
 };
 
-
-
 // Ajax form submit
 $('form').ajaxForm({
     target: '#metadata-form',
