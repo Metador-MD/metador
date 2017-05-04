@@ -2,8 +2,9 @@ metador-core:
     origin: WhereGroup
     type: system
     name: Hauptanwendung
+    active: true
     settings:
-        session-timeout-popup:
+        session_timeout_popup:
             frontend: true
             default: 60
             placeholder: 60
