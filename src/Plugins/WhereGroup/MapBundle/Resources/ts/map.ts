@@ -1,4 +1,3 @@
-/// <reference path="../../../../../typings/ol.d.ts"/> // for only NetBeans
 
 declare class proj4 {
     static defs(name: string, def: string): void;
