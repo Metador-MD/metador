@@ -3,13 +3,12 @@
     {% set value = p[key] is defined ? p[key] : defaultValue %}
 
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2">
-        <span class="form-icon-type icon-{{ type }} rs left"></span>
-        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input"/>
+    <div class="form-field-wrapper i2 -js-validation-wrapper">
+        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
+        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input" {{ id|md_data_obj }} />
         <span class="form-icon icon-question2 right -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endmacro %}
-
 
 {% macro select(p, key, defaultValue, options, label, type) %}
     {% set id = 'p[' ~ key ~ ']' %}
@@ -18,7 +17,7 @@
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
     <div class="form-field-wrapper i2">
         <span class="form-icon-type icon-{{ type }} rs left"></span>
-        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input">
+        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input" {{ id|md_data_obj }}>
             {% for optionValue, optionLabel in options  %}
                 <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
             {% endfor %}
@@ -34,7 +33,7 @@
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
     <div class="form-field-wrapper i2">
         <span class="form-icon-type icon-{{ type }} rs left"></span>
-        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input">{{ value }}</textarea>
+        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }}>{{ value }}</textarea>
         <span class="form-icon icon-question2 right -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endmacro %}

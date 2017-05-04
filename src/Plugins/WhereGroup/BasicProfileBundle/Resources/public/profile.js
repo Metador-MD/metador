@@ -36,6 +36,36 @@ MetadataForm.prototype = {
         $('[data-mdtab]').removeClass('act');
         $('[data-mdtab-content="' + id + '"]').addClass('act');
         $('[data-mdtab="' + id + '"]').addClass('act');
+    },
+
+    validate: function(item) {
+        var key = $(item).attr('data-obj-id');
+        var wrapper = $(item).closest('.-js-validation-wrapper');
+        var statusIcon = wrapper.find('.-js-validation-icon');
+        var defaultIcon = statusIcon.attr('data-validation-icon');
+        var valid = true;
+
+        jQuery.each(validation[key], function(index, value) {
+            var string = $(item).val();
+
+            if (string.match(new RegExp(value.regex, "i"))) {
+                wrapper.removeClass('error');
+                statusIcon
+                    .removeClass('icon-exclamation')
+                    .addClass(defaultIcon)
+                    .attr('title', '');
+            } else {
+                wrapper.addClass('error');
+                statusIcon
+                    .addClass('icon-exclamation')
+                    .removeClass(defaultIcon)
+                    .attr('title', value.message);
+                valid = false;
+                return false;
+            }
+        });
+
+        return valid;
     }
 };
 
@@ -43,6 +73,7 @@ var metadata = new MetadataForm();
 
 $(".-js-user-input").change(function() {
     metadata.enableSubmitButton();
+    metadata.validate(this);
 });
 
 window.onbeforeunload = function () {
@@ -51,11 +82,25 @@ window.onbeforeunload = function () {
     }
 };
 
+
+
 // Ajax form submit
 $('form').ajaxForm({
     target: '#metadata-form',
     dataType: 'json',
     beforeSubmit: function() {
+        var valid = true;
+
+        $(".-js-user-input").each(function () {
+            if (!metadata.validate(this)) {
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            return false;
+        }
+
         metadata.activateSubmitButton();
     },
     success: function(data) {

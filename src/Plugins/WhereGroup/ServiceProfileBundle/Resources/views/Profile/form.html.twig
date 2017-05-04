@@ -58,5 +58,8 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script>
+        var validation = {{ read_validation_rules(metadataProfil) }};
+    </script>
     <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
 {% endblock %}

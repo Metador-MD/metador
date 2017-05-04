@@ -1,0 +1,26 @@
+{
+    "p_title": [
+        {
+            "regex": "^.+$",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_metadatastandardname": [
+        {
+            "regex": "^.+$",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_metadatastandardversion": [
+        {
+            "regex": "^.+$",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_browsergraphic": [
+        {
+            "regex": "^((https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?|)$",
+            "message": "Eingabe ist keine gültige URL"
+        }
+    ]
+}
