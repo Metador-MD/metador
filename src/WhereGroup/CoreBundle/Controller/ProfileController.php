@@ -131,7 +131,7 @@ class ProfileController extends Controller
         $request = $this->get('request_stack')->getCurrentRequest()->request;
         $p = $request->get('p');
 
-        $id = empty($p['_id']) ? false : (int)$p['_id'];
+        $id = empty($p['_id']) || !is_numeric($p['_id']) ? false : (int)$p['_id'];
         $uuid = false;
 
         if ($id !== false) {
