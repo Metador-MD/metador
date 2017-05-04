@@ -35,14 +35,6 @@ class ConfigurationExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'configuration_extension';
-    }
-
-    /**
      * @return null
      */
     public function getConfiguration()

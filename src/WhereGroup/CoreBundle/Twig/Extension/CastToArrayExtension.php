@@ -19,14 +19,6 @@ class CastToArrayExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cast_to_array_extension';
-    }
-
-    /**
      * @param $var
      * @return array
      */

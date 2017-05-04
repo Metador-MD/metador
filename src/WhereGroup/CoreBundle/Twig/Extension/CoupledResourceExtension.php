@@ -36,14 +36,6 @@ class CoupledResourceExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function getName()
-    {
-        return 'coupled_resource_extension';
-    }
-
-    /**
-     * @return string
-     */
     public function operatesOn($uuid, $coupledResource)
     {
         $coupledResource = $coupledResource['codespace'] . $coupledResource['code'];

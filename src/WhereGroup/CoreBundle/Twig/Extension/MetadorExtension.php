@@ -31,14 +31,6 @@ class MetadorExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'metador_extension';
-    }
-
-    /**
      * @param $string
      * @return string
      */

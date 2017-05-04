@@ -23,14 +23,6 @@ class UuidExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function getName()
-    {
-        return 'uuid_extension';
-    }
-
-    /**
-     * @return string
-     */
     public function uuid()
     {
         $uuid4 = Uuid::uuid4();

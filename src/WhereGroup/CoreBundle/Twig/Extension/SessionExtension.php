@@ -23,14 +23,6 @@ class SessionExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function getName()
-    {
-        return 'session_extension';
-    }
-
-    /**
-     * @return string
-     */
     public function maxlifetime()
     {
         return ini_get("session.gc_maxlifetime");

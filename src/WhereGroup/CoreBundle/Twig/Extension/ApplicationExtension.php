@@ -32,14 +32,6 @@ class ApplicationExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'application_extension';
-    }
-
-    /**
      * @param $type
      * @param null $key
      * @param null $default

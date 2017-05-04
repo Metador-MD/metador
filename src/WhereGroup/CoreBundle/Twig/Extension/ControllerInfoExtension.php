@@ -34,14 +34,6 @@ class ControllerInfoExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'controller_info_extension';
-    }
-
-    /**
      * @return null
      */
     public function getControllerName()

@@ -20,14 +20,6 @@ class TeaserExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'teaser';
-    }
-
-    /**
      * @param $string
      * @param int $maxLen
      * @param bool $force

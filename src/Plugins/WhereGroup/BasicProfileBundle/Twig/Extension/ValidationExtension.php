@@ -38,7 +38,7 @@ class ValidationExtension extends \Twig_Extension
             )
         );
     }
-    
+
     /**
      * @param $profile
      * @return string

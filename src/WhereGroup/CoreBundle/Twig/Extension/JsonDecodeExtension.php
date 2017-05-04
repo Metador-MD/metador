@@ -19,14 +19,6 @@ class JsonDecodeExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'json_decode_extension';
-    }
-
-    /**
      * @param $var
      * @return array
      */
