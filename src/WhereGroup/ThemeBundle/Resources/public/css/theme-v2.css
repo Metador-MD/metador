@@ -1709,6 +1709,10 @@ html, body {
   height: 30px;
   line-height: 30px; }
 
+.md .left-menu > li .error-count {
+  float: right;
+  color: #e15b36; }
+
 .md .left-menu > li > a {
   display: block;
   text-decoration: none;
@@ -1722,6 +1726,9 @@ html, body {
 .md .left-menu > li:hover {
   color: #000;
   background-color: #eaeaea; }
+
+.md .left-menu > li.act.error, .md .left-menu > li.error {
+  box-shadow: inset 3px 0 0 #e15b36; }
 
 .md .left-menu > li.act {
   background-color: #fff;

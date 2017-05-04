@@ -20,6 +20,11 @@
         border: 1px solid $background;
         background-color: darken($background, 2%);
 
+        .error-count {
+            float: right;
+            color: $error;
+        }
+
         & > a {
             display: block;
             text-decoration: none;
@@ -36,6 +41,11 @@
         &:hover {
             color: darken($font, 30%);
             background-color: darken($background, 5%);
+        }
+
+        &.act.error,
+        &.error {
+            box-shadow: inset 3px 0 0 $error;
         }
 
         &.act {

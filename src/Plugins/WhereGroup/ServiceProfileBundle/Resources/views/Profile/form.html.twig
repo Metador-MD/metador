@@ -20,15 +20,42 @@
     <div class="center menu">
         <div class="center-left">
             <ul class="left-menu">
-                <li data-mdtab="metadata" class="act"><span>{% trans %}Metadatensatz{% endtrans %}</span></li>
-                <li data-mdtab="identification"><span>{% trans %}Identifikation{% endtrans %}</span></li>
-                <li data-mdtab="classification"><span>{% trans %}Klassifizierung{% endtrans %}</span></li>
-                <li data-mdtab="keyword"><span>{% trans %}Schlüsselwort{% endtrans %}</span></li>
-                <li data-mdtab="geographic"><span>{% trans %}Geografischer{% endtrans %}</span></li>
-                <li data-mdtab="temporal"><span>{% trans %}Zeitbezug{% endtrans %}</span></li>
-                <li data-mdtab="conformity"><span>{% trans %}Übereinstimmung{% endtrans %}</span></li>
-                <li data-mdtab="constraints"><span>{% trans %}Beschränkungen{% endtrans %}</span></li>
-                <li data-mdtab="responsibleparty"><span>{% trans %}Zuständige Stelle{% endtrans %}</span></li>
+                <li data-mdtab="metadata" class="act">
+                    <span>{% trans %}Metadatensatz{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="identification">
+                    <span>{% trans %}Identifikation{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="classification">
+                    <span>{% trans %}Klassifizierung{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="keyword">
+                    <span>{% trans %}Schlüsselwort{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="geographic">
+                    <span>{% trans %}Geografischer{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="temporal">
+                    <span>{% trans %}Zeitbezug{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="conformity">
+                    <span>{% trans %}Übereinstimmung{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="constraints">
+                    <span>{% trans %}Beschränkungen{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
+                <li data-mdtab="responsibleparty">
+                    <span>{% trans %}Zuständige Stelle{% endtrans %}</span>
+                    <span class="-js-error-count error-count"></span>
+                </li>
             </ul>
             <div class="left-menu-content">
                 {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata)) %}

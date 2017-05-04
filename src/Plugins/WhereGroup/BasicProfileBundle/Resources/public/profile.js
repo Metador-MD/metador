@@ -6,6 +6,7 @@ MetadataForm.prototype = {
     userinput: false,
     submitButton: $('.-js-metadata-button'),
     submitButtonStatus: $('.-js-metadata-button-status'),
+    validation: [],
 
     setUserinput: function(userinput) {
         this.userinput = userinput;
@@ -45,6 +46,15 @@ MetadataForm.prototype = {
         var defaultIcon = statusIcon.attr('data-validation-icon');
         var valid = true;
 
+        var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
+
+        if (typeof this.validation[tab] === 'undefined') {
+            this.validation[tab] = [];
+        }
+
+        this.validation[tab][key] = true;
+
+
         jQuery.each(validation[key], function(index, value) {
             var string = $(item).val();
 
@@ -64,6 +74,26 @@ MetadataForm.prototype = {
                 return false;
             }
         });
+
+        if (valid) {
+            delete this.validation[tab][key];
+        }
+
+        var errorCount = Object.keys(this.validation[tab]).length;
+
+        if (errorCount > 0) {
+            $('[data-mdtab="' + tab + '"]')
+                .addClass('error')
+                .find('.-js-error-count')
+                .text(errorCount);
+        } else {
+            $('[data-mdtab="' + tab + '"]')
+                .removeClass('error')
+                .find('.-js-error-count')
+                .text('');
+        }
+
+        // console.log(this.validation, Object.keys(this.validation[tab]).length);
 
         return valid;
     }
