@@ -114,6 +114,7 @@ class ProfileController extends Controller
         // Todo: hasGroups
 
         return new Response($this->get('metador_core')->render($template, array(
+            'metadataId'     => $id,
             'metadataSource' => $source,
             'metadataProfil' => $profile,
             'metadata'       => $metadata,
@@ -127,6 +128,7 @@ class ProfileController extends Controller
      */
     public function saveAction($source, $profile)
     {
+        $response = array();
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
         $request = $this->get('request_stack')->getCurrentRequest()->request;
         $p = $request->get('p');
@@ -148,6 +150,15 @@ class ProfileController extends Controller
             $id = $metadata->getId();
             $uuid = $metadata->getUuid();
 
+            $this->get('metador_frontend_command')->changeLocation(
+                $this->generateUrl('metadata_edit', array(
+                    'source' => $source,
+                    'profile' => $profile,
+                    'id' => $id
+                )),
+                $response
+            );
+
         } catch (MetadorException $e) {
             $this->get('metador_logger')->error(
                 'metadata',
@@ -159,12 +170,12 @@ class ProfileController extends Controller
             );
         }
 
-        $response = array(
+        $response = array_merge_recursive($response, array(
             'metadata' => array(
                 'id'   => $id,
                 'uuid' => $uuid
             )
-        );
+        ));
 
         // Add redirect command to response
         if ($request->get('submit') === 'close') {

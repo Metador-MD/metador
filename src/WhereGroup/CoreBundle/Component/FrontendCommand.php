@@ -26,4 +26,23 @@ class FrontendCommand
             )
         ));
     }
+
+    /**
+     * @param $url
+     * @param $response
+     */
+    public function changeLocation($url, &$response)
+    {
+        $response = array_merge_recursive($response, array(
+            'METADOR' => array(
+                'runMethod' => array(
+                    array(
+                        'class'    => 'metador',
+                        'method'   => 'changeLocation',
+                        'argument' => $url
+                    )
+                )
+            )
+        ));
+    }
 }

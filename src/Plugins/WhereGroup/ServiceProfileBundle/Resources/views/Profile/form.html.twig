@@ -3,8 +3,15 @@
 {% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
 
 {% block center %}
+{% set id = '' %}
+{% if metadataId is defined and metadataId is not empty %}
+    {% set id = metadataId %}
+{% elseif p['_id'] is defined and p['_id'] is not empty  %}
+    {% set id = p['_id'] %}
+{% endif %}
+
 <form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
-    <input type="hidden" name="p[_id]" value="{% if p['_id'] is defined and p['_id'] is not empty %}{{ p['_id'] }}{% endif %}" />
+    <input type="hidden" name="p[_id]" value="{{ id }}" />
     <input type="hidden" name="p[fileIdentifier]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
     <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
     <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
