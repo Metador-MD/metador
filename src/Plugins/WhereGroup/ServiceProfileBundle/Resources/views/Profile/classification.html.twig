@@ -1,0 +1,43 @@
+<div class="mdtab-content" data-mdtab-content="classification">
+    <h1 class="title">{% trans %}Klassifizierung{% endtrans %}</h1>
+
+    <div class="grid space responsive">
+        <div class="row r-2">
+            <div class="col c-2-3">
+                {{ profileForm.select(p, 'serviceType', '', {
+                    '': '',
+                    'view': 'Darstellungsdienste',
+                    'invoke': 'Dienste zum Abrufen von Geodatendiensten',
+                    'download': 'Download-Dienste',
+                    'other': 'Sonstige Dienste',
+                    'discovery': 'Suchdienste',
+                    'transformation': 'Transformationsdienste'
+                }, 'Geodatendienst', 'mandatory') }}
+            </div>
+            <div class="col c-1-3">
+                {{ profileForm.input(p, 'serviceTypeVersion', '', '1.1.1', 'Version', 'mandatory') }}
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                <h2 class="title no-m">{% trans %}Dienste Operationen{% endtrans %}</h2>
+            </div>
+        </div>
+
+        <div class="row r-2">
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'containsOperationsName', '', 'GetCapabilities', 'Operation', 'mandatory') }}
+            </div>
+            <div class="col c-1-2">
+                {{ profileForm.input(p, 'containsOperationsDCP', '', 'WebService', 'Platform', 'mandatory') }}
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ profileForm.input(p, 'containsOperationsURL', '', '', 'URL', 'mandatory') }}
+            </div>
+        </div>
+    </div>
+</div>

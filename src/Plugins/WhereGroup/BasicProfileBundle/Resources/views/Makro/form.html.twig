@@ -1,11 +1,11 @@
-{% macro input(p, key, defaultValue, label, type) %}
+{% macro input(p, key, defaultValue, placeholder, label, type) %}
     {% set id = 'p[' ~ key ~ ']' %}
     {% set value = p[key] is defined ? p[key] : defaultValue %}
 
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
     <div class="form-field-wrapper i2 -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input" {{ id|md_data_obj }} />
+        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
         <span class="form-icon icon-question2 right -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endmacro %}
@@ -15,8 +15,8 @@
     {% set value = p[key] is defined ? p[key] : defaultValue %}
 
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2">
-        <span class="form-icon-type icon-{{ type }} rs left"></span>
+    <div class="form-field-wrapper i2 -js-validation-wrapper">
+        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
         <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input" {{ id|md_data_obj }}>
             {% for optionValue, optionLabel in options  %}
                 <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
@@ -31,8 +31,8 @@
     {% set value = p[key] is defined ? p[key] : defaultValue %}
 
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2">
-        <span class="form-icon-type icon-{{ type }} rs left"></span>
+    <div class="form-field-wrapper i2 -js-validation-wrapper">
+        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
         <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }}>{{ value }}</textarea>
         <span class="form-icon icon-question2 right -js-show-help" {{ id|md_data_obj }}></span>
     </div>

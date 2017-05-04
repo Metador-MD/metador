@@ -45,7 +45,6 @@ MetadataForm.prototype = {
         var statusIcon = wrapper.find('.-js-validation-icon');
         var defaultIcon = statusIcon.attr('data-validation-icon');
         var valid = true;
-
         var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
 
         if (typeof this.validation[tab] === 'undefined') {
@@ -53,7 +52,6 @@ MetadataForm.prototype = {
         }
 
         this.validation[tab][key] = true;
-
 
         jQuery.each(validation[key], function(index, value) {
             var string = $(item).val();
@@ -92,8 +90,6 @@ MetadataForm.prototype = {
                 .find('.-js-error-count')
                 .text('');
         }
-
-        // console.log(this.validation, Object.keys(this.validation[tab]).length);
 
         return valid;
     }
