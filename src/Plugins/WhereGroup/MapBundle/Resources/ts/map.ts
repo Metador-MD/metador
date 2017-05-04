@@ -1,4 +1,4 @@
-
+import Object = ol.Object;
 declare class proj4 {
     static defs(name: string, def: string): void;
 }
@@ -88,13 +88,13 @@ export class Extent extends Ol4Geom {
     }
 }
 
-
 export class Ol4Map {
     private static _instance: Ol4Map = null; // singleton
     protected olMap: ol.Map = null;
     //    protected proj: ol.proj.Projection = null;
     protected startExtent: Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
     protected maxExtent: Extent = null;
+    protected drawer: Ol4Drawer;
 
     private constructor(options: any) { // singleton
         // init given crses
@@ -123,17 +123,16 @@ export class Ol4Map {
             extent: this.maxExtent.getExtent(proj)
         }));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
+        this.setDraw(SHAPES.Box, function () {
+        });
     }
 
     public static create(options: any): Ol4Map {
+        console.log('create');
         if (!Ol4Map._instance) {// singleton
             Ol4Map._instance = new Ol4Map(options);
         }
         return Ol4Map._instance;
-    }
-
-    updateMap(): void {
-        this.olMap.updateSize();
     }
 
     addWmsSource(options: any, proj: ol.proj.Projection): void {
@@ -147,4 +146,112 @@ export class Ol4Map {
         });
         this.olMap.addLayer(sourceWms);
     }
+
+    updateMap(): void {
+        this.olMap.updateSize();
+    }
+
+    public setDraw(type: SHAPES = null, onDrawEnd: Function = null) {
+        console.log('draw');
+        if (!this.drawer) {
+            let vlayer = new ol.layer.Vector({
+                source: new ol.source.Vector({wrapX: false})
+            });
+            this.olMap.addLayer(vlayer);
+            this.drawer = new Ol4Drawer(this.olMap, vlayer);
+        }
+        this.drawer.setInteraction(type);
+        if (onDrawEnd && this.drawer.getInteraction()) {
+            let drawer = this.drawer;
+            this.drawer.getInteraction().on(
+                'drawend',
+                function () {
+                    drawer.setInteraction(SHAPES.None);
+                    onDrawEnd;
+                }
+            );
+        }
+    }
+
+    getHgLayer() {
+
+    }
 }
+
+export enum SHAPES {None, Box, Polygon}
+;
+
+export class Ol4Drawer {
+    protected map: ol.Map;
+    protected layer: ol.layer.Vector;
+    protected interaction: ol.interaction.Draw;
+
+    constructor(map: ol.Map, layer: ol.layer.Vector) {
+        this.map = map;
+        this.layer = layer;
+    }
+
+    public getInteraction() {
+        return this.interaction;
+    }
+
+    public setInteraction(type: SHAPES) {
+        this.removeInteraction();
+        switch (type) {
+            case SHAPES.Box:
+                this.interaction = new ol.interaction.Draw({
+                    source: this.layer.getSource(),
+                    type: 'Circle',
+                    geometryFunction: createBox() // ol.d.ts has no function "ol.interaction.Draw.createBox()"
+                });
+                break;
+            case SHAPES.Polygon:
+                this.interaction = new ol.interaction.Draw({
+                    source: this.layer.getSource(),
+                    type: 'Polygon'
+                });
+                break;
+            default:
+                this.interaction = null;
+        }
+        this.addInteraction();
+    }
+
+    private removeInteraction() {
+        if (this.interaction) {
+            this.map.removeInteraction(this.interaction);
+        }
+    }
+
+    private addInteraction() {
+        if (this.interaction) {
+            this.map.addInteraction(this.interaction);
+        }
+    }
+}
+
+/**
+ * ol.d.ts has no function "ol.interaction.Draw.createBox()"
+ * @returns {(coordinates:any, opt_geometry:any)=>any|ol.geom.Polygon}
+ */
+export function createBox() {
+    return (
+        /**
+         * @param {ol.Coordinate|Array.<ol.Coordinate>|Array.<Array.<ol.Coordinate>>} coordinates
+         * @param {ol.geom.SimpleGeometry=} opt_geometry
+         * @return {ol.geom.SimpleGeometry}
+         */
+            function (coordinates, opt_geometry) {
+            var extent = ol.extent.boundingExtent(coordinates);
+            var geometry = opt_geometry || new ol.geom.Polygon(null);
+            geometry.setCoordinates([[
+                ol.extent.getBottomLeft(extent),
+                ol.extent.getBottomRight(extent),
+                ol.extent.getTopRight(extent),
+                ol.extent.getTopLeft(extent),
+                ol.extent.getBottomLeft(extent)
+            ]]);
+            return geometry;
+        }
+    );
+};
