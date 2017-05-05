@@ -51,8 +51,10 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         // Todo: disable check for leaving editor page.
         if (typeof data.METADOR.runMethod === 'undefined') {
             $('.-js-timeout-dialog-logout').click();
+            return true;
         }
 
+        session.windowUnload = true;
         metador.parseResponse(data);
     });
 });

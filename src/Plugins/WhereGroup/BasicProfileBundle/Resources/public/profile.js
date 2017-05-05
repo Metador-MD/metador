@@ -103,7 +103,7 @@ $(".-js-user-input").change(function() {
 });
 
 window.onbeforeunload = function () {
-    if (metadata.getUserinput()) {
+    if (metadata.getUserinput() && session.windowUnload === true) {
         return 'Möchten Sie diese Seite wirklich verlassen? Nicht gespeicherte Daten gehen hierbei verloren!';
     }
 };
@@ -114,7 +114,7 @@ $('form').ajaxForm({
     dataType: 'json',
     beforeSubmit: function(form, options) {
         var valid = true;
-        
+
         $(".-js-user-input").each(function () {
             if (!metadata.validate(this)) {
                 valid = false;
