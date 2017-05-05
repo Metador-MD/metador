@@ -112,9 +112,9 @@ window.onbeforeunload = function () {
 $('form').ajaxForm({
     target: '#metadata-form',
     dataType: 'json',
-    beforeSubmit: function() {
+    beforeSubmit: function(form, options) {
         var valid = true;
-
+        
         $(".-js-user-input").each(function () {
             if (!metadata.validate(this)) {
                 valid = false;
@@ -122,8 +122,22 @@ $('form').ajaxForm({
         });
 
         if (!valid) {
+            alert('Datensatz ist nicht valide und kann daher nicht gespeichert werden.')
             return false;
         }
+
+        var lock = {
+            name: "lock",
+            required: false,
+            type: "hidden",
+            value: "true"
+        };
+
+        if (confirm('Klicken Sie ok um den Datensatz nach dem Speichern freizugeben.')) {
+            lock.value = "false";
+        }
+
+        form.push(lock);
 
         metadata.activateSubmitButton();
     },

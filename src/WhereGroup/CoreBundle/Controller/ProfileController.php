@@ -141,7 +141,7 @@ class ProfileController extends Controller
             $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
         }
 
-        if ($request->get('submit') === 'close') {
+        if ($request->get('lock') === 'false') {
             $p['_remove_lock'] = true;
         }
 
@@ -178,7 +178,7 @@ class ProfileController extends Controller
         ));
 
         // Add redirect command to response
-        if ($request->get('submit') === 'close') {
+        if ($request->get('lock') === 'false') {
             $this
                 ->get('metador_frontend_command')
                 ->redirect($this->generateUrl('metador_home'), $response);

@@ -26,7 +26,7 @@
     </div>
 {% endmacro %}
 
-{% macro text(p, key, defaultValue, label, type) %}
+{% macro text(p, key, defaultValue, placeholder, label, type) %}
     {% set id = 'p[' ~ key ~ ']' %}
     {% set value = p[key] is defined ? p[key] : defaultValue %}
 
