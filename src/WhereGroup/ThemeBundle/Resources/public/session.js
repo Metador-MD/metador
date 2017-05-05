@@ -47,7 +47,12 @@ $('.-js-timeout-dialog-heartbeat').on('click', function () {
         'url': $(this).closest('.-js-timeout-dialog').attr('data-heartbeat-path'),
         'type': 'GET',
         'dataType': 'json'
-    }).done(function(data){
+    }).done(function(data) {
+        // Todo: disable check for leaving editor page.
+        if (typeof data.METADOR.runMethod === 'undefined') {
+            $('.-js-timeout-dialog-logout').click();
+        }
+
         metador.parseResponse(data);
     });
 });
