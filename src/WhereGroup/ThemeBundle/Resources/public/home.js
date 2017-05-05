@@ -11,3 +11,11 @@ $('.-js-source').on('click', function() {
     $('.-js-profile-menu').removeClass('active');
     $('#' + $(this).attr('data-id')).addClass('active');
 });
+
+$('.-js-draw-type').on('change', function() {
+   Window.metador.metadorMap.setDraw($(this).val(), $(this).val('NONE'));
+});
+
+$('.-js-crs-code').on('change', function() {
+   Window.metador.metadorMap.setCrs($(this).val());
+});

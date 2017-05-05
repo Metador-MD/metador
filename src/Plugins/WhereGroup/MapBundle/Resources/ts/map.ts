@@ -84,7 +84,7 @@ export class Ol4Geom {
 export class Extent extends Ol4Geom {
     public static fromArray(ordinates: number[], proj: ol.proj.Projection): Extent {
         let geom = new ol.geom.MultiPoint([[ordinates[0], ordinates[1]], [ordinates[2], ordinates[3]]]);
-        return new Ol4Geom(geom, proj);
+        return new Extent(geom, proj);
     }
 }
 
@@ -123,12 +123,9 @@ export class Ol4Map {
             extent: this.maxExtent.getExtent(proj)
         }));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
-        this.setDraw(SHAPES.Box, function () {
-        });
     }
 
     public static create(options: any): Ol4Map {
-        console.log('create');
         if (!Ol4Map._instance) {// singleton
             Ol4Map._instance = new Ol4Map(options);
         }
@@ -151,8 +148,7 @@ export class Ol4Map {
         this.olMap.updateSize();
     }
 
-    public setDraw(type: SHAPES = null, onDrawEnd: Function = null) {
-        console.log('draw');
+    public setDraw(shapeType: SHAPES = null, onDrawEnd: Function = null) {
         if (!this.drawer) {
             let vlayer = new ol.layer.Vector({
                 source: new ol.source.Vector({wrapX: false})
@@ -160,25 +156,25 @@ export class Ol4Map {
             this.olMap.addLayer(vlayer);
             this.drawer = new Ol4Drawer(this.olMap, vlayer);
         }
-        this.drawer.setInteraction(type);
+        this.drawer.setInteraction(typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType);
         if (onDrawEnd && this.drawer.getInteraction()) {
             let drawer = this.drawer;
             this.drawer.getInteraction().on(
                 'drawend',
                 function () {
-                    drawer.setInteraction(SHAPES.None);
+                    drawer.setInteraction(SHAPES.NONE);
                     onDrawEnd;
                 }
             );
         }
     }
 
-    getHgLayer() {
-
+    setCrs(crs: string) {
+        console.log(crs);
     }
 }
 
-export enum SHAPES {None, Box, Polygon}
+export enum SHAPES {NONE, BOX, POLYGON}
 ;
 
 export class Ol4Drawer {
@@ -198,14 +194,14 @@ export class Ol4Drawer {
     public setInteraction(type: SHAPES) {
         this.removeInteraction();
         switch (type) {
-            case SHAPES.Box:
+            case SHAPES.BOX:
                 this.interaction = new ol.interaction.Draw({
                     source: this.layer.getSource(),
                     type: 'Circle',
                     geometryFunction: createBox() // ol.d.ts has no function "ol.interaction.Draw.createBox()"
                 });
                 break;
-            case SHAPES.Polygon:
+            case SHAPES.POLYGON:
                 this.interaction = new ol.interaction.Draw({
                     source: this.layer.getSource(),
                     type: 'Polygon'
@@ -241,7 +237,7 @@ export function createBox() {
          * @param {ol.geom.SimpleGeometry=} opt_geometry
          * @return {ol.geom.SimpleGeometry}
          */
-            function (coordinates, opt_geometry) {
+        function (coordinates, opt_geometry) {
             var extent = ol.extent.boundingExtent(coordinates);
             var geometry = opt_geometry || new ol.geom.Polygon(null);
             geometry.setCoordinates([[
