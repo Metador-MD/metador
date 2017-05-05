@@ -29,7 +29,7 @@ Metador.prototype = {
     },
 
     changeLocation: function (url) {
-        window.history.pushState("", null, url);
+        window.history.replaceState("", null, url);
     }
 };
 

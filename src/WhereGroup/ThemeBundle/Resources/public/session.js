@@ -6,6 +6,7 @@ MetadorSession.prototype = {
     timeOut: 0,
     dialogTime: 60,
     interval: null,
+    windowUnload: true,
 
     setDialogTime: function(time) {
         this.dialogTime = parseInt(time);
@@ -27,6 +28,7 @@ MetadorSession.prototype = {
             }
 
             if (self.timeOut <= self.dialogTime) {
+                self.windowUnload = false;
                 $('.-js-timeout-wrapper').show();
             }
 
