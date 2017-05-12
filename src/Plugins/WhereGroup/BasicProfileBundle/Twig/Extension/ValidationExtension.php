@@ -68,4 +68,13 @@ class ValidationExtension extends \Twig_Extension
 
         return json_encode($validatonRules, JSON_FORCE_OBJECT);
     }
+
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_basic_profile_validation";
+    }
 }
