@@ -113,18 +113,21 @@ $('form').ajaxForm({
     target: '#metadata-form',
     dataType: 'json',
     beforeSubmit: function(form, options) {
-        var valid = true;
+        if ($('#validation').val() === '1') {
+            var valid = true;
 
-        $(".-js-user-input").each(function () {
-            if (!metadata.validate(this)) {
-                valid = false;
+            $(".-js-user-input").each(function () {
+                if (!metadata.validate(this)) {
+                    valid = false;
+                }
+            });
+
+            if (!valid) {
+                alert('Datensatz ist nicht valide und kann daher nicht gespeichert werden.')
+                return false;
             }
-        });
-
-        if (!valid) {
-            alert('Datensatz ist nicht valide und kann daher nicht gespeichert werden.')
-            return false;
         }
+
 
         var lock = {
             name: "lock",
@@ -162,4 +165,17 @@ $('form').ajaxForm({
 // Metadata Tab
 $('[data-mdtab]').click(function() {
     metadata.enableTab($(this).attr('data-mdtab'));
+});
+
+$(document).on('click', '.-js-toggle-switch', function () {
+    var value = $(this).find('.-js-toggle-switch-input').val();
+
+    if (value === '0') {
+        $(this).find('.-js-toggle-switch-input').val('1');
+        $(this).find('.-js-toggle-switch-icon').removeClass('icon-toggle-off').addClass('icon-toggle-on');
+        return;
+    }
+
+    $(this).find('.-js-toggle-switch-input').val('0');
+    $(this).find('.-js-toggle-switch-icon').removeClass('icon-toggle-on').addClass('icon-toggle-off');
 });
