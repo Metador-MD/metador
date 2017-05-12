@@ -590,7 +590,7 @@ html, body {
   border-radius: 2px;
   background-color: #fafafa; }
 
-.md .form-field-wrapper > .input, .md .form-field-wrapper > .select, .md .form-field-wrapper > .textarea {
+.md .form-field-wrapper > .input, .md .form-field-wrapper > .select, .md .form-field-wrapper > .textarea, .md .form-field-wrapper > .advanced-select {
   width: 100%;
   height: 100%;
   border: 0;
@@ -604,29 +604,34 @@ html, body {
   height: 35px;
   line-height: 35px; }
 
-.md .form-field-wrapper > .input:hover, .md .form-field-wrapper > .select:hover, .md .form-field-wrapper > .textarea:hover {
+.md .form-field-wrapper > .input:hover, .md .form-field-wrapper > .select:hover, .md .form-field-wrapper > .textarea:hover, .md .form-field-wrapper > .advanced-select:hover {
   background-color: #f4f4f4; }
 
-.md .form-field-wrapper > .input:focus, .md .form-field-wrapper > .select:focus, .md .form-field-wrapper > .textarea:focus {
+.md .form-field-wrapper > .input:focus, .md .form-field-wrapper > .select:focus, .md .form-field-wrapper > .textarea:focus, .md .form-field-wrapper > .advanced-select:focus {
   background-color: #f4f4f4; }
 
-.md .form-field-wrapper.i1 > .input, .md .form-field-wrapper.i1 > .select, .md .form-field-wrapper.i1 > .textarea {
+.md .form-field-wrapper.i1 > .input, .md .form-field-wrapper.i1 > .select, .md .form-field-wrapper.i1 > .textarea, .md .form-field-wrapper.i1 > .advanced-select {
   width: -webkit-calc(100% - 35px);
   width: -moz-calc(100% - 35px);
   width: calc(100% - 35px); }
 
-.md .form-field-wrapper.i2 > .input, .md .form-field-wrapper.i2 > .select, .md .form-field-wrapper.i2 > .textarea {
+.md .form-field-wrapper.i2 > .input, .md .form-field-wrapper.i2 > .select, .md .form-field-wrapper.i2 > .textarea, .md .form-field-wrapper.i2 > .advanced-select {
   width: -webkit-calc(100% - 70px);
   width: -moz-calc(100% - 70px);
   width: calc(100% - 70px); }
 
-.md .form-field-wrapper.i3 > .input, .md .form-field-wrapper.i3 > .select, .md .form-field-wrapper.i3 > .textarea {
+.md .form-field-wrapper.i3 > .input, .md .form-field-wrapper.i3 > .select, .md .form-field-wrapper.i3 > .textarea, .md .form-field-wrapper.i3 > .advanced-select {
   width: -webkit-calc(100% - 105px);
   width: -moz-calc(100% - 105px);
   width: calc(100% - 105px); }
 
-.md .form-field-wrapper > .select {
-  padding-right: 60px;
+.md .form-field-wrapper.i4 > .input, .md .form-field-wrapper.i4 > .select, .md .form-field-wrapper.i4 > .textarea, .md .form-field-wrapper.i4 > .advanced-select {
+  width: -webkit-calc(100% - 140px);
+  width: -moz-calc(100% - 140px);
+  width: calc(100% - 140px); }
+
+.md .form-field-wrapper > .select, .md .form-field-wrapper > .advanced-select {
+  padding-right: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -635,10 +640,10 @@ html, body {
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat; }
 
-.md .form-field-wrapper > .select::-ms-expand {
+.md .form-field-wrapper > .select::-ms-expand, .md .form-field-wrapper > .advanced-select::-ms-expand {
   display: none; }
 
-.md .form-field-wrapper > .select:-moz-focusring {
+.md .form-field-wrapper > .select:-moz-focusring, .md .form-field-wrapper > .advanced-select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000; }
 
@@ -648,22 +653,22 @@ html, body {
   resize: vertical;
   min-height: 70px; }
 
-.md .form-field-wrapper.error > .input:hover, .md .form-field-wrapper.error > .select:hover, .md .form-field-wrapper.error > .textarea:hover {
+.md .form-field-wrapper.error > .input:hover, .md .form-field-wrapper.error > .select:hover, .md .form-field-wrapper.error > .textarea:hover, .md .form-field-wrapper.error > .advanced-select:hover {
   background-color: #f8dad1; }
 
-.md .form-field-wrapper.error > .input:focus, .md .form-field-wrapper.error > .select:focus, .md .form-field-wrapper.error > .textarea:focus {
+.md .form-field-wrapper.error > .input:focus, .md .form-field-wrapper.error > .select:focus, .md .form-field-wrapper.error > .textarea:focus, .md .form-field-wrapper.error > .advanced-select:focus {
   background-color: #f8dad1; }
 
-.md .form-field-wrapper.error > .input::-webkit-input-placeholder, .md .form-field-wrapper.error > .select::-webkit-input-placeholder, .md .form-field-wrapper.error > .textarea::-webkit-input-placeholder {
+.md .form-field-wrapper.error > .input::-webkit-input-placeholder, .md .form-field-wrapper.error > .select::-webkit-input-placeholder, .md .form-field-wrapper.error > .textarea::-webkit-input-placeholder, .md .form-field-wrapper.error > .advanced-select::-webkit-input-placeholder {
   color: #f2b6a5; }
 
-.md .form-field-wrapper.error > .input::-moz-placeholder, .md .form-field-wrapper.error > .select::-moz-placeholder, .md .form-field-wrapper.error > .textarea::-moz-placeholder {
+.md .form-field-wrapper.error > .input::-moz-placeholder, .md .form-field-wrapper.error > .select::-moz-placeholder, .md .form-field-wrapper.error > .textarea::-moz-placeholder, .md .form-field-wrapper.error > .advanced-select::-moz-placeholder {
   color: #f2b6a5; }
 
-.md .form-field-wrapper.error > .input:-ms-input-placeholder, .md .form-field-wrapper.error > .select:-ms-input-placeholder, .md .form-field-wrapper.error > .textarea:-ms-input-placeholder {
+.md .form-field-wrapper.error > .input:-ms-input-placeholder, .md .form-field-wrapper.error > .select:-ms-input-placeholder, .md .form-field-wrapper.error > .textarea:-ms-input-placeholder, .md .form-field-wrapper.error > .advanced-select:-ms-input-placeholder {
   color: #f2b6a5; }
 
-.md .form-field-wrapper.error > .input:-moz-placeholder, .md .form-field-wrapper.error > .select:-moz-placeholder, .md .form-field-wrapper.error > .textarea:-moz-placeholder {
+.md .form-field-wrapper.error > .input:-moz-placeholder, .md .form-field-wrapper.error > .select:-moz-placeholder, .md .form-field-wrapper.error > .textarea:-moz-placeholder, .md .form-field-wrapper.error > .advanced-select:-moz-placeholder {
   color: #f2b6a5; }
 
 .md .form-field-wrapper.error > .select {
@@ -732,6 +737,39 @@ html, body {
   color: #008ec0;
   height: 35px;
   line-height: 35px; }
+
+.md .advanced-select {
+  position: relative;
+  cursor: pointer; }
+
+.md .advanced-select .advanced-select-options {
+  position: absolute;
+  display: none;
+  left: 0;
+  right: 0;
+  top: 35px;
+  background-color: #fafafa;
+  border: 1px solid #e1e1e1;
+  z-index: 2; }
+
+.md .advanced-select:hover .advanced-select-options {
+  display: block; }
+
+.md .advanced-select .advanced-select-option {
+  font-size: 1em;
+  padding: 0 20px;
+  height: 35px;
+  line-height: 35px; }
+
+.md .advanced-select .advanced-select-option.act {
+  border-left: 4px solid #008ec0;
+  background-color: #fff; }
+
+.md .advanced-select .advanced-select-option:hover {
+  background-color: #f4f4f4; }
+
+.md .advanced-select .advanced-select-option:focus {
+  background-color: #f4f4f4; }
 
 .light-normal, .md .notify {
   color: #444;
@@ -1219,6 +1257,110 @@ html, body {
 
 .md h2.title {
   font-size: 1.2em; }
+
+.light-normal, .md .notify {
+  color: #444;
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1; }
+
+.light-normal:hover, .md .notify:hover {
+  background-color: #f4f4f4;
+  border: 1px solid #dedede; }
+
+.light-info, .md .notify.info {
+  color: #444;
+  background-color: #e5f3ff;
+  border: 1px solid #b2dbff; }
+
+.light-info:hover, .md .notify.info:hover {
+  background-color: #e0f1ff;
+  border: 1px solid #add9ff; }
+
+.light-warning, .md .notify.warning {
+  background-color: #fdf4df;
+  border: 1px solid #fae4af; }
+
+.light-warning:hover, .md .notify.warning:hover {
+  background-color: #fdf3da;
+  border: 1px solid #fae3aa; }
+
+.light-success, .md .form-field-wrapper .form-icon.success, .md .form-field-wrapper .form-icon-type.success, .md .notify.success {
+  color: #444;
+  background-color: #d9f0d3;
+  border: 1px solid #b8e4ad; }
+
+.light-success:hover, .md .form-field-wrapper .form-icon.success:hover, .md .form-field-wrapper .form-icon-type.success:hover, .md .notify.success:hover {
+  background-color: #d6efcf;
+  border: 1px solid #b5e2a9; }
+
+.light-error, .md .form-field-wrapper.error, .md .notify.error {
+  color: #444;
+  background-color: #fbece8;
+  border: 1px solid #f5c8bb; }
+
+.light-error:hover, .md .form-field-wrapper.error:hover, .md .notify.error:hover {
+  background-color: #fbe8e3;
+  border: 1px solid #f4c4b7; }
+
+.dark-normal, .md .btn {
+  color: #444;
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1; }
+
+.dark-normal:hover, .md .btn:hover {
+  background-color: #eaeaea;
+  border: 1px solid #d4d4d4; }
+
+.dark-info, .md .btn.info {
+  color: #fff;
+  background-color: #4dacfe;
+  border: 1px solid #1a94fe; }
+
+.dark-info:hover, .md .btn.info:hover {
+  background-color: #1a94fe;
+  border: 1px solid #0188fd; }
+
+.dark-success, .md .btn.success {
+  color: #fff;
+  background-color: #77ca60;
+  border: 1px solid #59b93e; }
+
+.dark-success:hover, .md .btn.success:hover {
+  background-color: #59b93e;
+  border: 1px solid #4fa637; }
+
+.dark-warning, .md .btn.warning {
+  color: #fff;
+  background-color: #f5c44e;
+  border: 1px solid #f2b41e; }
+
+.dark-warning:hover, .md .btn.warning:hover {
+  background-color: #f2b41e;
+  border: 1px solid #e9a90d; }
+
+.dark-error, .md .btn.error {
+  color: #fff;
+  background-color: #e15b36;
+  border: 1px solid #c6421e; }
+
+.dark-error:hover, .md .btn.error:hover {
+  background-color: #c6421e;
+  border: 1px solid #b03b1a; }
+
+.md .text-center {
+  text-align: center; }
+
+.duplicatable-area .duplicatable-content {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-top-width: 0;
+  padding: 20px; }
+
+.duplicatable-area .duplicatable-content-item {
+  display: none; }
+
+.duplicatable-area .duplicatable-content-item.act {
+  display: block; }
 
 .light-normal, .md .notify {
   color: #444;

@@ -94,7 +94,7 @@ $icon-color: darken($border, 20%);
     background-color: lighten($background, 1%);
     @extend .clearfix;
 
-    & > .input, & > .select, & > .textarea {
+    & > .input, & > .select, & > .textarea, & > .advanced-select {
         width: 100%;
         height: 100%;
         border: 0;
@@ -116,25 +116,31 @@ $icon-color: darken($border, 20%);
     }
 
     &.i1 {
-        & > .input, & > .select, & > .textarea {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
             @include calc('width', '100% - #{$normal-item-height}');
         }
     }
 
     &.i2 {
-        & > .input, & > .select, & > .textarea {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
             @include calc('width', '100% - #{$normal-item-height * 2}');
         }
     }
 
     &.i3 {
-        & > .input, & > .select, & > .textarea {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
             @include calc('width', '100% - #{$normal-item-height * 3}');
         }
     }
 
-    & > .select {
-        padding-right: 60px;
+    &.i4 {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
+            @include calc('width', '100% - #{$normal-item-height * 4}');
+        }
+    }
+
+    & > .select, & > .advanced-select {
+        padding-right: 40px;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
@@ -170,7 +176,7 @@ $icon-color: darken($border, 20%);
     &.error {
         @extend .light-error;
 
-        & > .input, & > .select, & > .textarea {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
             &:hover {
                 background-color: lighten($error, 35%);
             }
@@ -291,4 +297,42 @@ $icon-color: darken($border, 20%);
 .md .form-label {
     color: $primary;
     @include normal-item(false, false);
+}
+
+.md .advanced-select {
+    position: relative;
+    cursor: pointer;
+
+    & .advanced-select-options {
+        position: absolute;
+        display: none;
+        left: 0;
+        right: 0;
+        top: $normal-item-height;
+        background-color: lighten($background, 1%);
+        border: 1px solid $border;
+        z-index: 2;
+    }
+
+    &:hover .advanced-select-options {
+        display: block;
+    }
+
+    .advanced-select-option {
+        @include normal-item();
+
+        &.act {
+            border-left: 4px solid $primary;
+            background-color: lighten($background, 5%);
+        }
+
+        &:hover {
+            background-color: darken($background, 1%);
+        }
+
+        &:focus {
+            background-color: darken($background, 1%);
+        }
+
+    }
 }

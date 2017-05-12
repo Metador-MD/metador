@@ -1,0 +1,19 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.duplicatable-area {
+    .duplicatable-content {
+        background-color: $white;
+        border: 1px solid $border;
+        border-top-width: 0;
+        padding: $padding;
+    }
+    .duplicatable-content-item {
+        display: none;
+
+        &.act {
+            display: block;
+        }
+    }
+}
