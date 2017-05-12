@@ -63,4 +63,12 @@ class ConfigurationExtension extends \Twig_Extension
 
         return $config;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_configuration";
+    }
 }

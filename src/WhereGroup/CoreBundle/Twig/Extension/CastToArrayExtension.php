@@ -26,4 +26,12 @@ class CastToArrayExtension extends \Twig_Extension
     {
         return (array)$var;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_cast_to_array";
+    }
 }

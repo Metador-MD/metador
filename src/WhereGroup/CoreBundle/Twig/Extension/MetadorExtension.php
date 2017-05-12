@@ -87,7 +87,10 @@ class MetadorExtension extends \Twig_Extension
     {
         return $value == $option ? 'selected="selected"' : '';
     }
-    
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return "metador_extension";

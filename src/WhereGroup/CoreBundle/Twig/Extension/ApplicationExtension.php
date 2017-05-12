@@ -41,4 +41,12 @@ class ApplicationExtension extends \Twig_Extension
     {
         return $this->application->getData($type, $key, $default);
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_application";
+    }
 }

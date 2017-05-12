@@ -26,4 +26,12 @@ class JsonDecodeExtension extends \Twig_Extension
     {
         return json_decode($var);
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_json_decode";
+    }
 }

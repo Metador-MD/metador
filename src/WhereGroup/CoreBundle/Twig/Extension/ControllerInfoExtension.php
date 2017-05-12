@@ -65,4 +65,12 @@ class ControllerInfoExtension extends \Twig_Extension
             $this->action = isset($matches[1]) ? strtolower($matches[1]) : '';
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_controler_info";
+    }
 }

@@ -28,4 +28,12 @@ class UuidExtension extends \Twig_Extension
         $uuid4 = Uuid::uuid4();
         return $uuid4->toString();
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_uuid";
+    }
 }

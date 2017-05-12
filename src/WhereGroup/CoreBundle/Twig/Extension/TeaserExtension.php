@@ -69,4 +69,12 @@ class TeaserExtension extends \Twig_Extension
 
         return trim($result);
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_teaser";
+    }
 }

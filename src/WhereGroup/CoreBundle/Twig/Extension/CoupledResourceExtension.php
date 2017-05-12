@@ -44,4 +44,12 @@ class CoupledResourceExtension extends \Twig_Extension
             . urlencode($this->operatesOnUrl . $uuid . '#' . $coupledResource)
             . '" uuidref="' . $coupledResource . '" />';
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "metador_coupled_resources";
+    }
 }
