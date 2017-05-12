@@ -134,8 +134,6 @@ class MetadataVoter extends Voter
             }
         }
 
-        dump("test");
-
         return false;
     }
 

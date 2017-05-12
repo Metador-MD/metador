@@ -21,8 +21,6 @@
                     {% set p = p|merge({'responsiblePartyMetadata': [{'organisationName':'','electronicMailAddress':''}]}) %}
                 {% endif %}
 
-                {% dump(p['responsiblePartyMetadata']) %}
-
                 <div class="duplicatable-area -js-duplicatable-area" data-count="{{ p['responsiblePartyMetadata']|length }}">
                     <div class="form-field-wrapper i4">
                         <span class="form-icon-type icon-mandatory rs left -js-validation-icon" data-validation-icon="icon-mandatory"></span>
