@@ -81,48 +81,72 @@ export class Ol4Geom {
     }
 }
 
-export class Extent extends Ol4Geom {
-    public static fromArray(ordinates: number[], proj: ol.proj.Projection): Extent {
+export class Ol4Extent extends Ol4Geom {
+    public static fromArray(ordinates: number[], proj: ol.proj.Projection): Ol4Extent {
         let geom = new ol.geom.MultiPoint([[ordinates[0], ordinates[1]], [ordinates[2], ordinates[3]]]);
-        return new Extent(geom, proj);
+        return new Ol4Extent(geom, proj);
     }
 }
 
 export class Ol4Map {
     private static _instance: Ol4Map = null; // singleton
     protected olMap: ol.Map = null;
+    protected scales: number[];
     //    protected proj: ol.proj.Projection = null;
-    protected startExtent: Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
-    protected maxExtent: Extent = null;
+    protected startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
+    protected maxExtent: Ol4Extent = null;
     protected drawer: Ol4Drawer;
 
     private constructor(options: any) { // singleton
         // init given crses
+        // ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
-        let resolutions = Ol4Utils.resolutionsForScales(options['view']['scales'], proj.getUnits()).reverse();
-        this.startExtent = Extent.fromArray(options['view']['startExtent'], proj);
-        this.maxExtent = Extent.fromArray(options['view']['maxExtent'], proj);
+        this.scales = options['view']['scales'];
+        this.startExtent = Ol4Extent.fromArray(options['view']['startExtent'], proj);
+        this.maxExtent = Ol4Extent.fromArray(options['view']['maxExtent'], proj);
         this.olMap = new ol.Map({
-            target: options['map']['target']
+            target: options['map']['target'],
+            renderer: 'canvas'
         });
+        for (const source of options['source']) {
+            if (source['type'] === 'WMS') {
+                this.olMap.addLayer(Ol4WmsLayer.createLayer(source['url'], source['params'], proj, true));
+            }
+        }
         this.olMap.setView(
             new ol.View({
                 projection: proj,
-                resolutions: resolutions
+                resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
+                extent: this.maxExtent.getExtent(proj)
             })
         );
-        for (const source of options['source']) {
-            if (source['type'] === 'WMS') {
-                this.addWmsSource(source, proj);
-            }
-        }
         this.olMap.addControl(new ol.control.ScaleLine());
 
         this.olMap.addControl(new ol.control.ZoomToExtent({
             extent: this.maxExtent.getExtent(proj)
         }));
+        this.olMap.addControl(new ol.control.MousePosition(
+            // {
+            //     coordinateFormat: function (coordinates) {
+            //         var coord_x = coordinates[0].toFixed(3);
+            //         var coord_y = coordinates[1].toFixed(3);
+            //         return coord_x + ', ' + coord_y;
+            //     }
+            // }
+        ));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
+        for (let layer of this.olMap.getLayers().getArray()) {
+            let source;
+            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
+                console.error('ol.layer.Group as Layer is not suported');
+                throw new Error('ol.layer.Group as Layer is not suported');
+            } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
+
+
+                console.log(source.getProperties());
+            }
+        }
     }
 
     public static create(options: any): Ol4Map {
@@ -130,18 +154,6 @@ export class Ol4Map {
             Ol4Map._instance = new Ol4Map(options);
         }
         return Ol4Map._instance;
-    }
-
-    addWmsSource(options: any, proj: ol.proj.Projection): void {
-        let sourceWms = new ol.layer.Image({
-            source: new ol.source.ImageWMS({
-                url: options['url'],
-                params: options['params'],
-                projection: proj
-            }),
-            visible: true
-        });
-        this.olMap.addLayer(sourceWms);
     }
 
     updateMap(): void {
@@ -170,7 +182,62 @@ export class Ol4Map {
     }
 
     setCrs(crs: string) {
-        console.log(crs);
+        this.changeCrs(crs);
+    }
+
+    changeCrs(crs: string) {
+        let proj = null;
+        if ((proj = ol.proj.get(crs))) {
+            let extent = Ol4Extent.fromArray(
+                this.olMap.getView().calculateExtent(this.olMap.getSize()),
+                this.olMap.getView().getProjection()
+            );
+            let newView = new ol.View({
+                projection: proj,
+                resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
+                extent: this.maxExtent.getExtent(proj)
+            });
+            let layers = this.olMap.getLayers().getArray();
+            let llength = layers.length;
+            for (let layer of layers) {
+                let source: ol.source.Source;
+                if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
+                    console.error('ol.layer.Group as Layer is not suported');
+                    throw new Error('ol.layer.Group as Layer is not suported');
+                } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
+                    (<ol.layer.Image>layer).setSource(Ol4WmsLayer.createFromSource(<ol.source.ImageWMS> source, proj));
+                }
+            }
+            this.olMap.setView(newView);
+            this.olMap.getView().fit(extent.getPolygonForExtent(proj), this.olMap.getSize());
+        }
+        // console.log(ol['ENABLE_RASTER_REPROJECTION'],this.olMap.getView().getProjection());
+    }
+}
+
+export class Ol4WmsLayer {
+    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean): ol.layer.Image {
+        let sourceWms = new ol.layer.Image({
+            source: Ol4WmsLayer.createSource(url, params, proj),
+            visible: visible
+        });
+        return sourceWms;
+    }
+
+    static createSource(url: string, params: any, proj: ol.ProjectionLike): ol.source.ImageWMS {
+        return new ol.source.ImageWMS({
+            url: url,
+            params: params,
+            projection: proj
+        });
+    }
+
+    static createFromSource(source: ol.source.ImageWMS, proj: ol.ProjectionLike) {
+        return new ol.source.ImageWMS({
+            url: source.getUrl(),
+            params: source.getParams(),
+            projection: proj
+        });
     }
 }
 
@@ -237,7 +304,7 @@ export function createBox() {
          * @param {ol.geom.SimpleGeometry=} opt_geometry
          * @return {ol.geom.SimpleGeometry}
          */
-        function (coordinates, opt_geometry) {
+            function (coordinates, opt_geometry) {
             var extent = ol.extent.boundingExtent(coordinates);
             var geometry = opt_geometry || new ol.geom.Polygon(null);
             geometry.setCoordinates([[

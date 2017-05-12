@@ -17,5 +17,5 @@ $('.-js-draw-type').on('change', function() {
 });
 
 $('.-js-crs-code').on('change', function() {
-   Window.metador.metadorMap.setCrs($(this).val());
+   Window.metador.metadorMap.changeCrs($(this).val());
 });
