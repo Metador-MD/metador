@@ -72,8 +72,10 @@ Duplicatable.prototype = {
         this.getItem(item).find('[data-tab="' + tabCount + '"]').remove();
 
         // find item
-        //var xxx = this.getItem(item).find('.-js-advanced-select-option').attr('data-tab');
-        //console.log(xxx);
+        var xxx = this.getItem(item)
+            .find('.-js-advanced-select-option').attr('data-tab');
+
+        console.log(this.getItem(item));
 
         this.changeTab(item, tabCount);
     },
