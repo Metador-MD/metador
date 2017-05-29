@@ -7,7 +7,7 @@ cache:
 
 before_script:
   - php5dismod xdebug
-  - composer update --no-dev --no-progress --optimize-autoloader
+  - composer update --no-progress
   - php5enmod xdebug
 
 stages:
