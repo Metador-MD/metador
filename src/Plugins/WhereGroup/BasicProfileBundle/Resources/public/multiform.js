@@ -64,6 +64,7 @@
             this.setLabel('');
             this.setItemCount(count);
             this.setTabCountLabel(this.getTabCount());
+            metadata.enableSubmitButton();
         },
 
         remove: function(tabCount) {
@@ -82,6 +83,7 @@
 
             this.changeTab(tabCount);
             this.updateTabCountLabel();
+            metadata.enableSubmitButton();
         },
 
         clearInputValues: function(item) {

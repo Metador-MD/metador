@@ -1,7 +1,7 @@
 'use strict';
 
 $('.-js-duplicatable-area').multiForm();
-
+$('.-js-multi-input').multiInput();
 
 var MetadataForm = function() {};
 
@@ -100,7 +100,7 @@ MetadataForm.prototype = {
 
 var metadata = new MetadataForm();
 
-$(".-js-user-input").change(function() {
+$(document).on('change', '.-js-user-input', function() {
     metadata.enableSubmitButton();
     metadata.validate(this);
 });
