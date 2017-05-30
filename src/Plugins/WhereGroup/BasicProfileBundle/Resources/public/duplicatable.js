@@ -1,3 +1,5 @@
+/*
+
 'use strict';
 
 var Duplicatable = function() {};
@@ -15,9 +17,13 @@ Duplicatable.prototype = {
         return parseInt(this.getItem(item).attr('data-count'));
     },
 
-    setCount: function(item, count) {
+    setCount: function(item, count, label) {
         this.getItem(item).attr('data-count', count);
-        this.getItem(item).find('.-js-data-count-label').text(count);
+        this.getItem(item).find('.-js-data-count-label').text(label);
+    },
+
+    getItemCount: function(item) {
+        return parseInt(this.getItem(item).find('[data-tab]').length);
     },
 
     getCurrentTabCount: function(item) {
@@ -43,6 +49,10 @@ Duplicatable.prototype = {
 
     setTabLabel: function(item, tabCount, name) {
         this.getItem(item).find('[data-tab="' + tabCount + '"]').find('.-js-title-label').text(name);
+
+        if (name !== '' && this.getCurrentTabCount(item) === 0) {
+            this.setCount(item, this.getCount(item), '1');
+        }
     },
 
     replaceCounter: function(split, delimiterStart, delimiterEnd, count, subCount, string) {
@@ -68,16 +78,42 @@ Duplicatable.prototype = {
     },
 
     remove: function(item, tabCount) {
+        var rootItem = this.getItem(item);
+        var itemCount = this.getItemCount(item);
+
+        if (itemCount === 1) {
+            tabCount = rootItem.find('[data-tab]').attr('data-tab');
+
+            this.clearInputValues(rootItem);
+            this.setTabLabel(rootItem, tabCount, '');
+            this.setCount(rootItem, this.getCount(rootItem), '0');
+
+            return false;
+        }
+
         this.getItem(item).find('[data-tab-content="' + tabCount + '"]').remove();
         this.getItem(item).find('[data-tab="' + tabCount + '"]').remove();
 
-        // find item
-        var xxx = this.getItem(item)
-            .find('.-js-advanced-select-option').attr('data-tab');
+        tabCount = rootItem.find('[data-tab]').first().attr('data-tab');
 
-        console.log(this.getItem(item));
+        this.changeTab(rootItem, tabCount);
+        this.setCount(rootItem, this.getCount(rootItem), --itemCount);
+    },
 
-        this.changeTab(item, tabCount);
+    clearInputValues: function(item) {
+        var self = this;
+
+        $(item).each(function() {
+            // Todo: clear checkbox $(this).prop("tagName");
+
+            if ($(this).val() !== '') {
+                $(this).val('')
+            }
+
+            if ($(this).children().size() > 0) {
+                self.clearInputValues($(this).children());
+            }
+        });
     },
 
     changeCloneNames: function(clone, count, subCount) {
@@ -147,7 +183,7 @@ Duplicatable.prototype = {
             var labelClone = duplicateOptions.children().first().clone();
             var contentClone = duplicateContent.children().first().clone();
 
-            self.setCount(this, count);
+            self.setCount(this, count, self.getItemCount(this) + 1);
 
             labelClone.attr('data-tab', count).find('.-js-title-label').text('');
             contentClone.attr('data-tab-content', count);
@@ -171,3 +207,4 @@ Duplicatable.prototype = {
 var duplicatable = new Duplicatable();
 
 duplicatable.init();
+*/

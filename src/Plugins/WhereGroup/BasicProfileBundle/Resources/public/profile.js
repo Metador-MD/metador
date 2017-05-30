@@ -1,5 +1,8 @@
 'use strict';
 
+$('.-js-duplicatable-area').multiForm();
+
+
 var MetadataForm = function() {};
 
 MetadataForm.prototype = {
