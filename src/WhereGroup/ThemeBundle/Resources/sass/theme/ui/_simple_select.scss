@@ -1,0 +1,92 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.simple-select {
+    width: 100%;
+    outline: none;
+    color: $font;
+    display: block;
+    position: relative;
+    border: 1px solid $border;
+    border-radius: 2px;
+    background-color: lighten($background, 1%);
+    padding-right: 40px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px);
+    background-size:
+        5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+    }
+
+    @extend .clearfix;
+    @include normal-item();
+
+    &:hover:not(.disabled) {
+        cursor: pointer;
+        box-shadow: -3px 0px 0px 0px $success;
+        background-color: darken($background, 1%);
+    }
+
+    &:focus {
+        background-color: darken($background, 1%);
+    }
+
+    & > .simple-select-label {
+        font-size: 0.8em;
+
+        & > button,
+        & > a {
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+
+            @include normal-item(false, false);
+        }
+    }
+
+    & > .simple-select-options {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: $normal-item-height;
+        background-color: lighten($background, 1%);
+        border: 1px solid $border;
+        z-index: 2;
+
+        & > .simple-select-option {
+            cursor: pointer;
+            font-size: 0.8em;
+            @include normal-item(false, true);
+
+            &:hover {
+                box-shadow: -3px 0px 0px 0px $success;
+                background-color: darken($background, 1%);
+            }
+        }
+    }
+
+    &:hover:not(.disabled) {
+        & > .simple-select-options {
+            display: block;
+        }
+    }
+}

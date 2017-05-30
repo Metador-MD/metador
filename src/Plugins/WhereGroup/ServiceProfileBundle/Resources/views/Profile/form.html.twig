@@ -73,16 +73,29 @@
                     <input type="hidden" id="validation" class="-js-toggle-switch-input" value="0" />
                 </div>
             </div>
+
             <div class="left-menu-content">
                 {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata)) %}
-                <button class="btn margin-b -js-metadata-button full" type="submit" name="submit" value="save" disabled>
-                    <span class="icon-download -js-metadata-button-status"></span> {% trans %}speichern{% endtrans %}
-                </button>
+                <div class="simple-select disabled -js-metadata-save-button">
+                    <div class="simple-select-label">
+                        <button type="submit" class="reset -js-metadata-button" name="submit" value="save" disabled>
+                            <span class="icon-download -js-metadata-button-status"></span>
+                            {% trans %}Speichern und beenden{% endtrans %}
+                        </button>
+                    </div>
+                    <div class="simple-select-options">
+                        <div class="simple-select-option">
+                            <span class="form-icon icon-download"></span> {% trans %}Zwischenstand speichern{% endtrans %}
+                        </div>
+                        <div class="simple-select-option">
+                            <span class="form-icon icon-sign-out"></span> {% trans %}Abbrechen{% endtrans %}
+                        </div>
+                    </div>
+                </div>
                 {% else %}
                     no!
                 {% endif %}
             </div>
-
         </div>
         <div class="center-right">
             <div class="content">
