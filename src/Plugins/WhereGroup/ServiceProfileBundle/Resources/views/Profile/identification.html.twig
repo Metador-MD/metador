@@ -19,7 +19,7 @@
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                <h2 class="title no-m">{% trans %}Bezeichner{% endtrans %}</h2>
+                <h2 class="title">{% trans %}Bezeichner{% endtrans %}</h2>
             </div>
         </div>
         <div class="row r-2">
@@ -37,5 +37,4 @@
     {% endif %}
 
     {{ profileForm.multi_input('p[onlineResource][]', p['onlineResource'], '', 'Ressourcenverweis', 'mandatory', '') }}
-
 </div>

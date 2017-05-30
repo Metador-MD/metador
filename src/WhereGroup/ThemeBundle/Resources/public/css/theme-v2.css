@@ -372,16 +372,16 @@ html, body {
 .md .grid .row > .col:last-child {
   float: right; }
 
-.md .grid.space .row {
+.md .grid.row-space .row {
   margin-bottom: 20px; }
 
-.md .grid.space .row > .col:not(:first-child):not(:last-child) {
+.md .grid.row-space .row > .col:not(:first-child):not(:last-child) {
   margin: 0 10px; }
 
-.md .grid.space .row > .col:first-child {
+.md .grid.row-space .row > .col:first-child {
   margin: 0 10px 0 0; }
 
-.md .grid.space .row > .col:last-child {
+.md .grid.row-space .row > .col:last-child {
   margin: 0 0 0 10px; }
 
 .md .grid.space.remove-last-space .row:last-child {
