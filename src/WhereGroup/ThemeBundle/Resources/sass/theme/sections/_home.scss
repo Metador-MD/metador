@@ -24,6 +24,44 @@ $home-menu-height: 35px;
     & > .map {
         @include pos($large-item-height, 0, 0, 0);
     }
+
+    .map-dialog-left-menu {
+        z-index: 1;
+        width: 0;
+        @include pos($large-item-height, '', 0, 0);
+
+        .map-dialog-left-content {
+            background-color: $white;
+            border-right: 1px solid $border;
+            @include pos(0, 0, 0, 0);
+        }
+
+        .map-dialog-left-menu-button {
+            z-index: 2;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            height: 30px;
+            width: 30px;
+            border-width: 1px 1px 1px 0;
+            border-style: solid;
+            border-color: $border;
+            position: absolute;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            left: -1px;
+            background: $white;
+            @include calc('top', '50% - 15px');
+        }
+
+        &.active {
+            width: 300px;
+
+            & > .map-dialog-left-menu-button {
+                left: 299px;
+            }
+        }
+    }
 }
 
 .md .home {
