@@ -2016,6 +2016,48 @@ html, body {
   right: 0;
   bottom: 0; }
 
+.md .map-dialog .map-dialog-left-menu {
+  z-index: 1;
+  width: 0;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  bottom: 0; }
+
+.md .map-dialog .map-dialog-left-menu .map-dialog-left-content {
+  background-color: #fff;
+  border-right: 1px solid #e1e1e1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+.md .map-dialog .map-dialog-left-menu .map-dialog-left-menu-button {
+  z-index: 2;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-width: 1px 1px 1px 0;
+  border-style: solid;
+  border-color: #e1e1e1;
+  position: absolute;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  left: -1px;
+  background: #fff;
+  top: -webkit-calc(50% - 15px);
+  top: -moz-calc(50% - 15px);
+  top: calc(50% - 15px); }
+
+.md .map-dialog .map-dialog-left-menu.active {
+  width: 300px; }
+
+.md .map-dialog .map-dialog-left-menu.active > .map-dialog-left-menu-button {
+  left: 299px; }
+
 .md .home {
   border: 1px solid #e1e1e1;
   border-radius: 2px;
