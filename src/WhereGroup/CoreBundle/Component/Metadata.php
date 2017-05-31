@@ -246,6 +246,26 @@ class Metadata implements MetadataInterface
 
     /**
      * @param $id
+     */
+    public function lock($id)
+    {
+        $entity = $this->getById($id);
+        $entity->setLocked(true);
+        $this->save($entity);
+    }
+
+    /**
+     * @param $id
+     */
+    public function unlock($id)
+    {
+        $entity = $this->getById($id);
+        $entity->setLocked(false);
+        $this->save($entity);
+    }
+
+    /**
+     * @param $id
      * @return bool
      */
     public function deleteById($id)

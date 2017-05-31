@@ -107,6 +107,8 @@ class ProfileController extends Controller
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
+        $this->get('metadata')->lock($id);
+
         $template = $this
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
@@ -141,7 +143,17 @@ class ProfileController extends Controller
             $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
         }
 
-        if ($request->get('lock') === 'false') {
+        if ($request->get('submit') === 'abort') {
+            if ($id !== false) {
+                $this->get('metadata')->unlock($id);
+            }
+
+            $this
+                ->get('metador_frontend_command')
+                ->redirect($this->generateUrl('metador_home'), $response);
+
+            return new AjaxResponse($response);
+        } elseif ($request->get('submit') === 'close') {
             $p['_remove_lock'] = true;
         }
 
@@ -178,7 +190,7 @@ class ProfileController extends Controller
         ));
 
         // Add redirect command to response
-        if ($request->get('lock') === 'false') {
+        if ($request->get('submit') === 'close') {
             $this
                 ->get('metador_frontend_command')
                 ->redirect($this->generateUrl('metador_home'), $response);

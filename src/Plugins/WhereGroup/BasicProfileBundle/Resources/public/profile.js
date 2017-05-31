@@ -22,17 +22,19 @@ MetadataForm.prototype = {
     enableSubmitButton: function() {
         this.setUserinput(true);
         this.submitButton.prop('disabled', false).addClass('success');
-        $(this.submitButton).closest('.-js-metadata-save-buttons').removeClass('disabled');
+        $('.-js-metadata-save').removeClass('disabled');
     },
 
     disableSubmitButton: function() {
         this.setUserinput(false);
         this.submitButton.prop('disabled', true).removeClass('success');
+        $('.-js-metadata-save').addClass('disabled');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
     activateSubmitButton: function() {
         this.submitButton.prop('disabled', true);
+        $('.-js-metadata-save').addClass('disabled');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
@@ -132,28 +134,14 @@ $('form').ajaxForm({
             }
         }
 
-
-        var lock = {
-            name: "lock",
-            required: false,
-            type: "hidden",
-            value: "true"
-        };
-
-        if (confirm('Klicken Sie ok um den Datensatz nach dem Speichern freizugeben.')) {
-            lock.value = "false";
-        }
-
-        form.push(lock);
-
         metadata.activateSubmitButton();
     },
     success: function(data) {
-        if (typeof data.metadata.id !== 'undefined') {
+        if (data && metadata && metadata.id) {
             $('[name="p[_id]"]').val(data.metadata.id);
         }
 
-        if (typeof data.metadata.uuid !== 'undefined') {
+        if (data && metadata && metadata.uuid) {
             $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
         }
 

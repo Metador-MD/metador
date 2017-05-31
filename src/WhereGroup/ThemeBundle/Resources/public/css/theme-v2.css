@@ -1482,6 +1482,9 @@ html, body {
   height: 35px;
   line-height: 35px; }
 
+.simple-select .simple-select-default-button.success {
+  box-shadow: -3px 0px 0px 0px #77ca60; }
+
 .simple-select .simple-select-button {
   box-sizing: content-box;
   float: right;
@@ -1523,6 +1526,14 @@ html, body {
   height: 35px;
   line-height: 35px; }
 
+.simple-select .simple-select-button > .simple-select-options > .simple-select-option.metadata-abort-button {
+  color: #444;
+  cursor: pointer; }
+
+.simple-select .simple-select-button > .simple-select-options > .simple-select-option.metadata-abort-button:hover {
+  box-shadow: -3px 0px 0px 0px #77ca60;
+  background-color: #f4f4f4; }
+
 .simple-select .simple-select-button:hover > .simple-select-options {
   display: block; }
 
@@ -1537,13 +1548,6 @@ html, body {
 
 .simple-select:not(.disabled) .metadata-save-button {
   color: #444; }
-
-.simple-select .metadata-abort-button {
-  color: #444;
-  cursor: pointer; }
-
-.simple-select .metadata-abort-button:hover {
-  background-color: #f4f4f4; }
 
 .light-normal, .md .notify {
   color: #444;

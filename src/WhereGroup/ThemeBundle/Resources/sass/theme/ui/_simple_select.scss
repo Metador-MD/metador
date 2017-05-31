@@ -5,7 +5,6 @@
 .simple-select {
     width: 100%;
     outline: none;
-    //color: $font;
     display: block;
     position: relative;
     border: 1px solid $border;
@@ -24,6 +23,10 @@
         @extend .reset;
         @include calc('width', '100% - 40px');
         @include normal-item(false, false);
+
+        &.success {
+            box-shadow: -3px 0px 0px 0px $success;
+        }
     }
 
     .simple-select-button {
@@ -80,6 +83,16 @@
 
                 @extend .reset;
                 @include normal-item(false, true);
+
+                &.metadata-abort-button {
+                    color: $font;
+                    cursor: pointer;
+
+                    &:hover {
+                        box-shadow: -3px 0px 0px 0px $success;
+                        background-color: darken($background, 1%);
+                    }
+                }
             }
         }
 
@@ -103,14 +116,5 @@
 
     &:not(.disabled) .metadata-save-button {
         color: $font;
-    }
-
-    .metadata-abort-button {
-        color: $font;
-        cursor: pointer;
-
-        &:hover {
-            background-color: darken($background, 1%);
-        }
     }
 }

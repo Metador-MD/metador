@@ -1,8 +1,19 @@
-.toggle-public,
-.toggle-validation {
-    cursor: pointer;
+@import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/config';
 
-    &:hover {
+.switch-row {
+    height: 40px;
+    line-height: 40px;
 
+    .switch-label {
+        font-size: 0.8em;
+        cursor: pointer;
+    }
+
+    & > span[class^="icon-"] {
+        vertical-align: middle;
+    }
+
+    & > span[class^="icon-toggle-on"] {
+        color: $info;
     }
 }

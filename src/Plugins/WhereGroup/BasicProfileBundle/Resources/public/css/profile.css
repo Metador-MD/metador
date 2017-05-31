@@ -1,2 +1,13 @@
-.toggle-public, .toggle-validation {
+.switch-row {
+  height: 40px;
+  line-height: 40px; }
+
+.switch-row .switch-label {
+  font-size: 0.8em;
   cursor: pointer; }
+
+.switch-row > span[class^="icon-"] {
+  vertical-align: middle; }
+
+.switch-row > span[class^="icon-toggle-on"] {
+  color: #4dacfe; }
