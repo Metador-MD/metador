@@ -99,7 +99,7 @@ export class Ol4Map {
 
     private constructor(options: any) { // singleton
         // init given crses
-        // ol['ENABLE_RASTER_REPROJECTION'] = false;
+        ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
         this.scales = options['view']['scales'];
@@ -192,6 +192,8 @@ export class Ol4Map {
                 this.olMap.getView().calculateExtent(this.olMap.getSize()),
                 this.olMap.getView().getProjection()
             );
+            let projection = this.olMap.getView().getProjection();
+            let center = this.olMap.getView().getCenter();
             let newView = new ol.View({
                 projection: proj,
                 resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
@@ -209,7 +211,11 @@ export class Ol4Map {
                 }
             }
             this.olMap.setView(newView);
+            console.log(center);
             this.olMap.getView().fit(extent.getPolygonForExtent(proj), this.olMap.getSize());
+            // let cpoint = <ol.geom.Point> new ol.geom.Point(center).transform(projection, proj);
+            // console.log(cpoint.getCoordinates());
+            // this.olMap.getView().setCenter(cpoint.getCoordinates());
         }
         // console.log(ol['ENABLE_RASTER_REPROJECTION'],this.olMap.getView().getProjection());
     }
