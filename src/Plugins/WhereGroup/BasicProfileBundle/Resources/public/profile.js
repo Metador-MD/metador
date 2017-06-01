@@ -22,6 +22,7 @@ MetadataForm.prototype = {
     enableSubmitButton: function() {
         this.setUserinput(true);
         this.submitButton.prop('disabled', false).addClass('success');
+        $(this.submitButton).closest('.-js-metadata-save-buttons').removeClass('disabled');
     },
 
     disableSubmitButton: function() {

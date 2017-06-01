@@ -1468,69 +1468,41 @@ html, body {
   display: block;
   position: relative;
   border: 1px solid #e1e1e1;
-  border-radius: 2px;
   background-color: #fafafa;
-  padding-right: 40px;
+  height: 35px;
+  line-height: 35px; }
+
+.simple-select .simple-select-label {
+  float: left;
+  font-size: 0.8em;
+  text-align: center;
+  width: -webkit-calc(100% - 35px);
+  width: -moz-calc(100% - 35px);
+  width: calc(100% - 35px);
+  height: 35px;
+  line-height: 35px; }
+
+.simple-select .simple-select-button {
+  float: right;
+  width: 35px;
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
   background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
   background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  font-size: 1em;
-  padding: 0 20px;
-  height: 35px;
-  line-height: 35px; }
+  background-repeat: no-repeat; }
 
-.simple-select::-ms-expand {
+.simple-select .simple-select-button::-ms-expand {
   display: none; }
 
-.simple-select:-moz-focusring {
+.simple-select .simple-select-button:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000; }
 
-.simple-select:hover:not(.disabled) {
-  cursor: pointer;
-  box-shadow: -3px 0px 0px 0px #77ca60;
+.simple-select .simple-select-button:hover {
   background-color: #f4f4f4; }
-
-.simple-select:focus {
-  background-color: #f4f4f4; }
-
-.simple-select > .simple-select-label {
-  font-size: 0.8em; }
-
-.simple-select > .simple-select-label > button, .simple-select > .simple-select-label > a {
-  height: 100%;
-  width: 100%;
-  cursor: pointer;
-  height: 35px;
-  line-height: 35px; }
-
-.simple-select > .simple-select-options {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 35px;
-  background-color: #fafafa;
-  border: 1px solid #e1e1e1;
-  z-index: 2; }
-
-.simple-select > .simple-select-options > .simple-select-option {
-  cursor: pointer;
-  font-size: 0.8em;
-  padding: 0 20px;
-  height: 35px;
-  line-height: 35px; }
-
-.simple-select > .simple-select-options > .simple-select-option:hover {
-  box-shadow: -3px 0px 0px 0px #77ca60;
-  background-color: #f4f4f4; }
-
-.simple-select:hover:not(.disabled) > .simple-select-options {
-  display: block; }
 
 .light-normal, .md .notify {
   color: #444;
