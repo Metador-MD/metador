@@ -10,53 +10,58 @@
 
 {% block center %}
 
-<div class="map-dialog -js-map-dialog">
-    <div class="map-menu">
+    <div class="map-dialog -js-map-dialog">
+        <div class="map-menu">
         <span class="btn medium">
             <span class="icon-location"></span> Neu
         </span>
-        <span class="btn medium">
+            <span class="btn medium">
             <span class="icon-map"></span> Karte
         </span>
-        <span class="btn medium">
-            <span class="icon-map -js-zoom-box"></span> Zoom
+            <span class="btn medium -js-zoom-box">
+            <span class="icon-map"></span> Zoom
         </span>
-        <select class="-js-draw-type">
-            <option value="NONE">None</option>
-            <option value="BOX">Box</option>
-            <option value="POLYGON">Polygon</option>
-        </select>
-        <select class="-js-crs-code">
-            <option value="EPSG:4326">EPSG:4326</option>
-            <option value="EPSG:4258">EPSG:4258</option>
-            <!--option value="EPSG:31466">EPSG:31466</option>
-            <option value="EPSG:31467">EPSG:31467</option-->
-            <option value="EPSG:25832">EPSG:25832</option>
-        </select>
-    </div>
-    <div class="map-dialog-left-menu -js-layertree">
-        <div class="map-dialog-left-content">
-
+            <select class="-js-draw-type">
+                <option value="NONE">None</option>
+                <option value="BOX">Box</option>
+                <option value="POLYGON">Polygon</option>
+            </select>
+            <select class="-js-crs-code">
+                <option value="EPSG:4326">EPSG:4326</option>
+                <option value="EPSG:4258">EPSG:4258</option>
+                <!--option value="EPSG:31466">EPSG:31466</option>
+                <option value="EPSG:31467">EPSG:31467</option-->
+                <option value="EPSG:25832">EPSG:25832</option>
+            </select>
         </div>
-        <div class="map-dialog-left-menu-button -js-toggle-layertree">
-            +
+        <div class="map-dialog-left-menu -js-map-dialog">
+            <div class="map-dialog-left-content -js-map-menu">
+                <div class="-js-map-layertree">
+                    <h4>Layerbaum</h4>
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="map-dialog-left-menu-button -js-toggle-layertree">
+                +
+            </div>
+        </div>
+        <div class="map -js-map" id="map"></div>
+    </div>
+
+    <div class="home -js-home">
+        <div class="source">
+            <ul class="source-list">
+                {% for slug, source in sourceConfig %}
+                    <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}"
+                        data-id="source-{{ slug }}">{{ source['name'] }}</li>
+                {% endfor %}
+            </ul>
+            {% include 'MetadorThemeBundle:Home:new-profile.html.twig' %}
+        </div>
+        <div class="search-content">
+            {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
+            {% include 'MetadorThemeBundle:Home:result.html.twig' %}
         </div>
     </div>
-    <div class="map -js-map" id="map"></div>
-</div>
-
-<div class="home -js-home">
-    <div class="source">
-        <ul class="source-list">
-        {% for slug, source in sourceConfig  %}
-            <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}" data-id="source-{{ slug }}">{{ source['name'] }}</li>
-        {% endfor %}
-        </ul>
-        {% include 'MetadorThemeBundle:Home:new-profile.html.twig' %}
-    </div>
-    <div class="search-content">
-        {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
-        {% include 'MetadorThemeBundle:Home:result.html.twig' %}
-    </div>
-</div>
 {% endblock %}

@@ -15,20 +15,41 @@ var metadorMapConfig = {
         startExtent: [9, 49, 11, 53],
         scales: [5000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000, 2000000, 5000000, 10000000]//, 20000000, 50000000]
     },
+    styles: {
+        highlight: {
+            fill: {
+                color: 'rgba(60, 180, 255, 0.2)'
+            },
+            stroke: {
+                color: 'rgba(60, 180, 255, 1.0)',
+                width: 2
+            }
+        },
+        search: {
+            fill: {
+                color: 'rgba(255, 180, 60, 0.2)'
+            },
+            stroke: {
+                color: 'rgba(255, 180, 60, 1.0)',
+                width: 2
+            }
+        }
+    },
     source: [
         {
             type: 'WMS',
             url: 'http://osm-demo.wheregroup.com/service?',
+            title: 'OSM',
             params: {
                 LAYERS: 'osm',
                 VERSION: '1.1.1',
                 FORMAT: 'image/png'
             }
-        }
-        ,
+        },
         {
             type: 'WMS',
             url: 'http://wms.wheregroup.com/cgi-bin/mapbender_user.xml?',
+            title: 'MB-User',
             params: {
                 LAYERS: 'Mapbender',
                 VERSION: '1.1.1',
@@ -47,6 +68,6 @@ var metadorMapConfig = {
         // "EPSG:25833": "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
     }
 };
-let metadorMap =metador.Ol4Map.create(metadorMapConfig);
+let metadorMap = metador.Ol4Map.create(metadorMapConfig);
 metador['metadorMap'] = metadorMap;
 // console.log(metador['metadorMap']);
