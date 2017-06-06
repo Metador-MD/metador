@@ -33,7 +33,7 @@ var conf = {
         js: [
             'web/assets/vendor/jquery/dist/jquery.min.js',
             'web/assets/vendor/proj4js/dist/proj4.js',
-            'web/assets/vendor/OpenLayers/ol.js',
+            // 'web/assets/vendor/OpenLayers/ol-debug.js',
             'web/assets/vendor/jquery-form/dist/jquery.form.min.js'
         ],
         css: [

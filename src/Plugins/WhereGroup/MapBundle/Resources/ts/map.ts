@@ -3,6 +3,8 @@ declare class proj4 {
     static defs(name: string, def: string): void;
 }
 
+declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
+
 export class Ol4Utils {
     /* 
      * units: 'degrees'|'ft'|'m'|'us-ft'
@@ -49,6 +51,29 @@ export class Ol4Utils {
     public static getProj(projCode: string): ol.proj.Projection {
         return ol.proj.get(projCode);
     }
+
+    public static getStyle(options: any): ol.style.Style {
+        return new ol.style.Style({
+            fill: new ol.style.Fill(options['fill']),
+            stroke: new ol.style.Stroke(options['stroke'])//,
+            // image: new ol.style.Circle({
+            //     radius: 7,
+            //     fill: new ol.style.Fill(options['fill'])
+            // })
+        });
+    }
+
+// fill
+// {
+//     color: rgba(255, 255, 255, 0.2)
+// }
+// stroke
+// {
+//     color: '#ffcc33',
+//     width: 2
+//     dash:
+// }
+// image
 }
 
 export class Ol4Geom {
@@ -87,8 +112,11 @@ export class Ol4Extent extends Ol4Geom {
         return new Ol4Extent(geom, proj);
     }
 }
+export const UUID = 'uuid';
+export const TITLE = 'title';
 
 export class Ol4Map {
+    private static _uuid = 0;
     private static _instance: Ol4Map = null; // singleton
     protected olMap: ol.Map = null;
     protected scales: number[];
@@ -96,12 +124,20 @@ export class Ol4Map {
     protected startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
     protected maxExtent: Ol4Extent = null;
     protected drawer: Ol4Drawer;
+    protected styles: Object;
+    protected hgLayer: ol.layer.Vector;
+    protected dragzoom: ol.interaction.DragZoom;
+
+    private static getUuid(prefix: string = ''): string {
+        return prefix + (++Ol4Map._uuid);
+    }
 
     private constructor(options: any) { // singleton
         // init given crses
         // ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
+        this.styles = options['styles'];
         this.scales = options['view']['scales'];
         this.startExtent = Ol4Extent.fromArray(options['view']['startExtent'], proj);
         this.maxExtent = Ol4Extent.fromArray(options['view']['maxExtent'], proj);
@@ -111,7 +147,15 @@ export class Ol4Map {
         });
         for (const source of options['source']) {
             if (source['type'] === 'WMS') {
-                this.olMap.addLayer(Ol4WmsLayer.createLayer(source['url'], source['params'], proj, true));
+                let wmsLayer = this.addLayer(
+                    Ol4WmsLayer.createLayer(source['url'],
+                        source['params'],
+                        proj,
+                        source['visible'],
+                        parseFloat(source['opacity'])),
+                    source['title']
+                );
+                addSource(wmsLayer.get('uuid'), wmsLayer.get('title'), wmsLayer.getVisible(), wmsLayer.getOpacity());
             }
         }
         this.olMap.setView(
@@ -126,6 +170,7 @@ export class Ol4Map {
         this.olMap.addControl(new ol.control.ZoomToExtent({
             extent: this.maxExtent.getExtent(proj)
         }));
+        this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
             // {
             //     coordinateFormat: function (coordinates) {
@@ -143,42 +188,75 @@ export class Ol4Map {
                 throw new Error('ol.layer.Group as Layer is not suported');
             } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
 
-
-                console.log(source.getProperties());
             }
         }
+        this.hgLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['highlight']));
     }
 
-    public static create(options: any): Ol4Map {
+    static create(options: any): Ol4Map {
         if (!Ol4Map._instance) {// singleton
             Ol4Map._instance = new Ol4Map(options);
         }
         return Ol4Map._instance;
     }
 
-    updateMap(): void {
-        this.olMap.updateSize();
+    // renderTreeOption() {
+    //     let ul = document.querySelector('.-js-map-layertree ul');
+    //     var button = document.createElement("button");
+    //     document.body.append(button);
+    //     button.style.position = 'absolute';
+    //     button.style.top = '10px';
+    //     button.style.left = '10px';
+    //     button.style.zIndex = 10000;
+    //     button.onclick = copyClicked;
+    // }
+
+    getDrawer(): Ol4Drawer {
+        return this.drawer;
     }
 
-    public setDraw(shapeType: SHAPES = null, onDrawEnd: Function = null) {
-        if (!this.drawer) {
-            let vlayer = new ol.layer.Vector({
-                source: new ol.source.Vector({wrapX: false})
-            });
-            this.olMap.addLayer(vlayer);
-            this.drawer = new Ol4Drawer(this.olMap, vlayer);
+    addVectorLayer(style: ol.style.Style): ol.layer.Vector {
+        let options = {
+            wrapX: false
+        };
+        let vLayer = new ol.layer.Vector({
+            source: new ol.source.Vector(options),
+            style: style
+        });
+        return <ol.layer.Vector>this.addLayer(vLayer);
+    }
+
+    addLayer(layer: ol.layer.Base, title: string = null): ol.layer.Base {
+        layer.set(UUID, Ol4Map.getUuid('olay-'));
+        if(title) {
+            layer.set(TITLE, title);
         }
-        this.drawer.setInteraction(typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType);
-        if (onDrawEnd && this.drawer.getInteraction()) {
-            let drawer = this.drawer;
-            this.drawer.getInteraction().on(
-                'drawend',
-                function () {
-                    drawer.setInteraction(SHAPES.NONE);
-                    onDrawEnd;
-                }
-            );
+        this.olMap.addLayer(layer);
+        return layer;
+    }
+
+    removeLayer(layer: ol.layer.Base): void {
+        this.olMap.removeLayer(layer);
+    }
+
+
+    private findLayer(uuid: string): ol.layer.Base {
+        let layers = this.olMap.getLayers().getArray();
+        let llength = layers.length;
+        for (let layer of layers) {
+            let source: ol.source.Source;
+            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
+                console.error('ol.layer.Group as Layer is not suported');
+                throw new Error('ol.layer.Group as Layer is not suported');
+            } else if (layer.get(UUID) === uuid) {
+                return layer;
+            }
         }
+        return null;
+    }
+
+    updateMap(): void {
+        this.olMap.updateSize();
     }
 
     setCrs(crs: string) {
@@ -192,6 +270,8 @@ export class Ol4Map {
                 this.olMap.getView().calculateExtent(this.olMap.getSize()),
                 this.olMap.getView().getProjection()
             );
+            let projection = this.olMap.getView().getProjection();
+            let center = this.olMap.getView().getCenter();
             let newView = new ol.View({
                 projection: proj,
                 resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
@@ -209,17 +289,93 @@ export class Ol4Map {
                 }
             }
             this.olMap.setView(newView);
+            console.log(center);
             this.olMap.getView().fit(extent.getPolygonForExtent(proj), this.olMap.getSize());
+            // let cpoint = <ol.geom.Point> new ol.geom.Point(center).transform(projection, proj);
+            // console.log(cpoint.getCoordinates());
+            // this.olMap.getView().setCenter(cpoint.getCoordinates());
         }
-        // console.log(ol['ENABLE_RASTER_REPROJECTION'],this.olMap.getView().getProjection());
+    }
+
+    setVisible(layerUiid: string, visiblity: boolean): void {
+        let layer: ol.layer.Base = this.findLayer(layerUiid);
+        if (layer) {
+            layer.setVisible(visiblity);
+        }
+    }
+
+    setOpacity(layerUiid: string, opacity: number): void {
+        let layer: ol.layer.Base = this.findLayer(layerUiid);
+        if (layer) {
+            layer.setOpacity(opacity);
+        }
+    }
+
+    dragZoom(activate: boolean, onZoomEnd: Function = null) {
+        if (!this.dragzoom) {
+            this.dragzoom = new ol.interaction.DragZoom({
+                condition: function () {
+                    return true;
+                }
+            });
+            let dragzoom = this.dragzoom;
+            let map = this.olMap;
+            this.dragzoom.on('boxend',
+                function (event: ol.interaction.Draw.Event) {
+                    map.removeInteraction(dragzoom);
+                    if (onZoomEnd) {
+                        onZoomEnd();
+                    }
+                });
+        }
+        if (activate) {
+            this.olMap.addInteraction(this.dragzoom);
+        } else {
+            this.olMap.removeInteraction(this.dragzoom);
+        }
+    }
+
+    setDraw(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+        let ol4map = this;
+        let olMap = this.olMap;
+        if (!this.drawer) {
+            let vLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['search']));
+            vLayer.setMap(this.olMap);
+            this.drawer = new Ol4Drawer(vLayer);
+        }
+        const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType;
+        if (this.drawer.getInteraction()) {
+            this.olMap.removeInteraction(this.drawer.getInteraction());
+        }
+        this.drawer.setInteraction(shape);
+        if (this.drawer.getInteraction()) {
+            this.getDrawer().getLayer().getSource().clear();
+            this.olMap.addInteraction(this.drawer.getInteraction());
+            this.drawer.getInteraction().on(
+                'drawstart',
+                function (e) {
+                    ol4map.getDrawer().getLayer().getSource().clear();
+                }
+            );
+            this.drawer.getInteraction().on(
+                'drawend',
+                function (e) {
+                    let geom = e.feature.getGeometry().transform(olMap.getView().getProjection(), 'EPSG:4326');
+                    onDrawEnd(geom);
+                }
+            );
+        } else {
+            this.getDrawer().getLayer().getSource().clear();
+        }
     }
 }
 
 export class Ol4WmsLayer {
-    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean): ol.layer.Image {
+    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Image {
         let sourceWms = new ol.layer.Image({
             source: Ol4WmsLayer.createSource(url, params, proj),
-            visible: visible
+            visible: visible,
+            opacity: opacity
         });
         return sourceWms;
     }
@@ -245,13 +401,16 @@ export enum SHAPES {NONE, BOX, POLYGON}
 ;
 
 export class Ol4Drawer {
-    protected map: ol.Map;
+    // private static _instance: Ol4Drawer;
     protected layer: ol.layer.Vector;
     protected interaction: ol.interaction.Draw;
 
-    constructor(map: ol.Map, layer: ol.layer.Vector) {
-        this.map = map;
+    constructor(layer: ol.layer.Vector) {
         this.layer = layer;
+    }
+
+    public getLayer(): ol.layer.Vector {
+        return this.layer;
     }
 
     public getInteraction() {
@@ -259,7 +418,6 @@ export class Ol4Drawer {
     }
 
     public setInteraction(type: SHAPES) {
-        this.removeInteraction();
         switch (type) {
             case SHAPES.BOX:
                 this.interaction = new ol.interaction.Draw({
@@ -276,19 +434,6 @@ export class Ol4Drawer {
                 break;
             default:
                 this.interaction = null;
-        }
-        this.addInteraction();
-    }
-
-    private removeInteraction() {
-        if (this.interaction) {
-            this.map.removeInteraction(this.interaction);
-        }
-    }
-
-    private addInteraction() {
-        if (this.interaction) {
-            this.map.addInteraction(this.interaction);
         }
     }
 }
