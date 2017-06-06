@@ -1,3 +1,4 @@
+// map menu
 $('.-js-toggle-map').on('click', function () {
     $(this).toggleClass('active');
     $('.-js-map-dialog').show();
@@ -47,15 +48,28 @@ $('.-js-zoom-box').on('click', function () {
     }
 });
 
+$('#map-menu-load-wms-button').on('click', function(){
+    var $input = $('#map-menu-load-wms-input');
+    $.ajax({
+        url: $input.attr('data-url'),
+        data: {
+            url: encodeURIComponent($input.val())
+        }
+    }).done(function(data){
+        Window.metador.metadorMap.addLayerForOptions(data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error(errorThrown);
+    });
+});
+
+// map side pane
 $(document).on('change', '.-js-map-source-visible', function () {
     var $this = $(this);
-    // console.log($this.parents('li:first').attr('id'), $this.prop('checked'));
     Window.metador.metadorMap.setVisible($this.parents('li:first').attr('id'), $this.prop('checked'));
 });
 
 $(document).on('change', '.-js-map-source-opacity', function () {
     var $this = $(this);
-    console.log($this.parents('li:first').attr('id'), $this.val());
     Window.metador.metadorMap.setOpacity($this.parents('li:first').attr('id'), $this.val());
 });
 
@@ -64,9 +78,9 @@ function addSource(id, title, visible, opacity) {
     var $chkwrap = $('<div class="form-wrapper medium"></div>');
     var $chck = $('<input id="chb-'+id+'" class="check -js-map-source-visible" type="checkbox">')
     $chck.prop('checked', visible);
-    console.log(visible);
     $chkwrap.append($chck);
     $chkwrap.append('<label class="form-label" for="chb-'+id+'">' +title+'</label>');
+    // TODO label set overflow hidden for max-width
     $li.append($chkwrap);
     var $selwrap = $('<div class="form-wrapper"></div>');
     var $sel = $('<select class="select -js-map-source-opacity"></select>');
@@ -76,5 +90,5 @@ function addSource(id, title, visible, opacity) {
     $sel.val(opacity);
     $selwrap.append($sel);
     $li.append($selwrap);
-    $('.-js-map-layertree').append($li);
+    $('.-js-map-layertree').prepend($li); // last layer as first at list
 }

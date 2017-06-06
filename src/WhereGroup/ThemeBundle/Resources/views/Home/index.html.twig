@@ -13,8 +13,8 @@
     <div class="map-dialog -js-map-dialog">
         <div class="map-menu">
             <span class="btn medium -js-zoom-box">
-            <span class="icon-map"></span> Zoom
-        </span>
+                <span class="icon-map"></span> Zoom
+            </span>
             <select class="select -js-draw-type">
                 <option value="NONE">None</option>
                 <option value="BOX">Box</option>
@@ -27,6 +27,10 @@
                 <option value="EPSG:31467">EPSG:31467</option-->
                 <option value="EPSG:25832">EPSG:25832</option>
             </select>
+            <input id="map-menu-load-wms-input" type="text" class=""
+                   placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
+                    data-url="{{ url('map_wms_loadwms') }}"/>
+            <button id="map-menu-load-wms-button" class="">Laden</button>
         </div>
         <div class="map-dialog-left-menu -js-map-dialog active">
             <div class="map-dialog-left-content -js-map-menu">

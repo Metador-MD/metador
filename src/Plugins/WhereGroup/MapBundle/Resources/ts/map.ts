@@ -145,19 +145,6 @@ export class Ol4Map {
             target: options['map']['target'],
             renderer: 'canvas'
         });
-        for (const source of options['source']) {
-            if (source['type'] === 'WMS') {
-                let wmsLayer = this.addLayer(
-                    Ol4WmsLayer.createLayer(source['url'],
-                        source['params'],
-                        proj,
-                        source['visible'],
-                        parseFloat(source['opacity'])),
-                    source['title']
-                );
-                addSource(wmsLayer.get('uuid'), wmsLayer.get('title'), wmsLayer.getVisible(), wmsLayer.getOpacity());
-            }
-        }
         this.olMap.setView(
             new ol.View({
                 projection: proj,
@@ -165,6 +152,9 @@ export class Ol4Map {
                 extent: this.maxExtent.getExtent(proj)
             })
         );
+        for (let source of options['source']) {
+            this.addLayerForOptions(source);
+        }
         this.olMap.addControl(new ol.control.ScaleLine());
 
         this.olMap.addControl(new ol.control.ZoomToExtent({
@@ -215,6 +205,22 @@ export class Ol4Map {
         return this.drawer;
     }
 
+    addLayerForOptions(options: any) {
+        if(options['type'] === 'WMS') {
+            let wmsLayer = this.addLayer(
+                Ol4WmsLayer.createLayer(options['url'],
+                    options['params'],
+                    this.olMap.getView().getProjection(),
+                    options['visible'],
+                    parseFloat(options['opacity'])),
+                options['title']
+            );
+            addSource(wmsLayer.get('uuid'), wmsLayer.get('title'), wmsLayer.getVisible(), wmsLayer.getOpacity());
+        } else {
+            console.error(options['type'] + ' is not supported.');
+        }
+    }
+
     addVectorLayer(style: ol.style.Style): ol.layer.Vector {
         let options = {
             wrapX: false
@@ -238,7 +244,6 @@ export class Ol4Map {
     removeLayer(layer: ol.layer.Base): void {
         this.olMap.removeLayer(layer);
     }
-
 
     private findLayer(uuid: string): ol.layer.Base {
         let layers = this.olMap.getLayers().getArray();

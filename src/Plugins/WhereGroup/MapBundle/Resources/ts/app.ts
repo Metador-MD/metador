@@ -1,5 +1,7 @@
 import * as metador from './map';
 
+declare var Configuration: any;
+
 let context: any = Window;
 context.metador = metador;
 
@@ -41,7 +43,7 @@ var metadorMapConfig = {
             url: 'http://osm-demo.wheregroup.com/service?',
             title: 'OSM',
             opacity: 0.8,
-            visible: true,
+            visible: false,
             params: {
                 LAYERS: 'osm',
                 VERSION: '1.1.1',
@@ -52,8 +54,8 @@ var metadorMapConfig = {
             type: 'WMS',
             url: 'http://wms.wheregroup.com/cgi-bin/mapbender_user.xml?',
             title: 'MB-User',
-            opacity: 0.8,
-            visible: false,
+            opacity: 0.6,
+            visible: true,
             params: {
                 LAYERS: 'Mapbender',
                 VERSION: '1.1.1',
@@ -75,3 +77,4 @@ var metadorMapConfig = {
 let metadorMap = metador.Ol4Map.create(metadorMapConfig);
 metador['metadorMap'] = metadorMap;
 // console.log(metador['metadorMap']);
+console.log(Configuration);
