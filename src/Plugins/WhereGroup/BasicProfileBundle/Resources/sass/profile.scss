@@ -1,19 +1,22 @@
 @import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/config';
+@import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/extensions';
 
 .switch-row {
     height: 40px;
     line-height: 40px;
+    cursor: pointer;
 
     .switch-label {
         font-size: 0.8em;
-        cursor: pointer;
+        @extend .no-user-select;
     }
 
-    & > span[class^="icon-"] {
+    & > .icon-toggle-on,
+    & > .icon-toggle-off {
         vertical-align: middle;
     }
 
-    & > span[class^="icon-toggle-on"] {
+    & > .icon-toggle-on {
         color: $info;
     }
 }

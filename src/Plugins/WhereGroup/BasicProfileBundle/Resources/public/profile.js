@@ -128,8 +128,12 @@ $('form').ajaxForm({
                 }
             });
 
-            if (!valid) {
-                alert('Datensatz ist nicht valide und kann daher nicht gespeichert werden.')
+            var abort = form.filter(function ( obj ) {
+                return obj.name === 'submit' && obj.value === 'abort';
+            });
+
+            if (!valid && abort.length === 0) {
+                metador.displayError('Datensatz ist nicht valide und kann daher nicht gespeichert werden.');
                 return false;
             }
         }

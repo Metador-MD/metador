@@ -58,21 +58,6 @@
                 </li>
             </ul>
             <div class="left-menu-content">
-                <div class="grid space">
-                    <div class="row r-2">
-                        <div class="col c-1-2 -js-toggle-switch switch-row">
-                            <span class="icon-toggle-off -js-toggle-switch-icon"></span>
-                            <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
-                            <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
-                        </div>
-                        <div class="col c-1-2 -js-toggle-switch switch-row">
-                            <span class="icon-toggle-on -js-toggle-switch-icon"></span>
-                            <span class="-js-toggle-switch-label switch-label">{% trans %}Validierung{% endtrans %}</span>
-                            <input type="hidden" id="validation" class="-js-toggle-switch-input" value="1" />
-                        </div>
-                    </div>
-                </div>
-
                 {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata)) %}
                 <div class="simple-select -js-metadata-save disabled">
                     <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
@@ -95,6 +80,20 @@
                 {% else %}
                     no!
                 {% endif %}
+                <div class="grid space">
+                    <div class="row r-2">
+                        <div class="col c-1-2 -js-toggle-switch switch-row">
+                            <span class="icon-toggle-off -js-toggle-switch-icon"></span>
+                            <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
+                            <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
+                        </div>
+                        <div class="col c-1-2 -js-toggle-switch switch-row">
+                            <span class="icon-toggle-on -js-toggle-switch-icon"></span>
+                            <span class="-js-toggle-switch-label switch-label">{% trans %}Validierung{% endtrans %}</span>
+                            <input type="hidden" id="validation" class="-js-toggle-switch-input" value="1" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="center-right">

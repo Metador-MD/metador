@@ -87,6 +87,12 @@
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -498,6 +504,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -866,6 +878,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -1016,6 +1034,12 @@ html, body {
 .dark-error:hover, .md .btn.error:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
+
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .md .text-center {
   text-align: center; }
@@ -1192,6 +1216,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -1353,6 +1383,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -1456,6 +1492,12 @@ html, body {
 .dark-error:hover, .md .btn.error:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
+
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .md .text-center {
   text-align: center; }
@@ -1638,6 +1680,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -1797,6 +1845,12 @@ html, body {
 .dark-error:hover, .md .btn.error:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
+
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .md .text-center {
   text-align: center; }
@@ -2014,6 +2068,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -2177,6 +2237,12 @@ html, body {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
 .md .text-center {
   text-align: center; }
 
@@ -2209,7 +2275,11 @@ html, body {
   position: absolute;
   top: 40px;
   left: 0;
-  bottom: 0; }
+  bottom: 0;
+  -webkit-transition: all 150ms ease-in-out;
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out; }
 
 .md .map-dialog .map-dialog-left-menu .map-dialog-left-content {
   background-color: #fff;
@@ -2237,7 +2307,11 @@ html, body {
   background: #fff;
   top: -webkit-calc(50% - 15px);
   top: -moz-calc(50% - 15px);
-  top: calc(50% - 15px); }
+  top: calc(50% - 15px);
+  -webkit-transition: all 150ms ease-in-out;
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out; }
 
 .md .map-dialog .map-dialog-left-menu.active {
   width: 300px; }
@@ -2480,6 +2554,12 @@ html, body {
 .dark-error:hover, .md .btn.error:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
+
+.md .no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .md .text-center {
   text-align: center; }
