@@ -40,6 +40,8 @@ var metadorMapConfig = {
             type: 'WMS',
             url: 'http://osm-demo.wheregroup.com/service?',
             title: 'OSM',
+            opacity: 0.8,
+            visible: true,
             params: {
                 LAYERS: 'osm',
                 VERSION: '1.1.1',
@@ -50,6 +52,8 @@ var metadorMapConfig = {
             type: 'WMS',
             url: 'http://wms.wheregroup.com/cgi-bin/mapbender_user.xml?',
             title: 'MB-User',
+            opacity: 0.8,
+            visible: false,
             params: {
                 LAYERS: 'Mapbender',
                 VERSION: '1.1.1',

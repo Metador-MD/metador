@@ -3,7 +3,7 @@ declare class proj4 {
     static defs(name: string, def: string): void;
 }
 
-declare function addSource(id: string, title: string, visibility:boolean, opacity:number) : void;
+declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
 
 export class Ol4Utils {
     /* 
@@ -113,6 +113,7 @@ export class Ol4Extent extends Ol4Geom {
     }
 }
 export const UUID = 'uuid';
+export const TITLE = 'title';
 
 export class Ol4Map {
     private static _uuid = 0;
@@ -146,8 +147,15 @@ export class Ol4Map {
         });
         for (const source of options['source']) {
             if (source['type'] === 'WMS') {
-                let wmsLayer = this.addLayer(Ol4WmsLayer.createLayer(source['url'], source['params'], proj, true));
-                addSource(wmsLayer.get('uuid'), source['title'], true, 1);
+                let wmsLayer = this.addLayer(
+                    Ol4WmsLayer.createLayer(source['url'],
+                        source['params'],
+                        proj,
+                        source['visible'],
+                        parseFloat(source['opacity'])),
+                    source['title']
+                );
+                addSource(wmsLayer.get('uuid'), wmsLayer.get('title'), wmsLayer.getVisible(), wmsLayer.getOpacity());
             }
         }
         this.olMap.setView(
@@ -218,8 +226,11 @@ export class Ol4Map {
         return <ol.layer.Vector>this.addLayer(vLayer);
     }
 
-    addLayer(layer: ol.layer.Base): ol.layer.Base {
+    addLayer(layer: ol.layer.Base, title: string = null): ol.layer.Base {
         layer.set(UUID, Ol4Map.getUuid('olay-'));
+        if(title) {
+            layer.set(TITLE, title);
+        }
         this.olMap.addLayer(layer);
         return layer;
     }
@@ -237,7 +248,7 @@ export class Ol4Map {
             if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
                 console.error('ol.layer.Group as Layer is not suported');
                 throw new Error('ol.layer.Group as Layer is not suported');
-            } else if (layer.get(UUID) === uuid){
+            } else if (layer.get(UUID) === uuid) {
                 return layer;
             }
         }
@@ -286,15 +297,15 @@ export class Ol4Map {
         }
     }
 
-    setVisibility(layerUiid: string, visiblity: boolean): void {
-        let layer:ol.layer.Base = this.findLayer(layerUiid);
+    setVisible(layerUiid: string, visiblity: boolean): void {
+        let layer: ol.layer.Base = this.findLayer(layerUiid);
         if (layer) {
             layer.setVisible(visiblity);
         }
     }
 
     setOpacity(layerUiid: string, opacity: number): void {
-        let layer:ol.layer.Base = this.findLayer(layerUiid);
+        let layer: ol.layer.Base = this.findLayer(layerUiid);
         if (layer) {
             layer.setOpacity(opacity);
         }
@@ -360,10 +371,11 @@ export class Ol4Map {
 }
 
 export class Ol4WmsLayer {
-    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean): ol.layer.Image {
+    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Image {
         let sourceWms = new ol.layer.Image({
             source: Ol4WmsLayer.createSource(url, params, proj),
-            visible: visible
+            visible: visible,
+            opacity: opacity
         });
         return sourceWms;
     }
