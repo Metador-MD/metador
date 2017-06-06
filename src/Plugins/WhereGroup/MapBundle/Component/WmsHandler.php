@@ -9,7 +9,7 @@ use Plugins\WhereGroup\MapBundle\Entity\Wms as WmsEntity;
  * Class WmsLoader
  * @package Plugins\WhereGroup\MapBundle\Component
  */
-class Wms implements WmsInterface
+class WmsHandler implements WmsInterface
 {
     /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository */
     protected $repo = null;
@@ -75,7 +75,7 @@ class Wms implements WmsInterface
      */
     public function update($url, WmsEntity &$wms)
     {
-        $url_ = Wms::getValidGcUrl($url);
+        $url_ = WmsHandler::getValidGcUrl($url);
         $doc = WmsCapabilitiesParser::createDocument($this->getContent($url_));
         $parser = WmsCapabilitiesParser::getParser($doc);
 
@@ -155,7 +155,10 @@ class Wms implements WmsInterface
     {
         return array(
             'type' => $wms::$type,
-            'url' => $wms->$this->getGmUrl(),
+            'url' => $wms->getGmUrl(),
+            'title' => $wms->getTitle(),
+            'visible' => $wms->getVisible(),
+            'opacity' => $wms->getOpacity(),
             'params' => array(
                 'LAYERS' => implode(',', $wms->getLayers()),
                 'VERSION' => $wms->getVersion(),

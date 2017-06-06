@@ -4,12 +4,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <!-- SERVICE -->
-        <parameter key="metador.map.wms.class">Plugins\WhereGroup\MapBundle\Component\Wms</parameter>
+        <parameter key="metador.map.wms.class">Plugins\WhereGroup\MapBundle\Component\WmsHandler</parameter>
     </parameters>
 
     <services>
         <!-- SERVICE -->
-        <service id="map_wms" class="%metador.map.wms.class%">
+        <service id="map_wmshandler" class="%metador.map.wms.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
     </services>

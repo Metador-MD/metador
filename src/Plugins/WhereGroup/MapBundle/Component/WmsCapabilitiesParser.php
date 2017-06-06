@@ -88,7 +88,6 @@ abstract class WmsCapabilitiesParser
 
     /**
      * Creates a Wms object for a wms document.
-     * @return Wms
      */
     abstract public function parse(Wms &$wms);
 
@@ -191,6 +190,18 @@ abstract class WmsCapabilitiesParser
             default:
                 throw new \Exception('Die Version ist nicht unterstützt');
         }
+    }
+
+    protected function selectFormat(array $formats, array $pattern)
+    {
+        foreach ($pattern as $pat) {
+            foreach ($formats as $format) {
+                if (strpos($format, $pat) === 0) {
+                    return $format;
+                }
+            }
+        }
+        return count($formats) > 0 ? $formats[0] : '';
     }
 
 }

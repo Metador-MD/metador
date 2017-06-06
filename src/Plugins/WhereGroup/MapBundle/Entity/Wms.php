@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Wms
 {
     static $type = "WMS";
-    
+
     /**
      * @var integer $id
      * @ORM\Id
@@ -24,7 +24,7 @@ class Wms
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @var string $gcUrl a WMS GetCapabilities URL
      * @ORM\Column(type="string", nullable=true)
@@ -78,10 +78,16 @@ class Wms
     protected $version;
 
     /**
-     * @var string $opacity an opacity value
+     * @var boolean $visible a visible value
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $opacity = true;
+    protected $visible = true;
+
+    /**
+     * @var float $opacity an opacity value
+     * @ORM\Column(type="float", nullable=false)
+     */
+    protected $opacity;
 
     /**
      * @var integer $priority a priority value
@@ -93,14 +99,16 @@ class Wms
     {
         $this->formats = array();
         $this->layerList = array();
-        $this->opacity = 1;
-        $this->proority = 0;
+        $this->layers = array();
+        $this->visible = true;
+        $this->opacity = 1.0;
+        $this->priority = 0;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -123,7 +131,7 @@ class Wms
     /**
      * Get gcUrl
      *
-     * @return string 
+     * @return string
      */
     public function getGcUrl()
     {
@@ -146,7 +154,7 @@ class Wms
     /**
      * Get gmUrl
      *
-     * @return string 
+     * @return string
      */
     public function getGmUrl()
     {
@@ -169,7 +177,7 @@ class Wms
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -192,34 +200,11 @@ class Wms
     /**
      * Get format
      *
-     * @return string 
+     * @return string
      */
     public function getFormat()
     {
         return $this->format;
-    }
-
-    /**
-     * Set formatList
-     *
-     * @param string $formatList
-     * @return Wms
-     */
-    public function setFormatList($formatList)
-    {
-        $this->formatList = $formatList;
-
-        return $this;
-    }
-
-    /**
-     * Get formatList
-     *
-     * @return string 
-     */
-    public function getFormatList()
-    {
-        return $this->formatList;
     }
 
     /**
@@ -274,7 +259,7 @@ class Wms
     /**
      * Get layerList
      *
-     * @return array 
+     * @return array
      */
     public function getLayerList()
     {
@@ -297,7 +282,7 @@ class Wms
     /**
      * Get version
      *
-     * @return string 
+     * @return string
      */
     public function getVersion()
     {
@@ -305,9 +290,32 @@ class Wms
     }
 
     /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return Wms
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
      * Set opacity
      *
-     * @param boolean $opacity
+     * @param float $opacity
      * @return Wms
      */
     public function setOpacity($opacity)
@@ -320,7 +328,7 @@ class Wms
     /**
      * Get opacity
      *
-     * @return boolean 
+     * @return float
      */
     public function getOpacity()
     {
@@ -343,7 +351,7 @@ class Wms
     /**
      * Get priority
      *
-     * @return integer 
+     * @return integer
      */
     public function getPriority()
     {
@@ -366,7 +374,7 @@ class Wms
     /**
      * Get formats
      *
-     * @return array 
+     * @return array
      */
     public function getFormats()
     {

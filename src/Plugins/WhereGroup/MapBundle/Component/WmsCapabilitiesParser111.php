@@ -31,7 +31,10 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
         $this->parseCapabilityRequest($wms, $this->getValue("./Capability/Request", $root));
         $wms->setLayerList(array());
         $this->parseLayer($wms, $this->getValue("./Capability/Layer", $root));
-        return $wms;
+        // set default values: all available layers, a first founded format
+        $wms->setLayers($wms->getLayerList());
+        $wms->setFormat(
+            $this->selectFormat($wms->getFormats(), array('image/png', 'image/jpg', 'image/jpeg', 'image/gif')));
     }
 
     /**
