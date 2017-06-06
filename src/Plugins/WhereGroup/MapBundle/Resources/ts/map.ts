@@ -354,6 +354,7 @@ export class Ol4Map {
         }
         this.drawer.setInteraction(shape);
         if (this.drawer.getInteraction()) {
+            let drawer = this.drawer;
             this.getDrawer().getLayer().getSource().clear();
             this.olMap.addInteraction(this.drawer.getInteraction());
             this.drawer.getInteraction().on(
@@ -367,6 +368,7 @@ export class Ol4Map {
                 function (e) {
                     let geom = e.feature.getGeometry().transform(olMap.getView().getProjection(), 'EPSG:4326');
                     onDrawEnd(geom);
+                    olMap.removeInteraction(drawer.getInteraction());
                 }
             );
         } else {

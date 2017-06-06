@@ -17,7 +17,7 @@ $('.-js-crs-code').on('change', function () {
     Window.metador.metadorMap.changeCrs($(this).val());
 });
 
-$('.-js-draw-type').on('change', function () {
+$('.-js-draw-type').on('click', function () {
     var $this = $(this);
     Window.metador.metadorMap.setDraw(
         $this.val(),
