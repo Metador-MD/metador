@@ -96,6 +96,22 @@ function addSource(id, title, visible, opacity) {
     $li.append($selwrap);
     $('.-js-map-layertree').prepend($li); // last layer as first at list
 }
+
+function getGeoFeature(west, south, east, north, properties) {
+    var feature = {
+        'type': 'Feature',
+        'geometry': {
+            'type': 'Polygon',
+            'coordinates': [[[west, south], [east, south], [east, north], [west, north], [west, south]]]
+        }
+    };
+    if (properties) {
+        for (var key in properties) {
+            feature[key] = properties[key];
+        }
+    }
+    return feature;
+}
 /* // show clear features
  // show features
  var hgcollection = {
