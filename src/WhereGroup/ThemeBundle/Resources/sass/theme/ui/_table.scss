@@ -52,4 +52,16 @@
             }
         }
     }
+
+    &.small {
+        font-size: $font-small;
+    }
+
+    &.medium {
+        font-size: $font-medium;
+    }
+
+    &.large {
+        font-size: $font-large;
+    }
 }

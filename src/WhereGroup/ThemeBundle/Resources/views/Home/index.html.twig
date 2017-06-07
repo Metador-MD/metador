@@ -9,7 +9,7 @@
 {% endif %}
 
 {% block center %}
-
+    {% if isHome is defined %}
     <div class="map-dialog -js-map-dialog">
         <div class="map-menu">
             <span class="btn medium -js-zoom-box">
@@ -20,13 +20,15 @@
                 <option value="BOX">Box</option>
                 <option value="POLYGON">Polygon</option>
             </select>
-            <select class="select -js-crs-code">
-                <option value="EPSG:4326">EPSG:4326</option>
-                <option value="EPSG:4258">EPSG:4258</option>
-                <!--option value="EPSG:31466">EPSG:31466</option>
-                <option value="EPSG:31467">EPSG:31467</option-->
-                <option value="EPSG:25832">EPSG:25832</option>
-            </select>
+            <div class="form-field-wrapper medium" style="display: inline-block;">
+                <select class="select -js-crs-code">
+                    <option value="EPSG:4326">EPSG:4326</option>
+                    <option value="EPSG:4258">EPSG:4258</option>
+                    <!--option value="EPSG:31466">EPSG:31466</option>
+                    <option value="EPSG:31467">EPSG:31467</option-->
+                    <option value="EPSG:25832">EPSG:25832</option>
+                </select>
+            </div>
         </div>
         <div class="map-dialog-left-menu -js-map-dialog active">
             <div class="map-dialog-left-content -js-map-menu">
@@ -42,6 +44,8 @@
         </div>
         <div class="map -js-map" id="map"></div>
     </div>
+    {% endif %}
+
 
     <div class="home -js-home">
         <div class="source">

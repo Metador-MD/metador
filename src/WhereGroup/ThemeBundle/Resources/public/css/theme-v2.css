@@ -384,17 +384,17 @@ html, body {
 .md .grid .row > .col:last-child {
   float: right; }
 
-.md .grid.row-space .row {
-  margin-bottom: 20px; }
-
-.md .grid.row-space .row > .col:not(:first-child):not(:last-child) {
+.md .grid.space .row > .col:not(:first-child):not(:last-child) {
   margin: 0 10px; }
 
-.md .grid.row-space .row > .col:first-child {
+.md .grid.space .row > .col:first-child {
   margin: 0 10px 0 0; }
 
-.md .grid.row-space .row > .col:last-child {
+.md .grid.space .row > .col:last-child {
   margin: 0 0 0 10px; }
+
+.md .grid.row-space .row {
+  margin-bottom: 20px; }
 
 .md .grid.space.remove-last-space .row:last-child {
   margin-bottom: 0; }
@@ -543,12 +543,12 @@ html, body {
   line-height: 20px; }
 
 .md .form-wrapper.small > .check {
-  font-size: 0.8em;
+  font-size: .8em;
   height: 20px;
   line-height: 20px; }
 
 .md .form-wrapper.small > .form-label {
-  font-size: 0.8em;
+  font-size: .8em;
   padding: 0 10px;
   height: 20px;
   line-height: 20px; }
@@ -558,12 +558,12 @@ html, body {
   line-height: 30px; }
 
 .md .form-wrapper.medium > .check {
-  font-size: 0.9em;
+  font-size: .9em;
   height: 30px;
   line-height: 30px; }
 
 .md .form-wrapper.medium > .form-label {
-  font-size: 0.9em;
+  font-size: .9em;
   padding: 0 15px;
   height: 30px;
   line-height: 30px; }
@@ -584,29 +584,29 @@ html, body {
   line-height: 40px; }
 
 .md .form-field-wrapper.small > .input, .md .form-field-wrapper.small > .select {
-  font-size: 0.8em;
-  padding: 0 10px;
+  font-size: .8em;
   height: 20px;
   line-height: 20px; }
 
 .md .form-field-wrapper.medium > .input, .md .form-field-wrapper.medium > .select {
-  font-size: 0.9em;
-  padding: 0 15px;
+  font-size: .9em;
   height: 30px;
   line-height: 30px; }
 
 .md .form-field-wrapper.large > .input, .md .form-field-wrapper.large > .select {
   font-size: 1.1em;
-  padding: 0 25px;
   height: 40px;
   line-height: 40px; }
 
 .md .form-field-wrapper {
   position: relative;
-  display: block;
   border: 1px solid #e1e1e1;
   border-radius: 2px;
-  background-color: #fafafa; }
+  background-color: #fafafa;
+  display: block; }
+
+.md .form-field-wrapper.inline {
+  display: inline-block; }
 
 .md .form-field-wrapper > .input, .md .form-field-wrapper > .select, .md .form-field-wrapper > .textarea, .md .form-field-wrapper > .advanced-select {
   width: 100%;
@@ -906,13 +906,13 @@ html, body {
   text-align: center; }
 
 .md .btn.small {
-  font-size: 0.8em;
+  font-size: .8em;
   padding: 0 10px;
   height: 20px;
   line-height: 20px; }
 
 .md .btn.medium {
-  font-size: 0.9em;
+  font-size: .9em;
   padding: 0 15px;
   height: 30px;
   line-height: 30px; }
@@ -1259,6 +1259,15 @@ html, body {
 
 .md .table > tbody > tr:nth-child(2n) > td {
   background-color: #fcfcfc; }
+
+.md .table.small {
+  font-size: .8em; }
+
+.md .table.medium {
+  font-size: .9em; }
+
+.md .table.large {
+  font-size: 1.1em; }
 
 .md .text-small {
   font-size: 0.8em; }
@@ -2272,6 +2281,7 @@ html, body {
 .md .map-dialog .map-dialog-left-menu {
   z-index: 1;
   width: 0;
+  background-color: #fff;
   position: absolute;
   top: 40px;
   left: 0;
@@ -2284,6 +2294,7 @@ html, body {
 .md .map-dialog .map-dialog-left-menu .map-dialog-left-content {
   background-color: #fff;
   border-right: 1px solid #e1e1e1;
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -2318,6 +2329,9 @@ html, body {
 
 .md .map-dialog .map-dialog-left-menu.active > .map-dialog-left-menu-button {
   left: 299px; }
+
+.md .map-dialog .map-dialog-left-menu.active .map-dialog-left-content {
+  display: block; }
 
 .md .home {
   border: 1px solid #e1e1e1;
@@ -2648,7 +2662,7 @@ html, body {
   border: 1px solid #e1e1e1;
   background-color: #fff;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: .9em;
   padding: 0 15px;
   height: 30px;
   line-height: 30px; }

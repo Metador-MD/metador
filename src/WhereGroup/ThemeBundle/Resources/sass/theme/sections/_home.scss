@@ -28,12 +28,15 @@ $home-menu-height: 35px;
     .map-dialog-left-menu {
         z-index: 1;
         width: 0;
+        background-color: $white;
+
         @include pos($large-item-height, '', 0, 0);
         @include transition-all(150ms);
 
         .map-dialog-left-content {
             background-color: $white;
             border-right: 1px solid $border;
+            display: none;
             @include pos(0, 0, 0, 0);
         }
 
@@ -61,6 +64,10 @@ $home-menu-height: 35px;
 
             & > .map-dialog-left-menu-button {
                 left: 299px;
+            }
+
+            & .map-dialog-left-content {
+                display: block;
             }
         }
     }
