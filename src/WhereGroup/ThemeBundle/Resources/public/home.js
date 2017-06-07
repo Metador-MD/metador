@@ -48,18 +48,22 @@ $('.-js-zoom-box').on('click', function () {
     }
 });
 
-$('#map-menu-load-wms-button').on('click', function(){
+$('#map-menu-load-wms-button').on('click', function () {
     var $input = $('#map-menu-load-wms-input');
-    $.ajax({
-        url: $input.attr('data-url'),
-        data: {
-            url: encodeURIComponent($input.val())
-        }
-    }).done(function(data){
-        Window.metador.metadorMap.addLayerForOptions(data);
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error(errorThrown);
-    });
+    if ($input.val()) {
+        $.ajax({
+            url: $input.attr('data-url'),
+            data: {
+                url: encodeURIComponent($input.val())
+            }
+        }).done(function (data) {
+            Window.metador.metadorMap.addLayerForOptions(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error(errorThrown);
+        });
+    } else {
+        console.log('Keine GetCapabilities URL eingetragen!');
+    }
 });
 
 // map side pane
@@ -74,21 +78,44 @@ $(document).on('change', '.-js-map-source-opacity', function () {
 });
 
 function addSource(id, title, visible, opacity) {
-    var $li = $('<li id="'+id+'" class="row"></li>');
+    var $li = $('<li id="' + id + '" class="row"></li>');
     var $chkwrap = $('<div class="form-wrapper medium"></div>');
-    var $chck = $('<input id="chb-'+id+'" class="check -js-map-source-visible" type="checkbox">')
+    var $chck = $('<input id="chb-' + id + '" class="check -js-map-source-visible" type="checkbox">')
     $chck.prop('checked', visible);
     $chkwrap.append($chck);
-    $chkwrap.append('<label class="form-label" for="chb-'+id+'">' +title+'</label>');
+    $chkwrap.append('<label class="form-label" for="chb-' + id + '">' + title + '</label>');
     // TODO label set overflow hidden for max-width
     $li.append($chkwrap);
     var $selwrap = $('<div class="form-wrapper"></div>');
     var $sel = $('<select class="select -js-map-source-opacity"></select>');
     for (var i = 0; i <= 10; i++) {
-        $sel.append('<option value="'+(i/10)+'">'+(i * 10)+' %</option>');
+        $sel.append('<option value="' + (i / 10) + '">' + (i * 10) + ' %</option>');
     }
     $sel.val(opacity);
     $selwrap.append($sel);
     $li.append($selwrap);
     $('.-js-map-layertree').prepend($li); // last layer as first at list
 }
+/* // show clear features
+ // show features
+ var hgcollection = {
+ 'type': 'FeatureCollection',
+ 'crs': {
+ 'type': 'name',
+ 'properties': {
+ 'name': 'EPSG:3857'
+ }
+ },
+ 'features': [{
+ 'type': 'Feature',
+ 'geometry': {
+ 'type': 'Polygon',
+ 'coordinates': [[[9, 49], [12, 50], [9, 51], [9, 49]]]
+ }
+ }]
+ };
+ Window.metador.metadorMap.showFeatures(Window.metador.metadorMap.getHgLayer(), hgcollection);
+ // clear features
+ Window.metador.metadorMap.clearFeatures(Window.metador.metadorMap.getHgLayer());
+
+ */
