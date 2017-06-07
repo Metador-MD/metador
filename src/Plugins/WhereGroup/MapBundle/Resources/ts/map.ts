@@ -264,11 +264,7 @@ export class Ol4Map {
         this.olMap.updateSize();
     }
 
-    setCrs(crs: string) {
-        this.changeCrs(crs);
-    }
-
-    changeCrs(crs: string) {
+    changeCrs(crs: string) { // TODO
         let proj = null;
         if ((proj = ol.proj.get(crs))) {
             let extent = Ol4Extent.fromArray(
