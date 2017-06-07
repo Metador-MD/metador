@@ -1,8 +1,22 @@
-.toggle-public,
-.toggle-validation {
+@import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/config';
+@import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/extensions';
+
+.switch-row {
+    height: 40px;
+    line-height: 40px;
     cursor: pointer;
 
-    &:hover {
+    .switch-label {
+        font-size: 0.8em;
+        @extend .no-user-select;
+    }
 
+    & > .icon-toggle-on,
+    & > .icon-toggle-off {
+        vertical-align: middle;
+    }
+
+    & > .icon-toggle-on {
+        color: $info;
     }
 }

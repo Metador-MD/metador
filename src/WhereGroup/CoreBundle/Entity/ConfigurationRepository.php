@@ -109,7 +109,6 @@ class ConfigurationRepository extends EntityRepository
                 ->setParameter('filterType', $filterType)
                 ->setParameter('filterValue', $filterValue)
                 ->getSingleScalarResult();
-
         } catch (NoResultException $e) {
             return $default;
         }

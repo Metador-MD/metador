@@ -79,6 +79,7 @@ class HomeController extends Controller
         }
 
         return array(
+            'isHome'       => true,
             'rows'         => $metadata['result'],
             'paging'       => $metadata['paging'],
             'params'       => $params,

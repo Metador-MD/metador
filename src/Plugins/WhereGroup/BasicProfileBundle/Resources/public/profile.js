@@ -1,5 +1,8 @@
 'use strict';
 
+$('.-js-duplicatable-area').multiForm();
+$('.-js-multi-input').multiInput();
+
 var MetadataForm = function() {};
 
 MetadataForm.prototype = {
@@ -19,16 +22,19 @@ MetadataForm.prototype = {
     enableSubmitButton: function() {
         this.setUserinput(true);
         this.submitButton.prop('disabled', false).addClass('success');
+        $('.-js-metadata-save').removeClass('disabled');
     },
 
     disableSubmitButton: function() {
         this.setUserinput(false);
         this.submitButton.prop('disabled', true).removeClass('success');
+        $('.-js-metadata-save').addClass('disabled');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
     activateSubmitButton: function() {
         this.submitButton.prop('disabled', true);
+        $('.-js-metadata-save').addClass('disabled');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
@@ -97,7 +103,7 @@ MetadataForm.prototype = {
 
 var metadata = new MetadataForm();
 
-$(".-js-user-input").change(function() {
+$(document).on('change', '.-js-user-input', function() {
     metadata.enableSubmitButton();
     metadata.validate(this);
 });
@@ -122,34 +128,24 @@ $('form').ajaxForm({
                 }
             });
 
-            if (!valid) {
-                alert('Datensatz ist nicht valide und kann daher nicht gespeichert werden.')
+            var abort = form.filter(function ( obj ) {
+                return obj.name === 'submit' && obj.value === 'abort';
+            });
+
+            if (!valid && abort.length === 0) {
+                metador.displayError('Datensatz ist nicht valide und kann daher nicht gespeichert werden.');
                 return false;
             }
         }
 
-
-        var lock = {
-            name: "lock",
-            required: false,
-            type: "hidden",
-            value: "true"
-        };
-
-        if (confirm('Klicken Sie ok um den Datensatz nach dem Speichern freizugeben.')) {
-            lock.value = "false";
-        }
-
-        form.push(lock);
-
         metadata.activateSubmitButton();
     },
     success: function(data) {
-        if (typeof data.metadata.id !== 'undefined') {
+        if (data && metadata && metadata.id) {
             $('[name="p[_id]"]').val(data.metadata.id);
         }
 
-        if (typeof data.metadata.uuid !== 'undefined') {
+        if (data && metadata && metadata.uuid) {
             $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
         }
 

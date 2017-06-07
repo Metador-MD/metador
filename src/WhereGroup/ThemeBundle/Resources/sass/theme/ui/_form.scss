@@ -69,30 +69,34 @@ $icon-color: darken($border, 20%);
 .md .form-field-wrapper {
     &.small {
         & > .input, & > .select {
-            @include small-item();
+            @include small-item(true ,false);
         }
     }
 
     &.medium {
         & > .input, & > .select {
-            @include medium-item();
+            @include medium-item(true ,false);
         }
     }
 
     &.large {
         & > .input, & > .select {
-            @include large-item();
+            @include large-item(true ,false);
         }
     }
 }
 
 .md .form-field-wrapper {
     position: relative;
-    display: block;
     border: 1px solid $border;
     border-radius: 2px;
     background-color: lighten($background, 1%);
+    display: block;
     @extend .clearfix;
+
+    &.inline {
+        display: inline-block;
+    }
 
     & > .input, & > .select, & > .textarea, & > .advanced-select {
         width: 100%;

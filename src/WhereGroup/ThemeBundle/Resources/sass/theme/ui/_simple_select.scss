@@ -1,0 +1,120 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.simple-select {
+    width: 100%;
+    outline: none;
+    display: block;
+    position: relative;
+    border: 1px solid $border;
+    background-color: lighten($background, 1%);
+    box-sizing: content-box;
+    border-radius: 2px;
+
+    @include normal-item(false, false);
+    @extend .clearfix;
+
+    .simple-select-default-button {
+        float: left;
+        font-size: 0.8em;
+        text-align: center;
+
+        @extend .reset;
+        @include calc('width', '100% - 40px');
+        @include normal-item(false, false);
+
+        &.success {
+            box-shadow: -3px 0px 0px 0px $success;
+        }
+    }
+
+    .simple-select-button {
+        box-sizing: content-box;
+
+        float: right;
+        width: 40px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        background-image:
+            linear-gradient(45deg, transparent 50%, gray 50%),
+            linear-gradient(135deg, gray 50%, transparent 50%);
+
+        background-position:
+            calc(100% - 20px) calc(1em + 2px),
+            calc(100% - 15px) calc(1em + 2px);
+
+        background-size:
+            5px 5px,
+            5px 5px;
+
+        background-repeat: no-repeat;
+
+        &::-ms-expand {
+            display: none;
+        }
+
+        &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+        }
+
+        &:hover {
+            background-color: darken($background, 1%);
+        }
+
+        & > .simple-select-options {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: $normal-item-height;
+            background-color: lighten($background, 1%);
+            border: 1px solid $border;
+            z-index: 2;
+
+            & > .simple-select-option {
+                font-size: 0.8em;
+                width: 100%;
+                text-align: left;
+
+                @extend .reset;
+                @include normal-item(false, true);
+
+                &.metadata-abort-button {
+                    color: $font;
+                    cursor: pointer;
+
+                    &:hover {
+                        box-shadow: -3px 0px 0px 0px $success;
+                        background-color: darken($background, 1%);
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            & > .simple-select-options {
+                display: block;
+            }
+        }
+    }
+
+    &:not(.disabled) .metadata-save-button:hover {
+        cursor: pointer;
+        box-shadow: -3px 0px 0px 0px $success;
+        background-color: darken($background, 1%);
+    }
+
+    .metadata-save-button {
+        color: lighten($font, 30%);
+        text-shadow: 1px 1px 0 $white;
+    }
+
+    &:not(.disabled) .metadata-save-button {
+        color: $font;
+    }
+}

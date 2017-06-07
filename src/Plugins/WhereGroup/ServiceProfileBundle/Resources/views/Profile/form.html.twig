@@ -57,32 +57,44 @@
                     <span class="-js-error-count error-count"></span>
                 </li>
             </ul>
-            <div class="grid padding">
-                <div class="row r-2 toggle-public -js-toggle-switch">
-                    <div class="col c-1-4">
-                        <span class="icon-toggle-off -js-toggle-switch-icon"></span>
-                    </div>
-                    <div class="col c-3-4 -js-toggle-switch-label">Freigabe</div>
-                    <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
-                </div>
-                <div class="row r-2 toggle-validation -js-toggle-switch">
-                    <div class="col c-1-4">
-                        <span class="icon-toggle-off -js-toggle-switch-icon"></span>
-                    </div>
-                    <div class="col c-3-4 -js-toggle-switch-label">Validierung</div>
-                    <input type="hidden" id="validation" class="-js-toggle-switch-input" value="0" />
-                </div>
-            </div>
             <div class="left-menu-content">
                 {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata)) %}
-                <button class="btn margin-b -js-metadata-button full" type="submit" name="submit" value="save" disabled>
-                    <span class="icon-download -js-metadata-button-status"></span> {% trans %}speichern{% endtrans %}
-                </button>
+                <div class="simple-select -js-metadata-save disabled">
+                    <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
+                        <span class="icon-download -js-metadata-button-status"></span>
+                        {% trans %}Speichern und beenden{% endtrans %}
+                    </button>
+                    <div class="simple-select-button">&nbsp;
+                        <div class="simple-select-options">
+                            <button type="submit" class="simple-select-option metadata-save-button -js-metadata-button" name="submit" value="save" disabled>
+                                <span class="form-icon icon-download"></span>
+                                {% trans %}Zwischenstand speichern{% endtrans %}
+                            </button>
+                            <button type="submit" class="simple-select-option metadata-abort-button" name="submit" value="abort">
+                                <span class="form-icon icon-sign-out"></span>
+                                {% trans %}Abbrechen{% endtrans %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 {% else %}
                     no!
                 {% endif %}
+                <div class="grid space">
+                    <div class="row r-2">
+                        <div class="col c-1-2 -js-toggle-switch switch-row">
+                            <span class="icon-toggle-off -js-toggle-switch-icon"></span>
+                            <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
+                            <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
+                        </div>
+                        <div class="col c-1-2 -js-toggle-switch switch-row">
+                            <span class="icon-toggle-on -js-toggle-switch-icon"></span>
+                            <span class="-js-toggle-switch-label switch-label">{% trans %}Validierung{% endtrans %}</span>
+                            <input type="hidden" id="validation" class="-js-toggle-switch-input" value="1" />
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
         <div class="center-right">
             <div class="content">
@@ -113,6 +125,7 @@
     <script>
         var validation = {{ read_validation_rules(metadataProfil) }};
     </script>
-    <script src="{{ asset('bundles/metadorbasicprofile/duplicatable.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/multiinput.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/multiform.js') }}"></script>
     <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
 {% endblock %}

@@ -1,6 +1,8 @@
+@import 'config';
+
 @mixin normal-item($change-font-size: true, $set-padding: true) {
     @if $change-font-size == true {
-        font-size: 1em;
+        font-size: $font-normal;
     }
 
     @if $set-padding == true {
@@ -13,7 +15,7 @@
 
 @mixin small-item($change-font-size: true, $set-padding: true) {
     @if $change-font-size == true {
-        font-size: 0.8em;
+        font-size: $font-small;
     }
 
     @if $set-padding == true {
@@ -26,7 +28,7 @@
 
 @mixin medium-item($change-font-size: true, $set-padding: true) {
     @if $change-font-size == true {
-        font-size: 0.9em;
+        font-size: $font-medium;
     }
 
     @if $set-padding == true {
@@ -39,7 +41,7 @@
 
 @mixin large-item($change-font-size: true, $set-padding: true) {
     @if $change-font-size == true {
-        font-size: 1.1em;
+        font-size: $font-large;
     }
 
     @if $set-padding == true {
@@ -157,6 +159,13 @@
         background-color: darken($error, 10%);
         border: 1px solid darken($error, 15%);
     }
+}
+
+.md .no-user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .md .text-center {
