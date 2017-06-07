@@ -21,8 +21,8 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
         foreach ($this->xpath->query('namespace::*', $this->doc->documentElement) as $node) {
             $nsPrefix = $node->prefix;
             $nsUri = $node->nodeValue;
-            if ($nsPrefix == "" && $nsUri == "http://www.opengis.net/wms") {
-                $nsPrefix = "wms";
+            if ($nsPrefix == '' && $nsUri == 'http://www.opengis.net/wms') {
+                $nsPrefix = 'wms';
             }
             $this->xpath->registerNamespace($nsPrefix, $nsUri);
         }
@@ -34,12 +34,12 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
     public function parse(Wms &$wms)
     {
         $root = $this->doc->documentElement;
-        $wms->setVersion($this->getValue("./@version", $root));
-        $this->parseService($wms, $this->getValue("./wms:Service", $root));
+        $wms->setVersion($this->getValue('./@version', $root));
+        $this->parseService($wms, $this->getValue('./wms:Service', $root));
         $wms->setFormats(array());
-        $this->parseCapabilityRequest($wms, $this->getValue("./wms:Capability/wms:Request", $root));
+        $this->parseCapabilityRequest($wms, $this->getValue('./wms:Capability/wms:Request', $root));
         $wms->setLayerList(array());
-        $this->parseLayer($wms, $this->getValue("./wms:Capability/wms:Layer", $root));
+        $this->parseLayer($wms, $this->getValue('./wms:Capability/wms:Layer', $root));
         // set default values: all available layers, a first founded format
         $wms->setLayers($wms->getLayerList());
         $wms->setFormat(
@@ -56,7 +56,7 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
      */
     private function parseService(Wms &$wms, \DOMElement $contextElm)
     {
-        $wms->setTitle($this->getValue("./wms:Title/text()", $contextElm));
+        $wms->setTitle($this->getValue('./wms:Title/text()', $contextElm));
     }
 
     /**
@@ -76,7 +76,7 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
         $formatList = $this->xpath->query('./wms:GetMap/wms:Format', $contextElm);
         if ($formatList !== null) {
             foreach ($formatList as $item) {
-                $wms->addFormat($this->getValue("./text()", $item));
+                $wms->addFormat($this->getValue('./text()', $item));
             }
         }
 
@@ -89,11 +89,11 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
      */
     private function parseLayer(Wms &$wms, \DOMElement $contextElm)
     {
-        $name = $this->getValue("./wms:Name/text()", $contextElm);
+        $name = $this->getValue('./wms:Name/text()', $contextElm);
         if ($name !== null) {
             $wms->addToLayerList($name);
         }
-        $tempList = $this->xpath->query("./wms:Layer", $contextElm);
+        $tempList = $this->xpath->query('./wms:Layer', $contextElm);
         if ($tempList !== null) {
             foreach ($tempList as $item) {
                 $this->parseLayer($wms, $item);

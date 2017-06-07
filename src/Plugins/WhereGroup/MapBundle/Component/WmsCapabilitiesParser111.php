@@ -25,12 +25,12 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
     public function parse(Wms &$wms)
     {
         $root = $this->doc->documentElement;
-        $wms->setVersion($this->getValue("./@version", $root));
-        $this->parseService($wms, $this->getValue("./Service", $root));
+        $wms->setVersion($this->getValue('./@version', $root));
+        $this->parseService($wms, $this->getValue('./Service', $root));
         $wms->setFormats(array());
-        $this->parseCapabilityRequest($wms, $this->getValue("./Capability/Request", $root));
+        $this->parseCapabilityRequest($wms, $this->getValue('./Capability/Request', $root));
         $wms->setLayerList(array());
-        $this->parseLayer($wms, $this->getValue("./Capability/Layer", $root));
+        $this->parseLayer($wms, $this->getValue('./Capability/Layer', $root));
         // set default values: all available layers, a first founded format
         $wms->setLayers($wms->getLayerList());
         $wms->setFormat(
@@ -44,7 +44,7 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
      */
     private function parseService(Wms &$wms, \DOMElement $contextElm)
     {
-        $wms->setTitle($this->getValue("./Title/text()", $contextElm));
+        $wms->setTitle($this->getValue('./Title/text()', $contextElm));
     }
 
     /**
@@ -57,10 +57,10 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
         $wms->setGcUrl($this->getValue('./GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href',
             $contextElm));
         $wms->setGmUrl($this->getValue('./GetMap/DCPType/HTTP/Get/OnlineResource/@xlink:href', $contextElm));
-        $formatList = $this->xpath->query("'./GetMap/Format", $contextElm);
+        $formatList = $this->xpath->query('./GetMap/Format', $contextElm);
         if ($formatList !== null) {
             foreach ($formatList as $item) {
-                $wms->addFormat($this->getValue("./text()", $item));
+                $wms->addFormat($this->getValue('./text()', $item));
             }
         }
 
@@ -73,11 +73,11 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
      */
     private function parseLayer(Wms &$wms, \DOMElement $contextElm)
     {
-        $name = $this->getValue("./Name/text()", $contextElm);
+        $name = $this->getValue('./Name/text()', $contextElm);
         if ($name !== null) {
             $wms->addToLayerList($name);
         }
-        $tempList = $this->xpath->query("./Layer", $contextElm);
+        $tempList = $this->xpath->query('./Layer', $contextElm);
         if ($tempList !== null) {
             foreach ($tempList as $item) {
                 $this->parseLayer($wms, $item);
