@@ -98,7 +98,7 @@ $icon-color: darken($border, 20%);
         display: inline-block;
     }
 
-    & > .input, & > .select, & > .textarea, & > .advanced-select {
+    & > .input, & > .select:not([multiple]), & > .textarea, & > .advanced-select {
         width: 100%;
         height: 100%;
         border: 0;
@@ -118,6 +118,28 @@ $icon-color: darken($border, 20%);
 
         @include normal-item();
     }
+
+    & > .select[multiple] {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background-color: transparent;
+        outline: none;
+        color: $font;
+        display: block;
+        float: left;
+
+        &:hover {
+            background-color: darken($background, 1%);
+        }
+
+        &:focus {
+            background-color: darken($background, 1%);
+        }
+
+        //@include normal-item();
+    }
+
 
     &.i1 {
         & > .input, & > .select, & > .textarea, & > .advanced-select {
@@ -143,7 +165,7 @@ $icon-color: darken($border, 20%);
         }
     }
 
-    & > .select, & > .advanced-select {
+    & > .select:not([multiple]), & > .advanced-select:not([multiple]) {
         padding-right: 40px;
         -webkit-appearance: none;
         -moz-appearance: none;

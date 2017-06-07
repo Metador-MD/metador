@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Wms
 {
-    static $type = "WMS";
+    public static $type = "WMS";
 
     /**
      * @var integer $id

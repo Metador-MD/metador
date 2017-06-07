@@ -608,7 +608,7 @@ html, body {
 .md .form-field-wrapper.inline {
   display: inline-block; }
 
-.md .form-field-wrapper > .input, .md .form-field-wrapper > .select, .md .form-field-wrapper > .textarea, .md .form-field-wrapper > .advanced-select {
+.md .form-field-wrapper > .input, .md .form-field-wrapper > .select:not([multiple]), .md .form-field-wrapper > .textarea, .md .form-field-wrapper > .advanced-select {
   width: 100%;
   height: 100%;
   border: 0;
@@ -622,10 +622,26 @@ html, body {
   height: 35px;
   line-height: 35px; }
 
-.md .form-field-wrapper > .input:hover, .md .form-field-wrapper > .select:hover, .md .form-field-wrapper > .textarea:hover, .md .form-field-wrapper > .advanced-select:hover {
+.md .form-field-wrapper > .input:hover, .md .form-field-wrapper > .select:not([multiple]):hover, .md .form-field-wrapper > .textarea:hover, .md .form-field-wrapper > .advanced-select:hover {
   background-color: #f4f4f4; }
 
-.md .form-field-wrapper > .input:focus, .md .form-field-wrapper > .select:focus, .md .form-field-wrapper > .textarea:focus, .md .form-field-wrapper > .advanced-select:focus {
+.md .form-field-wrapper > .input:focus, .md .form-field-wrapper > .select:not([multiple]):focus, .md .form-field-wrapper > .textarea:focus, .md .form-field-wrapper > .advanced-select:focus {
+  background-color: #f4f4f4; }
+
+.md .form-field-wrapper > .select[multiple] {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  color: #444;
+  display: block;
+  float: left; }
+
+.md .form-field-wrapper > .select[multiple]:hover {
+  background-color: #f4f4f4; }
+
+.md .form-field-wrapper > .select[multiple]:focus {
   background-color: #f4f4f4; }
 
 .md .form-field-wrapper.i1 > .input, .md .form-field-wrapper.i1 > .select, .md .form-field-wrapper.i1 > .textarea, .md .form-field-wrapper.i1 > .advanced-select {
@@ -648,7 +664,7 @@ html, body {
   width: -moz-calc(100% - 140px);
   width: calc(100% - 140px); }
 
-.md .form-field-wrapper > .select, .md .form-field-wrapper > .advanced-select {
+.md .form-field-wrapper > .select:not([multiple]), .md .form-field-wrapper > .advanced-select:not([multiple]) {
   padding-right: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -658,10 +674,10 @@ html, body {
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat; }
 
-.md .form-field-wrapper > .select::-ms-expand, .md .form-field-wrapper > .advanced-select::-ms-expand {
+.md .form-field-wrapper > .select:not([multiple])::-ms-expand, .md .form-field-wrapper > .advanced-select:not([multiple])::-ms-expand {
   display: none; }
 
-.md .form-field-wrapper > .select:-moz-focusring, .md .form-field-wrapper > .advanced-select:-moz-focusring {
+.md .form-field-wrapper > .select:not([multiple]):-moz-focusring, .md .form-field-wrapper > .advanced-select:not([multiple]):-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000; }
 

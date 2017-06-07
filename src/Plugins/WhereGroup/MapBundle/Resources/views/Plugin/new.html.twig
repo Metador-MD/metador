@@ -37,15 +37,59 @@
         </div>
     {% endif %}
 
+    {% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+        <div class="grid space row-space responsive">
+            <div class="row r-1">
+                <div class="col c-1">
+                    <div>{{ form_label(form.title, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.title, { 'attr': {'class': 'input'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row r-2">
+                <div class="col c-1-2">
+                    <div>{{ form_label(form.format, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.format, { 'attr': {'class': 'select'}}) }}
+                    </div>
+                </div>
+                <div class="col c-1-2">
+                    <div>{{ form_label(form.layers, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.layers, { 'attr': {'class': 'select'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row r-2">
+                <div class="col c-1-2">
+                    <div>{{ form_label(form.opacity, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.opacity, { 'attr': {'class': 'select'}}) }}
+                    </div>
+                </div>
+                <div class="col c-1-2">
+                    <div>{{ form_label(form.priority, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.priority, { 'attr': {'class': 'select'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
     <div class="grid space row-space responsive">
         <div class="row r-1">
             <div class="col c-1">
                 <div>{{ form_label(form.gcUrl, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                 <div class="form-field-wrapper">
-                    {{ form_widget(form.gcUrl, { 'attr': {'class': 'textarea'}}) }}
+                    {{ form_widget(form.gcUrl, { 'attr': {'class': 'input'}}) }}
                 </div>
             </div>
         </div>
+    </div>
+    {% endif %}
+
+    <div class="grid space row-space responsive">
         <div class="row r-1">
             <div class="col c-1 text-right">
                 <button class="btn success medium">

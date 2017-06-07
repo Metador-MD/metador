@@ -17,4 +17,21 @@
     </div>
 
     <hr class="line-separator" />
+
+    <table class="table bordered">
+        <thead>
+            <tr>
+                <th>{% trans %}Title{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in rows  %}
+            <tr>
+                <td>
+                    <a href="{{ path('metador_admin_map_edit', {'id': row.id }) }}">{{ row.title }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

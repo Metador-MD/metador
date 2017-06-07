@@ -10,15 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
+use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 
 /**
  * Class PluginController
  * @package Plugins\WhereGroup\DatasetBundle\Controller
+ * @Route("map/", name="metador_admin_map_new")
  */
 class PluginController extends Controller
 {
     /**
-     * @Route("map/index", name="metador_admin_map")
+     * @Route("/", name="metador_admin_map")
      * @Method("GET")
      * @Template()
      */
@@ -27,12 +29,12 @@ class PluginController extends Controller
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         return array(
-            'sources' => $this->get('metador_map')->all(),
+            'rows' => $this->get('metador_map')->all(),
         );
     }
 
     /**
-     * @Route("map/new", name="metador_admin_map_new")
+     * @Route("new/", name="metador_admin_map_new")
      * @Method({"GET", "POST"})
      * @Template()
      */
@@ -62,60 +64,54 @@ class PluginController extends Controller
         );
     }
 
-    /**
-     * @Route("map/updatewms/{id}", name="metador_admin_map_update")
-     * @Method({"GET", "POST"})
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function updateWmsAction($id)
-    {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
-        $form = $this
-            ->createForm(WmsNewType::class, $this->get('metador_map')->get($id))
-            ->handleRequest($this->get('request_stack')->getCurrentRequest());
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
-            try {
-                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
-                $this->get('metador_map')->save($entity);
-//            $this->setFlashSuccess(
-//                'edit',
-//                $entity->getId(),
-//                'Wms %wms% erfolgreich erstellt.',
-//                array('%wms%' => $entity->getName())
-//            );
-                return $this->redirectToRoute('metador_admin_map');
-            } catch (\Exception $e) {
-//                TODO flash error
-            }
-        }
+//    /**
+//     * @Route("map/updatewms/{id}", name="metador_admin_map_update")
+//     * @Method({"GET", "POST"})
+//     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+//     */
+//    public function updateWmsAction($id)
+//    {
+//        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+//        $form = $this
+//            ->createForm(WmsNewType::class, $this->get('metador_map')->get($id))
+//            ->handleRequest($this->get('request_stack')->getCurrentRequest());
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $entity = $form->getData();
+//            try {
+//                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
+//                $this->get('metador_map')->save($entity);
+////            $this->setFlashSuccess(
+////                'edit',
+////                $entity->getId(),
+////                'Wms %wms% erfolgreich erstellt.',
+////                array('%wms%' => $entity->getName())
+////            );
+//                return $this->redirectToRoute('metador_admin_map');
+//            } catch (\Exception $e) {
+////                TODO flash error
+//            }
+//        }
+//
+//        return array(
+//            'form' => $form->createView(),
+//        );
+//    }
 
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
     /**
-     * @Route("map/editwms/{id}", name="metador_admin_map_edit")
+     * @Route("edit/{id}", name="metador_admin_map_edit")
      * @Method({"GET", "POST"})
-     * @param $id a wms id
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @Template("MetadorMapBundle:Plugin:new.html.twig")
      */
-    public function editWmsAction($id)
+    public function editAction($id)
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $form = $this
             ->createForm(WmsEditType::class, $this->get('metador_map')->get($id))
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
-            $this->get('metador_map')->save($entity);
-//            $this->setFlashSuccess(
-//                'edit',
-//                $entity->getId(),
-//                'Wms %wms% erfolgreich bearbeitet.',
-//                array('%wms%' => $entity->getName())
-//            );
+            $this->get('metador_map')->save($form->getData());
             return $this->redirectToRoute('metador_admin_map');
         }
 
