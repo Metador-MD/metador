@@ -97,7 +97,7 @@ function addSource(id, title, visible, opacity) {
     $('.-js-map-layertree').prepend($li); // last layer as first at list
 }
 
-function getGeoFeature(west, south, east, north, properties) {
+function createGeoFeature(west, south, east, north, properties) {
     var feature = {
         'type': 'Feature',
         'geometry': {
@@ -112,6 +112,24 @@ function getGeoFeature(west, south, east, north, properties) {
     }
     return feature;
 }
+
+function createGeoCollection(crs, geoFeatures) {
+    return {
+        'type': 'FeatureCollection',
+        'crs': {
+            'type': 'name',
+            'properties': {
+                'name': 'EPSG:4326'
+            }
+        },
+        'features': geoFeatures ? geoFeatures : []
+    };
+}
+
+function addFeature(geoCollection, geoFeature) {
+    geoCollection.features.push(geoFeature);
+}
+
 /* // show clear features
  // show features
  var hgcollection = {
