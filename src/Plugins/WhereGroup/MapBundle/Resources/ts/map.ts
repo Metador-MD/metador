@@ -205,6 +205,10 @@ export class Ol4Map {
         return this.drawer;
     }
 
+    getHgLayer(): ol.layer.Vector{
+        return this.hgLayer;
+    }
+
     addLayerForOptions(options: any) {
         if (options['type'] === 'WMS') {
             let wmsLayer = this.addLayer(
@@ -221,12 +225,12 @@ export class Ol4Map {
         }
     }
 
-    addToHighlight(geoJson: any) {
-        this.hgLayer.getSource().addFeatures((new ol.format.GeoJSON()).readFeatures(geoJson));
+    showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
+        vLayer.getSource().addFeatures((new ol.format.GeoJSON()).readFeatures(geoJson));
     }
 
-    clearHighlight() {
-        this.hgLayer.getSource().clear(true);
+    clearFeatures(vLayer: ol.layer.Vector) {
+        vLayer.getSource().clear(true);
     }
 
     addVectorLayer(style: ol.style.Style): ol.layer.Vector {
