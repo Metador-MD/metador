@@ -205,8 +205,12 @@ export class Ol4Map {
         return this.drawer;
     }
 
+    getHgLayer(): ol.layer.Vector{
+        return this.hgLayer;
+    }
+
     addLayerForOptions(options: any) {
-        if(options['type'] === 'WMS') {
+        if (options['type'] === 'WMS') {
             let wmsLayer = this.addLayer(
                 Ol4WmsLayer.createLayer(options['url'],
                     options['params'],
@@ -219,6 +223,14 @@ export class Ol4Map {
         } else {
             console.error(options['type'] + ' is not supported.');
         }
+    }
+
+    showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
+        vLayer.getSource().addFeatures((new ol.format.GeoJSON()).readFeatures(geoJson));
+    }
+
+    clearFeatures(vLayer: ol.layer.Vector) {
+        vLayer.getSource().clear(true);
     }
 
     addVectorLayer(style: ol.style.Style): ol.layer.Vector {
@@ -234,7 +246,7 @@ export class Ol4Map {
 
     addLayer(layer: ol.layer.Base, title: string = null): ol.layer.Base {
         layer.set(UUID, Ol4Map.getUuid('olay-'));
-        if(title) {
+        if (title) {
             layer.set(TITLE, title);
         }
         this.olMap.addLayer(layer);
