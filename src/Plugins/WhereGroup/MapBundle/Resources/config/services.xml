@@ -4,13 +4,21 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <!-- SERVICE -->
-        <parameter key="metador.map.wms.class">Plugins\WhereGroup\MapBundle\Component\WmsHandler</parameter>
+        <parameter key="metador.map.class">Plugins\WhereGroup\MapBundle\Component\Map</parameter>
+
+        <!-- EVENTLISTENER -->
+        <parameter key="metador.map.app.listener.class">Plugins\WhereGroup\MapBundle\EventListener\ApplicationListener</parameter>
     </parameters>
 
     <services>
         <!-- SERVICE -->
-        <service id="map_wmshandler" class="%metador.map.wms.class%">
+        <service id="metador_map" class="%metador.map.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+
+        <!-- EVENTLISTENER -->
+        <service id="metador_map_app_listener" class="%metador.map.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
         </service>
     </services>
 </container>

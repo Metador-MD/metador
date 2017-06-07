@@ -1,0 +1,59 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+    {% set title  = 'Hintergrunddienst bearbeiten'|trans %}
+    {% set path   = 'metador_admin_map_edit' %}
+    {% set params = {id: form.vars.value.id} %}
+{% else %}
+    {% set title  = 'Hintergrunddienst erstellen'|trans %}
+    {% set path   = 'metador_admin_map_new' %}
+    {% set params = {} %}
+{% endif %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{{ title }}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_map') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.gcUrl) }}
+        </div>
+    {% endif %}
+
+    <div class="grid space row-space responsive">
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.gcUrl, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.gcUrl, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

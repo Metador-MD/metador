@@ -10,7 +10,7 @@ namespace Plugins\WhereGroup\MapBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-interface WmsInterface
+interface MapInterface
 {
     /**
      * ConfigurationInterface constructor.

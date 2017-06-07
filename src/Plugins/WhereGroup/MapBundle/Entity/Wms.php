@@ -36,7 +36,6 @@ class Wms
     /**
      * @var string $gmUrl a WMS GetMap URL
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Url()
      */
     protected $gmUrl = "";

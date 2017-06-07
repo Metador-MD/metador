@@ -23,7 +23,7 @@ class SourceController extends Controller
      */
     public function indexAction()
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return array(
             'sources' => $this->get('metador_source')->all()
@@ -37,7 +37,7 @@ class SourceController extends Controller
      */
     public function newAction()
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this
             ->createForm(SourceType::class, new Source())
@@ -84,7 +84,7 @@ class SourceController extends Controller
      */
     public function editAction($id)
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this
             ->createForm(SourceType::class, $this->get('metador_source')->get($id))
@@ -118,7 +118,7 @@ class SourceController extends Controller
      */
     public function confirmAction($id)
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_source')->get($id))
             ->add('delete', 'submit', array(
@@ -147,16 +147,6 @@ class SourceController extends Controller
         return array(
             'form' => $form->createView()
         );
-    }
-
-    /**
-     * @param $group
-     */
-    private function checkAuthorizationFor($group)
-    {
-        if (!$this->get('security.authorization_checker')->isGranted($group)) {
-            throw $this->createAccessDeniedException();
-        }
     }
 
     private function setFlashWarning($operation, $id, $message, $parameter = array())

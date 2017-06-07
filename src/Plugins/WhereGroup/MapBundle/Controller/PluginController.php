@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
-use WhereGroup\CoreBundle\Form\WmsNewType;
+use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
 
 /**
  * Class PluginController
@@ -17,46 +17,43 @@ use WhereGroup\CoreBundle\Form\WmsNewType;
  */
 class PluginController extends Controller
 {
-
     /**
-     * @Route("map/index", name="map_wms_index")
+     * @Route("map/index", name="metador_admin_map")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         return array(
-            'sources' => $this->get('map_wmshandler')->all(),
+            'sources' => $this->get('metador_map')->all(),
         );
     }
 
     /**
-     * @Route("map/newwms", name="map_wms_new")
+     * @Route("map/new", name="metador_admin_map_new")
      * @Method({"GET", "POST"})
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @Template()
      */
-    public function newWmsAction()
+    public function newAction()
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $form = $this
             ->createForm(WmsNewType::class, new Wms())
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
+
             try {
-                $this->get('map_wmshandler')->update($entity->getGcUrl(), $entity);
-                $this->get('map_wmshandler')->save($entity);
-//            $this->setFlashSuccess(
-//                'edit',
-//                $entity->getId(),
-//                'Wms %wms% erfolgreich erstellt.',
-//                array('%wms%' => $entity->getName())
-//            );
-                return $this->redirectToRoute('map_wms_index');
+                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
+                $this->get('metador_map')->save($entity);
+
+                return $this->redirectToRoute('metador_admin_map');
             } catch (\Exception $e) {
-//                TODO flash error
+                die($e->getMessage());
             }
         }
 
@@ -66,7 +63,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("map/updatewms/{id}", name="map_wms_update")
+     * @Route("map/updatewms/{id}", name="metador_admin_map_update")
      * @Method({"GET", "POST"})
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -74,20 +71,20 @@ class PluginController extends Controller
     {
         $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
         $form = $this
-            ->createForm(WmsNewType::class, $this->get('map_wmshandler')->get($id))
+            ->createForm(WmsNewType::class, $this->get('metador_map')->get($id))
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             try {
-                $this->get('map_wmshandler')->update($entity->getGcUrl(), $entity);
-                $this->get('map_wmshandler')->save($entity);
+                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
+                $this->get('metador_map')->save($entity);
 //            $this->setFlashSuccess(
 //                'edit',
 //                $entity->getId(),
 //                'Wms %wms% erfolgreich erstellt.',
 //                array('%wms%' => $entity->getName())
 //            );
-                return $this->redirectToRoute('map_wms_index');
+                return $this->redirectToRoute('metador_admin_map');
             } catch (\Exception $e) {
 //                TODO flash error
             }
@@ -99,7 +96,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("map/editwms/{id}", name="map_wms_edit")
+     * @Route("map/editwms/{id}", name="metador_admin_map_edit")
      * @Method({"GET", "POST"})
      * @param $id a wms id
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -108,18 +105,18 @@ class PluginController extends Controller
     {
         $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
         $form = $this
-            ->createForm(WmsEditType::class, $this->get('map_wmshandler')->get($id))
+            ->createForm(WmsEditType::class, $this->get('metador_map')->get($id))
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $this->get('map_wmshandler')->save($entity);
+            $this->get('metador_map')->save($entity);
 //            $this->setFlashSuccess(
 //                'edit',
 //                $entity->getId(),
 //                'Wms %wms% erfolgreich bearbeitet.',
 //                array('%wms%' => $entity->getName())
 //            );
-            return $this->redirectToRoute('map_wms_index');
+            return $this->redirectToRoute('metador_admin_map');
         }
 
         return array(
@@ -128,16 +125,17 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("map/confirm/{id}", name="map_wms_confirm")
+     * @Route("map/confirm/{id}", name="metador_admin_map_confirm")
      * @Method({"GET", "POST"})
      * @param $id a wms id
      * @Template()
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function confirmAction($id)
     {
         $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
 
-        $form = $this->createFormBuilder($this->get('map_wmshandler')->get($id))
+        $form = $this->createFormBuilder($this->get('metador_map')->get($id))
             ->add('delete', 'submit', array(
                 'label' => 'löschen',
             ))
@@ -158,7 +156,7 @@ class PluginController extends Controller
 //                array('%wms%' => $name)
 //            );
 
-            return $this->redirectToRoute('map_wms_index');
+            return $this->redirectToRoute('metador_admin_map');
         }
 
         return array(
@@ -168,7 +166,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("map/getwms", name="map_wms_getwms")
+     * @Route("map/getwms", name="metador_admin_map_getwms")
      * @Method({"GET", "POST"})
      */
     public function getWmsAction()
@@ -181,10 +179,10 @@ class PluginController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             try {
-                $this->get('map_wmshandler')->update($entity->getGcUrl(), $entity);
+                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
 
                 return new JsonResponse(
-                    $this->get('map_wmshandler')->toOl4($entity)
+                    $this->get('metador_map')->toOl4($entity)
                 );
             } catch (\Exception $e) {
 //                TODO flash error
@@ -198,21 +196,21 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("map/loadwms", name="map_wms_loadwms")
+     * @Route("map/loadwms", name="metador_admin_map_loadwms")
      * @Method({"GET"})
      */
     public function loadWmsAction()
     {
         $url      = urldecode($this->get('request_stack')->getCurrentRequest()->query->get('url'));
         $wms      = new Wms();
-        $this->get('map_wmshandler')->update($url, $wms);
-        $response = new AjaxResponse($this->get('map_wmshandler')->toOl4($wms));
+        $this->get('metador_map')->update($url, $wms);
+        $response = new AjaxResponse($this->get('metador_map')->toOl4($wms));
         return $response;
     }
 
     /**
      * @return Response
-     * @Route("map/testaddwms", name="map_wms_testadd")
+     * @Route("map/testaddwms", name="metador_admin_map_testadd")
      * @Method({"GET", "POST"})
      */
     public function testaddwmsAction()
@@ -220,7 +218,7 @@ class PluginController extends Controller
 //        TODO remove this action
         $url      = 'http://osm-demo.wheregroup.com/service';
         $wms      = new Wms();
-        $this->get('map_wmshandler')->update($url, $wms);
+        $this->get('metador_map')->update($url, $wms);
         $response = new Response();
         return $response;
     }
