@@ -1,4 +1,5 @@
 import Object = ol.Object;
+import ProjectionLike = ol.ProjectionLike;
 declare class proj4 {
     static defs(name: string, def: string): void;
 }
@@ -112,8 +113,9 @@ export class Ol4Extent extends Ol4Geom {
         return new Ol4Extent(geom, proj);
     }
 }
-export const UUID = 'uuid';
-export const TITLE = 'title';
+export const UUID: string = 'uuid';
+export const TITLE: string = 'title';
+export const METADOR_EPSG: ProjectionLike = 'EPSG:4326';
 
 export class Ol4Map {
     private static _uuid = 0;
@@ -205,7 +207,7 @@ export class Ol4Map {
         return this.drawer;
     }
 
-    getHgLayer(): ol.layer.Vector{
+    getHgLayer(): ol.layer.Vector {
         return this.hgLayer;
     }
 
@@ -226,7 +228,15 @@ export class Ol4Map {
     }
 
     showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
-        vLayer.getSource().addFeatures((new ol.format.GeoJSON()).readFeatures(geoJson));
+        let geoJsonReader: ol.format.GeoJSON = new ol.format.GeoJSON();
+        // let geoJsonProj = geoJsonReader.readProjection(geoJson);
+        let features = geoJsonReader.readFeatures(
+            geoJson,
+            {
+                'dataProjection': geoJsonReader.readProjection(geoJson),
+                'featureProjection': this.olMap.getView().getProjection()
+            });
+        vLayer.getSource().addFeatures(features);
     }
 
     clearFeatures(vLayer: ol.layer.Vector) {
@@ -299,10 +309,14 @@ export class Ol4Map {
                     throw new Error('ol.layer.Group as Layer is not suported');
                 } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
                     (<ol.layer.Image>layer).setSource(Ol4WmsLayer.createFromSource(<ol.source.ImageWMS> source, proj));
+                } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.Vector) {
+                    let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
+                    for (let feature of features) {
+                        feature.setGeometry(feature.getGeometry().transform(projection, proj));
+                    }
                 }
             }
             this.olMap.setView(newView);
-            console.log(center);
             this.olMap.getView().fit(extent.getPolygonForExtent(proj), this.olMap.getSize());
             // let cpoint = <ol.geom.Point> new ol.geom.Point(center).transform(projection, proj);
             // console.log(cpoint.getCoordinates());
@@ -374,8 +388,14 @@ export class Ol4Map {
             this.drawer.getInteraction().on(
                 'drawend',
                 function (e) {
-                    let geom = e.feature.getGeometry().transform(olMap.getView().getProjection(), 'EPSG:4326');
-                    onDrawEnd(geom);
+                    let geojson = new ol.format.GeoJSON().writeFeatureObject(
+                        e.feature,
+                        {
+                            'dataProjection': METADOR_EPSG,
+                            'featureProjection': olMap.getView().getProjection()
+                        }
+                    );
+                    onDrawEnd(geojson);
                     olMap.removeInteraction(drawer.getInteraction());
                 }
             );
