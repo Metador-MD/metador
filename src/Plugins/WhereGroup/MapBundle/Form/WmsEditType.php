@@ -20,18 +20,19 @@ class WmsEditType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formats = isset($options['formats']) ? $options['formats'] : array();
-        $layers = isset($options['layerList']) ? $options['layerList'] : array();
+        $wms = $options['data'];
         $builder
             ->add('title', TextType::class, array('label' => 'Title'))
             ->add('format', ChoiceType::class, array(
                 'label' => 'Format',
-                'choices' => array_combine($formats, $formats)))
+                'choices' => array_combine($wms->getFormats(), $wms->getFormats())))
             ->add('layers', ChoiceType::class, array(
                 'multiple' => true,
                 'label' => 'Layers',
-                'choices' => array_combine($layers, $layers)))
-            ->add('opacity', NumberType::class, array('label' => 'Opacity'))
+                'choices' => array_combine($wms->getLayerList(), $wms->getLayerList())))
+            ->add('opacity', ChoiceType::class, array(
+                'label' => 'Opacity',
+                'choices' => array_combine(range(0.0, 1.0, 0.1), range(0.0, 1.0, 0.1))))
             ->add('priority', NumberType::class, array('label' => 'Priority'));
     }
 }

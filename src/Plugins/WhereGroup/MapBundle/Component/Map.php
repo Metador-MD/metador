@@ -42,7 +42,7 @@ class Map implements MapInterface
      */
     public function all()
     {
-        return $this->repo->findBy(array(), array('priority' => 'ASC'));
+        return $this->repo->findBy(array(), array('priority' => 'DESC'));
     }
 
     /**
