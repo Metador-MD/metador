@@ -75,6 +75,17 @@
                     </div>
                 </div>
             </div>
+            <div class="row r-2">
+                <div class="col c-1-2">
+                    <div>
+                        {{ form_label(form.visible, null, { 'label_attr': {'class': 'form-label'}}) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.visible, { 'attr': {'class': 'checkbox'}}) }}
+                    </div>
+                </div>
+                <div class="col c-1-2"></div>
+            </div>
         </div>
     {% else %}
     <div class="grid space row-space responsive">

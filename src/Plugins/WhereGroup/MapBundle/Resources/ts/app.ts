@@ -20,20 +20,28 @@ var metadorMapConfig = {
     styles: {
         highlight: {
             fill: {
-                color: 'rgba(60, 180, 255, 0.2)'
+                color: 'rgba(60, 60, 255, 0.1)'
             },
             stroke: {
-                color: 'rgba(60, 180, 255, 1.0)',
+                color: 'rgba(60, 60, 255, 1.0)',
                 width: 2
             }
         },
         search: {
             fill: {
-                color: 'rgba(255, 180, 60, 0.2)'
+                color: 'rgba(255, 60, 60, 0.1)'
             },
             stroke: {
-                color: 'rgba(255, 180, 60, 1.0)',
+                color: 'rgba(255, 60, 60, 1.0)',
                 width: 2
+            },
+            image: {
+                circle: {
+                    radius: 5,
+                    fill: {
+                        color: 'rgba(255, 60, 60, 0.6)'
+                    }
+                }
             }
         }
     },
@@ -77,5 +85,3 @@ var metadorMapConfig = {
 
 let metadorMap = metador.Ol4Map.create(metadorMapConfig);
 metador['metadorMap'] = metadorMap;
-// console.log(metador['metadorMap']);
-console.log(metadorMapConfig);

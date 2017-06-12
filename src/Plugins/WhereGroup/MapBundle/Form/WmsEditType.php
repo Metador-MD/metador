@@ -3,6 +3,7 @@
 namespace Plugins\WhereGroup\MapBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,6 +34,7 @@ class WmsEditType extends AbstractType
             ->add('opacity', ChoiceType::class, array(
                 'label' => 'Opacity',
                 'choices' => array_combine(range(0.0, 1.0, 0.1), range(0.0, 1.0, 0.1))))
-            ->add('priority', NumberType::class, array('label' => 'Priority'));
+            ->add('priority', NumberType::class, array('label' => 'Priority'))
+            ->add('visible', CheckboxType::class, array('label' => 'Visible'));
     }
 }
