@@ -13,6 +13,11 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * @param ApplicationEvent $event
      */
@@ -28,6 +33,16 @@ class ApplicationListener
                     ->path('metador_admin_map')
                     ->setRole('ROLE_SYSTEM_GEO_OFFICE')
                     ->active($app->routeStartsWith('metador_admin_map'))
+            );
+        }
+
+        if ($app->isRoute('metador_home')) {
+
+            $rows = array('a' => 1, 'b' => 2);
+
+            $app->add(
+                $app->get('Configuration')
+                    ->parameter('map_background', json_encode($rows, JSON_FORCE_OBJECT))
             );
         }
     }

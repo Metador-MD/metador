@@ -17,7 +17,7 @@
     <body>
     {% block body %}{% endblock %}
     {% block javascript %}
-    {%  set parameters = get_configuration() %}
+    {%  set parameters = get_configuration()|merge(applicationGet('app-configuration')) %}
         <script type="text/javascript">
             var Configuration = {
                 'basedir': '{{ BASEDIR }}',
