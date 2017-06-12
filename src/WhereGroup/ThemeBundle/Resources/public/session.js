@@ -39,7 +39,7 @@ MetadorSession.prototype = {
 
 var session = new MetadorSession();
 
-session.setDialogTime(Configuration.parameters.session_timeout_popup);
+session.setDialogTime(Configuration.settings.session_timeout_popup);
 session.setTimeout(Configuration.maxlifetime);
 
 $('.-js-timeout-dialog-heartbeat').on('click', function () {

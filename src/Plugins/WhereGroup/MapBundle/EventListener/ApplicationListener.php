@@ -4,6 +4,7 @@ namespace Plugins\WhereGroup\MapBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
@@ -13,9 +14,15 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
-    public function __construct()
-    {
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository */
+    protected $repo = null;
 
+    const ENTITY = "MetadorMapBundle:Wms";
+
+    /** @param EntityManagerInterface $em */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->repo = $em->getRepository(self::ENTITY);
     }
 
     /**
@@ -37,12 +44,9 @@ class ApplicationListener
         }
 
         if ($app->isRoute('metador_home')) {
-
-            $rows = array('a' => 1, 'b' => 2);
-
             $app->add(
                 $app->get('Configuration')
-                    ->parameter('map_background', json_encode($rows, JSON_FORCE_OBJECT))
+                    ->parameter('map_background', json_encode($this->repo->all(), JSON_FORCE_OBJECT))
             );
         }
     }

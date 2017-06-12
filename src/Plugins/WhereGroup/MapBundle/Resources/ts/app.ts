@@ -12,9 +12,9 @@ var metadorMapConfig = {
         srs: ["EPSG:4326", "EPSG:31466", "EPSG:25832"]
     },
     view: {
-        projection: Configuration.parameters['map_crs'],//': '9,49,11,53',                                        '
-        maxExtent: Configuration.parameters['map_bbox_max'].split(/,\s?/),//[5.8, 47.0, 15.0, 55.0], // priority for scales or for maxExtent?
-        startExtent: Configuration.parameters['map_bbox_start'].split(/,\s?/),
+        projection: Configuration.settings['map_crs'],//': '9,49,11,53',                                        '
+        maxExtent: Configuration.settings['map_bbox_max'].split(/,\s?/),//[5.8, 47.0, 15.0, 55.0], // priority for scales or for maxExtent?
+        startExtent: Configuration.settings['map_bbox_start'].split(/,\s?/),
         scales: [5000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000, 2000000, 5000000, 10000000]//, 20000000, 50000000]
     },
     styles: {

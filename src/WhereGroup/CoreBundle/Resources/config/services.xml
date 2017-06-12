@@ -29,7 +29,7 @@
         <parameter key="metador.twig.uuid.class">WhereGroup\CoreBundle\Twig\Extension\UuidExtension</parameter>
         <parameter key="metador.twig.teaser.class">WhereGroup\CoreBundle\Twig\Extension\TeaserExtension</parameter>
         <parameter key="metador.twig.coupled.resource.class">WhereGroup\CoreBundle\Twig\Extension\CoupledResourceExtension</parameter>
-        <parameter key="metador.twig.configuration.class">WhereGroup\CoreBundle\Twig\Extension\ConfigurationExtension</parameter>
+        <parameter key="metador.twig.settings.class">WhereGroup\CoreBundle\Twig\Extension\SettingsExtension</parameter>
 
         <!-- VOTER -->
         <parameter key="metador.metadata.voter.class">WhereGroup\CoreBundle\Security\MetadataVoter</parameter>
@@ -120,7 +120,7 @@
             <argument>%operates_on_url%</argument>
             <tag name="twig.extension" />
         </service>
-        <service id="metador.twig.configuration" class="%metador.twig.configuration.class%">
+        <service id="metador.twig.settings" class="%metador.twig.settings.class%">
             <argument type="service" id="metador_plugin" />
             <argument type="service" id="metador_configuration" />
             <tag name="twig.extension" />

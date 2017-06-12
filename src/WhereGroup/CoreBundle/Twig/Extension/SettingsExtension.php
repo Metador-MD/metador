@@ -8,7 +8,7 @@ use WhereGroup\PluginBundle\Component\Plugin;
  * Class ConfigurationExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class ConfigurationExtension extends \Twig_Extension
+class SettingsExtension extends \Twig_Extension
 {
     protected $configuration;
     protected $plugin;
@@ -30,14 +30,14 @@ class ConfigurationExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration'))
+            new \Twig_SimpleFunction('get_settings', array($this, 'getSettings'))
         );
     }
 
     /**
      * @return null
      */
-    public function getConfiguration()
+    public function getSettings()
     {
         $config = array();
 
@@ -69,6 +69,6 @@ class ConfigurationExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return "metador_configuration";
+        return "metador_settings";
     }
 }
