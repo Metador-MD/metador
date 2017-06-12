@@ -136,8 +136,6 @@ $icon-color: darken($border, 20%);
         &:focus {
             background-color: darken($background, 1%);
         }
-
-        //@include normal-item();
     }
 
 
@@ -259,7 +257,6 @@ $icon-color: darken($border, 20%);
             background-color: lighten($error, 35%);
         }
     }
-
 }
 
 .md .form-field-wrapper .form-icon,

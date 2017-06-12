@@ -9,51 +9,7 @@
 {% endif %}
 
 {% block center %}
-    {% if isHome is defined %}
-    <div class="map-dialog -js-map-dialog">
-        <div class="map-menu">
-            <span class="btn medium -js-zoom-box">
-                <span class="icon-map"></span> Zoom
-            </span>
-            <select class="select -js-draw-type">
-                <option value="NONE">None</option>
-                <option value="BOX">Box</option>
-                <option value="POLYGON">Polygon</option>
-            </select>
-
-            <div class="form-field-wrapper medium" style="display: inline-block;">
-                <select class="select -js-crs-code">
-                    <option value="EPSG:4326">EPSG:4326</option>
-                    <option value="EPSG:4258">EPSG:4258</option>
-                    <!--option value="EPSG:31466">EPSG:31466</option>
-                    <option value="EPSG:31467">EPSG:31467</option-->
-                    <option value="EPSG:25832">EPSG:25832</option>
-                </select>
-            </div>
-
-            <input id="map-menu-load-wms-input" type="text" class=""
-                   placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
-                   data-url="{{ url('metador_admin_map_loadwms') }}"/>
-
-            <button id="map-menu-load-wms-button" class="btn success"><span class="icon-donwload"></span>Laden</button>
-
-        </div>
-        <div class="map-dialog-left-menu -js-map-dialog active">
-            <div class="map-dialog-left-content -js-map-menu">
-                <div class="-js-map-layertree">
-                    <h4>Layerbaum</h4>
-                    <ul>
-                    </ul>
-                </div>
-            </div>
-            <div class="map-dialog-left-menu-button -js-toggle-layertree">
-                +
-            </div>
-        </div>
-        <div class="map -js-map" id="map"></div>
-    </div>
-    {% endif %}
-
+    {% include 'MetadorThemeBundle:Home:map.html.twig' %}
 
     <div class="home -js-home">
         <div class="source">

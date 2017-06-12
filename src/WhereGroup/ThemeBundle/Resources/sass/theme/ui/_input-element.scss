@@ -1,0 +1,81 @@
+.input-element {
+    background-color: transparent;
+    display: inline-block;
+    border-radius: 2px;
+    margin: 0;
+    color: $font;
+    outline: none;
+    text-decoration: none;
+
+    @include normal-item();
+
+    &.full {
+        width: 100%;
+        text-align: center;
+    }
+
+    @extend .dark-normal;
+
+    &.info {
+        @extend .dark-info;
+    }
+
+    &.success {
+        @extend .dark-success;
+    }
+
+    &.warning {
+        @extend .dark-warning
+    }
+
+    &.error {
+        @extend .dark-error;
+    }
+
+    &.small {
+        @include small-item();
+    }
+
+    &.medium {
+        @include medium-item();
+    }
+
+    &.large {
+        @include large-item();
+    }
+}
+
+select.input-element:not(.simple) {
+    &.small, &.medium, &.large {
+        padding: 0 35px 0 $padding;
+    }
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px);
+    background-size:
+        5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+    }
+}
+
+input.input-element {
+    position: relative;
+    top: -1px;
+}

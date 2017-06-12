@@ -78,23 +78,32 @@ $(document).on('change', '.-js-map-source-opacity', function () {
 });
 
 function addSource(id, title, visible, opacity) {
-    var $li = $('<li id="' + id + '" class="row"></li>');
-    var $chkwrap = $('<div class="form-wrapper medium"></div>');
-    var $chck = $('<input id="chb-' + id + '" class="check -js-map-source-visible" type="checkbox">')
-    $chck.prop('checked', visible);
-    $chkwrap.append($chck);
-    $chkwrap.append('<label class="form-label" for="chb-' + id + '">' + title + '</label>');
-    // TODO label set overflow hidden for max-width
-    $li.append($chkwrap);
-    var $selwrap = $('<div class="form-wrapper"></div>');
-    var $sel = $('<select class="select -js-map-source-opacity"></select>');
+
+    var select = $('<select></select>')
+        .addClass('input-element medium simple js-map-source-opacity -js-map-source-opacity');
+
     for (var i = 0; i <= 10; i++) {
-        $sel.append('<option value="' + (i / 10) + '">' + (i * 10) + ' %</option>');
+        select.append('<option value="' + (i / 10) + '">' + (i * 10) + ' %</option>');
     }
-    $sel.val(opacity);
-    $selwrap.append($sel);
-    $li.append($selwrap);
-    $('.-js-map-layertree').prepend($li); // last layer as first at list
+
+    var li = $('<li id="' + id + '" ></li>');
+
+    li.append(
+        $('<input />')
+            .attr('type', 'checkbox')
+            .attr('id', 'chb-' + id)
+            .addClass('check -js-map-source-visible')
+            .prop('checked', visible)
+    ).append(
+        $('<label></label>')
+            .attr('for', 'chb-' + id)
+            .addClass('form-label')
+            .text(title)
+    ).append(
+        select
+    );
+
+    $('.-js-map-layertree ul').prepend(li);
 }
 
 function createGeoFeature(west, south, east, north, properties) {

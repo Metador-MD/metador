@@ -42,48 +42,48 @@
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -415,6 +415,64 @@ html, body {
 .md .grid.padding .row > .col {
   padding: 10px; }
 
+.input-element, .md .btn {
+  background-color: transparent;
+  display: inline-block;
+  border-radius: 2px;
+  margin: 0;
+  color: #444;
+  outline: none;
+  text-decoration: none;
+  font-size: 1em;
+  padding: 0 20px;
+  height: 35px;
+  line-height: 35px; }
+
+.input-element.full, .md .full.btn {
+  width: 100%;
+  text-align: center; }
+
+.input-element.small, .md .small.btn {
+  font-size: .8em;
+  padding: 0 10px;
+  height: 20px;
+  line-height: 20px; }
+
+.input-element.medium, .md .medium.btn {
+  font-size: .9em;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px; }
+
+.input-element.large, .md .large.btn {
+  font-size: 1.1em;
+  padding: 0 25px;
+  height: 40px;
+  line-height: 40px; }
+
+select.input-element:not(.simple), .md select.btn:not(.simple) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat; }
+
+select.input-element:not(.simple).small, .md select.btn:not(.simple).small, select.input-element:not(.simple).medium, .md select.btn:not(.simple).medium, select.input-element:not(.simple).large, .md select.btn:not(.simple).large {
+  padding: 0 35px 0 20px; }
+
+select.input-element:not(.simple)::-ms-expand, .md select.btn:not(.simple)::-ms-expand {
+  display: none; }
+
+select.input-element:not(.simple):-moz-focusring, .md select.btn:not(.simple):-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000; }
+
+input.input-element, .md input.btn {
+  position: relative;
+  top: -1px; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
@@ -459,48 +517,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -849,48 +907,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -904,40 +962,7 @@ html, body {
   text-align: center; }
 
 .md .btn {
-  display: inline-block;
-  border-radius: 2px;
-  margin: 0;
-  padding: 0 20px;
-  color: #444;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  font-size: 1em;
-  padding: 0 20px;
-  height: 35px;
-  line-height: 35px; }
-
-.md .btn.full {
-  width: 100%;
-  text-align: center; }
-
-.md .btn.small {
-  font-size: .8em;
-  padding: 0 10px;
-  height: 20px;
-  line-height: 20px; }
-
-.md .btn.medium {
-  font-size: .9em;
-  padding: 0 15px;
-  height: 30px;
-  line-height: 30px; }
-
-.md .btn.large {
-  font-size: 1.1em;
-  padding: 0 25px;
-  height: 40px;
-  line-height: 40px; }
+  cursor: pointer; }
 
 .md .spinn, .md span[class^="icon-spinner"] {
   display: inline-block;
@@ -1006,48 +1031,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -1187,48 +1212,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -1363,48 +1388,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -1473,48 +1498,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -1660,48 +1685,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -1826,48 +1851,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -2048,48 +2073,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -2217,48 +2242,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
@@ -2283,7 +2308,7 @@ html, body {
 .md .map-dialog > .map-menu {
   border-bottom: 1px solid #e1e1e1;
   background-color: #f3f5f6;
-  padding: 0 25px;
+  padding: 0 20px;
   height: 40px;
   line-height: 40px; }
 
@@ -2311,6 +2336,7 @@ html, body {
   background-color: #fff;
   border-right: 1px solid #e1e1e1;
   display: none;
+  padding: 20px;
   position: absolute;
   top: 0;
   left: 0;
@@ -2435,6 +2461,14 @@ html, body {
   display: block;
   z-index: 1; }
 
+.md .layer-tree-list {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+.md .js-map-source-opacity {
+  float: right; }
+
 .md .timeout-wrapper {
   z-index: 1;
   display: none; }
@@ -2540,48 +2574,48 @@ html, body {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-normal, .md .btn {
+.dark-normal, .input-element, .md .btn {
   color: #444;
   background-color: #f7f7f7;
   border: 1px solid #e1e1e1; }
 
-.dark-normal:hover, .md .btn:hover {
+.dark-normal:hover, .input-element:hover, .md .btn:hover {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .md .btn.info {
+.dark-info, .input-element.info, .md .info.btn {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .md .btn.info:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
-.dark-success, .md .btn.success {
+.dark-success, .input-element.success, .md .success.btn {
   color: #fff;
   background-color: #77ca60;
   border: 1px solid #59b93e; }
 
-.dark-success:hover, .md .btn.success:hover {
+.dark-success:hover, .input-element.success:hover, .md .success.btn:hover {
   background-color: #59b93e;
   border: 1px solid #4fa637; }
 
-.dark-warning, .md .btn.warning {
+.dark-warning, .input-element.warning, .md .warning.btn {
   color: #fff;
   background-color: #f5c44e;
   border: 1px solid #f2b41e; }
 
-.dark-warning:hover, .md .btn.warning:hover {
+.dark-warning:hover, .input-element.warning:hover, .md .warning.btn:hover {
   background-color: #f2b41e;
   border: 1px solid #e9a90d; }
 
-.dark-error, .md .btn.error {
+.dark-error, .input-element.error, .md .error.btn {
   color: #fff;
   background-color: #e15b36;
   border: 1px solid #c6421e; }
 
-.dark-error:hover, .md .btn.error:hover {
+.dark-error:hover, .input-element.error:hover, .md .error.btn:hover {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 

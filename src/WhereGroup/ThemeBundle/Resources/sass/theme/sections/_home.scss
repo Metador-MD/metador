@@ -18,7 +18,8 @@ $home-menu-height: 35px;
     & > .map-menu {
         border-bottom: 1px solid $border;
         background-color: $dialog-head;
-        @include large-item(false);
+        padding: 0 $padding;
+        @include large-item(false, false);
     }
 
     & > .map {
@@ -37,6 +38,7 @@ $home-menu-height: 35px;
             background-color: $white;
             border-right: 1px solid $border;
             display: none;
+            padding: $padding;
             @include pos(0, 0, 0, 0);
         }
 
@@ -158,4 +160,14 @@ $home-menu-height: 35px;
             z-index: 1;
         }
     }
+}
+
+.md .layer-tree-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.md .js-map-source-opacity {
+    float: right;
 }

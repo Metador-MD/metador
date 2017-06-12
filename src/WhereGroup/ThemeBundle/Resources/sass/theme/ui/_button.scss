@@ -3,51 +3,8 @@
 @import '../extensions';
 
 .md .btn {
-    display: inline-block;
-    border-radius: 2px;
-    margin: 0;
-    padding: 0 $padding;
-    color: $font;
+    @extend .input-element;
     cursor: pointer;
-    outline: none;
-    text-decoration: none;
-
-    &.full {
-        width: 100%;
-        text-align: center;
-    }
-
-    @extend .dark-normal;
-
-    &.info {
-        @extend .dark-info;
-    }
-
-    &.success {
-        @extend .dark-success;
-    }
-
-    &.warning {
-        @extend .dark-warning
-    }
-
-    &.error {
-        @extend .dark-error;
-    }
-
-    @include normal-item();
-
-    &.small {
-        @include small-item();
-    }
-
-    &.medium {
-        @include medium-item();
-    }
-
-    &.large {
-        @include large-item();
-    }
 }
 
 .md .spinn,
@@ -65,4 +22,3 @@
         transform: rotate(360deg);
     }
 }
-
