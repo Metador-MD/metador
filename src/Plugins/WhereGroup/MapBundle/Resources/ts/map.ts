@@ -1,5 +1,5 @@
 import Object = ol.Object;
-import ProjectionLike = ol.ProjectionLike;
+
 declare class proj4 {
     static defs(name: string, def: string): void;
 }
@@ -53,15 +53,29 @@ export class Ol4Utils {
         return ol.proj.get(projCode);
     }
 
-    public static getStyle(options: any): ol.style.Style {
-        return new ol.style.Style({
-            fill: new ol.style.Fill(options['fill']),
-            stroke: new ol.style.Stroke(options['stroke'])//,
-            // image: new ol.style.Circle({
-            //     radius: 7,
-            //     fill: new ol.style.Fill(options['fill'])
-            // })
-        });
+    public static getStyle(options: any, style: ol.style.Style = null): ol.style.Style {
+        let style_ = style ? style : new ol.style.Style();
+        style_.setFill(new ol.style.Fill(options['fill']));
+        style_.setStroke(new ol.style.Stroke(options['stroke']));
+        if (options['image'] && options['image']['circle']) {
+            style_.setImage(new ol.style.Circle({
+                    radius: options['image']['circle']['radius'],
+                    fill: new ol.style.Fill({
+                        color: options['image']['circle']['fill']['color']
+                    })
+                }
+            ));
+        }
+        return style_;
+        //
+        // return new ol.style_.Style({
+        //     fill: new ol.style_.Fill(options['fill']),
+        //     stroke: new ol.style_.Stroke(options['stroke'])//,
+        //     // image: new ol.style_.Circle({
+        //     //     radius: 7,
+        //     //     fill: new ol.style_.Fill(options['fill'])
+        //     // })
+        // });
     }
 
 // fill
@@ -115,7 +129,7 @@ export class Ol4Extent extends Ol4Geom {
 }
 export const UUID: string = 'uuid';
 export const TITLE: string = 'title';
-export const METADOR_EPSG: ProjectionLike = 'EPSG:4326';
+export const METADOR_EPSG: ol.ProjectionLike = 'EPSG:4326';
 
 export class Ol4Map {
     private static _uuid = 0;
@@ -362,7 +376,7 @@ export class Ol4Map {
         }
     }
 
-    setDraw(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+    drawShape(shapeType: SHAPES = null, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         if (!this.drawer) {
@@ -374,7 +388,7 @@ export class Ol4Map {
         if (this.drawer.getInteraction()) {
             this.olMap.removeInteraction(this.drawer.getInteraction());
         }
-        this.drawer.setInteraction(shape);
+        this.drawer.setInteraction(shape, Ol4Utils.getStyle(this.styles['search']));
         if (this.drawer.getInteraction()) {
             let drawer = this.drawer;
             this.getDrawer().getLayer().getSource().clear();
@@ -401,6 +415,7 @@ export class Ol4Map {
             );
         } else {
             this.getDrawer().getLayer().getSource().clear();
+            onDrawEnd(null);
         }
     }
 }
@@ -452,19 +467,21 @@ export class Ol4Drawer {
         return this.interaction;
     }
 
-    public setInteraction(type: SHAPES) {
+    public setInteraction(type: SHAPES, drawStyle: ol.style.Style) {
         switch (type) {
             case SHAPES.BOX:
                 this.interaction = new ol.interaction.Draw({
                     source: this.layer.getSource(),
                     type: 'Circle',
+                    style: drawStyle,
                     geometryFunction: createBox() // ol.d.ts has no function "ol.interaction.Draw.createBox()"
                 });
                 break;
             case SHAPES.POLYGON:
                 this.interaction = new ol.interaction.Draw({
                     source: this.layer.getSource(),
-                    type: 'Polygon'
+                    type: 'Polygon',
+                    style: drawStyle
                 });
                 break;
             default:
