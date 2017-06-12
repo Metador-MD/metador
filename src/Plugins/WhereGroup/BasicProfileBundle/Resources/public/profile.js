@@ -164,6 +164,8 @@ $('[data-mdtab]').click(function() {
 });
 
 $(document).on('click', '.-js-toggle-switch', function () {
+    metadata.enableSubmitButton();
+
     var value = $(this).find('.-js-toggle-switch-input').val();
 
     if (value === '0') {
