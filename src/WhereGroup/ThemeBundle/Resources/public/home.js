@@ -78,7 +78,7 @@ $(document).on('change', '.-js-map-source-opacity', function () {
 });
 
 function addSource(id, title, visible, opacity) {
-
+    console.log(opacity);
     var select = $('<select></select>')
         .addClass('input-element medium simple js-map-source-opacity -js-map-source-opacity');
 
@@ -102,6 +102,7 @@ function addSource(id, title, visible, opacity) {
     ).append(
         select
     );
+    select.val(opacity);
 
     $('.-js-map-layertree ul').prepend(li);
 }
