@@ -65,13 +65,6 @@ class ApplicationListener
                 ->path('metador_admin_source')
                 ->active($app->routeStartsWith('metador_admin_source'))
                 ->setRole('ROLE_SYSTEM_SUPERUSER')
-        )->add(
-            $app->get('Configuration', 'session')
-                ->parameter('session_dialog', $this->configuration->getValue(
-                    'session-timeout-popup',
-                    'plugin',
-                    'metador-core'
-                ))
         );
     }
 }
