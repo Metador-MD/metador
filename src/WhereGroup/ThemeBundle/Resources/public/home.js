@@ -78,7 +78,7 @@ $(document).on('change', '.-js-map-source-opacity', function () {
 });
 
 function addSource(id, title, visible, opacity) {
-
+    var maxLength = 16;
     var select = $('<select></select>')
         .addClass('input-element medium simple js-map-source-opacity -js-map-source-opacity');
 
@@ -87,7 +87,15 @@ function addSource(id, title, visible, opacity) {
     }
 
     var li = $('<li id="' + id + '" ></li>');
-
+    var ttl = null;
+    if(title.length > maxLength) {
+        ttl = title.substring(0, maxLength);
+        if(ttl.lastIndexOf(' ') > 0) {
+            ttl = ttl.substring(0, ttl.lastIndexOf(' '));
+        }
+    } else {
+        ttl = title;
+    }
     li.append(
         $('<input />')
             .attr('type', 'checkbox')
@@ -97,8 +105,9 @@ function addSource(id, title, visible, opacity) {
     ).append(
         $('<label></label>')
             .attr('for', 'chb-' + id)
+            .attr('title', title)
             .addClass('form-label')
-            .text(title)
+            .text(ttl)
     ).append(
         select
     );
