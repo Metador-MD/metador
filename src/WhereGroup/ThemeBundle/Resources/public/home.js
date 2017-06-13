@@ -102,7 +102,7 @@ function addSource(id, title, visible, opacity) {
     ).append(
         select
     );
-
+    select.val(opacity);
     $('.-js-map-layertree ul').prepend(li);
 }
 
