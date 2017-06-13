@@ -40,7 +40,8 @@ class WmsRepository extends EntityRepository
     public function all()
     {
         return $this->createQueryBuilder('c')
-            ->select('c.gcUrl, c.gmUrl')
+            ->select('c.gmUrl as url, c.title, c.format, c.layers, c.version, c.visible, c.opacity')
+//            ->where('c.filterType = :filterType')
             ->orderBy('c.priority', 'ASC')
             ->getQuery()
             ->getResult();

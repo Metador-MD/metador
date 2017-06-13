@@ -59,7 +59,7 @@ class Wms
     protected $formats = array();
 
     /**
-     * @var string $layers a csv of selected layers
+     * @var array $layers selected layers
      * @ORM\Column(type="array", nullable=false)
      */
     protected $layers;

@@ -45,32 +45,7 @@ var metadorMapConfig = {
             }
         }
     },
-    source: [
-        {
-            type: 'WMS',
-            url: 'http://osm-demo.wheregroup.com/service?',
-            title: 'OSM',
-            opacity: 1.0,
-            visible: true,
-            params: {
-                LAYERS: 'osm',
-                VERSION: '1.1.1',
-                FORMAT: 'image/png'
-            }
-        },
-        {
-            type: 'WMS',
-            url: 'http://wms.wheregroup.com/cgi-bin/mapbender_user.xml?',
-            title: 'MB-User',
-            opacity: 1.0,
-            visible: true,
-            params: {
-                LAYERS: 'Mapbender',
-                VERSION: '1.1.1',
-                FORMAT: 'image/png'
-            }
-        }
-    ],
+    source: [],
     proj4Defs: {
         "EPSG:4326": "+proj=longlat +datum=WGS84 +no_defs",
         "EPSG:4258": "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs",
@@ -83,5 +58,22 @@ var metadorMapConfig = {
     }
 };
 
+console.log(Configuration);
+for (const key in Configuration.config.map_background) {
+    let wms = Configuration.config.map_background[key];
+    metadorMapConfig.source.push({
+        'type': 'WMS',
+        'url': wms.url,
+        'title': wms.title,
+        'opacity': wms.opacity,
+        'visible': wms.visible,
+        'params': {
+            'LAYERS': [wms.layers].map(function(elem){ return elem; }).join(","),
+            'VERSION': wms.version,
+            'FORMAT': wms.format
+        }
+    });
+}
+console.log(metadorMapConfig);
 let metadorMap = metador.Ol4Map.create(metadorMapConfig);
 metador['metadorMap'] = metadorMap;
