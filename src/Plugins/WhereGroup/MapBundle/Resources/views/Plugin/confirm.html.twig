@@ -4,10 +4,10 @@
     <div class="grid content-title">
         <div class="row r-2">
             <div class="col c-1-2">
-                <h1 class="title dm">{% trans %}Datenquelle löschen{% endtrans %}</h1>
+                <h1 class="title dm">{% trans %}Hintergrunddienst löschen{% endtrans %}</h1>
             </div>
             <div class="col c-1-2 text-right">
-                <a href="{{ path('metador_admin_source') }}" class="btn medium">
+                <a href="{{ path('metador_admin_map') }}" class="btn medium">
                     <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
                 </a>
             </div>
@@ -16,7 +16,7 @@
 
     <hr class="line-separator" />
 
-    {{ form_start(form, { 'action': path('metador_admin_source_confirm', {id: form.vars.value.id}), 'method': 'POST', 'attr': {
+    {{ form_start(form, { 'action': path('metador_admin_map_confirm', {id: form.vars.value.id}), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
 
@@ -24,7 +24,7 @@
     <div class="grid space row-space responsive notify error remove-last-space">
         <div class="row r-1">
             <div class="col c-1 text-center">
-                Sind Sie sicher das sie <strong>{{ form.vars.value.name }}</strong> löschen möchten? Alle darin enthaltenen Metadaten werden unwiderruflich gelöscht!
+                Sind Sie sicher das sie <strong>{{ form.vars.value.title }}</strong> löschen möchten?
             </div>
         </div>
         <div class="row r-1">

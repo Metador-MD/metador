@@ -64,39 +64,6 @@ class PluginController extends Controller
         );
     }
 
-//    /**
-//     * @Route("map/updatewms/{id}", name="metador_admin_map_update")
-//     * @Method({"GET", "POST"})
-//     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-//     */
-//    public function updateWmsAction($id)
-//    {
-//        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
-//        $form = $this
-//            ->createForm(WmsNewType::class, $this->get('metador_map')->get($id))
-//            ->handleRequest($this->get('request_stack')->getCurrentRequest());
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $entity = $form->getData();
-//            try {
-//                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
-//                $this->get('metador_map')->save($entity);
-////            $this->setFlashSuccess(
-////                'edit',
-////                $entity->getId(),
-////                'Wms %wms% erfolgreich erstellt.',
-////                array('%wms%' => $entity->getName())
-////            );
-//                return $this->redirectToRoute('metador_admin_map');
-//            } catch (\Exception $e) {
-////                TODO flash error
-//            }
-//        }
-//
-//        return array(
-//            'form' => $form->createView(),
-//        );
-//    }
-
     /**
      * @Route("edit/{id}", name="metador_admin_map_edit")
      * @Method({"GET", "POST"})
@@ -129,7 +96,7 @@ class PluginController extends Controller
      */
     public function confirmAction($id)
     {
-        $this->checkAuthorizationFor('ROLE_SYSTEM_SUPERUSER');
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this->createFormBuilder($this->get('metador_map')->get($id))
             ->add('delete', 'submit', array(
@@ -140,17 +107,8 @@ class PluginController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $name   = $entity->getTitle();
-            $id     = $entity->getId();
 
             $this->get('metador_source')->remove($entity);
-
-//            $this->setFlashSuccess(
-//                'edit',
-//                $id,
-//                'WMS %wms% erfolgreich gelöscht.',
-//                array('%wms%' => $name)
-//            );
 
             return $this->redirectToRoute('metador_admin_map');
         }

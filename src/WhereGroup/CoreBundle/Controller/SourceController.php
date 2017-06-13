@@ -149,6 +149,12 @@ class SourceController extends Controller
         );
     }
 
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
     private function setFlashWarning($operation, $id, $message, $parameter = array())
     {
         $log = $this->get('metador_logger')->newLog();
