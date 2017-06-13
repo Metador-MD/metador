@@ -61,6 +61,10 @@ var metadorMapConfig = {
 console.log(Configuration);
 for (const key in Configuration.config.map_background) {
     let wms = Configuration.config.map_background[key];
+    let layers = [];
+    for (const l in wms.layers){
+        layers.push(wms.layers[l]);
+    }
     metadorMapConfig.source.push({
         'type': 'WMS',
         'url': wms.url,
@@ -68,7 +72,7 @@ for (const key in Configuration.config.map_background) {
         'opacity': wms.opacity,
         'visible': wms.visible,
         'params': {
-            'LAYERS': [wms.layers].map(function(elem){ return elem; }).join(","),
+            'LAYERS': layers.join(","),
             'VERSION': wms.version,
             'FORMAT': wms.format
         }
