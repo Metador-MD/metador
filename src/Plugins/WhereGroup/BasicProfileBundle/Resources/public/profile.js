@@ -119,6 +119,10 @@ $('form').ajaxForm({
     target: '#metadata-form',
     dataType: 'json',
     beforeSubmit: function(form, options) {
+        if ($('input[name="p[public]"]').val() === '1' && $('#validation').val() === '0') {
+            $('#validation').closest('.-js-toggle-switch').click();
+        }
+
         if ($('#validation').val() === '1') {
             var valid = true;
 
