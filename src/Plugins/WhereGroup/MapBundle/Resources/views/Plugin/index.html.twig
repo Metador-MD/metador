@@ -22,6 +22,8 @@
         <thead>
             <tr>
                 <th>{% trans %}Title{% endtrans %}</th>
+                <th>{% trans %}Sichtbarkeit{% endtrans %}</th>
+                <th>{% trans %}Reihenfolge{% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +32,8 @@
                 <td>
                     <a href="{{ path('metador_admin_map_edit', {'id': row.id }) }}">{{ row.title }}</a>
                 </td>
+                <td>{{ row.visible }}</td>
+                <td>{{ row.priority }}</td>
             </tr>
         {% endfor %}
         </tbody>
