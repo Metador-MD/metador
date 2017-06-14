@@ -86,7 +86,6 @@ addDraggableEventListener($('#dummy-layer').get(0));
 function getLayerPosition(layer){
     var index = 0;
     $('.-js-map-layertree ul').find('.-js-draggable').each(function(i){
-        console.log(this === layer);
         if (this === layer) {
             index = i;
         }
@@ -127,7 +126,6 @@ function _handleDragDrop(e){
 
 function _handleDragEnd(e){
     $(this).removeClass('move');
-    console.log(getLayerPosition(currentLayer));
     Window.metador.metadorMap.moveLayer(
                 $(currentLayer).attr('id'),
                 oldPosition,
