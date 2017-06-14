@@ -1,4 +1,10 @@
 {
+    "p_responsiblepartymetadata_organisationname": [
+        {
+            "regex": "^.+$",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
     "p_metadatastandardname": [
         {
             "regex": "^.+$",

@@ -9,7 +9,6 @@ MetadataForm.prototype = {
     userinput: false,
     submitButton: $('.-js-metadata-button'),
     submitButtonStatus: $('.-js-metadata-button-status'),
-    validation: [],
 
     setUserinput: function(userinput) {
         this.userinput = userinput;
@@ -43,61 +42,6 @@ MetadataForm.prototype = {
         $('[data-mdtab]').removeClass('act');
         $('[data-mdtab-content="' + id + '"]').addClass('act');
         $('[data-mdtab="' + id + '"]').addClass('act');
-    },
-
-    validate: function(item) {
-        var key = $(item).attr('data-obj-id');
-        var wrapper = $(item).closest('.-js-validation-wrapper');
-        var statusIcon = wrapper.find('.-js-validation-icon');
-        var defaultIcon = statusIcon.attr('data-validation-icon');
-        var valid = true;
-        var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
-
-        if (typeof this.validation[tab] === 'undefined') {
-            this.validation[tab] = [];
-        }
-
-        this.validation[tab][key] = true;
-
-        jQuery.each(validation[key], function(index, value) {
-            var string = $(item).val();
-
-            if (string.match(new RegExp(value.regex, "i"))) {
-                wrapper.removeClass('error');
-                statusIcon
-                    .removeClass('icon-exclamation')
-                    .addClass(defaultIcon)
-                    .attr('title', '');
-            } else {
-                wrapper.addClass('error');
-                statusIcon
-                    .addClass('icon-exclamation')
-                    .removeClass(defaultIcon)
-                    .attr('title', value.message);
-                valid = false;
-                return false;
-            }
-        });
-
-        if (valid) {
-            delete this.validation[tab][key];
-        }
-
-        var errorCount = Object.keys(this.validation[tab]).length;
-
-        if (errorCount > 0) {
-            $('[data-mdtab="' + tab + '"]')
-                .addClass('error')
-                .find('.-js-error-count')
-                .text(errorCount);
-        } else {
-            $('[data-mdtab="' + tab + '"]')
-                .removeClass('error')
-                .find('.-js-error-count')
-                .text('');
-        }
-
-        return valid;
     }
 };
 
@@ -124,19 +68,11 @@ $('form').ajaxForm({
         }
 
         if ($('#validation').val() === '1') {
-            var valid = true;
-
-            $(".-js-user-input").each(function () {
-                if (!metadata.validate(this)) {
-                    valid = false;
-                }
-            });
-
             var abort = form.filter(function ( obj ) {
                 return obj.name === 'submit' && obj.value === 'abort';
             });
 
-            if (!valid && abort.length === 0) {
+            if (!validator.validateAll() && abort.length === 0) {
                 metador.displayError('Datensatz ist nicht valide und kann daher nicht gespeichert werden.');
                 return false;
             }
