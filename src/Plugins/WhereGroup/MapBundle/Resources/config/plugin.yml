@@ -22,11 +22,11 @@ map:
             frontend: true
             type: string
             label: BBOX start extend
-            default: 'test'
-            description: asdf
+            default: '9,49,11,53'
+            description: Bounding Box start extend
         map_bbox_max:
             frontend: true
             type: string
             label: BBOX max extend
-            default: 'test'
-            description: asdf
+            default: '6,47,14,56'
+            description: Bounding Box max extend
