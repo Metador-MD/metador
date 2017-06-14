@@ -2,6 +2,7 @@
 
 namespace Plugins\WhereGroup\MapBundle\Controller;
 
+use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -88,7 +89,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("map/confirm/{id}", name="metador_admin_map_confirm")
+     * @Route("confirm/{id}", name="metador_admin_map_confirm")
      * @Method({"GET", "POST"})
      * @param $id a wms id
      * @Template()
@@ -120,7 +121,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("map/getwms", name="metador_admin_map_getwms")
+     * @Route("getwms", name="metador_admin_map_getwms")
      * @Method({"GET", "POST"})
      */
     public function getWmsAction()
@@ -150,7 +151,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("map/loadwms", name="metador_admin_map_loadwms")
+     * @Route("loadwms/", name="metador_admin_map_loadwms")
      * @Method({"GET"})
      */
     public function loadWmsAction()
@@ -160,6 +161,17 @@ class PluginController extends Controller
         $this->get('metador_map')->update($url, $wms);
         $response = new AjaxResponse($this->get('metador_map')->toOl4($wms));
         return $response;
+    }
+
+    /**
+     * @return Response
+     * @Route("uploadgeom/", name="metador_admin_map_uploadgeom")
+     * @Method({"GET"})
+     */
+    public function uploadGeomAction()
+    {
+
+        return new Response();
     }
 
     /**
