@@ -77,6 +77,76 @@ $(document).on('change', '.-js-map-source-opacity', function () {
     Window.metador.metadorMap.setOpacity($this.parents('li:first').attr('id'), $this.val());
 });
 
+// layer drag and drop
+
+var currentLayer = null;
+var oldPosition = 0;
+addDraggableEventListener($('#dummy-layer').get(0));
+
+function getLayerPosition(layer){
+    var index = 0;
+    $('.-js-map-layertree ul').find('.-js-draggable').each(function(i){
+        console.log(this === layer);
+        if (this === layer) {
+            index = i;
+        }
+    });
+    
+    return index;
+}
+
+function _handleDragStart(e){
+    currentLayer = this;
+    oldPosition = getLayerPosition(this); 
+    
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    $(this).addClass("move");
+}
+
+function _handleDragOver(e){
+    // Necessary. Allows to drop.
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+}
+
+function _handleDragEnter(e){
+    if(currentLayer !== this){
+        $(currentLayer).remove();
+        $(this).before(currentLayer);
+    }
+}
+
+function _handleDragDrop(e){
+    $(this).removeClass("over");
+}
+
+function _handleDragEnd(e){
+    $(this).removeClass('move');
+    console.log(getLayerPosition(currentLayer));
+    Window.metador.metadorMap.moveLayer(
+                $(currentLayer).attr('id'),
+                oldPosition,
+                getLayerPosition(currentLayer)
+            );
+}
+
+function addDraggableEventListener(layer){
+
+    if ($(layer).attr('data-draggable') === "true"){
+        layer.addEventListener('dragstart',_handleDragStart, false);
+        layer.addEventListener('dragend',_handleDragEnd, false);
+    }
+    
+    layer.addEventListener('dragenter',_handleDragEnter, false);
+    layer.addEventListener('dragover',_handleDragOver, false);
+    layer.addEventListener('drop', _handleDragDrop, false);
+}
+
 function addSource(id, title, visible, opacity) {
     var maxLength = 16;
     var select = $('<select></select>')
@@ -85,8 +155,15 @@ function addSource(id, title, visible, opacity) {
     for (var i = 0; i <= 10; i++) {
         select.append('<option value="' + (i / 10) + '">' + (i * 10) + ' %</option>');
     }
-
-    var li = $('<li id="' + id + '" ></li>');
+    // TODO: Configuration for draggable Layer
+    var li = $('<li></li>')
+            .attr('id',  id)
+            .attr('draggable', "true")
+            .attr('data-draggable', "true")
+            .addClass('draggable -js-draggable');
+    
+    addDraggableEventListener(li.get(0), true);
+    
     var ttl = null;
     if(title.length > maxLength) {
         ttl = title.substring(0, maxLength);

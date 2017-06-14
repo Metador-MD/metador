@@ -2466,6 +2466,18 @@ input.input-element, .md input.btn {
   margin: 0;
   padding: 0; }
 
+.md .layer-tree-list > .draggable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  cursor: move; }
+
+.md .layer-tree-list > .draggable.move {
+  background-color: #b2dbff; }
+
 .md .js-map-source-opacity {
   float: right; }
 
