@@ -121,6 +121,8 @@ function _handleDragEnter(e){
 }
 
 function _handleDragDrop(e){
+    e.stopPropagation(); // Stops some browsers from redirecting.
+    e.preventDefault();
     $(this).removeClass("over");
 }
 

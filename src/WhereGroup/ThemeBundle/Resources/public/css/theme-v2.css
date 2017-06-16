@@ -2476,7 +2476,8 @@ input.input-element, .md input.btn {
   cursor: move; }
 
 .md .layer-tree-list > .draggable.move {
-  background-color: #e5f3ff; }
+  background-color: #e5f3ff;
+  margin-left: 10px; }
 
 .md .js-map-source-opacity {
   float: right; }
