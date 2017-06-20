@@ -24,9 +24,11 @@
         <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
 
         <form action="{{ path('metador_admin_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
-            <div class="btn medium file-upload">
-                Upload
-                <input name="file" class="upload" type="file" size="0" accept=".zip|.gml">
+            <div class="btn medium">
+                <div class="file-upload">
+                    Upload
+                    <input name="file" class="upload" type="file" size="0" accept=".zip|.gml">
+                </div>
             </div>
         </form>
     </div>

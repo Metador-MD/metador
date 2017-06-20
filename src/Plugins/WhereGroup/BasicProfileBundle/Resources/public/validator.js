@@ -119,6 +119,6 @@ Validator.prototype = {
                 .text('');
         }
     }
-}
+};
 
 var validator = new Validator();
