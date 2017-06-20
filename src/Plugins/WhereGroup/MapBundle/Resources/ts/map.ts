@@ -380,7 +380,7 @@ export class Ol4Map {
         }
     }
 
-    drawGeometry(geoJson: Object, onDrawEnd: Function = null) {
+    drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         if (!this.drawer) {
@@ -393,7 +393,7 @@ export class Ol4Map {
         onDrawEnd(geoJson);
     }
 
-    drawShape(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+    drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         if (!this.drawer) {
