@@ -276,9 +276,13 @@ export class Ol4Map {
         this.olMap.addLayer(layer);
         return layer;
     }
-
+    
     removeLayer(layer: ol.layer.Base): void {
         this.olMap.removeLayer(layer);
+    }
+    
+    moveLayer(uuid: string, oldPos: number, newPos: number ): void{
+        console.log(uuid, oldPos, newPos);
     }
 
     private findLayer(uuid: string): ol.layer.Base {
