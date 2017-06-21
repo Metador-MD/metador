@@ -1,13 +1,15 @@
+{% set tabId = 'tab-metadata' %}
 <div class="mdtab-content act" data-mdtab-content="metadata">
     <h1 class="title">{% trans %}Metadaten{% endtrans %}</h1>
 
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.select(p, 'metadataLanguage', 'ger', {
+                {% set value = p['metadataLanguage'] is defined ? p['metadataLanguage'] : 'ger' %}
+                {{ profileForm.select('p[metadataLanguage]', value, 'Sprache der Metadaten', {
                     'ger': 'Deutsch',
                     'eng': 'Englisch'
-                }, 'Sprache der Metadaten', 'mandatory') }}
+                }, 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-2"></div>
         </div>
@@ -22,7 +24,7 @@
                 {% endif %}
 
                 <div class="duplicatable-area -js-duplicatable-area" data-count="{{ p['responsiblePartyMetadata']|length }}">
-                    <div class="form-field-wrapper i4">
+                    <div class="form-field-wrapper i4" id="{{ id|md_id }}">
                         <span class="form-icon-type icon-mandatory rs left -js-validation-icon" data-validation-icon="icon-mandatory"></span>
                         <div class="advanced-select -js-advanced-select">
                             {% if p['responsiblePartyMetadata']|first['organisationName'] is defined %}
@@ -50,14 +52,15 @@
                                     <div class="row r-2">
                                         <div class="col c-1-2">
                                             {% set organisationName = responsibleParty['organisationName'] is defined ? responsibleParty['organisationName'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][organisationName]', organisationName, '', 'Name der Organisation', 'mandatory', '-js-duplicatable-title'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][organisationName]', organisationName, '', 'Name der Organisation', 'mandatory', '-js-duplicatable-title',
+                                                tabId ~ ',' ~ id|md_id
                                             ) }}
                                         </div>
                                         <div class="col c-1-2">
                                             {% set electronicMailAddress = responsibleParty['electronicMailAddress'] is defined ? responsibleParty['electronicMailAddress'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][electronicMailAddress]', electronicMailAddress, '', 'E-Mail', 'mandatory'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][electronicMailAddress]', electronicMailAddress, '', 'E-Mail', 'mandatory', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -65,8 +68,8 @@
                                     <div class="row r-2">
                                         <div class="col c-1-2">
                                             {% set individualName = responsibleParty['individualName'] is defined ? responsibleParty['individualName'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][individualName]', individualName, '', 'Zuständige Person', 'conditional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][individualName]', individualName, '', 'Zuständige Person', 'conditional', tabId
                                             ) }}
                                         </div>
                                         <div class="col c-1-2"></div>
@@ -75,14 +78,14 @@
                                     <div class="row r-2">
                                         <div class="col c-1-2">
                                             {% set country = responsibleParty['country'] is defined ? responsibleParty['country'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][country]', country, '', 'Staat', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][country]', country, '', 'Staat', 'optional', tabId
                                             ) }}
                                         </div>
                                         <div class="col c-1-2">
                                             {% set administrativeArea = responsibleParty['administrativeArea'] is defined ? responsibleParty['administrativeArea'] : '' %}
-                                            {{ profileForm.input_temp(
-                                            'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][administrativeArea]', administrativeArea, '', 'Bundesland', 'optional'
+                                            {{ profileForm.input(
+                                            'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][administrativeArea]', administrativeArea, '', 'Bundesland', 'optional', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -90,8 +93,8 @@
                                     <div class="row r-1">
                                         <div class="col c-1">
                                             {% set deliveryPoint = responsibleParty['deliveryPoint'] is defined ? responsibleParty['deliveryPoint'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][deliveryPoint]', deliveryPoint, '', 'Straße und Hausnummer / Postfach', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][deliveryPoint]', deliveryPoint, '', 'Straße und Hausnummer / Postfach', 'optional', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -99,14 +102,14 @@
                                     <div class="row r-2">
                                         <div class="col c-1-2">
                                             {% set city = responsibleParty['city'] is defined ? responsibleParty['city'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][city]', city, '', 'Ort', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][city]', city, '', 'Ort', 'optional', tabId
                                             ) }}
                                         </div>
                                         <div class="col c-1-2">
                                             {% set postalCode = responsibleParty['postalCode'] is defined ? responsibleParty['postalCode'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][postalCode]', postalCode, '', 'PLZ', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][postalCode]', postalCode, '', 'PLZ', 'optional', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -114,14 +117,14 @@
                                     <div class="row r-2">
                                         <div class="col c-1-2">
                                             {% set voice = responsibleParty['voice'] is defined ? responsibleParty['voice'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][voice]', voice, '', 'Telefonnummer', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][voice]', voice, '', 'Telefonnummer', 'optional', tabId
                                             ) }}
                                         </div>
                                         <div class="col c-1-2">
                                             {% set facsimile = responsibleParty['facsimile'] is defined ? responsibleParty['facsimile'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][facsimile]', facsimile, '', 'Faxnummer', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][facsimile]', facsimile, '', 'Faxnummer', 'optional', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -129,8 +132,8 @@
                                     <div class="row r-1">
                                         <div class="col c-1">
                                             {% set onlineResource = responsibleParty['onlineResource'] is defined ? responsibleParty['onlineResource'] : '' %}
-                                            {{ profileForm.input_temp(
-                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][onlineResource]', onlineResource, '', 'Internetadresse', 'optional'
+                                            {{ profileForm.input(
+                                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][onlineResource]', onlineResource, '', 'Internetadresse', 'optional', tabId
                                             ) }}
                                         </div>
                                     </div>
@@ -150,15 +153,18 @@
         </div>
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'metadataStandardName', 'ISO 19119', '', 'Spezifikation', 'mandatory') }}
+                {% set value = p['metadataStandardName'] is defined ? p['metadataStandardName'] : '' %}
+                {{ profileForm.input('p[metadataStandardName]', value, 'ISO 19119',  'Spezifikation', 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'metadataStandardVersion', '2005/PDAM 1', '', 'Version', 'mandatory') }}
+                {% set value = p['metadataStandardName'] is defined ? p['metadataStandardName'] : '' %}
+                {{ profileForm.input('p[metadataStandardName]', value, '2005/PDAM 1', 'Version', 'mandatory', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.input(p, 'browserGraphic', '', '', 'Browser Bild', 'optional') }}
+                {% set value = p['browserGraphic'] is defined ? p['browserGraphic'] : '' %}
+                {{ profileForm.input('p[browserGraphic]', value, '', 'Browser Bild', 'optional', '', tabId) }}
             </div>
         </div>
     </div>

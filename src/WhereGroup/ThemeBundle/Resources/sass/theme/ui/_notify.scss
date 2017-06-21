@@ -16,13 +16,19 @@
 
 .md .notify {
     border: 1px solid $border;
-    padding: $padding + $padding / 2;
+    padding: $padding $padding;
     margin: $padding 0;
     border-radius: 2px;
     position: relative;
 
     @extend .light-normal;
     @include set-notify-close-color($border);
+
+    & > ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 
     & > .close {
         cursor: pointer;

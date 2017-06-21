@@ -22,7 +22,7 @@ Validator.prototype = {
     assert: function(assert, value) {
         var regex = ".*";
 
-        if (rule.assert === 'notBlank') {
+        if (assert === 'notBlank') {
             regex = "^.+$";
         }
 
@@ -38,18 +38,19 @@ Validator.prototype = {
         var valid = true;
         var key = $(item).attr('id');
         var objKey = $(item).attr('data-obj-id');
-        var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
+        var sources = $(item).attr('data-validator-source');
+
+        if (sources) {
+            sources = sources.split(',');
+        }
+
+        var errorCount = 0;
+        // var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
 
         // No validation rules
         if (typeof validation[objKey] === 'undefined') {
             return true;
         }
-
-        if (typeof this.validation[tab] === 'undefined') {
-            this.validation[tab] = [];
-        }
-
-        this.validation[tab][key] = true;
 
         jQuery.each(validation[objKey], function(index, rule) {
             var string = $(item).val();
@@ -65,11 +66,25 @@ Validator.prototype = {
             self.itemValid(item, rule.message);
         });
 
-        if (valid) {
-            delete this.validation[tab][key];
-        }
+        jQuery.each(sources, function(index, source) {
+            if (typeof self.validation[source] === 'undefined') {
+                self.validation[source] = [];
+            }
 
-        this.setErrorCount(Object.keys(this.validation[tab]).length, tab);
+            self.validation[source][key] = true;
+
+            if (valid) {
+                delete self.validation[source][key];
+            }
+
+            errorCount += Object.keys(self.validation[source]).length;
+
+
+        });
+
+        jQuery.each(sources, function(index, source) {
+            self.setErrorCount(errorCount, source);
+        });
 
         return valid;
     },
@@ -106,14 +121,14 @@ Validator.prototype = {
         this.setItemStatus(item, false, message);
     },
 
-    setErrorCount: function(count, tab) {
+    setErrorCount: function(count, source) {
         if (count > 0) {
-            $('[data-mdtab="' + tab + '"]')
+            $('#' + source)
                 .addClass('error')
                 .find('.-js-error-count')
                 .text(count);
         } else {
-            $('[data-mdtab="' + tab + '"]')
+            $('#' + source)
                 .removeClass('error')
                 .find('.-js-error-count')
                 .text('');

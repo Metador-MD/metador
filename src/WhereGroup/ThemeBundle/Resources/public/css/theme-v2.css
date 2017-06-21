@@ -863,6 +863,9 @@ input.input-element, .md input.btn {
 .md .advanced-select .advanced-select-option:focus {
   background-color: #f4f4f4; }
 
+.md .advanced-select .advanced-select-option.error {
+  border-left: 4px solid #e15b36; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
@@ -1087,7 +1090,7 @@ input.input-element, .md input.btn {
 
 .md .notify {
   border: 1px solid #e1e1e1;
-  padding: 30px;
+  padding: 20px 20px;
   margin: 20px 0;
   border-radius: 2px;
   position: relative; }
@@ -1097,6 +1100,11 @@ input.input-element, .md input.btn {
 
 .md .notify > .close:hover {
   color: #c8c8c8; }
+
+.md .notify > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
 
 .md .notify > .close {
   cursor: pointer;
@@ -1577,6 +1585,9 @@ input.input-element, .md input.btn {
 .simple-select .simple-select-default-button.success {
   box-shadow: -3px 0px 0px 0px #77ca60; }
 
+.simple-select .simple-select-default-button:focus {
+  outline: none; }
+
 .simple-select .simple-select-button {
   box-sizing: content-box;
   float: right;
@@ -1617,6 +1628,9 @@ input.input-element, .md input.btn {
   padding: 0 20px;
   height: 35px;
   line-height: 35px; }
+
+.simple-select .simple-select-button > .simple-select-options > .simple-select-option:focus {
+  outline: none; }
 
 .simple-select .simple-select-button > .simple-select-options > .simple-select-option.metadata-abort-button {
   color: #444;

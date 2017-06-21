@@ -1,8 +1,30 @@
-{% macro input_temp(id, value, placeholder, label, type, class) %}
+{% macro input(id, value, placeholder, label, type, class, validatorSources) %}
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
     <div class="form-field-wrapper i2 -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
+        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" data-validator-source="{{ validatorSources }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
+        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
+    </div>
+{% endmacro %}
+
+{% macro select(id, value, label, options, type, class, validatorSources) %}
+    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
+    <div class="form-field-wrapper i2 -js-validation-wrapper">
+        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
+        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input {{ class }}" data-validator-source="{{ validatorSources }}" {{ id|md_data_obj }}>
+            {% for optionValue, optionLabel in options  %}
+                <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
+            {% endfor %}
+        </select>
+        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
+    </div>
+{% endmacro %}
+
+{% macro text(id, value, placeholder, label, type, class, validatorSources) %}
+    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
+    <div class="form-field-wrapper i2 -js-validation-wrapper">
+        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
+        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }} placeholder="{{ placeholder }}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
         <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endmacro %}
@@ -32,7 +54,7 @@
                         {% if not loop.first and value is not empty%}
                             <div class="-js-multi-input-col">
                                 <div class="form-field-wrapper i2 -js-validation-wrapper">
-                                    <input name="{{ id }}" type="text" value="{{ value }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
+                                    <input name="{{ id }}" type="text" value="{{ value }}"  class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
                                     <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
                                     <span class="form-icon icon-bin2 -js-multi-input-remove"></span>
                                 </div>
@@ -42,45 +64,5 @@
                 </div>
             </div>
         </div>
-    </div>
-{% endmacro %}
-
-{% macro input(p, key, defaultValue, placeholder, label, type, id, value) %}
-    {% set id = 'p[' ~ key ~ ']' %}
-    {% set value = p[key] is defined ? p[key] : defaultValue %}
-
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-    </div>
-{% endmacro %}
-
-{% macro select(p, key, defaultValue, options, label, type) %}
-    {% set id = 'p[' ~ key ~ ']' %}
-    {% set value = p[key] is defined ? p[key] : defaultValue %}
-
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input" {{ id|md_data_obj }}>
-            {% for optionValue, optionLabel in options  %}
-                <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
-            {% endfor %}
-        </select>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-    </div>
-{% endmacro %}
-
-{% macro text(p, key, defaultValue, placeholder, label, type) %}
-    {% set id = 'p[' ~ key ~ ']' %}
-    {% set value = p[key] is defined ? p[key] : defaultValue %}
-
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }}>{{ value }}</textarea>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endmacro %}

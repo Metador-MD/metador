@@ -357,5 +357,9 @@ $icon-color: darken($border, 20%);
             background-color: darken($background, 1%);
         }
 
+        &.error {
+            border-left: 4px solid $error;
+        }
+
     }
 }

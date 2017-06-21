@@ -1,20 +1,24 @@
+{% set tabId = 'tab-identification' %}
 <div class="mdtab-content" data-mdtab-content="identification">
     <h1 class="title">{% trans %}Identifizierung{% endtrans %}</h1>
 
     <div class="grid space responsive">
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.input(p, 'title', '', '', 'Titel', 'mandatory') }}
+                {% set value = p['title'] is defined ? p['title'] : '' %}
+                {{ profileForm.input('p[title]', value, '', 'Titel', 'mandatory', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.input(p, 'alternateTitle', '', '', 'Alternativtitel', 'optional') }}
+                {% set value = p['alternateTitle'] is defined ? p['alternateTitle'] : '' %}
+                {{ profileForm.input('p[alternateTitle]', value, '', 'Alternativtitel', 'optional', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.text(p, 'abstract', '', '', 'Kurzbeschreibung', 'mandatory') }}
+                {% set value = p['abstract'] is defined ? p['abstract'] : '' %}
+                {{ profileForm.text('p[abstract]', value, '', 'Kurzbeschreibung', 'mandatory', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
@@ -24,10 +28,12 @@
         </div>
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'identifierCode', '', '', 'Code', 'mandatory') }}
+                {% set value = p['identifierCode'] is defined ? p['identifierCode'] : '' %}
+                {{ profileForm.input('p[identifierCode]', value, '', 'Code', 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'identifierCodespace', '', '', 'Namensraum', 'optional') }}
+                {% set value = p['identifierCodespace'] is defined ? p['identifierCodespace'] : '' %}
+                {{ profileForm.input('p[identifierCodespace]', value, '', 'Namensraum', 'optional', '', tabId) }}
             </div>
         </div>
     </div>

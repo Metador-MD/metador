@@ -1,10 +1,12 @@
+{% set tabId = 'tab-classification' %}
 <div class="mdtab-content" data-mdtab-content="classification">
     <h1 class="title">{% trans %}Klassifizierung{% endtrans %}</h1>
 
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-2-3">
-                {{ profileForm.select(p, 'serviceType', '', {
+                {% set value = p['serviceType'] is defined ? p['serviceType'] : '' %}
+                {{ profileForm.select('p[serviceType]', value, 'Geodatendienst', {
                     '': '',
                     'view': 'Darstellungsdienste',
                     'invoke': 'Dienste zum Abrufen von Geodatendiensten',
@@ -12,10 +14,11 @@
                     'other': 'Sonstige Dienste',
                     'discovery': 'Suchdienste',
                     'transformation': 'Transformationsdienste'
-                }, 'Geodatendienst', 'mandatory') }}
+                }, 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-3">
-                {{ profileForm.input(p, 'serviceTypeVersion', '', '1.1.1', 'Version', 'mandatory') }}
+                {% set value = p['serviceTypeVersion'] is defined ? p['serviceTypeVersion'] : '' %}
+                {{ profileForm.input('p[serviceTypeVersion]', value, '1.1.1', 'Version', 'mandatory', '', tabId) }}
             </div>
         </div>
 
@@ -27,16 +30,19 @@
 
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'containsOperationsName', '', 'GetCapabilities', 'Operation', 'mandatory') }}
+                {% set value = p['containsOperationsName'] is defined ? p['containsOperationsName'] : '' %}
+                {{ profileForm.input('p[containsOperationsName]', value, 'GetCapabilities', 'Operation', 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-2">
-                {{ profileForm.input(p, 'containsOperationsDCP', '', 'WebService', 'Platform', 'mandatory') }}
+                {% set value = p['containsOperationsDCP'] is defined ? p['containsOperationsDCP'] : '' %}
+                {{ profileForm.input('p[containsOperationsDCP]', value, 'WebService', 'Platform', 'mandatory', '', tabId) }}
             </div>
         </div>
 
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.input(p, 'containsOperationsURL', '', '', 'URL', 'mandatory') }}
+                {% set value = p['containsOperationsURL'] is defined ? p['containsOperationsURL'] : '' %}
+                {{ profileForm.input('p[containsOperationsURL]', value, '', 'URL', 'mandatory', '', tabId) }}
             </div>
         </div>
     </div>

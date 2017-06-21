@@ -27,6 +27,10 @@
         &.success {
             box-shadow: -3px 0px 0px 0px $success;
         }
+
+        &:focus {
+            outline:none;
+        }
     }
 
     .simple-select-button {
@@ -83,6 +87,10 @@
 
                 @extend .reset;
                 @include normal-item(false, true);
+
+                &:focus {
+                    outline:none;
+                }
 
                 &.metadata-abort-button {
                     color: $font;
