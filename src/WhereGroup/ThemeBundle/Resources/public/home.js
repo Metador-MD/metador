@@ -48,6 +48,11 @@ $('.-js-zoom-box').on('click', function () {
     }
 });
 
+$('.-js-file-upload').on('change', function(e){
+    $('#file-upload-form').submit();
+    
+});
+
 $('#map-menu-load-wms-button').on('click', function () {
     var $input = $('#map-menu-load-wms-input');
     if ($input.val()) {
@@ -160,7 +165,7 @@ function addSource(id, title, visible, opacity) {
             .attr('id',  id)
             .attr('draggable', "true")
             .attr('data-draggable', "true")
-            .addClass('draggable -js-draggable');
+            .addClass('draggable');
     
     addDraggableEventListener(li.get(0), true);
     
