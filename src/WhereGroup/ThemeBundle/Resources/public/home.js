@@ -53,6 +53,16 @@ $('.-js-file-upload').on('change', function(e){
     
 });
 
+$('#file-upload-form').ajaxForm({
+    dataType: 'text',
+    success: function(data) {
+        console.log('haha', data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log('ohoh',jqXHR, textStatus, errorThrown);
+    }
+});
+
 $('#map-menu-load-wms-button').on('click', function () {
     var $input = $('#map-menu-load-wms-input');
     if ($input.val()) {

@@ -167,7 +167,7 @@ class PluginController extends Controller
     /**
      * @return Response
      * @Route("uploadgeom/", name="metador_admin_map_uploadgeom")
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
     public function uploadGeomAction()
     {
@@ -198,7 +198,7 @@ class PluginController extends Controller
             exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
         }
 
-        return new Response();
+        return new Response('aaaaaaa');
     }
 
     /**
