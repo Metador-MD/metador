@@ -380,7 +380,20 @@ export class Ol4Map {
         }
     }
 
-    drawShape(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+    drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
+        let ol4map = this;
+        let olMap = this.olMap;
+        if (!this.drawer) {
+            let vLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['search']));
+            vLayer.setMap(this.olMap);
+            this.drawer = new Ol4Drawer(vLayer);
+        }
+        this.clearFeatures(this.drawer.getLayer());
+        this.showFeatures(this.drawer.getLayer(), geoJson);
+        onDrawEnd(geoJson);
+    }
+
+    drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         if (!this.drawer) {
