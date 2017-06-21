@@ -2,11 +2,12 @@
 
 namespace Plugins\WhereGroup\MapBundle\Controller;
 
-use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
+//use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use ShapeFile\ShapeFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
@@ -170,6 +171,32 @@ class PluginController extends Controller
      */
     public function uploadGeomAction()
     {
+
+
+//        /home/paul/Customer/LVermGEO/beispiele/beisöiel1
+        try {
+            // Open shapefile
+            $shapeFile = new ShapeFile(
+                '/home/paul/Customer/LVermGEO/beispiele/beispiel1.shp',
+                ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
+            );
+            $prj = $shapeFile->getPRJ();
+            $type = $shapeFile->getShapeType();
+            $current = $shapeFile->getCurrentRecord();
+            $record = $shapeFile->getRecord();
+            // Read all the records
+            while ($record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH)) {
+                if ($record['dbf']['_deleted']) continue;
+                // Geometry
+                print_r($record['shp']);
+                // DBF Data
+                print_r($record['dbf']);
+            }
+
+        } catch (ShapeFileException $e) {
+            // Print detailed error information
+            exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
+        }
 
         return new Response();
     }
