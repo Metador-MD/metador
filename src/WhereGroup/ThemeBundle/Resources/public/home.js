@@ -19,7 +19,7 @@ $('.-js-crs-code').on('change', function () {
 
 $('.-js-draw-type').on('click', function () {
     var $this = $(this);
-    Window.metador.metadorMap.drawShape(
+    Window.metador.metadorMap.drawShapeForSearch(
         $this.val(),
         function (geometry) {
             console.log(geometry);
