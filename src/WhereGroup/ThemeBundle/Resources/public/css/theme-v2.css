@@ -663,6 +663,9 @@ input.input-element, .md input.btn {
   background-color: #fafafa;
   display: block; }
 
+.md .form-field-wrapper.row-space {
+  margin-bottom: 20px; }
+
 .md .form-field-wrapper.inline {
   display: inline-block; }
 

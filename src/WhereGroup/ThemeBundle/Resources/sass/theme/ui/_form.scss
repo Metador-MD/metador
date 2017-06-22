@@ -94,6 +94,10 @@ $icon-color: darken($border, 20%);
     display: block;
     @extend .clearfix;
 
+    &.row-space {
+        margin-bottom: $padding;
+    }
+
     &.inline {
         display: inline-block;
     }
