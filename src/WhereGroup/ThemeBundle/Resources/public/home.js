@@ -48,6 +48,21 @@ $('.-js-zoom-box').on('click', function () {
     }
 });
 
+$('.-js-file-upload').on('change', function(e){
+    $('#file-upload-form').submit();
+    
+});
+
+$('#file-upload-form').ajaxForm({
+    dataType: 'text',
+    success: function(data) {
+        console.log('haha', data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log('ohoh',jqXHR, textStatus, errorThrown);
+    }
+});
+
 $('#map-menu-load-wms-button').on('click', function () {
     var $input = $('#map-menu-load-wms-input');
     if ($input.val()) {
@@ -121,6 +136,8 @@ function _handleDragEnter(e){
 }
 
 function _handleDragDrop(e){
+    e.stopPropagation(); // Stops some browsers from redirecting.
+    e.preventDefault();
     $(this).removeClass("over");
 }
 
@@ -158,7 +175,7 @@ function addSource(id, title, visible, opacity) {
             .attr('id',  id)
             .attr('draggable', "true")
             .attr('data-draggable', "true")
-            .addClass('draggable -js-draggable');
+            .addClass('draggable');
     
     addDraggableEventListener(li.get(0), true);
     
