@@ -1,77 +1,77 @@
 {
     "p_responsiblepartymetadata_organisationname": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_metadatastandardname": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_metadatastandardversion": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_browsergraphic": [
         {
-            "regex": "^((https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?|)$",
+            "assert": "url",
             "message": "Eingabe ist keine gültige URL"
         }
     ],
     "p_title": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_abstract": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_identifiercode": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_servicetype": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_servicetypeversion": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_containsoperationsname": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_containsoperationsdcp": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
     "p_containsoperationsurl": [
         {
-            "regex": "^.+$",
+            "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         },
         {
-            "regex": "^((https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?|)$",
+            "assert": "url",
             "message": "Eingabe ist keine gültige URL"
         }
     ]

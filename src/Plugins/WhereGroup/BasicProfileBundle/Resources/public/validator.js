@@ -24,6 +24,8 @@ Validator.prototype = {
 
         if (assert === 'notBlank') {
             regex = "^.+$";
+        } else if (assert === 'url') {
+            regex = "^((https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?|)$";
         }
 
         return this.assertRegex(regex, value);
@@ -45,7 +47,6 @@ Validator.prototype = {
         }
 
         var errorCount = 0;
-        // var tab = $(item).closest('[data-mdtab-content]').attr('data-mdtab-content');
 
         // No validation rules
         if (typeof validation[objKey] === 'undefined') {
