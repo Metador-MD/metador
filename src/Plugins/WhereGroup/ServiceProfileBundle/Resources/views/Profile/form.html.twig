@@ -19,6 +19,8 @@
 
     <div class="center menu">
         <div class="center-left">
+            {% include '@MetadorBasicProfile/Profile/metadataSettings.html.twig' %}
+
             <ul class="left-menu">
                 <li data-mdtab="metadata" id="tab-metadata" class="act">
                     <span>{% trans %}Metadatensatz{% endtrans %}</span>
@@ -80,20 +82,6 @@
                 {% else %}
                     no!
                 {% endif %}
-                <div class="grid space">
-                    <div class="row r-2">
-                        <div class="col c-1-2 -js-toggle-switch switch-row">
-                            <span class="icon-toggle-off -js-toggle-switch-icon"></span>
-                            <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
-                            <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
-                        </div>
-                        <div class="col c-1-2 -js-toggle-switch switch-row">
-                            <span class="icon-toggle-on -js-toggle-switch-icon"></span>
-                            <span class="-js-toggle-switch-label switch-label">{% trans %}Validierung{% endtrans %}</span>
-                            <input type="hidden" id="validation" class="-js-toggle-switch-input" value="1" />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="center-right">

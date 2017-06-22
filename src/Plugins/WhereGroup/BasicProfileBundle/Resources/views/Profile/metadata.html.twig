@@ -164,7 +164,7 @@
         <div class="row r-1">
             <div class="col c-1">
                 {% set value = p['browserGraphic'] is defined ? p['browserGraphic'] : '' %}
-                {{ profileForm.input('p[browserGraphic]', value, '', 'Browser Bild', 'optional', '', tabId) }}
+                {{ profileForm.input('p[browserGraphic]', value, '', 'Browser Bild', 'optional', '-js-update-preview-image', tabId) }}
             </div>
         </div>
     </div>

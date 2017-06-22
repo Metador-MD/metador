@@ -1,0 +1,45 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.md .metadata-settings-wrapper {
+    $wrapper-padding: $padding / 2;
+
+    border: 1px solid $border;
+    background-color: $white;
+    margin-bottom: $padding;
+    margin-right: $padding;
+    padding: $wrapper-padding;
+
+    @extend .clearfix;
+
+    & .settings-uuid {
+        font-size: 0.65em;
+    }
+}
+
+.metadata-settings-wrapper-preview > img {
+    height: 60px;
+    width: 60px;
+    border: 1px solid $border;
+    border-radius: 4px;
+}
+
+.metadata-settings-wrapper-title {
+    text-align: center;
+    font-weight: bold;
+    line-height: $medium-item-height;
+}
+
+.metadata-settings-wrapper-toggle {
+    text-align: right;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $background;
+    }
+}
+
+.md .grid .row.metadata-settings-wrapper-extended {
+    display: none;
+}

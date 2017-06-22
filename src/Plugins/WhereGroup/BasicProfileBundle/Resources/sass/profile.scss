@@ -2,8 +2,9 @@
 @import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/extensions';
 
 .switch-row {
-    height: 40px;
-    line-height: 40px;
+    height: $medium-item-height;
+    line-height: $medium-item-height;
+
     cursor: pointer;
 
     .switch-label {
@@ -11,12 +12,13 @@
         @extend .no-user-select;
     }
 
-    & > .icon-toggle-on,
     & > .icon-toggle-off {
+        color: lighten($font, 40%);
         vertical-align: middle;
     }
 
     & > .icon-toggle-on {
         color: $info;
+        vertical-align: middle;
     }
 }

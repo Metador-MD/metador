@@ -97,15 +97,17 @@
   text-align: center; }
 
 .switch-row {
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
   cursor: pointer; }
 
 .switch-row .switch-label {
   font-size: 0.8em; }
 
-.switch-row > .icon-toggle-on, .switch-row > .icon-toggle-off {
+.switch-row > .icon-toggle-off {
+  color: #aaa;
   vertical-align: middle; }
 
 .switch-row > .icon-toggle-on {
-  color: #4dacfe; }
+  color: #4dacfe;
+  vertical-align: middle; }

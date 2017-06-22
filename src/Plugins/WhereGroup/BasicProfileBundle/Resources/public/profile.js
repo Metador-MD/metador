@@ -49,7 +49,7 @@ var metadata = new MetadataForm();
 
 $(document).on('change', '.-js-user-input', function() {
     metadata.enableSubmitButton();
-    metadata.validate(this);
+    validator.validate(this);
 });
 
 window.onbeforeunload = function () {
@@ -99,8 +99,22 @@ $('form').ajaxForm({
 });
 
 // Metadata Tab
-$('[data-mdtab]').click(function() {
+$(document).on('click', '[data-mdtab]', function() {
     metadata.enableTab($(this).attr('data-mdtab'));
+});
+
+// Browser Graphic
+$(document).on('change', '.-js-update-preview-image', function() {
+    var preview = $('.-js-preview-image');
+
+    preview
+        .on('error', function() { preview.attr('src', '/bundles/metadortheme/img/preview.png') })
+        .attr('src', $(this).val());
+});
+
+$(document).on('click', '.-js-toggle-extended-metadata-settings', function() {
+    $('.-js-extended-metadata-settings').toggle();
+    $(this).find('span').toggleClass('icon-caret-down icon-caret-up');
 });
 
 $(document).on('click', '.-js-toggle-switch', function () {
