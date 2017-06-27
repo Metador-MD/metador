@@ -42,6 +42,9 @@
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
+.dark-info > a, .dark-success > a, .dark-warning > a, .dark-error > a {
+  color: #fff; }
+
 .dark-normal {
   color: #444;
   background-color: #f7f7f7;

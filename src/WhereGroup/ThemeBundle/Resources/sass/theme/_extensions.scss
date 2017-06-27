@@ -106,6 +106,15 @@
     }
 }
 
+.dark-info,
+.dark-success,
+.dark-warning,
+.dark-error {
+    & > a {
+        color: $white;
+    }
+}
+
 .dark-normal {
     color: $font;
     background-color: $background;
