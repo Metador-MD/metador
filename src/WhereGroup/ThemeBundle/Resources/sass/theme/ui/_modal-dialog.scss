@@ -1,0 +1,65 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+$dialog-width: 500px;
+$dialog-height: 300px;
+
+.md {
+    & > .modal-dialog {
+        display: none;
+    }
+
+    .modal-dialog-wrapper {
+        z-index: 1;
+        display: none;
+        @extend .clearfix;
+
+        & > .modal-dialog-background {
+            z-index: 1;
+            background-color: black;
+            opacity: 0.6;
+            @include pos(0px,0px,0px,0px);
+        }
+
+        & > .modal-dialog {
+            border: 1px solid $border;
+            z-index: 2;
+            background-color: $white;
+            border-radius: 2px;
+            line-height: $small-item-height;
+            width: $dialog-width;
+            position: relative;
+            margin: 200px auto;
+        }
+    }
+
+    .modal-dialog-header {
+        background-color: $title;
+        position: relative;
+        font-weight: bold;
+        @include large-item();
+    }
+
+    .modal-dialog-content {
+        position: relative;
+        min-height: 100px;
+        max-height: $dialog-height;
+        overflow-y: scroll;
+        border-top: 1px solid $border;
+        border-bottom: 1px solid $border;
+        padding: $padding;
+        @extend .clearfix;
+    }
+
+    .modal-dialog-footer {
+        position: relative;
+        text-align: right;
+
+        & > span {
+            margin-left: $padding / 2;
+        }
+
+        @include large-item();
+    }
+}
