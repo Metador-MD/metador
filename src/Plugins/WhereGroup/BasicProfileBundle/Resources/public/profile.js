@@ -10,20 +10,34 @@ MetadataForm.prototype = {
     submitButton: $('.-js-metadata-button'),
     submitButtonStatus: $('.-js-metadata-button-status'),
 
+    /**
+     *
+     * @param userinput
+     */
     setUserinput: function(userinput) {
         this.userinput = userinput;
     },
 
+    /**
+     *
+     * @returns {boolean}
+     */
     getUserinput: function() {
         return this.userinput;
     },
 
+    /**
+     *
+     */
     enableSubmitButton: function() {
         this.setUserinput(true);
         this.submitButton.prop('disabled', false).addClass('success');
         $('.-js-metadata-save').removeClass('disabled');
     },
 
+    /**
+     *
+     */
     disableSubmitButton: function() {
         this.setUserinput(false);
         this.submitButton.prop('disabled', true).removeClass('success');
@@ -31,12 +45,19 @@ MetadataForm.prototype = {
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
+    /**
+     *
+     */
     activateSubmitButton: function() {
         this.submitButton.prop('disabled', true);
         $('.-js-metadata-save').addClass('disabled');
         this.submitButtonStatus.toggleClass('icon-download icon-spinner');
     },
 
+    /**
+     *
+     * @param id
+     */
     enableTab: function(id) {
         $('[data-mdtab-content]').removeClass('act');
         $('[data-mdtab]').removeClass('act');
@@ -63,6 +84,7 @@ $('form').ajaxForm({
     target: '#metadata-form',
     dataType: 'json',
     beforeSubmit: function(form, options) {
+        // Enable validation if metadata public
         if ($('input[name="p[public]"]').val() === '1' && $('#validation').val() === '0') {
             $('#validation').closest('.-js-toggle-switch').click();
         }
@@ -72,7 +94,7 @@ $('form').ajaxForm({
                 return obj.name === 'submit' && obj.value === 'abort';
             });
 
-            if (!validator.validateAll() && abort.length === 0) {
+            if (abort.length === 0 && !validator.validateAll()) {
                 metador.displayError('Datensatz ist nicht valide und kann daher nicht gespeichert werden.');
                 return false;
             }
