@@ -27,3 +27,11 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/vendor/OpenLayers/ol-debug.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('bundles/metadormap/js/app.js') }}"></script>
+    <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/home.js') }}"></script>
+{% endblock %}
