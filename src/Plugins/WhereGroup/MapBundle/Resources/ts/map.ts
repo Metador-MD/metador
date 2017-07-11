@@ -4,6 +4,7 @@ declare class proj4 {
     static defs(name: string, def: string): void;
 }
 
+let winContext: any = window;
 declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
 
 export class Ol4Utils {
@@ -130,6 +131,8 @@ export class Ol4Extent extends Ol4Geom {
 export const UUID: string = 'uuid';
 export const TITLE: string = 'title';
 export const METADOR_EPSG: ol.ProjectionLike = 'EPSG:4326';
+export const LAYER_VECTOR = 'vector';
+export const LAYER_IMAGE = 'image';
 
 export class Ol4Map {
     private static _uuid = 0;
@@ -168,6 +171,24 @@ export class Ol4Map {
                 extent: this.maxExtent.getExtent(proj)
             })
         );
+        /* make a group layer for all image layers (WMS etc.)*/
+        let imageGroup = new ol.layer.Group(
+            {
+                layers: new ol.Collection<ol.layer.Base>()
+            }
+        );
+        imageGroup.set(UUID, LAYER_IMAGE)
+        this.olMap.addLayer(imageGroup);
+        /* make a group layer for all vector layers (Hightlight, Search results etc.)*/
+        let vectorGroup = new ol.layer.Group(
+            {
+                layers: new ol.Collection<ol.layer.Base>()
+            }
+        );
+        vectorGroup.set(UUID, LAYER_VECTOR)
+        this.olMap.addLayer(vectorGroup);
+
+
         for (let source of options['source']) {
             this.addLayerForOptions(source);
         }
@@ -187,15 +208,6 @@ export class Ol4Map {
             // }
         ));
         this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
-        for (let layer of this.olMap.getLayers().getArray()) {
-            let source;
-            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
-                console.error('ol.layer.Group as Layer is not suported');
-                throw new Error('ol.layer.Group as Layer is not suported');
-            } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
-
-            }
-        }
         this.hgLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['highlight']));
     }
 
@@ -206,17 +218,6 @@ export class Ol4Map {
         return Ol4Map._instance;
     }
 
-    // renderTreeOption() {
-    //     let ul = document.querySelector('.-js-map-layertree ul');
-    //     var button = document.createElement("button");
-    //     document.body.append(button);
-    //     button.style.position = 'absolute';
-    //     button.style.top = '10px';
-    //     button.style.left = '10px';
-    //     button.style.zIndex = 10000;
-    //     button.onclick = copyClicked;
-    // }
-
     getDrawer(): Ol4Drawer {
         return this.drawer;
     }
@@ -224,6 +225,7 @@ export class Ol4Map {
     getHgLayer(): ol.layer.Vector {
         return this.hgLayer;
     }
+
 
     addLayerForOptions(options: any) {
         if (options['type'] === 'WMS') {
@@ -235,15 +237,31 @@ export class Ol4Map {
                     parseFloat(options['opacity'])),
                 options['title']
             );
-            addSource(wmsLayer.get('uuid'), wmsLayer.get('title'), wmsLayer.getVisible(), wmsLayer.getOpacity());
         } else {
             console.error(options['type'] + ' is not supported.');
         }
     }
 
+    initLayertree() {
+        let layers = this.olMap.getLayers().getArray();
+        let llength = layers.length;
+        for (let layer of layers) {
+            let source: ol.source.Source;
+            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
+                let sublayers = (<ol.layer.Group>layer).getLayers().getArray();
+                for (let slayer of sublayers) {
+                    if (slayer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
+                        addSource(slayer.get('uuid'), slayer.get('title'), slayer.getVisible(), slayer.getOpacity());
+                    }
+                }
+            } else if (layer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
+                addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
+            }
+        }
+    }
+
     showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
         let geoJsonReader: ol.format.GeoJSON = new ol.format.GeoJSON();
-        // let geoJsonProj = geoJsonReader.readProjection(geoJson);
         let features = geoJsonReader.readFeatures(
             geoJson,
             {
@@ -273,28 +291,42 @@ export class Ol4Map {
         if (title) {
             layer.set(TITLE, title);
         }
-        this.olMap.addLayer(layer);
+        if (layer instanceof ol.layer.Image) {
+            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
+            group.getLayers().insertAt(group.getLayers().getLength(), layer);
+        } else if (layer instanceof ol.layer.Vector) {
+            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_VECTOR);
+            group.getLayers().insertAt(group.getLayers().getLength(), layer);
+        }
         return layer;
     }
-    
+
     removeLayer(layer: ol.layer.Base): void {
         this.olMap.removeLayer(layer);
     }
-    
-    moveLayer(uuid: string, oldPos: number, newPos: number ): void{
-        console.log(uuid, oldPos, newPos);
+
+    moveLayer(uuid: string, oldPos: number, newPos: number): void {
+        let layer: ol.layer.Base = this.findLayer(uuid);
+        if (layer instanceof ol.layer.Image) {
+            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
+            let layerll = group.getLayers().remove(layer);
+            group.getLayers().insertAt(newPos, layerll);
+        }
     }
 
     private findLayer(uuid: string): ol.layer.Base {
         let layers = this.olMap.getLayers().getArray();
-        let llength = layers.length;
         for (let layer of layers) {
             let source: ol.source.Source;
-            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
-                console.error('ol.layer.Group as Layer is not suported');
-                throw new Error('ol.layer.Group as Layer is not suported');
-            } else if (layer.get(UUID) === uuid) {
+            if (layer.get(UUID) === uuid) {
                 return layer;
+            } else if (layer instanceof ol.layer.Group) {
+                let sublayers = (<ol.layer.Group>layer).getLayers().getArray();
+                for (let sublayer of sublayers) {
+                    if (sublayer.get(UUID) === uuid) {
+                        return sublayer;
+                    }
+                }
             }
         }
         return null;
@@ -319,7 +351,7 @@ export class Ol4Map {
                 extent: this.maxExtent.getExtent(proj)
             });
             let layers = this.olMap.getLayers().getArray();
-            let llength = layers.length;
+            // let llength = layers.length;
             for (let layer of layers) {
                 let source: ol.source.Source;
                 if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group

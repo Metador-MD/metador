@@ -100,13 +100,16 @@ addDraggableEventListener($('#dummy-layer').get(0));
 
 function getLayerPosition(layer){
     var index = 0;
-    $('.-js-map-layertree ul').find('.-js-draggable').each(function(i){
-        if (this === layer) {
-            index = i;
+    var list = $('.-js-map-layertree ul .-js-draggable');
+    var length = list.length
+    for (var i = 0; i < length; i++) {
+        if (list[i].id === layer.id) {
+            // console.log(length - 1 - i);
+            return length - 1 - i;
         }
-    });
+    }
     
-    return index;
+    return null;
 }
 
 function _handleDragStart(e){
@@ -175,7 +178,7 @@ function addSource(id, title, visible, opacity) {
             .attr('id',  id)
             .attr('draggable', "true")
             .attr('data-draggable', "true")
-            .addClass('draggable');
+            .addClass('draggable -js-draggable');
     
     addDraggableEventListener(li.get(0), true);
     
@@ -239,6 +242,8 @@ function createGeoCollection(crs, geoFeatures) {
 function addFeature(geoCollection, geoFeature) {
     geoCollection.features.push(geoFeature);
 }
+
+Window.metador.initMap();
 
 /* // show clear features
  // show features
