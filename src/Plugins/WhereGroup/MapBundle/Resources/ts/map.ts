@@ -337,40 +337,39 @@ export class Ol4Map {
     }
 
     changeCrs(crs: string) { // TODO
-        let proj = null;
-        if ((proj = ol.proj.get(crs))) {
+        let toProj = null;
+        if ((toProj = ol.proj.get(crs))) {
             let extent = Ol4Extent.fromArray(
                 this.olMap.getView().calculateExtent(this.olMap.getSize()),
                 this.olMap.getView().getProjection()
             );
-            let projection = this.olMap.getView().getProjection();
+            let fromProj = this.olMap.getView().getProjection();
             let center = this.olMap.getView().getCenter();
             let newView = new ol.View({
-                projection: proj,
-                resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
-                extent: this.maxExtent.getExtent(proj)
+                projection: toProj,
+                resolutions: Ol4Utils.resolutionsForScales(this.scales, toProj.getUnits()).reverse(),
+                extent: this.maxExtent.getExtent(toProj)
             });
-            let layers = this.olMap.getLayers().getArray();
-            // let llength = layers.length;
-            for (let layer of layers) {
-                let source: ol.source.Source;
-                if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
-                    console.error('ol.layer.Group as Layer is not suported');
-                    throw new Error('ol.layer.Group as Layer is not suported');
-                } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
-                    (<ol.layer.Image>layer).setSource(Ol4WmsLayer.createFromSource(<ol.source.ImageWMS> source, proj));
-                } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.Vector) {
-                    let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
-                    for (let feature of features) {
-                        feature.setGeometry(feature.getGeometry().transform(projection, proj));
-                    }
+            let layers = (<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers().getArray();
+            this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers(), fromProj, toProj);
+            this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_VECTOR)).getLayers(), fromProj, toProj);
+
+            this.olMap.setView(newView);
+            this.olMap.getView().fit(extent.getPolygonForExtent(toProj), this.olMap.getSize());
+        }
+    }
+
+    private changeCrsList(layers: ol.Collection<ol.layer.Base>, fromProj, toProj) {
+        for (let layer of layers.getArray()) {
+            let source: ol.source.Source;
+            if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
+                (<ol.layer.Image>layer).setSource(Ol4WmsLayer.createFromSource(<ol.source.ImageWMS> source, toProj));
+            } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.Vector) {
+                let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
+                for (let feature of features) {
+                    feature.setGeometry(feature.getGeometry().transform(fromProj, toProj));
                 }
             }
-            this.olMap.setView(newView);
-            this.olMap.getView().fit(extent.getPolygonForExtent(proj), this.olMap.getSize());
-            // let cpoint = <ol.geom.Point> new ol.geom.Point(center).transform(projection, proj);
-            // console.log(cpoint.getCoordinates());
-            // this.olMap.getView().setCenter(cpoint.getCoordinates());
         }
     }
 
