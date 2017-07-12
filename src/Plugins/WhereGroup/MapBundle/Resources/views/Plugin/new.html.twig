@@ -41,6 +41,14 @@
         <div class="grid space row-space responsive">
             <div class="row r-1">
                 <div class="col c-1">
+                    <div>{{ form_label(form.gcUrl, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.gcUrl, { 'attr': {'class': 'input'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1">
                     <div>{{ form_label(form.title, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                     <div class="form-field-wrapper">
                         {{ form_widget(form.title, { 'attr': {'class': 'input'}}) }}
@@ -75,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row r-2">
+            <div class="row r-1">
                 <div class="col c-1-2">
                     <div>
                         {{ form_label(form.visible, null, { 'label_attr': {'class': 'form-label'}}) }}

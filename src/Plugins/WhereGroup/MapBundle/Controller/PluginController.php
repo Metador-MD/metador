@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ShapeFile\ShapeFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
@@ -57,7 +59,11 @@ class PluginController extends Controller
 
                 return $this->redirectToRoute('metador_admin_map');
             } catch (\Exception $e) {
-                die($e->getMessage());
+                $this->log('error', 'create', $e->getMessage());
+//
+//                $this->get('metador_logger')->flashError(
+//                    'application', 'map', 'create', '', '', $e->getMessage(), array(),
+//                    $this->get('metador_user')->getUserFromSession());
             }
         }
 
@@ -81,6 +87,7 @@ class PluginController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_map')->save($form->getData());
+
             return $this->redirectToRoute('metador_admin_map');
         }
 
@@ -157,10 +164,11 @@ class PluginController extends Controller
      */
     public function loadWmsAction()
     {
-        $url      = urldecode($this->get('request_stack')->getCurrentRequest()->query->get('url'));
-        $wms      = new Wms();
+        $url = urldecode($this->get('request_stack')->getCurrentRequest()->query->get('url'));
+        $wms = new Wms();
         $this->get('metador_map')->update($url, $wms);
         $response = new AjaxResponse($this->get('metador_map')->toOl4($wms));
+
         return $response;
     }
 
@@ -172,31 +180,91 @@ class PluginController extends Controller
     public function uploadGeomAction()
     {
 
+        $request = $this->get('request_stack')->getMasterRequest();
 
-//        /home/paul/Customer/LVermGEO/beispiele/beisöiel1
-        try {
-            // Open shapefile
-            $shapeFile = new ShapeFile(
-                '/home/paul/Customer/LVermGEO/beispiele/beispiel1.shp',
-                ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
-            );
-            $prj = $shapeFile->getPRJ();
-            $type = $shapeFile->getShapeType();
-            $current = $shapeFile->getCurrentRecord();
-            $record = $shapeFile->getRecord();
-            // Read all the records
-            while ($record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH)) {
-                if ($record['dbf']['_deleted']) continue;
-                // Geometry
-                print_r($record['shp']);
-                // DBF Data
-                print_r($record['dbf']);
+        /** @var UploadedFile $file */
+        foreach ($request->files as $file) {
+            if (!$file instanceof UploadedFile) {
+                return new Response('Keine Datei hochgeladen!');
             }
 
-        } catch (ShapeFileException $e) {
-            // Print detailed error information
-            exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
+            if ($file->getClientOriginalExtension() === 'xml') {
+                $a = $file->getRealPath();
+            } elseif ($file->getClientOriginalExtension() === 'zip') {
+                $zip = new \ZipArchive;
+
+                if ($zip->open($file->getRealPath()) !== true) {
+                    return new Response('Die Datei kann nicht entzippt werden!');
+                }
+                $kernelPath = $this->get('kernel')->getRootDir();
+                $tempPath = $kernelPath.'/../var/temp/';
+
+                $tempFolder = $tempPath.$file->getFilename();
+                $zip->extractTo($tempFolder);
+                $zip->close();
+                try {
+//                    $zipName = $tempFolder . '/' . $file->getClientOriginalName();
+//                    substr($zipName, -4) == '.zip') ? substr($zipName, 0, -4) :
+//
+                    // Open shapefile
+                    $shapeFile = new ShapeFile(
+                        substr($tempFolder.'/'.$file->getClientOriginalName(), 0, -4),
+                        ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
+                    );
+                    $prj = $shapeFile->getPRJ();
+                    $type = $shapeFile->getShapeType();
+                    $current = $shapeFile->getCurrentRecord();
+                    $record = $shapeFile->getRecord();
+                    // Read all the records
+                    while ($record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH)) {
+                        if ($record['dbf']['_deleted']) {
+                            continue;
+                        }
+                        // Geometry
+                        print_r($record['shp']);
+                        // DBF Data
+                        print_r($record['dbf']);
+                    }
+
+                } catch (ShapeFileException $e) {
+                    // Print detailed error information
+                    exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
+                }
+
+            }
+
+            $fs = new Filesystem();
+            // remove uploaded file
+            $fs->remove($file->getRealPath());
         }
+
+//        /home/paul/Customer/LVermGEO/beispiele/beisöiel1
+//        try {
+//            // Open shapefile
+//
+//            $shapeFile = new ShapeFile(
+//                '/home/paul/Customer/LVermGEO/beispiele/beispiel1.shp',
+//                ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
+//            );
+//            $prj = $shapeFile->getPRJ();
+//            $type = $shapeFile->getShapeType();
+//            $current = $shapeFile->getCurrentRecord();
+//            $record = $shapeFile->getRecord();
+//            // Read all the records
+//            while ($record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH)) {
+//                if ($record['dbf']['_deleted']) {
+//                    continue;
+//                }
+//                // Geometry
+//                print_r($record['shp']);
+//                // DBF Data
+//                print_r($record['dbf']);
+//            }
+//
+//        } catch (ShapeFileException $e) {
+//            // Print detailed error information
+//            exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
+//        }
 
         return new Response('aaaaaaa');
     }
@@ -209,10 +277,36 @@ class PluginController extends Controller
     public function testaddwmsAction()
     {
 //        TODO remove this action
-        $url      = 'http://osm-demo.wheregroup.com/service';
-        $wms      = new Wms();
+        $url = 'http://osm-demo.wheregroup.com/service';
+        $wms = new Wms();
         $this->get('metador_map')->update($url, $wms);
         $response = new Response();
+
         return $response;
+    }
+
+    /**
+     * Creates a flush message.
+     * @param $type log type
+     * @param $operation operation
+     * @param $message message to log
+     */
+    private function log($type, $operation, $message, $addUser = true)
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log
+            ->setFlashMessage(true)
+            ->setType($type)
+            ->setCategory('application')
+            ->setSubcategory('map')
+            ->setOperation($operation)
+            ->setMessage($message);
+        if ($addUser) {
+            $log->setUser($this->get('metador_user')->getUserFromSession());
+        }
+
+        $this->get('metador_logger')->set($log);
+
     }
 }
