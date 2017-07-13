@@ -992,7 +992,7 @@ input.input-element, .md input.btn {
 
 .md .line-separator {
   border: 0;
-  border-top: 1px solid #fbfbfb;
+  border-top: 1px solid #eee;
   padding: 0;
   margin: 20px 0; }
 
