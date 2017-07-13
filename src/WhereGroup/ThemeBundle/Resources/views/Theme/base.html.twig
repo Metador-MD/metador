@@ -22,7 +22,7 @@
                 'basedir': '{{ BASEDIR }}',
                 'maxlifetime': '{% if app.user %}{{ session_maxlifetime() }}{% else %}0{% endif %}',
                 'settings': {
-                    {% for key, value in get_settings() %}
+                    {% for key, value in get_frontend_settings() %}
                         '{{ key }}': '{{ value }}'{% if not loop.last %},{% endif %}
                     {% endfor %}
                 },

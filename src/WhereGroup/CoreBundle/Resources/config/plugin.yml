@@ -11,3 +11,7 @@ metador-core:
             type: string
             label: Session Timeout Meldung
             description: Beschreibungstext
+        system_message:
+            type: text
+            label: Systemmeldung
+            description: Zum setzten von Systemmeldung, Text eingeben und speichern. Markdown wird unterstützt.
