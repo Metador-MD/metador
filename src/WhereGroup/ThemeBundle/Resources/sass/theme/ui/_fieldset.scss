@@ -1,0 +1,66 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.md .fieldset {
+    border: 1px solid $border;
+    margin-bottom: $padding;
+    border-radius: 4px;
+    @extend .clearfix;
+
+    & > .head {
+        cursor: pointer;
+        font-weight: bold;
+        background-color: $background;
+        border-radius: 4px;
+        @include normal-item(false, false);
+
+        &:hover {
+            background-color: darken($background, 2%);
+        }
+
+        & > .status {
+            float: right;
+            width: $normal-item-height;
+            color: darken($background, 15%);
+            text-align: center;
+            @extend .no-user-select;
+            @include normal-item(false, false);
+        }
+
+        & > .title {
+            float: left;
+            font-size: 1.4em;
+            @extend .no-user-select;
+            @include normal-item(false);
+        }
+
+        & > .info {
+            float: right;
+            font-size: 1em;
+            color: darken($border, 30%);
+            @extend .no-user-select;
+            @include normal-item(false);
+        }
+    }
+
+    & > .content {
+        padding: $padding;
+    }
+
+    &:not(.minimize) > .head {
+        border-bottom: 1px solid $border;
+    }
+
+    &.active:not(.minimize) {
+        border: 1px solid $warning;
+    }
+
+    &.active:not(.minimize) > .head {
+        border-bottom: 1px solid $warning;
+    }
+
+    &.minimize > .content {
+        display: none;
+    }
+}

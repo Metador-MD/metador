@@ -6,41 +6,48 @@
     {% if pluginConfiguration is defined and pluginConfiguration is not empty %}
         <form action="{{ path('metador_admin_settings_update') }}" method="post" autocomplete="off">
             {% for pluginKey, pluginData in pluginConfiguration %}
-                <h2 class="title text-right dm">{{ pluginData['name'] }}</h2>
-
-                <div class="grid space responsive">
-                {% for configKey, config in pluginData['settings'] %}
-                    <div class="row r-1">
-                        <div class="col c-1">
-                            <div>
-                                <label class="form-label" for="{{ config['id'] }}">{{ config['label'] }}:</label>
-                            </div>
-                            {% if config['type'] == 'multi' %}
-                                {% for key, option in config['options'] %}
-                                    <div>
-                                        <input type="checkbox" name="{{ config['name'] }}[]" value="{{ key }}" {% if key in config['value'] %}checked="checked"{% endif %}> {{ option }}
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="form-field-wrapper i1">
-                                    {% if config['type'] == 'choice' %}
-                                        <select class="select" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}">
-                                            <option value=""></option>
-                                            {% for option in config['options'] %}
-                                                <option value="{{ option }}" {% if config['value'] == option %}selected="selected"{% endif %}>{{ option }}</option>
+                <a name="{{ pluginKey }}"></a>
+                <div class="fieldset -js-fieldset {% if fragment and pluginKey != fragment %}minimize{% elseif fragment %}active{% endif %}">
+                    <div class="head -js-fieldset-toggle">
+                        <div class="title">{{ pluginData['name'] }}</div>
+                        <div class="status -js-fieldset-status icon-minimize"></div>
+                    </div>
+                    <div class="content">
+                        <div class="grid space responsive">
+                            {% for configKey, config in pluginData['settings'] %}
+                                <div class="row r-1">
+                                    <div class="col c-1">
+                                        <div>
+                                            <label class="form-label" for="{{ config['id'] }}">{{ config['label'] }}:</label>
+                                        </div>
+                                        {% if config['type'] == 'multi' %}
+                                            {% for key, option in config['options'] %}
+                                                <div>
+                                                    <input type="checkbox" name="{{ config['name'] }}[]" value="{{ key }}" {% if key in config['value'] %}checked="checked"{% endif %}> {{ option }}
+                                                </div>
                                             {% endfor %}
-                                        </select>
-                                    {% elseif config['type'] == 'text' %}
-                                        <textarea class="textarea" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}" placeholder="{{ config['placeholder'] }}">{{ config['value'] }}</textarea>
-                                    {% else %}
-                                        <input class="input" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}" value="{{ config['value'] }}" placeholder="{{ config['placeholder'] }}">
-                                    {% endif %}
-                                    <span class="form-icon icon-question2 ls right" title="{{ config['description'] }}"></span>
+                                        {% else %}
+                                            <div class="form-field-wrapper i1">
+                                                {% if config['type'] == 'choice' %}
+                                                    <select class="select" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}">
+                                                        <option value=""></option>
+                                                        {% for option in config['options'] %}
+                                                            <option value="{{ option }}" {% if config['value'] == option %}selected="selected"{% endif %}>{{ option }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% elseif config['type'] == 'text' %}
+                                                    <textarea class="textarea" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}" placeholder="{{ config['placeholder'] }}">{{ config['value'] }}</textarea>
+                                                {% else %}
+                                                    <input class="input" id="{{ config['id'] }}" type="text" name="{{ config['name'] }}" value="{{ config['value'] }}" placeholder="{{ config['placeholder'] }}">
+                                                {% endif %}
+                                                <span class="form-icon icon-question2 ls right" title="{{ config['description'] }}"></span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
                 </div>
             {% endfor %}
 
