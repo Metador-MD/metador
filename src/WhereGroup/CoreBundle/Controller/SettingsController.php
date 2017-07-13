@@ -62,8 +62,6 @@ class SettingsController extends Controller
             $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
-        dump($fragment);
-
         return array(
             'fragment' => $fragment,
             'pluginConfiguration' => $pluginConfiguration
