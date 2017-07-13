@@ -17,3 +17,19 @@ $(document).on('mouseenter', '.-js-sys-msg', function() {
 $(document).on('mouseleave', '.-js-sys-msg', function() {
     $(this).removeClass('large');
 });
+
+
+$(document).on('click', '.-js-fieldset-toggle', function() {
+    var mainItem = $(this).closest('.-js-fieldset');
+
+    $(this).find('.-js-fieldset-status').toggleClass('icon-minimize icon-maximize');
+
+    if (mainItem.hasClass('minimize')) {
+        mainItem.removeClass('minimize');
+        return;
+    }
+
+    mainItem.addClass('minimize')
+});
+
+

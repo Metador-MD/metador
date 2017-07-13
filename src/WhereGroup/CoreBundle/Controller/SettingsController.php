@@ -16,11 +16,11 @@ use WhereGroup\CoreBundle\Entity\Source;
 class SettingsController extends Controller
 {
     /**
-     * @Route("/settings/", name="metador_admin_settings")
+     * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($fragment)
     {
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
@@ -62,8 +62,12 @@ class SettingsController extends Controller
             $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
+        dump($fragment);
+
         return array(
+            'fragment' => $fragment,
             'pluginConfiguration' => $pluginConfiguration
+
         );
     }
 
