@@ -124,11 +124,11 @@ html, body {
   right: 0;
   bottom: 0; }
 
-.clearfix:before, .md .grid .row:before, .md .form-wrapper:before, .md .form-field-wrapper:before, .md .info-box:before, .simple-select:before, .md .modal-dialog-wrapper:before, .md .modal-dialog-content:before, .top:before, .md .source > .source-list:before, .md .plugin:before, .md .metadata-settings-wrapper:before, .clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .simple-select:after, .md .modal-dialog-wrapper:after, .md .modal-dialog-content:after, .top:after, .md .source > .source-list:after, .md .plugin:after, .md .metadata-settings-wrapper:after {
+.clearfix:before, .md .grid .row:before, .md .form-wrapper:before, .md .form-field-wrapper:before, .md .info-box:before, .simple-select:before, .md .modal-dialog-wrapper:before, .md .modal-dialog-content:before, .top:before, .md .source > .source-list:before, .md .filter-wrapper > .filter-content:before, .md .plugin:before, .md .metadata-settings-wrapper:before, .clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .simple-select:after, .md .modal-dialog-wrapper:after, .md .modal-dialog-content:after, .top:after, .md .source > .source-list:after, .md .filter-wrapper > .filter-content:after, .md .plugin:after, .md .metadata-settings-wrapper:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .simple-select:after, .md .modal-dialog-wrapper:after, .md .modal-dialog-content:after, .top:after, .md .source > .source-list:after, .md .plugin:after, .md .metadata-settings-wrapper:after {
+.clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .simple-select:after, .md .modal-dialog-wrapper:after, .md .modal-dialog-content:after, .top:after, .md .source > .source-list:after, .md .filter-wrapper > .filter-content:after, .md .plugin:after, .md .metadata-settings-wrapper:after {
   clear: both; }
 
 ::-webkit-scrollbar {
@@ -2708,6 +2708,41 @@ input.input-element, .md input.btn {
   opacity: 0;
   filter: alpha(opacity=0);
   height: 30px; }
+
+.md .search-content {
+  padding: 20px; }
+
+.md .search-content > .search-content-left {
+  float: left;
+  width: 250px;
+  border: 1px solid red;
+  padding: 20px; }
+
+.md .search-content > .search-content-right {
+  border: 1px solid green;
+  margin-left: 250px;
+  padding: 20px; }
+
+.md .filter-wrapper {
+  border: 1px solid #e1e1e1;
+  border-radius: 4px; }
+
+.md .filter-wrapper > .filter-header {
+  font-size: .9em;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  border-bottom: 2px solid #008ec0; }
+
+.md .filter-wrapper > .filter-content {
+  padding: 10px 0; }
+
+.md .filter-wrapper > .filter-content > .filter-content-row {
+  font-size: .9em;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px; }
 
 ::-webkit-file-upload-button {
   cursor: pointer; }
