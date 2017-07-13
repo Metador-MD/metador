@@ -7,6 +7,7 @@
     max-width: $page-width;
     min-width: 500px;
     position: absolute;
+    z-index: 1;
 
     @media screen and (max-width: $break-large) {
         max-width: none;
@@ -18,11 +19,8 @@
 
     & .center {
         z-index: 1;
-        @include pos($header-height + $padding, 0, 0, 0);
 
-        //@media screen and (max-width: $break-menu) {
-        //    @include pos($padding, 0, 0, 0);
-        //}
+        @include pos($header-height + $padding, 0, 0, 0);
 
         &.menu {
             .center-left {
@@ -52,7 +50,6 @@
     .center-right {
         @include pos(0, 0, 0, 0);
     }
-
 }
 
 .md .center > .center-right > .content {
@@ -65,4 +62,36 @@
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.03);
 
     @include pos(0, 0, 10px, 0);
+}
+
+.md.sys-msg {
+    & > .main {
+        @include pos($sys-msg-height, 0, 0, 0);
+    }
+
+    & > .sys-msg-text {
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: $sys-msg-height;
+        background-color: lighten($error, 40%);
+        border-bottom: 4px solid $error;
+        overflow: hidden;
+        overflow-y: scroll;
+
+        @include transition-all(150ms);
+
+        &.large {
+            height: $sys-msg-large-height;
+            overflow-y: scroll;
+        }
+
+        & > .sys-msg-text-content {
+            margin: 0 auto;
+            width: $page-width;
+            @include pos(0,0,0,0);
+        }
+    }
 }

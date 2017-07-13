@@ -1942,6 +1942,7 @@ input.input-element, .md input.btn {
   max-width: 1024px;
   min-width: 500px;
   position: absolute;
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
@@ -2004,6 +2005,42 @@ input.input-element, .md input.btn {
   left: 0;
   right: 0;
   bottom: 10px; }
+
+.md.sys-msg > .main {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+.md.sys-msg > .sys-msg-text {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: #fbece8;
+  border-bottom: 4px solid #e15b36;
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-transition: all 150ms ease-in-out;
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out; }
+
+.md.sys-msg > .sys-msg-text.large {
+  height: 300px;
+  overflow-y: scroll; }
+
+.md.sys-msg > .sys-msg-text > .sys-msg-text-content {
+  margin: 0 auto;
+  width: 1024px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 .light-normal, .md .notify {
   color: #444;

@@ -9,3 +9,11 @@ $(document).on('click', '.-js-toggle-info-box', function() {
 $(document).on('click', '.-js-close-notify', function() {
     $(this).parent().remove();
 });
+
+$(document).on('mouseenter', '.-js-sys-msg', function() {
+    $(this).addClass('large');
+});
+
+$(document).on('mouseleave', '.-js-sys-msg', function() {
+    $(this).removeClass('large');
+});

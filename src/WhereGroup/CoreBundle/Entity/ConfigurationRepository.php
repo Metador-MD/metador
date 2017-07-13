@@ -101,14 +101,24 @@ class ConfigurationRepository extends EntityRepository
     public function getValue($key, $filterType, $filterValue, $default)
     {
         try {
-            return $this->getEntityManager()->createQuery(
-                "SELECT c.value FROM " . self::ENTITY .
-                " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
-            )
-                ->setParameter('key', $key)
-                ->setParameter('filterType', $filterType)
-                ->setParameter('filterValue', $filterValue)
-                ->getSingleScalarResult();
+            $qb = $this->createQueryBuilder('c')
+                ->select('c.value')
+                ->where('c.key = :key')
+                ->setParameter('key', $key);
+
+            if (!is_null($filterType)) {
+                $qb
+                    ->andWhere('c.filterType = :filterType')
+                    ->setParameter('filterType', $filterType);
+            }
+
+            if (!is_null($filterValue)) {
+                $qb
+                    ->andWhere('c.filterValue = :filterValue')
+                    ->setParameter('filterValue', $filterValue);
+            }
+
+            return $qb->getQuery()->getSingleScalarResult();
         } catch (NoResultException $e) {
             return $default;
         }

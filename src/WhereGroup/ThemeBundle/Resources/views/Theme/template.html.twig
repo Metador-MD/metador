@@ -3,7 +3,13 @@
 {% block title %}Metador{% endblock %}
 
 {% block body %}
-    <div class="md">
+    {% set systemMessage = get_setting('system_message') %}
+    <div class="md {% if systemMessage %}sys-msg{% endif %}">
+        {% if systemMessage %}
+            <div class="sys-msg-text -js-sys-msg">
+                <div class="sys-msg-text-content">{{ systemMessage|md2html }}</div>
+            </div>
+        {% endif %}
         <div class="main">
             <div class="top">
                 <div class="top-left">

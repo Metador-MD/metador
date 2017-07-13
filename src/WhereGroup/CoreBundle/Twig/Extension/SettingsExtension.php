@@ -30,14 +30,27 @@ class SettingsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_settings', array($this, 'getSettings'))
+            new \Twig_SimpleFunction('get_frontend_settings', array($this, 'getFrontendSettings')),
+            new \Twig_SimpleFunction('get_setting', array($this, 'getSetting')),
         );
+    }
+
+    /**
+     * @param $key
+     * @param null $filterType
+     * @param null $filterValue
+     * @param null $default
+     * @return mixed
+     */
+    public function getSetting($key, $filterType = null, $filterValue = null, $default = null)
+    {
+        return $this->configuration->getValue($key, $filterType, $filterValue, $default);
     }
 
     /**
      * @return null
      */
-    public function getSettings()
+    public function getFrontendSettings()
     {
         $config = array();
 
