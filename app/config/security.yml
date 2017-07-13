@@ -35,6 +35,7 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/csw, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/map, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_SYSTEM_GEO_OFFICE }
         - { path: ^/, roles: ROLE_SYSTEM_USER }
 
