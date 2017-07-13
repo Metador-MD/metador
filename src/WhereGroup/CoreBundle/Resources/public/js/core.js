@@ -19,10 +19,26 @@ Metador.prototype = {
         return false;
     },
 
+    displaySuccess: function (message) {
+        this.displayMessage(message, 'success');
+    },
+
+    displayInfo: function (message) {
+        this.displayMessage(message, 'info');
+    },
+
+    displayWarning: function (message) {
+        this.displayMessage(message, 'warning');
+    },
+
     displayError: function (message) {
+        this.displayMessage(message, 'error');
+    },
+
+    displayMessage: function (message, type) {
         $('#error-messages').append(
             $('<div></div>')
-                .addClass('notify error')
+                .addClass('notify ' + type)
                 .append($('<div></div>').addClass('close icon-cross -js-close-notify'))
                 .append($('<ul></ul>').append($('<li></li>').text(message)))
         )

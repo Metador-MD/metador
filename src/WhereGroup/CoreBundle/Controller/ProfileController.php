@@ -150,7 +150,7 @@ class ProfileController extends Controller
 
             $this
                 ->get('metador_frontend_command')
-                ->redirect($this->generateUrl('metador_home'), $response);
+                ->redirect($response, $this->generateUrl('metador_home'));
 
             return new AjaxResponse($response);
         } elseif ($request->get('submit') === 'close') {
@@ -163,12 +163,12 @@ class ProfileController extends Controller
             $uuid = $metadata->getUuid();
 
             $this->get('metador_frontend_command')->changeLocation(
+                $response,
                 $this->generateUrl('metadata_edit', array(
                     'source' => $source,
                     'profile' => $profile,
                     'id' => $id
-                )),
-                $response
+                ))
             );
 
         } catch (MetadorException $e) {
@@ -193,7 +193,7 @@ class ProfileController extends Controller
         if ($request->get('submit') === 'close') {
             $this
                 ->get('metador_frontend_command')
-                ->redirect($this->generateUrl('metador_home'), $response);
+                ->redirect($response, $this->generateUrl('metador_home'));
         }
 
         return new AjaxResponse($response);
