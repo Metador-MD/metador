@@ -70,7 +70,9 @@
         <service id="metador_source" class="%metador.source.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="metador_frontend_command" class="%metador.frontend.command.class%" />
+        <service id="metador_frontend_command" class="%metador.frontend.command.class%">
+            <argument type="service" id="metador_core" />
+        </service>
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">

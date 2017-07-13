@@ -8,38 +8,112 @@ namespace WhereGroup\CoreBundle\Component;
  */
 class FrontendCommand
 {
+    /** @var  Core */
+    private $core;
+
     /**
-     * @param $url
-     * @param $response
+     * FrontendCommand constructor.
+     * @param Core $core
      */
-    public function redirect($url, &$response)
+    public function __construct(Core $core)
     {
-        $response = array_merge_recursive($response, array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
-                        'class'    => 'metador',
-                        'method'   => 'redirect',
-                        'argument' => $url
-                    )
-                )
-            )
-        ));
+        $this->core = $core;
     }
 
     /**
-     * @param $url
      * @param $response
+     * @param $url
      */
-    public function changeLocation($url, &$response)
+    public function redirect(&$response, $url)
     {
-        $response = array_merge_recursive($response, array(
+        $response = $this->runMethod('metador', 'redirect', $url, $response);
+    }
+
+    /**
+     * @param $response
+     * @param $url
+     */
+    public function changeLocation(&$response, $url)
+    {
+        $response = $this->runMethod('metador', 'changeLocation', $url, $response);
+    }
+
+    /**
+     * @param $response
+     * @param $message
+     * @param $parameters
+     */
+    public function displayInfo(&$response, $message, $parameters = array())
+    {
+        $response = $this->runMethod(
+            'metador',
+            'displayInfo',
+            $this->core->translate($message, $parameters),
+            $response
+        );
+    }
+
+    /**
+     * @param $response
+     * @param $message
+     * @param $parameters
+     */
+    public function displaySuccess(&$response, $message, $parameters = array())
+    {
+        $response = $this->runMethod(
+            'metador',
+            'displaySuccess',
+            $this->core->translate($message, $parameters),
+            $response
+        );
+    }
+
+    /**
+     * @param $response
+     * @param $message
+     * @param $parameters
+     */
+    public function displayWarning(&$response, $message, $parameters = array())
+    {
+        $response = $this->runMethod(
+            'metador',
+            'displayWarning',
+            $this->core->translate($message, $parameters),
+            $response
+        );
+    }
+
+    /**
+     * @param $response
+     * @param $message
+     * @param $parameters
+     */
+    public function displayError(&$response, $message, $parameters = array())
+    {
+        $response = $this->runMethod(
+            'metador',
+            'displayError',
+            $this->core->translate($message, $parameters),
+            $response
+        );
+    }
+
+    /**
+     * @param $class
+     * @param $method
+     * @param $argument
+     * @param $response
+     * @return array
+     */
+    private function runMethod($class, $method, $argument, &$response)
+    {
+        return array_merge_recursive($response, array(
             'METADOR' => array(
                 'runMethod' => array(
                     array(
-                        'class'    => 'metador',
-                        'method'   => 'changeLocation',
-                        'argument' => $url
+                        'class'    => $class,
+                        'method'   => $method,
+                        'argument' => $argument
                     )
                 )
             )
