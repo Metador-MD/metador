@@ -232,6 +232,7 @@ $search-content-left-width: 250px;
 .md .filter-wrapper {
     border: 1px solid $border;
     border-radius: 4px;
+    margin-bottom: $padding;
 
     & > .filter-header {
         @include medium-item();

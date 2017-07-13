@@ -5,7 +5,7 @@
 .md .main {
     margin: 0 auto;
     max-width: $page-width;
-    min-width: 500px;
+    min-width: 820px;
     position: absolute;
     z-index: 1;
 
@@ -91,6 +91,11 @@
         & > .sys-msg-text-content {
             margin: 0 auto;
             width: $page-width;
+
+            @media screen and (max-width: $break-large) {
+                padding: 0 $padding;
+            }
+
             @include pos(0,0,0,0);
         }
     }
