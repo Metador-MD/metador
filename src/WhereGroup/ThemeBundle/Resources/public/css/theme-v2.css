@@ -1940,7 +1940,7 @@ input.input-element, .md input.btn {
 .md .main {
   margin: 0 auto;
   max-width: 1024px;
-  min-width: 500px;
+  min-width: 820px;
   position: absolute;
   z-index: 1;
   position: absolute;
@@ -2041,6 +2041,10 @@ input.input-element, .md input.btn {
   left: 0;
   right: 0;
   bottom: 0; }
+
+@media screen and (max-width: 1024px) {
+  .md.sys-msg > .sys-msg-text > .sys-msg-text-content {
+    padding: 0 20px; } }
 
 .light-normal, .md .notify {
   color: #444;
@@ -2762,7 +2766,8 @@ input.input-element, .md input.btn {
 
 .md .filter-wrapper {
   border: 1px solid #e1e1e1;
-  border-radius: 4px; }
+  border-radius: 4px;
+  margin-bottom: 20px; }
 
 .md .filter-wrapper > .filter-header {
   font-size: .9em;
