@@ -23,25 +23,32 @@ class FrontendCommand
     /**
      * @param $response
      * @param $url
+     * @return $this
      */
     public function redirect(&$response, $url)
     {
         $response = $this->runMethod('metador', 'redirect', $url, $response);
+
+        return $this;
     }
 
     /**
      * @param $response
      * @param $url
+     * @return $this
      */
     public function changeLocation(&$response, $url)
     {
         $response = $this->runMethod('metador', 'changeLocation', $url, $response);
+
+        return $this;
     }
 
     /**
      * @param $response
      * @param $message
      * @param $parameters
+     * @return $this
      */
     public function displayInfo(&$response, $message, $parameters = array())
     {
@@ -51,12 +58,15 @@ class FrontendCommand
             $this->core->translate($message, $parameters),
             $response
         );
+
+        return $this;
     }
 
     /**
      * @param $response
      * @param $message
      * @param $parameters
+     * @return $this
      */
     public function displaySuccess(&$response, $message, $parameters = array())
     {
@@ -66,12 +76,15 @@ class FrontendCommand
             $this->core->translate($message, $parameters),
             $response
         );
+
+        return $this;
     }
 
     /**
      * @param $response
      * @param $message
      * @param $parameters
+     * @return $this
      */
     public function displayWarning(&$response, $message, $parameters = array())
     {
@@ -81,12 +94,15 @@ class FrontendCommand
             $this->core->translate($message, $parameters),
             $response
         );
+
+        return $this;
     }
 
     /**
      * @param $response
      * @param $message
      * @param $parameters
+     * @return $this
      */
     public function displayError(&$response, $message, $parameters = array())
     {
@@ -96,6 +112,8 @@ class FrontendCommand
             $this->core->translate($message, $parameters),
             $response
         );
+
+        return $this;
     }
 
     /**
