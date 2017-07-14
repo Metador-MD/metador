@@ -92,7 +92,7 @@ class Map implements MapInterface
     {
         $content = @file_get_contents($url);
         if ($content === false) {
-            throw new \Exception('Kein Content von '.$url);
+            throw new \Exception('Die URL liefert keine Daten.');
         }
 
         return $content;

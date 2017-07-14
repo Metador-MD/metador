@@ -23,7 +23,12 @@ class WmsEditType extends AbstractType
     {
         $wms = $options['data'];
         $builder
-            ->add('title', TextType::class, array('label' => 'Title'))
+            ->add('gcUrl',TextType::class, array(
+                'label' => 'GetCapabilities Url (schreibgeschützt)',
+                'read_only' =>'true'))
+            ->add('title', TextType::class, array(
+                'label' => 'Title',
+                'invalid_message' => 'Der Titel darf nicht leer sein.'))
             ->add('format', ChoiceType::class, array(
                 'label' => 'Format',
                 'choices' => array_combine($wms->getFormats(), $wms->getFormats())))
@@ -33,7 +38,8 @@ class WmsEditType extends AbstractType
                 'choices' => array_combine($wms->getLayerList(), $wms->getLayerList())))
             ->add('opacity', ChoiceType::class, array(
                 'label' => 'Opacity',
-                'choices' => array_combine(range(0.0, 1.0, 0.1), range(0.0, 1.0, 0.1))))
+                'choices' => array_combine(
+                    range(0.0, 1.0, 0.1), range(0.0, 1.0, 0.1))))
             ->add('priority', NumberType::class, array('label' => 'Priority'))
             ->add('visible', CheckboxType::class, array('label' => 'Visible'));
     }

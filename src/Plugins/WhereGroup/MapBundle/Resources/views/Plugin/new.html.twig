@@ -34,11 +34,22 @@
         <div class="notify error">
             {{ form_errors(form) }}
             {{ form_errors(form.gcUrl) }}
+            {% if form.title is defined %}
+            {{ form_errors(form.title) }}
+            {%  endif %}
         </div>
     {% endif %}
 
     {% if form.vars.value.id is defined and form.vars.value.id is not empty %}
         <div class="grid space row-space responsive">
+            <div class="row r-1">
+                <div class="col c-1">
+                    <div>{{ form_label(form.gcUrl, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                    <div class="form-field-wrapper">
+                        {{ form_widget(form.gcUrl, { 'attr': {'class': 'input'}}) }}
+                    </div>
+                </div>
+            </div>
             <div class="row r-1">
                 <div class="col c-1">
                     <div>{{ form_label(form.title, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
@@ -75,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row r-2">
+            <div class="row r-1">
                 <div class="col c-1-2">
                     <div>
                         {{ form_label(form.visible, null, { 'label_attr': {'class': 'form-label'}}) }}

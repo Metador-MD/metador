@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Wms
 {
+
+    const TITLE_DEFAULT = 'Nicht Definiert';
+
     public static $type = "WMS";
 
     /**
@@ -42,7 +45,8 @@ class Wms
 
     /**
      * @var string $title a WMS title
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank(message="Der Titel darf nicht leer sein")
      */
     protected $title;
 
