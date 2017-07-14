@@ -26,7 +26,9 @@ class WmsEditType extends AbstractType
             ->add('gcUrl',TextType::class, array(
                 'label' => 'GetCapabilities Url (schreibgeschützt)',
                 'read_only' =>'true'))
-            ->add('title', TextType::class, array('label' => 'Title'))
+            ->add('title', TextType::class, array(
+                'label' => 'Title',
+                'invalid_message' => 'Der Titel darf nicht leer sein.'))
             ->add('format', ChoiceType::class, array(
                 'label' => 'Format',
                 'choices' => array_combine($wms->getFormats(), $wms->getFormats())))

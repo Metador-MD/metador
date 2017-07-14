@@ -56,7 +56,8 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
      */
     private function parseService(Wms &$wms, \DOMElement $contextElm)
     {
-        $wms->setTitle($this->getValue('./wms:Title/text()', $contextElm));
+        $title = $this->getValue('./wms:Title/text()', $contextElm);
+        $wms->setTitle($title ? $title : WMS::TITLE_DEFAULT);
     }
 
     /**

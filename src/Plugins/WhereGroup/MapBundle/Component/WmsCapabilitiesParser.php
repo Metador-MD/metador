@@ -12,6 +12,7 @@ use Plugins\WhereGroup\MapBundle\Entity\Wms;
  */
 abstract class WmsCapabilitiesParser
 {
+
     /**
      * The XML representation of the wms capabilites document
      * @var \DOMDocument

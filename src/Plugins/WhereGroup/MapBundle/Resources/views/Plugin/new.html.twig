@@ -34,6 +34,9 @@
         <div class="notify error">
             {{ form_errors(form) }}
             {{ form_errors(form.gcUrl) }}
+            {% if form.title is defined %}
+            {{ form_errors(form.title) }}
+            {%  endif %}
         </div>
     {% endif %}
 
