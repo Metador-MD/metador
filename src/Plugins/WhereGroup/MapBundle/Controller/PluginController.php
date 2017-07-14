@@ -29,6 +29,7 @@ class PluginController extends Controller
         "undefined" => "EPSG:31466",
         "undefined" => "EPSG:31467",
         "ETRS89_UTM_zone_32N" => "EPSG:25832",
+        "ETRS_1989_UTM_Zone_32N" => "EPSG:25832",
     );
 
     /**
@@ -149,11 +150,11 @@ class PluginController extends Controller
         } catch (\Exception $e) {
             $this->log('error', 'create', $e->getMessage(), false, false);
 
-            $response = array();
+            $result = array();
 
-            $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
+            $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
 
-            return new AjaxResponse($response);
+            return new AjaxResponse($result);
         }
     }
 
@@ -165,7 +166,9 @@ class PluginController extends Controller
     public function uploadGeomAction()
     {
         $request = $this->get('request_stack')->getMasterRequest();
-        $result = array("content" => null);
+        $result = array(
+            'content' => null,
+        );
         /** @var UploadedFile $file */
         foreach ($request->files as $file) {
             if (!$file instanceof UploadedFile) {
@@ -193,27 +196,41 @@ class PluginController extends Controller
                     $prj = $shapeFile->getPRJ();
                     $epsg = $this->findCrs($prj);
                     $shtype = $shapeFile->getShapeType();
-                    $current = $shapeFile->getCurrentRecord();
-                    $record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH);
                     $shape_types = $this->supportedTypes();
                     if (!isset($shape_types[$shtype])) {
                         throw new \Exception('Der Geometrietyp ist nicht unterstützt.');
                     }
                     $type = $shape_types[$shtype];
-                    $coords = $this->shGeomToJson($type, $record['shp']['parts'][0]);
-                    if ($coords === null) {
-                        throw new \Exception('Die Geometrie kann nicht ausgelesen werden.');
-                    }
                     $result['content'] = array(
                         "type" => "FeatureCollection",
-                        "bbox" => $record['shp']['bounding_box'],
-                        "features" => array(
-                            "type" => $type,
-                            "coordinates" => $coords
+                        "crs" => array(
+                            "type" => "name",
+                            "properties" => array(
+                                "name" => $epsg,
+                            ),
                         ),
+                        "features" => array(),
                     );
+                    foreach ($shapeFile as $i => $record) {
+                        if ($record['dbf']['_deleted']) {
+                            continue;
+                        }
+                        $coords = $this->shGeomToJson($type, $record['shp']['parts'][0]);
+                        if ($coords === null) {
+                            throw new \Exception('Die Geometrie kann nicht ausgelesen werden.');
+                        }
+                        $result['content']['features'][] = array(
+                            "type" => "Feature",
+                            "geometry" => array(
+                                "type" => $type,
+                                "coordinates" => $coords,
+                            ),
+                            "properties" => array(),
+                        );
+                        break; // only first geometry
+                    }
                 } catch (\Exception $e) {
-                    $result = array('status' => 'error', 'message' => $e->getMessage());
+                    $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
                 } finally {
                     // remove all uploaded files
                     $fs = new Filesystem();
@@ -223,38 +240,11 @@ class PluginController extends Controller
             }
             break; // only first file
         }
+        if (!$result['content']) {
+            $this->get('metador_frontend_command')->displayError($result, 'Keine Datei wurde hochgeladen.');
+        }
+
         return new AjaxResponse($result);
-//
-////        /home/paul/Customer/LVermGEO/beispiele/beisöiel1
-//        try {
-//            // Open shapefile
-//
-//            $shapeFile = new ShapeFile(
-//                '/home/paul/Customer/LVermGEO/beispiele/beispiel1.shp',
-//                ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
-//            );
-//            $prj = $shapeFile->getPRJ();
-//            $type = $shapeFile->getShapeType();
-//            $current = $shapeFile->getCurrentRecord();
-//            $record = $shapeFile->getRecord();
-//            $shp = $record['shp'];
-//            // Read all the records
-//            while ($record = $shapeFile->getRecord(ShapeFile::GEOMETRY_BOTH)) {
-//                if ($record['dbf']['_deleted']) {
-//                    continue;
-//                }
-//                // Geometry
-//                print_r($record['shp']);
-//                // DBF Data
-//                print_r($record['dbf']);
-//            }
-//
-//        } catch (ShapeFileException $e) {
-//            // Print detailed error information
-//            exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
-//        }
-//
-//        return new Response('aaaaaaa');
     }
 
     /**
@@ -354,7 +344,19 @@ class PluginController extends Controller
                 foreach ($part['points'] as $point) {
                     $res[] = array($point['x'], $point['y']);
                 }
+
                 return $res;
+            case 'Polygon':
+                $rings = array();
+                foreach ($part['rings'] as $item) {
+                    $ring = array();
+                    foreach ($item['points'] as $point) {
+                        $ring[] = array($point['x'], $point['y']);
+                    }
+                    $rings[] = $ring;
+                }
+
+                return $rings;
             default:
                 return null;
         }

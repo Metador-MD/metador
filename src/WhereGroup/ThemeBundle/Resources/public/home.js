@@ -48,18 +48,21 @@ $('.-js-zoom-box').on('click', function () {
     }
 });
 
-$('.-js-file-upload').on('change', function(e){
+$('.-js-file-upload').on('change', function (e) {
     $('#file-upload-form').submit();
 
 });
 
 $('#file-upload-form').ajaxForm({
-    dataType: 'text',
-    success: function(data) {
-        console.log('haha', data);
+    dataType: 'json',
+    success: function (data) {
+        metador.parseResponse(data);
+        if (data.content) {
+            Window.metador.metadorMap.drawGeometryForSearch(data.content);
+        }
     },
-    error: function(jqXHR, textStatus, errorThrown) {
-        console.log('ohoh',jqXHR, textStatus, errorThrown);
+    error: function (jqXHR, textStatus, errorThrown) {
+        metador.displayError(errorThrown);
     }
 });
 
@@ -73,14 +76,12 @@ $('#map-menu-load-wms-button').on('click', function () {
             }
         }).success(function (data) {
             metador.parseResponse(data);
-
             Window.metador.metadorMap.addLayerForOptions(data);
-
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.error(errorThrown);
+        }).error(function (jqXHR, textStatus, errorThrown) {
+            metador.displayError(errorThrown);
         });
     } else {
-        console.log('Keine GetCapabilities URL eingetragen!');
+        metador.displayError('Keine GetCapabilities URL eingetragen!');
     }
 });
 
@@ -96,12 +97,11 @@ $(document).on('change', '.-js-map-source-opacity', function () {
 });
 
 // layer drag and drop
-
 var currentLayer = null;
 var oldPosition = 0;
 addDraggableEventListener($('#dummy-layer').get(0));
 
-function getLayerPosition(layer){
+function getLayerPosition(layer) {
     var index = 0;
     var list = $('.-js-map-layertree ul .-js-draggable');
     var length = list.length
@@ -111,20 +111,20 @@ function getLayerPosition(layer){
             return length - 1 - i;
         }
     }
-    
+
     return null;
 }
 
-function _handleDragStart(e){
+function _handleDragStart(e) {
     currentLayer = this;
-    oldPosition = getLayerPosition(this); 
-    
+    oldPosition = getLayerPosition(this);
+
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
     $(this).addClass("move");
 }
 
-function _handleDragOver(e){
+function _handleDragOver(e) {
     // Necessary. Allows to drop.
     if (e.preventDefault) {
         e.preventDefault();
@@ -134,37 +134,37 @@ function _handleDragOver(e){
     return false;
 }
 
-function _handleDragEnter(e){
-    if(currentLayer !== this){
+function _handleDragEnter(e) {
+    if (currentLayer !== this) {
         $(currentLayer).remove();
         $(this).before(currentLayer);
     }
 }
 
-function _handleDragDrop(e){
+function _handleDragDrop(e) {
     e.stopPropagation(); // Stops some browsers from redirecting.
     e.preventDefault();
     $(this).removeClass("over");
 }
 
-function _handleDragEnd(e){
+function _handleDragEnd(e) {
     $(this).removeClass('move');
     Window.metador.metadorMap.moveLayer(
-                $(currentLayer).attr('id'),
-                oldPosition,
-                getLayerPosition(currentLayer)
-            );
+        $(currentLayer).attr('id'),
+        oldPosition,
+        getLayerPosition(currentLayer)
+    );
 }
 
-function addDraggableEventListener(layer){
+function addDraggableEventListener(layer) {
 
-    if ($(layer).attr('data-draggable') === "true"){
-        layer.addEventListener('dragstart',_handleDragStart, false);
-        layer.addEventListener('dragend',_handleDragEnd, false);
+    if ($(layer).attr('data-draggable') === "true") {
+        layer.addEventListener('dragstart', _handleDragStart, false);
+        layer.addEventListener('dragend', _handleDragEnd, false);
     }
-    
-    layer.addEventListener('dragenter',_handleDragEnter, false);
-    layer.addEventListener('dragover',_handleDragOver, false);
+
+    layer.addEventListener('dragenter', _handleDragEnter, false);
+    layer.addEventListener('dragover', _handleDragOver, false);
     layer.addEventListener('drop', _handleDragDrop, false);
 }
 
@@ -178,17 +178,17 @@ function addSource(id, title, visible, opacity) {
     }
     // TODO: Configuration for draggable Layer
     var li = $('<li></li>')
-            .attr('id',  id)
-            .attr('draggable', "true")
-            .attr('data-draggable', "true")
-            .addClass('draggable -js-draggable');
-    
+        .attr('id', id)
+        .attr('draggable', "true")
+        .attr('data-draggable', "true")
+        .addClass('draggable -js-draggable');
+
     addDraggableEventListener(li.get(0), true);
-    
+
     var ttl = null;
-    if(title.length > maxLength) {
+    if (title.length > maxLength) {
         ttl = title.substring(0, maxLength);
-        if(ttl.lastIndexOf(' ') > 0) {
+        if (ttl.lastIndexOf(' ') > 0) {
             ttl = ttl.substring(0, ttl.lastIndexOf(' '));
         }
     } else {
