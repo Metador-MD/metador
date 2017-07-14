@@ -1,4 +1,5 @@
 import Object = ol.Object;
+import * as HttpUtils from './HttpUtils';
 
 declare class proj4 {
     static defs(name: string, def: string): void;
@@ -242,22 +243,27 @@ export class Ol4Map {
         }
     }
 
-    initLayertree() {
-        let layers = this.olMap.getLayers().getArray();
-        let llength = layers.length;
-        for (let layer of layers) {
-            let source: ol.source.Source;
-            if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
-                let sublayers = (<ol.layer.Group>layer).getLayers().getArray();
-                for (let slayer of sublayers) {
-                    if (slayer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
-                        addSource(slayer.get('uuid'), slayer.get('title'), slayer.getVisible(), slayer.getOpacity());
-                    }
-                }
-            } else if (layer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
-                addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
-            }
-        }
+    //
+    // initLayertree() {
+    //     let layers = this.olMap.getLayers().getArray();
+    //     let llength = layers.length;
+    //     for (let layer of layers) {
+    //         let source: ol.source.Source;
+    //         if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
+    //             let sublayers = (<ol.layer.Group>layer).getLayers().getArray();
+    //             for (let slayer of sublayers) {
+    //                 if (slayer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
+    //                     addSource(slayer.get('uuid'), slayer.get('title'), slayer.getVisible(), slayer.getOpacity());
+    //                 }
+    //             }
+    //         } else if (layer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
+    //             addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
+    //         }
+    //     }
+    // }
+
+    private addToLayertree(layer: ol.layer.Image) {
+        addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
     }
 
     showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
@@ -294,6 +300,7 @@ export class Ol4Map {
         if (layer instanceof ol.layer.Image) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
+            addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
         } else if (layer instanceof ol.layer.Vector) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_VECTOR);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
@@ -563,3 +570,37 @@ export function createBox() {
         }
     );
 };
+
+
+
+
+
+export class UiUtils {
+
+}
+
+export class GeomLoader {
+    private map: Ol4Map;
+    private form: HTMLFormElement;
+
+    public constructor(map: Ol4Map, form: HTMLFormElement) {
+        this.map = map;
+        this.form = form;
+        this.on();
+    }
+
+    public on() {
+        this.form.addEventListener('change', this.upload.bind(this), false);
+    }
+
+    private upload(e: Event) {
+        console.log(e);
+        // HttpUtils.Http.sendForm(this.form, this.form.action, HttpUtils.HTTP_METHOD.POST, HttpUtils.HTTP_DATATYPE.json)
+        //     .then(function (value) {
+        //         console.log('Contents: ' + value);
+        //     })
+        //     .catch(function (reason) {
+        //         console.error(reason);
+        //     });
+    }
+}

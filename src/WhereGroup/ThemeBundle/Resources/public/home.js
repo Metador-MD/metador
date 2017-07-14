@@ -50,7 +50,7 @@ $('.-js-zoom-box').on('click', function () {
 
 $('.-js-file-upload').on('change', function(e){
     $('#file-upload-form').submit();
-    
+
 });
 
 $('#file-upload-form').ajaxForm({
@@ -71,8 +71,11 @@ $('#map-menu-load-wms-button').on('click', function () {
             data: {
                 url: encodeURIComponent($input.val())
             }
-        }).done(function (data) {
+        }).success(function (data) {
+            metador.parseResponse(data);
+
             Window.metador.metadorMap.addLayerForOptions(data);
+
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error(errorThrown);
         });
