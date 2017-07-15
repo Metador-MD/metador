@@ -59,7 +59,7 @@ class HomeController extends Controller
 
             $profileConfig[$key] = array(
                 'name'   => $profile['name'],
-                'source' => is_null($configuration) ? array() : $configuration->getValue()
+                'source' => is_null($configuration) ? array() : $configuration
             );
         }
 

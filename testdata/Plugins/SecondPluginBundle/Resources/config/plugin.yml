@@ -1,6 +1,0 @@
-example-hello-world:
-    origin: WhereGroup
-    name: Hallo Welt
-    description: Beispiel Plugin für Metador 2.1
-    class_path: User\Plugin\WhereGroup\HelloWorldBundle
-    class_name: WhereGroupHelloWorldBundle

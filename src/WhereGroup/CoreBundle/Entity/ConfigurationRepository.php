@@ -18,25 +18,29 @@ class ConfigurationRepository extends EntityRepository
      * @param $filterValue
      * @return array
      */
-    public function all($filterType, $filterValue)
+    public function all($filterType = null, $filterValue = null)
     {
-        $rows = $this->createQueryBuilder('c')
-            ->select('c.key, c.value, c.json')
-            ->where('c.filterType = :filterType')
-            ->andWhere('c.filterValue = :filterValue')
-            ->setParameter('filterType', $filterType)
-            ->setParameter('filterValue', $filterValue)
-            ->orderBy('c.filterType', 'ASC')
-            ->getQuery()
-            ->getResult();
+        $qb = $this->createQueryBuilder('c')->select('c');
 
-        $result = array();
-
-        foreach ($rows as $row) {
-            $result[$row['key']] = $row['json'] === true ? json_decode($row['value']) : $row['value'];
+        if (!is_null($filterType)) {
+            $qb->andWhere('c.filterType = :filterType')->setParameter('filterType', $filterType);
         }
 
-        return $result;
+        if (!is_null($filterValue)) {
+            $qb->andWhere('c.filterValue = :filterValue')->setParameter('filterValue', $filterValue);
+        }
+
+        $rows = $qb->orderBy('c.filterType', 'ASC')->getQuery()->getArrayResult();
+
+        for ($i=0; $i<count($rows); $i++) {
+            if ((boolean)$rows[$i]['json'] === true) {
+                $rows[$i]['value'] = json_decode($rows[$i]['value'], true);
+            }
+
+            unset($rows[$i]['json']);
+        }
+
+        return $rows;
     }
 
     /**
@@ -46,57 +50,17 @@ class ConfigurationRepository extends EntityRepository
      */
     public function removeAll($filterType = null, $filterValue = null)
     {
-        return $this->createQueryBuilder('c')
-            ->delete(self::ENTITY, 'c')
-            ->where('c.filterType = :filterType')
-            ->andWhere('c.filterValue = :filterValue')
-            ->setParameter('filterType', $filterType)
-            ->setParameter('filterValue', $filterValue)
-            ->getQuery()
-            ->execute();
-    }
+        $qb = $this->createQueryBuilder('c')->delete(self::ENTITY, 'c');
 
-    /**
-     * @param $key
-     * @param $filterType
-     * @param $filterValue
-     * @param null $default
-     * @return mixed
-     */
-    public function get($key, $filterType, $filterValue, $default = null)
-    {
-        try {
-            return $this->getEntityManager()->createQuery(
-                "SELECT c FROM " . self::ENTITY .
-                " c WHERE c.key = :key AND c.filterType = :filterType AND c.filterValue = :filterValue"
-            )
-                ->setParameter('key', $key)
-                ->setParameter('filterType', $filterType)
-                ->setParameter('filterValue', $filterValue)
-                ->getSingleResult();
-        } catch (NoResultException $e) {
-            return $default;
+        if (!is_null($filterType)) {
+            $qb->andWhere('c.filterType = :filterType')->setParameter('filterType', $filterType);
         }
-    }
 
-    /**
-     * @param $key
-     * @param $filterType
-     * @param $filterValue
-     * @return mixed
-     */
-    public function remove($key, $filterType, $filterValue)
-    {
-        return $this->createQueryBuilder('c')
-            ->delete(self::ENTITY, 'c')
-            ->where('c.key = :key')
-            ->andWhere('c.filterType = :filterType')
-            ->andWhere('c.filterValue = :filterValue')
-            ->setParameter('key', $key)
-            ->setParameter('filterType', $filterType)
-            ->setParameter('filterValue', $filterValue)
-            ->getQuery()
-            ->execute();
+        if (!is_null($filterValue)) {
+            $qb->andWhere('c.filterValue = :filterValue')->setParameter('filterValue', $filterValue);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
@@ -106,30 +70,87 @@ class ConfigurationRepository extends EntityRepository
      * @param null $default
      * @return mixed
      */
-    public function getValue($key, $filterType, $filterValue, $default)
+    public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
         try {
+
             $qb = $this->createQueryBuilder('c')
-                ->select('c.value, c.json')
+                ->select('c')
                 ->where('c.key = :key')
-                ->andWhere('c.filterType = :filterType')
-                ->andWhere('c.filterValue = :filterValue')
-                ->setParameters(array(
-                    'key' => $key,
-                    'filterType' => $filterType,
-                    'filterValue' => $filterValue
-                ));
+                ->setParameter('key', $key);
 
-            $result = $qb->getQuery()->getScalarResult();
-
-            if ($result[0]['json'] === true) {
-                return json_decode($result[0]['value']);
+            if (!is_null($filterType)) {
+                $qb->andWhere('c.filterType = :filterType')->setParameter('filterType', $filterType);
             }
 
-            return $result[0]['value'];
+            if (!is_null($filterValue)) {
+                $qb->andWhere('c.filterValue = :filterValue')->setParameter('filterValue', $filterValue);
+            }
+
+            return $qb->getQuery()->getSingleResult();
+
         } catch (NoResultException $e) {
             return $default;
         }
+    }
+
+    /**
+     * @param $key
+     * @param $filterType
+     * @param $filterValue
+     * @return mixed
+     */
+    public function remove($key, $filterType = null, $filterValue = null)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->delete(self::ENTITY, 'c')
+            ->where('c.key = :key')
+            ->setParameter('key', $key);
+
+        if (!is_null($filterType)) {
+            $qb->andWhere('c.filterType = :filterType')->setParameter('filterType', $filterType);
+        }
+
+        if (!is_null($filterValue)) {
+            $qb->andWhere('c.filterValue = :filterValue')->setParameter('filterValue', $filterValue);
+        }
+
+        $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param $key
+     * @param $filterType
+     * @param $filterValue
+     * @param null $default
+     * @return mixed
+     */
+    public function getValue($key, $filterType = null, $filterValue = null, $default = null)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.value, c.json')
+            ->where('c.key = :key')
+            ->setParameter('key', $key);
+
+        if (!is_null($filterType)) {
+            $qb->andWhere('c.filterType = :filterType')->setParameter('filterType', $filterType);
+        }
+
+        if (!is_null($filterValue)) {
+            $qb->andWhere('c.filterValue = :filterValue')->setParameter('filterValue', $filterValue);
+        }
+
+        $result = $qb->getQuery()->getScalarResult();
+
+        if (!isset($result[0])) {
+            return $default;
+        }
+
+        if ((boolean)$result[0]['json'] === true) {
+            return json_decode($result[0]['value'], true);
+        }
+
+        return $result[0]['value'];
     }
 
     /**
@@ -138,7 +159,7 @@ class ConfigurationRepository extends EntityRepository
      * @param $filterType
      * @param $filterValue
      */
-    public function set($key, $value, $filterType, $filterValue)
+    public function set($key, $value, $filterType = '', $filterValue = '')
     {
         /** @var Configuration $entity */
         $entity = $this->get($key, $filterType, $filterValue);
@@ -156,5 +177,16 @@ class ConfigurationRepository extends EntityRepository
 
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function truncate()
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('DELETE FROM ' . self::ENTITY)
+            ->execute();
     }
 }

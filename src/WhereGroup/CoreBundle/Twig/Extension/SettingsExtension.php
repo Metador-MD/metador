@@ -44,7 +44,7 @@ class SettingsExtension extends \Twig_Extension
      */
     public function getSetting($key, $filterType = null, $filterValue = null, $default = null)
     {
-        return $this->configuration->getValue($key, $filterType, $filterValue, $default);
+        return $this->configuration->get($key, $filterType, $filterValue, $default);
     }
 
     /**
@@ -65,7 +65,7 @@ class SettingsExtension extends \Twig_Extension
                 }
 
                 /** @var \WhereGroup\CoreBundle\Entity\Configuration $conf */
-                $config[$key] = $this->configuration->getValue(
+                $config[$key] = $this->configuration->get(
                     $key,
                     'plugin',
                     $pluginKey,

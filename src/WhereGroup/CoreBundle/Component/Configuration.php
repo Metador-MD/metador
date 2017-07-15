@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
     public function set($key, $value, $filterType = '', $filterValue = '')
     {
         $this->repo->set($key, $value, $filterType, $filterValue);
+
         return $this;
     }
 
@@ -47,7 +48,7 @@ class Configuration implements ConfigurationInterface
      * @param null $default
      * @return mixed
      */
-    public function get($key, $filterType = '', $filterValue = '', $default = null)
+    public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
         return $this->repo->getValue($key, $filterType, $filterValue, $default);
     }
@@ -56,11 +57,13 @@ class Configuration implements ConfigurationInterface
      * @param $key
      * @param string $filterType
      * @param string $filterValue
-     * @return mixed
+     * @return $this
      */
-    public function remove($key, $filterType = '', $filterValue = '')
+    public function remove($key, $filterType = null, $filterValue = null)
     {
-        return $this->repo->remove($key, $filterType, $filterValue);
+        $this->repo->remove($key, $filterType, $filterValue);
+
+        return $this;
     }
 
     /**
@@ -68,7 +71,7 @@ class Configuration implements ConfigurationInterface
      * @param string $filterValue
      * @return mixed
      */
-    public function findAll($filterType = '', $filterValue = '')
+    public function getAll($filterType = null, $filterValue = null)
     {
         return $this->repo->all($filterType, $filterValue);
     }
@@ -76,10 +79,22 @@ class Configuration implements ConfigurationInterface
     /**
      * @param string $filterType
      * @param string $filterValue
-     * @return mixed
+     * @return $this
      */
-    public function removeAll($filterType = '', $filterValue = '')
+    public function removeAll($filterType = null, $filterValue = null)
     {
-        return $this->repo->removeAll($filterType, $filterValue);
+        $this->repo->removeAll($filterType, $filterValue);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function truncate()
+    {
+        $this->repo->truncate();
+
+        return $this;
     }
 }

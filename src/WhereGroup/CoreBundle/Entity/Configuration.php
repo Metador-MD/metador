@@ -15,24 +15,24 @@ class Configuration
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $filterType;
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $filterValue;
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $key;
 
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false, nullable=true)
      */
     private $value;
 
@@ -111,7 +111,7 @@ class Configuration
     {
         $this->setJson(false);
 
-        if (is_array($value)) {
+        if (!is_string($value) && !is_numeric($value)) {
             $value = json_encode($value);
             $this->setJson(true);
         }
