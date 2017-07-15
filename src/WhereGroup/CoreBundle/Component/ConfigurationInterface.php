@@ -44,15 +44,6 @@ interface ConfigurationInterface
     public function remove($key, $filterType = null, $filterValue = null);
 
     /**
-     * @param $key
-     * @param null $filterType
-     * @param null $filterValue
-     * @param null $default
-     * @return mixed
-     */
-    public function getValue($key, $filterType = null, $filterValue = null, $default = null);
-
-    /**
      * @param null $filterType
      * @param null $filterValue
      * @return mixed

@@ -20,8 +20,8 @@ class ConfigurationRepository extends EntityRepository
      */
     public function all($filterType, $filterValue)
     {
-        return $this->createQueryBuilder('c')
-            ->select('c.key, c.value')
+        $rows = $this->createQueryBuilder('c')
+            ->select('c.key, c.value, c.json')
             ->where('c.filterType = :filterType')
             ->andWhere('c.filterValue = :filterValue')
             ->setParameter('filterType', $filterType)
@@ -29,6 +29,14 @@ class ConfigurationRepository extends EntityRepository
             ->orderBy('c.filterType', 'ASC')
             ->getQuery()
             ->getResult();
+
+        $result = array();
+
+        foreach ($rows as $row) {
+            $result[$row['key']] = $row['json'] === true ? json_decode($row['value']) : $row['value'];
+        }
+
+        return $result;
     }
 
     /**
@@ -102,23 +110,23 @@ class ConfigurationRepository extends EntityRepository
     {
         try {
             $qb = $this->createQueryBuilder('c')
-                ->select('c.value')
+                ->select('c.value, c.json')
                 ->where('c.key = :key')
-                ->setParameter('key', $key);
+                ->andWhere('c.filterType = :filterType')
+                ->andWhere('c.filterValue = :filterValue')
+                ->setParameters(array(
+                    'key' => $key,
+                    'filterType' => $filterType,
+                    'filterValue' => $filterValue
+                ));
 
-            if (!is_null($filterType)) {
-                $qb
-                    ->andWhere('c.filterType = :filterType')
-                    ->setParameter('filterType', $filterType);
+            $result = $qb->getQuery()->getScalarResult();
+
+            if ($result[0]['json'] === true) {
+                return json_decode($result[0]['value']);
             }
 
-            if (!is_null($filterValue)) {
-                $qb
-                    ->andWhere('c.filterValue = :filterValue')
-                    ->setParameter('filterValue', $filterValue);
-            }
-
-            return $qb->getQuery()->getSingleScalarResult();
+            return $result[0]['value'];
         } catch (NoResultException $e) {
             return $default;
         }

@@ -13,31 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Configuration
 {
-
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $filterType;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Id
+     * @ORM\Column(type="string", length=255)
      */
     private $filterValue;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Id
+     * @ORM\Column(type="string", length=255)
      */
     private $key;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $value;
 
@@ -45,14 +40,6 @@ class Configuration
      * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $json;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return mixed
