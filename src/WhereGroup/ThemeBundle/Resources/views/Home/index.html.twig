@@ -42,7 +42,7 @@
                     </div>
                     <div class="col c-3-4">
                         {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
-                        {% include 'MetadorThemeBundle:Home:result.html.twig' %}
+                        <div class="content" id="search-result"></div>
                     </div>
                 </div>
             </div>
@@ -55,4 +55,6 @@
     <script src="{{ asset('bundles/metadormap/js/app.js') }}"></script>
     <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/home.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/storage.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/search.js') }}"></script>
 {% endblock %}

@@ -2,9 +2,9 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Rhumsaa\Uuid\Uuid;
-use WhereGroup\CoreBundle\Component\Search\Paging;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
@@ -19,37 +19,51 @@ use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
  */
 class Metadata implements MetadataInterface
 {
-    /** @var ContainerInterface  */
-    protected $container;
-
     /** @var UserInterface  */
     protected $metadorUser;
 
-    private $repository = "MetadorCoreBundle:Metadata";
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository  */
+    protected $repo;
+
+    /** @var EntityManagerInterface */
+    protected $em;
+
+    /** @var Core  */
+    protected $core;
+
+    /** @var Logger  */
+    protected $logger;
+
+    const ENTITY = 'MetadorCoreBundle:Metadata';
 
     /**
-     * @param ContainerInterface $container
-     * @param UserInterface $metadorUser
+     * Metadata constructor.
+     * @param Core $core
+     * @param UserInterface $user
+     * @param Logger $logger
+     * @param EntityManagerInterface $em
      */
     public function __construct(
-        ContainerInterface $container,
-        UserInterface $metadorUser
+        Core $core,
+        UserInterface $user,
+        Logger $logger,
+        EntityManagerInterface $em
     ) {
-        $this->container   = $container;
-        $this->metadorUser = $metadorUser;
-
-        // Todo: needed?
-        $this->systemRoles = array(
-            'ROLE_SYSTEM_SUPERUSER',
-            'ROLE_SYSTEM_USER'
-        );
+        $this->em = $em;
+        $this->core = $core;
+        $this->user = $user;
+        $this->logger = $logger;
+        $this->repo = $em->getRepository(self::ENTITY);
     }
 
     public function __destruct()
     {
         unset(
-            $this->container,
-            $this->metadorUser
+            $this->core,
+            $this->metadorUser,
+            $this->repo,
+            $this->logger,
+            $this->em
         );
     }
 
@@ -62,10 +76,7 @@ class Metadata implements MetadataInterface
     public function getById($metadataId, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->container->get('doctrine')
-            ->getManager()
-            ->getRepository($this->repository)
-            ->findOneById($metadataId);
+        $metadata = $this->repo->findOneById($metadataId);
 
         if (is_null($metadata)) {
             throw new MetadataException('Datensatz existiert nicht.');
@@ -73,8 +84,7 @@ class Metadata implements MetadataInterface
 
         // EVENT ON LOAD
         if ($dispatchEvent) {
-            $event = new MetadataChangeEvent($metadata, array());
-            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+            $this->core->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
         }
 
         return $metadata;
@@ -90,10 +100,7 @@ class Metadata implements MetadataInterface
     public function getByUUID($uuid, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->container->get('doctrine')
-            ->getManager()
-            ->getRepository($this->repository)
-            ->findOneByUuid($uuid);
+        $metadata = $this->repo->findOneByUuid($uuid);
 
         if (is_null($metadata)) {
             throw new MetadataException('Datensatz existiert nicht.');
@@ -101,143 +108,125 @@ class Metadata implements MetadataInterface
 
         // EVENT ON LOAD
         if ($dispatchEvent) {
-            $event = new MetadataChangeEvent($metadata, array());
-            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+            $this->core->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
         }
 
         return $metadata;
     }
 
     /**
-     * @param $filter
-     * @param bool $force
+     * @param $p
+     * @param null $source
+     * @param null $profile
      * @param null $username
-     * @return array
+     * @param null $public
+     * @return mixed|void
+     * @throws MetadataException
      */
-    public function find($filter, $force = false, $username = null)
+    public function updateObject(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
-        $filter->force = $force;
+        $p['_public'] = false;
 
-        /** @var \WhereGroup\CoreBundle\Entity\MetadataRepository $repo */
-        $repo = $this->container->get('doctrine')
-            ->getManager()
-            ->getRepository($this->repository);
+        if (!is_null($profile)) {
+            $p['_profile'] = $profile;
+        }
 
+        if (!is_null($source)) {
+            $p['_source'] = $source;
+        }
+
+        if (!is_null($public)) {
+            $p['_public'] = (boolean)$public;
+        }
+
+        if (empty($p['_profile'])) {
+            throw new MetadataException("Profil nicht gefunden");
+        }
+
+        if (empty($p['_source'])) {
+            throw new MetadataException("Datenquelle nicht gefunden");
+        }
+
+        if (empty($p['_source'])) {
+            throw new MetadataException("Datenquelle nicht gefunden");
+        }
+
+        // Username
         /** @var User $user */
         $user = $this->getUser($username);
+        $p['_username'] = $user->getUsername();
 
-        if (is_object($user)) {
-            $filter->userId = $user->getId();
-
-            foreach ($user->getGroups() as $group) {
-                $groupName = $group->getRole();
-
-                if ($groupName === 'ROLE_SYSTEM_GEO_OFFICE') {
-                    $filter->geoOffice = true;
-                }
-
-                if (substr($groupName, 0, 12) === 'ROLE_SYSTEM_') {
-                    continue;
-                }
-
-                $filter->groups[] = $group->getId();
-            }
+        // UUID
+        if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {
+            $uuid4 = Uuid::uuid4();
+            $p['_uuid'] = $p['fileIdentifier'] = $uuid4->toString();
         }
 
-        $paging = array();
+        // DateStamp
+        $dateStamp = new \DateTime();
+        $p['_dateStamp'] = $dateStamp->format('Y-m-d');
 
-        if (!empty($filter->page) && !empty($filter->hits)) {
-            $pagingClass = new Paging($repo->count($filter), $filter->hits, $filter->page);
-            $paging = $pagingClass->calculate();
+        // Locked
+        if (isset($p['_remove_lock']) || !isset($p['_locked'])) {
+            $p['_locked'] = false;
+        } else {
+            $p['_locked'] = (boolean)$p['_locked'];
         }
 
-        /** @var MetadataRepository $repo */
-        $result = $repo->findByParams($filter);
-
-        return array(
-            'result' => $result,
-            'paging' => $paging
-        );
+        // Title
+        $p['title'] = isset($p['title']) ? $p['title'] : '';
+        $p['abstract'] = isset($p['abstract']) ? $p['abstract'] : '';
+        $p['hierarchyLevel'] = isset($p['hierarchyLevel']) ? $p['hierarchyLevel'] : '';
     }
 
     /**
-     * @param $p
-     * @param null $username
-     * @param bool $public
+     * @param $uuid
+     * @return bool|EntityMetadata
      */
-    public function updateObject(&$p, $username = null, $public = false)
+    public function exists($uuid)
     {
-
+        try {
+            return $this->getByUUID($uuid);
+        } catch (MetadataException $e) {
+            return false;
+        }
     }
 
     /**
      * @param $p
      * @param bool $id
-     * @param null $username
-     * @param bool $public
+     * @param null $uuid
      * @return EntityMetadata
      */
-    public function saveObject($p, $id = false, $username = null, $public = false)
+    public function saveObject($p, $id = null, $uuid = null)
     {
-        if (empty($p['fileIdentifier']) && strlen($p['fileIdentifier']) !== 36) {
-            $uuid4 = Uuid::uuid4();
-            $p['fileIdentifier'] = $uuid4->toString();
+        if (!is_null($id)) {
+            $metadata = $this->getById($id);
+        } elseif (!is_null($uuid)) {
+            $metadata = $this->getByUUID($uuid);
+        } else {
+            $metadata = new EntityMetadata();
         }
 
-        $dateStamp = new \DateTime();
-        $p['dateStamp'] = $dateStamp->format('Y-m-d');
+        $user = $this->metadorUser->getByUsername($p['_username']);
 
-        $this->checkMandatoryFields($p);
-
-        /** @var User $user */
-        $user     = $this->getUser($username);
-        $metadata = $this->getObject($id, $p['fileIdentifier']);
-
-        if ($id && $user->getId() == $metadata->getInsertUser()->getId()) {
-            if (empty($p['_group_id'])) {
-                $p['_group_id'] = array();
-            }
-
-            $groups = array();
-
-            // remove groups
-            foreach ($metadata->getGroups() as $group) {
-                $groups[] = $group->getId();
-
-                if (!in_array($group->getId(), $p['_group_id'])) {
-                    $metadata->removeGroups($group);
-                }
-            }
-
-            // add groups
-            foreach ($user->getGroups() as $group) {
-                if (in_array($group->getId(), $p['_group_id']) && !in_array($group->getId(), $groups)) {
-                    $metadata->addGroups($group);
-                }
-            }
+        if (!$metadata->getId()) {
+            $metadata->setInsertUser($p['_username']);
+            $metadata->setInsertTime($p['_dateStamp']);
         }
 
-        if (!$id) {
-            $metadata->setInsertUser($user);
-            $metadata->setInsertTime($this->getTimestamp());
-            $metadata->setPublic($public);
-        }
-
-        $metadata->setLocked(isset($p['_remove_lock']) ? false : true);
+        $metadata->setPublic($p['_public']);
+        $metadata->setLocked($p['_locked']);
         $metadata->setUpdateUser($user);
-        $metadata->setUpdateTime($this->getTimestamp());
-        $metadata->setUuid(isset($p['fileIdentifier']) ? $p['fileIdentifier'] : '');
-        $metadata->setCodespace(isset($p['identifier'][0]['codespace']) ? $p['identifier'][0]['codespace'] : '');
-        $metadata->setTitle(isset($p['title']) ? $p['title'] : '');
-        $metadata->setAbstract(isset($p['abstract']) ? $p['abstract'] : '');
-        $metadata->setBrowserGraphic(isset($p['browserGraphic']) ? $p['browserGraphic'] : '');
+        $metadata->setUpdateTime($p['_dateStamp']);
+        $metadata->setUuid($p['_uuid']);
+        $metadata->setTitle($p['title']);
+        $metadata->setAbstract($p['abstract']);
         $metadata->setObject($p);
-        $metadata->setHierarchyLevel(isset($p['hierarchyLevel']) ? $p['hierarchyLevel'] : '');
+        $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setProfile($p['_profile']);
-        $metadata->setPublic(isset($p['_public']) && $p['_public'] === '1' ? true : false);
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
-        $metadata->setReadonly(false);
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
@@ -249,37 +238,87 @@ class Metadata implements MetadataInterface
 
         $this->save($metadata);
 
-        $this->container
-            ->get('metador_logger')
-            ->success(
-                'system',
-                'plugin',
-                'upload',
-                'source',
-                'identifier',
-                (isset($p['title']) ? $p['title'] : 'Datensatz') . ' gespeichert.'
-            );
         return $metadata;
     }
 
     /**
-     * @param $id
+     * @param $type
+     * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
+     * @param $operation
+     * @param $message
+     * @param array $messageParams
+     * @return mixed|void
      */
-    public function lock($id)
+    public function log($type, $metadata, $operation, $message, $messageParams = array())
     {
-        $entity = $this->getById($id, false);
-        $entity->setLocked(true);
-        $this->save($entity);
+        $log = $this->logger->newLog();
+        $log
+            ->setType($type)
+            ->setCategory('metadata')
+            ->setSubcategory('')
+            ->setOperation($operation)
+            ->setSource($metadata->getSource())
+            ->setIdentifier($metadata->getUuid())
+            ->setMessage($message, $messageParams)
+            ->setUser($metadata->getUpdateUser());
+        $this->logger->set($log);
+    }
+
+    /**
+     * @param $metadata
+     * @param $operation
+     * @param $message
+     * @param array $messageParams
+     * @return mixed
+     */
+    public function success($metadata, $operation, $message, $messageParams = array())
+    {
+        $this->log('success', $metadata, $operation, $message, $messageParams);
+    }
+
+    /**
+     * @param $metadata
+     * @param $operation
+     * @param $message
+     * @param array $messageParams
+     * @return mixed
+     */
+    public function error($metadata, $operation, $message, $messageParams = array())
+    {
+        $this->log('error', $metadata, $operation, $message, $messageParams);
     }
 
     /**
      * @param $id
+     * @return mixed|void
+     */
+    public function lock($id)
+    {
+        $entity = $this->getById($id, false);
+        $entity
+            ->setLocked(true)
+            ->setLockUser($this->metadorUser->getUserFromSession())
+            ->setLockTime($this->getTimestamp());
+        $this->save($entity);
+
+        $this->success($entity, 'lock', '%title% gesperrt.', array(
+            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ));
+    }
+
+    /**
+     * @param $id
+     * @return mixed|void
      */
     public function unlock($id)
     {
         $entity = $this->getById($id, false);
         $entity->setLocked(false);
         $this->save($entity);
+
+        $this->success($entity, 'unlock', '%title% freigegeben.', array(
+            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ));
     }
 
     /**
@@ -288,35 +327,29 @@ class Metadata implements MetadataInterface
      */
     public function deleteById($id)
     {
-        $em = $this->container->get('doctrine')->getManager();
         $metadata = $this->getById($id);
 
-        try {
-            if ($metadata) {
-                // EVENT PRE DELETE
-                $event = new MetadataChangeEvent($metadata, array());
-                $this->container->get('event_dispatcher')->dispatch('metador.pre_delete', $event);
+        // EVENT PRE DELETE
+        $event = new MetadataChangeEvent($metadata, array());
+        $this->core->dispatch('metadata.pre_delete', $event);
 
-                foreach ($metadata->getGroups() as $group) {
-                    $metadata->removeGroups($group);
-                }
-
-                // DELETE
-                $em->persist($metadata);
-                $em->flush();
-                $em->remove($metadata);
-                $em->flush();
-            }
-        } catch (\Exception $e) {
-            $this->container->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', $e->getMessage());
-            return false;
+        foreach ($metadata->getGroups() as $group) {
+            $metadata->removeGroups($group);
         }
 
-        return true;
+        $this->success($metadata, 'unlock', '%title% gelöscht.', array(
+            'title' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
+        ));
+
+        // DELETE
+        $this->em->persist($metadata);
+        $this->em->flush();
+        $this->em->remove($metadata);
+        $this->em->flush();
     }
 
     /**
-     * @param $entity
+     * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
      * @param bool $dispatchEvent
      * @return bool
      */
@@ -325,82 +358,20 @@ class Metadata implements MetadataInterface
         // EVENT PRE SAVE
         if ($dispatchEvent) {
             $event  = new MetadataChangeEvent($entity, array());
-            $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+            $this->core->dispatch('metadata.pre_save', $event);
         }
 
         // SAVE TO DATABASE
-        $entityManager = $this->container->get('doctrine')->getManager();
-        $entityManager->persist($entity);
-        $entityManager->flush();
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        $this->success($entity, 'update', '%title% gespeichert.', array(
+            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ));
 
         // EVENT POST SAVE
         if ($dispatchEvent) {
-            $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
-        }
-    }
-
-    /**
-     * @param $username
-     * @return mixed
-     */
-    private function getUser($username)
-    {
-        return is_null($username)
-            ? $this->metadorUser->getUserFromSession()
-            : $this->metadorUser->getByUsername($username);
-    }
-
-    /**
-     * @param $id
-     * @param $uuid
-     * @return EntityMetadata
-     * @throws \Exception
-     */
-    private function getObject($id, $uuid)
-    {
-        // Metadata exists
-        if ($id !== false) {
-            return $this->getById($id);
-        }
-
-        $entity = $this
-            ->container
-            ->get('doctrine')
-            ->getManager()
-            ->getRepository($this->repository)
-            ->findByUuid($uuid);
-
-        if ($entity) {
-            throw new \Exception("UUID existiert bereits!");
-        }
-
-        // New Metadata
-        return new EntityMetadata();
-    }
-
-    /**
-     * @return int
-     */
-    private function getTimestamp()
-    {
-        $dateTime = new \DateTime();
-
-        return $dateTime->getTimestamp();
-    }
-
-    /**
-     * @param $p
-     * @throws \Exception
-     */
-    private function checkMandatoryFields($p)
-    {
-        // Check for uuid
-        if (!isset($p['fileIdentifier']) || empty($p['fileIdentifier'])) {
-            throw new \Exception("fileIdentifier nicht gefunden");
-        }
-
-        if (!isset($p['_profile']) || empty($p['_profile'])) {
-            throw new \Exception("_profile nicht gefunden");
+            $this->core->dispatch('metadata.post_save', $event);
         }
     }
 
@@ -408,7 +379,7 @@ class Metadata implements MetadataInterface
      * @param $p
      * @return string
      */
-    private function prepareSearchField($p)
+    protected function prepareSearchField($p)
     {
         $searchfield  = '';
         $searchfield .= isset($p['_searchfield']) ? ' ' . strtolower($p['_searchfield']) : '';
@@ -426,6 +397,27 @@ class Metadata implements MetadataInterface
         }
 
         return trim($searchfield);
+    }
+
+    /**
+     * @param $username
+     * @return mixed
+     */
+    private function getUser($username)
+    {
+        return is_null($username)
+            ? $this->metadorUser->getUserFromSession()
+            : $this->metadorUser->getByUsername($username);
+    }
+
+    /**
+     * @return int
+     */
+    private function getTimestamp()
+    {
+        $dateTime = new \DateTime();
+
+        return $dateTime->getTimestamp();
     }
 
     /**
@@ -452,17 +444,5 @@ class Metadata implements MetadataInterface
         }
 
         return $metadataObject['dateStamp'];
-    }
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function getQueryBuilder($name)
-    {
-        return $this->container->get('doctrine')
-            ->getManager()
-            ->getRepository($this->repository)
-            ->createQueryBuilder($name);
     }
 }

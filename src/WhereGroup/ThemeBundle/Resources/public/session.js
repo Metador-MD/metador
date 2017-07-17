@@ -1,8 +1,8 @@
 'use strict';
 
-var MetadorSession = function() {};
+var Session = function() {};
 
-MetadorSession.prototype = {
+Session.prototype = {
     timeOut: 0,
     dialogTime: 60,
     interval: null,
@@ -37,7 +37,7 @@ MetadorSession.prototype = {
     }
 };
 
-var session = new MetadorSession();
+var session = new Session();
 
 session.setDialogTime(Configuration.settings.session_timeout_popup);
 session.setTimeout(Configuration.maxlifetime);

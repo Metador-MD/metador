@@ -19,7 +19,7 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
@@ -49,7 +49,7 @@ class ExportController extends Controller
      */
     public function jsonAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
@@ -73,7 +73,7 @@ class ExportController extends Controller
      */
     public function objAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
@@ -94,7 +94,7 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted('view', $metadata);
 
@@ -137,7 +137,7 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted('view', $metadata);
 

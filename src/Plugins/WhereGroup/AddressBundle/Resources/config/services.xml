@@ -24,7 +24,7 @@
             <argument type="service" id="metador_address" />
         </service>
         <service id="metador_address_metadata_listener" class="%metador.address.metadata.listener.class%">
-            <tag name="kernel.event_listener" event="metador.post_save" method="onPostSave" />
+            <tag name="kernel.event_listener" event="metadata.post_save" method="onPostSave" />
             <argument type="service" id="metador_address" />
         </service>
     </services>

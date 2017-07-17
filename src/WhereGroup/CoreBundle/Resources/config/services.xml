@@ -15,6 +15,7 @@
         <parameter key="metador.source.class">WhereGroup\CoreBundle\Component\Source</parameter>
         <parameter key="metador.frontend.command.class">WhereGroup\CoreBundle\Component\FrontendCommand</parameter>
         <parameter key="metador.markdown.class">WhereGroup\CoreBundle\Component\Utils\Markdown</parameter>
+        <parameter key="metador.metadata.search.class">WhereGroup\CoreBundle\Component\Search\MetadataSearch</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
@@ -52,9 +53,11 @@
             <argument>%kernel.environment%</argument>
         </service>
         <service id="metador_wizard" class="%metador.wizard.class%" />
-        <service id="metadata" class="%metador.metadata.class%">
-            <argument type="service" id="service_container" />
+        <service id="metador_metadata" class="%metador.metadata.class%">
+            <argument type="service" id="metador_core" />
             <argument type="service" id="metador_user" />
+            <argument type="service" id="metador_logger" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
         <service id="metador_logger" class="%metador.logger.class%">
             <argument type="service" id="session.flash_bag" />
@@ -76,6 +79,9 @@
             <argument type="service" id="metador_core" />
         </service>
         <service id="metador_markdown" class="%metador.markdown.class%" />
+        <service id="metador_metadata_search" class="%metador.metadata.search.class%">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">

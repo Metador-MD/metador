@@ -92,4 +92,14 @@ class Core
             throw new AccessDeniedException($message);
         }
     }
+
+    /**
+     * @param $name
+     * @param $event
+     * @return \Symfony\Component\EventDispatcher\Event
+     */
+    public function dispatch($name, $event)
+    {
+        return $this->eventDispatcher->dispatch($name, $event);
+    }
 }

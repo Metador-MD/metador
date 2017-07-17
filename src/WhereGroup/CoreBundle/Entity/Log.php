@@ -57,11 +57,17 @@ class Log
 
     /**
      * @param $message
+     * @param null $parameter
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage($message, $parameter = null)
     {
         $this->message = $message;
+
+        if (!is_null($parameter)) {
+            $this->messageParameter = $parameter;
+        }
+
         return $this;
     }
 
@@ -76,6 +82,7 @@ class Log
     /**
      * @param $messageParameter
      * @return $this
+     * Todo: remove
      */
     public function setMessageParameter($messageParameter)
     {
