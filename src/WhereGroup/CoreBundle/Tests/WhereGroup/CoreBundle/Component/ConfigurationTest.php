@@ -18,8 +18,16 @@ class ConfigurationTest extends KernelTestCase
     /** @var Configuration $conf */
     private $conf;
 
-    public function setUp()
+    /**
+     * ConfigurationTest constructor.
+     * @param null $name
+     * @param array $data
+     * @param string $dataName
+     */
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
+
         self::bootKernel();
 
         $this->container = self::$kernel->getContainer();
@@ -134,5 +142,10 @@ class ConfigurationTest extends KernelTestCase
             ->getAll('plugin');
 
         $this->assertEquals(array(), $actual);
+    }
+
+    public function testDestructor()
+    {
+        unset($this->conf);
     }
 }
