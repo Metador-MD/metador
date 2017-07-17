@@ -5,6 +5,7 @@ namespace WhereGroup\Tests\WhereGroup\CoreBundle\Component;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\Container;
 use WhereGroup\CoreBundle\Component\Configuration;
+use WhereGroup\CoreBundle\Component\ConfigurationInterface;
 
 /**
  * Class ConfigurationTest
@@ -144,8 +145,12 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals(array(), $actual);
     }
 
-    public function testDestructor()
+    public function testObject()
     {
-        unset($this->conf);
+        $object = new Configuration($this->container->get('doctrine.orm.entity_manager'));
+
+        $this->assertInstanceOf(ConfigurationInterface::class, $object);
+
+        unset($object);
     }
 }
