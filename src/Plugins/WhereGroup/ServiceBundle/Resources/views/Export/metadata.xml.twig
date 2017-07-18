@@ -115,9 +115,9 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    {% if p['dateStamp'] is defined %}
+    {% if p['_dateStamp'] is defined %}
         <gmd:dateStamp>
-            <gco:Date>{{ p['dateStamp'] }}</gco:Date>
+            <gco:Date>{{ p['_dateStamp'] }}</gco:Date>
         </gmd:dateStamp>
     {% endif %}
     <gmd:metadataStandardName>

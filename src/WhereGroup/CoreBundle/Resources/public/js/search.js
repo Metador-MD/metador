@@ -43,6 +43,7 @@ Search.prototype = {
             'type': 'POST',
             'dataType': 'json',
             'data': {
+                'source': $('.-js-source.active').attr('data-slug'),
                 'terms': self.getParam('terms')
             }
         }).success(function(data) {

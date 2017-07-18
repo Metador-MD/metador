@@ -62,7 +62,6 @@ class ProfileController extends Controller
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
         // Todo: hasGroups
-
         return new Response($this->get('metador_core')->render($template, array(
             'metadataId'     => $id,
             'metadataSource' => $source,
@@ -209,7 +208,7 @@ class ProfileController extends Controller
         $this->data['user'] = $this->get('metador_user')->getUserFromSession();
         $this->data['template'] = $this->data['className'] . '::';
         $this->data['p'] = $this->data['request']->request->get('p', array());
-        $this->data['p']['dateStamp'] = date("Y-m-d");
+        $this->data['p']['_dateStamp'] = date("Y-m-d");
     }
 
     /**
@@ -238,7 +237,7 @@ class ProfileController extends Controller
         /** @var Metadata $entity */
         if (!is_null($entity)) {
             $this->data['p'] = $entity->getObject();
-            $this->data['p']['dateStamp'] = date("Y-m-d");
+            $this->data['p']['_dateStamp'] = date("Y-m-d");
 
             $params['id'] = $entity->getId();
             $params['hasAccess'] = $this->isGranted('edit', $entity);

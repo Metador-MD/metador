@@ -12,6 +12,7 @@
 
 <form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
     <input type="hidden" name="p[_id]" value="{{ id }}" />
+    <input type="hidden" name="p[_uuid]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
     <input type="hidden" name="p[fileIdentifier]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
     <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
     <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />

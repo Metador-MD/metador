@@ -10,7 +10,9 @@ $('.-js-source').on('click', function () {
     $(this).siblings().removeClass('active');
     $(this).addClass('active');
     $('.-js-profile-menu').removeClass('active');
-    $('#' + $(this).attr('data-id')).addClass('active');
+    $('#source-' + $(this).attr('data-slug')).addClass('active');
+    $('#search-result').html('');
+    search.find();
 });
 
 $('.-js-crs-code').on('change', function () {
@@ -111,14 +113,14 @@ function getLayerPosition(layer){
             return length - 1 - i;
         }
     }
-    
+
     return null;
 }
 
 function _handleDragStart(e){
     currentLayer = this;
-    oldPosition = getLayerPosition(this); 
-    
+    oldPosition = getLayerPosition(this);
+
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
     $(this).addClass("move");
@@ -162,7 +164,7 @@ function addDraggableEventListener(layer){
         layer.addEventListener('dragstart',_handleDragStart, false);
         layer.addEventListener('dragend',_handleDragEnd, false);
     }
-    
+
     layer.addEventListener('dragenter',_handleDragEnter, false);
     layer.addEventListener('dragover',_handleDragOver, false);
     layer.addEventListener('drop', _handleDragDrop, false);
@@ -182,9 +184,9 @@ function addSource(id, title, visible, opacity) {
             .attr('draggable', "true")
             .attr('data-draggable', "true")
             .addClass('draggable -js-draggable');
-    
+
     addDraggableEventListener(li.get(0), true);
-    
+
     var ttl = null;
     if(title.length > maxLength) {
         ttl = title.substring(0, maxLength);

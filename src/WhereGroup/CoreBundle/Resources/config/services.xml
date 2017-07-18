@@ -85,7 +85,6 @@
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
-            <argument type="service" id="metador_configuration" />
             <tag name="kernel.event_listener" event="application.loading" method="onLoading" />
         </service>
         <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">

@@ -11,22 +11,6 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
-    private $configuration;
-
-    /**
-     * ApplicationListener constructor.
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
-    public function __destruct()
-    {
-        unset($this->configuration);
-    }
-
     /**
      * @param ApplicationEvent $event
      */

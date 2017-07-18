@@ -54,7 +54,7 @@ class HomeController extends Controller
 //
 //        $metadata = $this->get('metador_metadata')->find($filter);
         $profileConfig = array();
-        $sourceConfig = array();
+        $sourceConfig  = array();
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
@@ -99,12 +99,11 @@ class HomeController extends Controller
         /** @var SearchInterface $search */
         $search = $this->get('metador_metadata_search');
 
-
-
         $search
             ->setPage(1)
             ->setHits(10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
+            ->setSource(isset($params['source']) ? $params['source'] : '')
             ->find();
 
         $html = $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
@@ -113,7 +112,7 @@ class HomeController extends Controller
         ));
 
         return new AjaxResponse(array(
-            'html' => $html . 'ok',
+            'html'  => $html,
             'debug' => $params
         ));
     }

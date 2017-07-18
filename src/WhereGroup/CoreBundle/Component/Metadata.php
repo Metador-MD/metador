@@ -20,7 +20,7 @@ use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 class Metadata implements MetadataInterface
 {
     /** @var UserInterface  */
-    protected $metadorUser;
+    protected $user;
 
     /** @var \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository  */
     protected $repo;
@@ -60,7 +60,7 @@ class Metadata implements MetadataInterface
     {
         unset(
             $this->core,
-            $this->metadorUser,
+            $this->user,
             $this->repo,
             $this->logger,
             $this->em
@@ -208,17 +208,19 @@ class Metadata implements MetadataInterface
             $metadata = new EntityMetadata();
         }
 
-        $user = $this->metadorUser->getByUsername($p['_username']);
+        $date = new \DateTime($p['_dateStamp']);
+
+        $user = $this->user->getByUsername($p['_username']);
 
         if (!$metadata->getId()) {
-            $metadata->setInsertUser($p['_username']);
-            $metadata->setInsertTime($p['_dateStamp']);
+            $metadata->setInsertUser($user);
+            $metadata->setInsertTime($date->getTimestamp());
         }
 
         $metadata->setPublic($p['_public']);
         $metadata->setLocked($p['_locked']);
         $metadata->setUpdateUser($user);
-        $metadata->setUpdateTime($p['_dateStamp']);
+        $metadata->setUpdateTime($date->getTimestamp());
         $metadata->setUuid($p['_uuid']);
         $metadata->setTitle($p['title']);
         $metadata->setAbstract($p['abstract']);
@@ -297,7 +299,7 @@ class Metadata implements MetadataInterface
         $entity = $this->getById($id, false);
         $entity
             ->setLocked(true)
-            ->setLockUser($this->metadorUser->getUserFromSession())
+            ->setLockUser($this->user->getUserFromSession())
             ->setLockTime($this->getTimestamp());
         $this->save($entity);
 
@@ -406,8 +408,8 @@ class Metadata implements MetadataInterface
     private function getUser($username)
     {
         return is_null($username)
-            ? $this->metadorUser->getUserFromSession()
-            : $this->metadorUser->getByUsername($username);
+            ? $this->user->getUserFromSession()
+            : $this->user->getByUsername($username);
     }
 
     /**
@@ -439,10 +441,10 @@ class Metadata implements MetadataInterface
             return $metadataObject['creationDate'];
         }
 
-        if (empty($metadataObject['dateStamp'])) {
+        if (empty($metadataObject['_dateStamp'])) {
             throw new \Exception("dateStamp empty!");
         }
 
-        return $metadataObject['dateStamp'];
+        return $metadataObject['_dateStamp'];
     }
 }

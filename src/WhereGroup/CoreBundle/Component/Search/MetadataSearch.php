@@ -43,6 +43,10 @@ class MetadataSearch extends Search implements SearchInterface
             unset($termCount);
         }
 
+        if (!empty($this->getSource())) {
+            $this->qb->andWhere('m.source = :source')->setParameter('source', $this->getSource());
+        }
+
         return $this;
     }
 

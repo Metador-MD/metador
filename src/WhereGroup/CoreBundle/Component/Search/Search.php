@@ -14,6 +14,7 @@ abstract class Search
     protected $page = 1;
     protected $offset = 0;
     protected $terms = '';
+    protected $source = '';
 
     /**
      * @param $terms
@@ -90,5 +91,24 @@ abstract class Search
         $paging = new Paging($this->getResultCount(), $this->hits, $this->page);
 
         return $paging->calculate();
+    }
+
+    /**
+     * @param $source
+     * @return $this
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }
