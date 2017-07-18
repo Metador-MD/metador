@@ -93,7 +93,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
     private function addSettingsToDatabase()
     {
         // Add default configuration to database
-        $plugins = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
+        $plugins = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/plugin.yml'));
 
         foreach ($plugins as $pluginKey => $pluginInfo) {
             if (!isset($pluginInfo['settings'])) {
