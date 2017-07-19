@@ -1,4 +1,4 @@
-dataset:
+dataset-profile:
     origin: WhereGroup
     name: Datensatz
     description: Metadatensatz-Profil für Geodatensätze
@@ -7,7 +7,7 @@ dataset:
     version: '1.0'
     type: profile
     require:
-        - metador-basic-profile
+        - basic-profile
     settings:
         source:
             type: multi
