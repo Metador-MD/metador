@@ -3,6 +3,10 @@
 namespace Plugins\WhereGroup\MapBundle\Controller;
 
 //use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
+use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
+use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
+use Plugins\WhereGroup\MapBundle\Component\XmlUtils\GmlJsonWriter;
+use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -174,8 +178,28 @@ class PluginController extends Controller
             if (!$file instanceof UploadedFile) {
                 return new Response('Keine Datei hochgeladen!');
             }
-            if ($file->getClientOriginalExtension() === 'xml') {
-                $a = $file->getRealPath();
+            if ($file->getClientOriginalExtension() === 'xml' || $file->getClientOriginalExtension() === 'gml') {
+                $reader = EXmlReader::create($file->getRealPath());
+                $map = array('wfs:member', 'gml:featureMember');
+                $reader->addReader($map, new XmlAssocArrayReader($reader, new FeatureJsonWriter()));
+                $result['content'] = array(
+                    "type" => "FeatureCollection",
+                    "features" => array(),
+                );
+                try {
+                    while ($reader->readComponent()) {
+                        $result['content']['features'][] = $reader->getContent();
+                        if (!isset($result['content']['crs']) && isset($result['content']['features'][0]['crs'])) {
+                            $result['content']['crs'] = $result['content']['features'][0]['crs'];
+                        }
+                        break; // only first geometry
+                    }
+                } catch (\Exception $e) {
+                    $result['content'] = null;
+                    $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
+                } finally {
+                    $reader->close();
+                }
             } elseif ($file->getClientOriginalExtension() === 'zip') {
                 $zip = new \ZipArchive;
                 if ($zip->open($file->getRealPath()) !== true) {
@@ -240,28 +264,28 @@ class PluginController extends Controller
             }
             break; // only first file
         }
-        if (!$result['content']) {
+        if (count($request->files) === null) {
             $this->get('metador_frontend_command')->displayError($result, 'Keine Datei wurde hochgeladen.');
         }
 
         return new AjaxResponse($result);
     }
-
-    /**
-     * @return Response
-     * @Route("map/testaddwms", name="metador_admin_map_testadd")
-     * @Method({"GET", "POST"})
-     */
-    public function testaddwmsAction()
-    {
-//        TODO remove this action
-        $url = 'http://osm-demo.wheregroup.com/service';
-        $wms = new Wms();
-        $this->get('metador_map')->update($url, $wms);
-        $response = new Response();
-
-        return $response;
-    }
+//
+//    /**
+//     * @return Response
+//     * @Route("map/testaddwms", name="metador_admin_map_testadd")
+//     * @Method({"GET", "POST"})
+//     */
+//    public function testaddwmsAction()
+//    {
+////        TODO remove this action
+//        $url = 'http://osm-demo.wheregroup.com/service';
+//        $wms = new Wms();
+//        $this->get('metador_map')->update($url, $wms);
+//        $response = new Response();
+//
+//        return $response;
+//    }
 
     /**
      * Creates a flush message.
