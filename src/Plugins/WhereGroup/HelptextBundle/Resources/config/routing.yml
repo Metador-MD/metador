@@ -1,4 +1,0 @@
-metador_heltext:
-    resource: "@MetadorHelptextBundle/Controller/"
-    type:     annotation
-    prefix:   /

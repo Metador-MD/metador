@@ -1,4 +1,4 @@
-service:
+metador_service_profile:
     origin: WhereGroup
     name: Dienst
     description: Metadatensatz-Profil für Geodienste
@@ -7,7 +7,7 @@ service:
     version: '1.0'
     type: profile
     require:
-        - metador-basic-profile
+        - metador_basic_profile
     settings:
         source:
             type: multi
