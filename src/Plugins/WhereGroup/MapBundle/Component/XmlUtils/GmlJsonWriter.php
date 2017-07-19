@@ -70,24 +70,24 @@ class GmlJsonWriter implements IContextWriter
         switch ($c[xaar::KEY_NAME]) {
             case 'gml:Point':
                 return $this->createJson(
-                    $this->coordsToGJ($this->findCoordinates($c[xaar::KEY_CHILDREN][0]))[0],
+                    $this->coordsToGJ($this->findCoords_v3($c[xaar::KEY_CHILDREN][0]))[0],
                     self::POINT
                 );
             case 'gml:MultiPoint': // gml:MultiPoint/gml:pointMember[?]/gml:Point/gml:pos
                 $coords = array();
                 foreach ($c[xaar::KEY_CHILDREN] as $pm) {
                     $coords[] =
-                        $this->coordsToGJ($this->findCoordinates($pm[xaar::KEY_CHILDREN][0][xaar::KEY_CHILDREN][0]))[0];
+                        $this->coordsToGJ($this->findCoords_v3($pm[xaar::KEY_CHILDREN][0][xaar::KEY_CHILDREN][0]))[0];
                 }
 
                 return $this->createJson($coords, self::MULTIPOINT);
             case 'gml:LineString':
                 return $this->createJson(
-                    $this->coordsToGJ($this->findCoordinates($c[xaar::KEY_CHILDREN][0])), self::LINESTRING);
+                    $this->coordsToGJ($this->findCoords_v3($c[xaar::KEY_CHILDREN][0])), self::LINESTRING);
             case 'gml:Polygon':
                 $coords = array();
                 foreach ($c[xaar::KEY_CHILDREN] as $ring) {
-                    $coords[] = $this->coordsToGJ($this->findCoordinates($ring));
+                    $coords[] = $this->coordsToGJ($this->findCoords_v3($ring));
                 }
 
                 return $this->createJson($coords, self::POLYGON);
@@ -115,7 +115,7 @@ class GmlJsonWriter implements IContextWriter
      * @param $item array
      * @return array|null
      */
-    private function findCoordinates($item)
+    private function findCoords_v3($item)
     {
         switch ($item[xaar::KEY_NAME]) {
 //            case 'gml:coordinates': # @decimal default ".", @cs default ",", ts" default "&#x20;"  GMLv2.X
@@ -128,9 +128,9 @@ class GmlJsonWriter implements IContextWriter
 //                break;
             default:
                 if (isset($item[xaar::KEY_CHILDREN])) {
-                    return $this->findCoordinates($item[xaar::KEY_CHILDREN][0]);
+                    return $this->findCoords_v3($item[xaar::KEY_CHILDREN][0]);
                 } else {
-                    return null;
+                    throw new \Exception('GML v3.x: Koordinaten können nicht ausgelesen werden.');
                 }
         }
     }
@@ -138,9 +138,6 @@ class GmlJsonWriter implements IContextWriter
 
     public static function coordsToGJ($ordinates, $fromDim = 2, $toDim = 2)
     {
-        if($ordinates === null) {
-            throw new \Exception('Koordinaten können nicht ausgelesen werden.');
-        }
         $result = array();
         $max = $toDim - $fromDim;
         for ($i = $fromDim - 1; $i < count($ordinates); $i += $fromDim) {
