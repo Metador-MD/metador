@@ -268,6 +268,7 @@ export class Ol4Map {
 
     showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
         let geoJsonReader: ol.format.GeoJSON = new ol.format.GeoJSON();
+        let dataproj = geoJsonReader.readProjection(geoJson);
         let features = geoJsonReader.readFeatures(
             geoJson,
             {
@@ -428,7 +429,10 @@ export class Ol4Map {
         }
         this.clearFeatures(this.drawer.getLayer());
         this.showFeatures(this.drawer.getLayer(), geoJson);
-        onDrawEnd(geoJson);
+        if (onDrawEnd !== null) {
+            onDrawEnd(geoJson);
+        }
+        this.olMap.getView().fit(this.drawer.getLayer().getSource().getExtent(), this.olMap.getSize());
     }
 
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
@@ -594,7 +598,7 @@ export class GeomLoader {
     }
 
     private upload(e: Event) {
-        console.log(e);
+        // console.log(e);
         // HttpUtils.Http.sendForm(this.form, this.form.action, HttpUtils.HTTP_METHOD.POST, HttpUtils.HTTP_DATATYPE.json)
         //     .then(function (value) {
         //         console.log('Contents: ' + value);
