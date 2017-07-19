@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Form\UserType;
-use WhereGroup\CoreBundle\Component\MetadorException;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 use WhereGroup\CoreBundle\Component\PictureTransformation;
 
 /**

@@ -30,68 +30,71 @@ class Configuration implements ConfigurationInterface
     /**
      * @param $key
      * @param $value
-     * @param null $filterType
-     * @param null $filterValue
+     * @param string $filterType
+     * @param string $filterValue
      * @return $this|mixed
      */
-    public function set($key, $value, $filterType = null, $filterValue = null)
+    public function set($key, $value, $filterType = '', $filterValue = '')
     {
         $this->repo->set($key, $value, $filterType, $filterValue);
+
         return $this;
     }
 
     /**
      * @param $key
-     * @param null $filterType
-     * @param null $filterValue
+     * @param string $filterType
+     * @param string $filterValue
      * @param null $default
      * @return mixed
      */
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
-        return $this->repo->get($key, $filterType, $filterValue, $default);
-    }
-
-    /**
-     * @param $key
-     * @param null $filterType
-     * @param null $filterValue
-     * @return mixed
-     */
-    public function remove($key, $filterType = null, $filterValue = null)
-    {
-        return $this->repo->remove($key, $filterType, $filterValue);
-    }
-
-    /**
-     * @param $key
-     * @param null $filterType
-     * @param null $filterValue
-     * @param null $default
-     * @return mixed
-     */
-    public function getValue($key, $filterType = null, $filterValue = null, $default = null)
-    {
         return $this->repo->getValue($key, $filterType, $filterValue, $default);
     }
 
     /**
-     * @param null $filterType
-     * @param null $filterValue
+     * @param $key
+     * @param string $filterType
+     * @param string $filterValue
+     * @return $this
+     */
+    public function remove($key, $filterType = null, $filterValue = null)
+    {
+        $this->repo->remove($key, $filterType, $filterValue);
+
+        return $this;
+    }
+
+    /**
+     * @param string $filterType
+     * @param string $filterValue
      * @return mixed
      */
-    public function findAll($filterType = null, $filterValue = null)
+    public function getAll($filterType = null, $filterValue = null)
     {
         return $this->repo->all($filterType, $filterValue);
     }
 
     /**
-     * @param null $filterType
-     * @param null $filterValue
-     * @return mixed
+     * @param string $filterType
+     * @param string $filterValue
+     * @return $this
      */
     public function removeAll($filterType = null, $filterValue = null)
     {
-        return $this->repo->removeAll($filterType, $filterValue);
+        $this->repo->removeAll($filterType, $filterValue);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function truncate()
+    {
+        $this->repo->truncate();
+
+        return $this;
     }
 }

@@ -53,7 +53,7 @@ class SettingsController extends Controller
                     }
                 }
 
-                $value = $configuration->getValue($settingKey, 'plugin', $pluginKey, '');
+                $value = $configuration->get($settingKey, 'plugin', $pluginKey, '');
 
                 $pluginInfo['settings'][$settingKey]['value']
                     = !empty($value) ? $value : $pluginInfo['settings'][$settingKey]['default'];

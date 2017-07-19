@@ -4,11 +4,13 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Rhumsaa\Uuid\Uuid;
+use WhereGroup\CoreBundle\Component\Search\Paging;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
 /**
  * Class Metadata
@@ -53,10 +55,11 @@ class Metadata implements MetadataInterface
 
     /**
      * @param $metadataId
+     * @param bool $dispatchEvent
      * @return EntityMetadata
      * @throws \Exception
      */
-    public function getById($metadataId)
+    public function getById($metadataId, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
@@ -65,12 +68,14 @@ class Metadata implements MetadataInterface
             ->findOneById($metadataId);
 
         if (is_null($metadata)) {
-            throw new \Exception('Datensatz existiert nicht.');
+            throw new MetadataException('Datensatz existiert nicht.');
         }
 
         // EVENT ON LOAD
-        $event = new MetadataChangeEvent($metadata, array());
-        $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        if ($dispatchEvent) {
+            $event = new MetadataChangeEvent($metadata, array());
+            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        }
 
         return $metadata;
     }
@@ -78,10 +83,11 @@ class Metadata implements MetadataInterface
 
     /**
      * @param string $uuid
+     * @param bool $dispatchEvent
      * @return EntityMetadata
      * @throws \Exception
      */
-    public function getByUUID($uuid)
+    public function getByUUID($uuid, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
         $metadata = $this->container->get('doctrine')
@@ -90,12 +96,14 @@ class Metadata implements MetadataInterface
             ->findOneByUuid($uuid);
 
         if (is_null($metadata)) {
-            throw new \Exception('Datensatz existiert nicht.');
+            throw new MetadataException('Datensatz existiert nicht.');
         }
 
         // EVENT ON LOAD
-        $event = new MetadataChangeEvent($metadata, array());
-        $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        if ($dispatchEvent) {
+            $event = new MetadataChangeEvent($metadata, array());
+            $this->container->get('event_dispatcher')->dispatch('metador.on_load', $event);
+        }
 
         return $metadata;
     }
@@ -150,6 +158,16 @@ class Metadata implements MetadataInterface
             'result' => $result,
             'paging' => $paging
         );
+    }
+
+    /**
+     * @param $p
+     * @param null $username
+     * @param bool $public
+     */
+    public function updateObject(&$p, $username = null, $public = false)
+    {
+
     }
 
     /**
@@ -249,7 +267,7 @@ class Metadata implements MetadataInterface
      */
     public function lock($id)
     {
-        $entity = $this->getById($id);
+        $entity = $this->getById($id, false);
         $entity->setLocked(true);
         $this->save($entity);
     }
@@ -259,7 +277,7 @@ class Metadata implements MetadataInterface
      */
     public function unlock($id)
     {
-        $entity = $this->getById($id);
+        $entity = $this->getById($id, false);
         $entity->setLocked(false);
         $this->save($entity);
     }
@@ -299,14 +317,16 @@ class Metadata implements MetadataInterface
 
     /**
      * @param $entity
+     * @param bool $dispatchEvent
      * @return bool
      */
-    public function save($entity)
+    public function save($entity, $dispatchEvent = true)
     {
-        $event  = new MetadataChangeEvent($entity, array());
-
         // EVENT PRE SAVE
-        $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+        if ($dispatchEvent) {
+            $event  = new MetadataChangeEvent($entity, array());
+            $this->container->get('event_dispatcher')->dispatch('metador.pre_save', $event);
+        }
 
         // SAVE TO DATABASE
         $entityManager = $this->container->get('doctrine')->getManager();
@@ -314,7 +334,9 @@ class Metadata implements MetadataInterface
         $entityManager->flush();
 
         // EVENT POST SAVE
-        $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
+        if ($dispatchEvent) {
+            $this->container->get('event_dispatcher')->dispatch('metador.post_save', $event);
+        }
     }
 
     /**

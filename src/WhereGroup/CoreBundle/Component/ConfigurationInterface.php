@@ -21,47 +21,39 @@ interface ConfigurationInterface
     /**
      * @param $key
      * @param $value
-     * @param null $filterType
-     * @param null $filterValue
+     * @param string $filterType
+     * @param string $filterValue
      * @return mixed
      */
-    public function set($key, $value, $filterType = null, $filterValue = null);
+    public function set($key, $value, $filterType = '', $filterValue = '');
 
     /**
      * @param $key
-     * @param null $filterType
-     * @param null $filterValue
+     * @param null|string $filterType
+     * @param null|string $filterValue
+     * @param null $default
      * @return mixed
      */
-    public function get($key, $filterType = null, $filterValue = null);
+    public function get($key, $filterType = null, $filterValue = null, $default = null);
 
     /**
      * @param $key
-     * @param null $filterType
-     * @param null $filterValue
+     * @param string $filterType
+     * @param string $filterValue
      * @return mixed
      */
     public function remove($key, $filterType = null, $filterValue = null);
 
     /**
-     * @param $key
-     * @param null $filterType
-     * @param null $filterValue
-     * @param null $default
+     * @param string $filterType
+     * @param string $filterValue
      * @return mixed
      */
-    public function getValue($key, $filterType = null, $filterValue = null, $default = null);
+    public function getAll($filterType = null, $filterValue = null);
 
     /**
-     * @param null $filterType
-     * @param null $filterValue
-     * @return mixed
-     */
-    public function findAll($filterType = null, $filterValue = null);
-
-    /**
-     * @param null $filterType
-     * @param null $filterValue
+     * @param string $filterType
+     * @param string $filterValue
      * @return mixed
      */
     public function removeAll($filterType = null, $filterValue = null);

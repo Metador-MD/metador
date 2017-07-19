@@ -17,12 +17,12 @@ else
 fi
 
 # Check code for PSR2 convention
-echo "Test - phpcs"
-$ROOTPATH/bin/phpcs -n --extensions=php --standard=PSR2 $ROOTPATH/src/
+#echo "Test - phpcs"
+#$ROOTPATH/bin/phpcs -n --extensions=php --standard=PSR2 $ROOTPATH/src/
 
 # Run the copy paste detector
-echo "Test - phpcpd"
-# $ROOTPATH/bin/phpcpd $ROOTPATH/src/
+#echo "Test - phpcpd"
+#$ROOTPATH/bin/phpcpd $ROOTPATH/src/
 
 # Test complexity
 #echo "Test - pdepend"
