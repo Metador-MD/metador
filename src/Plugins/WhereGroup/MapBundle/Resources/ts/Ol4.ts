@@ -1,5 +1,5 @@
 import Object = ol.Object;
-import * as HttpUtils from './HttpUtils';
+// import * as HttpUtils from './HttpUtils';
 
 declare class proj4 {
     static defs(name: string, def: string): void;

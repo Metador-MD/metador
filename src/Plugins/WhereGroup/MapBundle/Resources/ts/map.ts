@@ -83,8 +83,6 @@ export function init() {
                 'LAYERS': layers.join(","),
                 'VERSION': wms.version,
                 'FORMAT': wms.format
-                // ,
-                // 'TILED': true
             }
         });
     }

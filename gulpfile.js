@@ -64,10 +64,10 @@ var conf = {
     },
     ts: {
         files  : 'src/**/ts/*.ts',
-        entries: ['src/Plugins/WhereGroup/MapBundle/Resources/ts/app.ts'],
+        entries: ['src/Plugins/WhereGroup/MapBundle/Resources/ts/map.ts'],
         target: {
             dir: 'src/Plugins/WhereGroup/MapBundle/Resources/public/js/',
-            file: 'app.js'
+            file: 'map.js'
         }
     }
 }
