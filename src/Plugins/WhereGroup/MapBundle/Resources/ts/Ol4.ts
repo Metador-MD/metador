@@ -48,6 +48,7 @@ export class Ol4Utils {
     public static initProj4Defs(proj4Defs: any): void {
         for (const name in proj4Defs) {
             proj4.defs(name, proj4Defs[name]);
+            let pr = ol.proj.get(name);
         }
     }
 
@@ -153,9 +154,9 @@ export class Ol4Map {
     }
 
     private constructor(options: any) { // singleton
-        // init given crses
         // ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
+        (<HTMLFormElement>document.querySelector('.-js-crs-code')).value = options['view']['projection'];
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
         this.styles = options['styles'];
         this.scales = options['view']['scales'];
