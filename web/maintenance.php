@@ -31,7 +31,7 @@
         <h1>metador</h1>
     </div>
     <div style="float: right;">
-        <img src="/bundles/metadortheme/img/logo-s.png" />
+        <img src="bundles/metadortheme/img/logo-s.png" />
     </div>
 </div>
 
