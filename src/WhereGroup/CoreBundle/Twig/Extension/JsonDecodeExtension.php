@@ -20,11 +20,12 @@ class JsonDecodeExtension extends \Twig_Extension
 
     /**
      * @param $var
+     * @param bool $assoc
      * @return array
      */
-    public function decode($var)
+    public function decode($var, $assoc = false)
     {
-        return json_decode($var);
+        return json_decode($var, $assoc);
     }
 
     /**

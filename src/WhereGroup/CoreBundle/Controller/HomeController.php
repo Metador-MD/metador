@@ -26,33 +26,6 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-//        $params = $this->get('request_stack')->getCurrentRequest()->query->all();
-//        $filter = new Finder();
-//
-//        $filter->public = true;
-//
-//        if ($this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
-//            $filter->geoOffice = true;
-//            $filter->public = null;
-//        }
-//
-//        $filter->page        = isset($params['page'])  ? $params['page']  : 1;
-//        $filter->hits        = isset($params['hits'])  ? $params['hits']  : 10;
-//        $filter->terms       = isset($params['terms']) ? $params['terms'] : '';
-//        $filter->userEntries = isset($params['user_entries']) ? $params['user_entries'] : null;
-//
-//        /** @var UsernamePasswordToken $token */
-//        $token = $this->get('security.token_storage')->getToken();
-//
-//        /** @var User $user */
-//        $user = $token->getUser();
-//
-//        if (is_object($user)) {
-//            $filter->userId = $user->getId();
-//            $filter->public = null;
-//        }
-//
-//        $metadata = $this->get('metador_metadata')->find($filter);
         $profileConfig = array();
         $sourceConfig  = array();
 
@@ -82,15 +55,12 @@ class HomeController extends Controller
 
         return array(
             'isHome'       => true,
-//            'rows'         => $metadata['result'],
-//            'paging'       => $metadata['paging'],
-//            'params'       => $params,
             'sourceConfig' => $sourceConfig
         );
     }
 
     /**
-     * @Route("/search/", name="metador_search")
+     * @Route("/public/search/", name="metador_search")
      */
     public function searchAction()
     {

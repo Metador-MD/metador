@@ -125,8 +125,6 @@ class Metadata implements MetadataInterface
      */
     public function updateObject(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
-        $p['_public'] = false;
-
         if (!is_null($profile)) {
             $p['_profile'] = $profile;
         }
@@ -137,6 +135,8 @@ class Metadata implements MetadataInterface
 
         if (!is_null($public)) {
             $p['_public'] = (boolean)$public;
+        } elseif (!isset($p['_public'])) {
+            $p['_public'] = false;
         }
 
         if (empty($p['_profile'])) {
@@ -151,20 +151,33 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
+        // DateStamp
+        $dateStamp = new \DateTime();
+        $p['_dateStamp'] = $dateStamp->format('Y-m-d');
+
+
         // Username
         /** @var User $user */
         $user = $this->getUser($username);
         $p['_username'] = $user->getUsername();
+
+        if (!isset($p['_insert_user'])) {
+            $p['_insert_user'] = $p['_username'];
+        }
+
+        if (!isset($p['_insert_time'])) {
+            $p['_insert_time'] = $p['_dateStamp'];
+        }
+
+        $p['_update_user'] = $p['_username'];
+        $p['_update_time'] = $p['_dateStamp'];
+        $p['_groups']      = array();
 
         // UUID
         if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {
             $uuid4 = Uuid::uuid4();
             $p['_uuid'] = $p['fileIdentifier'] = $uuid4->toString();
         }
-
-        // DateStamp
-        $dateStamp = new \DateTime();
-        $p['_dateStamp'] = $dateStamp->format('Y-m-d');
 
         // Locked
         if (isset($p['_remove_lock']) || !isset($p['_locked'])) {
@@ -297,10 +310,21 @@ class Metadata implements MetadataInterface
     public function lock($id)
     {
         $entity = $this->getById($id, false);
+
+        // Update DataObject
+        $p = $entity->getObject();
+        $p['_locked'] = true;
+        $p['_lock_user'] = $this->user->getUserFromSession()->getUsername();
+        $p['_lock_time'] = $this->getTimestamp();
+        $entity->setObject($p);
+
+        // Update Table
         $entity
             ->setLocked(true)
             ->setLockUser($this->user->getUserFromSession())
             ->setLockTime($this->getTimestamp());
+
+
         $this->save($entity);
 
         $this->success($entity, 'lock', '%title% gesperrt.', array(
@@ -315,7 +339,14 @@ class Metadata implements MetadataInterface
     public function unlock($id)
     {
         $entity = $this->getById($id, false);
+
+        // Update DataObject
+        $p = $entity->getObject();
+        $p['_locked'] = true;
+
+        // Update Table
         $entity->setLocked(false);
+
         $this->save($entity);
 
         $this->success($entity, 'unlock', '%title% freigegeben.', array(

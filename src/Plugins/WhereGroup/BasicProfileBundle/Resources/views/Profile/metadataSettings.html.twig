@@ -14,10 +14,13 @@
                 {% endif %}
             </div>
             <div class="col c-2-3">
+                {% set id = 'p[_public]' %}
+                {% set val = p['_public'] is not empty ? p['_public'] : '0' %}
+                {% set class = val == '0' ? 'icon-toggle-off' : 'icon-toggle-on'  %}
                 <div class="-js-toggle-switch switch-row">
-                    <span class="icon-toggle-off -js-toggle-switch-icon"></span>
+                    <span class="{{ class }} -js-toggle-switch-icon"></span>
                     <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
-                    <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
+                    <input type="hidden" name="{{ id }}" class="-js-toggle-switch-input" value="{{ val }}" />
                 </div>
                 <div class="-js-toggle-switch switch-row">
                     <span class="icon-toggle-on -js-toggle-switch-icon"></span>

@@ -7,9 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
 /**
- * @Route("/metador/export")
+ * @Route("/public/export")
  */
 class ExportController extends Controller
 {
@@ -139,11 +140,12 @@ class ExportController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted('view', $metadata);
-
         if (!$metadata) {
-            return new Response('Datensatz nicht gefunden');
+            throw new MetadataException('Datensatz nicht gefunden');
         }
+
+        $this->get('metador_core')
+            ->denyAccessUnlessGranted('view', $metadata->getObject());
 
         $p = $metadata->getObject();
 

@@ -53,7 +53,7 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $metadata->getObject());
 
         $this->get('metador_metadata')->lock($id);
 
@@ -83,6 +83,8 @@ class ProfileController extends Controller
         $request  = $this->get('request_stack')->getCurrentRequest()->request;
 
         $p = $request->get('p');
+
+        dump($p);
 
         $this->get('metador_metadata')->updateObject($p, $source, $profile, null, null);
 

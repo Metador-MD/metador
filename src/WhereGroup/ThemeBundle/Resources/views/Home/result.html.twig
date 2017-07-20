@@ -1,12 +1,21 @@
 {% if rows is defined and rows is not empty %}
-{% for row in rows %}
-    {% if row.title is defined %}
+{% for row in rows if is_granted('view', row.object|json_decode(true)) %}
+    {% set editable = app.user and is_granted('edit', row.object|json_decode(true)) %}
+
+    {% set title = row.title is defined ? row.title|teaser(75, true) : 'noname' %}
+
+    {% if editable %}
         <a href="{{ path('metadata_edit', { 'source': row.source,'profile' : row.profile, 'id' : row.id }) }}">
-        {{ row.title|teaser(75, true) }}
+            {{ title }}
         </a>
     {% else %}
-        noname
+        <a href="{{ path('metador_export_html', { 'id' : row.id }) }}">
+            {{ title }}
+        </a>
     {% endif %}
+
+
+
     <br>
     {#<div class="metadata-row clearfix" data-id="{{ row.id }}">#}
         {#<div class="left">#}
