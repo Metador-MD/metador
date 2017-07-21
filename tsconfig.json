@@ -1,5 +1,4 @@
 {
-    "version": "2.2.0",
     "compilerOptions": {
         "allowJs": true,
         "module": "commonjs",
@@ -11,12 +10,11 @@
             "./typings/"
         ],
         "types": [
-            "ol"
+            "openlayers"
         ]
     },
     "include": [
-        "src/**/*.ts",
-        "typings/*.d.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
         "app",

@@ -1,5 +1,5 @@
-import Object = ol.Object;
-// import * as HttpUtils from './HttpUtils';
+import * as openlayers4 from 'openlayers';
+// import * as jquery from 'jquery';
 
 declare class proj4 {
     static defs(name: string, def: string): void;
@@ -209,8 +209,12 @@ export class Ol4Map {
             //     }
             // }
         ));
-        this.olMap.getView().fit(this.startExtent.getPolygonForExtent(proj), this.olMap.getSize());
+        this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
         this.hgLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['highlight']));
+    }
+
+    zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent){
+        this.olMap.getView().fit(geometry, <olx.view.FitOptions>this.olMap.getSize());
     }
 
     static create(options: any): Ol4Map {
@@ -364,7 +368,7 @@ export class Ol4Map {
             this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_VECTOR)).getLayers(), fromProj, toProj);
 
             this.olMap.setView(newView);
-            this.olMap.getView().fit(extent.getPolygonForExtent(toProj), this.olMap.getSize());
+            this.zoomToExtent(extent.getPolygonForExtent(toProj));
         }
     }
 
@@ -433,7 +437,7 @@ export class Ol4Map {
         if (onDrawEnd !== null) {
             onDrawEnd(geoJson);
         }
-        this.olMap.getView().fit(this.drawer.getLayer().getSource().getExtent(), this.olMap.getSize());
+        this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
     }
 
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
