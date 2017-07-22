@@ -22,7 +22,7 @@ class ExportController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $metadata->getObject());
 
         if (!$metadata) {
             $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
@@ -52,20 +52,21 @@ class ExportController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        if ($metadata) {
-            $p = $metadata->getObject();
-
-            ksort($p);
-
-            return new JsonResponse($p);
+        if (!$metadata) {
+            return new JsonResponse(array(
+                'status'  => 'error',
+                'message' => 'Datensatz nicht gefunden.'
+            ));
         }
 
-        return new JsonResponse(array(
-            'status'  => 'error',
-            'message' => 'Datensatz nicht gefunden.'
-        ));
+        $p = $metadata->getObject();
+
+        $this->denyAccessUnlessGranted('view', $p);
+
+        if ($metadata) {
+            ksort($p);
+            return new JsonResponse($p);
+        }
     }
 
     /**
@@ -76,7 +77,7 @@ class ExportController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $metadata->getObject());
 
         if ($metadata) {
             $p = $metadata->getObject();

@@ -39,17 +39,22 @@ class ProfileController extends Controller
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
         return new Response($this->get('metador_core')->render($template, array(
-            'metadataSource' => $source,
-            'metadataProfil' => $profile,
-            'p'              => array()
+            'p' => array(
+                '_source'  => $source,
+                '_profile' => $profile,
+                '_public'  => false
+            )
         )));
     }
 
     /**
-     * @Route("/{source}/{profile}/edit/{id}", name="metadata_edit")
+     * @Route("/{profile}/edit/{id}", name="metadata_edit")
      * @Method("GET")
+     * @param $profile
+     * @param $id
+     * @return Response
      */
-    public function editAction($source, $profile, $id)
+    public function editAction($profile, $id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
@@ -63,11 +68,7 @@ class ProfileController extends Controller
 
         // Todo: hasGroups
         return new Response($this->get('metador_core')->render($template, array(
-            'metadataId'     => $id,
-            'metadataSource' => $source,
-            'metadataProfil' => $profile,
-            'metadata'       => $metadata,
-            'p'              => $metadata->getObject()
+            'p' => $metadata->getObject()
         )));
     }
 
@@ -80,21 +81,19 @@ class ProfileController extends Controller
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
 
         $response = array();
+        $uuid = false;
         $request  = $this->get('request_stack')->getCurrentRequest()->request;
 
         $p = $request->get('p');
 
-        dump($p);
-
         $this->get('metador_metadata')->updateObject($p, $source, $profile, null, null);
 
         $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
-//        $uuid = false;
-//
-//        if ($id !== false) {
-//            $metadata = $this->get('metador_metadata')->getById($id);
-//            $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
-//        }
+
+        if (!is_null($id)) {
+            $metadata = $this->get('metador_metadata')->getById($id);
+            $this->denyAccessUnlessGranted('edit', $metadata->getObject());
+        }
 
         if ($request->get('submit') === 'abort') {
             if (!is_null($id)) {

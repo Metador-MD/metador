@@ -56,7 +56,7 @@ class MetadataSearch extends Search implements SearchInterface
     public function getResult()
     {
         return $this->qb
-            ->select('m')
+            ->select('m.object')
             ->setFirstResult($this->offset)
             ->setMaxResults($this->hits)
             ->getQuery()

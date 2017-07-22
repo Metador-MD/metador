@@ -2,18 +2,15 @@
 
 {% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
 
-{% block center %}
-{% set id = '' %}
-{% if metadataId is defined and metadataId is not empty %}
-    {% set id = metadataId %}
-{% elseif p['_id'] is defined and p['_id'] is not empty  %}
-    {% set id = p['_id'] %}
-{% endif %}
+{% set metadataId     = p['_id'] is defined and p['_id'] is not empty ? p['_id'] : '' %}
+{% set metadataUuid   = p['_uuid'] is defined and p['_uuid'] is not empty ? p['_uuid'] : '' %}
+{% set metadataSource = p['_source'] is defined and p['_source'] is not empty ? p['_source'] : '' %}
+{% set metadataProfil = p['_profile'] is defined and p['_profile'] is not empty ? p['_profile'] : '' %}
 
+{% block center %}
 <form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
-    <input type="hidden" name="p[_id]" value="{{ id }}" />
-    <input type="hidden" name="p[_uuid]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
-    <input type="hidden" name="p[fileIdentifier]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
+    <input type="hidden" name="p[_id]" value="{{ metadataId }}" />
+    <input type="hidden" name="p[_uuid]" value="{{ metadataUuid }}" />
     <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
     <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
     <input type="hidden" name="p[hierarchyLevel]" value="service" />
@@ -61,7 +58,7 @@
                 </li>
             </ul>
             <div class="left-menu-content">
-                {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata.object)) %}
+                {% if is_granted('edit', p) %}
                 <div class="simple-select -js-metadata-save disabled">
                     <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
                         <span class="icon-download -js-metadata-button-status"></span>
@@ -81,7 +78,9 @@
                     </div>
                 </div>
                 {% else %}
-                    no!
+                    <div class="notify warning">
+                        {% trans %}Datensatz ist Schreibgeschützt.{% endtrans %}
+                    </div>
                 {% endif %}
             </div>
         </div>

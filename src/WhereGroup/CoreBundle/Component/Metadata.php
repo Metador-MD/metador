@@ -325,7 +325,7 @@ class Metadata implements MetadataInterface
             ->setLockTime($this->getTimestamp());
 
 
-        $this->save($entity);
+        $this->save($entity, false);
 
         $this->success($entity, 'lock', '%title% gesperrt.', array(
             'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
@@ -342,12 +342,13 @@ class Metadata implements MetadataInterface
 
         // Update DataObject
         $p = $entity->getObject();
-        $p['_locked'] = true;
+        $p['_locked'] = false;
+        $entity->setObject($p);
 
         // Update Table
         $entity->setLocked(false);
 
-        $this->save($entity);
+        $this->save($entity, false);
 
         $this->success($entity, 'unlock', '%title% freigegeben.', array(
             'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
@@ -395,17 +396,48 @@ class Metadata implements MetadataInterface
         }
 
         // SAVE TO DATABASE
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->em->beginTransaction();
+        $success = false;
 
-        $this->success($entity, 'update', '%title% gespeichert.', array(
+        try {
+            $hasId = $entity->getId();
+
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            if (!$hasId) {
+                $p = $entity->getObject();
+                $p['_id'] = $entity->getId();
+                $entity->setObject($p);
+                $this->em->persist($entity);
+                $this->em->flush();
+            }
+
+            $this->em->commit();
+
+            $success = true;
+        } catch (\Exception $e) {
+            $this->em->rollBack();
+        }
+
+        if ($success) {
+            $this->success($entity, 'update', '%title% gespeichert.', array(
+                'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            ));
+
+            // EVENT POST SAVE
+            if ($dispatchEvent) {
+                $this->core->dispatch('metadata.post_save', $event);
+            }
+
+            return true;
+        }
+
+        $this->error($entity, 'update', '%title% konnte nicht gespeichert werden.', array(
             'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
         ));
 
-        // EVENT POST SAVE
-        if ($dispatchEvent) {
-            $this->core->dispatch('metadata.post_save', $event);
-        }
+        return false;
     }
 
     /**

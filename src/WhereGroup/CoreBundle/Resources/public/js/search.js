@@ -47,13 +47,15 @@ Search.prototype = {
                 'terms': self.getParam('terms')
             }
         }).success(function(data) {
+            self.searchResultElement.html('');
+
             if (data && data.html) {
                 self.searchResultElement.html(data.html);
             }
 
             metador.parseResponse(data);
         }).error(function() {
-
+            self.searchResultElement.html('');
         });
     }
 };
