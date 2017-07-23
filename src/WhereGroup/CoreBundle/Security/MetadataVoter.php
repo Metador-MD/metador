@@ -97,7 +97,7 @@ class MetadataVoter extends Voter
             return false;
         }
 
-        if ($subject['_locked']) {
+        if (isset($subject['_locked']) && $subject['_locked']) {
             if (!isset($subject['_lock_user']) || !isset($subject['_lock_time'])) {
                 throw new MetadorException('_lock_user and _lock_time are missing in Dataobject!');
             }

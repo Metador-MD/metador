@@ -13,12 +13,12 @@
             <div class="right">
                 <div class="md-result-title">
                     {% if app.user %}
-                        <a href="{{ path('metadata_edit', { 'source': p['_source'],'profile' : p['_profile'], 'id' : p['_id'] }) }}">
-                            {{ title }}
+                        <a href="{{ path('metadata_edit', { 'source': p['_source'],'profile' : p['_profile'], 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
+                            {{ title|teaser(60, true) }}
                         </a>
                     {% else %}
-                        <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}">
-                            {{ title }}
+                        <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
+                            {{ title|teaser(60, true) }}
                         </a>
                     {% endif %}
 
@@ -43,19 +43,31 @@
                     </div>
                 </div>
 
-                <div class="md-result-alternate-title">
-                    {{ p['alternateTitle'] }}
+                <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
+                    {% if p['alternateTitle'] is defined %}
+                        {{ p['alternateTitle']|teaser(80, true) }}
+                    {% endif %}
                 </div>
 
                 <hr class="line-separator">
 
-                <div class="md-result-abstract">
-                    {{ p['abstract'] }}
+                <div class="md-result-abstract" {% if p['abstract']|length > 400 %}title="{{ p['abstract'] }}"{% endif %}>
+                    {% if p['abstract'] is defined %}
+                        {{ p['abstract']|teaser(400) }}
+                    {% endif %}
                 </div>
             </div>
         </div>
         <div class="result-footer">
-            <div class="left">...</div>
+            <div class="left">
+                {% if p['hierarchyLevel'] is defined %}
+                    {{ p['hierarchyLevel']|capitalize }}
+                {% endif %}
+                -
+                {% if p['_dateStamp'] is defined %}
+                    {{ p['_dateStamp'] }}
+                {% endif %}
+            </div>
             <div class="right">
                 {% if app.environment == 'dev' %}
                     <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link">object</a>

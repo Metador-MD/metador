@@ -58,7 +58,7 @@
                 </li>
             </ul>
             <div class="left-menu-content">
-                {% if is_granted('edit', p) %}
+                {% if p['_id'] is not defined or is_granted('edit', p) %}
                 <div class="simple-select -js-metadata-save disabled">
                     <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
                         <span class="icon-download -js-metadata-button-status"></span>

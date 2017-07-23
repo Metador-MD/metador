@@ -1991,6 +1991,70 @@ input.input-element, .md input.btn {
 .md .fieldset.minimize > .content {
   display: none; }
 
+.md .tooltip {
+  position: relative;
+  display: inline-block; }
+
+.md .tooltip > .tooltip-wrapper {
+  display: none;
+  min-width: 300px;
+  max-width: 600px;
+  position: absolute;
+  height: 40px; }
+
+.md .tooltip > .tooltip-wrapper.left {
+  left: 0; }
+
+.md .tooltip > .tooltip-wrapper.left .tooltip-dialog {
+  left: 0; }
+
+.md .tooltip > .tooltip-wrapper.left .tooltip-dialog:after, .md .tooltip > .tooltip-wrapper.left .tooltip-dialog:before {
+  left: 40px; }
+
+.md .tooltip > .tooltip-wrapper.right {
+  right: 0; }
+
+.md .tooltip > .tooltip-wrapper.right .tooltip-dialog {
+  right: 0; }
+
+.md .tooltip > .tooltip-wrapper.right .tooltip-dialog:after, .md .tooltip > .tooltip-wrapper.right .tooltip-dialog:before {
+  right: 40px; }
+
+.md .tooltip:hover > .tooltip-wrapper {
+  display: block;
+  z-index: 1; }
+
+.md .tooltip-dialog {
+  position: absolute;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 2px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  line-height: normal;
+  margin-top: 20px; }
+
+.md .tooltip-dialog:after, .md .tooltip-dialog:before {
+  position: absolute;
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  pointer-events: none; }
+
+.md .tooltip-dialog:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 8px;
+  margin-left: -8px; }
+
+.md .tooltip-dialog:before {
+  border-color: rgba(82, 82, 82, 0);
+  border-bottom-color: #e1e1e1;
+  border-width: 9px;
+  margin-left: -9px; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
@@ -2845,24 +2909,15 @@ input.input-element, .md input.btn {
 .md .profile-menu.active {
   display: block; }
 
-.md .profile-menu > .profile-menu-btn {
-  position: relative;
-  display: inline-block; }
+.md .profile-menu-dialog {
+  display: none; }
 
-.md .profile-menu > .profile-menu-btn > .profile-menu-dialog {
-  display: none;
-  min-width: 200px;
-  padding: 10px 20px;
-  background-color: #fff;
-  border: 1px solid #e1e1e1;
-  border-radius: 2px;
-  position: absolute;
-  top: 30px;
-  right: -1px; }
-
-.md .profile-menu > .profile-menu-btn:hover > .profile-menu-dialog {
+.md .profile-menu-item {
   display: block;
-  z-index: 1; }
+  padding: 10px; }
+
+.md .profile-menu-item:hover {
+  background-color: #f7f7f7; }
 
 .md .layer-tree-list {
   list-style: none;
