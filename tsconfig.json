@@ -1,5 +1,4 @@
 {
-    "version": "2.2.0",
     "compilerOptions": {
         "allowJs": true,
         "module": "commonjs",
@@ -7,16 +6,17 @@
         "sourceMap": true,
         "declaration": false,
         "noImplicitAny": false,
+        "removeComments": true,
         "typeRoots": [
             "./typings/"
         ],
         "types": [
-            "ol"
+            "es6-shim",
+            "openlayers"
         ]
     },
     "include": [
-        "src/**/*.ts",
-        "typings/*.d.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
         "app",
