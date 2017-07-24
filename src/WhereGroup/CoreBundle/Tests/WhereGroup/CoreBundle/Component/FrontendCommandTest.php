@@ -19,6 +19,12 @@ class FrontendCommandTest extends KernelTestCase
     private $core;
     private $response;
 
+    /**
+     * FrontendCommandTest constructor.
+     * @param null $name
+     * @param array $data
+     * @param string $dataName
+     */
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
