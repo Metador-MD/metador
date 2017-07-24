@@ -77,9 +77,13 @@
                         </div>
                     </div>
                 </div>
+                {% elseif metadata_is_locked(p) %}
+                    <div class="notify warning">
+                        {% trans with { '%user%': p['_lock_user'] } %}Der Datensatz ist derzeit durch Benutzer %user% gesperrt.{% endtrans %}
+                    </div>
                 {% else %}
                     <div class="notify warning">
-                        {% trans %}Datensatz ist Schreibgeschützt.{% endtrans %}
+                        {% trans %}Sie haben nicht die nötigen Rechte um den Datensatz zu bearbeiten.{% endtrans %}
                     </div>
                 {% endif %}
             </div>

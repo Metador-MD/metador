@@ -36,7 +36,44 @@
         </div>
         <div class="row r-1 metadata-settings-wrapper-extended -js-extended-metadata-settings">
             <div class="col c-1">
-                <div class="settings-uuid">{% if p['fileIdentifier'] is defined %}{{ p['fileIdentifier'] }}{% endif %}</div>
+
+                {% if p['_uuid'] is defined %}
+                <div class="settings small">
+                    <div class="label">
+                        {% trans %}UUID{% endtrans %}
+                    </div>
+                    <div class="content">
+                        {{ p['_uuid'] }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="settings small">
+                    <div class="label">
+                        {% trans %}Verfügbar in Gruppen{% endtrans %}
+                    </div>
+                    <div class="content">
+                        {% for group in userGroups %}
+                            <div>
+                                {% if is_granted('edit_group', p) %}
+                                    <input type="checkbox" name="p[_groups][]" class="-js-user-input" value="{{ group }}" {% if group in p['_groups'] %}checked="checked"{% endif %} /> {{ group }}
+                                {% elseif group in p['_groups'] %}
+                                    {{ group }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="settings small">
+                    <div class="label">
+                        {% trans %}Metadaten{% endtrans %}
+                    </div>
+                    <div class="content">
+                        <div>Erstellt von {{ p['_insert_user'] }}</div>
+                        <div>Bearbeitet von {{ p['_insert_user'] }}</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

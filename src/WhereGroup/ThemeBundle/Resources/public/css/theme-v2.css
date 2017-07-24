@@ -581,9 +581,6 @@ input.input-element, .md input.btn {
   position: relative;
   display: block; }
 
-.md .form-wrapper > .form-label {
-  padding: 20px; }
-
 .md .form-wrapper > .check {
   height: 100%;
   border: 0;
@@ -598,7 +595,6 @@ input.input-element, .md input.btn {
 
 .md .form-wrapper > .form-label {
   font-size: 1em;
-  padding: 0 20px;
   height: 35px;
   line-height: 35px; }
 
@@ -613,7 +609,6 @@ input.input-element, .md input.btn {
 
 .md .form-wrapper.small > .form-label {
   font-size: .8em;
-  padding: 0 10px;
   height: 20px;
   line-height: 20px; }
 
@@ -628,7 +623,6 @@ input.input-element, .md input.btn {
 
 .md .form-wrapper.medium > .form-label {
   font-size: .9em;
-  padding: 0 15px;
   height: 30px;
   line-height: 30px; }
 
@@ -643,7 +637,6 @@ input.input-element, .md input.btn {
 
 .md .form-wrapper.large > .form-label {
   font-size: 1.1em;
-  padding: 0 25px;
   height: 40px;
   line-height: 40px; }
 
@@ -835,7 +828,6 @@ input.input-element, .md input.btn {
   background-color: #f2f2f2; }
 
 .md .form-label {
-  color: #008ec0;
   height: 35px;
   line-height: 35px; }
 
@@ -1936,6 +1928,38 @@ input.input-element, .md input.btn {
 
 .md .text-center {
   text-align: center; }
+
+.md .settings {
+  margin-bottom: 20px; }
+
+.md .settings > .label {
+  font-weight: bold;
+  padding: 10px;
+  background-color: #eaeaea;
+  border: 1px solid #dedede;
+  font-size: 1em;
+  padding: 0 20px;
+  height: 35px;
+  line-height: 35px; }
+
+.md .settings > .content {
+  padding: 20px;
+  background-color: #fafafa;
+  border: 1px solid #e1e1e1;
+  border-top-width: 0; }
+
+.md .settings.small {
+  margin-bottom: 5px; }
+
+.md .settings.small > .label {
+  font-size: .8em;
+  padding: 0 10px;
+  height: 20px;
+  line-height: 20px; }
+
+.md .settings.small > .content {
+  padding: 5px;
+  font-size: .8em; }
 
 .md .fieldset {
   border: 1px solid #e1e1e1;

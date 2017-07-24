@@ -17,6 +17,7 @@ class MetadataVoter extends Voter
 {
     const EDIT = 'edit';
     const VIEW = 'view';
+    const EDIT_GROUP = 'edit_group';
 
     private $decisionManager;
 
@@ -36,7 +37,7 @@ class MetadataVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::EDIT, self::VIEW))) {
+        if (!in_array($attribute, array(self::EDIT, self::VIEW, self::EDIT_GROUP))) {
             return false;
         }
 
@@ -63,6 +64,8 @@ class MetadataVoter extends Voter
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
                 return $this->canEdit($subject, $user, $token);
+            case self::EDIT_GROUP:
+                return $this->canEditGroup($subject, $user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -145,6 +148,25 @@ class MetadataVoter extends Voter
                     return true;
                 }
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $subject
+     * @param $user
+     * @param $token
+     * @return bool
+     */
+    private function canEditGroup($subject, $user, $token)
+    {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if (isset($subject['_insert_user']) && $subject['_insert_user'] == $user->getUsername()) {
+            return true;
         }
 
         return false;

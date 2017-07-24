@@ -171,7 +171,7 @@ class Metadata implements MetadataInterface
 
         $p['_update_user'] = $p['_username'];
         $p['_update_time'] = $p['_dateStamp'];
-        $p['_groups']      = array();
+        $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
         if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {

@@ -13,7 +13,7 @@
             <div class="right">
                 <div class="md-result-title">
                     {% if app.user %}
-                        <a href="{{ path('metadata_edit', { 'source': p['_source'],'profile' : p['_profile'], 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
+                        <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
                             {{ title|teaser(60, true) }}
                         </a>
                     {% else %}

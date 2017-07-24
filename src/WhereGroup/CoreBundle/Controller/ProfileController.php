@@ -10,6 +10,7 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
+use WhereGroup\UserBundle\Entity\User;
 
 /**
  * @Route("/metadata")
@@ -57,19 +58,38 @@ class ProfileController extends Controller
     public function editAction($profile, $id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted('view', $metadata->getObject());
+        $this->denyAccessUnlessGranted('view', $p);
 
-        $this->get('metador_metadata')->lock($id);
+        if ($this->get('metador_core')->isGranted('edit', $p)) {
+            $this->get('metador_metadata')->lock($id);
+        }
 
         $template = $this
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        // Todo: hasGroups
         return new Response($this->get('metador_core')->render($template, array(
-            'p' => $metadata->getObject()
+            'p' => $metadata->getObject(),
+            'userGroups' => $this->getRoles()
         )));
+    }
+
+    private function getRoles()
+    {
+        /** @var User $user */
+        $user = $this->get('metador_user')->getUserFromSession();
+
+        $roles = array();
+
+        foreach ($user->getRoles() as $role) {
+            if (!strstr($role, 'ROLE_SYSTEM_')) {
+                $roles[] = $role;
+            }
+        }
+
+        return $roles;
     }
 
     /**

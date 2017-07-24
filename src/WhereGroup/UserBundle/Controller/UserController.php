@@ -154,7 +154,7 @@ class UserController extends Controller
                     $user->setPassword($oldPassword);
                 }
 
-                if ($user->getPicture() !== "" &&  $oldPicture !== $user->getPicture()) {
+                if (!empty($user->getPicture()) &&  $oldPicture !== $user->getPicture()) {
                     $picture = new PictureTransformation($user->getPicture());
                     $picture->resizeProfilePicture(60, 60);
                     $user->setPicture($picture->getImageBase64Encode());

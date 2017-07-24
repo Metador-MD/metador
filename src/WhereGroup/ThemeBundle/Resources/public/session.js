@@ -42,14 +42,13 @@ var session = new Session();
 session.setDialogTime(Configuration.settings.session_timeout_popup);
 session.setTimeout(Configuration.maxlifetime);
 
-$('.-js-timeout-dialog-heartbeat').on('click', function () {
+$(document).on('click', '.-js-timeout-dialog-heartbeat', function () {
     $.ajax({
         'url': $(this).closest('.-js-timeout-dialog').attr('data-heartbeat-path'),
         'type': 'GET',
         'dataType': 'json'
     }).done(function(data) {
-        // Todo: disable check for leaving editor page.
-        if (typeof data.METADOR.runMethod === 'undefined') {
+        if (!data || !data.METADOR) {
             $('.-js-timeout-dialog-logout').click();
             return true;
         }

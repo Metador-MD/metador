@@ -2,6 +2,38 @@
 @import '../mixins';
 @import '../extensions';
 
+.md .settings {
+    margin-bottom: $normal-item-padding;
+
+    & > .label {
+        font-weight: bold;
+        padding: $padding/2;
+        background-color: darken($background, 5%);
+        border: 1px solid darken($background, 10%);
+        @include normal-item();
+    }
+
+    & > .content {
+        padding: $normal-item-padding;
+        background-color: lighten($background, 1%);
+        border: 1px solid $border;
+        border-top-width: 0;
+    }
+
+    &.small {
+        margin-bottom: $small-item-padding;
+
+        & > .label {
+            @include small-item();
+        }
+
+        &> .content {
+            padding: $small-item-padding;
+            font-size: $font-small;
+        }
+    }
+}
+
 .md .fieldset {
     border: 1px solid $border;
     margin-bottom: $padding;
