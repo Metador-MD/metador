@@ -6,10 +6,12 @@
         "sourceMap": true,
         "declaration": false,
         "noImplicitAny": false,
+        "removeComments": true,
         "typeRoots": [
             "./typings/"
         ],
         "types": [
+            "es6-shim",
             "openlayers"
         ]
     },

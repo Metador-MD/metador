@@ -1,12 +1,14 @@
 import * as openlayers4 from 'openlayers';
 // import * as jquery from 'jquery';
+import {LayerTree} from './LayerTree';
+import {Ol4Source, Ol4VectorSource, Ol4WmsSource} from "./Ol4Source"
 
 declare class proj4 {
     static defs(name: string, def: string): void;
 }
 
-let winContext: any = window;
-declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
+
+// declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
 
 export class Ol4Utils {
     /* 
@@ -130,7 +132,9 @@ export class Ol4Extent extends Ol4Geom {
         return new Ol4Extent(geom, proj);
     }
 }
+
 export const UUID: string = 'uuid';
+export const LAYER_UUID: string = 'layeruuid';
 export const TITLE: string = 'title';
 export const METADOR_EPSG: ol.ProjectionLike = 'EPSG:4326';
 export const LAYER_VECTOR = 'vector';
@@ -145,6 +149,9 @@ export class Ol4Map {
     protected startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
     protected maxExtent: Ol4Extent = null;
     protected drawer: Ol4Drawer;
+    protected wmsSource: Ol4WmsSource;
+    protected vecSource: Ol4VectorSource;
+    private layertree: LayerTree;
     protected styles: Object;
     protected hgLayer: ol.layer.Vector;
     protected dragzoom: ol.interaction.DragZoom;
@@ -156,6 +163,9 @@ export class Ol4Map {
     private constructor(options: any) { // singleton
         // ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
+        this.layertree = LayerTree.create(this);
+        this.wmsSource = Ol4WmsSource.create(this, true, this.layertree);
+        this.vecSource = Ol4VectorSource.create(this);
         (<HTMLFormElement>document.querySelector('.-js-crs-code')).value = options['view']['projection'];
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
         this.styles = options['styles'];
@@ -191,8 +201,20 @@ export class Ol4Map {
         this.olMap.addLayer(vectorGroup);
 
 
-        for (let source of options['source']) {
-            this.addLayerForOptions(source);
+        for (let sourceOptions of options['source']) {
+            if (sourceOptions['type'] === 'WMS') {
+                let wmsLayer = this.addLayer(
+                    this.wmsSource.createLayer(
+                        Ol4Map.getUuid('olay-'),
+                        sourceOptions,
+                        this.olMap.getView().getProjection(),
+                        sourceOptions['visible'],
+                        parseFloat(sourceOptions['opacity'])
+                    )
+                );
+            } else {
+                console.error(sourceOptions['type'] + ' is not supported.');
+            }
         }
         this.olMap.addControl(new ol.control.ScaleLine());
 
@@ -210,10 +232,25 @@ export class Ol4Map {
             // }
         ));
         this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
-        this.hgLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['highlight']));
+        let hgl = this.vecSource.createLayer(
+            Ol4Map.getUuid('olay-'),
+            {'style': Ol4Utils.getStyle(this.styles['highlight'])},
+            this.olMap.getView().getProjection()
+        );
+        this.hgLayer = <ol.layer.Vector>this.addLayer(hgl);
+
+        let vLayer = <ol.layer.Vector>this.addLayer(
+            this.vecSource.createLayer(
+                Ol4Map.getUuid('olay-'),
+                {'style': Ol4Utils.getStyle(this.styles['search'])},
+                this.olMap.getView().getProjection()
+            )
+        );
+        vLayer.setMap(this.olMap);
+        this.drawer = new Ol4Drawer(vLayer);
     }
 
-    zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent){
+    zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent) {
         this.olMap.getView().fit(geometry, <olx.view.FitOptions>this.olMap.getSize());
     }
 
@@ -224,6 +261,10 @@ export class Ol4Map {
         return Ol4Map._instance;
     }
 
+    getProjection(): ol.proj.Projection {
+        return this.olMap.getView().getProjection();
+    }
+
     getDrawer(): Ol4Drawer {
         return this.drawer;
     }
@@ -232,86 +273,33 @@ export class Ol4Map {
         return this.hgLayer;
     }
 
-
-    addLayerForOptions(options: any) {
-        if (options['type'] === 'WMS') {
-            let wmsLayer = this.addLayer(
-                Ol4WmsLayer.createLayer(options['url'],
-                    options['params'],
-                    this.olMap.getView().getProjection(),
-                    options['visible'],
-                    parseFloat(options['opacity'])),
-                options['title']
-            );
-        } else {
-            console.error(options['type'] + ' is not supported.');
-        }
-    }
-
     //
-    // initLayertree() {
-    //     let layers = this.olMap.getLayers().getArray();
-    //     let llength = layers.length;
-    //     for (let layer of layers) {
-    //         let source: ol.source.Source;
-    //         if (layer instanceof ol.layer.Group) { // instance of ol.layer.Group
-    //             let sublayers = (<ol.layer.Group>layer).getLayers().getArray();
-    //             for (let slayer of sublayers) {
-    //                 if (slayer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
-    //                     addSource(slayer.get('uuid'), slayer.get('title'), slayer.getVisible(), slayer.getOpacity());
-    //                 }
-    //             }
-    //         } else if (layer instanceof ol.layer.Image) { // add only image layer (WMS etc.)
-    //             addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
-    //         }
-    //     }
+    // addVectorLayer(style: ol.style.Style): ol.layer.Vector {
+    //     let options = {
+    //         wrapX: false
+    //     };
+    //     let vLayer = new ol.layer.Vector({
+    //         source: new ol.source.Vector(options),
+    //         style: style
+    //     });
+    //     return <ol.layer.Vector>this.addLayer(vLayer);
     // }
 
-    private addToLayertree(layer: ol.layer.Image) {
-        addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
-    }
-
-    showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
-        let geoJsonReader: ol.format.GeoJSON = new ol.format.GeoJSON();
-        let dataproj = geoJsonReader.readProjection(geoJson);
-        let features = geoJsonReader.readFeatures(
-            geoJson,
-            {
-                'dataProjection': geoJsonReader.readProjection(geoJson),
-                'featureProjection': this.olMap.getView().getProjection()
-            });
-        vLayer.getSource().addFeatures(features);
-    }
-
-    clearFeatures(vLayer: ol.layer.Vector) {
-        vLayer.getSource().clear(true);
-    }
-
-    addVectorLayer(style: ol.style.Style): ol.layer.Vector {
-        let options = {
-            wrapX: false
-        };
-        let vLayer = new ol.layer.Vector({
-            source: new ol.source.Vector(options),
-            style: style
-        });
-        return <ol.layer.Vector>this.addLayer(vLayer);
-    }
-
-    addLayer(layer: ol.layer.Base, title: string = null): ol.layer.Base {
-        layer.set(UUID, Ol4Map.getUuid('olay-'));
-        if (title) {
-            layer.set(TITLE, title);
-        }
+    addLayer(layer: ol.layer.Base): ol.layer.Base {
+        // layer.set(UUID, Ol4Map.getUuid('olay-'));
+        // if (title) {
+        //     layer.set(TITLE, title);
+        // }
         if (layer instanceof ol.layer.Image) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
-            addSource(layer.get('uuid'), layer.get('title'), layer.getVisible(), layer.getOpacity());
+            return layer;
         } else if (layer instanceof ol.layer.Vector) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_VECTOR);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
+            return layer;
         }
-        return layer;
+        return null;
     }
 
     removeLayer(layer: ol.layer.Base): void {
@@ -354,9 +342,9 @@ export class Ol4Map {
         if ((toProj = ol.proj.get(crs))) {
             let extent = Ol4Extent.fromArray(
                 this.olMap.getView().calculateExtent(this.olMap.getSize()),
-                this.olMap.getView().getProjection()
+                this.getProjection()
             );
-            let fromProj = this.olMap.getView().getProjection();
+            let fromProj = this.getProjection();
             let center = this.olMap.getView().getCenter();
             let newView = new ol.View({
                 projection: toProj,
@@ -376,7 +364,7 @@ export class Ol4Map {
         for (let layer of layers.getArray()) {
             let source: ol.source.Source;
             if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
-                (<ol.layer.Image>layer).setSource(Ol4WmsLayer.createFromSource(<ol.source.ImageWMS> source, toProj));
+                this.wmsSource.refreshSource(<ol.layer.Image>layer, fromProj, toProj);
             } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.Vector) {
                 let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
                 for (let feature of features) {
@@ -427,13 +415,8 @@ export class Ol4Map {
     drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
-        if (!this.drawer) {
-            let vLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['search']));
-            vLayer.setMap(this.olMap);
-            this.drawer = new Ol4Drawer(vLayer);
-        }
-        this.clearFeatures(this.drawer.getLayer());
-        this.showFeatures(this.drawer.getLayer(), geoJson);
+        this.vecSource.clearFeatures(this.drawer.getLayer());
+        this.vecSource.showFeatures(this.drawer.getLayer(), geoJson);
         if (onDrawEnd !== null) {
             onDrawEnd(geoJson);
         }
@@ -443,11 +426,6 @@ export class Ol4Map {
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
-        if (!this.drawer) {
-            let vLayer = this.addVectorLayer(Ol4Utils.getStyle(this.styles['search']));
-            vLayer.setMap(this.olMap);
-            this.drawer = new Ol4Drawer(vLayer);
-        }
         const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType;
         if (this.drawer.getInteraction()) {
             this.olMap.removeInteraction(this.drawer.getInteraction());
@@ -470,7 +448,7 @@ export class Ol4Map {
                         e.feature,
                         {
                             'dataProjection': METADOR_EPSG,
-                            'featureProjection': olMap.getView().getProjection()
+                            'featureProjection': ol4map.getProjection()
                         }
                     );
                     onDrawEnd(geojson);
@@ -481,33 +459,6 @@ export class Ol4Map {
             this.getDrawer().getLayer().getSource().clear();
             onDrawEnd(null);
         }
-    }
-}
-
-export class Ol4WmsLayer {
-    static createLayer(url: string, params: any, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Image {
-        let sourceWms = new ol.layer.Image({
-            source: Ol4WmsLayer.createSource(url, params, proj),
-            visible: visible,
-            opacity: opacity
-        });
-        return sourceWms;
-    }
-
-    static createSource(url: string, params: any, proj: ol.ProjectionLike): ol.source.ImageWMS {
-        return new ol.source.ImageWMS({
-            url: url,
-            params: params,
-            projection: proj
-        });
-    }
-
-    static createFromSource(source: ol.source.ImageWMS, proj: ol.ProjectionLike) {
-        return new ol.source.ImageWMS({
-            url: source.getUrl(),
-            params: source.getParams(),
-            projection: proj
-        });
     }
 }
 
@@ -565,7 +516,7 @@ export function createBox() {
          * @param {ol.geom.SimpleGeometry=} opt_geometry
          * @return {ol.geom.SimpleGeometry}
          */
-            function (coordinates, opt_geometry) {
+        function (coordinates, opt_geometry) {
             var extent = ol.extent.boundingExtent(coordinates);
             var geometry = opt_geometry || new ol.geom.Polygon(null);
             geometry.setCoordinates([[
@@ -579,9 +530,6 @@ export function createBox() {
         }
     );
 };
-
-
-
 
 
 export class UiUtils {
