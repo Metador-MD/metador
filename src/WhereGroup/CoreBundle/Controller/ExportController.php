@@ -21,17 +21,9 @@ class ExportController extends Controller
     public function xmlAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata->getObject());
-
-        if (!$metadata) {
-            $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
-                "message" => "Datensatz nicht gefunden"
-            ));
-            return $this->xmlResponse($xml->getContent());
-        }
-
         $p = $metadata->getObject();
+        
+        $this->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')
@@ -51,22 +43,12 @@ class ExportController extends Controller
     public function jsonAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
-
-        if (!$metadata) {
-            return new JsonResponse(array(
-                'status'  => 'error',
-                'message' => 'Datensatz nicht gefunden.'
-            ));
-        }
-
         $p = $metadata->getObject();
 
         $this->denyAccessUnlessGranted('view', $p);
 
-        if ($metadata) {
-            ksort($p);
-            return new JsonResponse($p);
-        }
+        ksort($p);
+        return new JsonResponse($p);
     }
 
     /**
@@ -76,18 +58,12 @@ class ExportController extends Controller
     public function objAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted('view', $metadata->getObject());
+        $this->denyAccessUnlessGranted('view', $p);
 
-        if ($metadata) {
-            $p = $metadata->getObject();
-
-            ksort($p);
-
-            return new Response('<pre>' . print_r($p, 1) . '</pre>');
-        }
-
-        return new Response('Datensatz nicht gefunden.');
+        ksort($p);
+        return new Response('<pre>' . print_r($p, 1) . '</pre>');
     }
 
     /**
@@ -97,14 +73,9 @@ class ExportController extends Controller
     public function pdfAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        if (!$metadata) {
-            return new Response('Datensatz nicht gefunden');
-        }
-
         $p = $metadata->getObject();
+
+        $this->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')
@@ -130,7 +101,7 @@ class ExportController extends Controller
         $pdf->setAutoPageBreak(true, 20);
         $pdf->AddPage();
         $pdf->writeHTML($html->getContent(), true, true, false, false, '');
-        $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+        $pdf->Output($p['_uuid'] . '.pdf', 'D');
     }
 
     /**
@@ -140,15 +111,10 @@ class ExportController extends Controller
     public function htmlAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
-
-        if (!$metadata) {
-            throw new MetadataException('Datensatz nicht gefunden');
-        }
+        $p = $metadata->getObject();
 
         $this->get('metador_core')
-            ->denyAccessUnlessGranted('view', $metadata->getObject());
-
-        $p = $metadata->getObject();
+            ->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')

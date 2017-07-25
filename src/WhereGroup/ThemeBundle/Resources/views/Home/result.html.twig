@@ -74,6 +74,7 @@
                     <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link">json</a>
                 {% endif %}
 
+                <a href="{{ path('metador_export_pdf', { 'id' : p['_id'] }) }}" class="link">pdf</a>
                 <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" class="link">html</a>
                 <a href="{{ path('metador_export_xml', { 'id' : p['_id'] }) }}" class="link">xml</a>
             </div>
