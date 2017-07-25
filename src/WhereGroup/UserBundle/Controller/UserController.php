@@ -194,64 +194,91 @@ class UserController extends Controller
     }
 
     /**
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Route("/delete/{id}", name="metador_admin_user_confirm")
      * @Template()
      */
     public function confirmAction($id)
     {
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
+        $form = $this->createFormBuilder($this->get('metador_user')->get($id))
+            ->add('delete', 'submit', array(
+                'label' => 'löschen'
+            ))
+            ->getForm()
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
+            $name   = $entity->getUsername();
+            $id     = $entity->getId();
+
+            $this->get('metador_user')->delete($entity);
+
+            $this->setFlashSuccess(
+                'delete',
+                $id,
+                'Benutzer %user% erfolgreich gelöscht.',
+                array('%user%' => $name)
+            );
+
+            return $this->redirectToRoute('metador_admin_user');
+        }
+
         return array(
-            'form' => $this
-                ->createDeleteForm($id)
-                ->createView()
+            'form' => $form->createView()
         );
     }
 
+
     /**
-     * @Route("/delete/{id}", name="metador_admin_user_delete")
-     * @Method("POST")
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
      */
-    public function deleteAction(Request $request, $id)
+    private function setFlashWarning($operation, $id, $message, $parameter = array())
     {
-        $form = $this
-            ->createDeleteForm($id)
-            ->submit($request);
+        $log = $this->get('metador_logger')->newLog();
 
-        if ($form->isValid()) {
-            try {
-                $user = $this->get('metador_user')->get($id);
-                $this->get('metador_user')->delete($user);
-                $this->get('metador_logger')->success(
-                    'application',
-                    'user',
-                    'delete',
-                    'source',
-                    'identifier',
-                    'Benutzer %username% wurde gelöscht.',
-                    array('%username%' => $user->getUsername())
-                );
-            } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning(
-                    'application',
-                    'user',
-                    'delete',
-                    'source',
-                    'identifier',
-                    $e->getMessage()
-                );
-                return $this->redirectToRoute('metador_admin_user');
-            }
-        }
+        $log->setType('warning')
+            ->setFlashMessage()
+            ->setCategory('application')
+            ->setSubcategory('user')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
 
-        return $this->redirectToRoute('metador_admin_user');
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
     }
 
-    private function createDeleteForm($id)
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashSuccess($operation, $id, $message, $parameter = array())
     {
-        return $this
-            ->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->add('submit', 'submit', array('label' => 'löschen'))
-            ->getForm();
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('success')
+            ->setFlashMessage()
+            ->setCategory('application')
+            ->setSubcategory('user')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
     }
 }

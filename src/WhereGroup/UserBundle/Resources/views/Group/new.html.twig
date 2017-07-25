@@ -12,16 +12,18 @@
     {% set params = {} %}
 {% endif %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {# CONTENT #}
 {% block content %}
     <div class="grid content-title">
         <div class="row r-2">
             <div class="col c-1-2">
-                <h1 class="title">{{ title }}</h1>
+                <h1 class="title dm">{{ title }}</h1>
             </div>
             <div class="col c-1-2 text-right">
                 <a href="{{ path('metador_admin_group') }}" class="btn medium">
-                    <span class="icon-th-list"></span> {% trans %}Übersicht{% endtrans %}
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
                 </a>
             </div>
         </div>
@@ -33,13 +35,31 @@
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
 
-    <div class="basic-form">
-        {{ form_widget(form) }}
-    </div>
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.role) }}
+            {{ form_errors(form.description) }}
+        </div>
+    {% endif %}
 
-    <hr class="line-separator" />
-
-    <div class="grid space">
+    <div class="grid space responsive">
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.role, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.role, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1 margin-b">
+            <div class="col c-1">
+                <div>{{ form_label(form.description, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.description, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
         <div class="row r-1">
             <div class="col c-1 text-right">
                 <button class="btn success medium">
@@ -53,5 +73,6 @@
             </div>
         </div>
     </div>
+
     {{ form_end(form) }}
 {% endblock %}

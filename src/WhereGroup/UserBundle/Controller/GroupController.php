@@ -26,12 +26,10 @@ class GroupController extends Controller
      */
     public function indexAction()
     {
-        $groups = $this
-            ->getRepository()
-            ->findAllSorted();
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return array(
-            'groups' => $groups,
+            'groups' => $this->getRepository()->findAllSorted()
         );
     }
 
@@ -129,59 +127,43 @@ class GroupController extends Controller
     }
 
     /**
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Route("/delete/{id}", name="metador_admin_group_confirm")
      * @Template()
      */
     public function confirmAction($id)
     {
-        return array(
-            'form' => $this
-                ->createDeleteForm($id)
-                ->createView()
-        );
-    }
+        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-    /**
-     * @Route("/delete/{id}", name="metador_admin_group_delete")
-     * @Method("POST")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        /** @var Form $form */
-        $form = $this
-            ->createDeleteForm($id)
-            ->submit($request);
+        $form = $this->createFormBuilder($this->getRepository()->findOneById($id))
+            ->add('delete', 'submit', array(
+                'label' => 'löschen'
+            ))
+            ->getForm()
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
-
-        if ($form->isValid()) {
-            $entity = $this->getRepository()->findOneById($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Group entity.');
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
+            $name   = $entity->getRole();
+            $id     = $entity->getId();
 
             $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
             $em->flush();
 
-            $this->addFlash('success', 'Gruppe erfolgreich gelöscht.');
+            $this->setFlashSuccess(
+                'delete',
+                $id,
+                'Gruppe %group% erfolgreich gelöscht.',
+                array('%group%' => $name)
+            );
+
+            return $this->redirectToRoute('metador_admin_group');
         }
 
-        return $this->redirect($this->generateUrl('metador_admin_group'));
-    }
-
-    /**
-     * @param $id
-     * @return Form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this
-            ->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->add('submit', 'submit', array('label' => 'löschen'))
-            ->getForm();
+        return array(
+            'form' => $form->createView()
+        );
     }
 
     /**
@@ -202,14 +184,62 @@ class GroupController extends Controller
      */
     private function getGroup($id)
     {
-        $entity = $this
-            ->getRepository()
-            ->findOneById($id);
+        $entity = $this->getRepository()->findOneById($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Group entity.');
         }
 
         return $entity;
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('warning')
+            ->setFlashMessage()
+            ->setCategory('application')
+            ->setSubcategory('group')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('success')
+            ->setFlashMessage()
+            ->setCategory('application')
+            ->setSubcategory('group')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
     }
 }

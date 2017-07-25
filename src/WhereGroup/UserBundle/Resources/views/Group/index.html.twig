@@ -16,31 +16,29 @@
 
     <hr class="line-separator" />
 
-    {% for group in groups %}
-        {% set class = '' %}
-        {% if group.users|length == 0 %}
-            {% set class = class ~ ' disabled' %}
-        {% endif %}
-
-        <div class="title-box {{ class|trim }}">
-            <div class="title-box-logo">
-                <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
-                    <span class="icon-users"></span>
-                </a>
-            </div>
-            <div class="title-box-info">
-                <div class="title" title="{{ group.role|groupname }}">
+    <table class="table bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Users</th>
+            <th>Id</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr title="{{ group.description }}">
+                <td>
                     <a href="{{ path('metador_admin_group_edit', {'id': group.id}) }}">
-                    {{ group.role|groupname|teaser(13, 1) }}
+                        {{ group.role|groupname|teaser(13, 1) }}
                     </a>
-                </div>
-                <div class="alternate" title="{{ group.description }}">
-                    {{ group.description|teaser(30) }}
-                </div>
-                <div class="count" title="{% for user in group.users %}{{ user.username ~ "\n" }}{% endfor %}">
-                    {{ group.users|length }}
-                </div>
-            </div>
-        </div>
-    {% endfor %}
+                </td>
+                <td>{{ group.users|length }}</td>
+                <td class="text-right">
+                    #{{ group.id }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
 {% endblock %}
