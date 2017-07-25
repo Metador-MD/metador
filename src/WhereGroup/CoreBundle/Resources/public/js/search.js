@@ -16,6 +16,8 @@ Search.prototype = {
         this.searchFieldElement = $('#searchfield');
         this.searchResultElement = $('#search-result');
         this.setParam('page', 1);
+
+        this.searchFieldElement.val(this.getParam('terms', ''));
     },
 
     keyup: function() {
