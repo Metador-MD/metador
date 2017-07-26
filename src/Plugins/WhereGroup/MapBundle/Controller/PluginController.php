@@ -176,7 +176,7 @@ class PluginController extends Controller
         /** @var UploadedFile $file */
         foreach ($request->files as $file) {
             if (!$file instanceof UploadedFile) {
-                return new Response('Keine Datei hochgeladen!');
+                return new Response('Die Hochgeladene Datei kann nicht gefunden werden.');
             }
             if ($file->getClientOriginalExtension() === 'xml' || $file->getClientOriginalExtension() === 'gml') {
                 $reader = EXmlReader::create($file->getRealPath());
@@ -203,7 +203,7 @@ class PluginController extends Controller
             } elseif ($file->getClientOriginalExtension() === 'zip') {
                 $zip = new \ZipArchive;
                 if ($zip->open($file->getRealPath()) !== true) {
-                    return new Response('Die Datei kann nicht entzippt werden!');
+                    return new Response('Die Datei kann nicht entzippt werden.');
                 }
                 $kernelPath = $this->get('kernel')->getRootDir();
                 $tempPath = $this->getParameter('metador_temp_dir');
@@ -222,7 +222,7 @@ class PluginController extends Controller
                     $shtype = $shapeFile->getShapeType();
                     $shape_types = $this->supportedTypes();
                     if (!isset($shape_types[$shtype])) {
-                        throw new \Exception('Der Geometrietyp ist nicht unterstützt.');
+                        throw new \Exception('Der Geometrietyp ist nicht unterstützt:'.$shtype);
                     }
                     $type = $shape_types[$shtype];
                     $result['content'] = array(
