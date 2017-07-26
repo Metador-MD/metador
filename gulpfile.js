@@ -25,8 +25,8 @@ const gulp      = require('gulp'),
     browserify = require("browserify"),
     tsify = require("tsify"),
     source = require('vinyl-source-stream');
-
-var tsProject   = ts.createProject('tsconfig.json');
+//
+// var tsProject   = ts.createProject('./tsconfig.json');
 
 var conf = {
     assets: {
@@ -61,15 +61,16 @@ var conf = {
             outputStyle  : 'compressed',
             includePaths : [] //'src/WhereGroup/ThemeBundle/Resources/styleguide'
         }
-    },
-    ts: {
-        files  : 'src/**/ts/*.ts',
-        entries: ['src/Plugins/WhereGroup/MapBundle/Resources/ts/app.ts'],
-        target: {
-            dir: 'src/Plugins/WhereGroup/MapBundle/Resources/public/js/',
-            file: 'app.js'
-        }
     }
+    // ,
+    // ts: {
+    //     files  : 'src/**/ts/*.ts',
+    //     entries: ['src/Plugins/WhereGroup/MapBundle/Resources/ts/map.ts'],
+    //     target: {
+    //         dir: 'src/Plugins/WhereGroup/MapBundle/Resources/public/js/',
+    //         file: 'map.js'
+    //     }
+    // }
 }
 
 gulp.task('clean', () => {
@@ -82,25 +83,19 @@ gulp.task('init', ['clean'], () => {
     return bower();
 });
 
-gulp.task('ts-old', function() {
-    var tsResult = gulp.src(conf.ts.files)
-        .pipe(tsProject());
-
-    return tsResult.js.pipe(gulp.dest(''));
-});
-
 gulp.task('ts', function() {
     return browserify({
         basedir: '.',
         debug: true,
-        entries: conf.ts.entries,
+        entries: ["src/Plugins/WhereGroup/MapBundle/Resources/ts/map.ts"],
         cache: {},
         packageCache: {}
     })
         .plugin(tsify)
         .bundle()
-        .pipe(source(conf.ts.target.file))
-        .pipe(gulp.dest(conf.ts.target.dir));
+        .pipe(source('map.js'))
+        .pipe(gulp.dest('src/Plugins/WhereGroup/MapBundle/Resources/public/js/'))
+        ;
 });
 
 gulp.task('sass', function() {
@@ -115,7 +110,7 @@ gulp.task('watch', () => {
     livereload.listen();
 
     gulp.watch(conf.sass.files, ['sass']);
-    gulp.watch(conf.ts.files, ['ts']);
+    gulp.watch('src/**/ts/*.ts', ['ts']);
     gulp.watch(conf.watch.files).on('change', function(file) {
         livereload.changed(file.path);
         browserSync.reload();
