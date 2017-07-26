@@ -206,7 +206,7 @@ class PluginController extends Controller
                     return new Response('Die Datei kann nicht entzippt werden!');
                 }
                 $kernelPath = $this->get('kernel')->getRootDir();
-                $tempPath = $kernelPath.'/../var/temp/';
+                $tempPath = $this->getParameter('metador_temp_dir');
 
                 $tempFolder = $tempPath.$file->getFilename();
                 $zip->extractTo($tempFolder);
