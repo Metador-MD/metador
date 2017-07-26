@@ -47,17 +47,19 @@ Search.prototype = {
             'data': {
                 'source': $('.-js-source.active').attr('data-slug'),
                 'terms': self.getParam('terms')
-            }
-        }).success(function(data) {
-            self.searchResultElement.html('');
+            },
+            'success': function(data) {
+                self.searchResultElement.html('');
 
-            if (data && data.html) {
-                self.searchResultElement.html(data.html);
-            }
+                if (data && data.html) {
+                    self.searchResultElement.html(data.html);
+                }
 
-            metador.parseResponse(data);
-        }).error(function() {
-            self.searchResultElement.html('');
+                metador.parseResponse(data);
+            },
+            'error': function() {
+                self.searchResultElement.html('');
+            }
         });
     }
 };
@@ -65,9 +67,13 @@ Search.prototype = {
 var search = new Search();
 
 search.init();
-search.find();
+
 
 $(document).on('keyup', '#searchfield', function() {
     search.keyup();
+});
+
+$( document ).ready(function() {
+    search.find();
 });
 
