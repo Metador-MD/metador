@@ -79,9 +79,18 @@ class MetadataVoter extends Voter
      */
     private function canView($subject, $user, $token)
     {
-        // is public
+        // Is public
         if ((boolean)$subject['_public'] === true || $this->canEdit($subject, $user, $token)) {
             return true;
+        }
+
+        // Same group?
+        if (isset($subject['_groups'])) {
+            foreach ($user->getRoles() as $role) {
+                if (in_array($role, $subject['_groups'])) {
+                    return true;
+                }
+            }
         }
 
         return false;

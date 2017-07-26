@@ -41,12 +41,12 @@ class MetadataExtension extends \Twig_Extension
      */
     public function isLocked($p)
     {
-        if (!isset($p['_lock_user']) || !isset($p['_lock_time'])) {
-            throw new MetadorException('_lock_user and _lock_time are missing in Dataobject!');
-        }
-
         if ((boolean)$p['_locked'] === false) {
             return false;
+        }
+
+        if (!isset($p['_lock_user']) || !isset($p['_lock_time'])) {
+            throw new MetadorException('_lock_user and _lock_time are missing in Dataobject!');
         }
 
         $dateTime = new \DateTime();
