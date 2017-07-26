@@ -169,6 +169,10 @@ class MetadataVoter extends Voter
             return true;
         }
 
+        if (!isset($subject['_insert_user']) && !isset($subject['_uuid'])) {
+            return true;
+        }
+
         return false;
     }
 

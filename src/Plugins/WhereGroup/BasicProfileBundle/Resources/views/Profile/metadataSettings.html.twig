@@ -6,11 +6,11 @@
             </div>
         </div>
         <div class="row r-2">
-            <div class="col c-1-3 metadata-settings-wrapper-preview">
+            <div class="col c-1-3">
                 {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
-                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image" />
+                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image browser-graphic" />
                 {% else %}
-                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image" />
+                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image browser-graphic" />
                 {% endif %}
             </div>
             <div class="col c-2-3">
@@ -48,7 +48,8 @@
                 </div>
                 {% endif %}
 
-                <div class="settings small">
+                {% if p['_groups'] is defined and p['_groups'] is iterable %}
+                    <div class="settings small">
                     <div class="label">
                         {% trans %}Verfügbar in Gruppen{% endtrans %}
                     </div>
@@ -64,16 +65,19 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endif %}
 
+                {% if p['_insert_user'] is defined and p['_update_user'] is defined %}
                 <div class="settings small">
                     <div class="label">
                         {% trans %}Metadaten{% endtrans %}
                     </div>
                     <div class="content">
                         <div>Erstellt von {{ p['_insert_user'] }}</div>
-                        <div>Bearbeitet von {{ p['_insert_user'] }}</div>
+                        <div>Bearbeitet von {{ p['_update_user'] }}</div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -43,8 +43,10 @@ class ProfileController extends Controller
             'p' => array(
                 '_source'  => $source,
                 '_profile' => $profile,
-                '_public'  => false
-            )
+                '_public'  => false,
+                '_groups'  => array()
+            ),
+            'userGroups' => $this->getRoles()
         )));
     }
 
@@ -76,6 +78,9 @@ class ProfileController extends Controller
         )));
     }
 
+    /**
+     * @return array
+     */
     private function getRoles()
     {
         /** @var User $user */

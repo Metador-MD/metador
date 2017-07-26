@@ -3402,12 +3402,6 @@ input.input-element, .md input.btn {
 .md .metadata-settings-wrapper .settings-uuid {
   font-size: 0.65em; }
 
-.metadata-settings-wrapper-preview > img {
-  height: 60px;
-  width: 60px;
-  border: 1px solid #e1e1e1;
-  border-radius: 4px; }
-
 .metadata-settings-wrapper-title {
   text-align: center;
   font-weight: bold;
@@ -3422,6 +3416,12 @@ input.input-element, .md input.btn {
 
 .md .grid .row.metadata-settings-wrapper-extended {
   display: none; }
+
+.md .browser-graphic {
+  height: 60px;
+  width: 60px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px; }
 
 .light-normal, .md .notify {
   color: #444;

@@ -8,7 +8,11 @@
     <div class="search-result">
         <div class="result-header">
             <div class="left">
-                <img src="{{ p['browserGraphic'] }}" class="md-result-preview-img"/>
+                {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
+                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image browser-graphic" />
+                {% else %}
+                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image browser-graphic" />
+                {% endif %}
             </div>
             <div class="right">
                 <div class="md-result-title">
