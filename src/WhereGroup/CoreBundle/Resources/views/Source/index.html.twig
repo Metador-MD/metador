@@ -1,43 +1,40 @@
 {% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block content %}
-    <div class="grid content-title">
-        <div class="row r-2">
-            <div class="col c-1-2">
-                <h1 class="title dm">{% trans %}Datenquellen{% endtrans %}</h1>
-            </div>
-            <div class="col c-1-2 text-right">
-                <a href="{{ path('metador_admin_source_new') }}" class="btn info medium">
-                    <span class="icon-plus-circle"></span> {% trans %}Neu{% endtrans %}
-                </a>
-            </div>
+<div class="grid content-title">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            <h1 class="title dm">{% trans %}Datenquellen{% endtrans %}</h1>
+        </div>
+        <div class="col c-1-2 text-right">
+            <a href="{{ path('metador_admin_source_new') }}" class="btn info medium">
+                <span class="icon-plus-circle"></span> {% trans %}Neu{% endtrans %}
+            </a>
         </div>
     </div>
+</div>
 
-    <hr class="line-separator" />
+<hr class="line-separator" />
 
-
-    <table class="table bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>System</th>
-                <th>Id</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for source in sources  %}
-            <tr>
-                <td><a href="{{ path('metador_admin_source_edit', {'id': source.id }) }}">{{ source.name }}</a></td>
-                <td>{{ source.slug }}</td>
-                <td>{{ source.system }}</td>
-                <td class="text-right">#{{ source.id }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <br/>
-
+<table class="table bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>System</th>
+            <th>Id</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for source in sources  %}
+        <tr>
+            <td><a href="{{ path('metador_admin_source_edit', {'id': source.id }) }}">{{ source.name }}</a></td>
+            <td>{{ source.slug }}</td>
+            <td>{{ source.system }}</td>
+            <td class="text-right">#{{ source.id }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br/>
 {% endblock %}

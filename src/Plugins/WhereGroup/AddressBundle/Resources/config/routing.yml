@@ -1,4 +1,0 @@
-metador_heltext:
-    resource: "@MetadorAddressBundle/Controller/"
-    type:     annotation
-    prefix:   /

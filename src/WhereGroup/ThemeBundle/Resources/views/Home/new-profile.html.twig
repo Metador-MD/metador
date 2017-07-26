@@ -9,15 +9,13 @@
             </a>
         </div>
         {% elseif source['profiles']|length > 1 %}
-        <div class="btn info medium">
+        <div class="btn info medium right -js-show-tooltip" data-tooltip-id="profile-menu-dialog" data-tooltip-position="right">
             {% trans %}new_profiles{% endtrans %}
             <span class="icon-sort-desc"></span>
         </div>
-        <div class="profile-menu-dialog">
+        <div class="profile-menu-dialog" id="profile-menu-dialog">
             {% for profileKey, profile in source['profiles'] %}
-            <div>
-                <a href="{{ path('metadata_new', { source: slug, profile: profileKey }) }}" class="">{{ profile|trans }}</a>
-            </div>
+            <a href="{{ path('metadata_new', { source: slug, profile: profileKey }) }}" class="profile-menu-item">{{ profile|trans }}</a>
             {% endfor %}
         </div>
         {% endif %}

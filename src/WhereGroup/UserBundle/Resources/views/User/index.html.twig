@@ -18,43 +18,33 @@
 
 <hr class="line-separator" />
 
+<table class="table bordered">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Groups</th>
+        <th>Active</th>
+        <th>Id</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for user in users %}
-        {% set class = '' %}
-        {% if not user.isactive %}
-            {% set class = class ~ ' disabled' %}
-        {% endif %}
-
-        {% if 'ROLE_SYSTEM_SUPERUSER' in user.roles %}
-            {% set class = class ~ ' superuser' %}
-        {% endif %}
-
-        <div class="title-box {{ class|trim }}">
-                {% if user.picture is defined and user.picture is not empty %}
-                    <div class="title-box-img">
-                        <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                            <img src="data:image/jpeg;base64,{{ user.picture }}"/>
-                        </a>
-                    </div>
-                {% else %}
-                    <div class="title-box-logo">
-                        <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
-                            <span class="icon-user"></span>
-                        </a>
-                    </div>
-                {% endif %}
-            <div class="title-box-info">
-                <div class="title">
-                    <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
+        <tr>
+            <td>
+                <a href="{{ path('metador_admin_user_edit', {'id': user.id}) }}">
                     {{ user.username|teaser(13, 1) }}
-                    </a>
-                </div>
-                <div class="alternate">
-                    {{ user.email }}
-                </div>
-                <div class="count" title="{% for group in user.groups %}{{ group.role ~ "\n" }}{% endfor %}">
-                    {{ user.groups|length }}
-                </div>
-            </div>
-        </div>
+                </a>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.groups|length }}</td>
+            <td>{{ user.isactive }}</td>
+            <td class="text-right">
+                #{{ user.id }}
+            </td>
+        </tr>
     {% endfor %}
+    </tbody>
+</table>
+<br/>
 {% endblock %}

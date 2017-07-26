@@ -6,18 +6,21 @@
             </div>
         </div>
         <div class="row r-2">
-            <div class="col c-1-3 metadata-settings-wrapper-preview">
+            <div class="col c-1-3">
                 {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
-                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image" />
+                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image browser-graphic" />
                 {% else %}
-                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image" />
+                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image browser-graphic" />
                 {% endif %}
             </div>
             <div class="col c-2-3">
+                {% set id = 'p[_public]' %}
+                {% set val = p['_public'] is not empty ? p['_public'] : '0' %}
+                {% set class = val == '0' ? 'icon-toggle-off' : 'icon-toggle-on'  %}
                 <div class="-js-toggle-switch switch-row">
-                    <span class="icon-toggle-off -js-toggle-switch-icon"></span>
+                    <span class="{{ class }} -js-toggle-switch-icon"></span>
                     <span class="-js-toggle-switch-label switch-label">{% trans %}Freigabe{% endtrans %}</span>
-                    <input type="hidden" name="p[public]" class="-js-toggle-switch-input" value="0" />
+                    <input type="hidden" name="{{ id }}" class="-js-toggle-switch-input" value="{{ val }}" />
                 </div>
                 <div class="-js-toggle-switch switch-row">
                     <span class="icon-toggle-on -js-toggle-switch-icon"></span>
@@ -33,7 +36,48 @@
         </div>
         <div class="row r-1 metadata-settings-wrapper-extended -js-extended-metadata-settings">
             <div class="col c-1">
-                <div class="settings-uuid">{% if p['fileIdentifier'] is defined %}{{ p['fileIdentifier'] }}{% endif %}</div>
+
+                {% if p['_uuid'] is defined %}
+                <div class="settings small">
+                    <div class="label">
+                        {% trans %}UUID{% endtrans %}
+                    </div>
+                    <div class="content">
+                        {{ p['_uuid'] }}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if p['_groups'] is defined and p['_groups'] is iterable %}
+                    <div class="settings small">
+                    <div class="label">
+                        {% trans %}Verfügbar in Gruppen{% endtrans %}
+                    </div>
+                    <div class="content">
+                        {% for group in userGroups %}
+                            <div>
+                                {% if is_granted('edit_group', p) %}
+                                    <input type="checkbox" name="p[_groups][]" class="-js-user-input" value="{{ group }}" {% if group in p['_groups'] %}checked="checked"{% endif %} /> {{ group }}
+                                {% elseif group in p['_groups'] %}
+                                    {{ group }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if p['_insert_user'] is defined and p['_update_user'] is defined %}
+                <div class="settings small">
+                    <div class="label">
+                        {% trans %}Metadaten{% endtrans %}
+                    </div>
+                    <div class="content">
+                        <div>Erstellt von {{ p['_insert_user'] }}</div>
+                        <div>Bearbeitet von {{ p['_update_user'] }}</div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ namespace WhereGroup\CoreBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use WhereGroup\CoreBundle\Entity\Metadata;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User;
 
@@ -17,6 +17,7 @@ class MetadataVoter extends Voter
 {
     const EDIT = 'edit';
     const VIEW = 'view';
+    const EDIT_GROUP = 'edit_group';
 
     private $decisionManager;
 
@@ -36,20 +37,21 @@ class MetadataVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::EDIT, self::VIEW))) {
+        if (!in_array($attribute, array(self::EDIT, self::VIEW, self::EDIT_GROUP))) {
             return false;
         }
 
-        // only vote on Metadata objects inside this voter
-        if (!$subject instanceof Metadata) {
+        // only vote on Metadata array inside this voter
+        if (!is_array($subject) || !isset($subject['_profile']) || !isset($subject['_source'])) {
             return false;
         }
+
         return true;
     }
 
     /**
      * @param string $attribute
-     * @param Metadata $subject
+     * @param array $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -62,21 +64,23 @@ class MetadataVoter extends Voter
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
                 return $this->canEdit($subject, $user, $token);
+            case self::EDIT_GROUP:
+                return $this->canEditGroup($subject, $user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
     /**
-     * @param Metadata $entity
-     * @param User $user
+     * @param $subject
+     * @param $user
      * @param $token
      * @return bool
      */
-    private function canView(Metadata $entity, $user, $token)
+    private function canView($subject, $user, $token)
     {
         // is public
-        if ($entity->getPublic() === true || $this->canEdit($entity, $user, $token)) {
+        if ((boolean)$subject['_public'] === true || $this->canEdit($subject, $user, $token)) {
             return true;
         }
 
@@ -84,29 +88,37 @@ class MetadataVoter extends Voter
     }
 
     /**
-     * @param Metadata $entity
-     * @param User $user
+     * @param $subject
+     * @param $user
      * @param $token
      * @return bool
+     * @throws MetadorException
      */
-    private function canEdit(Metadata $entity, $user, $token)
+    private function canEdit($subject, $user, $token)
     {
         if (!$user instanceof User) {
             return false;
         }
 
-        if ($entity->getLocked()) {
-            $lastUser = $entity->getUpdateUser();
-            $dateTime = new \DateTime();
-            $timeout = ($dateTime->getTimestamp() - $entity->getUpdateTime()) > (int)ini_get("session.gc_maxlifetime");
+        if (isset($subject['_locked']) && $subject['_locked']) {
+            if (!isset($subject['_lock_user']) || !isset($subject['_lock_time'])) {
+                throw new MetadorException('_lock_user and _lock_time are missing in Dataobject!');
+            }
 
-            if (!$timeout && $lastUser->getId() !== $user->getId()) {
+            $dateTime = new \DateTime();
+            $timeout = ($dateTime->getTimestamp() - $subject['_lock_time']) > (int)ini_get("session.gc_maxlifetime");
+
+            if (!$timeout && $subject['_lock_user'] !== $user->getUsername()) {
                 return false;
             }
         }
 
+        if (!isset($subject['_insert_user'])) {
+            throw new MetadorException('_insert_user is missing in Dataobject!');
+        }
+
         // can edit if user is owner
-        if ($entity->getInsertUser()->getId() === $user->getId()) {
+        if ($subject['_insert_user'] === $user->getUsername()) {
             return true;
         }
 
@@ -115,10 +127,14 @@ class MetadataVoter extends Voter
             return true;
         }
 
+        if (!isset($subject['_groups']) || !is_array($subject['_groups'])) {
+            throw new MetadorException('_groups is missing in Dataobject!');
+        }
+
         // can edit if user is in the same group
         /** @var Group $group */
-        foreach ($entity->getGroups() as $group) {
-            if ($this->isSystemGroup($group->getRole())) {
+        foreach ($subject['_groups'] as $group) {
+            if ($this->isSystemGroup($group)) {
                 continue;
             }
 
@@ -128,10 +144,33 @@ class MetadataVoter extends Voter
                     continue;
                 }
 
-                if ($group->getRole() === $userGroup->getRole()) {
+                if ($group === $userGroup->getRole()) {
                     return true;
                 }
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $subject
+     * @param $user
+     * @param $token
+     * @return bool
+     */
+    private function canEditGroup($subject, $user, $token)
+    {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if (isset($subject['_insert_user']) && $subject['_insert_user'] == $user->getUsername()) {
+            return true;
+        }
+
+        if (!isset($subject['_insert_user']) && !isset($subject['_uuid'])) {
+            return true;
         }
 
         return false;

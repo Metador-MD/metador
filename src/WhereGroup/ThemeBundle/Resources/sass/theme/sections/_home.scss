@@ -139,26 +139,18 @@ $home-menu-height: 35px;
     &.active {
         display: block;
     }
+}
 
-    & > .profile-menu-btn {
-        position: relative;
-        display: inline-block;
+.md .profile-menu-dialog {
+    display: none;
+}
 
-        & > .profile-menu-dialog {
-            display: none;
-            min-width: 200px;
-            padding: $padding/2 $padding;
-            background-color: $white;
-            border: 1px solid $border;
-            border-radius: 2px;
+.md .profile-menu-item {
+    display: block;
+    padding:10px;
 
-            @include pos($medium-item-height, -1px, '', '');
-        }
-
-        &:hover > .profile-menu-dialog {
-            display: block;
-            z-index: 1;
-        }
+    &:hover {
+        background-color: $background;
     }
 }
 

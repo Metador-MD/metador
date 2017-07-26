@@ -2,7 +2,7 @@
 <div class="header-menu-item">
     <div class="form-field-wrapper i2">
         <span class="form-icon-type left icon-search2"></span>
-        <input class="input ls" type="text" name="terms" value="{% if params.terms is defined %}{{ params.terms }}{% endif %}" placeholder="{{ 'Suchbegriff eingeben'|trans }}" autocomplete="off" />
+        <input class="input ls" type="text" id="searchfield" data-url="{{ path('metador_search') }}" name="terms" value="{% if params.terms is defined %}{{ params.terms }}{% endif %}" placeholder="{{ 'Suchbegriff eingeben'|trans }}" autocomplete="off" />
         <span class="form-icon right icon-map ls -js-toggle-map" title="{% trans %}mehr{% endtrans %}"></span>
     </div>
 </div>

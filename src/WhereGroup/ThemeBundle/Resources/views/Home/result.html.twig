@@ -1,66 +1,86 @@
-{% if rows is defined and rows is not empty %}
+{% if rows is defined and rows is iterable %}
+{% for row in rows if is_granted('view', row.object|json_decode(true)) %}
 
-{% for row in rows %}
-    <div class="metadata-row clearfix" data-id="{{ row.id }}">
-        <div class="left">
-            {% if row.browserGraphic is defined and row.browserGraphic is not empty %}
-                <img src="{{ row.browserGraphic }}" class="browser-graphic" />
-            {% else %}
-                <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="browser-graphic" />
-            {% endif %}
+    {% set p = row.object|json_decode(true) %}
+    {% set editable = app.user and is_granted('edit', p) %}
+    {% set title = p.title is defined ? p.title|teaser(75, true) : 'noname' %}
+
+    <div class="search-result">
+        <div class="result-header">
+            <div class="left">
+                {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
+                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image browser-graphic" />
+                {% else %}
+                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image browser-graphic" />
+                {% endif %}
+            </div>
+            <div class="right">
+                <div class="md-result-title">
+                    {% if app.user %}
+                        <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
+                            {{ title|teaser(60, true) }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
+                            {{ title|teaser(60, true) }}
+                        </a>
+                    {% endif %}
+
+                    <div class="md-result-info">
+                        {% if not editable and not app.user %}
+                        <div class="result-icon" title="{% trans %}Um editieren zu können, müssen Sie angemeldet sein.{% endtrans %}">
+                            <span class="icon-eye"></span>
+                        </div>
+                        {% elseif not editable and p['_locked'] is defined and p['_locked'] %}
+                        <div class="result-icon" title="{% trans %}Datensatz ist derzeig gesperrt.{% endtrans %}">
+                            <span class="icon-lock"></span>
+                        </div>
+                        {% elseif editable %}
+                        <div class="result-icon">
+                            <span class="icon-pencil"></span>
+                        </div>
+                        {% endif %}
+
+                        <div class="result-icon">
+                            <span class="icon-user"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
+                    {% if p['alternateTitle'] is defined %}
+                        {{ p['alternateTitle']|teaser(80, true) }}
+                    {% endif %}
+                </div>
+
+                <hr class="line-separator">
+
+                <div class="md-result-abstract" {% if p['abstract']|length > 400 %}title="{{ p['abstract'] }}"{% endif %}>
+                    {% if p['abstract'] is defined %}
+                        {{ p['abstract']|teaser(400) }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="right">
-            <div class="metadata-row-head clearfix">
-                {% if row.title is defined and row.title is not empty %}
-                <div class="title">
-                    <a href="{{ path('metadata_edit', { 'source': row.source,'profile' : row.profile, 'id' : row.id }) }}">
-                        {{ row.title|teaser(75, true) }}
-                    </a>
-                    {#{% if app.user and is_granted('edit', row) %}#}
-                    {#{% else %}#}
-                        {#<a href="{{ path('metador_export_html', { 'id' : row.id }) }}">#}
-                            {#{{ row.title|teaser(75, true) }}#}
-                        {#</a>#}
-                    {#{% endif %}#}
-                </div>
+        <div class="result-footer">
+            <div class="left">
+                {% if p['hierarchyLevel'] is defined %}
+                    {{ p['hierarchyLevel']|capitalize }}
                 {% endif %}
-                {% if row.object.alternateTitle is defined and row.object.alternateTitle is not empty %}
-                <div class="alternate-title">
-                    {{ row.object.alternateTitle }}
-                </div>
+                -
+                {% if p['_dateStamp'] is defined %}
+                    {{ p['_dateStamp'] }}
                 {% endif %}
-                <div class="user-date" title="Zuletzt bearbeitet von {{ row.updateUser.username }} am {{ row.updateTime|date("d.m.Y") }} um {{ row.updateTime|date("H:i") }} Uhr">
-                    <span class="icon-user"></span>
-                </div>
             </div>
-            {% if row.abstract is defined and row.abstract is not empty %}
-            <div class="metadata-row-abstract">
-                {{ row.abstract }}
-            </div>
-            {% endif %}
-            <div class="metadata-row-foot">
-                {% for item in applicationGet('app-search-menu') %}
-                {% if item.path is defined %}
-
-                {# Add id to params #}
-                {% set params = item.params %}
-                {% set params = params|merge({ 'id':  row.id }) %}
-
-                <a href="{{ path(item.path, params) }}"{% if item.target is defined %} target="{{ item.target }}"{% endif %} class="plugin-menu-item">
-                    {% if item.icon is defined %}
-                        <span class="{{ item.icon }}"></span>
-                    {% endif %}
-                    {{ item.label|trans }}
-                </a>
-                {% elseif item.label is defined %}
-                <button type="submit" class="no-style-button plugin-menu-item">
-                    {% if item.icon is defined %}
-                        <span class="{{ item.icon }}"></span>
-                    {% endif %}
-                    {{ item.label|trans }}
-                </button>
+            <div class="right">
+                {% if app.environment == 'dev' %}
+                    <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link">object</a>
+                    <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link">json</a>
                 {% endif %}
-                {% endfor %}
+
+                <a href="{{ path('metador_export_pdf', { 'id' : p['_id'] }) }}" class="link">pdf</a>
+                <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" class="link">html</a>
+                <a href="{{ path('metador_export_xml', { 'id' : p['_id'] }) }}" class="link">xml</a>
             </div>
         </div>
     </div>

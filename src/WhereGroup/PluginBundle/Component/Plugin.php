@@ -139,7 +139,7 @@ class Plugin
     {
         $result = array();
         $plugins = $this->plugins;
-        $core = Yaml::parse(__DIR__ . '/../../CoreBundle/Resources/config/plugin.yml');
+        $core = Yaml::parse(file_get_contents(__DIR__ . '/../../CoreBundle/Resources/config/plugin.yml'));
 
         foreach (array_merge_recursive($core, $plugins) as $key => $plugin) {
             if (isset($plugin['active']) && $plugin['active']) {

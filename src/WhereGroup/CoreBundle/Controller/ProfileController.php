@@ -5,14 +5,10 @@ namespace WhereGroup\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
-use WhereGroup\CoreBundle\Component\MetadorException;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Entity\Metadata;
-use WhereGroup\CoreBundle\Component\Finder;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\UserBundle\Entity\User;
 
@@ -26,53 +22,6 @@ class ProfileController extends Controller
     public function __destruct()
     {
         unset($this->data);
-    }
-
-    /**
-     * @Route("/{profile}/index", name="metadata_index")
-     * @Method("GET")
-     */
-    public function indexAction($profile)
-    {
-        $this->init($profile);
-
-        $params = $this->data['request']->query->all();
-
-        $filter = new Finder();
-        $filter->page    = isset($params['page']) ? $params['page'] : 1;
-        $filter->hits    = isset($params['hits']) ? $params['hits'] : 10;
-        $filter->terms   = isset($params['terms']) ? $params['terms'] : '';
-        $filter->userEntries = isset($params['user_entries']) ? $params['user_entries'] : null;
-        $filter->profile = $profile;
-        $filter->public  = true;
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_GEO_OFFICE')) {
-            $filter->geoOffice = true;
-            $filter->public = null;
-        }
-
-        /** @var UsernamePasswordToken $token */
-        $token = $this->get('security.token_storage')->getToken();
-
-        /** @var User $user */
-        $user = $token->getUser();
-
-        if (is_object($user)) {
-            $filter->userId = $user->getId();
-            $filter->public = null;
-        }
-
-        $metadata = $this->get('metadata')->find($filter);
-
-        return $this->get('templating')->renderResponse(
-            $this->getTemplate('index'),
-            array(
-                'params'       => $params,
-                'profile'      => $profile,
-                'rows'         => $metadata['result'],
-                'paging'       => $metadata['paging']
-            )
-        );
     }
 
     /**
@@ -91,37 +40,61 @@ class ProfileController extends Controller
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
         return new Response($this->get('metador_core')->render($template, array(
-            'metadataSource' => $source,
-            'metadataProfil' => $profile,
-            'p'              => array()
+            'p' => array(
+                '_source'  => $source,
+                '_profile' => $profile,
+                '_public'  => false,
+                '_groups'  => array()
+            ),
+            'userGroups' => $this->getRoles()
         )));
     }
 
     /**
-     * @Route("/{source}/{profile}/edit/{id}", name="metadata_edit")
+     * @Route("/{profile}/edit/{id}", name="metadata_edit")
      * @Method("GET")
+     * @param $profile
+     * @param $id
+     * @return Response
      */
-    public function editAction($source, $profile, $id)
+    public function editAction($profile, $id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $p);
 
-        $this->get('metadata')->lock($id);
+        if ($this->get('metador_core')->isGranted('edit', $p)) {
+            $this->get('metador_metadata')->lock($id);
+        }
 
         $template = $this
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        // Todo: hasGroups
-
         return new Response($this->get('metador_core')->render($template, array(
-            'metadataId'     => $id,
-            'metadataSource' => $source,
-            'metadataProfil' => $profile,
-            'metadata'       => $metadata,
-            'p'              => $metadata->getObject()
+            'p' => $metadata->getObject(),
+            'userGroups' => $this->getRoles()
         )));
+    }
+
+    /**
+     * @return array
+     */
+    private function getRoles()
+    {
+        /** @var User $user */
+        $user = $this->get('metador_user')->getUserFromSession();
+
+        $roles = array();
+
+        foreach ($user->getRoles() as $role) {
+            if (!strstr($role, 'ROLE_SYSTEM_')) {
+                $roles[] = $role;
+            }
+        }
+
+        return $roles;
     }
 
     /**
@@ -130,22 +103,26 @@ class ProfileController extends Controller
      */
     public function saveAction($source, $profile)
     {
-        $response = array();
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
-        $request = $this->get('request_stack')->getCurrentRequest()->request;
+
+        $response = array();
+        $uuid = false;
+        $request  = $this->get('request_stack')->getCurrentRequest()->request;
+
         $p = $request->get('p');
 
-        $id = empty($p['_id']) || !is_numeric($p['_id']) ? false : (int)$p['_id'];
-        $uuid = false;
+        $this->get('metador_metadata')->updateObject($p, $source, $profile, null, null);
 
-        if ($id !== false) {
-            $metadata = $this->get('metadata')->getById($id);
-            $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+        $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
+
+        if (!is_null($id)) {
+            $metadata = $this->get('metador_metadata')->getById($id);
+            $this->denyAccessUnlessGranted('edit', $metadata->getObject());
         }
 
         if ($request->get('submit') === 'abort') {
-            if ($id !== false) {
-                $this->get('metadata')->unlock($id);
+            if (!is_null($id)) {
+                $this->get('metador_metadata')->unlock($id);
             }
 
             $this
@@ -158,7 +135,7 @@ class ProfileController extends Controller
         }
 
         try {
-            $metadata = $this->get('metadata')->saveObject($p, $id);
+            $metadata = $this->get('metador_metadata')->saveObject($p, $id);
             $id = $metadata->getId();
             $uuid = $metadata->getUuid();
 
@@ -171,15 +148,8 @@ class ProfileController extends Controller
                 ))
             );
 
-        } catch (MetadorException $e) {
-            $this->get('metador_logger')->error(
-                'metadata',
-                'profile',
-                'update',
-                'source',
-                $this->data['p']['uuid'],
-                $e->getMessage()
-            );
+        } catch (MetadataException $e) {
+            $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), array());
         }
 
         $response = array_merge_recursive($response, array(
@@ -200,130 +170,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{profile}/create", name="metadata_create")
-     * @Method("POST")
-     */
-    public function createAction($profile)
-    {
-        $this->init($profile);
-
-        try {
-            $metadata = $this->get('metadata')->saveObject($this->data['p']);
-        } catch (MetadorException $e) {
-            $this->get('metador_logger')->flashError(
-                'metadata',
-                'profile',
-                'create',
-                'source',
-                $this->data['p']['uuid'],
-                $e->getMessage()
-            );
-
-            return $this->renderResponse($profile, 'form');
-        }
-
-        return $this->redirectToRoute('metadata_edit', array(
-            'profile' => $profile,
-            'id'      => $metadata->getId()
-        ));
-    }
-
-//    /**
-//     * @Route("/{profile}/coupled/", name="metadata_coupled")
-//     * @Method("GET")
-//     */
-//    public function coupledAction($profile)
-//    {
-//        $data = array();
-//
-//        $filter = new Finder();
-//        $filter->hierarchyLevel = array('series', 'dataset');
-//        $filter->profile = 'profile-dataset';
-//
-//        $title = $this->get('request_stack')->getCurrentRequest()->get('title');
-//        if (!empty($title)) {
-//            $filter->title = $title;
-//        }
-//        unset($title);
-//
-//        $metadata = $this->get('metadata')->find($filter);
-//
-//        /** @var Metadata $obj */
-//        foreach ($metadata['result'] as $obj) {
-//            $p = $obj->getObject();
-//
-//            if (isset($p['identifier'][0]['codespace']) && isset($p['identifier'][0]['code'])) {
-//                $data[] = array(
-//                    'title'     => $obj->getTitle(),
-//                    'code'      => $p['identifier'][0]['code'],
-//                    'codespace' => $p['identifier'][0]['codespace'],
-//                    'uuid'      =>  $obj->getUuid()
-//                );
-//            }
-//        }
-//
-//        return new JsonResponse($data);
-//    }
-
-    /**
-     * @Route("/{profile}/update/{id}", name="metadata_update")
-     * @Method("POST")
-     */
-    public function updateAction($profile, $id)
-    {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
-
-        $this->init($profile);
-
-        try {
-            $metadata = $this->get('metadata')->saveObject($this->data['p'], $id);
-        } catch (MetadorException $e) {
-            $this->get('metador_logger')->flashError('metadata', 'profile', 'update', 'source', $this->data['p']['uuid'], $e->getMessage());
-            $this->redirectToRoute('metadata_edit', array('profile' => $profile, 'id' => $id));
-        }
-
-        return $this->renderResponse($profile, 'form', $metadata);
-    }
-
-    /**
-     * @Route("/{profile}/use/{id}", name="metadata_use")
-     * @Method({"GET"})
-     */
-    public function useAction($profile, $id)
-    {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        $this->init($profile);
-
-        // EVENT PRE USE
-        $this->container->get('event_dispatcher')->dispatch(
-            'metador.pre_use',
-            new MetadataChangeEvent($metadata, array())
-        );
-
-        $this->data['p'] = $metadata->getObject();
-        $this->data['p']['dateStamp'] = date("Y-m-d");
-
-        unset(
-            $this->data['p']['fileIdentifier'],
-            $this->data['p']['identifier']
-        );
-
-        return $this->renderResponse($profile, 'form');
-    }
-
-
-    /**
      * @Route("/{profile}/confirm/{id}", name="metadata_confirm")
      * @Method("GET")
      */
     public function confirmAction($profile, $id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
 
@@ -349,7 +201,7 @@ class ProfileController extends Controller
      */
     public function deleteAction($profile, $id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
 
@@ -361,7 +213,7 @@ class ProfileController extends Controller
             ->submit($this->data['request']);
 
         if ($form->isValid()) {
-            $this->get('metadata')->deleteById($id);
+            $this->get('metador_metadata')->deleteById($id);
             $this->get('metador_logger')->flashSuccess('metadata', 'profile', 'delete', 'source', 'identifier', 'Erfolgreich gelöscht.');
         } else {
             $this->get('metador_logger')->flashError('metadata', 'profile', 'delete', 'source', 'identifier', 'Eintrag konnte nicht gelöscht werden.');
@@ -382,7 +234,7 @@ class ProfileController extends Controller
         $this->data['user'] = $this->get('metador_user')->getUserFromSession();
         $this->data['template'] = $this->data['className'] . '::';
         $this->data['p'] = $this->data['request']->request->get('p', array());
-        $this->data['p']['dateStamp'] = date("Y-m-d");
+        $this->data['p']['_dateStamp'] = date("Y-m-d");
     }
 
     /**
@@ -411,7 +263,7 @@ class ProfileController extends Controller
         /** @var Metadata $entity */
         if (!is_null($entity)) {
             $this->data['p'] = $entity->getObject();
-            $this->data['p']['dateStamp'] = date("Y-m-d");
+            $this->data['p']['_dateStamp'] = date("Y-m-d");
 
             $params['id'] = $entity->getId();
             $params['hasAccess'] = $this->isGranted('edit', $entity);

@@ -10,7 +10,9 @@ $('.-js-source').on('click', function () {
     $(this).siblings().removeClass('active');
     $(this).addClass('active');
     $('.-js-profile-menu').removeClass('active');
-    $('#' + $(this).attr('data-id')).addClass('active');
+    $('#source-' + $(this).attr('data-slug')).addClass('active');
+    $('#search-result').html('');
+    search.find();
 });
 
 $('.-js-crs-code').on('change', function () {

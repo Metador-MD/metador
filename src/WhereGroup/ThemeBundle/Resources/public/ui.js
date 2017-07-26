@@ -18,7 +18,6 @@ $(document).on('mouseleave', '.-js-sys-msg', function() {
     $(this).removeClass('large');
 });
 
-
 $(document).on('click', '.-js-fieldset-toggle', function() {
     var mainItem = $(this).closest('.-js-fieldset');
 
@@ -33,3 +32,6 @@ $(document).on('click', '.-js-fieldset-toggle', function() {
 });
 
 
+$(document).ready(function() {
+    $('.-js-show-tooltip').tooltip();
+});

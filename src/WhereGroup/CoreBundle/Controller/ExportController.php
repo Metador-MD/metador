@@ -7,9 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
 /**
- * @Route("/metador/export")
+ * @Route("/public/export")
  */
 class ExportController extends Controller
 {
@@ -19,18 +20,10 @@ class ExportController extends Controller
      */
     public function xmlAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        if (!$metadata) {
-            $xml = $this->render("MetadorCoreBundle::exception.xml.twig", array(
-                "message" => "Datensatz nicht gefunden"
-            ));
-            return $this->xmlResponse($xml->getContent());
-        }
-
+        $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
+        
+        $this->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')
@@ -49,22 +42,13 @@ class ExportController extends Controller
      */
     public function jsonAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $p);
 
-        if ($metadata) {
-            $p = $metadata->getObject();
-
-            ksort($p);
-
-            return new JsonResponse($p);
-        }
-
-        return new JsonResponse(array(
-            'status'  => 'error',
-            'message' => 'Datensatz nicht gefunden.'
-        ));
+        ksort($p);
+        return new JsonResponse($p);
     }
 
     /**
@@ -73,19 +57,13 @@ class ExportController extends Controller
      */
     public function objAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted('view', $metadata);
+        $this->denyAccessUnlessGranted('view', $p);
 
-        if ($metadata) {
-            $p = $metadata->getObject();
-
-            ksort($p);
-
-            return new Response('<pre>' . print_r($p, 1) . '</pre>');
-        }
-
-        return new Response('Datensatz nicht gefunden.');
+        ksort($p);
+        return new Response('<pre>' . print_r($p, 1) . '</pre>');
     }
 
     /**
@@ -94,15 +72,10 @@ class ExportController extends Controller
      */
     public function pdfAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        if (!$metadata) {
-            return new Response('Datensatz nicht gefunden');
-        }
-
+        $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
+
+        $this->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')
@@ -128,7 +101,7 @@ class ExportController extends Controller
         $pdf->setAutoPageBreak(true, 20);
         $pdf->AddPage();
         $pdf->writeHTML($html->getContent(), true, true, false, false, '');
-        $pdf->Output(md5($p['fileIdentifier']) . '.pdf', 'D');
+        $pdf->Output($p['_uuid'] . '.pdf', 'D');
     }
 
     /**
@@ -137,15 +110,11 @@ class ExportController extends Controller
     */
     public function htmlAction($id)
     {
-        $metadata = $this->get('metadata')->getById($id);
-
-        $this->denyAccessUnlessGranted('view', $metadata);
-
-        if (!$metadata) {
-            return new Response('Datensatz nicht gefunden');
-        }
-
+        $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
+
+        $this->get('metador_core')
+            ->denyAccessUnlessGranted('view', $p);
 
         $className = $this
             ->get('metador_plugin')

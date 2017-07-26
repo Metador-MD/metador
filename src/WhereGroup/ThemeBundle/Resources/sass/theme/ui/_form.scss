@@ -9,10 +9,6 @@ $icon-color: darken($border, 20%);
     display: block;
     @extend .clearfix;
 
-    & > .form-label {
-        padding: $padding;
-    }
-
     & > .check {
         height: 100%;
         border: 0;
@@ -26,7 +22,7 @@ $icon-color: darken($border, 20%);
     }
 
     & > .form-label {
-        @include normal-item();
+        @include normal-item(true, false);
     }
 
     &.small {
@@ -37,7 +33,7 @@ $icon-color: darken($border, 20%);
         }
 
         & > .form-label {
-            @include small-item();
+            @include small-item(true, false);
         }
     }
 
@@ -49,7 +45,7 @@ $icon-color: darken($border, 20%);
         }
 
         & > .form-label {
-            @include medium-item();
+            @include medium-item(true, false);
         }
     }
 
@@ -61,7 +57,7 @@ $icon-color: darken($border, 20%);
         }
 
         & > .form-label {
-            @include large-item();
+            @include large-item(true, false);
         }
     }
 }
@@ -322,7 +318,7 @@ $icon-color: darken($border, 20%);
 }
 
 .md .form-label {
-    color: $primary;
+    //color: $primary;
     @include normal-item(false, false);
 }
 

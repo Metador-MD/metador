@@ -107,7 +107,7 @@ class SettingsController extends Controller
         $settings = $this->get('metador_plugin')->getPlugins();
 
         // Read system config
-        $coreSettings = Yaml::parse(__DIR__ . '/../Resources/config/plugin.yml');
+        $coreSettings = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/plugin.yml'));
 
         $settings = array_merge_recursive($coreSettings, $settings);
 

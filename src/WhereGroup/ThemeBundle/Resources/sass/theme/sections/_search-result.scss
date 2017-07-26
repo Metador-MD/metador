@@ -1,0 +1,108 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+$image-size: 80px;
+
+.md-result-preview-img {
+    height: $image-size;
+    width: $image-size;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+}
+
+.md-result-title {
+    font-weight: bold;
+    font-size: $font-large;
+
+    & > .md-result-info {
+        float: right;
+        box-sizing: content-box;
+
+        background-color: $white;
+        border: 1px solid $border;
+        border-radius: $border-radius;
+
+        @include medium-item(true, false);
+
+        & > .result-icon {
+            display: block;
+            float: left;
+            padding: 0 10px;
+
+            &:not(:last-child) {
+                border-right: 1px solid $border;
+            }
+
+            &:hover {
+                background-color: $background;
+            }
+
+            & > span {
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.md-result-alternate-title {
+    font-style: italic;
+    font-size: $font-small;
+
+}
+
+.md-result-abstract {
+    font-style: italic;
+    font-size: $font-medium;
+}
+
+.search-result {
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    padding: $padding / 2;
+    background-color: $background;
+    margin-bottom: $padding;
+    @extend .clearfix;
+
+    & > .result-header {
+        margin-bottom: $padding;
+
+        & > .left {
+            float: left;
+            width: $image-size;
+        }
+
+        & > .right {
+            margin-left: $image-size + $padding * 2;
+        }
+    }
+
+    & > .result-footer {
+        background-color: $white;
+        border: 1px solid $border;
+        border-radius: $border-radius;
+        @include medium-item();
+
+        & > .left {
+            float: left;
+        }
+
+        & > .right {
+            float: right;
+
+            & > .link {
+                padding: 0 5px;
+
+                &:hover {
+                    color: $primary;
+                }
+
+                &:not(:last-child) {
+                    border-right: 1px solid $border;
+                }
+            }
+        }
+    }
+}
+
+

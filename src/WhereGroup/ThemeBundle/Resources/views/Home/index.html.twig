@@ -16,7 +16,7 @@
             <ul class="source-list">
                 {% for slug, source in sourceConfig %}
                     <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}"
-                        data-id="source-{{ slug }}">{{ source['name'] }}</li>
+                        data-slug="{{ slug }}">{{ source['name'] }}</li>
                 {% endfor %}
             </ul>
             {% include 'MetadorThemeBundle:Home:new-profile.html.twig' %}
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col c-3-4">
                         {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
-                        {% include 'MetadorThemeBundle:Home:result.html.twig' %}
+                        <div class="content" id="search-result"></div>
                     </div>
                 </div>
             </div>
@@ -55,4 +55,6 @@
     <script src="{{ asset('bundles/metadormap/js/map.js') }}"></script>
     <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/home.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/storage.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/search.js') }}"></script>
 {% endblock %}

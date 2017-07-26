@@ -1,4 +1,4 @@
-map:
+metador_map:
     origin: WhereGroup
     name: Map
     description: Kartenkomponente

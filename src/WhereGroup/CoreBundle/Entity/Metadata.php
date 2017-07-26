@@ -35,6 +35,10 @@ class Metadata
     private $updateTime;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lockTime;
+    /**
      * @ORM\ManyToOne(targetEntity="WhereGroup\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="insertuser_id", referencedColumnName="id")
      */
@@ -45,6 +49,12 @@ class Metadata
      * @ORM\JoinColumn(name="updateuser_id", referencedColumnName="id")
      */
     private $updateUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WhereGroup\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="lockuser_id", referencedColumnName="id")
+     */
+    private $lockUser;
 
     /**
      * @ORM\Column(type="boolean")
@@ -60,11 +70,6 @@ class Metadata
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $uuid;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $codespace;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
@@ -91,10 +96,6 @@ class Metadata
      */
     private $searchfield;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $browserGraphic;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -111,11 +112,6 @@ class Metadata
      * @ORM\JoinTable(name="metadata_groups")
      */
     private $groups;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $readonly;
 
     /**
      * @ORM\Column(type="date", nullable=true, name="`date`")
@@ -197,6 +193,25 @@ class Metadata
     }
 
     /**
+     * @param $lockTime
+     * @return $this
+     */
+    public function setLockTime($lockTime)
+    {
+        $this->lockTime = $lockTime;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLockTime()
+    {
+        return $this->lockTime;
+    }
+
+    /**
      * @param $uuid
      * @return $this
      */
@@ -213,25 +228,6 @@ class Metadata
     public function getUuid()
     {
         return $this->uuid;
-    }
-
-    /**
-     * @param $codespace
-     * @return $this
-     */
-    public function setCodespace($codespace)
-    {
-        $this->codespace = $codespace;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCodespace()
-    {
-        return $this->codespace;
     }
 
     /**
@@ -292,25 +288,6 @@ class Metadata
     }
 
     /**
-     * @param $browserGraphic
-     * @return $this
-     */
-    public function setBrowserGraphic($browserGraphic)
-    {
-        $this->browserGraphic = $browserGraphic;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBrowserGraphic()
-    {
-        return $this->browserGraphic;
-    }
-
-    /**
      * @param User|null $insertUser
      * @return $this
      */
@@ -346,6 +323,25 @@ class Metadata
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * @param User|null $lockUser
+     * @return $this
+     */
+    public function setLockUser(User $lockUser = null)
+    {
+        $this->lockUser = $lockUser;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLockUser()
+    {
+        return $this->lockUser;
     }
 
     /**
