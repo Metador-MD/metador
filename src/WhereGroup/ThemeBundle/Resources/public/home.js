@@ -75,12 +75,14 @@ $('#map-menu-load-wms-button').on('click', function () {
             url: $input.attr('data-url'),
             data: {
                 url: encodeURIComponent($input.val())
+            },
+            succes: function (data) {
+                metador.parseResponse(data);
+                Window.metador.metadorMap.addLayerForOptions(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                metador.displayError(errorThrown);
             }
-        }).success(function (data) {
-            metador.parseResponse(data);
-            Window.metador.metadorMap.addLayerForOptions(data);
-        }).error(function (jqXHR, textStatus, errorThrown) {
-            metador.displayError(errorThrown);
         });
     } else {
         metador.displayError('Keine GetCapabilities URL eingetragen!');
