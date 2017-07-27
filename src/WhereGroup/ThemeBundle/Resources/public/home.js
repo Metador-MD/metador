@@ -76,7 +76,7 @@ $('#map-menu-load-wms-button').on('click', function () {
             data: {
                 url: encodeURIComponent($input.val())
             },
-            succes: function (data) {
+            success: function (data) {
                 metador.parseResponse(data);
                 Window.metador.metadorMap.addLayerForOptions(data);
             },

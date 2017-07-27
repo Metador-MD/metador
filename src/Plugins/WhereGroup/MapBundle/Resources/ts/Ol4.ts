@@ -273,23 +273,23 @@ export class Ol4Map {
         return this.hgLayer;
     }
 
-    //
-    // addVectorLayer(style: ol.style.Style): ol.layer.Vector {
-    //     let options = {
-    //         wrapX: false
-    //     };
-    //     let vLayer = new ol.layer.Vector({
-    //         source: new ol.source.Vector(options),
-    //         style: style
-    //     });
-    //     return <ol.layer.Vector>this.addLayer(vLayer);
-    // }
+    addLayerForOptions(options: any) {
+        if (options['type'] === 'WMS') {
+            let wmsLayer = this.addLayer(
+                this.wmsSource.createLayer(
+                    Ol4Map.getUuid('olay-'),
+                    options,
+                    this.olMap.getView().getProjection(),
+                    options['visible'],
+                    parseFloat(options['opacity'])
+                )
+            );
+        } else {
+            console.error(options['type'] + ' is not supported.');
+        }
+    }
 
     addLayer(layer: ol.layer.Base): ol.layer.Base {
-        // layer.set(UUID, Ol4Map.getUuid('olay-'));
-        // if (title) {
-        //     layer.set(TITLE, title);
-        // }
         if (layer instanceof ol.layer.Image) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
