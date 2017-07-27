@@ -85,7 +85,7 @@ class MetadataVoter extends Voter
         }
 
         // Same group?
-        if (isset($subject['_groups'])) {
+        if ($user instanceof User && isset($subject['_groups'])) {
             foreach ($user->getRoles() as $role) {
                 if (in_array($role, $subject['_groups'])) {
                     return true;
