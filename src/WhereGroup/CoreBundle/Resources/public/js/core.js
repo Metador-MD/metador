@@ -50,3 +50,9 @@ Metador.prototype = {
 };
 
 var metador = new Metador();
+
+$( document ).ajaxStart(function() {
+    $('.-js-progress').addClass('act');
+}).ajaxStop(function() {
+    $('.-js-progress').removeClass('act');
+});
