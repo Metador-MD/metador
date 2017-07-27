@@ -100,3 +100,41 @@
         }
     }
 }
+
+.md {
+    .progressbar {
+        height: 3px;
+        width: 100%;
+        background-color: #EEE;
+        clear: both;
+        //margin: 10px 0 ;
+    }
+
+    .progress.act {
+        background: $primary;
+        height: 3px;
+        width: 0%;
+        max-width: 100%;
+        float: left;
+        -webkit-animation: progress 2s 1 forwards;
+        -moz-animation: progress 2s 1 forwards;
+        -ms-animation: progress 2s 1 forwards;
+        animation: progress 2s 1 forwards;
+    }
+
+    @-webkit-keyframes progress {
+        from { } to { width: 100% }
+    }
+
+    @-moz-keyframes progress {
+        from { } to { width: 100% }
+    }
+
+    @-ms-keyframes progress {
+        from { } to { width: 100% }
+    }
+
+    @keyframes progress {
+        from { } to { width: 100% }
+    }
+}

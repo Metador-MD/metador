@@ -5,9 +5,11 @@
 {% block body %}
     {% set systemMessage = get_setting('system_message') %}
     <div class="md {% if systemMessage %}sys-msg{% endif %}">
+        <div class="progressbar"><div class="progress -js-progress"></div></div>
         {% if systemMessage %}
             <div class="sys-msg-text -js-sys-msg">
                 <div class="sys-msg-text-content">{{ systemMessage|md2html }}</div>
+                <div class="progressbar"><div class="progress -js-progress"></div></div>
             </div>
         {% endif %}
         <div class="main">
