@@ -46,13 +46,19 @@ Metador.prototype = {
 
     changeLocation: function (url) {
         window.history.replaceState("", null, url);
+    },
+    preloaderStart: function () {
+        $('.-js-progress').addClass('act');
+    },
+    preloaderStop: function() {
+        $('.-js-progress').removeClass('act');
     }
 };
 
 var metador = new Metador();
 
 $( document ).ajaxStart(function() {
-    $('.-js-progress').addClass('act');
+    metador.preloaderStart();
 }).ajaxStop(function() {
-    $('.-js-progress').removeClass('act');
+    metador.preloaderStop();
 });
