@@ -173,7 +173,7 @@ export class MapActivity {
     private static _instance: MapActivity;
     private layers: any = {};
     private isLoading: boolean = false;
-    
+
     private constructor() {
     }
 
