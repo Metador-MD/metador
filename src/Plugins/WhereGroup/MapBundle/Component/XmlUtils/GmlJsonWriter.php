@@ -99,7 +99,7 @@ class GmlJsonWriter implements IContextWriter
 //                $json['type'] = self::MULTIPOLYGON;
 //                return $this->createJson($coords, self::MULTIPOLYGON);
             default:
-                throw new \Exception('not yet implemented gml type:'.$c[xaar::KEY_NAME]);
+                throw new \Exception('Der Geometrietyp ist nicht unterstützt:'.$c[xaar::KEY_NAME]);
         }
     }
 

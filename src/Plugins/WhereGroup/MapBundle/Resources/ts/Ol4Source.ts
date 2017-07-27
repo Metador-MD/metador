@@ -79,11 +79,15 @@ export class Ol4WmsSource implements Ol4Source {
     private ol4Map: Ol4Map;
     private useLoadEvents: boolean;
     private layertree: LayerTree;
+    private static mapActivity: MapActivity;
 
     private constructor(ol4Map: Ol4Map, useLoadEvents: boolean = true, layertree: LayerTree = null) {
         this.ol4Map = ol4Map;
         this.useLoadEvents = useLoadEvents;
         this.layertree = layertree;
+        if (this.useLoadEvents) {
+            Ol4WmsSource.mapActivity = MapActivity.create();
+        }
     }
 
     static create(ol4Map: Ol4Map, useLoadEvents: boolean = true, layertree: LayerTree = null): Ol4WmsSource {
@@ -144,15 +148,69 @@ export class Ol4WmsSource implements Ol4Source {
     }
 
     static imageLoadStart(e: ol.source.ImageEvent) {
-        console.log('start', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        // console.log('start', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        if(Ol4WmsSource.mapActivity) {
+            Ol4WmsSource.mapActivity.loadStart((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        }
     }
 
     static imageLoadEnd(e: ol.source.ImageEvent) {
-        console.log('end', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        // console.log('end', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        if(Ol4WmsSource.mapActivity) {
+            Ol4WmsSource.mapActivity.loadEnd((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        }
     }
 
     static imageLoadError(e: ol.source.ImageEvent) {
-        console.log('error', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
-        // (<ol.source.ImageWMS>e.target).refresh();
+        // console.log('error', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        if(Ol4WmsSource.mapActivity) {
+            Ol4WmsSource.mapActivity.loadError((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        }
+    }
+}
+
+export class MapActivity {
+    private static _instance: MapActivity;
+    private layers: any = {};
+    private isLoading: boolean = false;
+    private constructor() {
+    }
+
+    static create(): MapActivity {
+        if (!MapActivity._instance) {// singleton
+            MapActivity._instance = new MapActivity();
+        }
+        return MapActivity._instance;
+    }
+
+    private activityStart(layerName: string) {
+        this.layers[layerName] = true;
+        if (this.isLoading === false) {
+            this.isLoading = true;
+            window['metador'].preloaderStart();
+        }
+    }
+
+    private activityEnd(layerName: string) {
+        if (this.layers[layerName]) {
+            delete this.layers[layerName];
+        }
+        for(let layerN in this.layers) {
+            return;
+        }
+        this.isLoading = false;
+        window['metador'].preloaderStop();
+    }
+
+    loadStart(layerName: string) {
+        this.activityStart(layerName);
+    }
+
+    loadEnd(layerName: string) {
+        this.activityEnd(layerName);
+    }
+
+    loadError(layerName: string) {
+        this.activityEnd(layerName);
     }
 }
