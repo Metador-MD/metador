@@ -4,6 +4,7 @@ namespace Plugins\WhereGroup\MapBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Plugins\WhereGroup\MapBundle\Entity\Wms as WmsEntity;
+use WhereGroup\CoreBundle\Component\Utils\Browser;
 
 /**
  * Class WmsLoader
@@ -14,12 +15,19 @@ class Map implements MapInterface
     /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository */
     protected $repo = null;
 
+    /** @var Browser $browser  */
+    protected $browser = null;
+
     const ENTITY = "MetadorMapBundle:Wms";
 
-    /** @param EntityManagerInterface $em */
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @param EntityManagerInterface $em
+     * @param Browser $browser
+     */
+    public function __construct(EntityManagerInterface $em, Browser $browser)
     {
         $this->repo = $em->getRepository(self::ENTITY);
+        $this->browser = $browser;
     }
 
     public function __destruct()
@@ -88,9 +96,10 @@ class Map implements MapInterface
      * @return bool|string
      * @throws \Exception
      */
-    private static function getContent($url)
+    private function getContent($url)
     {
-        $content = @file_get_contents($url);
+        $content = $this->browser->get($url);
+
         if ($content === false) {
             throw new \Exception('Die URL liefert keine Daten.');
         }
