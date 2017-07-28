@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils;
 
-use Rhumsaa\Uuid\Console\Exception;
 use WhereGroup\CoreBundle\Component\Configuration;
 
 /**
