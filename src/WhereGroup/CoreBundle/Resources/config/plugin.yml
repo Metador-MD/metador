@@ -15,3 +15,15 @@ metador_core:
             type: text
             label: Systemmeldung
             description: Zum setzten von Systemmeldung, Text eingeben und speichern. Markdown wird unterstützt.
+        proxy_host:
+            type: string
+            label: Proxy Host
+        proxy_port:
+            type: string
+            label: Proxy Port
+        proxy_user:
+            type: string
+            label: Proxy User
+        proxy_pass:
+            type: string
+            label: Proxy Password
