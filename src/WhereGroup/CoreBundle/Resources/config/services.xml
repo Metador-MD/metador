@@ -35,6 +35,7 @@
         <parameter key="metador.twig.settings.class">WhereGroup\CoreBundle\Twig\Extension\SettingsExtension</parameter>
         <parameter key="metador.twig.markdown.class">WhereGroup\CoreBundle\Twig\Extension\MarkdownExtension</parameter>
         <parameter key="metador.twig.metadata.class">WhereGroup\CoreBundle\Twig\Extension\MetadataExtension</parameter>
+        <parameter key="metador.twig.array.class">WhereGroup\CoreBundle\Twig\Extension\ArrayExtension</parameter>
 
         <!-- VOTER -->
         <parameter key="metador.metadata.voter.class">WhereGroup\CoreBundle\Security\MetadataVoter</parameter>
@@ -144,8 +145,11 @@
             <argument type="service" id="metador_markdown" />
             <tag name="twig.extension" />
         </service>
-        <service id="metador.metadata.markdown" class="%metador.twig.metadata.class%">
+        <service id="metador.twig.metadata" class="%metador.twig.metadata.class%">
             <argument type="service" id="metador_user" />
+            <tag name="twig.extension" />
+        </service>
+        <service id="metador.twig.array" class="%metador.twig.array.class%">
             <tag name="twig.extension" />
         </service>
 

@@ -11,15 +11,16 @@ class ArrayParser
     /**
      * @param array $array
      * @param $path
+     * @param null $default
      * @return array|null
      */
-    public static function get(array $array, $path)
+    public static function get(array $array, $path, $default = null)
     {
         if (empty($path) || trim($path) === "") {
             return $array;
         }
 
-        return self::arrayGet($array, self::explodePath($path));
+        return self::arrayGet($array, self::explodePath($path), $default);
     }
 
     /**
@@ -145,9 +146,10 @@ class ArrayParser
     /**
      * @param $array
      * @param $keys
+     * @param null $default
      * @return null
      */
-    private static function arrayGet($array, $keys)
+    private static function arrayGet($array, $keys, $default = null)
     {
         $key = array_shift($keys);
 
@@ -157,7 +159,7 @@ class ArrayParser
             return self::arrayGet($array[$key], $keys);
         }
 
-        return null;
+        return $default;
     }
 
     /**
