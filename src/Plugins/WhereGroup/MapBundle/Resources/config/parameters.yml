@@ -1,0 +1,8 @@
+parameters:
+    map_shape_epsg:
+        "ETRS89_UTM_zone_32N": "EPSG:25832"
+        "ETRS_1989_UTM_Zone_32N": "EPSG:25832"
+#        "undefined": "EPSG:4326"
+#        "undefined": "EPSG:4258"
+#        "undefined": "EPSG:31466"
+#        "undefined": "EPSG:31467"
