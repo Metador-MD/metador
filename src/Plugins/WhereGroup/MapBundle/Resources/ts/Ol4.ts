@@ -172,16 +172,23 @@ export class Ol4Map {
         this.scales = options['view']['scales'];
         this.startExtent = Ol4Extent.fromArray(options['view']['startExtent'], proj);
         this.maxExtent = Ol4Extent.fromArray(options['view']['maxExtent'], proj);
+        var interactions = ol.interaction.defaults(
+            {
+                altShiftDragRotate: false,
+                pinchRotate: false
+            }
+        );
         this.olMap = new ol.Map({
+            interactions: interactions,
             target: options['map']['target'],
             renderer: 'canvas'
         });
         this.olMap.setView(
-            new ol.View({
-                projection: proj,
-                resolutions: Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse(),
-                extent: this.maxExtent.getExtent(proj)
-            })
+            this.createView(
+                proj,
+                this.maxExtent.getExtent(proj),
+                Ol4Utils.resolutionsForScales(this.scales, proj.getUnits()).reverse()
+            )
         );
         /* make a group layer for all image layers (WMS etc.)*/
         let imageGroup = new ol.layer.Group(
@@ -248,6 +255,14 @@ export class Ol4Map {
         );
         vLayer.setMap(this.olMap);
         this.drawer = new Ol4Drawer(vLayer);
+    }
+
+    private createView(proj: ol.proj.Projection, extent: ol.Extent, resolutions: number[]) {
+        return new ol.View({
+            projection: proj,
+            resolutions: resolutions,
+            extent: extent
+        });
     }
 
     zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent) {
@@ -346,16 +361,16 @@ export class Ol4Map {
             );
             let fromProj = this.getProjection();
             let center = this.olMap.getView().getCenter();
-            let newView = new ol.View({
-                projection: toProj,
-                resolutions: Ol4Utils.resolutionsForScales(this.scales, toProj.getUnits()).reverse(),
-                extent: this.maxExtent.getExtent(toProj)
-            });
             let layers = (<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers().getArray();
             this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers(), fromProj, toProj);
             this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_VECTOR)).getLayers(), fromProj, toProj);
-
-            this.olMap.setView(newView);
+            this.olMap.setView(
+                this.createView(
+                    toProj,
+                    this.maxExtent.getExtent(toProj),
+                    Ol4Utils.resolutionsForScales(this.scales, toProj.getUnits()).reverse()
+                )
+            );
             this.zoomToExtent(extent.getPolygonForExtent(toProj));
         }
     }
