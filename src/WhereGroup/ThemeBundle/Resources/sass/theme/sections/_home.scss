@@ -24,6 +24,22 @@ $home-menu-height: 35px;
 
     & > .map {
         @include pos($large-item-height, 0, 0, 0);
+        /* start position for map buttons */
+        & .ol-control.ol-zoom {
+            right: 8px;
+            left: auto;
+            top: 28px;
+        }
+        & .ol-control.ol-zoom-extent {
+            right: 8px;
+            left: auto;
+            top: 90px;
+        }
+        & .ol-scale-line{
+            left: auto;
+            right: 8px;
+        }
+        /* end position for map buttons */
     }
 
     .map-dialog-left-menu {

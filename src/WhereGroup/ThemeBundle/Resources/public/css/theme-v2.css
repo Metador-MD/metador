@@ -2846,6 +2846,20 @@ input.input-element, .md input.btn {
   right: 0;
   bottom: 0; }
 
+.md .map-dialog > .map .ol-control.ol-zoom {
+  right: 8px;
+  left: auto;
+  top: 28px; }
+
+.md .map-dialog > .map .ol-control.ol-zoom-extent {
+  right: 8px;
+  left: auto;
+  top: 90px; }
+
+.md .map-dialog > .map .ol-scale-line {
+  left: auto;
+  right: 8px; }
+
 .md .map-dialog .map-dialog-left-menu {
   z-index: 1;
   width: 0;

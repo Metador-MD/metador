@@ -172,16 +172,18 @@ export class Ol4Map {
         this.scales = options['view']['scales'];
         this.startExtent = Ol4Extent.fromArray(options['view']['startExtent'], proj);
         this.maxExtent = Ol4Extent.fromArray(options['view']['maxExtent'], proj);
-        var interactions = ol.interaction.defaults(
+        let interactions = ol.interaction.defaults(
             {
                 altShiftDragRotate: false,
                 pinchRotate: false
             }
         );
+        let controls = ol.control.defaults({ attribution: false });//.extend([attribution])
         this.olMap = new ol.Map({
             interactions: interactions,
             target: options['map']['target'],
-            renderer: 'canvas'
+            renderer: 'canvas',
+            controls: controls
         });
         this.olMap.setView(
             this.createView(
@@ -191,19 +193,15 @@ export class Ol4Map {
             )
         );
         /* make a group layer for all image layers (WMS etc.)*/
-        let imageGroup = new ol.layer.Group(
-            {
-                layers: new ol.Collection<ol.layer.Base>()
-            }
-        );
+        let imageGroup = new ol.layer.Group({
+            layers: new ol.Collection<ol.layer.Base>()
+        });
         imageGroup.set(UUID, LAYER_IMAGE)
         this.olMap.addLayer(imageGroup);
         /* make a group layer for all vector layers (Hightlight, Search results etc.)*/
-        let vectorGroup = new ol.layer.Group(
-            {
-                layers: new ol.Collection<ol.layer.Base>()
-            }
-        );
+        let vectorGroup = new ol.layer.Group({
+            layers: new ol.Collection<ol.layer.Base>()
+        });
         vectorGroup.set(UUID, LAYER_VECTOR)
         this.olMap.addLayer(vectorGroup);
 
