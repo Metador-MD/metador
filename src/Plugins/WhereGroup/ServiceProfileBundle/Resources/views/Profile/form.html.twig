@@ -2,23 +2,17 @@
 
 {% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
 
-{% set metadataId     = p['_id'] is defined and p['_id'] is not empty ? p['_id'] : '' %}
-{% set metadataUuid   = p['_uuid'] is defined and p['_uuid'] is not empty ? p['_uuid'] : '' %}
-{% set metadataSource = p['_source'] is defined and p['_source'] is not empty ? p['_source'] : '' %}
-{% set metadataProfil = p['_profile'] is defined and p['_profile'] is not empty ? p['_profile'] : '' %}
-
 {% block center %}
-<form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
-    <input type="hidden" name="p[_id]" value="{{ metadataId }}" />
-    <input type="hidden" name="p[_uuid]" value="{{ metadataUuid }}" />
-    <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
-    <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
+<form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
+    <input type="hidden" name="p[_id]" value="{{ array_get(p, '_id', '') }}" />
+    <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
+    <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
+    <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
     <input type="hidden" name="p[hierarchyLevel]" value="service" />
 
     <div class="center menu">
         <div class="center-left">
             {% include '@MetadorBasicProfile/Profile/metadataSettings.html.twig' %}
-
             <ul class="left-menu">
                 <li data-mdtab="metadata" id="tab-metadata" class="act">
                     <span>{% trans %}Metadatensatz{% endtrans %}</span>
@@ -115,7 +109,7 @@
 {% block javascript %}
     {{ parent() }}
     <script>
-        var validation = {{ read_validation_rules(metadataProfil) }};
+        var validation = {{ read_validation_rules(array_get(p, '_profile', '')) }};
     </script>
     <script src="{{ asset('bundles/metadorbasicprofile/multiinput.js') }}"></script>
     <script src="{{ asset('bundles/metadorbasicprofile/multiform.js') }}"></script>
