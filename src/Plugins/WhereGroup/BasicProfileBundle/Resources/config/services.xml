@@ -4,15 +4,28 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <!-- EVENTLISTENER -->
+        <parameter key="wheregroup.lists.app.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\ApplicationListener</parameter>
+
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.validation.class">Plugins\WhereGroup\BasicProfileBundle\Twig\Extension\ValidationExtension</parameter>
+        <parameter key="metador.twig.lists.class">Plugins\WhereGroup\BasicProfileBundle\Twig\Extension\ListsExtension</parameter>
     </parameters>
 
     <services>
+        <!-- EVENTLISTENER -->
+        <service id="metador_lists_app_listener" class="%wheregroup.lists.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+        </service>
+
         <!-- TWIG EXTENSION -->
         <service id="metador.twig.validation" class="%metador.twig.validation.class%">
             <argument type="service" id="metador_plugin" />
             <argument type="service" id="translator.default" />
+            <tag name="twig.extension" />
+        </service>
+        <service id="metador.twig.lists" class="%metador.twig.lists.class%">
+            <argument type="service" id="metador_configuration" />
             <tag name="twig.extension" />
         </service>
     </services>

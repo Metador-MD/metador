@@ -1,0 +1,4 @@
+metador_logging:
+    resource: "@MetadorBasicProfileBundle/Controller/"
+    type:     annotation
+    prefix:   /
