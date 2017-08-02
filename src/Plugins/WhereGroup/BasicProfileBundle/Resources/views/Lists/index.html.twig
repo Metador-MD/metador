@@ -1,0 +1,33 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}Auswahllisten{% endblock %}
+
+{% block content %}
+    <h1 class="title">Auswahllisten</h1>
+
+    <hr class="line-separator" />
+
+
+    <table id="table-log" class="table bordered small">
+        <thead>
+        <tr>
+            <th>Plugin-Key</th>
+            <th>Key</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, list in lists %}
+            {% for item in list %}
+                <tr>
+                    <td>
+                        <a href="{{ path('metador_admin_lists_edit', { 'profile': key, 'key': item.key }) }}">{{ key }}</a>
+                    </td>
+                    <td>{{ item.key }}</td>
+                    <td>{{ item.value|length }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
