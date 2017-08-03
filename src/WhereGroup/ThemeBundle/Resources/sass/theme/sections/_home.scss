@@ -39,6 +39,33 @@ $home-menu-height: 35px;
             left: auto;
             right: 8px;
         }
+        & .tooltip {
+            position: relative;
+            background: rgba(0, 60, 136, 0.5); // ol button bgcolor
+            border-radius: 4px;
+            color: white; // ol button color
+            padding: 4px 8px;
+            white-space: nowrap;
+            border: 1px solid white;
+            & span {
+                display: block;
+                cursor: pointer;
+            }
+        }
+        & .tooltip:before {
+            border-top: 6px solid rgba(0, 0, 0, 0.5);
+            border-right: 6px solid transparent;
+            border-left: 6px solid transparent;
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            margin-left: -7px;
+            left: 50%;
+            border-top-color: rgba(0, 60, 136, 0.5);
+        }
+        & .hidden {
+            display: none;
+        }
         /* end position for map buttons */
     }
 

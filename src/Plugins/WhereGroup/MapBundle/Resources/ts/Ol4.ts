@@ -1,15 +1,15 @@
-import * as openlayers4 from 'openlayers';
-// import * as jquery from 'jquery';
+import * as ol4 from 'openlayers';// ???
+// import * as jquery from 'jquery'; //error in index.d.ts for @types/jquery
 import {LayerTree} from './LayerTree';
+import {DragZoom} from './DragZoom';
 import {Ol4Source, Ol4VectorSource, Ol4WmsSource} from "./Ol4Source"
+import {FeatureInfo} from "./FeatureInfo";
 
 declare class proj4 {
     static defs(name: string, def: string): void;
 }
 
-
 // declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
-
 export class Ol4Utils {
     /* 
      * units: 'degrees'|'ft'|'m'|'us-ft'
@@ -143,18 +143,20 @@ export const LAYER_IMAGE = 'image';
 export class Ol4Map {
     private static _uuid = 0;
     private static _instance: Ol4Map = null; // singleton
-    protected olMap: ol.Map = null;
-    protected scales: number[];
+    private olMap: ol.Map = null;
+    private scales: number[];
     //    protected proj: ol.proj.Projection = null;
-    protected startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
-    protected maxExtent: Ol4Extent = null;
-    protected drawer: Ol4Drawer;
-    protected wmsSource: Ol4WmsSource;
-    protected vecSource: Ol4VectorSource;
+    private startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
+    private maxExtent: Ol4Extent = null;
+    private drawer: Ol4Drawer;
+    private wmsSource: Ol4WmsSource;
+    private vecSource: Ol4VectorSource;
     private layertree: LayerTree;
-    protected styles: Object;
-    protected hgLayer: ol.layer.Vector;
-    protected dragzoom: ol.interaction.DragZoom;
+    private styles: Object;
+    private hgLayer: ol.layer.Vector;
+    // protected dragzoom: ol.interaction.DragZoom;
+    private dragzoom: DragZoom;
+    private featureInfo: FeatureInfo;
 
     private static getUuid(prefix: string = ''): string {
         return prefix + (++Ol4Map._uuid);
@@ -205,7 +207,6 @@ export class Ol4Map {
         vectorGroup.set(UUID, LAYER_VECTOR)
         this.olMap.addLayer(vectorGroup);
 
-
         for (let sourceOptions of options['source']) {
             if (sourceOptions['type'] === 'WMS') {
                 let wmsLayer = this.addLayer(
@@ -253,6 +254,8 @@ export class Ol4Map {
         );
         vLayer.setMap(this.olMap);
         this.drawer = new Ol4Drawer(vLayer);
+        this.dragzoom = new DragZoom(this.olMap);
+        this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
     }
 
     private createView(proj: ol.proj.Projection, extent: ol.Extent, resolutions: number[]) {
@@ -400,31 +403,13 @@ export class Ol4Map {
             layer.setOpacity(opacity);
         }
     }
-
-    dragZoom(activate: boolean, onZoomEnd: Function = null) {
-        if (!this.dragzoom) {
-            this.dragzoom = new ol.interaction.DragZoom({
-                condition: function () {
-                    return true;
-                }
-            });
-            let dragzoom = this.dragzoom;
-            let map = this.olMap;
-            this.dragzoom.on('boxend',
-                function (event: ol.interaction.Draw.Event) {
-                    map.removeInteraction(dragzoom);
-                    if (onZoomEnd) {
-                        onZoomEnd();
-                    }
-                });
-        }
-        if (activate) {
-            this.olMap.addInteraction(this.dragzoom);
-        } else {
-            this.olMap.removeInteraction(this.dragzoom);
-        }
+    clearFeatures() {
+        this.vecSource.clearFeatures(this.hgLayer);
     }
 
+    showFeatures(geoJson: Object) {
+        this.vecSource.showFeatures(this.hgLayer, geoJson);
+    }
     drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
@@ -542,11 +527,6 @@ export function createBox() {
             return geometry;
         }
     );
-};
-
-
-export class UiUtils {
-
 }
 
 export class GeomLoader {

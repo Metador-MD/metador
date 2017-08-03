@@ -130,15 +130,6 @@ export class Ol4WmsSource implements Ol4Source {
         (<ol.layer.Layer>layer).setSource(this.createSource(layer.get(UUID), oldsource.getUrl(), oldsource.getParams(), toProj));
     }
 
-    //
-    // showLayer(){
-    //
-    // }
-    //
-    // hideLayer(){
-    //
-    // }
-
     private setLoadEvents(source: ol.source.ImageWMS) {
         if (this.useLoadEvents) {
             source.on('imageloadstart', Ol4WmsSource.imageLoadStart);
