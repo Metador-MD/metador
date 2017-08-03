@@ -76,7 +76,7 @@ export class LayerTree {
 
     private addOpacity(layerNode: HTMLElement, layer: ol.layer.Base): void {
         let select = dom.create('select', {},
-            ['input-element', 'medium', 'simple', 'js-map-source-opacity', '-js-map-source-opacity']);
+            ['input-element', 'medium', 'simple', 'map-source-opacity', '-js-map-source-opacity']);
 
         for (var i = 0; i <= 10; i++) {
             select.appendChild(dom.create('option', {'value': i / 10}, [], (i * 10) + ' %'));
