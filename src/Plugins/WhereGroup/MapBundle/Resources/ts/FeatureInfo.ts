@@ -20,7 +20,7 @@ export class FeatureInfo {
     }
 
     private buttonClick(e) {
-        if (!dom.hasClass(e.target, 'success')) {
+        if (!dom.hasClass(e.currentTarget, 'success')) {
             this.activate();
         } else {
             this.deactivate();
@@ -42,9 +42,9 @@ export class FeatureInfo {
 
     private deactivate() {
         dom.removeClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
-        this.olMap.removeOverlay(this.tooltip);
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();
+        this.olMap.removeOverlay(this.tooltip);
         this.olMap.un('click', this.mapClick, this);
     }
 
