@@ -2542,8 +2542,7 @@ input.input-element, .md input.btn {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a,
-.dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3020,6 +3019,47 @@ input.input-element, .md input.btn {
   right: 0;
   bottom: 0; }
 
+.md .map-dialog > .map .ol-control.ol-zoom {
+  right: 8px;
+  left: auto;
+  top: 28px; }
+
+.md .map-dialog > .map .ol-control.ol-zoom-extent {
+  right: 8px;
+  left: auto;
+  top: 90px; }
+
+.md .map-dialog > .map .ol-scale-line {
+  left: auto;
+  right: 8px; }
+
+.md .map-dialog > .map .tooltip {
+  position: relative;
+  background: rgba(0, 60, 136, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  white-space: nowrap;
+  border: 1px solid white; }
+
+.md .map-dialog > .map .tooltip span {
+  display: block;
+  cursor: pointer; }
+
+.md .map-dialog > .map .tooltip:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+  border-top-color: rgba(0, 60, 136, 0.5); }
+
+.md .map-dialog > .map .hidden {
+  display: none; }
+
 .md .map-dialog .map-dialog-left-menu {
   z-index: 1;
   width: 0;
@@ -3171,7 +3211,7 @@ input.input-element, .md input.btn {
   background-color: #e5f3ff;
   margin-left: 10px; }
 
-.md .js-map-source-opacity {
+.md .map-source-opacity {
   float: right; }
 
 .md .file-upload {
