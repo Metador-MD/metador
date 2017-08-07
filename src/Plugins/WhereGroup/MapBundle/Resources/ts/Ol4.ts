@@ -180,7 +180,7 @@ export class Ol4Map {
                 pinchRotate: false
             }
         );
-        let controls = ol.control.defaults({ attribution: false });//.extend([attribution])
+        let controls = ol.control.defaults({attribution: false});//.extend([attribution])
         this.olMap = new ol.Map({
             interactions: interactions,
             target: options['map']['target'],
@@ -258,12 +258,12 @@ export class Ol4Map {
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
     }
 
-    getLayerTree(): LayerTree{
+    getLayerTree(): LayerTree {
         return this.layertree;
     }
 
     private addIntoLayerTree(layer: ol.layer.Base) {
-        if(this.layertree) {
+        if (this.layertree) {
             this.layertree.add(layer);
         }
     }
@@ -329,7 +329,7 @@ export class Ol4Map {
         } else {
             return null;
         }
-        if(addToLayertree) {
+        if (addToLayertree) {
             this.addIntoLayerTree(layer);
         }
         return layer;
@@ -392,6 +392,7 @@ export class Ol4Map {
             this.zoomToExtent(extent.getPolygonForExtent(toProj));
         }
     }
+
     private changeForVLayers(layers: ol.Collection<ol.layer.Base>, fromProj, toProj) {
         for (let layer of layers.getArray()) {
             this.vecSource.reprojectionSource(layer, fromProj, toProj);
@@ -420,6 +421,7 @@ export class Ol4Map {
             _layer.setOpacity(opacity);
         }
     }
+
     clearFeatures() {
         this.vecSource.clearFeatures(this.hgLayer);
     }
@@ -427,6 +429,7 @@ export class Ol4Map {
     showFeatures(geoJson: Object) {
         this.vecSource.showFeatures(this.hgLayer, geoJson);
     }
+
     drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
@@ -435,7 +438,17 @@ export class Ol4Map {
         if (onDrawEnd !== null) {
             onDrawEnd(geoJson);
         }
-        this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
+        let multiPoint: ol.geom.MultiPoint = <ol.geom.MultiPoint> Ol4Extent.fromArray(
+            this.drawer.getLayer().getSource().getExtent(),
+            this.olMap.getView().getProjection()
+        ).getGeom();
+        let maxextent = this.maxExtent.getPolygonForExtent(this.olMap.getView().getProjection());
+        if (maxextent.intersectsCoordinate(multiPoint.getPoint(0).getCoordinates())
+            && maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
+            this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
+        } else {
+            metador.displayError('Die Geometrie ist außerhalb der räumlichen Erstreckung.');
+        }
     }
 
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
@@ -571,3 +584,5 @@ export class GeomLoader {
         //     });
     }
 }
+
+declare var metador: any;
