@@ -2542,8 +2542,7 @@ input.input-element, .md input.btn {
   background-color: #fbe8e3;
   border: 1px solid #f4c4b7; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a,
-.dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3171,7 +3170,7 @@ input.input-element, .md input.btn {
   background-color: #e5f3ff;
   margin-left: 10px; }
 
-.md .js-map-source-opacity {
+.md .map-source-opacity {
   float: right; }
 
 .md .file-upload {
