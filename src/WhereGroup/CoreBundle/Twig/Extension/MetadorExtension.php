@@ -27,6 +27,7 @@ class MetadorExtension extends \Twig_Extension
             new \Twig_SimpleFilter('md_obj_id', array($this, 'getObjectId'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('md_boolean', array($this, 'booleanFilter')),
+            new \Twig_SimpleFilter('md_array_path', array($this, 'arrayPath')),
         );
     }
 
@@ -76,6 +77,23 @@ class MetadorExtension extends \Twig_Extension
         }
 
         return "Nein";
+    }
+
+    /**
+     * @param $string
+     * @return mixed
+     */
+    public function arrayPath($string)
+    {
+        preg_match('/^p\[(.+)\]$/', $string, $match);
+
+        if (empty($match[1])) {
+            return '';
+        }
+
+        $string = str_replace(array(']['), ':', $match[1]);
+
+        return trim($string, ':');
     }
 
     /**
