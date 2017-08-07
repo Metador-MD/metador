@@ -16,13 +16,15 @@ class ApplicationListener
 {
     /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\Plugins\WhereGroup\MapBundle\Entity\WmsRepository */
     protected $repo = null;
+    protected $env = null;
 
     const ENTITY = "MetadorMapBundle:Wms";
 
     /** @param EntityManagerInterface $em */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, $env)
     {
         $this->repo = $em->getRepository(self::ENTITY);
+        $this->env = $env;
     }
 
     /**
@@ -44,10 +46,20 @@ class ApplicationListener
         }
 
         if ($app->isRoute('metador_home')) {
+            if ($this->env === 'dev') {
+                $app->add($app->get('Script')->file('assets/vendor/OpenLayers/ol-debug.js'));
+            } else {
+                $app->add($app->get('Script')->file('assets/vendor/OpenLayers/ol.js'));
+            }
+
             $app->add(
-                $app->get('Configuration')
+                $app
+                    ->get('Configuration')
                     ->parameter('map_background', json_encode($this->repo->all(), JSON_FORCE_OBJECT))
-            );
+            )
+            ->add($app->get('Style')->file('bundles/metadormap/css/map.css'))
+            ->add($app->get('Script')->file('bundles/metadormap/js/map.js'))
+            ->add($app->get('Script')->file('bundles/metadormap/js/map-ui.js'));
         }
     }
 }
