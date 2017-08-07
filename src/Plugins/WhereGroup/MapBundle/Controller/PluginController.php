@@ -8,6 +8,7 @@ use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\GmlJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
+use Rhumsaa\Uuid\Console\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -216,6 +217,10 @@ class PluginController extends Controller
                     );
                     $prj = $shapeFile->getPRJ();
                     $epsg = $this->findCrs($prj);
+                    if($epsg === null) {
+                        throw new \Exception('Das Koordinatenreferenzsystem kann nicht ermittelt werden'
+                        .' bzw. ist nicht unterstützt.');
+                    }
                     $shtype = $shapeFile->getShapeType();
                     if (!isset(self::$shapeSupportedTypes[$shtype])) {
                         throw new \Exception('Der Geometrietyp ist nicht unterstützt:'.$shtype);
@@ -312,13 +317,16 @@ class PluginController extends Controller
     {
         $help = $this->prepareStr($projDef);
         $map = $this->getParameter('map_shape_epsg');
+        if ($map === null){
+            throw new \Exception('Kein Koordinatreferenzsystem ist vorhanden.');
+        }
         foreach ($map as $key => $epsg) {
             if (strpos($help, $this->prepareStr($key)) !== false) {
                 return $epsg;
             }
         }
 
-        return 'undefined';
+        return null;
     }
 
     private function prepareStr($str)
