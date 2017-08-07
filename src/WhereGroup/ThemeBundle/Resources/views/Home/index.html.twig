@@ -52,8 +52,10 @@
 
 {% block javascript %}
     {{ parent() }}
-    <script src="{{ asset('bundles/metadormap/js/map.js') }}"></script>
-    <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
+    {% if plugin_is_active('metador_map') %}
+        <script src="{{ asset('bundles/metadormap/js/map.js') }}"></script>
+        <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
+    {% endif %}
     <script src="{{ asset('bundles/metadorcore/js/storage.js') }}"></script>
     <script src="{{ asset('bundles/metadorcore/js/search.js') }}"></script>
 {% endblock %}

@@ -8,7 +8,7 @@ Metador.prototype = {
     },
 
     parseResponse: function (data) {
-        if (typeof data.METADOR.runMethod !== 'undefined') {
+        if (data && data.METADOR && data.METADOR.runMethod) {
             $(data.METADOR.runMethod).each(function (index, params) {
                   if(typeof window[params.class][params.method] === 'function'){
                     window[params.class][params.method](params.argument);
