@@ -163,10 +163,10 @@ export class Ol4Map {
     }
 
     private constructor(options: any) { // singleton
-        // ol['ENABLE_RASTER_REPROJECTION'] = false;
+        ol['ENABLE_RASTER_REPROJECTION'] = false;
         Ol4Utils.initProj4Defs(options['proj4Defs']);
         this.layertree = LayerTree.create(this);
-        this.wmsSource = Ol4WmsSource.create(this, true, this.layertree);
+        this.wmsSource = Ol4WmsSource.create(this, true);
         this.vecSource = Ol4VectorSource.create(this);
         (<HTMLFormElement>document.querySelector('.-js-crs-code')).value = options['view']['projection'];
         let proj: ol.proj.Projection = ol.proj.get(options['view']['projection']);
@@ -216,7 +216,7 @@ export class Ol4Map {
                         this.olMap.getView().getProjection(),
                         sourceOptions['visible'],
                         parseFloat(sourceOptions['opacity'])
-                    )
+                    ), true
                 );
             } else {
                 console.error(sourceOptions['type'] + ' is not supported.');
@@ -258,6 +258,16 @@ export class Ol4Map {
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
     }
 
+    getLayerTree(): LayerTree{
+        return this.layertree;
+    }
+
+    private addIntoLayerTree(layer: ol.layer.Base) {
+        if(this.layertree) {
+            this.layertree.add(layer);
+        }
+    }
+
     private createView(proj: ol.proj.Projection, extent: ol.Extent, resolutions: number[]) {
         return new ol.View({
             projection: proj,
@@ -289,6 +299,10 @@ export class Ol4Map {
         return this.hgLayer;
     }
 
+    /**
+     * Adds a layer into a map.
+     * @param options
+     */
     addLayerForOptions(options: any) {
         if (options['type'] === 'WMS') {
             let wmsLayer = this.addLayer(
@@ -305,17 +319,20 @@ export class Ol4Map {
         }
     }
 
-    addLayer(layer: ol.layer.Base): ol.layer.Base {
+    addLayer(layer: ol.layer.Base, addToLayertree: boolean = false): ol.layer.Base {
         if (layer instanceof ol.layer.Image) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
-            return layer;
         } else if (layer instanceof ol.layer.Vector) {
             let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_VECTOR);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
-            return layer;
+        } else {
+            return null;
         }
-        return null;
+        if(addToLayertree) {
+            this.addIntoLayerTree(layer);
+        }
+        return layer;
     }
 
     removeLayer(layer: ol.layer.Base): void {
@@ -331,7 +348,7 @@ export class Ol4Map {
         }
     }
 
-    private findLayer(uuid: string): ol.layer.Base {
+    findLayer(uuid: string): ol.layer.Base {
         let layers = this.olMap.getLayers().getArray();
         for (let layer of layers) {
             let source: ol.source.Source;
@@ -361,10 +378,8 @@ export class Ol4Map {
                 this.getProjection()
             );
             let fromProj = this.getProjection();
-            let center = this.olMap.getView().getCenter();
-            let layers = (<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers().getArray();
-            this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers(), fromProj, toProj);
-            this.changeCrsList((<ol.layer.Group>this.findLayer(LAYER_VECTOR)).getLayers(), fromProj, toProj);
+            // let center = this.olMap.getView().getCenter();
+            // let layers = (<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers().getArray();
             this.olMap.setView(
                 this.createView(
                     toProj,
@@ -372,35 +387,37 @@ export class Ol4Map {
                     Ol4Utils.resolutionsForScales(this.scales, toProj.getUnits()).reverse()
                 )
             );
+            this.changeForILayersI((<ol.layer.Group>this.findLayer(LAYER_IMAGE)).getLayers(), fromProj, toProj);
+            this.changeForVLayers((<ol.layer.Group>this.findLayer(LAYER_VECTOR)).getLayers(), fromProj, toProj);
             this.zoomToExtent(extent.getPolygonForExtent(toProj));
         }
     }
-
-    private changeCrsList(layers: ol.Collection<ol.layer.Base>, fromProj, toProj) {
+    private changeForVLayers(layers: ol.Collection<ol.layer.Base>, fromProj, toProj) {
         for (let layer of layers.getArray()) {
-            let source: ol.source.Source;
-            if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.ImageWMS) {
-                this.wmsSource.refreshSource(<ol.layer.Image>layer, fromProj, toProj);
-            } else if ((source = (<ol.layer.Layer>layer).getSource()) instanceof ol.source.Vector) {
-                let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
-                for (let feature of features) {
-                    feature.setGeometry(feature.getGeometry().transform(fromProj, toProj));
-                }
-            }
+            this.vecSource.reprojectionSource(layer, fromProj, toProj);
         }
     }
 
-    setVisible(layerUiid: string, visiblity: boolean): void {
-        let layer: ol.layer.Base = this.findLayer(layerUiid);
-        if (layer) {
-            layer.setVisible(visiblity);
+    private changeForILayersI(layers: ol.Collection<ol.layer.Base>, fromProj, toProj) {
+        for (let layer of layers.getArray()) {
+            this.wmsSource.reprojectionSource(<ol.layer.Image>layer, fromProj, toProj);
+            let source = <ol.source.ImageWMS>(<ol.layer.Image>layer).getSource();
+            let ilf: ol.ImageLoadFunctionType = source.getImageLoadFunction();
+            source.setImageLoadFunction(ilf);
         }
     }
 
-    setOpacity(layerUiid: string, opacity: number): void {
-        let layer: ol.layer.Base = this.findLayer(layerUiid);
-        if (layer) {
-            layer.setOpacity(opacity);
+    setVisible(layer: ol.layer.Base | string, visiblity: boolean): void {
+        let _layer: ol.layer.Base = layer instanceof ol.layer.Base ? layer : this.findLayer(<string>layer);
+        if (_layer) {
+            _layer.setVisible(visiblity);
+        }
+    }
+
+    setOpacity(layer: ol.layer.Base | string, opacity: number): void {
+        let _layer: ol.layer.Base = layer instanceof ol.layer.Base ? layer : this.findLayer(<string>layer);
+        if (_layer) {
+            _layer.setOpacity(opacity);
         }
     }
     clearFeatures() {
