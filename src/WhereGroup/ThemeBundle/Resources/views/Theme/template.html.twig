@@ -68,7 +68,6 @@
     {% endif %}
 
     <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/theme-v2.css') }}">
 
     {# Load plugin css #}
     {% for item in applicationGet('app-css') %}
@@ -90,12 +89,12 @@
 {% block javascript %}
     {{ parent() }}
     <script src="{{ asset('public/app.min.js') }}"></script>
-    <script src="{{ asset('bundles/metadorcore/js/core.js') }}"></script>
     <script src="{{ asset('public/javascript/zebra_datepicker.js') }}"></script>
-    <script src="{{ asset('bundles/metadortheme/session.js') }}"></script>
-    <script src="{{ asset('bundles/metadortheme/ui.js') }}"></script>
-    <script src="{{ asset('bundles/metadortheme/ui/modal-dialog.js') }}"></script>
-    <script src="{{ asset('bundles/metadortheme/ui/tooltip.js') }}"></script>
+    <script src="{{ asset('bundles/metadorcore/js/core.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/js/session.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/js/ui.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/js/ui/modal-dialog.js') }}"></script>
+    <script src="{{ asset('bundles/metadortheme/js/ui/tooltip.js') }}"></script>
     {% for plugin, src in applicationGet('app-javascript') %}
         <script src="{{ asset(src) }}"></script>
     {% endfor %}
