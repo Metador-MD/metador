@@ -53,6 +53,11 @@
 {% block javascript %}
     {{ parent() }}
     {% if plugin_is_active('metador_map') %}
+        {% if app.environment == 'dev' %}
+            <script src="{{ asset('assets/vendor/OpenLayers/ol-debug.js') }}"></script>
+        {% else %}
+            <script src="{{ asset('assets/vendor/OpenLayers/ol.js') }}"></script>
+        {% endif %}
         <script src="{{ asset('bundles/metadormap/js/map.js') }}"></script>
         <script src="{{ asset('bundles/metadormap/js/map-ui.js') }}"></script>
     {% endif %}
