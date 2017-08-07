@@ -1,0 +1,27 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.md .icon {
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    @include normal-item(true, false);
+
+    &.small {
+        @include small-item(true, false);
+    }
+
+    &.medium {
+        @include medium-item(true, false);
+    }
+
+    &.large {
+        @include large-item(true, false);
+    }
+
+    &:hover {
+        background-color: lighten($border, 1%);
+    }
+}

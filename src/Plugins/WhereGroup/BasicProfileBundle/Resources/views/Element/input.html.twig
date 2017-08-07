@@ -10,7 +10,7 @@
     {% set class = class is defined ? class : '' %}
     {% set validatorSources = validatorSources is defined ? validatorSources : '' %}
 
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
+    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}:</label>
     <div class="form-field-wrapper i2 -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
         <input name="{{ id }}" id="{{ id|md_id }}" value="{{ value }}" data-validator-source="{{ validatorSources }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}" {% endif %}/>
