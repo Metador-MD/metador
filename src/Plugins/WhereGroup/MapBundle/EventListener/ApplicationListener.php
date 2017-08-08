@@ -47,9 +47,9 @@ class ApplicationListener
 
         if ($app->isRoute('metador_home')) {
             if ($this->env === 'dev') {
-                $app->add($app->get('Script')->file('assets/vendor/OpenLayers/ol-debug.js'));
+                $app->add($app->get('Script')->file('public/ol-debug.js'));
             } else {
-                $app->add($app->get('Script')->file('assets/vendor/OpenLayers/ol.js'));
+                $app->add($app->get('Script')->file('public/ol.js'));
             }
 
             $app->add(
