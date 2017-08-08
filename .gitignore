@@ -16,7 +16,8 @@ app/check.php
 
 # PROJECT FOLDERS
 app/config/parameters.yml
-bin
+bin/*
+!bin/console
 vendor
 web/bundles
 bower_components
