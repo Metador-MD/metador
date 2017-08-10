@@ -1,0 +1,17 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+<style>
+    .html-gap{
+        height: 10px;
+    }
+</style>
+{#{{ dump(p) }}#}
+<div class="center">
+    <div class="center-right">
+        <div class="content">
+            {% include '@MetadorServiceProfile/Export/view.html.twig' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

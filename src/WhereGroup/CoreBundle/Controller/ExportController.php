@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+use WhereGroup\CoreBundle\Component\PDFExport;
 
 /**
  * @Route("/public/export")
@@ -85,23 +86,14 @@ class ExportController extends Controller
             "p" => $p
         ));
 
+        /**
+         * Extract as Component PDFExporter
+         *
+         */
         error_reporting(E_ERROR);
-
-        require_once __DIR__ . '/../../../../vendor/tecnickcom/tcpdf/tcpdf.php';
-
-        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false, false);
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Metador');
-        $pdf->SetTitle($p['title']);
-        $pdf->SetSubject('Metadaten');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->SetMargins(20, 20, 15);
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
-        $pdf->setAutoPageBreak(true, 20);
-        $pdf->AddPage();
-        $pdf->writeHTML($html->getContent(), true, true, false, false, '');
-        $pdf->Output($p['_uuid'] . '.pdf', 'D');
+        $pdf = new PDFExport('P', 'mm', 'A4', true, 'UTF-8', false, false);
+        $pdf->setUUID($p['_uuid']);
+        $pdf->createPdf($html->getContent(), $p);
     }
 
     /**
@@ -120,7 +112,7 @@ class ExportController extends Controller
             ->get('metador_plugin')
             ->getPluginClassName($p['_profile']);
 
-        return $this->render($className . ":Export:view.html.twig", array(
+        return $this->render($className . ":Export:html.html.twig", array(
             "p" => $p
         ));
     }
