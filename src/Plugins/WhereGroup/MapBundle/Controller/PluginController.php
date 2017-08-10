@@ -8,6 +8,7 @@ use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\GmlJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
+use Rhumsaa\Uuid\Console\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,13 +28,10 @@ use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
  */
 class PluginController extends Controller
 {
-    static $crsMap = array(
-        "undefined" => "EPSG:4326",
-        "undefined" => "EPSG:4258",
-        "undefined" => "EPSG:31466",
-        "undefined" => "EPSG:31467",
-        "ETRS89_UTM_zone_32N" => "EPSG:25832",
-        "ETRS_1989_UTM_Zone_32N" => "EPSG:25832",
+    static $shapeSupportedTypes = array(
+        1 => 'Point',
+        3 => 'LineString',//'PolyLine',
+        5 => 'Polygon'
     );
 
     /**
@@ -219,12 +217,15 @@ class PluginController extends Controller
                     );
                     $prj = $shapeFile->getPRJ();
                     $epsg = $this->findCrs($prj);
+                    if($epsg === null) {
+                        throw new \Exception('Das Koordinatenreferenzsystem kann nicht ermittelt werden'
+                        .' bzw. ist nicht unterstützt.');
+                    }
                     $shtype = $shapeFile->getShapeType();
-                    $shape_types = $this->supportedTypes();
-                    if (!isset($shape_types[$shtype])) {
+                    if (!isset(self::$shapeSupportedTypes[$shtype])) {
                         throw new \Exception('Der Geometrietyp ist nicht unterstützt:'.$shtype);
                     }
-                    $type = $shape_types[$shtype];
+                    $type = self::$shapeSupportedTypes[$shtype];
                     $result['content'] = array(
                         "type" => "FeatureCollection",
                         "crs" => array(
@@ -315,13 +316,17 @@ class PluginController extends Controller
     private function findCrs($projDef)
     {
         $help = $this->prepareStr($projDef);
-        foreach (self::$crsMap as $key => $epsg) {
+        $map = $this->getParameter('map_shape_epsg');
+        if ($map === null){
+            throw new \Exception('Kein Koordinatreferenzsystem ist vorhanden.');
+        }
+        foreach ($map as $key => $epsg) {
             if (strpos($help, $this->prepareStr($key)) !== false) {
                 return $epsg;
             }
         }
 
-        return 'undefined';
+        return null;
     }
 
     private function prepareStr($str)
@@ -338,27 +343,6 @@ class PluginController extends Controller
 
         return rmdir($dir);
     }
-//
-//    private function typeForShType($shtype)
-//    {
-//        $shape_types = array(
-////            0   => 'Null Shape',
-//            1 => 'Point',
-//            3 => 'LineString',//'PolyLine',
-//            5 => 'Polygon',
-////            8   => 'MultiPoint',
-////            11  => 'PointZ',
-////            13  => 'PolyLineZ',
-////            15  => 'PolygonZ',
-////            18  => 'MultiPointZ',
-////            21  => 'PointM',
-////            23  => 'PolyLineM',
-////            25  => 'PolygonM',
-////            28  => 'MultiPointM'
-//        );
-//
-//        return in_array($shtype, $shape_types) ? $shape_types[$shtype] : null;
-//    }
 
     private function shGeomToJson($type, $part)
     {
@@ -384,24 +368,5 @@ class PluginController extends Controller
             default:
                 return null;
         }
-    }
-
-    private function supportedTypes()
-    {
-        return array(
-//            0   => 'Null Shape',
-            1 => 'Point',
-            3 => 'LineString',//'PolyLine',
-            5 => 'Polygon',
-//            8   => 'MultiPoint',
-//            11  => 'PointZ',
-//            13  => 'PolyLineZ',
-//            15  => 'PolygonZ',
-//            18  => 'MultiPointZ',
-//            21  => 'PointM',
-//            23  => 'PolyLineM',
-//            25  => 'PolygonM',
-//            28  => 'MultiPointM'
-        );
     }
 }

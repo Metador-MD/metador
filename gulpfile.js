@@ -33,7 +33,6 @@ var conf = {
         js: [
             'web/assets/vendor/jquery/dist/jquery.min.js',
             'web/assets/vendor/proj4js/dist/proj4.js',
-            'web/assets/vendor/OpenLayers/ol.js',
             'web/assets/vendor/jquery-form/dist/jquery.form.min.js'
         ],
         css: [
@@ -41,7 +40,9 @@ var conf = {
             'web/assets/vendor/OpenLayers/ol.css'
         ],
         copy: [
-            'web/assets/vendor/zebra_datepicker/public/**/*'
+            'web/assets/vendor/zebra_datepicker/public/**/*',
+            'web/assets/vendor/OpenLayers/ol.js',
+            'web/assets/vendor/OpenLayers/ol-debug.js'
         ],
         dest: 'web/public',
         filename: 'app.min'

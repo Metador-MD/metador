@@ -2,8 +2,8 @@ import * as metador from './Ol4';
 
 declare var Configuration: any;
 
-let context: any = Window;
-context.metador = metador;
+let context: any = window;
+context.spatial = metador;
 
 export function init() {
 
@@ -73,6 +73,7 @@ export function init() {
         for (const l in wms.layers) {
             layers.push(wms.layers[l]);
         }
+        // console.log(wms);
         metadorMapConfig.source.push({
             'type': 'WMS',
             'url': wms.url,
@@ -89,8 +90,8 @@ export function init() {
     // console.log(metadorMapConfig);
     let metadorMap = metador.Ol4Map.create(metadorMapConfig);
     // metadorMap.initLayertree();
-    metador['metadorMap'] = metadorMap;
+    context.spatial['map'] = metadorMap;
+    // metador['metadorMap'] = metadorMap;
     // metador['geomLoader'] = new metador.GeomLoader(metadorMap, <HTMLFormElement>document.querySelector('#file-upload-form'));
 }
-
-metador['initMap'] = init;
+init();

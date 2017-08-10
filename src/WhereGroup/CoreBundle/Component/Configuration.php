@@ -77,6 +77,22 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * @param null $filterType
+     * @param null $filterValue
+     * @return array
+     */
+    public function getValues($filterType = null, $filterValue = null)
+    {
+        $config = array();
+
+        foreach ($this->getAll($filterType, $filterValue) as $row) {
+            $config[$row['key']] = $row['value'];
+        }
+
+        return $config;
+    }
+
+    /**
      * @param string $filterType
      * @param string $filterValue
      * @return $this

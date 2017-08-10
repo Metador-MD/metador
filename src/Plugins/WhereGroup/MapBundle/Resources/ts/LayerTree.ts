@@ -1,5 +1,6 @@
 import {dom} from './dom';
 import {TITLE, UUID, Ol4Map} from "./Ol4";
+
 // import * as $ from 'jquery';
 
 export class LayerTree {
@@ -21,7 +22,7 @@ export class LayerTree {
         this.tree = <HTMLElement>dom.findFirst(LayerTree.treeselector);
         if (LayerTree.useSortable) {
             let dummy = dom.findFirst(LayerTree.dummyselector, this.tree);
-            this.addDraggableEventListener(<HTMLElement>dummy, true);
+            this.addDraggable(<HTMLElement>dummy, true);
         }
     }
 
@@ -32,6 +33,47 @@ export class LayerTree {
         return LayerTree._instance;
     }
 
+    private findLayerItem(layer: ol.layer.Base): HTMLElement {
+        return <HTMLElement>dom.findFirst('#' + layer.get(UUID));
+    }
+
+    private findLayerVisible(layer: ol.layer.Base): HTMLFormElement {
+        return <HTMLFormElement>dom.findFirst('#' + layer.get(UUID) + ' .-js-map-source-visible');
+    }
+
+    private findLayerOpacity(layer: ol.layer.Base): HTMLFormElement {
+        return <HTMLFormElement>dom.findFirst('#' + layer.get(UUID) + ' .-js-map-source-opacity');
+    }
+
+    getVisible(layer: ol.layer.Base) {
+        let checkbox = this.findLayerVisible(layer);
+        return checkbox.checked;
+    }
+
+    setVisible(layer: ol.layer.Base, visible: boolean, action: boolean = false) {
+        let checkbox = this.findLayerVisible(layer);
+        if (checkbox.checked !== visible && !action) {
+            checkbox.checked = visible;
+        } else if (checkbox.checked !== visible && action) {
+            checkbox.click();
+        }
+    }
+
+    setDisable(layer: ol.layer.Base, disable: boolean) {
+        let item = this.findLayerItem(layer);
+        let checkboxVisible = this.findLayerVisible(layer);
+        let selectOpacity = this.findLayerOpacity(layer);
+        if (disable) {
+            dom.addClass(item, 'disabled');
+            checkboxVisible.setAttribute('disabled', 'true');
+            selectOpacity.setAttribute('disabled', 'true')
+        } else {
+            dom.removeClass(item, 'disabled');
+            checkboxVisible.removeAttribute('disabled');
+            selectOpacity.removeAttribute('disabled');
+        }
+    }
+
     private substringTitle(text: string) {
         if (text.length > LayerTree.maxlength) {
             text = text.substring(0, LayerTree.maxlength);
@@ -40,6 +82,14 @@ export class LayerTree {
             }
         }
         return text;
+    }
+
+    remove(layer: ol.layer.Base) {
+        let layerNode = this.findLayerItem(layer);
+        if (layerNode) {
+            this.removeDraggable(<HTMLElement>layerNode);
+            layerNode.remove();
+        }
     }
 
     add(layer: ol.layer.Base) {
@@ -58,7 +108,7 @@ export class LayerTree {
 
         this.tree.insertBefore(layerNode, dom.findFirst('li', this.tree));
         if (LayerTree.useSortable) {
-            this.addDraggableEventListener(layerNode);
+            this.addDraggable(layerNode);
         }
     }
 
@@ -70,13 +120,13 @@ export class LayerTree {
         layerNode.appendChild(input);
     }
 
-    private changeVisible(e){
+    private changeVisible(e) {
         this.ol4Map.setVisible(e.target.parentElement.id, e.target.checked);
     }
 
     private addOpacity(layerNode: HTMLElement, layer: ol.layer.Base): void {
         let select = dom.create('select', {},
-            ['input-element', 'medium', 'simple', 'js-map-source-opacity', '-js-map-source-opacity']);
+            ['input-element', 'medium', 'simple', 'map-source-opacity', '-js-map-source-opacity']);
 
         for (var i = 0; i <= 10; i++) {
             select.appendChild(dom.create('option', {'value': i / 10}, [], (i * 10) + ' %'));
@@ -86,12 +136,11 @@ export class LayerTree {
         layerNode.appendChild(select);
     }
 
-    private changeOpacity(e){
+    private changeOpacity(e) {
         this.ol4Map.setOpacity(e.target.parentElement.id, parseFloat(e.target.value));
     }
 
-    private addDraggableEventListener(layer: HTMLElement, isDummy:boolean = false) {
-
+    private addDraggable(layer: HTMLElement, isDummy: boolean = false) {
         if (!isDummy) {
             layer.addEventListener('dragstart', this.dragStart.bind(this), false);
             layer.addEventListener('dragend', this.dragEnd.bind(this), false);
@@ -99,6 +148,16 @@ export class LayerTree {
         layer.addEventListener('dragenter', this.dragEnter.bind(this), false);
         layer.addEventListener('dragover', this.dragOver.bind(this), false);
         layer.addEventListener('drop', this.dragDrop.bind(this), false);
+    }
+
+    private removeDraggable(layer: HTMLElement, isDummy: boolean = false) {
+        if (!isDummy) {
+            layer.removeEventListener('dragstart', this.dragStart.bind(this), false);
+            layer.removeEventListener('dragend', this.dragEnd.bind(this), false);
+        }
+        layer.removeEventListener('dragenter', this.dragEnter.bind(this), false);
+        layer.removeEventListener('dragover', this.dragOver.bind(this), false);
+        layer.removeEventListener('drop', this.dragDrop.bind(this), false);
     }
 
 
@@ -120,7 +179,7 @@ export class LayerTree {
 
     private dragEnter(e) {
         if (this.currentLayer !== e.toElement) {
-                this.tree.insertBefore(this.currentLayer, e.toElement.draggable ? e.toElement : e.toElement.parentElement);
+            this.tree.insertBefore(this.currentLayer, e.toElement.draggable ? e.toElement : e.toElement.parentElement);
         }
     }
 

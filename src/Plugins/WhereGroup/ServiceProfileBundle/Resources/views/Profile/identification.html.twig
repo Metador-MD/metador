@@ -5,42 +5,148 @@
     <div class="grid space responsive">
         <div class="row r-1">
             <div class="col c-1">
-                {% set value = p['title'] is defined ? p['title'] : '' %}
-                {{ profileForm.input('p[title]', value, '', 'Titel', 'mandatory', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                    'name'            : 'p[title]',
+                    'label'           : 'Titel',
+                    'validatorSources': tabId,
+                    'p'               : p
+                } only %}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {% set value = p['alternateTitle'] is defined ? p['alternateTitle'] : '' %}
-                {{ profileForm.input('p[alternateTitle]', value, '', 'Alternativtitel', 'optional', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                    'name'            : 'p[alternateTitle]',
+                    'label'           : 'Alternativtitel',
+                    'type'            : 'optional',
+                    'validatorSources': tabId,
+                    'p'               : p
+                } only %}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {% set value = p['abstract'] is defined ? p['abstract'] : '' %}
-                {{ profileForm.text('p[abstract]', value, '', 'Kurzbeschreibung', 'mandatory', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/text.html.twig' with {
+                    'name'            : 'p[abstract]',
+                    'label'           : 'Kurzbeschreibung',
+                    'type'            : 'optional',
+                    'validatorSources': tabId,
+                    'p'               : p
+                } only %}
             </div>
         </div>
-        <div class="row r-1">
-            <div class="col c-1">
-                <h2 class="title">{% trans %}Bezeichner{% endtrans %}</h2>
-            </div>
-        </div>
+
+        <h2 class="title">{% trans %}Bezeichner{% endtrans %}</h2>
+
         <div class="row r-2">
             <div class="col c-1-2">
-                {% set value = p['identifierCode'] is defined ? p['identifierCode'] : '' %}
-                {{ profileForm.input('p[identifierCode]', value, '', 'Code', 'mandatory', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                    'name'            : 'p[identifierCode]',
+                    'label'           : 'Code',
+                    'validatorSources': tabId,
+                    'p'               : p
+                } only %}
             </div>
             <div class="col c-1-2">
-                {% set value = p['identifierCodespace'] is defined ? p['identifierCodespace'] : '' %}
-                {{ profileForm.input('p[identifierCodespace]', value, '', 'Namensraum', 'optional', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                    'name'            : 'p[identifierCodespace]',
+                    'label'           : 'Namensraum',
+                    'type'            : 'optional',
+                    'validatorSources': tabId,
+                    'p'               : p
+                } only %}
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                {% if p['onlineResource'] is not defined %}
+                    {% set p = p|merge({'onlineResource': ['']}) %}
+                {% endif %}
+
+                {{ profileForm.multi_input('p[onlineResource][]', p['onlineResource'], '', 'Ressourcenverweis', 'mandatory', '') }}
             </div>
         </div>
     </div>
 
-    {% if p['onlineResource'] is not defined %}
-        {% set p = p|merge({'onlineResource': ['']}) %}
-    {% endif %}
-
-    {{ profileForm.multi_input('p[onlineResource][]', p['onlineResource'], '', 'Ressourcenverweis', 'mandatory', '') }}
+    <div class="fieldset2">
+        <div class="head">
+            <div class="left">{% trans %}Koordinatenreferenzsystem{% endtrans %}</div>
+            <div class="right">
+                <span class="icon medium icon-plus"></span>
+            </div>
+        </div>
+        <div class="rows">
+            <div class="row">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-3">
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                    'name'            : 'p[referencesysteminfo][][code]',
+                                    'label'           : 'Referenzsystem-Code',
+                                    'validatorSources': tabId,
+                                    'p'               : p
+                                } only %}
+                            </div>
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                    'name'            : 'p[referencesysteminfo][][codespace]',
+                                    'label'           : 'Codespace',
+                                    'validatorSources': tabId,
+                                    'p'               : p
+                                } only %}
+                            </div>
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                    'name'            : 'p[referencesysteminfo][][version]',
+                                    'label'           : 'Version',
+                                    'validatorSources': tabId,
+                                    'p'               : p
+                                } only %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-icon">
+                    <span class="icon icon-bin2"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-3">
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                'name'            : 'p[referencesysteminfo][][code]',
+                                'label'           : 'Referenzsystem-Code',
+                                'validatorSources': tabId,
+                                'p'               : p
+                                } only %}
+                            </div>
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                'name'            : 'p[referencesysteminfo][][codespace]',
+                                'label'           : 'Codespace',
+                                'validatorSources': tabId,
+                                'p'               : p
+                                } only %}
+                            </div>
+                            <div class="col c-1-3">
+                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                'name'            : 'p[referencesysteminfo][][version]',
+                                'label'           : 'Version',
+                                'validatorSources': tabId,
+                                'p'               : p
+                                } only %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-icon">
+                    <span class="icon icon-bin2"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

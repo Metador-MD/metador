@@ -52,6 +52,13 @@ interface ConfigurationInterface
     public function getAll($filterType = null, $filterValue = null);
 
     /**
+     * @param null $filterType
+     * @param null $filterValue
+     * @return mixed
+     */
+    public function getValues($filterType = null, $filterValue = null);
+
+    /**
      * @param string $filterType
      * @param string $filterValue
      * @return mixed

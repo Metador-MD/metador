@@ -1,8 +1,11 @@
-{% if isHome is defined %}
+{% if isHome is defined and plugin_is_active('metador_map') %}
 <div class="map-dialog -js-map-dialog">
     <div class="map-menu">
         <span class="btn medium -js-zoom-box">
             <span class="icon-map"></span> Zoom
+        </span>
+        <span class="btn medium -js-map-info">
+            <span class="icon-info"></span> Info
         </span>
 
         <select class="input-element medium -js-draw-type">

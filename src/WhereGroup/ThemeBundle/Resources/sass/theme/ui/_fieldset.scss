@@ -74,6 +74,11 @@
             @extend .no-user-select;
             @include normal-item(false);
         }
+
+        & > .right {
+            float: right;
+            padding-right: 10px;
+        }
     }
 
     & > .content {
@@ -94,5 +99,59 @@
 
     &.minimize > .content {
         display: none;
+    }
+}
+
+.md .fieldset2 {
+    border: 1px solid $border;
+    margin-bottom: $padding;
+    border-radius: 4px;
+    @extend .clearfix;
+
+    & > .head {
+        font-weight: bold;
+        background-color: $background;
+        border-radius: 4px;
+        border-bottom: 1px solid $border;
+
+        @include medium-item(false, false);
+
+        & > .left {
+            float: left;
+            font-size: 1.4em;
+            color: $font;
+            @extend .no-user-select;
+            @include medium-item(false);
+        }
+
+        & > .right {
+            float: right;
+            padding-right: 10px;
+        }
+    }
+
+    & > .rows {
+        @extend .clearfix;
+
+        & > .row {
+            position: relative;
+            @extend .clearfix;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $border;
+            }
+
+            & > .row-content {
+                float: left;
+                @include calc('width', '100% - #{$medium-item-height}');
+                padding: $padding / 2;
+            }
+
+            & > .row-icon {
+                float: right;
+                width: $medium-item-height;
+            }
+        }
+
     }
 }

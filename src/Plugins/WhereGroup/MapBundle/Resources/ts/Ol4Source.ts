@@ -3,14 +3,11 @@ import {LayerTree} from './LayerTree';
 
 export abstract class Ol4Source {
 
-    abstract createLayer(layerUuid: string, options: any, proj: ol.ProjectionLike, visible: boolean, opacity: number);
+    abstract createLayer(layerUuid: string, options: any, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Base;
 
-    abstract refreshSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike);
+    abstract reprojectionSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike);
 
-    //
-    // abstract showLayer();
-    //
-    // abstract hideLayer();
+    abstract cloneLayer(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike): ol.layer.Base;
 }
 
 export class Ol4VectorSource implements Ol4Source {
@@ -31,7 +28,7 @@ export class Ol4VectorSource implements Ol4Source {
         return Ol4VectorSource._instance;
     }
 
-    createLayer(layerUuid: string, options: any, proj: ol.ProjectionLike, visible: boolean = true, opacity: number = 1.0): ol.layer.Vector {
+    createLayer(layerUuid: string, options: any, proj: ol.ProjectionLike, visible: boolean = true, opacity: number = 1.0): ol.layer.Base {
         let vLayer = new ol.layer.Vector({
             source: new ol.source.Vector({wrapX: false}),
             style: options['style']
@@ -40,7 +37,7 @@ export class Ol4VectorSource implements Ol4Source {
         return vLayer;
     }
 
-    refreshSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike) {
+    reprojectionSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike) {
         let source = (<ol.layer.Layer>layer).getSource();
         let features: ol.Feature[] = (<ol.source.Vector>source).getFeatures();
         for (let feature of features) {
@@ -48,14 +45,10 @@ export class Ol4VectorSource implements Ol4Source {
         }
     }
 
-    //
-    // showLayer(){
-    //
-    // }
-    //
-    // hideLayer(){
-    //
-    // }
+    cloneLayer(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike): ol.layer.Base {
+        /* TODO for clone */
+        return layer;
+    }
 
     showFeatures(vLayer: ol.layer.Vector, geoJson: Object) {
         let geoJsonReader: ol.format.GeoJSON = new ol.format.GeoJSON();
@@ -78,40 +71,57 @@ export class Ol4WmsSource implements Ol4Source {
     private static _instance: Ol4WmsSource;
     private ol4Map: Ol4Map;
     private useLoadEvents: boolean;
-    private layertree: LayerTree;
-    private static mapActivity: MapActivity;
+    public static mapActivity: MapActivity;// = MapActivity.create();
+    public disabled: any;
 
-    private constructor(ol4Map: Ol4Map, useLoadEvents: boolean = true, layertree: LayerTree = null) {
+    private constructor(ol4Map: Ol4Map, useLoadEvents: boolean = true) {
         this.ol4Map = ol4Map;
         this.useLoadEvents = useLoadEvents;
-        this.layertree = layertree;
         if (this.useLoadEvents) {
             Ol4WmsSource.mapActivity = MapActivity.create();
         }
+        this.disabled = {};
     }
 
-    static create(ol4Map: Ol4Map, useLoadEvents: boolean = true, layertree: LayerTree = null): Ol4WmsSource {
+    static create(ol4Map: Ol4Map, useLoadEvents: boolean = true): Ol4WmsSource {
         if (!Ol4WmsSource._instance) {// singleton
-            Ol4WmsSource._instance = new Ol4WmsSource(ol4Map, useLoadEvents, layertree);
+            Ol4WmsSource._instance = new Ol4WmsSource(ol4Map, useLoadEvents);
         }
         return Ol4WmsSource._instance;
     }
 
-    createLayer(layerUuid: string, options: any = null, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Image {
+    public addDisabled(layer: ol.layer.Base) {
+        this.disabled[layer.get(UUID)] = layer.get(UUID);
+        this.ol4Map.getLayerTree().setDisable(layer, true);
+        this.ol4Map.setVisible(layer, false);
+    }
+
+    public removeDisabled(layer: ol.layer.Base) {
+        if (layer.get(UUID)){
+            this.ol4Map.getLayerTree().setDisable(layer, false);
+            let visible = this.ol4Map.getLayerTree().getVisible(layer);
+            this.ol4Map.setVisible(layer, visible);
+            delete this.disabled[layer.get(UUID)];
+        }
+    }
+
+    createLayer(layerUuid: string, options: any = null, proj: ol.ProjectionLike, visible: boolean, opacity: number): ol.layer.Base {
         let source = this.createSource(layerUuid, options['url'], options['params'], proj);
-        let sourceWms = new ol.layer.Image({
+        let layerWms = this._createLayer(layerUuid, visible, opacity, source, options['title'] ? options['title'] : null);
+        return layerWms;
+    }
+
+    private _createLayer(layerUuid: string, visible: boolean, opacity: number, source: ol.source.ImageWMS, title: string = null) {
+        let layerWms = new ol.layer.Image({
             source: source,
             visible: visible,
             opacity: opacity
         });
-        sourceWms.set(UUID, layerUuid);
-        if (options['title']) {
-            sourceWms.set(TITLE, options['title']);
+        layerWms.set(UUID, layerUuid);
+        if (title !== null) {
+            layerWms.set(TITLE, title);
         }
-        if (this.layertree !== null) {
-            this.layertree.add(sourceWms);
-        }
-        return sourceWms;
+        return layerWms;
     }
 
     private createSource(layerUuid: string, url: string, params: any, proj: ol.ProjectionLike): ol.source.ImageWMS {
@@ -125,48 +135,54 @@ export class Ol4WmsSource implements Ol4Source {
         return source;
     }
 
-    refreshSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike) {
+    reprojectionSource(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike) {
         let oldsource = <ol.source.ImageWMS>(<ol.layer.Layer>layer).getSource();
-        (<ol.layer.Layer>layer).setSource(this.createSource(layer.get(UUID), oldsource.getUrl(), oldsource.getParams(), toProj));
+        let newSource = this.createSource(layer.get(UUID), oldsource.getUrl(), oldsource.getParams(), toProj);
+        (<ol.layer.Layer>layer).setSource(newSource);
+        this.removeDisabled(layer);
     }
 
-    //
-    // showLayer(){
-    //
-    // }
-    //
-    // hideLayer(){
-    //
-    // }
+    cloneLayer(layer: ol.layer.Base, fromProj: ol.ProjectionLike, toProj: ol.ProjectionLike): ol.layer.Base {
+        let oldsource = <ol.source.ImageWMS>(<ol.layer.Layer>layer).getSource();
+        let newSource = this.createSource(layer.get(UUID), oldsource.getUrl(), oldsource.getParams(), toProj);
+        let oldLayer = (<ol.layer.Layer>layer);
+        let newLayer = this._createLayer(oldLayer.get(UUID), oldLayer.getVisible(), oldLayer.getOpacity(), newSource, oldLayer.get(TITLE));
+        return newLayer;
+    }
+
 
     private setLoadEvents(source: ol.source.ImageWMS) {
         if (this.useLoadEvents) {
-            source.on('imageloadstart', Ol4WmsSource.imageLoadStart);
-            source.on('imageloadend', Ol4WmsSource.imageLoadEnd);
-            source.on('imageloaderror', Ol4WmsSource.imageLoadError);
+            // source.setImageLoadFunction(this.imageLoadFunction.bind(this));
+            source.on('imageloadstart', this.imageLoadStart.bind(this));
+            source.on('imageloadend', this.imageLoadEnd.bind(this));
+            source.on('imageloaderror', this.imageLoadError.bind(this));
         }
     }
 
-    static imageLoadStart(e: ol.source.ImageEvent) {
+    imageLoadStart(e: ol.source.ImageEvent) {
         // console.log('start', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
-        if(Ol4WmsSource.mapActivity) {
+        if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadStart((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
     }
 
-    static imageLoadEnd(e: ol.source.ImageEvent) {
+    imageLoadEnd(e: ol.source.ImageEvent) {
         // console.log('end', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
-        if(Ol4WmsSource.mapActivity) {
+        if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadEnd((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
     }
 
-    static imageLoadError(e: ol.source.ImageEvent) {
+    imageLoadError(e: ol.source.ImageEvent) {
         // console.log('error', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
-        if(Ol4WmsSource.mapActivity) {
+        if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadError((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
+        let layer = this.ol4Map.findLayer((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
+        this.addDisabled(layer);
     }
+
 }
 
 export class MapActivity {
@@ -196,7 +212,7 @@ export class MapActivity {
         if (this.layers[layerName]) {
             delete this.layers[layerName];
         }
-        for(let layerN in this.layers) {
+        for (let layerN in this.layers) {
             return;
         }
         this.isLoading = false;

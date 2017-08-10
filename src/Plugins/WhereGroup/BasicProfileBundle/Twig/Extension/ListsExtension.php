@@ -39,15 +39,27 @@ class ListsExtension extends \Twig_Extension
     /**
      * @param $profile
      * @param $key
+     * @param array $default
+     * @param null $sort
+     * @param null $direction
      * @return string
      */
-    public function getListOptions($profile, $key, $sort = null)
+    public function getListOptions($profile, $key, $default = array(), $sort = null, $direction = null)
     {
         $options = $this->conf->get($key, 'list-option', $profile);
 
         if (is_null($options)) {
-            $this->conf->set($key, array(), 'list-option', $profile);
-            $options = array();
+            $options = $default;
+            $this->conf->set($key, $options, 'list-option', $profile);
+        }
+
+        if ($sort) {
+            array_multisort(
+                array_map('strtolower', $options), // ignore case
+                ($direction === 'desc') ? SORT_DESC : SORT_ASC,
+                ($sort === 'numeric') ? SORT_NUMERIC : SORT_STRING,
+                $options
+            );
         }
 
         return $options;

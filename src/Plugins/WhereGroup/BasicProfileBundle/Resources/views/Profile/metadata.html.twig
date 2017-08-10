@@ -2,14 +2,23 @@
 <div class="mdtab-content act" data-mdtab-content="metadata">
     <h1 class="title">{% trans %}Metadaten{% endtrans %}</h1>
 
+
+
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-1-2">
-                {% set value = p['metadataLanguage'] is defined ? p['metadataLanguage'] : 'ger' %}
-                {{ profileForm.select('p[metadataLanguage]', value, 'Sprache der Metadaten', {
-                    'ger': 'Deutsch',
-                    'eng': 'Englisch'
-                }, 'mandatory', '', tabId) }}
+                {% include '@MetadorBasicProfile/Element/select.html.twig' with {
+                    'name'    : 'p[metadataLanguage]',
+                    'label'   : 'Sprache der Metadaten',
+                    'default' : 'ger',
+                    'validatorSources': tabId,
+                    'hasList' : true,
+                    'defaultList': {
+                        'ger': 'Deutsch',
+                        'eng': 'Englisch'
+                    },
+                    'p'       : p
+                } only %}
             </div>
             <div class="col c-1-2"></div>
         </div>
