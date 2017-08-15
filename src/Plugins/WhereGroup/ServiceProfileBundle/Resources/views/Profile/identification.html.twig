@@ -69,21 +69,23 @@
         </div>
     </div>
 
-    <div class="fieldset2">
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'referencesysteminfo') }}">
         <div class="head">
             <div class="left">{% trans %}Koordinatenreferenzsystem{% endtrans %}</div>
             <div class="right">
-                <span class="icon medium icon-plus"></span>
+                <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
             </div>
         </div>
-        <div class="rows">
-            <div class="row">
+        <div class="rows -js-multi-fieldset-rows">
+            {% dump(array_get(p, 'referencesysteminfo', [{}], true)) %}
+            {% for row in array_get(p, 'referencesysteminfo', [{}], true) %}
+            <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
                 <div class="row-content">
                     <div class="grid space responsive">
                         <div class="row r-3">
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                    'name'            : 'p[referencesysteminfo][][code]',
+                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][code]',
                                     'label'           : 'Referenzsystem-Code',
                                     'validatorSources': tabId,
                                     'p'               : p
@@ -91,7 +93,7 @@
                             </div>
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                    'name'            : 'p[referencesysteminfo][][codespace]',
+                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][codespace]',
                                     'label'           : 'Codespace',
                                     'validatorSources': tabId,
                                     'p'               : p
@@ -99,7 +101,7 @@
                             </div>
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                    'name'            : 'p[referencesysteminfo][][version]',
+                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][version]',
                                     'label'           : 'Version',
                                     'validatorSources': tabId,
                                     'p'               : p
@@ -108,45 +110,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row-icon">
-                    <span class="icon icon-bin2"></span>
+                <div class="row-icon -js-multi-fieldset-icons">
+                    {% if loop.index0 > 0 %}
+                        <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                    {% endif %}
                 </div>
             </div>
-            <div class="row">
-                <div class="row-content">
-                    <div class="grid space responsive">
-                        <div class="row r-3">
-                            <div class="col c-1-3">
-                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                'name'            : 'p[referencesysteminfo][][code]',
-                                'label'           : 'Referenzsystem-Code',
-                                'validatorSources': tabId,
-                                'p'               : p
-                                } only %}
-                            </div>
-                            <div class="col c-1-3">
-                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                'name'            : 'p[referencesysteminfo][][codespace]',
-                                'label'           : 'Codespace',
-                                'validatorSources': tabId,
-                                'p'               : p
-                                } only %}
-                            </div>
-                            <div class="col c-1-3">
-                                {% include '@MetadorBasicProfile/Element/input.html.twig' with {
-                                'name'            : 'p[referencesysteminfo][][version]',
-                                'label'           : 'Version',
-                                'validatorSources': tabId,
-                                'p'               : p
-                                } only %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-icon">
-                    <span class="icon icon-bin2"></span>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

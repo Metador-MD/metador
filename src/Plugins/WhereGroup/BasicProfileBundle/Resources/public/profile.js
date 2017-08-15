@@ -2,6 +2,7 @@
 
 $('.-js-duplicatable-area').multiForm();
 $('.-js-multi-input').multiInput();
+$('.-js-multi-fieldset').multiFieldset();
 
 var MetadataForm = function() {};
 

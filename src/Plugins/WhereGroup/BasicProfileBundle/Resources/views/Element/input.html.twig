@@ -6,7 +6,7 @@
     {% set id = name|md_id %}
     {% set type = type is defined ? type : 'mandatory' %}
     {% set default = default is defined ? default : '' %}
-    {% set value = array_get(p, name|md_array_path, default) %}
+    {% set value = array_get(p, name|md_array_path, default, true) %}
     {% set class = class is defined ? class : '' %}
     {% set validatorSources = validatorSources is defined ? validatorSources : '' %}
 

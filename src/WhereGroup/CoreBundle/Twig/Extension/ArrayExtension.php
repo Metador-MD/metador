@@ -19,7 +19,8 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_get', array($this, 'get')),
             new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
-            new \Twig_SimpleFunction('array_exists', array($this, 'exists'))
+            new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
+            new \Twig_SimpleFunction('array_reindex', array($this, 'reindex')),
         );
     }
 
@@ -27,11 +28,12 @@ class ArrayExtension extends \Twig_Extension
      * @param array $array
      * @param $path
      * @param null $default
+     * @param bool $reindex
      * @return array|null
      */
-    public function get(array $array, $path, $default = null)
+    public function get(array $array, $path, $default = null, $reindex = false)
     {
-        return ArrayParser::get($array, $path, $default);
+        return ArrayParser::get($array, $path, $default, $reindex);
     }
 
     /**
@@ -63,6 +65,15 @@ class ArrayExtension extends \Twig_Extension
     public function exists(array $array, $path, $find = null)
     {
         return ArrayParser::exists($array, $path, $find);
+    }
+
+    /**
+     * @param array $array
+     * @return array
+     */
+    public function reindex(array $array)
+    {
+        $array = array_values($array);
     }
 
     /**

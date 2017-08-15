@@ -12,15 +12,16 @@ class ArrayParser
      * @param array $array
      * @param $path
      * @param null $default
+     * @param bool $reindex
      * @return array|null
      */
-    public static function get(array $array, $path, $default = null)
+    public static function get(array $array, $path, $default = null, $reindex = false)
     {
         if (empty($path) || trim($path) === "") {
             return $array;
         }
 
-        return self::arrayGet($array, self::explodePath($path), $default);
+        return self::arrayGet($array, self::explodePath($path), $default, $reindex);
     }
 
     /**
@@ -147,20 +148,37 @@ class ArrayParser
      * @param $array
      * @param $keys
      * @param null $default
+     * @param bool $reindex
      * @return null
      */
-    private static function arrayGet($array, $keys, $default = null)
+    private static function arrayGet($array, $keys, $default = null, $reindex = false)
     {
         $key = array_shift($keys);
 
         if (isset($array[$key]) && count($keys) === 0) {
             return $array[$key];
         } elseif (isset($array[$key]) && count($keys) >= 1) {
+
+            // Reindex array keys
+            if ($reindex && is_array($array[$key]) && !self::hasStringKeys($array[$key])) {
+                return self::arrayGet(array_values($array[$key]), $keys);
+            }
+
             return self::arrayGet($array[$key], $keys);
         }
 
         return $default;
     }
+
+    /**
+     * @param array $array
+     * @return bool
+     */
+    private static function hasStringKeys(array $array)
+    {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
+    }
+
 
     /**
      * @param array $array
