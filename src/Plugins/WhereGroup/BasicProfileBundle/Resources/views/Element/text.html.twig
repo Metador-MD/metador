@@ -13,7 +13,7 @@
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}:</label>
     <div class="form-field-wrapper i2 -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}{% endif %}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
+        <textarea name="{{ name }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}{% endif %}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
         <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
     </div>
 {% endif %}

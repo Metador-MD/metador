@@ -25,7 +25,7 @@
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}:</label>
     <div class="form-field-wrapper {{ iconCount }} -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input {{ class }}" data-validator-source="{{ validatorSources }}" {{ id|md_data_obj }}>
+        <select name="{{ name }}" id="{{ id|md_id }}" class="select -js-user-input {{ class }}" data-validator-source="{{ validatorSources }}" {{ id|md_data_obj }}>
             {% for optionValue, optionLabel in options  %}
                 <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
             {% endfor %}
