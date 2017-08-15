@@ -42,6 +42,8 @@ class Source implements SourceInterface
      */
     public function get($id)
     {
+        $this->allValues();
+
         return $this->repo->findOneById($id);
     }
 
@@ -51,6 +53,20 @@ class Source implements SourceInterface
     public function all()
     {
         return $this->repo->findAll();
+    }
+
+    /**
+     * @return array
+     */
+    public function allValues()
+    {
+        $array = array();
+
+        foreach ($this->all() as $source) {
+            $array[$source->getSlug()] = $source->getName();
+        }
+
+        return $array;
     }
 
     /**
