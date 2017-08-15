@@ -46,20 +46,19 @@
                         </div>
                     </div>
                 </div>
-
+                {% if not array_is_empty(p, 'alternateTitle') %}
                 <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
-                    {% if p['alternateTitle'] is defined %}
-                        {{ p['alternateTitle']|teaser(80, true) }}
-                    {% endif %}
+                    {{ p['alternateTitle']|teaser(80, true) }}
                 </div>
+                {% endif %}
 
                 <hr class="line-separator">
 
+                {% if not array_is_empty(p, 'abstract') %}
                 <div class="md-result-abstract" {% if p['abstract']|length > 400 %}title="{{ p['abstract'] }}"{% endif %}>
-                    {% if p['abstract'] is defined %}
                         {{ p['abstract']|teaser(400) }}
-                    {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="result-footer">
