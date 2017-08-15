@@ -17,8 +17,8 @@ stages:
 test_job:
     stage: test
     script:
-        - app/console --env=test doctrine:database:create
-        - app/console --env=test doctrine:schema:create
+        - bin/console --env=test doctrine:database:create
+        - bin/console --env=test doctrine:schema:create
         - chmod +x app/Resources/scripts/test.sh
         - app/Resources/scripts/test.sh
 
