@@ -160,14 +160,24 @@ class ArrayParser
         } elseif (isset($array[$key]) && count($keys) >= 1) {
 
             // Reindex array keys
-            if ($reindex && is_array($array[$key]) && !self::hasStringKeys($array[$key])) {
-                return self::arrayGet(array_values($array[$key]), $keys);
+            if ($reindex) {
+                self::reindexKeys($array[$key]);
             }
 
             return self::arrayGet($array[$key], $keys);
         }
 
         return $default;
+    }
+
+    /**
+     * @param array $array
+     */
+    public static function reindexKeys(array &$array)
+    {
+        if (is_array($array) && !self::hasStringKeys($array)) {
+            $array = array_values($array);
+        }
     }
 
     /**
