@@ -84,6 +84,10 @@ $space: $padding;
         margin-bottom: $padding;
     }
 
+    &.grid-space {
+        margin-bottom: $padding;
+    }
+
     &.space.remove-last-space .row:last-child {
         margin-bottom: 0;
     }

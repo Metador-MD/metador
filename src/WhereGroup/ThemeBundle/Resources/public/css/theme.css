@@ -399,6 +399,9 @@ html, body {
 .md .grid.row-space .row {
   margin-bottom: 20px; }
 
+.md .grid.grid-space {
+  margin-bottom: 20px; }
+
 .md .grid.space.remove-last-space .row:last-child {
   margin-bottom: 0; }
 

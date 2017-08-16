@@ -2,7 +2,7 @@
 <div class="mdtab-content" data-mdtab-content="identification">
     <h1 class="title">{% trans %}Identifizierung{% endtrans %}</h1>
 
-    <div class="grid space responsive">
+    <div class="grid space grid-space responsive">
         <div class="row r-1">
             <div class="col c-1">
                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
@@ -57,17 +57,55 @@
                 } only %}
             </div>
         </div>
+    </div>
 
-        <div class="row r-1">
-            <div class="col c-1">
-                {% if p['onlineResource'] is not defined %}
-                    {% set p = p|merge({'onlineResource': ['']}) %}
-                {% endif %}
-
-                {{ profileForm.multi_input('p[onlineResource][]', p['onlineResource'], '', 'Ressourcenverweis', 'mandatory', '') }}
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'onlineResource') }}">
+        <div class="head">
+            <div class="left">{% trans %}Ressourcenverweis{% endtrans %}</div>
+            <div class="right">
+                <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
             </div>
         </div>
+        <div class="rows -js-multi-fieldset-rows">
+            <div class="row">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-1">
+                            <div class="col c-1 form-label">
+                                {% trans %}URL:{% endtrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for row in array_get(p, 'onlineResource', [{}], true) if row is not empty %}
+                <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                    <div class="row-content">
+                        <div class="grid space responsive">
+                            <div class="row r-1">
+                                <div class="col c-1">
+                                    {% include '@MetadorBasicProfile/Element/input.html.twig' with {
+                                        'name'            : 'p[onlineResource][' ~ loop.index0  ~ ']',
+                                        'validatorSources': tabId,
+                                        'p'               : p
+                                    } only %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-icon -js-multi-fieldset-icons">
+                        {% if loop.index0 > 0 %}
+                            <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
+
+
+
 
     <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'referencesysteminfo') }}">
         <div class="head">
@@ -77,6 +115,23 @@
             </div>
         </div>
         <div class="rows -js-multi-fieldset-rows">
+            <div class="row">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-3">
+                            <div class="col c-1-3 text-center form-label">
+                                {% trans %}Referenzsystem-Code:{% endtrans %}
+                            </div>
+                            <div class="col c-1-3 text-center form-label">
+                                {% trans %}Codespace:{% endtrans %}
+                            </div>
+                            <div class="col c-1-3 text-center form-label">
+                                {% trans %}Version:{% endtrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% for row in array_get(p, 'referencesysteminfo', [{}], true) %}
             <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
                 <div class="row-content">
@@ -85,7 +140,6 @@
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
                                     'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][code]',
-                                    'label'           : 'Referenzsystem-Code',
                                     'validatorSources': tabId,
                                     'p'               : p
                                 } only %}
@@ -93,7 +147,6 @@
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
                                     'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][codespace]',
-                                    'label'           : 'Codespace',
                                     'validatorSources': tabId,
                                     'p'               : p
                                 } only %}
@@ -101,7 +154,6 @@
                             <div class="col c-1-3">
                                 {% include '@MetadorBasicProfile/Element/input.html.twig' with {
                                     'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][version]',
-                                    'label'           : 'Version',
                                     'validatorSources': tabId,
                                     'p'               : p
                                 } only %}
