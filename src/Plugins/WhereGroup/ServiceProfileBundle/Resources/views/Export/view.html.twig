@@ -49,8 +49,8 @@
 <table class="view-table">
     <thead>
         <tr>
-            {% if not array_is_empty(p, 'title') %}
-                <th colspan="2" class="view-header-one">{{ array_get(p, 'title') }}</th>
+        {% if not array_is_empty(p, 'title') %}
+            <th colspan="2" class="view-header-one">{{ array_get(p, 'title', '') }}</th>
             {% endif %}
         </tr>
     </thead>
