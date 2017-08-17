@@ -1,3 +1,9 @@
+{% macro document_header(value) %}
+        <tr>
+            <th colspan="2" class="view-header-one">{{ value|trans }}</th>
+        </tr>
+{% endmacro %}
+
 {% macro line(label, value) %}
     {% if value is not empty %}
     <tr>
