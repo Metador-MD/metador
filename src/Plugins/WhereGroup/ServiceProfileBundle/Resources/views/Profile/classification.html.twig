@@ -5,20 +5,32 @@
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-2-3">
-                {% set value = p['serviceType'] is defined ? p['serviceType'] : '' %}
-                {{ profileForm.select('p[serviceType]', value, 'Geodatendienst', {
-                    '': '',
-                    'view': 'Darstellungsdienste',
-                    'invoke': 'Dienste zum Abrufen von Geodatendiensten',
-                    'download': 'Download-Dienste',
-                    'other': 'Sonstige Dienste',
-                    'discovery': 'Suchdienste',
-                    'transformation': 'Transformationsdienste'
-                }, 'mandatory', '', tabId) }}
+                {{ profileForm.x_select({
+                    'name'            : 'p[serviceType]',
+                    'label'           : 'Geodatendienst',
+                    'default'         : '',
+                    'validatorSources': tabId,
+                    'hasList'         : true,
+                    'p'               : p,
+                    'defaultList'     : {
+                        ''              : '',
+                        'view'          : 'Darstellungsdienste',
+                        'invoke'        : 'Dienste zum Abrufen von Geodatendiensten',
+                        'download'      : 'Download-Dienste',
+                        'other'         : 'Sonstige Dienste',
+                        'discovery'     : 'Suchdienste',
+                        'transformation': 'Transformationsdienste'
+                    }
+                }) }}
             </div>
             <div class="col c-1-3">
-                {% set value = p['serviceTypeVersion'] is defined ? p['serviceTypeVersion'] : '' %}
-                {{ profileForm.input('p[serviceTypeVersion]', value, '1.1.1', 'Version', 'mandatory', '', tabId) }}
+                {{ profileForm.x_input({
+                    'name'            : 'p[serviceTypeVersion]',
+                    'label'           : 'Version',
+                    'placeholder'     : '1.1.1',
+                    'validatorSources': tabId,
+                    'p'               : p
+                }) }}
             </div>
         </div>
 
@@ -27,22 +39,34 @@
                 <h2 class="title">{% trans %}Dienste Operationen{% endtrans %}</h2>
             </div>
         </div>
-
         <div class="row r-2">
             <div class="col c-1-2">
-                {% set value = p['containsOperationsName'] is defined ? p['containsOperationsName'] : '' %}
-                {{ profileForm.input('p[containsOperationsName]', value, 'GetCapabilities', 'Operation', 'mandatory', '', tabId) }}
+                {{ profileForm.x_input({
+                    'name'            : 'p[containsOperationsName]',
+                    'label'           : 'Operation',
+                    'placeholder'     : 'GetCapabilities',
+                    'validatorSources': tabId,
+                    'p'               : p
+                }) }}
             </div>
             <div class="col c-1-2">
-                {% set value = p['containsOperationsDCP'] is defined ? p['containsOperationsDCP'] : '' %}
-                {{ profileForm.input('p[containsOperationsDCP]', value, 'WebService', 'Platform', 'mandatory', '', tabId) }}
+                {{ profileForm.x_input({
+                    'name'            : 'p[containsOperationsDCP]',
+                    'label'           : 'WebService',
+                    'placeholder'     : 'Platform',
+                    'validatorSources': tabId,
+                    'p'               : p
+                }) }}
             </div>
         </div>
-
         <div class="row r-1">
             <div class="col c-1">
-                {% set value = p['containsOperationsURL'] is defined ? p['containsOperationsURL'] : '' %}
-                {{ profileForm.input('p[containsOperationsURL]', value, '', 'URL', 'mandatory', '', tabId) }}
+                {{ profileForm.x_input({
+                    'name'            : 'p[containsOperationsURL]',
+                    'label'           : 'URL',
+                    'validatorSources': tabId,
+                    'p'               : p
+                }) }}
             </div>
         </div>
     </div>
