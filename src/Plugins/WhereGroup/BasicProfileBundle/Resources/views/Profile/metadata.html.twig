@@ -8,7 +8,7 @@
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.x_select({
+                {{ form_element.select({
                     'name'            : 'p[metadataLanguage]',
                     'label'           : 'Sprache der Metadaten',
                     'default'         : 'ger',
@@ -60,7 +60,7 @@
                     <div class="grid space responsive">
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][organisationName]',
                                     'label'           : 'Name der Organisation',
                                     'validatorSources': tabId ~ ',' ~ id|md_id,
@@ -69,7 +69,7 @@
                                 }) }}
                             </div>
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][electronicMailAddress]',
                                     'label'           : 'E-Mail',
                                     'validatorSources': tabId ~ ',' ~ id|md_id,
@@ -80,7 +80,7 @@
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][individualName]',
                                     'label'           : 'Zuständige Person',
                                     'type'            : 'conditional',
@@ -93,7 +93,7 @@
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][country]',
                                     'label'           : 'Staat',
                                     'type'            : 'optional',
@@ -102,7 +102,7 @@
                                 }) }}
                             </div>
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][administrativeArea]',
                                     'label'           : 'Bundesland',
                                     'type'            : 'optional',
@@ -114,7 +114,7 @@
 
                         <div class="row r-1">
                             <div class="col c-1">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][deliveryPoint]',
                                     'label'           : 'Straße und Hausnummer / Postfach',
                                     'type'            : 'optional',
@@ -126,7 +126,7 @@
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][city]',
                                     'label'           : 'Ort',
                                     'type'            : 'optional',
@@ -135,7 +135,7 @@
                                 }) }}
                             </div>
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][postalCode]',
                                     'label'           : 'PLZ',
                                     'type'            : 'optional',
@@ -147,7 +147,7 @@
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][voice]',
                                     'label'           : 'Telefonnummer',
                                     'type'            : 'optional',
@@ -156,7 +156,7 @@
                                 }) }}
                             </div>
                             <div class="col c-1-2">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][facsimile]',
                                     'label'           : 'Faxnummer',
                                     'type'            : 'optional',
@@ -168,7 +168,7 @@
 
                         <div class="row r-1">
                             <div class="col c-1">
-                                {{ profileForm.x_input({
+                                {{ form_element.input({
                                     'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][onlineResource]',
                                     'label'           : 'Internetadresse',
                                     'type'            : 'optional',
@@ -191,7 +191,7 @@
         </div>
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[metadataStandardName]',
                     'label'           : 'Spezifikation',
                     'validatorSources': tabId,
@@ -200,7 +200,7 @@
                 }) }}
             </div>
             <div class="col c-1-2">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[metadataStandardVersion]',
                     'label'           : 'Version',
                     'validatorSources': tabId,
@@ -211,7 +211,7 @@
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[browserGraphic]',
                     'label'           : 'Browser Bild',
                     'validatorSources': tabId,

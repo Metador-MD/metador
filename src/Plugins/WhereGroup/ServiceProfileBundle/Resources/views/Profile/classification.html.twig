@@ -5,7 +5,7 @@
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-2-3">
-                {{ profileForm.x_select({
+                {{ form_element.select({
                     'name'            : 'p[serviceType]',
                     'label'           : 'Geodatendienst',
                     'default'         : '',
@@ -24,7 +24,7 @@
                 }) }}
             </div>
             <div class="col c-1-3">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[serviceTypeVersion]',
                     'label'           : 'Version',
                     'placeholder'     : '1.1.1',
@@ -41,7 +41,7 @@
         </div>
         <div class="row r-2">
             <div class="col c-1-2">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[containsOperationsName]',
                     'label'           : 'Operation',
                     'placeholder'     : 'GetCapabilities',
@@ -50,7 +50,7 @@
                 }) }}
             </div>
             <div class="col c-1-2">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[containsOperationsDCP]',
                     'label'           : 'WebService',
                     'placeholder'     : 'Platform',
@@ -61,7 +61,7 @@
         </div>
         <div class="row r-1">
             <div class="col c-1">
-                {{ profileForm.x_input({
+                {{ form_element.input({
                     'name'            : 'p[containsOperationsURL]',
                     'label'           : 'URL',
                     'validatorSources': tabId,

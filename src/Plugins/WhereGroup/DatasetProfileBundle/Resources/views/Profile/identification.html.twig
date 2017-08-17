@@ -5,19 +5,19 @@
         <div class="row r-1">
             <div class="col c-1">
                 {% set value = p['title'] is defined ? p['title'] : '' %}
-                {{ profileForm.input('p[title]', value, '', 'Titel', 'mandatory', '', tabId) }}
+                {{ form_element.input('p[title]', value, '', 'Titel', 'mandatory', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
                 {% set value = p['alternateTitle'] is defined ? p['alternateTitle'] : '' %}
-                {{ profileForm.input('p[alternateTitle]', value, '', 'Alternativtitel', 'optional', '', tabId) }}
+                {{ form_element.input('p[alternateTitle]', value, '', 'Alternativtitel', 'optional', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
             <div class="col c-1">
                 {% set value = p['abstract'] is defined ? p['abstract'] : '' %}
-                {{ profileForm.text('p[abstract]', value, '', 'Kurzbeschreibung', 'mandatory', '', tabId) }}
+                {{ form_element.text('p[abstract]', value, '', 'Kurzbeschreibung', 'mandatory', '', tabId) }}
             </div>
         </div>
         <div class="row r-1">
@@ -28,11 +28,11 @@
         <div class="row r-2">
             <div class="col c-1-2">
                 {% set value = p['identifierCode'] is defined ? p['identifierCode'] : '' %}
-                {{ profileForm.input('p[identifierCode]', value, '', 'Code', 'mandatory', '', tabId) }}
+                {{ form_element.input('p[identifierCode]', value, '', 'Code', 'mandatory', '', tabId) }}
             </div>
             <div class="col c-1-2">
                 {% set value = p['identifierCodespace'] is defined ? p['identifierCodespace'] : '' %}
-                {{ profileForm.input('p[identifierCodespace]', value, '', 'Namensraum', 'optional', '', tabId) }}
+                {{ form_element.input('p[identifierCodespace]', value, '', 'Namensraum', 'optional', '', tabId) }}
             </div>
         </div>
     </div>

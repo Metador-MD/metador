@@ -1,6 +1,6 @@
 {% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
 
-{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
 
 {% block center %}
 <form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
