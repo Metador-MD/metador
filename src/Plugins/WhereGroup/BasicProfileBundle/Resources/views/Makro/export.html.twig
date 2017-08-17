@@ -1,8 +1,10 @@
 {% macro line(label, value) %}
+    {% if value is not empty %}
     <tr>
         <td class="view-property-label view-header-three" style="width: 40%;">{{ label|trans }}</td>
         <td class="view-property" style="width: 60%;">{{ value }}</td>
     </tr>
+    {% endif %}
 {% endmacro %}
 
 {% macro title(value) %}

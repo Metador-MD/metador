@@ -1,3 +1,15 @@
+{% macro x_input(options) %}
+    {% include '@MetadorBasicProfile/Element/input.html.twig' with options only %}
+{% endmacro %}
+
+{% macro x_text(options) %}
+    {% include '@MetadorBasicProfile/Element/text.html.twig' with options only %}
+{% endmacro %}
+
+{% macro x_select(options) %}
+    {% include '@MetadorBasicProfile/Element/select.html.twig' with options only %}
+{% endmacro %}
+
 {% macro input(id, value, placeholder, label, type, class, validatorSources) %}
     <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
     <div class="form-field-wrapper i2 -js-validation-wrapper">
