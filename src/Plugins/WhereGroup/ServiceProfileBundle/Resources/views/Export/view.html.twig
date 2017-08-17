@@ -1,3 +1,5 @@
+{% import 'MetadorBasicProfileBundle:Makro:export.html.twig' as export %}
+
 <style>
 {#    .view-table, th, td{
         border: 1px solid black;
@@ -47,10 +49,8 @@
 <table class="view-table">
     <thead>
         <tr>
-            {% if p['title'] is defined and p['title'] is not empty %}
-            <th colspan="2" class="view-header-one">{{ p['title'] }}</th>
-            {% else %}
-            <th colspan="2" class="view-header-one">Kein Titel</th>
+            {% if not array_is_empty(p, 'title') %}
+                <th colspan="2" class="view-header-one">{{ array_get(p, 'title') }}</th>
             {% endif %}
         </tr>
     </thead>
@@ -113,41 +113,21 @@
         <tr>
             <td colspan="2" class="html-gap pdf-gap"></td>
         </tr>
-        <tr>
-            <td colspan="2" class="view-row-two view-header-two">Für Metadaten verantwortliche Stelle</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="html-gap pdf-gap"></td>
-        </tr>
-        {% for responsible in p['responsiblePartyMetadata']%}
-        <tr>
-            <td class="view-property-label view-header-three">Name der Organisation</td>
-            <td class="view-property">{{ responsible['organisationName'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Zuständige Person</td>
-            <td class="view-property">{{ responsible['individualName'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Straße und Hausnummer / Postfach</td>
-            <td class="view-property">{{ responsible['deliveryPoint'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Ort</td>
-            <td class="view-property">{{ responsible['city'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">PLZ</td>
-            <td class="view-property">{{ responsible['postalCode'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Bundesland</td>
-            <td class="view-property">{{ responsible['administrativeArea'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Staat</td>
-            <td class="view-property">{{ responsible['country'] }}</td>
-        </tr>
+
+        {% if not array_is_empty(p, 'responsiblePartyMetadata:0:organisationName') %}
+
+            {{ export.title('Für Metadaten verantwortliche Stelle') }}
+
+            {% for responsible in p['responsiblePartyMetadata']%}
+                {{ export.line('Name der Organisation', responsible['organisationName']) }}
+                {{ export.line('Zuständige Person', responsible['individualName']) }}
+                {{ export.line('Straße und Hausnummer / Postfach', responsible['deliveryPoint']) }}
+                {{ export.line('Ort', responsible['city']) }}
+                {{ export.line('PLZ', responsible['postalCode']) }}
+                {{ export.line('Bundesland', responsible['administrativeArea']) }}
+                {{ export.line('Staat', responsible['country']) }}
+
+
         <tr>
             <td class="view-property-label view-header-three">Telefonnummer</td>
             <td class="view-property">{{ responsible['voice'] }}</td>
@@ -168,6 +148,9 @@
             <td colspan="2" class="html-gap pdf-gap"></td>
         </tr>
         {% endfor %}
+        {% endif %}
+
+
         <tr>
             <td colspan="2" class="view-row-two view-header-two">Angaben zur Metadatenspezifikation</td>
         </tr>
