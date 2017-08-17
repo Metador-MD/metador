@@ -27,3 +27,11 @@ metador_core:
         proxy_pass:
             type: string
             label: Proxy Password
+        hierarchy_levels:
+            type: multi
+            label: Unterstützte hierarchy levels
+            options:
+                service: Dienst
+                series: Datensatzreihe
+                dataset: Datensatz
+                tile: Tile
