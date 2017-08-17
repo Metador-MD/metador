@@ -8,18 +8,18 @@
     <div class="grid space responsive">
         <div class="row r-2">
             <div class="col c-1-2">
-                {% include '@MetadorBasicProfile/Element/select.html.twig' with {
-                    'name'    : 'p[metadataLanguage]',
-                    'label'   : 'Sprache der Metadaten',
-                    'default' : 'ger',
+                {{ profileForm.x_select({
+                    'name'            : 'p[metadataLanguage]',
+                    'label'           : 'Sprache der Metadaten',
+                    'default'         : 'ger',
                     'validatorSources': tabId,
-                    'hasList' : true,
-                    'defaultList': {
+                    'hasList'         : true,
+                    'defaultList'     : {
                         'ger': 'Deutsch',
                         'eng': 'Englisch'
                     },
-                    'p'       : p
-                } only %}
+                    'p'               : p
+                }) }}
             </div>
             <div class="col c-1-2"></div>
         </div>
@@ -69,83 +69,122 @@
                                 }) }}
                             </div>
                             <div class="col c-1-2">
-                                {% set electronicMailAddress = responsibleParty['electronicMailAddress'] is defined ? responsibleParty['electronicMailAddress'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][electronicMailAddress]', electronicMailAddress, '', 'E-Mail', 'mandatory', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][electronicMailAddress]',
+                                    'label'           : 'E-Mail',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {% set individualName = responsibleParty['individualName'] is defined ? responsibleParty['individualName'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][individualName]', individualName, '', 'Zuständige Person', 'conditional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][individualName]',
+                                    'label'           : 'Zuständige Person',
+                                    'type'            : 'conditional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                             <div class="col c-1-2"></div>
                         </div>
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {% set country = responsibleParty['country'] is defined ? responsibleParty['country'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][country]', country, '', 'Staat', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][country]',
+                                    'label'           : 'Staat',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                             <div class="col c-1-2">
-                                {% set administrativeArea = responsibleParty['administrativeArea'] is defined ? responsibleParty['administrativeArea'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][administrativeArea]', administrativeArea, '', 'Bundesland', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][administrativeArea]',
+                                    'label'           : 'Bundesland',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
 
                         <div class="row r-1">
                             <div class="col c-1">
-                                {% set deliveryPoint = responsibleParty['deliveryPoint'] is defined ? responsibleParty['deliveryPoint'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][deliveryPoint]', deliveryPoint, '', 'Straße und Hausnummer / Postfach', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][deliveryPoint]',
+                                    'label'           : 'Straße und Hausnummer / Postfach',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {% set city = responsibleParty['city'] is defined ? responsibleParty['city'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][city]', city, '', 'Ort', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][city]',
+                                    'label'           : 'Ort',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                             <div class="col c-1-2">
-                                {% set postalCode = responsibleParty['postalCode'] is defined ? responsibleParty['postalCode'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][postalCode]', postalCode, '', 'PLZ', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][postalCode]',
+                                    'label'           : 'PLZ',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
 
                         <div class="row r-2">
                             <div class="col c-1-2">
-                                {% set voice = responsibleParty['voice'] is defined ? responsibleParty['voice'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][voice]', voice, '', 'Telefonnummer', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][voice]',
+                                    'label'           : 'Telefonnummer',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                             <div class="col c-1-2">
-                                {% set facsimile = responsibleParty['facsimile'] is defined ? responsibleParty['facsimile'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][facsimile]', facsimile, '', 'Faxnummer', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][facsimile]',
+                                    'label'           : 'Faxnummer',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
 
                         <div class="row r-1">
                             <div class="col c-1">
-                                {% set onlineResource = responsibleParty['onlineResource'] is defined ? responsibleParty['onlineResource'] : '' %}
-                                {{ profileForm.input(
-                                'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][onlineResource]', onlineResource, '', 'Internetadresse', 'optional', tabId
-                                ) }}
+                                {{ profileForm.x_input({
+                                    'name'            : 'p[responsiblePartyMetadata][' ~ loop.index0 ~ '][onlineResource]',
+                                    'label'           : 'Internetadresse',
+                                    'type'            : 'optional',
+                                    'validatorSources': tabId ~ ',' ~ id|md_id,
+                                    'class'           : '-js-duplicatable-title',
+                                    'p'               : p
+                                }) }}
                             </div>
                         </div>
                     </div>
