@@ -1,30 +1,29 @@
-<div class="left-menu-content">
-    {% if p['_id'] is not defined or is_granted('edit', p) %}
-        <div class="simple-select -js-metadata-save disabled">
-            <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
-                <span class="icon-download -js-metadata-button-status"></span>
-                {% trans %}Speichern und beenden{% endtrans %}
-            </button>
-            <div class="simple-select-button">&nbsp;
-                <div class="simple-select-options">
-                    <button type="submit" class="simple-select-option metadata-save-button -js-metadata-button" name="submit" value="save" disabled>
-                        <span class="form-icon icon-download"></span>
-                        {% trans %}Zwischenstand speichern{% endtrans %}
-                    </button>
-                    <button type="submit" class="simple-select-option metadata-abort-button" name="submit" value="abort">
-                        <span class="form-icon icon-sign-out"></span>
-                        {% trans %}Abbrechen{% endtrans %}
-                    </button>
-                </div>
+
+{% if p['_id'] is not defined or is_granted('edit', p) %}
+    <div class="simple-select -js-metadata-save disabled">
+        <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
+            <span class="icon-download -js-metadata-button-status"></span>
+            {% trans %}Speichern und beenden{% endtrans %}
+        </button>
+        <div class="simple-select-button">&nbsp;
+            <div class="simple-select-options">
+                <button type="submit" class="simple-select-option metadata-save-button -js-metadata-button" name="submit" value="save" disabled>
+                    <span class="form-icon icon-download"></span>
+                    {% trans %}Zwischenstand speichern{% endtrans %}
+                </button>
+                <button type="submit" class="simple-select-option metadata-abort-button" name="submit" value="abort">
+                    <span class="form-icon icon-sign-out"></span>
+                    {% trans %}Abbrechen{% endtrans %}
+                </button>
             </div>
         </div>
-    {% elseif metadata_is_locked(p) %}
-        <div class="notify warning">
-            {% trans with { '%user%': p['_lock_user'] } %}Der Datensatz ist derzeit durch Benutzer %user% gesperrt.{% endtrans %}
-        </div>
-    {% else %}
-        <div class="notify warning">
-            {% trans %}Sie haben nicht die nötigen Rechte um den Datensatz zu bearbeiten.{% endtrans %}
-        </div>
-    {% endif %}
-</div>
+    </div>
+{% elseif metadata_is_locked(p) %}
+    <div class="notify warning">
+        {% trans with { '%user%': p['_lock_user'] } %}Der Datensatz ist derzeit durch Benutzer %user% gesperrt.{% endtrans %}
+    </div>
+{% else %}
+    <div class="notify warning">
+        {% trans %}Sie haben nicht die nötigen Rechte um den Datensatz zu bearbeiten.{% endtrans %}
+    </div>
+{% endif %}

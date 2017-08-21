@@ -1466,6 +1466,9 @@ input.input-element, .md input.btn {
 .md .text-center {
   text-align: center; }
 
+.duplicatable-area {
+  margin-bottom: 20px; }
+
 .duplicatable-area .duplicatable-content {
   background-color: #fff;
   border: 1px solid #e1e1e1;
@@ -2830,13 +2833,11 @@ input.input-element, .md input.btn {
 .md .left-menu {
   list-style: none;
   padding: 0;
-  margin: 0;
   z-index: 2;
-  margin-bottom: 20px; }
+  margin: 0 0 20px; }
 
-.md .left-menu > li {
+.md .left-menu > .menu-item {
   position: relative;
-  margin: 0 20px 0 0;
   padding: 0 20px;
   cursor: pointer;
   color: #444;
@@ -2845,36 +2846,37 @@ input.input-element, .md input.btn {
   border-bottom-right-radius: 2px;
   border: 1px solid #f7f7f7;
   background-color: #f2f2f2;
+  font-size: .9em;
   height: 30px;
   line-height: 30px; }
 
-.md .left-menu > li .error-count {
+.md .left-menu > .menu-item .error-count {
   float: right;
   color: #e15b36; }
 
-.md .left-menu > li > a {
+.md .left-menu > .menu-item > a {
   display: block;
   text-decoration: none;
   font-size: 0.9em; }
 
-.md .left-menu > li span[class^="icon-"] {
+.md .left-menu > .menu-item span[class^="icon-"] {
   height: 30px;
   line-height: 30px;
   margin-right: 10px; }
 
-.md .left-menu > li:hover {
+.md .left-menu > .menu-item:hover {
   color: #000;
   background-color: #eaeaea; }
 
-.md .left-menu > li.act.error, .md .left-menu > li.error {
+.md .left-menu > .menu-item.act.error, .md .left-menu > .menu-item.error {
   box-shadow: inset 3px 0 0 #e15b36; }
 
-.md .left-menu > li.act {
+.md .left-menu > .menu-item.act {
   background-color: #fff;
   box-shadow: inset 3px 0 0 #008ec0;
   border: 1px solid #eaeaea; }
 
-.md .left-menu > li.act:after, .md .left-menu > li.act:before {
+.md .left-menu > .menu-item.act:after, .md .left-menu > .menu-item.act:before {
   right: -22px;
   top: 50%;
   border: solid transparent;
@@ -2886,14 +2888,23 @@ input.input-element, .md input.btn {
   border-right-color: white;
   z-index: 2; }
 
-.md .left-menu > li.act:after {
+.md .left-menu > .menu-item.act:after {
   border-width: 8px;
   margin-top: -8px; }
 
-.md .left-menu > li.act:before {
+.md .left-menu > .menu-item.act:before {
   border-right-color: #e5e5e5;
   border-width: 9px;
   margin-top: -9px; }
+
+.md .left-menu .menu-title {
+  font-weight: bold;
+  color: #777;
+  background-color: #eaeaea;
+  font-size: .9em;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px; }
 
 .content-title {
   margin-top: 20px; }
