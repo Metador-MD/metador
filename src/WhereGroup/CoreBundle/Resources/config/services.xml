@@ -15,7 +15,7 @@
         <parameter key="metador.source.class">WhereGroup\CoreBundle\Component\Source</parameter>
         <parameter key="metador.frontend.command.class">WhereGroup\CoreBundle\Component\FrontendCommand</parameter>
         <parameter key="metador.markdown.class">WhereGroup\CoreBundle\Component\Utils\Markdown</parameter>
-        <parameter key="metador.metadata.search.class">WhereGroup\CoreBundle\Component\Search\MetadataSearch</parameter>
+        <parameter key="metador.database.search.class">WhereGroup\CoreBundle\Component\Search\DatabaseSearch</parameter>
         <parameter key="metador.browser.class">WhereGroup\CoreBundle\Component\Utils\Browser</parameter>
 
         <!-- EVENT LISTENER -->
@@ -82,7 +82,7 @@
             <argument type="service" id="metador_core" />
         </service>
         <service id="metador_markdown" class="%metador.markdown.class%" />
-        <service id="metador_metadata_search" class="%metador.metadata.search.class%">
+        <service id="metador_metadata_search" class="%metador.database.search.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
         <service id="metador_browser" class="%metador.browser.class%">

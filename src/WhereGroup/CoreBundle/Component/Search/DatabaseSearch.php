@@ -5,10 +5,10 @@ namespace WhereGroup\CoreBundle\Component\Search;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class Search
- * @package WhereGroup\CoreBundle\Component
+ * Class DatabaseSearch
+ * @package WhereGroup\CoreBundle\Component\Search
  */
-class MetadataSearch extends Search implements SearchInterface
+class DatabaseSearch extends Search implements SearchInterface
 {
     /** @var EntityManagerInterface|null  */
     protected $em = null;
