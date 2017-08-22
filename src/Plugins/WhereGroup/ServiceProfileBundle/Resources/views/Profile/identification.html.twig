@@ -79,14 +79,14 @@
                 </div>
             </div>
 
-            {% for row in array_get(p, 'onlineResource', [{}], true) if row is not empty %}
-                <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+            {% for key in 0 .. array_length(p, 'onlineResource', [{}]) -1 %}
+                <div class="row -js-multi-field-row {% if key == 0 %}-js-multi-fieldset-default-row{% endif %}">
                     <div class="row-content">
                         <div class="grid space responsive">
                             <div class="row r-1">
                                 <div class="col c-1">
                                     {{ form_element.input({
-                                        'name'            : 'p[onlineResource][' ~ loop.index0  ~ ']',
+                                        'name'            : 'p[onlineResource][' ~ key  ~ ']',
                                         'validatorSources': tabId,
                                         'p'               : p
                                     }) }}
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="row-icon -js-multi-fieldset-icons">
-                        {% if loop.index0 > 0 %}
+                        {% if key > 0 %}
                             <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
                         {% endif %}
                     </div>
@@ -129,42 +129,44 @@
                     </div>
                 </div>
             </div>
-            {% for row in array_get(p, 'referencesysteminfo', [{}], true) %}
-            <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
-                <div class="row-content">
-                    <div class="grid space responsive">
-                        <div class="row r-3">
-                            <div class="col c-1-3">
-                                {{ form_element.input({
-                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][code]',
-                                    'validatorSources': tabId,
-                                    'p'               : p
-                                }) }}
-                            </div>
-                            <div class="col c-1-3">
-                                {{ form_element.input({
-                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][codespace]',
-                                    'validatorSources': tabId,
-                                    'p'               : p
-                                }) }}
-                            </div>
-                            <div class="col c-1-3">
-                                {{ form_element.input({
-                                    'name'            : 'p[referencesysteminfo][' ~ loop.index0  ~ '][version]',
-                                    'validatorSources': tabId,
-                                    'p'               : p
-                                }) }}
+            {% for key in 0 .. array_length(p, 'referencesysteminfo', [{}]) -1 %}
+                <div class="row -js-multi-field-row {% if key == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                    <div class="row-content">
+                        <div class="grid space responsive">
+                            <div class="row r-3">
+                                <div class="col c-1-3">
+                                    {{ form_element.input({
+                                        'name'            : 'p[referencesysteminfo][' ~ key  ~ '][code]',
+                                        'validatorSources': tabId,
+                                        'p'               : p
+                                    }) }}
+                                </div>
+                                <div class="col c-1-3">
+                                    {{ form_element.input({
+                                        'name'            : 'p[referencesysteminfo][' ~ key  ~ '][codespace]',
+                                        'validatorSources': tabId,
+                                        'p'               : p
+                                    }) }}
+                                </div>
+                                <div class="col c-1-3">
+                                    {{ form_element.input({
+                                        'name'            : 'p[referencesysteminfo][' ~ key  ~ '][version]',
+                                        'validatorSources': tabId,
+                                        'p'               : p
+                                    }) }}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row-icon -js-multi-fieldset-icons">
+                        {% if key > 0 %}
+                            <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="row-icon -js-multi-fieldset-icons">
-                    {% if loop.index0 > 0 %}
-                        <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
-                    {% endif %}
-                </div>
-            </div>
             {% endfor %}
         </div>
     </div>
+
+
 </div>

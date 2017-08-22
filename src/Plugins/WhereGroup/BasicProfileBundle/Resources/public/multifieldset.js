@@ -35,6 +35,7 @@
 
         remove: function(element) {
             $(element).closest('.-js-multi-field-row').remove();
+            metadata.enableSubmitButton();
         },
 
         add: function() {
@@ -52,6 +53,7 @@
             $(this.element).attr('data-count', ++count);
 
             $(this.element).find('.-js-multi-fieldset-rows').append(clone);
+            metadata.enableSubmitButton();
         },
 
         changeElementNames: function(element, count, subCount) {
