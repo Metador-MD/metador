@@ -15,6 +15,7 @@ abstract class Search
     protected $offset = 0;
     protected $terms = '';
     protected $source = '';
+    protected $profile = '';
 
     /**
      * @param $terms
@@ -110,5 +111,25 @@ abstract class Search
     public function getSource()
     {
         return $this->source;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param $profile
+     * @return $this
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+
+        return $this;
     }
 }
