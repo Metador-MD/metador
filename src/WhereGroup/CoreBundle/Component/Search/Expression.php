@@ -34,6 +34,13 @@ interface Expression
 
     /**
      * @param $property
+     * @param $items
+     * @return mixed
+     */
+    public function getIn($property, $items);
+
+    /**
+     * @param $property
      * @param $value
      * @return mixed
      */

@@ -218,6 +218,18 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
+     * @param $items
+     * @return Expr\Func
+     */
+    public function getIn($property, $items)
+    {
+        $expr = new Expr();
+
+        return $expr->in($property, $items);
+    }
+
+    /**
+     * @param $property
      * @param $value
      * @return Expr\Comparison
      */
