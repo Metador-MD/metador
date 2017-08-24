@@ -8,48 +8,54 @@ namespace WhereGroup\CoreBundle\Component\Search;
  */
 interface Expression
 {
+
+    /**
+     * @return mixed
+     */
+    public function getExpression();
+
     /**
      * @param $expression
-     * @return mixed
+     * @return Expression
      */
     public function setExpression($expression);
 
     /**
-     * @param $items
+     * @param array $items
      * @return mixed
      */
-    public function getAnd($items);
+    public function andx(array $items);
 
     /**
-     * @param $items
+     * @param array $items
      * @return mixed
      */
-    public function getOr($items);
+    public function orx(array $items);
 
     /**
      * @param $item
      * @return mixed
      */
-    public function getNot($item);
+    public function not($item);
 
     /**
      * @param $property
-     * @param $items
+     * @param array $items
      * @return mixed
      */
-    public function getIn($property, $items);
-
-    /**
-     * @param $property
-     * @param $value
-     * @return mixed
-     */
-    public function getEqual($property, $value);
+    public function inx($property, array $items);
 
     /**
      * @param $property
      * @param $value
      * @return mixed
      */
-    public function getLike($property, $value);
+    public function equal($property, $value);
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function like($property, $value);
 }

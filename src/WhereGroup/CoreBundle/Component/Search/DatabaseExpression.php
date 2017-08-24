@@ -77,6 +77,86 @@ class DatabaseExpression implements Expression
     }
 
     /**
+     * @return Expr
+     */
+    public function getExpression()
+    {
+        return $this->expression;
+    }
+
+    /**
+     * @param $expression
+     * @return $this
+     */
+    public function setExpression($expression)
+    {
+        $this->expression = $expression;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $items
+     * @return Expr\Andx
+     */
+    public function andx(array $items)
+    {
+        return new Expr\Andx($items);
+    }
+
+    /**
+     * @param array $items
+     * @return Expr\Orx
+     */
+    public function orx(array $items)
+    {
+        return new Expr\Orx($items);
+    }
+
+    /**
+     * @param $item
+     * @return Expr\Func
+     */
+    public function not($item)
+    {
+        $expr = new Expr();
+
+        return $expr->not($item);
+    }
+
+    /**
+     * @param $property
+     * @param $items
+     * @return Expr\Func
+     */
+    public function inx($property, array $items)
+    {
+        $expr = new Expr();
+
+        return $expr->in($property, $items);
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function equal($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->eq($this->getName($property), $this->addParameter($property, $value));
+    }
+
+    /**
      * @param $name
      * @return string
      */
@@ -99,29 +179,24 @@ class DatabaseExpression implements Expression
     }
 
     /**
-     * @param $character
-     * @return string
+     * @param $property
+     * @param $value
+     * @param array|null $replacements
+     * @return Expr\Comparison
      */
-    private function addEscape($character)
+    public function like($property, $value, array $replacements = null)
     {
-        if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
-            return '\\'.$character;
+        $expr = new Expr();
+        $prepared = $this->prepareReplacements($replacements);
+
+        $valueX = $value;
+        if ($prepared) {
+            $valueX = $this->replace($valueX, $prepared);
         } else {
-            return $character;
+            $valueX = $this->addParameter($property, $value);
         }
-    }
 
-    /**
-     * @param $escape
-     * @param $character
-     * @return string
-     */
-    private function getRegex($escape, $character)
-    {
-        $first = $this->addEscape($escape);
-        $second = $this->addEscape($character);
-
-        return '/(?<!'.$first.')('.$second.')/';
+        return $expr->like($this->getName($property), $valueX);
     }
 
     /**
@@ -161,104 +236,29 @@ class DatabaseExpression implements Expression
     }
 
     /**
-     * @return Expr
+     * @param $escape
+     * @param $character
+     * @return string
      */
-    public function getExpression()
+    private function getRegex($escape, $character)
     {
-        return $this->expression;
+        $first = $this->addEscape($escape);
+        $second = $this->addEscape($character);
+
+        return '/(?<!'.$first.')('.$second.')/';
     }
 
     /**
-     * @param $expression
-     * @return $this
+     * @param $character
+     * @return string
      */
-    public function setExpression($expression)
+    private function addEscape($character)
     {
-        $this->expression = $expression;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
-
-    /**
-     * @param $items
-     * @return Expr\Andx
-     */
-    public function getAnd($items)
-    {
-        return new Expr\Andx($items);
-    }
-
-    /**
-     * @param $items
-     * @return Expr\Orx
-     */
-    public function getOr($items)
-    {
-        return new Expr\Orx($items);
-    }
-
-    /**
-     * @param $item
-     * @return Expr\Func
-     */
-    public function getNot($item)
-    {
-        $expr = new Expr();
-
-        return $expr->not($item);
-    }
-
-    /**
-     * @param $property
-     * @param $items
-     * @return Expr\Func
-     */
-    public function getIn($property, $items)
-    {
-        $expr = new Expr();
-
-        return $expr->in($property, $items);
-    }
-
-    /**
-     * @param $property
-     * @param $value
-     * @return Expr\Comparison
-     */
-    public function getEqual($property, $value)
-    {
-        $expr = new Expr();
-
-        return $expr->eq($this->getName($property), $this->addParameter($property, $value));
-    }
-
-    /**
-     * @param $property
-     * @param $value
-     * @param array|null $replacements
-     * @return Expr\Comparison
-     */
-    public function getLike($property, $value, array $replacements = null)
-    {
-        $expr = new Expr();
-        $prepared = $this->prepareReplacements($replacements);
-
-        $value_ = $value;
-        if ($prepared) {
-            $value_ = $this->replace($value_, $prepared);
+        if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
+            return '\\'.$character;
         } else {
-            $value_ = $this->addParameter($property, $value);
+            return $character;
         }
-
-        return $expr->like($this->getName($property), $value_);
     }
 
 }

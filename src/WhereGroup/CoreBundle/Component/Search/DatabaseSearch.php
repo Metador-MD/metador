@@ -21,8 +21,8 @@ class DatabaseSearch extends Search implements SearchInterface
     /**  @var string */
     protected $alias = 'm';
 
-    /**  @var DatabaseExpression */
-    protected $expression;
+    /** @var array|null */
+    protected $parameters = null;
 
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
@@ -31,16 +31,6 @@ class DatabaseSearch extends Search implements SearchInterface
         $this->qb = $em
             ->getRepository(self::ENTITY)
             ->createQueryBuilder($this->alias);
-
-        $this->expression = new DatabaseExpression($this->alias);
-    }
-
-    /**
-     * @return DatabaseExpression
-     */
-    public function getExpression()
-    {
-        return $this->expression;
     }
 
     /**
@@ -48,10 +38,10 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function find()
     {
-        if ($this->expression->getExpression()) {
+        if ($this->filter && $this->parameters) {
             $this->qb
-                ->add('where', $this->expression->getExpression())
-                ->setParameters($this->expression->getParameters());
+                ->add('where', $this->filter)
+                ->setParameters($this->parameters);
         }
 
         // Searchterms
@@ -99,5 +89,25 @@ class DatabaseSearch extends Search implements SearchInterface
             ->select('count(' . $this->alias . ')')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return DatabaseExpression
+     */
+    public  function createExpression()
+    {
+        return new DatabaseExpression($this->alias);
+    }
+
+    /**
+     * @param $expression
+     * @return $this
+     */
+    public  function useExpression($expression)
+    {
+        /**  @var DatabaseExpression $expression */
+        $this->filter = $expression->getExpression();
+        $this->parameters = $expression->getParameters();
+        return $this;
     }
 }

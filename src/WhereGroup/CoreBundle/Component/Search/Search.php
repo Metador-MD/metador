@@ -2,8 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
-use WhereGroup\CoreBundle\Component\Search\Paging;
-
 /**
  * Class Search
  * @package WhereGroup\CoreBundle\Component\Search
@@ -16,6 +14,15 @@ abstract class Search
     protected $terms = '';
     protected $source = '';
     protected $profile = '';
+    protected $filter = null;
+
+    /**
+     * @return array
+     */
+    public function getTerms()
+    {
+        return explode(' ', $this->terms);
+    }
 
     /**
      * @param $terms
@@ -29,11 +36,11 @@ abstract class Search
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function getTerms()
+    public function getHits()
     {
-        return explode(' ', $this->terms);
+        return $this->hits;
     }
 
     /**
@@ -51,9 +58,9 @@ abstract class Search
     /**
      * @return int
      */
-    public function getHits()
+    public function getPage()
     {
-        return $this->hits;
+        return $this->page;
     }
 
     /**
@@ -66,14 +73,6 @@ abstract class Search
         $this->offset = ($this->hits * $this->page) - $this->hits;
 
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
     }
 
     /**
@@ -95,6 +94,14 @@ abstract class Search
     }
 
     /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
      * @param $source
      * @return $this
      */
@@ -104,15 +111,6 @@ abstract class Search
 
         return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
 
     /**
      * @return string
@@ -132,4 +130,15 @@ abstract class Search
 
         return $this;
     }
+
+    /**
+     * @return Expression
+     */
+    public abstract function createExpression();
+
+    /**
+     * @param $expression
+     * @return mixed
+     */
+    public abstract function useExpression($expression);
 }
