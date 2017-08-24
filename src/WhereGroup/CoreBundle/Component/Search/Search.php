@@ -140,5 +140,5 @@ abstract class Search
      * @param $expression
      * @return mixed
      */
-    public abstract function useExpression($expression);
+    public abstract function setExpression($expression);
 }
