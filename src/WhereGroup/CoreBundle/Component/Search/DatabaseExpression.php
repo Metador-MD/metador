@@ -44,8 +44,6 @@ class DatabaseExpression implements Expression
             'escapechar' => '\\',
         );
         $this->parameters = array();
-
-
     }
 
     /**
@@ -140,8 +138,7 @@ class DatabaseExpression implements Expression
     public function inx($property, array $items)
     {
         $expr = new Expr();
-
-        return $expr->in($property, $items);
+        return $expr->in($this->getName($property), $this->addParameter($property, $items));
     }
 
     /**

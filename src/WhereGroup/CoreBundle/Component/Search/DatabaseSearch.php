@@ -12,10 +12,10 @@ class DatabaseSearch extends Search implements SearchInterface
 {
     const ENTITY = "MetadorCoreBundle:Metadata";
 
-    /** @var EntityManagerInterface|null  */
+    /** @var EntityManagerInterface|null */
     protected $em = null;
 
-    /** @var \Doctrine\ORM\QueryBuilder|null  */
+    /** @var \Doctrine\ORM\QueryBuilder|null */
     protected $qb = null;
 
     /**  @var string */
@@ -49,8 +49,8 @@ class DatabaseSearch extends Search implements SearchInterface
             $termCount = 0;
             foreach ($this->getTerms() as $term) {
                 $this->qb
-                    ->andWhere('LOWER(' . $this->alias . '.searchfield) LIKE :termX' . $termCount)
-                    ->setParameter('termX' . $termCount, "%" . strtolower($term) . "%");
+                    ->andWhere('LOWER('.$this->alias.'.searchfield) LIKE :termX'.$termCount)
+                    ->setParameter('termX'.$termCount, "%".strtolower($term)."%");
             }
             unset($termCount);
         }
@@ -86,7 +86,7 @@ class DatabaseSearch extends Search implements SearchInterface
     public function getResultCount()
     {
         return $this->qb
-            ->select('count(' . $this->alias . ')')
+            ->select('count('.$this->alias.')')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -94,7 +94,7 @@ class DatabaseSearch extends Search implements SearchInterface
     /**
      * @return DatabaseExpression
      */
-    public  function createExpression()
+    public function createExpression()
     {
         return new DatabaseExpression($this->alias);
     }
@@ -103,11 +103,12 @@ class DatabaseSearch extends Search implements SearchInterface
      * @param $expression
      * @return $this
      */
-    public  function setExpression($expression)
+    public function setExpression($expression)
     {
         /**  @var DatabaseExpression $expression */
         $this->filter = $expression->getExpression();
         $this->parameters = $expression->getParameters();
+
         return $this;
     }
 }
