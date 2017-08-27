@@ -28,7 +28,9 @@ class KeywordType extends AbstractType
             ->add('dateType', ChoiceType::class, array(
                 'label' => 'Beschreibung',
                 'choices' => array(
-                    'a' => 'A'
+                    'creation'    => 'Erstellungsdatum',
+                    'revision'    => 'Überarbeitung',
+                    'publication' => 'Veröffentlichung'
                 )
             ))
             ->add('keywords', TextareaType::class, array(
