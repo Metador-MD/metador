@@ -15,6 +15,12 @@
                     <span class="form-icon icon-sign-out"></span>
                     {% trans %}Abbrechen{% endtrans %}
                 </button>
+                {% if p['_id'] is defined and p['_id'] is not empty %}
+                <a href="{{ path('metadata_confirm', { 'profile': p['_profile'], 'id': p['_id']}) }}" class="simple-select-option metadata-delete-button">
+                    <span class="form-icon icon-bin2"></span>
+                    {% trans %}Löschen{% endtrans %}
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>

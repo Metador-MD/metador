@@ -1674,6 +1674,16 @@ input.input-element, .md input.btn {
   color: #919191;
   text-shadow: 1px 1px 0 #fff; }
 
+.simple-select .metadata-delete-button {
+  display: block;
+  height: 35px;
+  line-height: 35px; }
+
+.simple-select .metadata-delete-button:hover {
+  cursor: pointer;
+  box-shadow: -3px 0px 0px 0px #e15b36;
+  background-color: #eaeaea; }
+
 .simple-select:not(.disabled) .metadata-save-button {
   color: #444; }
 

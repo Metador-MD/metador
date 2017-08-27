@@ -245,10 +245,10 @@ class Metadata implements MetadataInterface
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
-            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
+            $metadata->setBboxn((int)$p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe((int)$p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs((int)$p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw((int)$p['bbox'][0]['wLongitude']);
         }
 
         $this->save($metadata);

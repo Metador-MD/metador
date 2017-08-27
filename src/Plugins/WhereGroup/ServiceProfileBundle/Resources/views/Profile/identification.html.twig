@@ -1,5 +1,5 @@
 {% set tabId = 'tab-identification' %}
-<div class="mdtab-content" data-mdtab-content="identification">
+<div class="mdtab-content act" data-mdtab-content="identification">
     <h1 class="title">{% trans %}Identifizierung{% endtrans %}</h1>
 
     <div class="grid space grid-space responsive">
@@ -87,6 +87,51 @@
                                 <div class="col c-1">
                                     {{ form_element.input({
                                         'name'            : 'p[onlineResource][' ~ key  ~ ']',
+                                        'validatorSources': tabId,
+                                        'p'               : p
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-icon -js-multi-fieldset-icons">
+                        {% if key > 0 %}
+                            <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'coupledResource') }}">
+        <div class="head">
+            <div class="left">{% trans %}Gekoppelte Ressource{% endtrans %}</div>
+            <div class="right">
+                <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+            </div>
+        </div>
+        <div class="rows -js-multi-fieldset-rows">
+            <div class="row">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-1">
+                            <div class="col c-1 form-label">
+                                {% trans %}URL:{% endtrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for key in 0 .. array_length(p, 'coupledResource', [{}]) -1 %}
+                <div class="row -js-multi-field-row {% if key == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                    <div class="row-content">
+                        <div class="grid space responsive">
+                            <div class="row r-1">
+                                <div class="col c-1">
+                                    {{ form_element.input({
+                                        'name'            : 'p[coupledResource][' ~ key  ~ ']',
                                         'validatorSources': tabId,
                                         'p'               : p
                                     }) }}

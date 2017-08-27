@@ -177,7 +177,7 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
 
         $this->init($profile);
 
@@ -203,7 +203,7 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata);
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
 
         $this->init($profile);
 
@@ -219,7 +219,7 @@ class ProfileController extends Controller
             $this->get('metador_logger')->flashError('metadata', 'profile', 'delete', 'source', 'identifier', 'Eintrag konnte nicht gelöscht werden.');
         }
 
-        return $this->redirectToRoute('metadata_index', array('profile' => $profile));
+        return $this->redirectToRoute('metador_home', array('profile' => $profile));
     }
 
     /**
@@ -232,7 +232,7 @@ class ProfileController extends Controller
         $this->data['request'] = $this->get('request_stack')->getCurrentRequest();
         $this->data['className'] = $this->get('metador_plugin')->getPluginClassName($profile);
         $this->data['user'] = $this->get('metador_user')->getUserFromSession();
-        $this->data['template'] = $this->data['className'] . '::';
+        $this->data['template'] = $this->data['className'] . ':Profile:';
         $this->data['p'] = $this->data['request']->request->get('p', array());
         $this->data['p']['_dateStamp'] = date("Y-m-d");
     }
