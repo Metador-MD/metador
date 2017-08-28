@@ -19,7 +19,8 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_get', array($this, 'get')),
             new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
-            new \Twig_SimpleFunction('array_exists', array($this, 'exists'))
+            new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
+            new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
         );
     }
 
@@ -67,6 +68,24 @@ class ArrayExtension extends \Twig_Extension
     public function exists(array $array, $path, $find = null, $reindex = false)
     {
         return ArrayParser::exists($array, $path, $find, $reindex);
+    }
+
+    /**
+     * @param array $array
+     * @param array $paths
+     * @param null $find
+     * @param bool $reindex
+     * @return bool
+     */
+    public function allExists(array $array, array $paths, $find = null, $reindex = false)
+    {
+        foreach ($paths as $path) {
+            if (!$this->exists($array, $path, $find, $reindex)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
