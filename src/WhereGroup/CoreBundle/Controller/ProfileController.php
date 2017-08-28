@@ -242,6 +242,14 @@ class ProfileController extends Controller
             $className
         );
 
+        foreach ($object1 as $key => $value) {
+            if (substr($key, 0, 1) !== '_') {
+                continue;
+            }
+
+            $object2[$key] = $value;
+        }
+
         $object2['_profile'] = $object1['_profile'];
 
         $arr1 = array();
