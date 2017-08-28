@@ -22,13 +22,13 @@
     <div class="grid space responsive">
         <form action="{{ path('metador_admin_lists_add', { 'profile': listProfile, 'key': listKey }) }}" method="post">
             <div class="row r-2 margin-b">
-                <div class="col c-1-3">
+                <div class="col c-1-2">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper">
-                        <input class="input" name="new_list_item_key" value="" placeholder="..." />
+                        <textarea class="textarea" name="new_list_item_key" placeholder="..."></textarea>
                     </div>
                 </div>
-                <div class="col c-2-3">
+                <div class="col c-1-2">
                     <div><label class="form-label">Beschreibung:</label></div>
                     <div class="form-field-wrapper">
                         <textarea class="textarea" name="new_list_item_value" placeholder="..."></textarea>
@@ -40,11 +40,6 @@
                     <button class="btn success medium">
                         <span class="icon-checkmark"></span> hinzufügen
                     </button>
-                    {#{% if form.vars.value.id is defined and form.vars.value.id is not empty %}#}
-                        {#<a href="{{ path('metador_admin_user_confirm', params) }}" class="btn error medium">#}
-                            {#<span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}#}
-                        {#</a>#}
-                    {#{% endif %}#}
                 </div>
             </div>
             <hr class="line-separator" />
@@ -52,20 +47,22 @@
         <form action="{{ path('metador_admin_lists_update', { 'profile': listProfile, 'key': listKey }) }}" method="post">
         {% for key, value in list %}
             <div class="row r-2">
-                <div class="col c-1-3">
+                <div class="col c-1-2">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper i1">
-                    <span class="form-icon-type rs left" title="löschen">
-                        <input type="checkbox" name="item[{{ loop.index }}][delete]" value="1" />
-                    </span>
-                        <input class="input" type="text" name="item[{{ loop.index }}][key]" value="{{ key }}" placeholder="..." />
+                        <textarea class="textarea" name="item[{{ loop.index }}][key]" placeholder="...">{{ key }}</textarea>
                     </div>
                 </div>
-                <div class="col c-2-3">
+                <div class="col c-1-2">
                     <div><label class="form-label">Beschreibung:</label></div>
                     <div class="form-field-wrapper">
                         <textarea class="textarea" name="item[{{ loop.index }}][value]" placeholder="...">{{ value }}</textarea>
                     </div>
+                </div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1 text-right">
+                    <input type="checkbox" name="item[{{ loop.index }}][delete]" value="1" /> löschen
                 </div>
             </div>
             <hr class="line-separator" />
