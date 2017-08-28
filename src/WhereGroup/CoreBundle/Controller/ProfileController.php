@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -196,21 +197,21 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{profile}/delete/{id}", name="metadata_delete")
+     * @Route("/delete/{id}", name="metadata_delete")
      * @Method("POST")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($profile, $id)
+    public function deleteAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
         $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
 
-        $this->init($profile);
-
         $form = $this->createFormBuilder($metadata)
             ->add('delete', 'submit', array('label' => 'ok'))
             ->getForm()
-            ->submit($this->data['request']);
+            ->submit($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
@@ -219,7 +220,85 @@ class ProfileController extends Controller
             $this->get('metador_logger')->flashError('metadata', 'profile', 'delete', 'source', 'identifier', 'Eintrag konnte nicht gelöscht werden.');
         }
 
-        return $this->redirectToRoute('metador_home', array('profile' => $profile));
+        return $this->redirectToRoute('metador_home');
+    }
+
+    /**
+     * @Route("/profile/test/{id}", name="metadata_test")
+     * @Template()
+     */
+    public function testAction($id)
+    {
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $object1  = $metadata->getObject();
+
+        $className = $this->get('metador_plugin')->getPluginClassName($object1['_profile']);
+
+        $object2  = $this->get('metadata_import')->load(
+            $this->get('templating')->render(
+                $className . ":Export:metadata.xml.twig",
+                array("p" => $object1)
+            ),
+            $className
+        );
+
+        $object2['_profile'] = $object1['_profile'];
+
+        $arr1 = array();
+        $arr2 = array();
+        $this->flatten($object1, $arr1);
+        $this->flatten($object2, $arr2);
+
+        return array(
+            'result' => $this->test($arr1, $arr2)
+        );
+    }
+
+    /**
+     * @param $arr1
+     * @param $arr2
+     * @return array
+     */
+    private function test($arr1, $arr2)
+    {
+        ksort($arr1);
+        ksort($arr2);
+
+        $result = array(
+            'status' => 1,
+            'data'   => array()
+        );
+
+        foreach ($arr1 as $key => $value) {
+            if (isset($arr2[$key]) && $value === $arr2[$key]) {
+                $result['data'][$key] = ($value !== "") ? 1 : 2;
+            } else {
+                $result['data'][$key] = 0;
+                $result['status'] = 0;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $array
+     * @param $result
+     * @param null $prefix
+     */
+    private function flatten($array, &$result, $prefix = null)
+    {
+        foreach ($array as $key => $value) {
+            if (!is_null($prefix)) {
+                $key = $prefix . '_' . $key;
+            }
+
+            if (is_array($value)) {
+                $this->flatten($value, $result, $key);
+            } else {
+                $result[$key] = $value;
+            }
+        }
     }
 
     /**
@@ -244,87 +323,5 @@ class ProfileController extends Controller
     private function getTemplate($name)
     {
         return $this->data['template'] . $name . '.html.twig';
-    }
-
-    /**
-     * @param $profile
-     * @param null $entity
-     * @return array
-     */
-    private function getParams($profile, $entity = null)
-    {
-        $params = array();
-        $params['profile'] = $profile;
-        $params['examples'] = $this->getExample();
-        $params['hasGroupAccess'] = true;
-        $params['groups'] = array();
-        $params['hasAccess'] = true;
-
-        /** @var Metadata $entity */
-        if (!is_null($entity)) {
-            $this->data['p'] = $entity->getObject();
-            $this->data['p']['_dateStamp'] = date("Y-m-d");
-
-            $params['id'] = $entity->getId();
-            $params['hasAccess'] = $this->isGranted('edit', $entity);
-            $params['public'] = $entity->getPublic();
-            $params['entity'] = $entity;
-            $params['hasGroupAccess'] = ($this->data['user']->getId() == $entity->getInsertUser()->getId());
-
-            foreach ($entity->getGroups() as $group) {
-                $params['groups'][$group->getId()] = array(
-                    'name'   => $group->getRole(),
-                    'active' => true
-                );
-            }
-        }
-
-        if ($params['hasGroupAccess']) {
-            foreach ($this->data['user']->getGroups() as $group) {
-                if (!isset($params['groups'][$group->getId()])) {
-                    if (substr($group->getRole(), 0, 12) === 'ROLE_SYSTEM_') {
-                        continue;
-                    }
-
-                    $params['groups'][$group->getId()] = array(
-                        'name'   => $group->getRole(),
-                        'active' => false
-                    );
-                }
-            }
-        }
-
-        $params['p'] = $this->data['p'];
-
-        return $params;
-    }
-
-    /**
-     * @param $profile
-     * @param $template
-     * @param null $entity
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function renderResponse($profile, $template, $entity = null)
-    {
-        return $this->get('templating')->renderResponse(
-            $this->getTemplate($template),
-            $this->getParams($profile, $entity)
-        );
-    }
-
-    /**
-     * @return array
-     */
-    private function getExample()
-    {
-        return $this
-            ->container
-            ->get('metador_wizard')
-            ->getExamples(
-                $this
-                    ->get('kernel')
-                    ->locateResource('@' . $this->data['className'] . '/Resources/config/wizard/')
-            );
     }
 }

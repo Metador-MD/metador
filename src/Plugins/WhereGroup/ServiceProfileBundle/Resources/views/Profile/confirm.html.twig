@@ -16,7 +16,7 @@
 
     <hr class="line-separator" />
 
-    {{ form_start(form, { 'action': path('metadata_delete', { 'profile': profile, id: form.vars.value.id }), 'method': 'POST', 'attr': {
+    {{ form_start(form, { 'action': path('metadata_delete', { id: form.vars.value.id }), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
 
