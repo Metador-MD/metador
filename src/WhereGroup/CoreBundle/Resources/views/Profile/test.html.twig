@@ -1,0 +1,26 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+<div class="center">
+    <div class="center-right">
+        <div class="content">
+            <h1 style="display:block;text-align:right;color:{% if result['status'] == 1 %}green{% else %}red{% endif %};">
+                <span class="icon-accessibility"></span>
+            </h1>
+            <hr/>
+
+            {% for key,value in result['data'] if value == 0 %}
+                <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
+            {% endfor %}
+
+            {% for key,value in result['data']  if value == 1 %}
+                <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
+            {% endfor %}
+
+            {% for key,value in result['data']  if value == 2 %}
+                <div style="color:blue";>{{ key }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

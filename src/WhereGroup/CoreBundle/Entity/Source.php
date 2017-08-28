@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * WhereGroup\CoreBundle\Entity\Metadata
+ * WhereGroup\CoreBundle\Entity\Source
  *
  * @ORM\Table(name="source")
  * @ORM\Entity

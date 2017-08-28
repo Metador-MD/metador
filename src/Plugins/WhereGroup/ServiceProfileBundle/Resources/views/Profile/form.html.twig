@@ -16,12 +16,12 @@
 
             <div class="left-menu-content">
                 <ul class="left-menu">
-                    <li data-mdtab="metadata" id="tab-metadata" class="menu-item act">
-                        <span>{% trans %}Metadatensatz{% endtrans %}</span>
+                    <li class="menu-item act" data-mdtab="identification" id="tab-identification">
+                        <span>{% trans %}Identifikation{% endtrans %}</span>
                         <span class="-js-error-count error-count"></span>
                     </li>
-                    <li class="menu-item" data-mdtab="identification" id="tab-identification">
-                        <span>{% trans %}Identifikation{% endtrans %}</span>
+                    <li data-mdtab="metadata" id="tab-metadata" class="menu-item">
+                        <span>{% trans %}Metadatensatz{% endtrans %}</span>
                         <span class="-js-error-count error-count"></span>
                     </li>
                     <li class="menu-item" data-mdtab="classification" id="tab-classification">
@@ -63,11 +63,11 @@
             <div class="content">
                 {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
 
-                {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
                 {% include 'MetadorServiceProfileBundle:Profile:identification.html.twig' %}
+                {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
                 {% include 'MetadorServiceProfileBundle:Profile:classification.html.twig' %}
                 <div class="mdtab-content" data-mdtab-content="keyword"></div>
-                <div class="mdtab-content" data-mdtab-content="geographic"></div>
+                {% include 'MetadorServiceProfileBundle:Profile:geographic.html.twig' %}
                 <div class="mdtab-content" data-mdtab-content="temporal"></div>
                 <div class="mdtab-content" data-mdtab-content="conformity"></div>
                 <div class="mdtab-content" data-mdtab-content="constraints"></div>

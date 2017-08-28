@@ -1,1 +1,609 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<gmd:MD_Metadata
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+
+    {% if p['_uuid'] is defined %}
+        <gmd:fileIdentifier>
+            <gco:CharacterString>{{ p['_uuid'] }}</gco:CharacterString>
+        </gmd:fileIdentifier>
+    {% endif %}
+    <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{{ p['metadataLanguage'] }}">{{ p['metadataLanguage'] }}</gmd:LanguageCode>
+    </gmd:language>
+    <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeSpace="ISOTC211/19115" codeListValue="utf8" codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#MD_CharacterSetCode">utf8</gmd:MD_CharacterSetCode>
+    </gmd:characterSet>
+    {% if p['hierarchyLevel'] is defined %}
+        <gmd:hierarchyLevel>
+            <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="{{ p['hierarchyLevel'] }}">{{ p['hierarchyLevel'] }}</gmd:MD_ScopeCode>
+        </gmd:hierarchyLevel>
+    {% endif %}
+    {% if p['hierarchyLevelName'] is defined %}
+        <gmd:hierarchyLevelName>
+            <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
+        </gmd:hierarchyLevelName>
+    {% endif %}
+    {% if p['responsiblePartyMetadata'] is defined %}
+        {% for contact in p['responsiblePartyMetadata'] %}
+            {% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
+                <gmd:contact>
+                    <gmd:CI_ResponsibleParty>
+                        {% if contact['individualName'] is defined and contact['individualName'] is not empty %}
+                            <gmd:individualName>
+                                <gco:CharacterString>{{ contact['individualName'] }}</gco:CharacterString>
+                            </gmd:individualName>
+                        {% endif %}
+                        {% if contact['organisationName'] is defined %}
+                            <gmd:organisationName>
+                                <gco:CharacterString>{{ contact['organisationName'] }}</gco:CharacterString>
+                            </gmd:organisationName>
+                        {% endif %}
+                        <gmd:contactInfo>
+                            <gmd:CI_Contact>
+                                {% if contact['voice'] is defined and contact['voice'] is not empty
+                                or contact['facsimile'] is defined and contact['facsimile'] is not empty %}
+                                    <gmd:phone>
+                                        <gmd:CI_Telephone>
+                                            {% if contact['voice'] is defined and contact['voice'] is not empty %}
+                                                <gmd:voice>
+                                                    <gco:CharacterString>{{ contact['voice'] }}</gco:CharacterString>
+                                                </gmd:voice>
+                                            {% endif %}
+                                            {% if contact['facsimile'] is defined and contact['facsimile'] is not empty %}
+                                                <gmd:facsimile>
+                                                    <gco:CharacterString>{{ contact['facsimile'] }}</gco:CharacterString>
+                                                </gmd:facsimile>
+                                            {% endif %}
+                                        </gmd:CI_Telephone>
+                                    </gmd:phone>
+                                {% endif %}
+                                <gmd:address>
+                                    <gmd:CI_Address>
+                                        {% if contact['deliveryPoint'] is defined and contact['deliveryPoint'] is not empty %}
+                                            <gmd:deliveryPoint>
+                                                <gco:CharacterString>{{ contact['deliveryPoint'] }}</gco:CharacterString>
+                                            </gmd:deliveryPoint>
+                                        {% endif %}
+                                        {% if contact['city'] is defined and contact['city'] is not empty %}
+                                            <gmd:city>
+                                                <gco:CharacterString>{{ contact['city'] }}</gco:CharacterString>
+                                            </gmd:city>
+                                        {% endif %}
+                                        {% if contact['administrativeArea'] is defined and contact['administrativeArea'] is not empty %}
+                                            <gmd:administrativeArea>
+                                                <gco:CharacterString>{{ contact['administrativeArea'] }}</gco:CharacterString>
+                                            </gmd:administrativeArea>
+                                        {% endif %}
+                                        {% if contact['postalCode'] is defined and contact['postalCode'] is not empty %}
+                                            <gmd:postalCode>
+                                                <gco:CharacterString>{{ contact['postalCode'] }}</gco:CharacterString>
+                                            </gmd:postalCode>
+                                        {% endif %}
+                                        {% if contact['country'] is defined and contact['country'] is not empty %}
+                                            <gmd:country>
+                                                <gco:CharacterString>{{ contact['country'] }}</gco:CharacterString>
+                                            </gmd:country>
+                                        {% endif %}
+                                        {% if contact['electronicMailAddress'] is defined %}
+                                            <gmd:electronicMailAddress>
+                                                <gco:CharacterString>{{ contact['electronicMailAddress'] }}</gco:CharacterString>
+                                            </gmd:electronicMailAddress>
+                                        {% endif %}
+                                    </gmd:CI_Address>
+                                </gmd:address>
+                                {% if contact['onlineResource'] is defined and contact['onlineResource'] is not empty %}
+                                    <gmd:onlineResource>
+                                        <gmd:CI_OnlineResource>
+                                            <gmd:linkage>
+                                                <gmd:URL>{{ contact['onlineResource'] }}</gmd:URL>
+                                            </gmd:linkage>
+                                        </gmd:CI_OnlineResource>
+                                    </gmd:onlineResource>
+                                {% endif %}
+                            </gmd:CI_Contact>
+                        </gmd:contactInfo>
+                        <gmd:role>
+                            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+                        </gmd:role>
+                    </gmd:CI_ResponsibleParty>
+                </gmd:contact>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if p['dateStamp'] is defined %}
+        <gmd:dateStamp>
+            <gco:Date>{{ p['dateStamp'] }}</gco:Date>
+        </gmd:dateStamp>
+    {% endif %}
+    <gmd:metadataStandardName>
+        <gco:CharacterString>{{ p['metadataStandardName'] }}</gco:CharacterString>
+    </gmd:metadataStandardName>
+    <gmd:metadataStandardVersion>
+        <gco:CharacterString>{{ p['metadataStandardVersion'] }}</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+    {% if p['referencesysteminfo'] is defined and p['referencesysteminfo'] is not empty %}
+        {% for referencSystem in p['referencesysteminfo'] %}
+            <gmd:referenceSystemInfo>
+                <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                        <gmd:RS_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>{{ referencSystem.code }}</gco:CharacterString>
+                            </gmd:code>
+                            <gmd:codeSpace>
+                                <gco:CharacterString>{{ referencSystem.codespace }}</gco:CharacterString>
+                            </gmd:codeSpace>
+                            <gmd:version>
+                                <gco:CharacterString>{{ referencSystem.version }}</gco:CharacterString>
+                            </gmd:version>
+                        </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                </gmd:MD_ReferenceSystem>
+            </gmd:referenceSystemInfo>
+        {% endfor%}
+    {% endif %}
+    <gmd:identificationInfo>
+        <srv:SV_ServiceIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    {% if p['title'] is defined %}
+                        <gmd:title>
+                            <gco:CharacterString>{{ p['title'] }}</gco:CharacterString>
+                        </gmd:title>
+                    {% endif %}
+
+                    {% if p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}
+                        <gmd:alternateTitle>
+                            <gco:CharacterString>{{ p['alternateTitle'] }}</gco:CharacterString>
+                        </gmd:alternateTitle>
+                    {% endif %}
+
+                    {% if p['creationDate'] is defined and p['creationDate'] is not empty %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['creationDate'] }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+
+                    {% if p['publicationDate'] is defined and p['publicationDate'] is not empty %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['publicationDate'] }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+
+                    {% if p['revisionDate'] is defined and p['revisionDate'] is not empty %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['revisionDate'] }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+
+                    {% for key in array_get(p, 'identifier') %}
+                        {% if array_all_exists(key, ['code', 'codespace']) %}
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>{{ key['codespace'] }}{{ key['code'] }}</gco:CharacterString>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        {% endif %}
+                    {% endfor %}
+                </gmd:CI_Citation>
+            </gmd:citation>
+
+            {% if p['abstract'] is defined %}
+                <gmd:abstract>
+                    <gco:CharacterString>{{ p['abstract'] }}</gco:CharacterString>
+                </gmd:abstract>
+            {% endif %}
+
+            {% if p['responsibleParty'] is defined %}
+                {% for contact in p['responsibleParty'] %}
+                    {% if contact['organisationName'] is defined and contact['organisationName'] is not empty %}
+                        <gmd:pointOfContact>
+                            <gmd:CI_ResponsibleParty>
+                                {% if contact['individualName'] is defined and contact['individualName'] is not empty %}
+                                    <gmd:individualName>
+                                        <gco:CharacterString>{{ contact['individualName'] }}</gco:CharacterString>
+                                    </gmd:individualName>
+                                {% endif %}
+                                {% if contact['organisationName'] is defined %}
+                                    <gmd:organisationName>
+                                        <gco:CharacterString>{{ contact['organisationName'] }}</gco:CharacterString>
+                                    </gmd:organisationName>
+                                {% endif %}
+                                <gmd:contactInfo>
+                                    <gmd:CI_Contact>
+                                        {% if contact['voice'] is defined and contact['voice'] is not empty
+                                        or contact['facsimile'] is defined and contact['facsimile'] is not empty %}
+                                            <gmd:phone>
+                                                <gmd:CI_Telephone>
+                                                    {% if contact['voice'] is defined and contact['voice'] is not empty %}
+                                                        <gmd:voice>
+                                                            <gco:CharacterString>{{ contact['voice'] }}</gco:CharacterString>
+                                                        </gmd:voice>
+                                                    {% endif %}
+                                                    {% if contact['facsimile'] is defined and contact['facsimile'] is not empty %}
+                                                        <gmd:facsimile>
+                                                            <gco:CharacterString>{{ contact['facsimile'] }}</gco:CharacterString>
+                                                        </gmd:facsimile>
+                                                    {% endif %}
+                                                </gmd:CI_Telephone>
+                                            </gmd:phone>
+                                        {% endif %}
+                                        <gmd:address>
+                                            <gmd:CI_Address>
+                                                {% if contact['deliveryPoint'] is defined and contact['deliveryPoint'] is not empty %}
+                                                    <gmd:deliveryPoint>
+                                                        <gco:CharacterString>{{ contact['deliveryPoint'] }}</gco:CharacterString>
+                                                    </gmd:deliveryPoint>
+                                                {% endif %}
+                                                {% if contact['city'] is defined and contact['city'] is not empty %}
+                                                    <gmd:city>
+                                                        <gco:CharacterString>{{ contact['city'] }}</gco:CharacterString>
+                                                    </gmd:city>
+                                                {% endif %}
+                                                {% if contact['administrativeArea'] is defined and contact['administrativeArea'] is not empty %}
+                                                    <gmd:administrativeArea>
+                                                        <gco:CharacterString>{{ contact['administrativeArea'] }}</gco:CharacterString>
+                                                    </gmd:administrativeArea>
+                                                {% endif %}
+                                                {% if contact['postalCode'] is defined and contact['postalCode'] is not empty %}
+                                                    <gmd:postalCode>
+                                                        <gco:CharacterString>{{ contact['postalCode'] }}</gco:CharacterString>
+                                                    </gmd:postalCode>
+                                                {% endif %}
+                                                {% if contact['country'] is defined and contact['country'] is not empty %}
+                                                    <gmd:country>
+                                                        <gco:CharacterString>{{ contact['country'] }}</gco:CharacterString>
+                                                    </gmd:country>
+                                                {% endif %}
+                                                {% if contact['electronicMailAddress'] is defined %}
+                                                    <gmd:electronicMailAddress>
+                                                        <gco:CharacterString>{{ contact['electronicMailAddress'] }}</gco:CharacterString>
+                                                    </gmd:electronicMailAddress>
+                                                {% endif %}
+                                            </gmd:CI_Address>
+                                        </gmd:address>
+                                        {% if contact['onlineResource'] is defined and contact['onlineResource'] is not empty %}
+                                            <gmd:onlineResource>
+                                                <gmd:CI_OnlineResource>
+                                                    <gmd:linkage>
+                                                        <gmd:URL>{{ contact['onlineResource'] }}</gmd:URL>
+                                                    </gmd:linkage>
+                                                </gmd:CI_OnlineResource>
+                                            </gmd:onlineResource>
+                                        {% endif %}
+                                    </gmd:CI_Contact>
+                                </gmd:contactInfo>
+                                <gmd:role>
+                                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="{{ contact['role'] }}">{{ contact['role'] }}</gmd:CI_RoleCode>
+                                </gmd:role>
+                            </gmd:CI_ResponsibleParty>
+                        </gmd:pointOfContact>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if p['browserGraphic'] is defined %}
+                <gmd:graphicOverview>
+                    <gmd:MD_BrowseGraphic>
+                        <gmd:fileName>
+                            <gco:CharacterString>{{ p['browserGraphic'] }}</gco:CharacterString>
+                        </gmd:fileName>
+                    </gmd:MD_BrowseGraphic>
+                </gmd:graphicOverview>
+            {% endif %}
+            {% if p['keyword'] is defined %}
+                {% for title, keywords in p['keyword'] %}
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            {% for keyword in keywords.value %}
+                                <gmd:keyword>
+                                    <gco:CharacterString>{{ keyword }}</gco:CharacterString>
+                                </gmd:keyword>
+                            {% endfor %}
+                            {% if title is defined and title is not empty and title != '_noRepo' %}
+                                <gmd:thesaurusName>
+                                    <gmd:CI_Citation>
+                                        <gmd:title>
+                                            <gco:CharacterString>{{ title }}</gco:CharacterString>
+                                        </gmd:title>
+                                        <gmd:date>
+                                            <gmd:CI_Date>
+                                                <gmd:date>
+                                                    <gco:Date>{{ keywords.date }}</gco:Date>
+                                                </gmd:date>
+                                                <gmd:dateType>
+                                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ keywords.type }}">{{ keywords.type }}</gmd:CI_DateTypeCode>
+                                                </gmd:dateType>
+                                            </gmd:CI_Date>
+                                        </gmd:date>
+                                    </gmd:CI_Citation>
+                                </gmd:thesaurusName>
+                            {% endif %}
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Nutzungseinschränkungen -->
+            {% if p['uselimitation'] is defined %}
+                {% for uselimitation in p['uselimitation'] %}
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useLimitation>
+                                <gco:CharacterString>Nutzungseinschränkungen: {{ uselimitation }}</gco:CharacterString>
+                            </gmd:useLimitation>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Nutzungsbedingungen -->
+            {% if p['useconstraints'] is defined %}
+                {% for row in p['useconstraints'] %}
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            {% if row.useconstraints is defined %}
+                                <gmd:useConstraints>
+                                    <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="{{ row.useconstraints }}" />
+                                </gmd:useConstraints>
+                            {% endif %}
+                            {% if row.otherconstraints is defined and row.otherconstraints is not empty %}
+                                <gmd:useConstraints>
+                                    <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="otherRestrictions" />
+                                </gmd:useConstraints>
+                                <gmd:otherConstraints>
+                                    <gco:CharacterString>Nutzungsbedingungen: {{ row.otherconstraints }}</gco:CharacterString>
+                                </gmd:otherConstraints>
+                            {% endif %}
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Zugriffseinschränkungen -->
+            {% if p['accessConstraints'] is defined %}
+                {% for row in p['accessConstraints'] %}
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            {% if row.accessConstraints is defined %}
+                                <gmd:accessConstraints>
+                                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="{{ row.accessConstraints }}" />
+                                </gmd:accessConstraints>
+                            {% endif %}
+                            {% if row.otherconstraints is defined and row.otherconstraints is not empty %}
+                                <gmd:accessConstraints>
+                                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+                                </gmd:accessConstraints>
+                                <gmd:otherConstraints>
+                                    <gco:CharacterString>{{ row.otherconstraints }}</gco:CharacterString>
+                                </gmd:otherConstraints>
+                            {% endif %}
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                {% endfor %}
+            {% endif %}
+
+            {% if p['serviceType'] is defined %}
+                <srv:serviceType>
+                    <gco:LocalName>{{ p['serviceType'] }}</gco:LocalName>
+                </srv:serviceType>
+            {% endif %}
+
+            {% if p['serviceTypeVersion'] is defined %}
+                {% for version in p['serviceTypeVersion'] %}
+                    <srv:serviceTypeVersion>
+                        <gco:CharacterString>{{ version }}</gco:CharacterString>
+                    </srv:serviceTypeVersion>
+                {% endfor %}
+            {% endif %}
+
+            <srv:extent>
+                <gmd:EX_Extent>
+                    {% if p['bbox'] is defined %}
+                        {% for bbox in p['bbox'] %}
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicBoundingBox>
+                                    <gmd:westBoundLongitude>
+                                        <gco:Decimal>{{ bbox['wLongitude'] }}</gco:Decimal>
+                                    </gmd:westBoundLongitude>
+                                    <gmd:eastBoundLongitude>
+                                        <gco:Decimal>{{ bbox['eLongitude'] }}</gco:Decimal>
+                                    </gmd:eastBoundLongitude>
+                                    <gmd:southBoundLatitude>
+                                        <gco:Decimal>{{ bbox['sLatitude'] }}</gco:Decimal>
+                                    </gmd:southBoundLatitude>
+                                    <gmd:northBoundLatitude>
+                                        <gco:Decimal>{{ bbox['nLatitude'] }}</gco:Decimal>
+                                    </gmd:northBoundLatitude>
+                                </gmd:EX_GeographicBoundingBox>
+                            </gmd:geographicElement>
+                        {% endfor %}
+                    {% endif %}
+                    {% if p['temporalExtent'] is defined %}
+                        {% for temporalExtent in p['temporalExtent'] %}
+                            {% if temporalExtent['begin'] is defined and temporalExtent['begin'] is not empty %}
+                                <gmd:temporalElement>
+                                    <gmd:EX_TemporalExtent>
+                                        <gmd:extent>
+                                            <gml:TimePeriod gml:id="ID_{{ loop.index }}" xsi:type="gml:TimePeriodType">
+                                                <gml:beginPosition>{{ temporalExtent['begin'] }}</gml:beginPosition>
+                                                <gml:endPosition>{{ temporalExtent['end'] }}</gml:endPosition>
+                                            </gml:TimePeriod>
+                                        </gmd:extent>
+                                    </gmd:EX_TemporalExtent>
+                                </gmd:temporalElement>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </gmd:EX_Extent>
+            </srv:extent>
+            {% if p['coupledResource'] is defined and p['coupledResource'] is not empty %}
+                <srv:couplingType>
+                    <SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="tight"/>
+                </srv:couplingType>
+            {% else %}
+                <srv:couplingType>
+                    <SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="loose"/>
+                </srv:couplingType>
+            {% endif %}
+
+            {% if p['containsOperationsURL'] is defined %}
+                <srv:containsOperations>
+                    <srv:SV_OperationMetadata>
+                        {% if p['containsOperationsName'] is defined %}
+                            <srv:operationName>
+                                <gco:CharacterString>{{ p['containsOperationsName'] }}</gco:CharacterString>
+                            </srv:operationName>
+                        {% endif %}
+                        {% if p['containsOperationsDCP'] is defined %}
+                            <srv:DCP>
+                                <srv:DCPList codeList="DCPList" codeListValue="{{ p['containsOperationsDCP'] }}">{{ p['containsOperationsDCP'] }}</srv:DCPList>
+                            </srv:DCP>
+                        {% endif %}
+                        {% if p['containsOperationsURL'] is defined %}
+                            <srv:connectPoint>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>{{ p['containsOperationsURL'] }}</gmd:URL>
+                                    </gmd:linkage>
+                                </gmd:CI_OnlineResource>
+                            </srv:connectPoint>
+                        {% endif %}
+                    </srv:SV_OperationMetadata>
+                </srv:containsOperations>
+            {% endif %}
+
+            {#{% if not array_is_empty(p, 'coupledResource') %}#}
+                {#{% for uuid, coupledResource in array_get(p, 'coupledResource') %}#}
+                    {#{{ generate_operates_on(uuid, coupledResource) }}#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+        </srv:SV_ServiceIdentification>
+    </gmd:identificationInfo>
+
+    <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+            <gmd:distributionFormat>
+                <gmd:MD_Format>
+                    <gmd:name gco:nilReason="inapplicable">
+                        <gco:CharacterString>inapplicable</gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version gco:nilReason="inapplicable">
+                        <gco:CharacterString>inapplicable</gco:CharacterString>
+                    </gmd:version>
+                </gmd:MD_Format>
+            </gmd:distributionFormat>
+
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    {% if p['onlineResource'] is defined %}
+                        {% for onlineResource in p['onlineResource'] %}
+                            <gmd:onLine>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>{{ onlineResource }}</gmd:URL>
+                                    </gmd:linkage>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onLine>
+                        {% endfor %}
+                    {% endif %}
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+        </gmd:MD_Distribution>
+    </gmd:distributionInfo>
+
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:scope>
+                <gmd:DQ_Scope>
+                    <gmd:level>
+                        <gmd:MD_ScopeCode
+                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                            codeListValue="service">service</gmd:MD_ScopeCode>
+                    </gmd:level>
+                    {% if p['hierarchyLevelName'] is defined %}
+                        <gmd:levelDescription>
+                            <gmd:MD_ScopeDescription>
+                                <gmd:other>
+                                    <gco:CharacterString>{{ p['hierarchyLevelName'] }}</gco:CharacterString>
+                                </gmd:other>
+                            </gmd:MD_ScopeDescription>
+                        </gmd:levelDescription>
+                    {% endif %}
+                </gmd:DQ_Scope>
+            </gmd:scope>
+
+            {% if p['dataquality'] is defined %}
+                {% for dataquality in p['dataquality'] %}
+                    <gmd:report>
+                        <gmd:DQ_DomainConsistency xsi:type="gmd:DQ_DomainConsistency_Type">
+                            <gmd:result>
+                                <gmd:DQ_ConformanceResult xsi:type="gmd:DQ_ConformanceResult_Type">
+                                    <gmd:specification>
+                                        <gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gco:CharacterString>{{ dataquality['title'] }}</gco:CharacterString>
+                                            </gmd:title>
+                                            <gmd:date>
+                                                <gmd:CI_Date>
+                                                    <gmd:date>
+                                                        <gco:Date>{{ dataquality['date'] }}</gco:Date>
+                                                    </gmd:date>
+                                                    <gmd:dateType>
+                                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ dataquality['type'] }}">{{ dataquality['type'] }}</gmd:CI_DateTypeCode>
+                                                    </gmd:dateType>
+                                                </gmd:CI_Date>
+                                            </gmd:date>
+                                        </gmd:CI_Citation>
+                                    </gmd:specification>
+                                    <gmd:explanation>
+                                        <gco:CharacterString>See the referenced specification</gco:CharacterString>
+                                    </gmd:explanation>
+                                    {% if dataquality['result'] is not empty %}
+                                        <gmd:pass>
+                                            <gco:Boolean>{{ dataquality['result'] }}</gco:Boolean>
+                                        </gmd:pass>
+                                    {% else %}
+                                        <gmd:pass gco:nilReason="unknown" />
+                                    {% endif %}
+                                </gmd:DQ_ConformanceResult>
+                            </gmd:result>
+                        </gmd:DQ_DomainConsistency>
+                    </gmd:report>
+                {% endfor %}
+            {% endif %}
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

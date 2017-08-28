@@ -1,0 +1,46 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}
+    {% trans %}Schlüsselwörter{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title no-m">{% trans %}Schlüsselwörter{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_keyword_new') }}" class="btn info medium">
+                    <span class="icon-plus-circle"></span> {% trans %}Neu{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <table id="table-log" class="table bordered small">
+        <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Datum</th>
+            <th>Datumstyp</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for keyword in keywords %}
+            <tr>
+                {#<td>#}
+
+                {#</td>#}
+                <td>
+                    <a href="{{ path('metador_admin_keyword_edit', { 'id': keyword.id }) }}">{{ keyword.title }}</a>
+                </td>
+                <td>{{ keyword.date|date('Y-m-d') }}</td>
+                <td>{{ keyword.dateType }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
