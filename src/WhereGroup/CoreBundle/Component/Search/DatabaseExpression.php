@@ -29,7 +29,7 @@ class DatabaseExpression implements Expression
     /**
      * @var Expr
      */
-    private $expression;
+    private $resultExpression;
 
     /**
      * DatabaseExpression constructor.
@@ -39,9 +39,9 @@ class DatabaseExpression implements Expression
     {
         $this->alias = $alias;
         $this->replacements = array(
-            'wildcard' => '%',
-            'singlechar' => '_',
-            'escapechar' => '\\',
+            self::WILDCARD => '%',
+            self::SINGLECHAR => '_',
+            self::EXCAPECHAR => '\\',
         );
         $this->parameters = array();
     }
@@ -77,18 +77,18 @@ class DatabaseExpression implements Expression
     /**
      * @return Expr
      */
-    public function getExpression()
+    public function getResultExpression()
     {
-        return $this->expression;
+        return $this->resultExpression;
     }
 
     /**
      * @param $expression
      * @return $this
      */
-    public function setExpression($expression)
+    public function setResultExpression($expression)
     {
-        $this->expression = $expression;
+        $this->resultExpression = $expression;
 
         return $this;
     }
@@ -138,19 +138,8 @@ class DatabaseExpression implements Expression
     public function inx($property, array $items)
     {
         $expr = new Expr();
+
         return $expr->in($this->getName($property), $this->addParameter($property, $items));
-    }
-
-    /**
-     * @param $property
-     * @param $value
-     * @return Expr\Comparison
-     */
-    public function equal($property, $value)
-    {
-        $expr = new Expr();
-
-        return $expr->eq($this->getName($property), $this->addParameter($property, $value));
     }
 
     /**
@@ -173,6 +162,30 @@ class DatabaseExpression implements Expression
         $this->parameters[$name] = $value;
 
         return ':'.$name;
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function equal($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->eq($this->getName($property), $this->addParameter($property, $value));
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function notequal($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->neq($this->getName($property), $this->addParameter($property, $value));
     }
 
     /**

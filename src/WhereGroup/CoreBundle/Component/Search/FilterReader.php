@@ -12,8 +12,8 @@ namespace WhereGroup\CoreBundle\Component\Search;
 interface FilterReader
 {
     /**
-     * @param mixed $filter
+     * @param $filter
      * @param Expression $expression
      */
-    public static function read($filter, Expression $expression);
+    public static function read($filter, Expression &$expression);
 }

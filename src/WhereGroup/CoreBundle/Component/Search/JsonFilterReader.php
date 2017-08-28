@@ -11,12 +11,12 @@ class JsonFilterReader implements FilterReader
 {
 
     /**
-     * @param mixed $filter
+     * @param $filter
      * @param Expression $expression
      */
-    public static function read($filter, Expression $expression)
+    public static function read($filter, Expression &$expression)
     {
-        $expression->setExpression(self::getExpression($filter, $expression));
+        $expression->setResultExpression(self::getExpression($filter, $expression));
     }
 
     /**
@@ -24,7 +24,7 @@ class JsonFilterReader implements FilterReader
      * @param Expression $expression
      * @return array|mixed|null
      */
-    private static function getExpression(array $filter, Expression $expression)
+    private static function getExpression(array $filter, Expression &$expression)
     {
         // property name and property value, ">=2" is for "in".
         if (count($filter) >= 2 && !is_array($filter[0]) && !is_array($filter[1])) {

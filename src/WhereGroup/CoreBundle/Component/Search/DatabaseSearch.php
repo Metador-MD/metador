@@ -106,7 +106,7 @@ class DatabaseSearch extends Search implements SearchInterface
     public function setExpression($expression)
     {
         /**  @var DatabaseExpression $expression */
-        $this->filter = $expression->getExpression();
+        $this->filter = $expression->getResultExpression();
         $this->parameters = $expression->getParameters();
 
         return $this;

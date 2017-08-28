@@ -9,16 +9,20 @@ namespace WhereGroup\CoreBundle\Component\Search;
 interface Expression
 {
 
+    const EXCAPECHAR = 'escapechar';
+    const SINGLECHAR = 'singlechar';
+    const WILDCARD = 'wildcard';
+
     /**
      * @return mixed
      */
-    public function getExpression();
+    public function getResultExpression();
 
     /**
      * @param $expression
      * @return Expression
      */
-    public function setExpression($expression);
+    public function setResultExpression($expression);
 
     /**
      * @param array $items
@@ -57,5 +61,14 @@ interface Expression
      * @param $value
      * @return mixed
      */
-    public function like($property, $value);
+    public function notequal($property, $value);
+
+    /**
+     * @param $property
+     * @param $value
+     * @param array|null $replacements-
+     * e.g. array(self::WILDCARD => '%',self::SINGLECHAR => '_',self::EXCAPECHAR => '\\')
+     * @return mixed
+     */
+    public function like($property, $value, array $replacements = null);
 }
