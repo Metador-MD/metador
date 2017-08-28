@@ -9,10 +9,6 @@ namespace WhereGroup\CoreBundle\Component\Search;
 interface Expression
 {
 
-    const EXCAPECHAR = 'escapechar';
-    const SINGLECHAR = 'singlechar';
-    const WILDCARD = 'wildcard';
-
     /**
      * @return mixed
      */
@@ -47,28 +43,87 @@ interface Expression
      * @param array $items
      * @return mixed
      */
-    public function inx($property, array $items);
+    public function in($property, array $items);
 
     /**
      * @param $property
      * @param $value
      * @return mixed
      */
-    public function equal($property, $value);
+    public function eq($property, $value);
 
     /**
      * @param $property
      * @param $value
      * @return mixed
      */
-    public function notequal($property, $value);
+    public function neq($property, $value);
 
     /**
      * @param $property
      * @param $value
-     * @param array|null $replacements-
-     * e.g. array(self::WILDCARD => '%',self::SINGLECHAR => '_',self::EXCAPECHAR => '\\')
+     * @param string $escapeChar
+     * @param string $singleChar
+     * @param string $wildCard
      * @return mixed
      */
-    public function like($property, $value, array $replacements = null);
+    public function like($property, $value, $escapeChar, $singleChar, $wildCard);
+
+    /**
+     * @param $property
+     * @param $value
+     * @param string $escapeChar
+     * @param string $singleChar
+     * @param string $wildCard
+     * @return mixed
+     */
+    public function notLike($property, $value, $escapeChar, $singleChar, $wildCard);
+
+    /**
+     * @param $property
+     * @param $lower
+     * @param $upper
+     * @return mixed
+     */
+    public function between($property, $lower, $upper);
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function gt($property, $value);
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function gte($property, $value);
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function lt($property, $value);
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function lte($property, $value);
+
+    /**
+     * @param $property
+     * @return mixed
+     */
+    public function isNull($property);
+
+    /**
+     * @param $property
+     * @return mixed
+     */
+    public function isNotNull($property);
 }

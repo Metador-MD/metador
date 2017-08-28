@@ -11,10 +11,19 @@ use Doctrine\ORM\Query\Expr;
  */
 class DatabaseExpression implements Expression
 {
+
     /**
-     * @var array
+     * @var string
      */
-    private $replacements;
+    private $escapeChar = '\\';
+    /**
+     * @var string
+     */
+    private $singleChar = '_';
+    /**
+     * @var string
+     */
+    private $wildCard = '%';
 
     /**
      * @var string
@@ -38,40 +47,55 @@ class DatabaseExpression implements Expression
     public function __construct($alias)
     {
         $this->alias = $alias;
-        $this->replacements = array(
-            self::WILDCARD => '%',
-            self::SINGLECHAR => '_',
-            self::EXCAPECHAR => '\\',
-        );
         $this->parameters = array();
     }
 
     /**
-     * @param array $replacements
+     * @param $escape
+     * @param $character
+     * @return string
      */
-    public function resetReplacements($replacements)
+    private static function getRegex($escape, $character)
     {
-        $this->replacements = $this->prepareReplacements($replacements);
+        $first = self::addEscape($escape);
+        $second = self::addEscape($character);
+
+        return '/(?<!'.$first.')('.$second.')/';
     }
 
     /**
-     * @param array|null $replacements
-     * @return array|null
+     * @param $character
+     * @return string
      */
-    private function prepareReplacements(array $replacements = null)
+    private static function addEscape($character)
     {
-        if ($replacements !== null) {
-            $replacements = array_change_key_case($replacements, CASE_LOWER);
-            if (!isset($replacements['wildcard'])
-                || !isset($replacements['singlechar'])
-                || !isset($replacements['escapechar'])) {
-                $replacements = null;
-            }
-
-            return $replacements;
+        if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
+            return '\\'.$character;
         } else {
-            return null;
+            return $character;
         }
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getName($name)
+    {
+        return $this->alias.'.'.$name;
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return string
+     */
+    private function addParameter($property, $value)
+    {
+        $name = $property.count($this->parameters);
+        $this->parameters[$name] = $value;
+
+        return ':'.$name;
     }
 
     /**
@@ -135,7 +159,7 @@ class DatabaseExpression implements Expression
      * @param $items
      * @return Expr\Func
      */
-    public function inx($property, array $items)
+    public function in($property, array $items)
     {
         $expr = new Expr();
 
@@ -143,33 +167,11 @@ class DatabaseExpression implements Expression
     }
 
     /**
-     * @param $name
-     * @return string
-     */
-    private function getName($name)
-    {
-        return $this->alias.'.'.$name;
-    }
-
-    /**
-     * @param $property
-     * @param $value
-     * @return string
-     */
-    private function addParameter($property, $value)
-    {
-        $name = $property.count($this->parameters);
-        $this->parameters[$name] = $value;
-
-        return ':'.$name;
-    }
-
-    /**
      * @param $property
      * @param $value
      * @return Expr\Comparison
      */
-    public function equal($property, $value)
+    public function eq($property, $value)
     {
         $expr = new Expr();
 
@@ -181,7 +183,7 @@ class DatabaseExpression implements Expression
      * @param $value
      * @return Expr\Comparison
      */
-    public function notequal($property, $value)
+    public function neq($property, $value)
     {
         $expr = new Expr();
 
@@ -191,84 +193,135 @@ class DatabaseExpression implements Expression
     /**
      * @param $property
      * @param $value
-     * @param array|null $replacements
+     * @param string $escapeChar
+     * @param string $singleChar
+     * @param string $wildCard
      * @return Expr\Comparison
      */
-    public function like($property, $value, array $replacements = null)
+    public function like($property, $value, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
-        $prepared = $this->prepareReplacements($replacements);
-
-        $valueX = $value;
-        if ($prepared) {
-            $valueX = $this->replace($valueX, $prepared);
-        } else {
+        if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
             $valueX = $this->addParameter($property, $value);
+        } else {
+            $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
+            #repalce singleChar
+            $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
+            #repalce escape
+            $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
         }
 
         return $expr->like($this->getName($property), $valueX);
     }
 
     /**
+     * @param $property
      * @param $value
-     * @param array $replacements
-     * @return bool
+     * @param string $escapeChar
+     * @param string $singleChar
+     * @param string $wildCard
+     * @return Expr\Comparison
      */
-    private function replace(&$value, array $replacements)
+    public function notLike($property, $value, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
-        if ($replacements !== null && $this->replacements) {
-            $escape = $replacements !== null ? $replacements['escapechar'] : null;
-
-            $value = preg_replace(
-                $this->getRegex(
-                    $escape,
-                    $replacements['wildcard']
-                ),
-                $this->replacements['wildcard'],
-                $value
-            );
-
-            $value = preg_replace(
-                $this->getRegex(
-                    $escape,
-                    $replacements['singlechar']
-                ),
-                $this->replacements['singlechar'],
-                $value
-            );
-
-            $value = preg_replace($this->getRegex($escape, $escape), $this->replacements['singlechar'], $value);
-
-            return true;
+        $expr = new Expr();
+        if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
+            $valueX = $this->addParameter($property, $value);
         } else {
-            return false;
+            $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
+            #repalce singleChar
+            $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
+            #repalce escape
+            $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
         }
+
+        return $expr->notLike($this->getName($property), $valueX);
     }
 
     /**
-     * @param $escape
-     * @param $character
-     * @return string
+     * @param $property
+     * @param $lower
+     * @param $upper
+     * @return Expr\Func
      */
-    private function getRegex($escape, $character)
+    public function between($property, $lower, $upper)
     {
-        $first = $this->addEscape($escape);
-        $second = $this->addEscape($character);
+        $expr = new Expr();
 
-        return '/(?<!'.$first.')('.$second.')/';
+        return $expr->between(
+            $this->getName($property),
+            $this->addParameter($property, $lower),
+            $this->addParameter($property, $upper)
+        );
     }
 
     /**
-     * @param $character
-     * @return string
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
      */
-    private function addEscape($character)
+    public function gt($property, $value)
     {
-        if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
-            return '\\'.$character;
-        } else {
-            return $character;
-        }
+        $expr = new Expr();
+
+        return $expr->gt($this->getName($property), $this->addParameter($property, $value));
     }
 
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function gte($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->gte($this->getName($property), $this->addParameter($property, $value));
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function lt($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->lt($this->getName($property), $this->addParameter($property, $value));
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return Expr\Comparison
+     */
+    public function lte($property, $value)
+    {
+        $expr = new Expr();
+
+        return $expr->lte($this->getName($property), $this->addParameter($property, $value));
+    }
+
+    /**
+     * @param $property
+     * @return string
+     */
+    public function isNull($property)
+    {
+        $expr = new Expr();
+
+        return $expr->isNull($this->getName($property));
+    }
+
+    /**
+     * @param $property
+     * @return string
+     */
+    public function isNotNull($property)
+    {
+        $expr = new Expr();
+
+        return $expr->isNotNull($this->getName($property));
+    }
 }

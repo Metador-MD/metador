@@ -63,18 +63,30 @@ class JsonFilterReader implements FilterReader
                     $item = self::getExpression($value, $expression);
 
                     return $expression->not($item);
-                case 'equal':
+                case 'eq':
                     $property = self::getExpression($value, $expression);
 
-                    return $expression->equal($property[0], $property[1]);
+                    return $expression->eq($property[0], $property[1]);
                 case 'like':
                     $property = self::getExpression($value, $expression);
 
-                    return $expression->like($property[0], $property[1]);
-                case 'in':
+                    return $expression->like($property[0], $property[1], '\\', '_', '*');
+                case 'notlike':
+                case 'notLike':
                     $property = self::getExpression($value, $expression);
 
-                    return $expression->like($property[0], $property[1]);
+                    return $expression->notLike($property[0], $property[1], '\\', '_', '*');
+                case 'in':
+                    $list = self::getExpression($value, $expression);
+
+                    if (count($list) > 1) {
+                        return $expression->in($key, $list);
+                    } elseif (count($list) === 1) {
+                        return $list[0];
+                    }
+
+                    return null;
+                // TODO other
                 default:
                     return null;
             }
