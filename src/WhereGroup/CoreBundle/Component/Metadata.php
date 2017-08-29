@@ -449,6 +449,7 @@ class Metadata implements MetadataInterface
         $searchfield  = '';
         $searchfield .= isset($p['_searchfield']) ? ' ' . strtolower($p['_searchfield']) : '';
         $searchfield .= isset($p['title'])        ? ' ' . strtolower($p['title']) : '';
+        $searchfield .= isset($p['alternateTitle']) ? ' ' . strtolower($p['alternateTitle']) : '';
         $searchfield .= isset($p['abstract'])     ? ' ' . strtolower($p['abstract']) : '';
 
         if (isset($p['keyword'])) {
