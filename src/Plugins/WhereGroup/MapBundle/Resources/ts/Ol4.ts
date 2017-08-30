@@ -479,6 +479,8 @@ export class Ol4Map {
                             'featureProjection': ol4map.getProjection()
                         }
                     );
+                    geojson['bbox'] = new Ol4Geom(e.feature.getGeometry(), ol4map.getProjection())
+                        .getExtent(ol.proj.get(METADOR_EPSG));
                     onDrawEnd(geojson);
                     olMap.removeInteraction(drawer.getInteraction());
                 }
