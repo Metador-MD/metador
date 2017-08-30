@@ -84,6 +84,17 @@ abstract class Search
     }
 
     /**
+     * @param $offset
+     * @return $this
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = (int)$offset;
+
+        return $this;
+    }
+
+    /**
      * @return \stdClass
      */
     public function getResultPaging()
@@ -130,6 +141,11 @@ abstract class Search
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public abstract function getResultCount();
 
     /**
      * @return Expression

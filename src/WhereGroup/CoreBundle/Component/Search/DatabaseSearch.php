@@ -81,7 +81,7 @@ class DatabaseSearch extends Search implements SearchInterface
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getResultCount()
     {
