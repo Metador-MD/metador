@@ -12,9 +12,11 @@
             <gco:CharacterString>{{ p['_uuid'] }}</gco:CharacterString>
         </gmd:fileIdentifier>
     {% endif %}
+    {% if not array_is_empty(p, 'metadataLanguage') %}
     <gmd:language>
         <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{{ p['metadataLanguage'] }}">{{ p['metadataLanguage'] }}</gmd:LanguageCode>
     </gmd:language>
+    {% endif %}
     <gmd:characterSet>
         <gmd:MD_CharacterSetCode codeSpace="ISOTC211/19115" codeListValue="utf8" codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#MD_CharacterSetCode">utf8</gmd:MD_CharacterSetCode>
     </gmd:characterSet>

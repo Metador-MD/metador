@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?e19fp6');
-  src:  url('fonts/icomoon.eot?e19fp6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?e19fp6') format('woff2'),
-    url('fonts/icomoon.ttf?e19fp6') format('truetype'),
-    url('fonts/icomoon.woff?e19fp6') format('woff'),
-    url('fonts/icomoon.svg?e19fp6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?lr485p');
+  src:  url('fonts/icomoon.eot?lr485p#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?lr485p') format('woff2'),
+    url('fonts/icomoon.ttf?lr485p') format('truetype'),
+    url('fonts/icomoon.woff?lr485p') format('woff'),
+    url('fonts/icomoon.svg?lr485p#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,6 +27,9 @@
 
 .icon-spinner:before {
   content: "\e982";
+}
+.icon-loop2:before {
+  content: "\ea2e";
 }
 .icon-file-pdf2:before {
   content: "\eadf";
@@ -229,6 +232,9 @@
 .icon-tag:before {
   content: "\f02b";
 }
+.icon-tags:before {
+  content: "\f02c";
+}
 .icon-book:before {
   content: "\f02d";
 }
@@ -280,6 +286,9 @@
 .icon-sort-up:before {
   content: "\f0de";
 }
+.icon-cloud-download:before {
+  content: "\f0ed";
+}
 .icon-bell:before {
   content: "\f0f3";
 }
@@ -307,4 +316,3 @@
 .icon-toggle-on:before {
   content: "\f205";
 }
-
