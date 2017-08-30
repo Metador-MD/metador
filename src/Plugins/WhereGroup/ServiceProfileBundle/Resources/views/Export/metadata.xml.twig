@@ -125,9 +125,11 @@
     <gmd:metadataStandardName>
         <gco:CharacterString>{{ p['metadataStandardName'] }}</gco:CharacterString>
     </gmd:metadataStandardName>
+    {% if p['metadataStandardVersion'] is defined %}
     <gmd:metadataStandardVersion>
         <gco:CharacterString>{{ p['metadataStandardVersion'] }}</gco:CharacterString>
     </gmd:metadataStandardVersion>
+    {% endif %}
     {% if p['referencesysteminfo'] is defined and p['referencesysteminfo'] is not empty %}
         {% for referencSystem in p['referencesysteminfo'] %}
             <gmd:referenceSystemInfo>
