@@ -126,4 +126,36 @@ interface Expression
      * @return mixed
      */
     public function isNotNull($property);
+
+    /**** geo spatial ****/
+
+    /**
+     * @param $property
+     * @param array $bbox
+     * @return mixed
+     */
+    public function bbox($property, array $bbox);
+
+    /**
+     * @param $property
+     * @param $geoFeature
+     * @return mixed
+     */
+    public function intersects($property, $geoFeature);
+
+    /**
+     * Checks if $geom is completely inside $property
+     * @param $property
+     * @param $geoFeature
+     * @return mixed
+     */
+    public function contains($property, $geoFeature);
+
+    /**
+     * Checks if $property is completely inside $geom
+     * @param $property
+     * @param $geoFeature
+     * @return mixed
+     */
+    public function within($property, $geoFeature);
 }
