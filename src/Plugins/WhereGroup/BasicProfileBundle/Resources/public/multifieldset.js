@@ -48,11 +48,14 @@
                     $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
                 );
 
+
             var count = $(this.element).attr('data-count');
             this.changeElementNames(clone, count);
+
             $(this.element).attr('data-count', ++count);
 
             $(this.element).find('.-js-multi-fieldset-rows').append(clone);
+
             metadata.enableSubmitButton();
         },
 
@@ -61,11 +64,12 @@
             subCount = (typeof subCount === 'undefined') ? 0 : parseInt(subCount);
 
             element.each(function() {
+                var node    = $(this).prop('nodeName');
                 var name    = $(this).attr('name');
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
-                if ($(this).val() !== '') {
+                if (node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') {
                     $(this).val('')
                 }
 
@@ -79,7 +83,7 @@
 
                 if(typeof id !== 'undefined' && id !== false) {
                     id = self.replaceCounter(
-                        /_([\d]{1,3})_/g,
+                        /_([\d]{1,3})[_]*/g,
                         "_", "_", count, subCount, id
                     );
                     $(this).attr('id', id);
@@ -87,7 +91,7 @@
 
                 if(typeof obj_id !== 'undefined' && obj_id !== false) {
                     obj_id = self.replaceCounter(
-                        /_([\d]{1,3})_/g,
+                        /_([\d]{1,3})[_]*/g,
                         "_", "_", count, subCount, obj_id
                     );
                     $(this).attr('data-obj-id', obj_id);

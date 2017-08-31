@@ -23,6 +23,17 @@ class Keyword
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Identifier darf nicht leer sein.")
+     */
+    private $identifier = null;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $repository = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Titel darf nicht leer sein.")
      */
     private $title = null;
@@ -147,5 +158,53 @@ class Keyword
     public function getKeywords()
     {
         return $this->keywords;
+    }
+
+    /**
+     * Set identifier
+     *
+     * @param string $identifier
+     *
+     * @return Keyword
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * Get identifier
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * Set repository
+     *
+     * @param boolean $repository
+     *
+     * @return Keyword
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+
+        return $this;
+    }
+
+    /**
+     * Get repository
+     *
+     * @return boolean
+     */
+    public function getRepository()
+    {
+        return $this->repository;
     }
 }
