@@ -12,17 +12,17 @@ class DatabaseSearch extends Search implements SearchInterface
 {
     const ENTITY = "MetadorCoreBundle:Metadata";
 
-    /** @var EntityManagerInterface|null  */
+    /** @var EntityManagerInterface|null */
     protected $em = null;
 
-    /** @var \Doctrine\ORM\QueryBuilder|null  */
+    /** @var \Doctrine\ORM\QueryBuilder|null */
     protected $qb = null;
 
     /**  @var string */
     protected $alias = 'm';
 
-    /**  @var DatabaseExpression */
-    protected $expression;
+    /** @var array|null */
+    protected $parameters = null;
 
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
@@ -31,16 +31,6 @@ class DatabaseSearch extends Search implements SearchInterface
         $this->qb = $em
             ->getRepository(self::ENTITY)
             ->createQueryBuilder($this->alias);
-
-        $this->expression = new DatabaseExpression($this->alias);
-    }
-
-    /**
-     * @return DatabaseExpression
-     */
-    public function getExpression()
-    {
-        return $this->expression;
     }
 
     /**
@@ -48,10 +38,10 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function find()
     {
-        if ($this->expression->getExpression()) {
+        if ($this->filter && $this->parameters) {
             $this->qb
-                ->add('where', $this->expression->getExpression())
-                ->setParameters($this->expression->getParameters());
+                ->add('where', $this->filter)
+                ->setParameters($this->parameters);
         }
 
         // Searchterms
@@ -59,8 +49,8 @@ class DatabaseSearch extends Search implements SearchInterface
             $termCount = 0;
             foreach ($this->getTerms() as $term) {
                 $this->qb
-                    ->andWhere('LOWER(' . $this->alias . '.searchfield) LIKE :termX' . $termCount)
-                    ->setParameter('termX' . $termCount, "%" . strtolower($term) . "%");
+                    ->andWhere('LOWER('.$this->alias.'.searchfield) LIKE :termX'.$termCount)
+                    ->setParameter('termX'.$termCount, "%".strtolower($term)."%");
             }
             unset($termCount);
         }
@@ -91,13 +81,34 @@ class DatabaseSearch extends Search implements SearchInterface
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getResultCount()
     {
         return $this->qb
-            ->select('count(' . $this->alias . ')')
+            ->select('count('.$this->alias.')')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return DatabaseExpression
+     */
+    public function createExpression()
+    {
+        return new DatabaseExpression($this->alias);
+    }
+
+    /**
+     * @param $expression
+     * @return $this
+     */
+    public function setExpression($expression)
+    {
+        /**  @var DatabaseExpression $expression */
+        $this->filter = $expression->getResultExpression();
+        $this->parameters = $expression->getParameters();
+
+        return $this;
     }
 }

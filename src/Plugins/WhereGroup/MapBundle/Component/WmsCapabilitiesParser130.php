@@ -67,12 +67,18 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
      */
     private function parseCapabilityRequest(Wms &$wms, \DOMElement $contextElm)
     {
-        $wms->setGcUrl($this->getValue(
-            './wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href',
-            $contextElm));
-        $wms->setGmUrl($this->getValue(
-            './wms:GetMap/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href',
-            $contextElm));
+        $wms->setGcUrl(
+            $this->getValue(
+                './wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href',
+                $contextElm
+            )
+        );
+        $wms->setGmUrl(
+            $this->getValue(
+                './wms:GetMap/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href',
+                $contextElm
+            )
+        );
 
         $formatList = $this->xpath->query('./wms:GetMap/wms:Format', $contextElm);
         if ($formatList !== null) {
@@ -80,7 +86,6 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
                 $wms->addFormat($this->getValue('./text()', $item));
             }
         }
-
     }
 
     /**
@@ -91,15 +96,14 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
     private function parseLayer(Wms &$wms, \DOMElement $contextElm)
     {
         $name = $this->getValue('./wms:Name/text()', $contextElm);
-        if ($name !== null) {
+        /* @var \DOMNodeList $tempList */
+        $tempList = $this->xpath->query('./wms:Layer', $contextElm);
+        // add only named layer and no root or group layer
+        if ($name !== null && $tempList->length === 0) {
             $wms->addToLayerList($name);
         }
-        $tempList = $this->xpath->query('./wms:Layer', $contextElm);
-        if ($tempList !== null) {
-            foreach ($tempList as $item) {
-                $this->parseLayer($wms, $item);
-            }
+        foreach ($tempList as $item) {
+            $this->parseLayer($wms, $item);
         }
     }
-
 }
