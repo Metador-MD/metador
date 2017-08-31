@@ -312,7 +312,8 @@ export class Ol4Map {
                     this.olMap.getView().getProjection(),
                     options['visible'],
                     parseFloat(options['opacity'])
-                )
+                ),
+                true
             );
         } else {
             console.error(options['type'] + ' is not supported.');
