@@ -453,6 +453,7 @@ export class Ol4Map {
     }
 
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+        this.setDoubleClickZoom(false);
         let ol4map = this;
         let olMap = this.olMap;
         const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType;
@@ -489,6 +490,20 @@ export class Ol4Map {
         } else {
             this.getDrawer().getLayer().getSource().clear();
             onDrawEnd(null);
+            this.setDoubleClickZoom(true);
+        }
+    }
+
+    /**
+     * Activates / deactivates interaction ol.interaction.DoubleClickZoom
+     * @param {boolean} state
+     */
+    private setDoubleClickZoom(state: boolean) {
+        for (let interaction of this.olMap.getInteractions().getArray()) {
+            if (interaction instanceof ol.interaction.DoubleClickZoom) {
+                interaction.setActive(state);
+                break;
+            }
         }
     }
 }
