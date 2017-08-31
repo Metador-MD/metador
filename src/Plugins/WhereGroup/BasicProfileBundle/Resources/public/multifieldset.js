@@ -69,8 +69,8 @@
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
-                if (node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') {
-                    $(this).val('')
+                if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
+                    $(this).val('');
                 }
 
                 if(typeof name !== 'undefined' && name !== false) {
@@ -97,7 +97,7 @@
                     $(this).attr('data-obj-id', obj_id);
                 }
 
-                if($(this).children().size() > 0) {
+                if($(this).children().length > 0) {
                     self.changeElementNames($(this).children(), count, subCount);
                 }
             });
