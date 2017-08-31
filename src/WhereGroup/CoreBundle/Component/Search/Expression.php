@@ -21,6 +21,12 @@ interface Expression
     public function setResultExpression($expression);
 
     /**
+     * @param array $propertyMap
+     * @return mixed
+     */
+    public function setPropertyMap(array $propertyMap);
+
+    /**
      * @param array $items
      * @return mixed
      */
@@ -144,7 +150,7 @@ interface Expression
     public function intersects($property, $geoFeature);
 
     /**
-     * Checks if $geom is completely inside $property
+     * Checks if $geom is completelly inside $property
      * @param $property
      * @param $geoFeature
      * @return mixed

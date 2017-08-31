@@ -46,6 +46,11 @@ class DatabaseExpression implements Expression
     private $resultExpression;
 
     /**
+     * @var array
+     */
+    private $propertyMap;
+
+    /**
      * DatabaseExpression constructor.
      * @param string $alias
      * @param  array|string $spatialProperty
@@ -68,6 +73,12 @@ class DatabaseExpression implements Expression
         $this->singleChar = $singleChar;
         $this->wildCard = $wildCard;
         $this->parameters = array();
+        $this->propertyMap = array();
+    }
+
+    public function setPropertyMap(array $propertyMap)
+    {
+        $this->propertyMap = $propertyMap;
     }
 
     /**
