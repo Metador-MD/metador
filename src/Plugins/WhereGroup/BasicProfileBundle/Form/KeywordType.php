@@ -3,6 +3,7 @@
 namespace Plugins\WhereGroup\BasicProfileBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,6 +24,7 @@ class KeywordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('identifier', TextType::class, array('label' => 'Identifier'))
             ->add('title', TextType::class, array('label' => 'Titel'))
             ->add('date', TextType::class, array('label' => 'Datum'))
             ->add('dateType', ChoiceType::class, array(
@@ -36,7 +38,12 @@ class KeywordType extends AbstractType
             ->add('keywords', TextareaType::class, array(
                 'label'    => 'Schlüsselwörter',
                 'required' => false,
-            ));
+            ))
+            ->add('repository', CheckboxType::class, array(
+                'label'    => 'Repository',
+                'required' => false,
+            ))
+        ;
 
 
         $builder->get('keywords')
@@ -45,7 +52,7 @@ class KeywordType extends AbstractType
                     return is_array($keywords) ? implode(', ', $keywords) : '';
                 },
                 function ($keywords) {
-                    $keywords = explode(',', trim($keywords, ','));
+                    $keywords = explode(',', $keywords);
                     $keywords = array_map('trim', $keywords);
                     return $keywords;
                 }

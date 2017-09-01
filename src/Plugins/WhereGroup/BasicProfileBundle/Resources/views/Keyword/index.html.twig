@@ -24,6 +24,7 @@
         <thead>
         <tr>
             <th>Titel</th>
+            <th>Identifier</th>
             <th>Datum</th>
             <th>Datumstyp</th>
         </tr>
@@ -31,14 +32,20 @@
         <tbody>
         {% for keyword in keywords %}
             <tr>
-                {#<td>#}
-
-                {#</td>#}
                 <td>
                     <a href="{{ path('metador_admin_keyword_edit', { 'id': keyword.id }) }}">{{ keyword.title }}</a>
                 </td>
-                <td>{{ keyword.date|date('Y-m-d') }}</td>
-                <td>{{ keyword.dateType }}</td>
+                <td>{{ keyword.identifier }}</td>
+                <td>
+                    {% if keyword.repository %}
+                        {{ keyword.date|date('Y-m-d') }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if keyword.repository %}
+                        {{ keyword.dateType }}
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
