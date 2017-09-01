@@ -31,6 +31,7 @@ class KeywordExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('get_keyword_repo', array($this, 'getKeywordRepo')),
+            new \Twig_SimpleFunction('get_keywords', array($this, 'getKeywordByProfile')),
         );
     }
 
@@ -55,6 +56,14 @@ class KeywordExtension extends \Twig_Extension
         }
 
         return array();
+    }
+
+    /**
+     * @param $profile
+     */
+    public function getKeywordByProfile($profile)
+    {
+
     }
 
     /**
