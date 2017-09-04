@@ -26,7 +26,7 @@ class KeywordController extends Controller
             'keywords' => $this
                 ->getDoctrine()
                 ->getRepository('MetadorBasicProfileBundle:Keyword')
-                ->findAll()
+                ->findAll(),
         );
     }
 
@@ -41,8 +41,7 @@ class KeywordController extends Controller
 
         $form = $this
             ->createForm($this->get("keyword_form_type"), new Keyword())
-            ->handleRequest($this->get('request_stack')->getCurrentRequest())
-        ;
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
@@ -54,9 +53,8 @@ class KeywordController extends Controller
         }
 
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
-
     }
 
     /**
@@ -75,11 +73,9 @@ class KeywordController extends Controller
             ->getRepository('MetadorBasicProfileBundle:Keyword')
             ->findOneById($id);
 
-
         $form = $this
             ->createForm($this->get("keyword_form_type"), $entity)
-            ->handleRequest($this->get('request_stack')->getCurrentRequest())
-        ;
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
@@ -91,7 +87,7 @@ class KeywordController extends Controller
         }
 
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
@@ -111,7 +107,7 @@ class KeywordController extends Controller
 
         $form = $this->createFormBuilder($entity)
             ->add('delete', 'submit', array(
-                'label' => 'löschen'
+                'label' => 'löschen',
             ))
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
@@ -126,7 +122,7 @@ class KeywordController extends Controller
         }
 
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 

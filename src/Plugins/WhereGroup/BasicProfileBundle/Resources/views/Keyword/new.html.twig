@@ -91,10 +91,8 @@
 
         <div class="row r-1">
             <div class="col c-1">
-                <div>{{ form_label(form.profiles, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
-                <div class="form-field-wrapper">
-                {{ form_widget(form.profiles, { 'attr': {'class': 'checkbox'}}) }}
-                </div>
+                {{ form_label(form.profiles, null, { 'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.profiles) }}
             </div>
         </div>
     </div>
