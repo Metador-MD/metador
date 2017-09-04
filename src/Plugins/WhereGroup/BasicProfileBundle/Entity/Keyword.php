@@ -53,7 +53,13 @@ class Keyword
     /**
      * @ORM\Column(type="json_array")
      */
+
     private $keywords = null;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $profiles = null;
 
     /**
      * Get id
@@ -147,6 +153,7 @@ class Keyword
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+
         return $this;
     }
 
@@ -206,5 +213,29 @@ class Keyword
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * Set profiles
+     *
+     * @param array $profiles
+     *
+     * @return Keyword
+     */
+    public function setProfiles($profiles)
+    {
+        $this->profiles = $profiles;
+
+        return $this;
+    }
+
+    /**
+     * Get profiles
+     *
+     * @return array
+     */
+    public function getProfiles()
+    {
+        return $this->profiles;
     }
 }

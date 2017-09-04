@@ -17,23 +17,41 @@ use Symfony\Component\Form\CallbackTransformer;
  */
 class KeywordType extends AbstractType
 {
+    private $plugin;
+
+    public function __construct($plugin = null)
+    {
+        $this->plugin = $plugin;
+    }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        unset($this->plugin);
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $help = $this->plugin->getActiveProfiles();
+        $profiles = array_combine(array_keys($help), array_keys($help));
         $builder
             ->add('identifier', TextType::class, array('label' => 'Identifier'))
             ->add('title', TextType::class, array('label' => 'Titel'))
             ->add('date', TextType::class, array('label' => 'Datum'))
             ->add('dateType', ChoiceType::class, array(
-                'label' => 'Beschreibung',
+                'label'   => 'Beschreibung',
                 'choices' => array(
                     'creation'    => 'Erstellungsdatum',
                     'revision'    => 'Überarbeitung',
-                    'publication' => 'Veröffentlichung'
-                )
+                    'publication' => 'Veröffentlichung',
+                ),
             ))
             ->add('keywords', TextareaType::class, array(
                 'label'    => 'Schlüsselwörter',
@@ -43,9 +61,12 @@ class KeywordType extends AbstractType
                 'label'    => 'Repository',
                 'required' => false,
             ))
-        ;
-
-
+            ->add('profiles', ChoiceType::class, array(
+                'required' => false,
+                'choices'  => $profiles,
+                'multiple' => true,
+                'expanded' => true,
+            ));
         $builder->get('keywords')
             ->addModelTransformer(new CallbackTransformer(
                 function ($keywords) {
@@ -54,11 +75,10 @@ class KeywordType extends AbstractType
                 function ($keywords) {
                     $keywords = explode(',', $keywords);
                     $keywords = array_map('trim', $keywords);
+
                     return $keywords;
                 }
             ));
-
-
         $builder->get('date')
             ->addModelTransformer(new CallbackTransformer(
                 function ($date) {
