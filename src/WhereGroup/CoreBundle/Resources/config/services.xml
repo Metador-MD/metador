@@ -48,6 +48,7 @@
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
             <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="kernel" />
         </service>
         <service id="metador.application" class="%metador.application.class%">
             <argument type="service" id="event_dispatcher" />
@@ -61,6 +62,7 @@
             <argument type="service" id="metador_user" />
             <argument type="service" id="metador_logger" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="metador_plugin" />
         </service>
         <service id="metador_logger" class="%metador.logger.class%">
             <argument type="service" id="session.flash_bag" />

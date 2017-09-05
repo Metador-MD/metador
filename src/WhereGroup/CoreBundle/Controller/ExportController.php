@@ -23,18 +23,12 @@ class ExportController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
-        
+
         $this->denyAccessUnlessGranted('view', $p);
 
-        $className = $this
-            ->get('metador_plugin')
-            ->getPluginClassName($p['_profile']);
-
-        $xml = $this->render($className .":Export:metadata.xml.twig", array(
-            "p" => $p
-        ));
-
-        return $this->xmlResponse($xml->getContent());
+        return $this->xmlResponse(
+            $this->get('metador_metadata')->objectToXml($p)
+        );
     }
 
     /**
