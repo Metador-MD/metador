@@ -363,3 +363,11 @@ $icon-color: darken($border, 20%);
 
     }
 }
+
+.md .form-field-wrapper > .select.helper-select {
+    background-color: lighten($info, 30%);
+
+    &:hover {
+        background-color: lighten($info, 25%);
+    }
+}

@@ -943,6 +943,12 @@ input.input-element, .md input.btn {
 .md .advanced-select .advanced-select-option.error {
   border-left: 4px solid #e15b36; }
 
+.md .form-field-wrapper > .select.helper-select {
+  background-color: #e5f3ff; }
+
+.md .form-field-wrapper > .select.helper-select:hover {
+  background-color: #cce7ff; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
