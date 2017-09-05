@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class KeywordRepository extends EntityRepository
 {
-    public function findByProfiles($profile)
+    public function getByProfile($profile)
     {
         return $this
             ->getEntityManager()
