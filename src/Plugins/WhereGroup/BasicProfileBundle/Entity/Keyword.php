@@ -224,11 +224,7 @@ class Keyword
      */
     public function setProfiles($profiles)
     {
-//        if (is_array($profiles)) {
-//            $this->profiles = json_encode($profiles);
-//        } elseif (is_string($profiles) && is_array(json_decode($profiles))) {
-            $this->profiles = $profiles;
-//        }
+        $this->profiles = $profiles;
 
         return $this;
     }
@@ -240,10 +236,6 @@ class Keyword
      */
     public function getProfiles()
     {
-//        if (is_array($this->profiles)) {
-//            return $this->profiles;
-//        } elseif (is_string($this->profiles) && is_array(json_decode($this->profiles))) {
-            return $this->profiles;
-//        }
+        return $this->profiles;
     }
 }
