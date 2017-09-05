@@ -12,9 +12,9 @@ namespace WhereGroup\CoreBundle\Component\Search;
 interface FilterReader
 {
     /**
-     * @param $filter
+     * @param mixed $filter
      * @param ExprHandler $expression
-     * @return Expression
+     * @return null|Expression
      */
     public static function read($filter, ExprHandler $expression);
 }

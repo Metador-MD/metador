@@ -38,10 +38,10 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function find()
     {
-        if ($this->filter && $this->parameters) {
+        if ($this->expression) {
             $this->qb
-                ->add('where', $this->filter)
-                ->setParameters($this->parameters);
+                ->add('where', $this->expression->getExpression())
+                ->setParameters($this->expression->getParameters());
         }
 
         // Searchterms
@@ -105,8 +105,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function setExpression(Expression $expression)
     {
-        $this->filter = $expression->getExpression();
-        $this->parameters = $expression->getParameters();
+        $this->expression = $expression;
 
         return $this;
     }

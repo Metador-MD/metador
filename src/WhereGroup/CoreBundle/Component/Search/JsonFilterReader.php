@@ -11,14 +11,19 @@ class JsonFilterReader implements FilterReader
 {
 
     /**
-     * @param $filter
+     * @param mixed $filter
      * @param ExprHandler $expression
-     * @return Expression
+     * @return null|Expression
      */
     public static function read($filter, ExprHandler $expression)
     {
         $parameters = array();
-        return new Expression(self::getExpression($filter, $expression, $parameters), $parameters);
+        $expression = self::getExpression($filter, $expression, $parameters);
+        if (is_array($expression) && count($expression) === 0) {
+            return null;
+        } else {
+            return new Expression($expression, $parameters);
+        }
     }
 
     /**
@@ -66,9 +71,9 @@ class JsonFilterReader implements FilterReader
 
                     return $expression->not($item);
                 case 'eq':
-                    $property = self::getExpression($value, $expression, $parameters);
-
-                    return $expression->eq($property[0], $property[1], $parameters);
+                    foreach ($value as $name => $val) {
+                        return $expression->eq($name, $val, $parameters);
+                    }
                 case 'like':
                     $property = self::getExpression($value, $expression, $parameters);
 

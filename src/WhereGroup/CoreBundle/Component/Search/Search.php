@@ -14,7 +14,8 @@ abstract class Search
     protected $terms = '';
     protected $source = '';
     protected $profile = '';
-    protected $filter = null;
+    /* @var Expression $expression */
+    protected $expression = null;
 
     /**
      * @return array
