@@ -145,16 +145,16 @@ abstract class Search
     /**
      * @return int
      */
-    public abstract function getResultCount();
+    abstract public function getResultCount();
 
     /**
-     * @return Expression
+     * @return ExprHandler
      */
-    public abstract function createExpression();
+    abstract public function createExpression();
 
     /**
-     * @param $expression
+     * @param Expression $expression
      * @return mixed
      */
-    public abstract function setExpression($expression);
+    abstract public function setExpression(Expression $expression);
 }

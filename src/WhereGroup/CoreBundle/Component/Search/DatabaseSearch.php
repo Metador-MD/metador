@@ -92,21 +92,20 @@ class DatabaseSearch extends Search implements SearchInterface
     }
 
     /**
-     * @return DatabaseExpression
+     * @return DatabaseExprHandler
      */
     public function createExpression()
     {
-        return new DatabaseExpression($this->alias);
+        return new DatabaseExprHandler($this->alias);
     }
 
     /**
-     * @param $expression
+     * @param Expression $expression
      * @return $this
      */
-    public function setExpression($expression)
+    public function setExpression(Expression $expression)
     {
-        /**  @var DatabaseExpression $expression */
-        $this->filter = $expression->getResultExpression();
+        $this->filter = $expression->getExpression();
         $this->parameters = $expression->getParameters();
 
         return $this;

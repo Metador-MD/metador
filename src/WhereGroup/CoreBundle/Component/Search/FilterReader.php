@@ -13,7 +13,8 @@ interface FilterReader
 {
     /**
      * @param $filter
-     * @param Expression $expression
+     * @param ExprHandler $expression
+     * @return Expression
      */
-    public static function read($filter, Expression &$expression);
+    public static function read($filter, ExprHandler $expression);
 }

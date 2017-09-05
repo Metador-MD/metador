@@ -5,11 +5,11 @@ namespace WhereGroup\CoreBundle\Component\Search;
 use Doctrine\ORM\Query\Expr;
 
 /**
- * Class DatabaseExpression
+ * Class DatabaseExprHandler
  * @package Plugins\WhereGroup\DevToolsBundle\Component
  * @author Paul Schmidt <panadium@gmx.de>
  */
-class DatabaseExpression implements Expression
+class DatabaseExprHandler implements ExprHandler
 {
 
     /**
@@ -38,20 +38,10 @@ class DatabaseExpression implements Expression
     /**
      * @var array
      */
-    private $parameters;
-
-    /**
-     * @var Expr
-     */
-    private $resultExpression;
-
-    /**
-     * @var array
-     */
     private $propertyMap;
 
     /**
-     * DatabaseExpression constructor.
+     * DatabaseExprHandler constructor.
      * @param string $alias
      * @param  array|string $spatialProperty
      * array: names of ordinate columns - array(w,s,e,n)
@@ -72,32 +62,12 @@ class DatabaseExpression implements Expression
         $this->escapeChar = $escapeChar;
         $this->singleChar = $singleChar;
         $this->wildCard = $wildCard;
-        $this->parameters = array();
         $this->propertyMap = array();
     }
 
     public function setPropertyMap(array $propertyMap)
     {
         $this->propertyMap = $propertyMap;
-    }
-
-    /**
-     * @return Expr
-     */
-    public function getResultExpression()
-    {
-        return $this->resultExpression;
-    }
-
-    /**
-     * @param $expression
-     * @return $this
-     */
-    public function setResultExpression($expression)
-    {
-        $this->resultExpression = $expression;
-
-        return $this;
     }
 
     /**
@@ -110,24 +80,17 @@ class DatabaseExpression implements Expression
     }
 
     /**
-     * @param $property
-     * @param $value
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return string
      */
-    private function addParameter($property, $value)
+    private static function addParameter($property, $value, &$parameters)
     {
-        $name = $property.count($this->parameters);
-        $this->parameters[$name] = $value;
+        $name = $property.count($parameters);
+        $parameters[$name] = $value;
 
         return ':'.$name;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
     }
 
     /**
@@ -187,53 +150,57 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
-     * @param $items
+     * @param array $items
+     * @param $parameters
      * @return Expr\Func
      */
-    public function in($property, array $items)
+    public function in($property, array $items, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->in($this->getName($property), $this->addParameter($property, $items));
+        return $expr->in($this->getName($property), self::addParameter($property, $items, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function eq($property, $value)
+    public function eq($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->eq($this->getName($property), $this->addParameter($property, $value));
+        return $expr->eq($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function neq($property, $value)
+    public function neq($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->neq($this->getName($property), $this->addParameter($property, $value));
+        return $expr->neq($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @param string $escapeChar
      * @param string $singleChar
      * @param string $wildCard
      * @return Expr\Comparison
      */
-    public function like($property, $value, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
+    public function like($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
         if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
-            $valueX = $this->addParameter($property, $value);
+            $valueX = self::addParameter($property, $value, $parameters);
         } else {
             $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
             #repalce singleChar
@@ -248,16 +215,17 @@ class DatabaseExpression implements Expression
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @param string $escapeChar
      * @param string $singleChar
      * @param string $wildCard
      * @return Expr\Comparison
      */
-    public function notLike($property, $value, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
+    public function notLike($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
         if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
-            $valueX = $this->addParameter($property, $value);
+            $valueX = self::addParameter($property, $value, $parameters);
         } else {
             $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
             #repalce singleChar
@@ -273,65 +241,70 @@ class DatabaseExpression implements Expression
      * @param $property
      * @param $lower
      * @param $upper
+     * @param $parameters
      * @return Expr\Func
      */
-    public function between($property, $lower, $upper)
+    public function between($property, $lower, $upper, &$parameters)
     {
         $expr = new Expr();
 
         return $expr->between(
             $this->getName($property),
-            $this->addParameter($property, $lower),
-            $this->addParameter($property, $upper)
+            self::addParameter($property, $lower, $parameters),
+            self::addParameter($property, $upper, $parameters)
         );
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function gt($property, $value)
+    public function gt($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->gt($this->getName($property), $this->addParameter($property, $value));
+        return $expr->gt($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function gte($property, $value)
+    public function gte($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->gte($this->getName($property), $this->addParameter($property, $value));
+        return $expr->gte($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function lt($property, $value)
+    public function lt($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->lt($this->getName($property), $this->addParameter($property, $value));
+        return $expr->lt($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
      * @param $property
      * @param $value
+     * @param $parameters
      * @return Expr\Comparison
      */
-    public function lte($property, $value)
+    public function lte($property, $value, &$parameters)
     {
         $expr = new Expr();
 
-        return $expr->lte($this->getName($property), $this->addParameter($property, $value));
+        return $expr->lte($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -358,11 +331,12 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
-     * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
+     * @param array $geoFeature
+     * @param $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function bbox($property, array $geoFeature)
+    public function bbox($property, array $geoFeature, &$parameters)
     {
         if (is_array($this->spatialProperty)) {
             // check if $geoFeature is an array(w,s,e,n) or GeoJSON "Feature" / GeoJSON "geometry"
@@ -371,10 +345,10 @@ class DatabaseExpression implements Expression
             // "spatially intersect" - (share any portion of space)
             return new Expr\Andx(
                 array(
-                    $this->lt($this->spatialProperty[0], $bbox[2]),
-                    $this->gt($this->spatialProperty[2], $bbox[0]),
-                    $this->lt($this->spatialProperty[1], $bbox[3]),
-                    $this->gt($this->spatialProperty[3], $bbox[1]),
+                    $this->lt($this->spatialProperty[0], $bbox[2], $parameters),
+                    $this->gt($this->spatialProperty[2], $bbox[0], $parameters),
+                    $this->lt($this->spatialProperty[1], $bbox[3], $parameters),
+                    $this->gt($this->spatialProperty[3], $bbox[1], $parameters),
                 )
             );
         } else {
@@ -384,11 +358,12 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
-     * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
+     * @param $geoFeature
+     * @param $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function contains($property, $geoFeature)
+    public function contains($property, $geoFeature, &$parameters)
     {
         /** Checks if $geom is completely inside $this->spatialProperty or $property */
         if (is_array($this->spatialProperty)) {
@@ -399,22 +374,22 @@ class DatabaseExpression implements Expression
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '<=',
-                        $this->addParameter($this->spatialProperty[0], $bbox[0])
+                        self::addParameter($this->spatialProperty[0], $bbox[0], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '>=',
-                        $this->addParameter($this->spatialProperty[2], $bbox[2])
+                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[1]),
                         '<=',
-                        $this->addParameter($this->spatialProperty[1], $bbox[1])
+                        self::addParameter($this->spatialProperty[1], $bbox[1], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '>=',
-                        $this->addParameter($this->spatialProperty[2], $bbox[2])
+                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
                     ),
                 )
             );
@@ -425,11 +400,12 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
-     * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
+     * @param $geoFeature
+     * @param $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function within($property, $geoFeature)
+    public function within($property, $geoFeature, &$parameters)
     {
         /* Checks if $this->spatialProperty or $property is completely inside $geom */
         if (is_array($this->spatialProperty)) {
@@ -440,22 +416,22 @@ class DatabaseExpression implements Expression
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '>=',
-                        $this->addParameter($this->spatialProperty[0], $bbox[0])
+                        self::addParameter($this->spatialProperty[0], $bbox[0], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '<=',
-                        $this->addParameter($this->spatialProperty[2], $bbox[2])
+                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[1]),
                         '>=',
-                        $this->addParameter($this->spatialProperty[1], $bbox[1])
+                        self::addParameter($this->spatialProperty[1], $bbox[1], $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '<=',
-                        $this->addParameter($this->spatialProperty[2], $bbox[2])
+                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
                     ),
                 )
             );
@@ -466,16 +442,17 @@ class DatabaseExpression implements Expression
 
     /**
      * @param $property
-     * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
+     * @param $geoFeature
+     * @param $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function intersects($property, $geoFeature)
+    public function intersects($property, $geoFeature, &$parameters)
     {
         if (is_array($this->spatialProperty)) {
             // no spatial column
             // "spatially intersect" - (share any portion of space)
-            return $this->bbox($property, self::bboxForGeoJson($geoFeature));
+            return $this->bbox($property, self::bboxForGeoJson($geoFeature), $parameters);
         } else {
             throw new \Exception('Operation "intersects" for a spatial database is not yet implemented');
         }
