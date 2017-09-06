@@ -44,7 +44,9 @@ class KeywordController extends Controller
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Keyword $entity */
             $entity = $form->getData();
+            $entity->setKeywords(array_combine($entity->getKeywords(), $entity->getKeywords()));
 
             $this->getDoctrine()->getManager()->persist($entity);
             $this->getDoctrine()->getManager()->flush($entity);
@@ -79,6 +81,7 @@ class KeywordController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
+            $entity->setKeywords(array_combine($entity->getKeywords(), $entity->getKeywords()));
 
             $this->getDoctrine()->getManager()->persist($entity);
             $this->getDoctrine()->getManager()->flush($entity);
