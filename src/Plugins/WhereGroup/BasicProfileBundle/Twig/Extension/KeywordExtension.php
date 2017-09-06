@@ -41,29 +41,18 @@ class KeywordExtension extends \Twig_Extension
      */
     public function getKeywordRepo($name)
     {
-        $entity = $this
-            ->em
+        return $this->em
             ->getRepository('MetadorBasicProfileBundle:Keyword')
             ->findOneByIdentifier($name);
-
-        if ($entity) {
-            return array(
-                'name' => $entity->getTitle(),
-                'date' => $entity->getDate(),
-                'type' => $entity->getDateType(),
-                'options' => array_combine($entity->getKeywords(), $entity->getKeywords())
-            );
-        }
-
-        return array();
     }
 
     /**
      * @param $profile
+     * @return array
      */
     public function getKeywordByProfile($profile)
     {
-
+        return $this->em->getRepository('MetadorBasicProfileBundle:Keyword')->getByProfile($profile);
     }
 
     /**
