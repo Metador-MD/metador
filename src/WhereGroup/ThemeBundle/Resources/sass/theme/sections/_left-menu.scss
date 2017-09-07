@@ -4,13 +4,12 @@
 .md .left-menu {
     list-style: none;
     padding: 0;
-    margin: 0;
     z-index: 2;
-    margin-bottom: $padding;
+    margin: 0 0 $padding;
 
-    & > li {
+    & > .menu-item {
         position: relative;
-        margin: 0 $padding 0 0;
+        //margin: 0 $padding 0 0;
         padding: 0 $padding;
         cursor: pointer;
         color: $font;
@@ -19,6 +18,8 @@
         border-bottom-right-radius: 2px;
         border: 1px solid $background;
         background-color: darken($background, 2%);
+        font-size: $font-medium;
+        @include medium-item(false, false);
 
         .error-count {
             float: right;
@@ -31,7 +32,6 @@
             font-size: 0.9em;
         }
 
-        @include medium-item(false, false);
 
         & span[class^="icon-"] {
             @include medium-item(false, false);
@@ -78,4 +78,13 @@
             }
         }
     }
+
+    & .menu-title {
+        font-weight: bold;
+        color: lighten($font, 20%);
+        background-color: darken($background, 5%);
+        @include medium-item();
+    }
+
+
 }

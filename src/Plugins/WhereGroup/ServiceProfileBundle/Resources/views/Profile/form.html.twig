@@ -1,6 +1,6 @@
 {% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
 
-{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
 
 {% block center %}
 <form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
@@ -14,44 +14,47 @@
         <div class="center-left">
             {% include '@MetadorBasicProfile/Profile/settings.html.twig' %}
 
-            <ul class="left-menu">
-                <li data-mdtab="metadata" id="tab-metadata" class="act">
-                    <span>{% trans %}Metadatensatz{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="identification" id="tab-identification">
-                    <span>{% trans %}Identifikation{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="classification" id="tab-classification">
-                    <span>{% trans %}Klassifizierung{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="keyword" id="tab-keyword">
-                    <span>{% trans %}Schlüsselwort{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="geographic" id="tab-geographic">
-                    <span>{% trans %}Geografischer Standort{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="temporal" id="tab-temporal">
-                    <span>{% trans %}Zeitbezug{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="conformity" id="tab-conformity">
-                    <span>{% trans %}Übereinstimmung{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="constraints" id="tab-constraints">
-                    <span>{% trans %}Beschränkungen{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-                <li data-mdtab="responsibleparty" id="tab-responsibleparty">
-                    <span>{% trans %}Zuständige Stelle{% endtrans %}</span>
-                    <span class="-js-error-count error-count"></span>
-                </li>
-            </ul>
+            <div class="left-menu-content">
+                <ul class="left-menu">
+                    <li class="menu-item act" data-mdtab="identification" id="tab-identification">
+                        <span>{% trans %}Identifikation{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li data-mdtab="metadata" id="tab-metadata" class="menu-item">
+                        <span>{% trans %}Metadatensatz{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="classification" id="tab-classification">
+                        <span>{% trans %}Klassifizierung{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="keyword" id="tab-keyword">
+                        <span>{% trans %}Schlüsselwort{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="geographic" id="tab-geographic">
+                        <span>{% trans %}Geografischer Standort{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="temporal" id="tab-temporal">
+                        <span>{% trans %}Zeitbezug{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="conformity" id="tab-conformity">
+                        <span>{% trans %}Übereinstimmung{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="constraints" id="tab-constraints">
+                        <span>{% trans %}Beschränkungen{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                    <li class="menu-item" data-mdtab="responsibleparty" id="tab-responsibleparty">
+                        <span>{% trans %}Zuständige Stelle{% endtrans %}</span>
+                        <span class="-js-error-count error-count"></span>
+                    </li>
+                </ul>
+            </div>
+
             <div class="left-menu-content">
                 {% include "@MetadorBasicProfile/Profile/saveButton.html.twig" %}
             </div>
@@ -60,11 +63,11 @@
             <div class="content">
                 {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
 
-                {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
                 {% include 'MetadorServiceProfileBundle:Profile:identification.html.twig' %}
+                {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
                 {% include 'MetadorServiceProfileBundle:Profile:classification.html.twig' %}
                 <div class="mdtab-content" data-mdtab-content="keyword"></div>
-                <div class="mdtab-content" data-mdtab-content="geographic"></div>
+                {% include 'MetadorServiceProfileBundle:Profile:geographic.html.twig' %}
                 <div class="mdtab-content" data-mdtab-content="temporal"></div>
                 <div class="mdtab-content" data-mdtab-content="conformity"></div>
                 <div class="mdtab-content" data-mdtab-content="constraints"></div>

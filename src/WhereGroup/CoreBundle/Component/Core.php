@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig_Environment;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class Core
@@ -19,6 +20,7 @@ class Core
     protected $security;
     protected $eventDispatcher;
     protected $authorizationChecker;
+    protected $kernel;
 
     /**
      * Core constructor.
@@ -26,17 +28,20 @@ class Core
      * @param EventDispatcherInterface $eventDispatcher
      * @param TranslatorInterface $translator
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param KernelInterface $kernel
      */
     public function __construct(
         Twig_Environment $templating,
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        KernelInterface $kernel
     ) {
         $this->templating = $templating;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
         $this->authorizationChecker = $authorizationChecker;
+        $this->kernel = $kernel;
     }
 
     public function __destruct()
@@ -45,7 +50,8 @@ class Core
             $this->templating,
             $this->eventDispatcher,
             $this->translatorInterface,
-            $this->authorizationChecker
+            $this->authorizationChecker,
+            $this->kernel
         );
     }
 
@@ -101,5 +107,14 @@ class Core
     public function dispatch($name, $event)
     {
         return $this->eventDispatcher->dispatch($name, $event);
+    }
+
+    /**
+     * @param $resource
+     * @return array|string
+     */
+    public function locateResource($resource)
+    {
+        return $this->kernel->locateResource($resource);
     }
 }

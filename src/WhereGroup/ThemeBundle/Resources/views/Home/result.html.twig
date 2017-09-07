@@ -73,6 +73,7 @@
             </div>
             <div class="right">
                 {% if app.environment == 'dev' %}
+                    <a href="{{ path('metadata_test', { 'id' : p['_id'] }) }}" class="link">test</a>
                     <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link">object</a>
                     <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link">json</a>
                 {% endif %}

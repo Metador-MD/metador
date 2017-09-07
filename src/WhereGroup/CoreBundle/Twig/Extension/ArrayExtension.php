@@ -20,7 +20,7 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
-            new \Twig_SimpleFunction('array_reindex', array($this, 'reindex')),
+            new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
         );
     }
 
@@ -37,43 +37,55 @@ class ArrayExtension extends \Twig_Extension
     }
 
     /**
-     * @param $array
+     * @param array $array
      * @param $path
+     * @param bool $reindex
      * @return bool
      */
-    public function isEmpty(array $array, $path)
+    public function isEmpty(array $array, $path, $reindex = false)
     {
-        return ArrayParser::isEmpty($array, $path);
-    }
-
-    /**
-     * @param $array
-     * @param $path
-     * @return array|int|null
-     */
-    public function length(array $array, $path)
-    {
-        return ArrayParser::length($array, $path);
-    }
-
-    /**
-     * @param $array
-     * @param $path
-     * @param null $find
-     * @return bool
-     */
-    public function exists(array $array, $path, $find = null)
-    {
-        return ArrayParser::exists($array, $path, $find);
+        return ArrayParser::isEmpty($array, $path, $reindex);
     }
 
     /**
      * @param array $array
-     * @return array
+     * @param $path
+     * @param null $default
+     * @return array|int|null
      */
-    public function reindex(array $array)
+    public function length(array $array, $path, $default = null)
     {
-        $array = array_values($array);
+        return ArrayParser::length($array, $path, $default);
+    }
+
+    /**
+     * @param array $array
+     * @param $path
+     * @param null $find
+     * @param bool $reindex
+     * @return bool
+     */
+    public function exists(array $array, $path, $find = null, $reindex = false)
+    {
+        return ArrayParser::exists($array, $path, $find, $reindex);
+    }
+
+    /**
+     * @param array $array
+     * @param array $paths
+     * @param null $find
+     * @param bool $reindex
+     * @return bool
+     */
+    public function allExists(array $array, array $paths, $find = null, $reindex = false)
+    {
+        foreach ($paths as $path) {
+            if (!$this->exists($array, $path, $find, $reindex)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

@@ -8,6 +8,7 @@ use Rhumsaa\Uuid\Uuid;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
+use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
@@ -34,6 +35,9 @@ class Metadata implements MetadataInterface
     /** @var Logger  */
     protected $logger;
 
+    /** @var  Plugin */
+    protected $plugin;
+
     const ENTITY = 'MetadorCoreBundle:Metadata';
 
     /**
@@ -42,18 +46,21 @@ class Metadata implements MetadataInterface
      * @param UserInterface $user
      * @param Logger $logger
      * @param EntityManagerInterface $em
+     * @param Plugin $plugin
      */
     public function __construct(
         Core $core,
         UserInterface $user,
         Logger $logger,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        Plugin $plugin
     ) {
         $this->em = $em;
         $this->core = $core;
         $this->user = $user;
         $this->logger = $logger;
         $this->repo = $em->getRepository(self::ENTITY);
+        $this->plugin = $plugin;
     }
 
     public function __destruct()
@@ -63,7 +70,8 @@ class Metadata implements MetadataInterface
             $this->user,
             $this->repo,
             $this->logger,
-            $this->em
+            $this->em,
+            $this->plugin
         );
     }
 
@@ -90,6 +98,48 @@ class Metadata implements MetadataInterface
         return $metadata;
     }
 
+    /**
+     * @param $p
+     * @return string
+     */
+    public function objectToXml($p)
+    {
+        $class = $this->plugin->getPluginClassName($p['_profile']);
+
+        $xml = $this->core->render($class .":Export:metadata.xml.twig", array(
+            "p" => $p
+        ));
+
+        return $xml;
+    }
+
+    /**
+     * @param $xml
+     * @param $profile
+     * @return array|mixed
+     */
+    public function xmlToObject($xml, $profile)
+    {
+        $class  = $this->plugin->getPluginClassName($profile);
+        $schema = $this->core->locateResource('@' . $class . '/Resources/config/import.json');
+
+        $parser = new XmlParser($xml, new XmlParserFunctions());
+        return $parser->loadSchema(file_get_contents($schema))->parse();
+    }
+
+    /**
+     * @param $p
+     * @return array
+     */
+    public function renderObject($p)
+    {
+
+
+
+
+
+        return isset($array['p']) ? $array['p'] : array();
+    }
 
     /**
      * @param string $uuid
@@ -120,7 +170,7 @@ class Metadata implements MetadataInterface
      * @param null $profile
      * @param null $username
      * @param null $public
-     * @return mixed|void
+     * @return $this|mixed
      * @throws MetadataException
      */
     public function updateObject(&$p, $source = null, $profile = null, $username = null, $public = null)
@@ -190,6 +240,8 @@ class Metadata implements MetadataInterface
         $p['title'] = isset($p['title']) ? $p['title'] : '';
         $p['abstract'] = isset($p['abstract']) ? $p['abstract'] : '';
         $p['hierarchyLevel'] = isset($p['hierarchyLevel']) ? $p['hierarchyLevel'] : '';
+
+        return $this;
     }
 
     /**
@@ -245,10 +297,10 @@ class Metadata implements MetadataInterface
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
-            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
+            $metadata->setBboxn((int)$p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe((int)$p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs((int)$p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw((int)$p['bbox'][0]['wLongitude']);
         }
 
         $this->save($metadata);
@@ -449,6 +501,7 @@ class Metadata implements MetadataInterface
         $searchfield  = '';
         $searchfield .= isset($p['_searchfield']) ? ' ' . strtolower($p['_searchfield']) : '';
         $searchfield .= isset($p['title'])        ? ' ' . strtolower($p['title']) : '';
+        $searchfield .= isset($p['alternateTitle']) ? ' ' . strtolower($p['alternateTitle']) : '';
         $searchfield .= isset($p['abstract'])     ? ' ' . strtolower($p['abstract']) : '';
 
         if (isset($p['keyword'])) {

@@ -122,6 +122,18 @@
         text-shadow: 1px 1px 0 $white;
     }
 
+
+    .metadata-delete-button {
+        display: block;
+        @include normal-item(false, false);
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: -3px 0px 0px 0px $error;
+            background-color: darken($background, 5%);
+        }
+    }
+
     &:not(.disabled) .metadata-save-button {
         color: $font;
     }

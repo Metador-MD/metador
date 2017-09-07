@@ -10,6 +10,10 @@
         <!-- TWIG EXTENSION -->
         <parameter key="metador.twig.validation.class">Plugins\WhereGroup\BasicProfileBundle\Twig\Extension\ValidationExtension</parameter>
         <parameter key="metador.twig.lists.class">Plugins\WhereGroup\BasicProfileBundle\Twig\Extension\ListsExtension</parameter>
+        <parameter key="metador.twig.keywords.class">Plugins\WhereGroup\BasicProfileBundle\Twig\Extension\KeywordExtension</parameter>
+
+        <!-- FORM TYPE -->
+        <parameter key="keyword.form.type.class">Plugins\WhereGroup\BasicProfileBundle\Form\KeywordType</parameter>
     </parameters>
 
     <services>
@@ -27,6 +31,16 @@
         <service id="metador.twig.lists" class="%metador.twig.lists.class%">
             <argument type="service" id="metador_configuration" />
             <tag name="twig.extension" />
+        </service>
+        <service id="metador.twig.keywords" class="%metador.twig.keywords.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- FORM TYPE -->
+        <service id="keyword_form_type" class="%keyword.form.type.class%">
+            <argument type="service" id="metador_plugin" />
+            <tag name="form.type" alias="task" />
         </service>
     </services>
 </container>

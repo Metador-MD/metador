@@ -3,29 +3,31 @@
 {% block center %}
     <div class="center menu">
         <div class="center-left">
-            <ul class="left-menu">
-                {% for item in applicationGet('app-admin-menu') %}
-                    {# RAW CONTENT #}
-                    {% if item.raw is defined %}
-                        {{ item.raw|raw }}
+            <div class="left-menu-content">
+                <ul class="left-menu">
+                    {% for item in applicationGet('app-admin-menu') %}
+                        {# RAW CONTENT #}
+                        {% if item.raw is defined %}
+                            {{ item.raw|raw }}
 
-                        {# INCLUDE CONTENT #}
-                    {% elseif item.template is defined %}
-                        {% include item.template %}
+                            {# INCLUDE CONTENT #}
+                        {% elseif item.template is defined %}
+                            {% include item.template %}
 
-                        {# USE TEMPLATE #}
-                    {% else %}
-                        <li class="{% if item.active is defined and item.active %}act{% endif %}">
-                            <a href="{{ path(item.path, item.params) }}"{% if item.target is defined and item.target %} target="{{ item.target }}"{% endif %}>
-                                {% if item.icon is defined %}
-                                    <span class="{{ item.icon }}"></span>
-                                {% endif %}
-                                {{ item.label|trans }}
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+                            {# USE TEMPLATE #}
+                        {% else %}
+                            <li class="menu-item {% if item.active is defined and item.active %}act{% endif %}">
+                                <a href="{{ path(item.path, item.params) }}"{% if item.target is defined and item.target %} target="{{ item.target }}"{% endif %}>
+                                    {% if item.icon is defined %}
+                                        <span class="{{ item.icon }}"></span>
+                                    {% endif %}
+                                    {{ item.label|trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         <div class="center-right">
             <div class="content">

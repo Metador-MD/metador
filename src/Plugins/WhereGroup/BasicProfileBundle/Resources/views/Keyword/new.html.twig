@@ -1,0 +1,112 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+    {% set title  = 'Schlüsselwörter bearbeiten'|trans %}
+    {% set path   = 'metador_admin_keyword_edit' %}
+    {% set params = {id: form.vars.value.id} %}
+{% else %}
+    {% set title  = 'Schlüsselwörter erstellen'|trans %}
+    {% set path   = 'metador_admin_keyword_new' %}
+    {% set params = {} %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{{ title }}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_keyword') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.identifier) }}
+            {{ form_errors(form.title) }}
+            {{ form_errors(form.date) }}
+            {{ form_errors(form.dateType) }}
+        </div>
+    {% endif %}
+
+    <div class="grid space grid-space responsive">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.identifier, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.identifier, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.title, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.title, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.date, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.date, { 'attr': {'class': 'input -js-datepicker'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.dateType, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.dateType, { 'attr': {'class': 'select'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.keywords, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.keywords, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ form_widget(form.repository, { 'attr': {'class': 'checkbox'}}) }}
+                {{ form_label(form.repository, null, { 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+        </div>
+
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ form_label(form.profiles, null, { 'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.profiles) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button class="btn success medium">
+            <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+        </button>
+        {% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+            <a href="{{ path('metador_admin_keyword_confirm', params) }}" class="btn error medium">
+                <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+            </a>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

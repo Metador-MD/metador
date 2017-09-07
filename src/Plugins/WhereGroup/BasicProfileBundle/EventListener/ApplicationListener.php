@@ -25,6 +25,13 @@ class ApplicationListener
                     ->path('metador_admin_lists')
                     ->setRole('ROLE_SYSTEM_GEO_OFFICE')
                     ->active($app->routeStartsWith('metador_admin_lists'))
+            )->add(
+                $app->get('AdminMenu', 'metador_admin_keyword')
+                    ->icon('icon-tags')
+                    ->label('Schlüsselwörter')
+                    ->path('metador_admin_keyword')
+                    ->setRole('ROLE_SYSTEM_GEO_OFFICE')
+                    ->active($app->routeStartsWith('metador_admin_keyword'))
             );
         }
     }
