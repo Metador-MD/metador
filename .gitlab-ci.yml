@@ -1,4 +1,4 @@
-image: wg-ubuntu-14-04-basic
+image: wg-runner/php7
 
 cache:
     paths:
@@ -6,9 +6,9 @@ cache:
         - vendor/
 
 before_script:
-  - php5dismod xdebug
+#  - phpdismod xdebug
   - composer update --no-progress
-  - php5enmod xdebug
+#  - phpenmod xdebug
 
 stages:
   - test
@@ -19,7 +19,7 @@ test_job:
     script:
         - bin/console --env=test doctrine:database:create
         - bin/console --env=test doctrine:schema:create
-        - chmod +x app/Resources/scripts/test.sh
+ #       - chmod +x app/Resources/scripts/test.sh
         - app/Resources/scripts/test.sh
 
 deploy_job:
