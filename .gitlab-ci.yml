@@ -6,9 +6,9 @@ cache:
         - vendor/
 
 before_script:
-  - phpdismod xdebug
+#  - phpdismod xdebug
   - composer update --no-progress
-  - phpenmod xdebug
+#  - phpenmod xdebug
 
 stages:
   - test
