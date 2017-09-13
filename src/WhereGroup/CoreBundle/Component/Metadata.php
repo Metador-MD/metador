@@ -271,6 +271,7 @@ class Metadata implements MetadataInterface
             $metadata = $this->getByUUID($uuid);
         } else {
             $metadata = new EntityMetadata();
+            unset($p['_id']);
         }
 
         $date = new \DateTime($p['_dateStamp']);
