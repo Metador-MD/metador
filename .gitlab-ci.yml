@@ -1,4 +1,4 @@
-image: wg-ubuntu-14-04-basic
+image: wg-runner/php7
 
 cache:
     paths:
