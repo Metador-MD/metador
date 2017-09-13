@@ -19,7 +19,7 @@ test_job:
     script:
         - bin/console --env=test doctrine:database:create
         - bin/console --env=test doctrine:schema:create
-        - chmod +x app/Resources/scripts/test.sh
+ #       - chmod +x app/Resources/scripts/test.sh
         - app/Resources/scripts/test.sh
 
 deploy_job:
