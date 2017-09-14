@@ -21,6 +21,7 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
             new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
+            new \Twig_SimpleFunction('array_key_empty', array($this, 'keyEmpty')),
         );
     }
 
@@ -86,6 +87,17 @@ class ArrayExtension extends \Twig_Extension
         }
 
         return true;
+    }
+
+    public function keyEmpty(array $array)
+    {
+        foreach ($array as $value) {
+            if (!empty($value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
