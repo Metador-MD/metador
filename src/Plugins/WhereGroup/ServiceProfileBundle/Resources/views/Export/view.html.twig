@@ -48,11 +48,7 @@
     {# identification #}
 <table class="view-table">
     <thead>
-        <tr>
-        {% if not array_is_empty(p, 'title') %}
-            <th colspan="2" class="view-header-one">{{ array_get(p, 'title', '') }}</th>
-            {% endif %}
-        </tr>
+        {{ export.document_header(p['title']) }}
     </thead>
     <tbody>
         <tr>
@@ -126,49 +122,20 @@
                 {{ export.line('PLZ', responsible['postalCode']) }}
                 {{ export.line('Bundesland', responsible['administrativeArea']) }}
                 {{ export.line('Staat', responsible['country']) }}
-
-
-        <tr>
-            <td class="view-property-label view-header-three">Telefonnummer</td>
-            <td class="view-property">{{ responsible['voice'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Faxnummer</td>
-            <td class="view-property">{{ responsible['facsimile'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">E-Mail</td>
-            <td class="view-property">{{ responsible['electronicMailAddress'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Internetadresse</td>
-            <td class="view-property">{{ responsible['onlineResource'] }}</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="html-gap pdf-gap"></td>
-        </tr>
-        {% endfor %}
+                {{ export.line('Telefonnummer', responsible['voice']) }}
+                {{ export.line('Faxnummer', responsible['facsimile']) }}
+                {{ export.line('E-Mail', responsible['electronicMailAddress']) }}
+                {{ export.line('Internetadresse', responsible['onlineResource']) }}
+                <tr>
+                    <td colspan="2" class="html-gap pdf-gap"></td>
+                </tr>
+            {% endfor %}
         {% endif %}
 
-
-        <tr>
-            <td colspan="2" class="view-row-two view-header-two">Angaben zur Metadatenspezifikation</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="html-gap pdf-gap"></td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Spezifikation</td>
-            <td class="view-property">{{ p['metadataStandardName'] }}</td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Version</td>
-            <td class="view-property"></td>
-        </tr>
-        <tr>
-            <td class="view-property-label view-header-three">Browser Bild</td>
-            <td class="view-property">{{ p['browserGraphic'] }}</td>
-        </tr>
+        {{ export.title('Angaben zur Metadatenspezifikation') }}
+        {{ export.line('Spezifikation', p['metadataStandardName']) }}
+        {{ export.line('Version', '') }}
+        {{ export.line('Browser Bild', p['browserGraphic']) }}
     </tbody>
 </table>
 {#<div class="html-gap pdf-gap"></div>#}
@@ -218,9 +185,9 @@
             </tr>
         </tbody>
     </table>#}
-    <div>
+{#    <div>
         <div class="html-gap pdf-gap"></div>
-    </div>
+    </div>#}
     {# keyword #}
 {#    <table class="view-table">
         <thead>
