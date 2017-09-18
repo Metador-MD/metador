@@ -70,7 +70,7 @@ class HomeController extends Controller
         $search = $this->get('metador_metadata_search');
 
         $search
-            ->setPage(1)
+            ->setPage(isset($params['page']) ? $params['page'] : 1)
             ->setHits(10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
             ->setSource(isset($params['source']) ? $params['source'] : '')

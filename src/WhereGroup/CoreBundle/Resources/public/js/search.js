@@ -15,9 +15,29 @@ Search.prototype = {
     init: function() {
         this.searchFieldElement = $('#searchfield');
         this.searchResultElement = $('#search-result');
-        this.setParam('page', 1);
 
-        this.searchFieldElement.val(this.getParam('terms', ''));
+        this.set('page', 1);
+        this.searchFieldElement.val(this.get('terms', ''));
+    },
+
+    getAll: function() {
+        return this.getObject('search-params', {});
+    },
+
+    get: function(key, defaultValue) {
+        var params = this.getObject('search-params', {});
+
+        if (params[key]) {
+            return params[key];
+        }
+
+        return defaultValue;
+    },
+
+    set: function(key, value) {
+        var params = this.getObject('search-params', {});
+        params[key] = value;
+        this.setObject('search-params', params);
     },
 
     keyup: function() {
@@ -29,10 +49,9 @@ Search.prototype = {
 
         self.timeoutId = window.setTimeout(function() {
             self.timeoutId = undefined;
-            self.setParam('page', 1);
-            self.setParam('terms', self.searchFieldElement.val());
+            self.set('page', 1);
+            self.set('terms', self.searchFieldElement.val());
             self.find();
-
         }, self.timeoutDelay);
 
     },
@@ -40,14 +59,13 @@ Search.prototype = {
     find: function() {
         var self = this;
 
+        self.set('source', $('.-js-source.active').attr('data-slug'));
+
         $.ajax({
             'url': self.searchFieldElement.attr('data-url'),
             'type': 'POST',
             'dataType': 'json',
-            'data': {
-                'source': $('.-js-source.active').attr('data-slug'),
-                'terms': self.getParam('terms')
-            },
+            'data': self.getAll(),
             'success': function(data) {
                 self.searchResultElement.html('');
 
