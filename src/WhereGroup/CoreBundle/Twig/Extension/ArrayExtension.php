@@ -89,11 +89,13 @@ class ArrayExtension extends \Twig_Extension
         return true;
     }
 
-    public function arrayHasValue(array $array)
+    public function arrayHasValue($array)
     {
-        foreach ($array as $value) {
-            if (!empty($value)) {
-                return true;
+        if (is_array($array)) {
+            foreach ($array as $value) {
+                if (!empty($value)) {
+                    return true;
+                }
             }
         }
 
