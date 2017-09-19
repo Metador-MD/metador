@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
+use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Search\SearchInterface;
 use WhereGroup\CoreBundle\Entity\Configuration;
 use WhereGroup\UserBundle\Entity\User;
@@ -27,14 +29,14 @@ class HomeController extends Controller
     public function indexAction()
     {
         $profileConfig = array();
-        $sourceConfig  = array();
+        $sourceConfig = array();
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
 
             $profileConfig[$key] = array(
                 'name'   => $profile['name'],
-                'source' => is_null($configuration) ? array() : $configuration
+                'source' => is_null($configuration) ? array() : $configuration,
             );
         }
 
@@ -48,14 +50,14 @@ class HomeController extends Controller
             }
 
             $sourceConfig[$source->getSlug()] = array(
-                'name' => $source->getName(),
-                'profiles' => $sourceConfigProfiles
+                'name'     => $source->getName(),
+                'profiles' => $sourceConfigProfiles,
             );
         }
 
         return array(
             'isHome'       => true,
-            'sourceConfig' => $sourceConfig
+            'sourceConfig' => $sourceConfig,
         );
     }
 
@@ -66,24 +68,28 @@ class HomeController extends Controller
     {
         $params = $this->get('request_stack')->getCurrentRequest()->request->all();
 
-        /** @var SearchInterface $search */
+        /** @var Search $search */
         $search = $this->get('metador_metadata_search');
-
         $search
             ->setPage(isset($params['page']) ? $params['page'] : 1)
             ->setHits(10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
-            ->setSource(isset($params['source']) ? $params['source'] : '')
-            ->find();
+            ->setSource(isset($params['source']) ? $params['source'] : '');
+        if (isset($params['spatial']) && $params['spatial']) {
+            $exprHandler = $search->createExpression();
+            $expr = JsonFilterReader::read($params['spatial'], $exprHandler);
+            $search->setExpression($expr);
+        }
+        $search->find();
 
         $html = $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
             'rows'   => $search->getResult(),
-            'paging' => $search->getResultPaging()
+            'paging' => $search->getResultPaging(),
         ));
 
         return new AjaxResponse(array(
             'html'  => $html,
-            'debug' => $params
+            'debug' => $params,
         ));
     }
 
