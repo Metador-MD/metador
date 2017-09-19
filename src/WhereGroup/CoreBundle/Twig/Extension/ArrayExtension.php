@@ -97,6 +97,8 @@ class ArrayExtension extends \Twig_Extension
                     return true;
                 }
             }
+        } else {
+            return !empty($array);
         }
 
         return false;
