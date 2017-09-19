@@ -142,19 +142,19 @@ function addFeature(geoCollection, geoFeature) {
     geoCollection.features.push(geoFeature);
 }
 
-// show clear features
-// show features
-var hgcollection = createGeoCollection();
-addFeature(hgcollection, createBboxGeoFeature(9, 49, 12, 50, {
-    'uuid': 'tiurutuuuoooi',
-    'title': 'Feature 1',
-    'alternateTitle': 'Feature 1111111'
-}));
-addFeature(hgcollection, createBboxGeoFeature(9, 49, 12, 50, {
-    'uuid': 'ewqwqrqwreqwer',
-    'title': 'Feature 2',
-    'alternateTitle': 'Feature 222222'
-}));
+// // show clear features
+// // show features
+// var hgcollection = createGeoCollection();
+// addFeature(hgcollection, createBboxGeoFeature(8,50,11,52, {
+//     'uuid': 'tiurutuuuoooi',
+//     'title': 'Feature 1',
+//     'alternateTitle': 'Feature 1111111'
+// }));
+// addFeature(hgcollection, createBboxGeoFeature(10,48,12,54, {
+//     'uuid': 'ewqwqrqwreqwer',
+//     'title': 'Feature 2',
+//     'alternateTitle': 'Feature 222222'
+// }));
 // window.spatial.map.showFeatures(hgcollection);
-// clear features
-// window.spatial.map.clearFeatures();
+// // clear features
+// // window.spatial.map.clearFeatures();
