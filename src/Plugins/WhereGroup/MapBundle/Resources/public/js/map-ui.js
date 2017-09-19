@@ -25,12 +25,39 @@ $('.-js-crs-code').on('change', function () {
     window.spatial.map.changeCrs($(this).val());
 });
 
+$(document).on('click', '.-js-spatial-operator', function () {
+    setSpatialFilter(null);
+    search.find();
+});
+
+function createSpatialFilter(geoFeature) {
+    var _geoFeature = geoFeature ? geoFeature : window.spatial.map.getFirstGeomForSearch();
+    if (!_geoFeature) {
+        return null;
+    }
+    var operation = $('.-js-spatial-operator').val();
+    var filter = {};
+    filter[operation] = {'geom': _geoFeature};
+
+    return filter;
+}
+
+function setSpatialFilter(geoFeature) {
+    var filter = createSpatialFilter(geoFeature);
+    if (filter) {
+        search.set('spatial', filter);
+    } else {
+        search.set('spatial', null);
+    }
+}
+
 $('.-js-draw-type').on('click', function () {
     var $this = $(this);
     window.spatial.map.drawShapeForSearch(
         $this.val(),
-        function (geometry) {
-            console.log(geometry);
+        function (geoFeature) {
+            setSpatialFilter(geoFeature);
+            search.find();
         }
     );
 });
@@ -45,7 +72,13 @@ $('#file-upload-form').ajaxForm({
     success: function (data) {
         metador.parseResponse(data);
         if (data.content) {
-            window.spatial.map.drawGeometryForSearch(data.content);
+            window.spatial.map.drawGeometryForSearch(
+                data.content,
+                function (geoFeature) {
+                    setSpatialFilter(geoFeature);
+                    search.find();
+                }
+            );
         }
     },
     error: function (jqXHR, textStatus, errorThrown) {
