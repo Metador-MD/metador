@@ -74,12 +74,13 @@ class JsonFilterReader implements FilterReader
                     foreach ($value as $name => $val) {
                         return $expression->eq($name, $val, $parameters);
                     }
+
+                    return null;
                 case 'like':
                     $property = self::getExpression($value, $expression, $parameters);
 
                     return $expression->like($property[0], $property[1], $parameters, '\\', '_', '*');
                 case 'notlike':
-                case 'notLike':
                     $property = self::getExpression($value, $expression, $parameters);
 
                     return $expression->notLike($property[0], $property[1], $parameters, '\\', '_', '*');
@@ -93,7 +94,64 @@ class JsonFilterReader implements FilterReader
                     }
 
                     return null;
-                // TODO other
+                case 'between':
+                    foreach ($value as $name => $val) {
+                        return $expression->between($name, $val['lower'], $val['upper'], $parameters);
+                    }
+
+                    return null;
+                case 'gt':
+                case '>':
+                    foreach ($value as $name => $val) {
+                        return $expression->gt($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'gte':
+                case '>=':
+                    foreach ($value as $name => $val) {
+                        return $expression->gte($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'lt':
+                case '<':
+                    foreach ($value as $name => $val) {
+                        return $expression->lt($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'lte':
+                case '<=':
+                    foreach ($value as $name => $val) {
+                        return $expression->lte($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'bbox':
+                    foreach ($value as $name => $val) {
+                        return $expression->bbox($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'intersects':
+                    foreach ($value as $name => $val) {
+                        return $expression->intersects($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'contains':
+                    foreach ($value as $name => $val) {
+                        return $expression->contains($name, $val, $parameters);
+                    }
+
+                    return null;
+                case 'within':
+                    foreach ($value as $name => $val) {
+                        return $expression->within($name, $val, $parameters);
+                    }
+
+                    return null;
                 default:
                     return null;
             }

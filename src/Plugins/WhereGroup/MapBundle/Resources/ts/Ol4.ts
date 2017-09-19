@@ -431,14 +431,28 @@ export class Ol4Map {
         this.vecSource.showFeatures(this.hgLayer, geoJson);
     }
 
+    getFirstGeomForSearch(): object {
+        let features = this.drawer.getLayer().getSource().getFeatures();
+        if(features.length === 0) {
+            return null;
+        }
+        let geojson = new ol.format.GeoJSON().writeFeatureObject(
+            features[0],
+            {
+                'dataProjection': METADOR_EPSG,
+                'featureProjection': this.getProjection()
+            }
+        );
+        geojson['bbox'] = new Ol4Geom(features[0].getGeometry(), this.getProjection())
+            .getExtent(ol.proj.get(METADOR_EPSG));
+        return geojson;
+    }
+
     drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         this.vecSource.clearFeatures(this.drawer.getLayer());
         this.vecSource.showFeatures(this.drawer.getLayer(), geoJson);
-        if (onDrawEnd !== null) {
-            onDrawEnd(geoJson);
-        }
         let multiPoint: ol.geom.MultiPoint = <ol.geom.MultiPoint> Ol4Extent.fromArray(
             this.drawer.getLayer().getSource().getExtent(),
             this.olMap.getView().getProjection()
@@ -449,6 +463,10 @@ export class Ol4Map {
             this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
         } else {
             metador.displayError('Die Geometrie ist außerhalb der räumlichen Erstreckung.');
+        }
+        let geoFeature = this.getFirstGeomForSearch();
+        if (onDrawEnd !== null && geoFeature) {
+            onDrawEnd(geoFeature);
         }
     }
 
