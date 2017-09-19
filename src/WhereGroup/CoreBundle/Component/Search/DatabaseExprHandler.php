@@ -65,13 +65,17 @@ class DatabaseExprHandler implements ExprHandler
         $this->propertyMap = array();
     }
 
+    /**
+     * @param array $propertyMap
+     * @return mixed
+     */
     public function setPropertyMap(array $propertyMap)
     {
         $this->propertyMap = $propertyMap;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
     private function getName($name)
@@ -94,8 +98,8 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $escape
-     * @param $character
+     * @param string $escape
+     * @param string $character
      * @return string
      */
     private static function getRegex($escape, $character)
@@ -138,7 +142,7 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $item
+     * @param Expr $item
      * @return Expr\Func
      */
     public function not($item)
@@ -149,9 +153,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
+     * @param string $property
      * @param array $items
-     * @param $parameters
+     * @param array $parameters
      * @return Expr\Func
      */
     public function in($property, array $items, &$parameters)
@@ -162,9 +166,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function eq($property, $value, &$parameters)
@@ -175,9 +179,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function neq($property, $value, &$parameters)
@@ -188,9 +192,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @param string $escapeChar
      * @param string $singleChar
      * @param string $wildCard
@@ -213,9 +217,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @param string $escapeChar
      * @param string $singleChar
      * @param string $wildCard
@@ -256,9 +260,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function gt($property, $value, &$parameters)
@@ -269,9 +273,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function gte($property, $value, &$parameters)
@@ -282,9 +286,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function lt($property, $value, &$parameters)
@@ -295,9 +299,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $value
-     * @param $parameters
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
      * @return Expr\Comparison
      */
     public function lte($property, $value, &$parameters)
@@ -308,7 +312,7 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
+     * @param string $property
      * @return string
      */
     public function isNull($property)
@@ -319,7 +323,7 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
+     * @param string $property
      * @return string
      */
     public function isNotNull($property)
@@ -330,25 +334,29 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param array $geoFeature
-     * @param $parameters
+     * @param string $property
+     * @param array $geoFeature GeoJSON or an array(w,s,e,n)
+     * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function bbox($property, array $geoFeature, &$parameters)
+    public function bbox($property, $geoFeature, &$parameters)
     {
         if (is_array($this->spatialProperty)) {
             // check if $geoFeature is an array(w,s,e,n) or GeoJSON "Feature" / GeoJSON "geometry"
-            $bbox = count($geoFeature) === 4 && is_float($geoFeature) ? $geoFeature : self::bboxForGeoJson($geoFeature);
+            if (count($geoFeature) === 4 && !isset($geoFeature['geometry'])) {
+                $bbox = $geoFeature;
+            } else {
+                $bbox = self::bboxForGeoJson($geoFeature);
+            }
             // no spatial column
             // "spatially intersect" - (share any portion of space)
             return new Expr\Andx(
                 array(
-                    $this->lt($this->spatialProperty[0], $bbox[2], $parameters),
-                    $this->gt($this->spatialProperty[2], $bbox[0], $parameters),
-                    $this->lt($this->spatialProperty[1], $bbox[3], $parameters),
-                    $this->gt($this->spatialProperty[3], $bbox[1], $parameters),
+                    $this->lt($this->spatialProperty[0], floatval($bbox[2]), $parameters),
+                    $this->gt($this->spatialProperty[2], floatval($bbox[0]), $parameters),
+                    $this->lt($this->spatialProperty[1], floatval($bbox[3]), $parameters),
+                    $this->gt($this->spatialProperty[3], floatval($bbox[1]), $parameters),
                 )
             );
         } else {
@@ -357,9 +365,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $geoFeature
-     * @param $parameters
+     * @param string $property
+     * @param array $geoFeature GeoJSON
+     * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
@@ -374,22 +382,22 @@ class DatabaseExprHandler implements ExprHandler
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '<=',
-                        self::addParameter($this->spatialProperty[0], $bbox[0], $parameters)
+                        self::addParameter($this->spatialProperty[0], floatval($bbox[0]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '>=',
-                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
+                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[1]),
                         '<=',
-                        self::addParameter($this->spatialProperty[1], $bbox[1], $parameters)
+                        self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '>=',
-                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
+                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                 )
             );
@@ -399,9 +407,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $geoFeature
-     * @param $parameters
+     * @param string $property
+     * @param array $geoFeature GeoJSON
+     * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
@@ -416,22 +424,22 @@ class DatabaseExprHandler implements ExprHandler
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '>=',
-                        self::addParameter($this->spatialProperty[0], $bbox[0], $parameters)
+                        self::addParameter($this->spatialProperty[0], floatval($bbox[0]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '<=',
-                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
+                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[1]),
                         '>=',
-                        self::addParameter($this->spatialProperty[1], $bbox[1], $parameters)
+                        self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
                         '<=',
-                        self::addParameter($this->spatialProperty[2], $bbox[2], $parameters)
+                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                 )
             );
@@ -441,9 +449,9 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param $property
-     * @param $geoFeature
-     * @param $parameters
+     * @param string $property
+     * @param array $geoFeature GeoJSON
+     * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
