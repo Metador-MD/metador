@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+
 /**
  * Class FrontendCommand
  * @package WhereGroup\CoreBundle\Component
@@ -125,7 +127,7 @@ class FrontendCommand
      */
     public function runMethod($class, $method, $argument, &$response)
     {
-        $response =  array_merge_recursive($response, array(
+        $response = ArrayParser::merge($response, array(
             'METADOR' => array(
                 'runMethod' => array(
                     array(
