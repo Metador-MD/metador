@@ -79,6 +79,18 @@ Search.prototype = {
                 self.searchResultElement.html('');
             }
         });
+    },
+
+    clearMetadataMarks: function() {
+        $('[data-metadata-uuid]').removeClass('marked');
+    },
+
+    markMetadata: function(uuid) {
+        $('[data-metadata-uuid="' + uuid + '"]').addClass('marked');
+    },
+
+    unmarkMetadata: function(uuid) {
+        $('[data-metadata-uuid="' + uuid + '"]').removeClass('marked');
     }
 };
 
