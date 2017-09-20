@@ -16,16 +16,16 @@ $('.-js-source').on('click', function () {
     $('.-js-profile-menu').removeClass('active');
     $('#source-' + $(this).attr('data-slug')).addClass('active');
     $('#search-result').html('');
-    search.find();
+    MetadorOl4Bridge.getSearch().find();
 });
 
 $('.-js-crs-code').on('change', function () {
     MetadorOl4Bridge.changeCrs($(this).val());
 });
 
-$(document).on('click', '.-js-spatial-operator', function () {
+$('.-js-spatial-operator').on('click', function () {
     MetadorOl4Bridge.setSpatialFilter(null);
-    search.find();
+    MetadorOl4Bridge.getSearch().find();
 });
 
 $('.-js-draw-type').on('click', function () {
@@ -42,6 +42,7 @@ $('#file-upload-form').ajaxForm({
     dataType: 'json',
     success: function (data) {
         metador.parseResponse(data);
+        $('.-js-draw-type').val('NONE');
         MetadorOl4Bridge.drawGeometryForSearch(data.content);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -70,57 +71,95 @@ $('#map-menu-load-wms-button').on('click', function () {
     }
 });
 
-
 var MetadorOl4Bridge = {
-    ol: window.spatial.map,
-    // search: search,
-    isExists: function () {
-        if (!window || !window.spatial || !window.spatial.map) {
-            throw new Error("OL4 Map not exists");
+    getSearch: function () {
+        if (search) {
+            return search;
+        } else {
+            throw new Error("Search is not found");
+        }
+    },
+    getOl: function () {
+        if (window && window.spatial && window.spatial.map) {
+            return window.spatial.map;
+        } else {
+            throw new Error("OL4 Map is not found");
         }
     },
 
     updateMap: function () {
-        // this.isExists();
-        this.ol.updateMap();
+        var spatial = this.getSearch().get('spatial');
+        if (spatial) {
+            var name;
+            for (name in spatial) {
+                // console.log(spatial);
+                $('.-js-spatial-operator').val(name);
+                var collection = this.createGeoCollection('EPSG:4326', [spatial[name]['geom']]);
+                MetadorOl4Bridge.drawGeometryForSearch(collection);
+            }
+        } else {
+
+        }
+        this.getOl().updateMap();
     },
 
     changeCrs: function (newCrs) {
-        this.ol.changeCrs(newCrs);
+        this.getOl().changeCrs(newCrs);
     },
 
     getGeomForSearch: function () {
-        return this.ol.getFirstGeomForSearch();
+        return this.getOl().getFirstGeomForSearch();
+    },
+
+    createSpatialFilter: function (geoFeature) {
+        var _geoFeature = geoFeature ? geoFeature : this.getGeomForSearch();
+        if (!_geoFeature) {
+            return null;
+        }
+        var operation = $('.-js-spatial-operator').val();
+        var filter = {};
+        filter[operation] = {'geom': _geoFeature};
+
+        return filter;
+    },
+
+    setSpatialFilter: function (geoFeature) {
+        var filter = this.createSpatialFilter(geoFeature);
+        if (filter) {
+            this.getSearch().set('spatial', filter);
+        } else {
+            this.getSearch().set('spatial', null);
+        }
     },
 
     drawShapeForSearch: function (shapeType) {
         var self = this;
-        this.ol.drawShapeForSearch(
+        this.getOl().drawShapeForSearch(
             shapeType,
             function (geoFeature) {
                 self.setSpatialFilter(geoFeature);
-                search.find();
+                self.getSearch().find();
             }
         );
     },
     drawGeometryForSearch: function (geometry) {
         var self = this;
         if (geometry) {
-            this.ol.drawGeometryForSearch(
+            this.getOl().drawGeometryForSearch(
                 geometry,
                 function (geoFeature) {
                     self.setSpatialFilter(geoFeature);
-                    search.find();
+                    self.getSearch().find();
                 }
             );
         }
     },
     addLayerForOptions: function (data) {
-        this.ol.addLayerForOptions(data);
+        this.getOl().addLayerForOptions(data);
     },
 
     clearFeatures: function () {
-        this.ol.clearFeatures();
+        this.getOl().clearFeatures();
     },
 
     createBboxGeoFeature: function (west, south, east, north, properties) {
@@ -154,6 +193,7 @@ var MetadorOl4Bridge = {
     },
 
     showResults: function (resultList) {
+        this.clearFeatures();
         var featureCollection = [];
         var i = 0;
         for (i = 0; i < resultList.length; i++) {
@@ -163,37 +203,16 @@ var MetadorOl4Bridge = {
             featureCollection.push(geoFeature);
         }
         if (featureCollection.length > 0) {
-            this.ol.showFeatures(this.createGeoCollection('EPSG:4326', featureCollection));
+            this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', featureCollection));
         }
     },
 
     showFeatureCollection: function (geoFeatures) {
-        this.ol.showFeatures(this.createGeoCollection('EPSG:4326', geoFeatures));
+        this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', geoFeatures));
     },
 
     showFeature: function (west, south, east, north, properties) {
         var geoFeature = this.createBboxGeoFeature(west, south, east, north, properties);
-        this.ol.showFeatures(this.createGeoCollection('EPSG:4326', [geoFeature]));
-    },
-
-    createSpatialFilter: function (geoFeature) {
-        var _geoFeature = geoFeature ? geoFeature : this.getGeomForSearch();
-        if (!_geoFeature) {
-            return null;
-        }
-        var operation = $('.-js-spatial-operator').val();
-        var filter = {};
-        filter[operation] = {'geom': _geoFeature};
-
-        return filter;
-    },
-
-    setSpatialFilter: function (geoFeature) {
-        var filter = this.createSpatialFilter(geoFeature);
-        if (filter) {
-            search.set('spatial', filter);
-        } else {
-            search.set('spatial', null);
-        }
+        this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', [geoFeature]));
     }
 };

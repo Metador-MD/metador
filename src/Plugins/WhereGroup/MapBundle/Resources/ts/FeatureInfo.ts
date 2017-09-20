@@ -2,33 +2,40 @@ import {UUID} from './Ol4';
 import {dom} from './dom';
 
 export class FeatureInfo {
-    private static buttonSelector: string = '.-js-map-info';
-    private static selectClass: string = 'select';
+    // private static buttonSelector: string = '.-js-map-info';
+    // private static selectClass: string = 'select';
     private static keyId: string = 'uuid';
     private static keyTitle: string = 'title';
-    private static keyAlternateTitle: string = 'alternateTitle';
+    // private static keyAlternateTitle: string = 'alternateTitle';
     private static itemTagName: string = 'span';
     private olMap: ol.Map;
     private tooltip: ol.Overlay;
     private tooltipElm: HTMLElement;
     private layer: ol.layer.Vector;
+    private callbackSelect: Function;
+    private callbackUnSelect: Function;
+    private callbackUnSelectAll: Function;
 
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
-        dom.findFirst(FeatureInfo.buttonSelector).addEventListener('click', this.buttonClick.bind(this), false);
+        // dom.findFirst(FeatureInfo.buttonSelector).addEventListener('click', this.buttonClick.bind(this), false);
     }
 
-    private buttonClick(e) {
-        if (!dom.hasClass(e.currentTarget, 'success')) {
-            this.activate();
-        } else {
-            this.deactivate();
-        }
-    }
+    //
+    // private buttonClick(e) {
+    //     if (!dom.hasClass(e.currentTarget, 'success')) {
+    //         this.activate();
+    //     } else {
+    //         this.deactivate();
+    //     }
+    // }
 
-    private activate() {
-        dom.addClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
+    public activate(callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+        // dom.addClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
+        this.callbackSelect = callbackSelect;
+        this.callbackUnSelect = callbackUnSelect;
+        this.callbackUnSelectAll = callbackUnSelectAll;
         this.olMap.on('click', this.mapClick, this);
         this.tooltipElm = dom.create('div', {}, ['tooltip', 'hidden']);
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
@@ -40,8 +47,12 @@ export class FeatureInfo {
         this.olMap.addOverlay(this.tooltip);
     }
 
-    private deactivate() {
-        dom.removeClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
+    public deactivate() {
+        // dom.removeClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
+        this.callbackUnSelectAll();
+        this.callbackSelect = null;
+        this.callbackUnSelect = null;
+        this.callbackUnSelectAll = null;
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();
         this.olMap.removeOverlay(this.tooltip);
@@ -78,12 +89,10 @@ export class FeatureInfo {
             this.selectDataset(features[0].get(FeatureInfo.keyId));
         } else {
             for (let feature of features) {
-                let dataAttr = FeatureInfo.dataAttrName(FeatureInfo.keyId);
                 let title = feature.get(FeatureInfo.keyTitle);
-                let aTitle = feature.get(FeatureInfo.keyAlternateTitle);
                 let attrs = {
                     dataAttr: feature.get(FeatureInfo.keyId),
-                    title: aTitle ? title + ' / ' + aTitle : title
+                    title: title
                 };
                 attrs[FeatureInfo.dataAttrName(FeatureInfo.keyId)] = feature.get(FeatureInfo.keyId);
                 this.tooltipElm.appendChild(dom.create(FeatureInfo.itemTagName, attrs, [], title));
@@ -94,10 +103,10 @@ export class FeatureInfo {
     }
 
     private selectDataset(selector: string) {
-        console.log('set class ' + FeatureInfo.selectClass + ' for dataset' + selector);
+        this.callbackSelect(selector);
     }
 
-    private unSelectDataset() {
-        console.log('remove class ' + FeatureInfo.selectClass + ' for all datasets');
+    private unSelectDataset(selector: string) {
+        this.callbackUnSelect(selector);
     }
 }
