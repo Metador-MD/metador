@@ -136,7 +136,6 @@ class HomeController extends Controller
             );
         }
 
-
         return new AjaxResponse($response);
     }
 
