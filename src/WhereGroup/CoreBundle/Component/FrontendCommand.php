@@ -123,7 +123,7 @@ class FrontendCommand
      * @param $response
      * @return array
      */
-    private function runMethod($class, $method, $argument, &$response)
+    public function runMethod($class, $method, $argument, &$response)
     {
         return array_merge_recursive($response, array(
             'METADOR' => array(
@@ -131,6 +131,26 @@ class FrontendCommand
                     array(
                         'class'    => $class,
                         'method'   => $method,
+                        'argument' => $argument
+                    )
+                )
+            )
+        ));
+    }
+
+    /**
+     * @param $function
+     * @param $argument
+     * @param $response
+     * @return array
+     */
+    public function runFunction($function, $argument, &$response)
+    {
+        return array_merge_recursive($response, array(
+            'METADOR' => array(
+                'runFunction' => array(
+                    array(
+                        'function' => $function,
                         'argument' => $argument
                     )
                 )
