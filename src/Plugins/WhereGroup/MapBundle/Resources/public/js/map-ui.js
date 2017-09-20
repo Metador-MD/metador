@@ -120,7 +120,7 @@ var MetadorOl4Bridge = {
     },
 
     clearFeatures: function () {
-        this.ol.clearFeatures()
+        this.ol.clearFeatures();
     },
 
     createBboxGeoFeature: function (west, south, east, north, properties) {
@@ -155,12 +155,16 @@ var MetadorOl4Bridge = {
 
     showResults: function (resultList) {
         var featureCollection = [];
-        for (var i = 0; i < resultList.length; i++){
-            break; // TODO
-            var geoFeature = null;//this.createBboxGeoFeature(west, south, east, north, properties);
+        var i = 0;
+        for (i = 0; i < resultList.length; i++) {
+            var item = resultList[i];
+            var properties = {"uuid": item.uuid, "title": item.title};
+            var geoFeature = this.createBboxGeoFeature(item.west, item.south, item.east, item.north, properties);
             featureCollection.push(geoFeature);
         }
-        this.ol.showFeatures(this.createGeoCollection('EPSG:4326', featureCollection));
+        if (featureCollection.length > 0) {
+            this.ol.showFeatures(this.createGeoCollection('EPSG:4326', featureCollection));
+        }
     },
 
     showFeatureCollection: function (geoFeatures) {
@@ -193,23 +197,3 @@ var MetadorOl4Bridge = {
         }
     }
 };
-
-//
-// MetadorOl4Bridge.clearFeatures();
-//
-// MetadorOl4Bridge.showFeature(8, 50, 11, 52, {
-//     'uuid': 'tiurutuuuoooi',
-//     'title': 'Feature 1',
-//     'alternateTitle': 'Feature 1111111'
-// });
-//
-// MetadorOl4Bridge.showFeature(10, 48, 12, 54, {
-//     'uuid': 'ewqwqrqwreqwer',
-//     'title': 'Feature 2',
-//     'alternateTitle': 'Feature 222222'
-// });
-// 10, 48, 12, 54, {
-//     'uuid': 'ewqwqrqwreqwer',
-//     'title': 'Feature 2',
-//     'alternateTitle': 'Feature 222222'
-// }
