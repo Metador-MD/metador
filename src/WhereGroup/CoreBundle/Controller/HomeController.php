@@ -97,6 +97,13 @@ class HomeController extends Controller
 
         $bboxParams = [];
 
+        $this->get('metador_frontend_command')->runMethod(
+            'MetadorOl4Bridge',
+            'clearFeatures',
+            '',
+            $response
+        );
+
         if (!empty($results)) {
             foreach ($results as $result) {
                 if (!isset($result['object'])) {
