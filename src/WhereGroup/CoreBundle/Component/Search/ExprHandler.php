@@ -136,34 +136,34 @@ interface ExprHandler
     /**** geo spatial ****/
 
     /**
-     * @param string $property
+     * @param string $propertyNameName
      * @param array $geoFeature GeoJSON or an array(w,s,e,n)
      * @param array $parameters
      * @return mixed
      */
-    public function bbox($property, $geoFeature, &$parameters);
+    public function bbox($propertyNameName, $geoFeature, &$parameters);
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string  $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson
      * @param array $parameters
      * @return mixed
      */
-    public function intersects($property, $geoFeature, &$parameters);
+    public function intersects($propertyName, $geoFeature, &$parameters);
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson
      * @param array $parameters
      * @return mixed
      */
-    public function contains($property, $geoFeature, &$parameters);
+    public function contains($propertyName, $geoFeature, &$parameters);
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson
      * @param array $parameters
      * @return mixed
      */
-    public function within($property, $geoFeature, &$parameters);
+    public function within($propertyName, $geoFeature, &$parameters);
 }

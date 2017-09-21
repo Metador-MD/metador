@@ -28,9 +28,13 @@ $('.-js-spatial-operator').on('click', function () {
     MetadorOl4Bridge.getSearch().find();
 });
 
-$('.-js-draw-type').on('click', function () {
-    var $this = $(this);
-    MetadorOl4Bridge.drawShapeForSearch($this.val());
+$('.-js-geometry-type').on('click', function () {
+    var geometryType = $(this).val();
+    if(geometryType === 'load') {
+        $('.-js-file-upload').click();
+    } else {
+        MetadorOl4Bridge.drawShapeForSearch(geometryType);
+    }
 });
 
 $('.-js-file-upload').on('change', function (e) {
@@ -42,7 +46,6 @@ $('#file-upload-form').ajaxForm({
     dataType: 'json',
     success: function (data) {
         metador.parseResponse(data);
-        $('.-js-draw-type').val('NONE');
         MetadorOl4Bridge.drawGeometryForSearch(data.content);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -92,10 +95,12 @@ var MetadorOl4Bridge = {
         if (spatial) {
             var name;
             for (name in spatial) {
-                // console.log(spatial);
+                console.log(spatial);
                 $('.-js-spatial-operator').val(name);
                 var collection = this.createGeoCollection('EPSG:4326', [spatial[name]['geom']]);
+                $('.-js-geometry-type').val('load');
                 MetadorOl4Bridge.drawGeometryForSearch(collection);
+                break;
             }
         } else {
 

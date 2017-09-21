@@ -8,18 +8,6 @@
             <span class="icon-info"></span> Info
         </span>
 
-        <select class="input-element medium -js-spatial-operator">
-            <option value="intersects">Schnedet</option>
-            <option value="contains">Umfasst</option>
-            <option value="within">Innerhalb</option>
-        </select>
-
-        <select class="input-element medium -js-draw-type">
-            <option value="NONE">None</option>
-            <option value="BOX">Box</option>
-            <option value="POLYGON">Polygon</option>
-        </select>
-
         <select class="input-element medium -js-crs-code">
             <option value="EPSG:4326">EPSG:4326</option>
             <option value="EPSG:4258">EPSG:4258</option>
@@ -34,12 +22,25 @@
 
         <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
 
-        <form id="file-upload-form" action="{{ path('metador_admin_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
-            <div class="btn medium file-upload">
-                Upload
+        <select class="input-element medium -js-geometry-type">
+            <option value="NONE">Keine Geometrie</option>
+            <option value="load">geladene Geometrie</option>
+            <option value="BOX">Box</option>
+            <option value="POLYGON">Polygon</option>
+        </select>
+
+        <div style="display: none">
+            <form id="file-upload-form" action="{{ path('metador_admin_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
                 <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <select class="input-element medium -js-spatial-operator">
+            <option value="intersects">Schnedet</option>
+            <option value="contains">Innerhalb</option>
+            <option value="within">Umfasst</option>
+        </select>
+
     </div>
     <div class="map-dialog-left-menu -js-map-dialog active">
         <div class="map-dialog-left-content -js-map-menu">

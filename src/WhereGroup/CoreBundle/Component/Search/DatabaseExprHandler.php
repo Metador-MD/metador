@@ -334,13 +334,13 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON or an array(w,s,e,n)
+     * @param string $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson or an array(w,s,e,n)
      * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function bbox($property, $geoFeature, &$parameters)
+    public function bbox($propertyName, $geoFeature, &$parameters)
     {
         if (is_array($this->spatialProperty)) {
             // check if $geoFeature is an array(w,s,e,n) or GeoJSON "Feature" / GeoJSON "geometry"
@@ -365,15 +365,19 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson
      * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function contains($property, $geoFeature, &$parameters)
+    public function contains($propertyName, $geoFeature, &$parameters)
     {
-        /** Checks if $geom is completely inside $this->spatialProperty or $property */
+        /**
+         * ST_Contains — Returns true if and only if no points of B lie in the exterior of A, and at least one point
+         * of the interior of B lies in the interior of A.
+         * boolean ST_Contains(geometry geomA, geometry geomB)
+         */
         if (is_array($this->spatialProperty)) {
             $bbox = self::bboxForGeoJson($geoFeature);
 
@@ -395,73 +399,82 @@ class DatabaseExprHandler implements ExprHandler
                         self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getName($this->spatialProperty[2]),
+                        $this->getName($this->spatialProperty[3]),
                         '>=',
-                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
+                        self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
                     ),
                 )
             );
         } else {
+            // TODO St_Contains(geometry A, geometry B) escape geometry as string (property name)
             throw new \Exception('Operation "contains" for a spatial database is not yet implemented');
         }
     }
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string $propertyName property name
+     * @param string|array $geoFeature property name or GeoJson
      * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function within($property, $geoFeature, &$parameters)
+    public function within($propertyName, $geoFeature, &$parameters)
     {
-        /* Checks if $this->spatialProperty or $property is completely inside $geom */
+        /**
+         * ST_Within — Returns true if the geometry A is completely inside geometry B
+         * boolean ST_Within(geometry A, geometry B);
+         */
         if (is_array($this->spatialProperty)) {
+            /* no geometry property -> 4 bbox values w,s,e,n */
             $bbox = self::bboxForGeoJson($geoFeature);
 
             return new Expr\Andx(
                 array(
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
-                        '>=',
+                        '>',
                         self::addParameter($this->spatialProperty[0], floatval($bbox[0]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[2]),
-                        '<=',
+                        '<',
                         self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[1]),
-                        '>=',
+                        '>',
                         self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getName($this->spatialProperty[2]),
-                        '<=',
-                        self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
+                        $this->getName($this->spatialProperty[3]),
+                        '<',
+                        self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
                     ),
                 )
             );
+
+
         } else {
-            throw new \Exception('Operation "contains" for a spatial database is not yet implemented');
+            // TODO St_Within($geometryA, $geometryB)
+            throw new \Exception('Operation "within" for a spatial database is not yet implemented');
         }
     }
 
     /**
-     * @param string $property
-     * @param array $geoFeature GeoJSON
+     * @param string $propertyName property name
+     * @param string|array $geoFeature propertyName or GeoJson
      * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
      */
-    public function intersects($property, $geoFeature, &$parameters)
+    public function intersects($propertyName, $geoFeature, &$parameters)
     {
+        // "spatially intersect" - (share any portion of space)
         if (is_array($this->spatialProperty)) {
-            // no spatial column
-            // "spatially intersect" - (share any portion of space)
-            return $this->bbox($property, self::bboxForGeoJson($geoFeature), $parameters);
+            // no spatial column -> bbox 4 values
+            return $this->bbox($propertyName, self::bboxForGeoJson($geoFeature), $parameters);
         } else {
+            // TODO St_Intersects($propertyName, $geoFeature)
             throw new \Exception('Operation "intersects" for a spatial database is not yet implemented');
         }
     }
