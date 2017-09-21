@@ -6,6 +6,12 @@ $('.-js-toggle-map').on('click', function () {
     MetadorOl4Bridge.updateMap();
 });
 
+$('.-js-map-info').on('click', function () {
+    var $this = $(this);
+    $this.toggleClass("success");
+    MetadorOl4Bridge.activateFeatureInfo($this.hasClass("success"));
+});
+
 $(document).on('click', '.-js-toggle-layertree', function () {
     $(this).closest('.-js-map-dialog').toggleClass('active');
 });
@@ -104,10 +110,26 @@ var MetadorOl4Bridge = {
                 MetadorOl4Bridge.drawGeometryForSearch(collection);
                 break;
             }
-        } else {
-
         }
         this.getOl().updateMap();
+    },
+
+    activateFeatureInfo: function (activate) {
+        if (activate) {
+            this.getOl().activateFeatureInfo(
+                function(uuid){
+                    search.markMetadata(uuid);
+                },
+                function(uuid){
+                    search.unmarkMetadata(uuid);
+                },
+                function(){
+                    search.clearMetadataMarks();
+                }
+            );
+        } else {
+            this.getOl().deactivateFeatureInfo();
+        }
     },
 
     changeCrs: function (newCrs) {

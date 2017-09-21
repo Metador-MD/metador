@@ -2,11 +2,8 @@ import {UUID} from './Ol4';
 import {dom} from './dom';
 
 export class FeatureInfo {
-    // private static buttonSelector: string = '.-js-map-info';
-    // private static selectClass: string = 'select';
     private static keyId: string = 'uuid';
     private static keyTitle: string = 'title';
-    // private static keyAlternateTitle: string = 'alternateTitle';
     private static itemTagName: string = 'span';
     private olMap: ol.Map;
     private tooltip: ol.Overlay;
@@ -19,25 +16,15 @@ export class FeatureInfo {
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
-        // dom.findFirst(FeatureInfo.buttonSelector).addEventListener('click', this.buttonClick.bind(this), false);
     }
 
-    //
-    // private buttonClick(e) {
-    //     if (!dom.hasClass(e.currentTarget, 'success')) {
-    //         this.activate();
-    //     } else {
-    //         this.deactivate();
-    //     }
-    // }
-
     public activate(callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
-        // dom.addClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
         this.callbackSelect = callbackSelect;
         this.callbackUnSelect = callbackUnSelect;
         this.callbackUnSelectAll = callbackUnSelectAll;
         this.olMap.on('click', this.mapClick, this);
         this.tooltipElm = dom.create('div', {}, ['tooltip', 'hidden']);
+        this.tooltipElm.setAttribute('style', 'padding-right:20px;');
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
@@ -48,7 +35,6 @@ export class FeatureInfo {
     }
 
     public deactivate() {
-        // dom.removeClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
         this.callbackUnSelectAll();
         this.callbackSelect = null;
         this.callbackUnSelect = null;
@@ -61,7 +47,12 @@ export class FeatureInfo {
 
     private itemClick(e: Event) {
         if ((<any>e.target).tagName === FeatureInfo.itemTagName.toUpperCase()) {
-            this.selectDataset((<HTMLElement>e.target).getAttribute(FeatureInfo.dataAttrName(FeatureInfo.keyId)));
+            let tag = (<HTMLElement>e.target);
+            if (dom.hasClass(tag, 'icon-plus-circle')) {
+                dom.addClass(this.tooltipElm, 'hidden');
+            } else {
+                this.selectDataset(tag.getAttribute(FeatureInfo.dataAttrName(FeatureInfo.keyId)));
+            }
         } else {
             e.stopPropagation();
         }
@@ -72,7 +63,7 @@ export class FeatureInfo {
     }
 
     private mapClick(e: ol.MapBrowserEvent) {
-        this.tooltipElm.innerHTML = '';
+        this.tooltipElm.innerHTML = '<span class="icon-plus-circle" style="position:absolute;right:2px;top:2px;"></span>';
         let lay = this.layer;
         let features: ol.Feature[] = new Array<ol.Feature>();
         this.olMap.forEachFeatureAtPixel(e.pixel, function (feature: ol.Feature) {
@@ -83,6 +74,7 @@ export class FeatureInfo {
             }
         });
         if (features.length === 0) {
+            this.callbackUnSelectAll();
             dom.addClass(this.tooltipElm, 'hidden');
         } else if (features.length === 1) {
             dom.addClass(this.tooltipElm, 'hidden');
@@ -103,6 +95,7 @@ export class FeatureInfo {
     }
 
     private selectDataset(selector: string) {
+        this.callbackUnSelectAll();
         this.callbackSelect(selector);
     }
 

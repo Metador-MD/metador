@@ -258,6 +258,14 @@ export class Ol4Map {
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
     }
 
+    activateFeatureInfo(callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function): void {
+        this.featureInfo.activate(callbackSelect, callbackUnSelect, callbackUnSelectAll);
+    }
+
+    deactivateFeatureInfo(): void {
+        this.featureInfo.deactivate();
+    }
+
     getLayerTree(): LayerTree {
         return this.layertree;
     }
