@@ -25,12 +25,14 @@ $('.-js-crs-code').on('change', function () {
 
 $('.-js-spatial-operator').on('click', function () {
     MetadorOl4Bridge.setSpatialFilter(null);
-    MetadorOl4Bridge.getSearch().find();
+    if ($('.-js-geometry-type').val() !== 'NONE') {
+        MetadorOl4Bridge.getSearch().find();
+    }
 });
 
 $('.-js-geometry-type').on('click', function () {
     var geometryType = $(this).val();
-    if(geometryType === 'load') {
+    if (geometryType === 'load') {
         $('.-js-file-upload').click();
     } else {
         MetadorOl4Bridge.drawShapeForSearch(geometryType);
