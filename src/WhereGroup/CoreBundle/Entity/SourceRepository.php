@@ -23,6 +23,7 @@ class SourceRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
     /**
      * @param $entity
      * @return $this
