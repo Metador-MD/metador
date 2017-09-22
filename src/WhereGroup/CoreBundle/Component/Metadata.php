@@ -124,7 +124,9 @@ class Metadata implements MetadataInterface
         $schema = $this->core->locateResource('@' . $class . '/Resources/config/import.json');
 
         $parser = new XmlParser($xml, new XmlParserFunctions());
-        return $parser->loadSchema(file_get_contents($schema))->parse();
+        $result = $parser->loadSchema(file_get_contents($schema))->parse();
+
+        return $result['p'];
     }
 
     /**
@@ -197,10 +199,6 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
-        if (empty($p['_source'])) {
-            throw new MetadataException("Datenquelle nicht gefunden");
-        }
-
         // DateStamp
         $dateStamp = new \DateTime();
         $p['_dateStamp'] = $dateStamp->format('Y-m-d');
@@ -224,7 +222,7 @@ class Metadata implements MetadataInterface
         $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
-        if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {
+        if (!isset($p['_uuid']) || (empty($p['_uuid']) && strlen($p['_uuid']) !== 36)) {
             $uuid4 = Uuid::uuid4();
             $p['_uuid'] = $p['fileIdentifier'] = $uuid4->toString();
         }
@@ -298,10 +296,10 @@ class Metadata implements MetadataInterface
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
-            $metadata->setBboxn((int)$p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe((int)$p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs((int)$p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw((int)$p['bbox'][0]['wLongitude']);
+            $metadata->setBboxn((float)$p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe((float)$p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs((float)$p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw((float)$p['bbox'][0]['wLongitude']);
         }
 
         $this->save($metadata);
