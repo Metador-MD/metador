@@ -115,8 +115,11 @@ var MetadorOl4Bridge = {
     },
 
     activateFeatureInfo: function (activate) {
+        var $tooltip = $('<div class="tooltip hidden" style="padding-right:20px;"></span></div>');
+        $tooltip.append('<span style="position:absolute;top:2px;right:0px;" class="icon-plus-circle">');
         if (activate) {
             this.getOl().activateFeatureInfo(
+                $tooltip.get(0),
                 function(uuid){
                     search.markMetadata(uuid);
                 },

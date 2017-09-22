@@ -116,6 +116,22 @@ export class dom {
         return element;
     };
 
+
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @returns {Element}
+     */
+    static remove(selector: string, context: any = document): NodeListOf<Element> | null {
+        let list: NodeListOf<Element> = dom.find(selector, context);
+        for(let i = 0; i < list.length; i++) {
+            list[i].remove();
+        }
+        return list;
+    };
+
     /**
      *
      * @param element

@@ -18,13 +18,12 @@ export class FeatureInfo {
         this.layer = layer;
     }
 
-    public activate(callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+    public activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
         this.callbackSelect = callbackSelect;
         this.callbackUnSelect = callbackUnSelect;
         this.callbackUnSelectAll = callbackUnSelectAll;
         this.olMap.on('click', this.mapClick, this);
-        this.tooltipElm = dom.create('div', {}, ['tooltip', 'hidden']);
-        this.tooltipElm.setAttribute('style', 'padding-right:20px;');
+        this.tooltipElm = tooltipElm;
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
@@ -48,7 +47,7 @@ export class FeatureInfo {
     private itemClick(e: Event) {
         if ((<any>e.target).tagName === FeatureInfo.itemTagName.toUpperCase()) {
             let tag = (<HTMLElement>e.target);
-            if (dom.hasClass(tag, 'icon-plus-circle')) {
+            if (!dom.hasClass(tag, '-js-tooltip-item')) {
                 dom.addClass(this.tooltipElm, 'hidden');
             } else {
                 this.selectDataset(tag.getAttribute(FeatureInfo.dataAttrName(FeatureInfo.keyId)));
@@ -63,7 +62,8 @@ export class FeatureInfo {
     }
 
     private mapClick(e: ol.MapBrowserEvent) {
-        this.tooltipElm.innerHTML = '<span class="icon-plus-circle" style="position:absolute;right:2px;top:2px;"></span>';
+        // this.tooltipElm.innerHTML = '<span class="icon-plus-circle" style="position:absolute;right:2px;top:2px;"></span>';
+        dom.remove('.-js-tooltip-item', this.tooltipElm);
         let lay = this.layer;
         let features: ol.Feature[] = new Array<ol.Feature>();
         this.olMap.forEachFeatureAtPixel(e.pixel, function (feature: ol.Feature) {
@@ -87,7 +87,7 @@ export class FeatureInfo {
                     title: title
                 };
                 attrs[FeatureInfo.dataAttrName(FeatureInfo.keyId)] = feature.get(FeatureInfo.keyId);
-                this.tooltipElm.appendChild(dom.create(FeatureInfo.itemTagName, attrs, [], title));
+                this.tooltipElm.appendChild(dom.create(FeatureInfo.itemTagName, attrs, ['-js-tooltip-item'], title));
             }
             this.tooltip.setPosition(e.coordinate);
             dom.removeClass(this.tooltipElm, 'hidden');
