@@ -271,6 +271,10 @@ export class Ol4Map {
         this.featureInfo.deactivate();
     }
 
+    resetFeatureInfo() {
+        this.featureInfo.reset();
+    }
+
     getLayerTree(): LayerTree {
         return this.layertree;
     }

@@ -18,7 +18,16 @@ export class FeatureInfo {
         this.layer = layer;
     }
 
-    public activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+    reset() {
+        if (this.tooltipElm) {
+            dom.addClass(this.tooltipElm, 'hidden');
+        }
+        if (this.callbackUnSelectAll) {
+            this.callbackUnSelectAll();
+        }
+    }
+
+    activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
         this.callbackSelect = callbackSelect;
         this.callbackUnSelect = callbackUnSelect;
         this.callbackUnSelectAll = callbackUnSelectAll;
