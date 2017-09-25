@@ -203,17 +203,10 @@ class DatabaseExprHandler implements ExprHandler
     public function like($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
-        if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
-            $valueX = self::addParameter($property, $value, $parameters);
-        } else {
-            $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
-            #repalce singleChar
-            $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
-            #repalce escape
-            $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
-        }
-
-        return $expr->like($this->getName($property), $valueX);
+        return $expr->like(
+            $this->getName($property),
+            $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
+        );
     }
 
     /**
@@ -228,6 +221,23 @@ class DatabaseExprHandler implements ExprHandler
     public function notLike($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
+        return $expr->notLike(
+            $this->getName($property),
+            $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
+        );
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
+     * @param string $escapeChar
+     * @param string $singleChar
+     * @param string $wildCard
+     * @return mixed
+     */
+    private function valueForLike($property, $value, &$parameters, $escapeChar, $singleChar, $wildCard)
+    {
         if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
             $valueX = self::addParameter($property, $value, $parameters);
         } else {
@@ -237,8 +247,7 @@ class DatabaseExprHandler implements ExprHandler
             #repalce escape
             $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
         }
-
-        return $expr->notLike($this->getName($property), $valueX);
+        return $valueX;
     }
 
     /**
