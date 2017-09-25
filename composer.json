@@ -18,7 +18,7 @@
         "erusev/parsedown": "^1.6",
         "gasparesganga/php-shapefile": "^2.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "ramsey/uuid": "~2.8",
+        "ramsey/uuid": "^3.7",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/assetic-bundle": "~2.3",
