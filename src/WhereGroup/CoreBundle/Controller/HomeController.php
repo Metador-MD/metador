@@ -13,6 +13,7 @@ use WhereGroup\CoreBundle\Component\Finder;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Search\SearchInterface;
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 use WhereGroup\CoreBundle\Entity\Configuration;
 use WhereGroup\UserBundle\Entity\User;
 
@@ -75,22 +76,67 @@ class HomeController extends Controller
             ->setHits(10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
             ->setSource(isset($params['source']) ? $params['source'] : '');
+
         if (isset($params['spatial']) && $params['spatial']) {
             $exprHandler = $search->createExpression();
             $expr = JsonFilterReader::read($params['spatial'], $exprHandler);
             $search->setExpression($expr);
         }
-        $search->find();
+
+        $results = $search->find()->getResult();
 
         $html = $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
-            'rows'   => $search->getResult(),
+            'rows'   => $results,
             'paging' => $search->getResultPaging(),
         ));
 
-        return new AjaxResponse(array(
+        $response = [
             'html'  => $html,
             'debug' => $params,
-        ));
+        ];
+
+        $bboxParams = [];
+
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if (!isset($result['object'])) {
+                    continue;
+                }
+
+                $p = json_decode($result['object'], true);
+
+                if (!$p) {
+                    continue;
+                }
+
+                $bbox = ArrayParser::get($p, 'bbox:0', null, true);
+
+                if (isset($p['_uuid']) && !empty($p['_uuid']) &&
+                    isset($p['title']) && !empty($p['title']) &&
+                    isset($bbox['wLongitude']) && !empty($bbox['wLongitude']) &&
+                    isset($bbox['sLatitude'])  && !empty($bbox['sLatitude']) &&
+                    isset($bbox['eLongitude']) && !empty($bbox['eLongitude']) &&
+                    isset($bbox['nLatitude'])  && !empty($bbox['nLatitude'])) {
+                    $bboxParams[] = [
+                        'uuid'  => $p['_uuid'],
+                        'title' => $p['title'],
+                        'west'  => $bbox['wLongitude'],
+                        'south' => $bbox['sLatitude'],
+                        'east'  => $bbox['eLongitude'],
+                        'north' => $bbox['nLatitude']
+                    ];
+                }
+            }
+        }
+
+        $this->get('metador_frontend_command')->runMethod(
+            'MetadorOl4Bridge',
+            'showResults',
+            $bboxParams,
+            $response
+        );
+
+        return new AjaxResponse($response);
     }
 
     /**

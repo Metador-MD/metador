@@ -3886,6 +3886,10 @@ input.input-element, .md input.btn {
   background-color: #f7f7f7;
   margin-bottom: 20px; }
 
+.search-result.marked {
+  border: 1px solid #c8c8c8;
+  background-color: #dedede; }
+
 .search-result > .result-header {
   margin-bottom: 20px; }
 

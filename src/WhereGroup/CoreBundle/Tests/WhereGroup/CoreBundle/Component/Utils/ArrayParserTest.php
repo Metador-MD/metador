@@ -99,6 +99,16 @@ class ArrayParserTest extends TestCase
 
     public function testMerge()
     {
+        $array1 = ['X' => ['Y' => ['one' => '1']]];
+        $array2 = ['X' => ['Y' => ['two' => '2']]];
 
+        $this->assertEquals([
+            'X' => array(
+                'Y' => array(
+                    'one' => '1',
+                    'two' => '2'
+                )
+            )
+        ], ArrayParser::merge($array1, $array2));
     }
 }
