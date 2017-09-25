@@ -1,7 +1,19 @@
-{% macro document_header(value) %}
-        <tr>
-            <th colspan="2" class="view-header-one">{{ value|trans }}</th>
-        </tr>
+{% macro topic_one(value) %}
+    <tr>
+        <th colspan="2" class="view-header-one">{{ value }}</th>
+    </tr>
+{% endmacro %}
+
+{% macro topic_two(value) %}
+    <tr>
+        <th colspan="2" class="view-row-one view-header-one">{{ value|trans }}</th>
+    </tr>
+{% endmacro %}
+
+{% macro topic_three(value) %}
+    <tr><td colspan="2" class="html-gap pdf-gap"></td></tr>
+    <tr><td colspan="2" class="view-row-two view-header-two">{{ value|trans }}</td></tr>
+    <tr><td colspan="2" class="html-gap pdf-gap"></td></tr>
 {% endmacro %}
 
 {% macro line(label, value) %}
@@ -19,22 +31,4 @@
         <td colspan="2" class="view-property">{{ value }}</td>
     </tr>
     {% endif %}
-{% endmacro %}
-
-{% macro topic_one(value) %}
-    <tr>
-        <th colspan="2" class="view-header-one">{{ value }}</th>
-    </tr>
-{% endmacro %}
-
-{% macro topic_two(value) %}
-    <tr>
-        <th colspan="2" class="view-row-one view-header-one">{{ value|trans }}</th>
-    </tr>
-{% endmacro %}
-
-{% macro topic_three(value) %}
-    <tr><td colspan="2" class="html-gap pdf-gap"></td></tr>
-    <tr><td colspan="2" class="view-row-two view-header-two">{{ value|trans }}</td></tr>
-    <tr><td colspan="2" class="html-gap pdf-gap"></td></tr>
 {% endmacro %}
