@@ -130,20 +130,6 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $p
-     * @return array
-     */
-    public function renderObject($p)
-    {
-
-
-
-
-
-        return isset($array['p']) ? $array['p'] : array();
-    }
-
-    /**
      * @param string $uuid
      * @param bool $dispatchEvent
      * @return EntityMetadata
