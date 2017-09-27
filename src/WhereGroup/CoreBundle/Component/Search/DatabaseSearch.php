@@ -21,9 +21,6 @@ class DatabaseSearch extends Search implements SearchInterface
     /**  @var string */
     protected $alias = 'm';
 
-    /** @var array|null */
-    protected $parameters = null;
-
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
     {
@@ -96,7 +93,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler($this->alias);
+        return new DatabaseExprHandler($this->alias, self::MAP_QUERY2SOURCE);
     }
 
     /**

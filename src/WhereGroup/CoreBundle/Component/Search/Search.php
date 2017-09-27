@@ -8,6 +8,25 @@ namespace WhereGroup\CoreBundle\Component\Search;
  */
 abstract class Search
 {
+    /* mapping: query property name to entity Metador property */
+    const MAP_QUERY2SOURCE = array(
+        'bboxn' => 'bboxn',
+        'bboxe' => 'bboxe',
+        'bboxs' => 'bboxs',
+        'bboxw' => 'bboxw',
+        'profile' => 'profile',
+        'public' => 'public',
+        'hierarchylevel' => 'hierarchyLevel',
+        'uuid' => 'uuid',
+        'searchfield' => 'searchfield',
+        'date' => 'date',
+        // ISO queryables
+        'identifier' => 'uuid',
+        'title' => 'title',
+        'language' => 'language',
+        'anytext' => 'searchfield',
+    );
+
     protected $hits = 10;
     protected $page = 1;
     protected $offset = 0;
