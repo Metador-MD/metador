@@ -14,6 +14,7 @@ class JsonFilterReader implements FilterReader
      * @param mixed $filter
      * @param ExprHandler $expression
      * @return null|Expression
+     * @throws PropertyNameNotFoundException
      */
     public static function read($filter, ExprHandler $expression)
     {
@@ -29,7 +30,9 @@ class JsonFilterReader implements FilterReader
     /**
      * @param array $filter
      * @param ExprHandler $expression
+     * @param $parameters
      * @return array|mixed|null
+     * @throws PropertyNameNotFoundException
      */
     private static function getExpression(array $filter, ExprHandler $expression, &$parameters)
     {
