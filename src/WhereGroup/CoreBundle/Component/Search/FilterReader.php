@@ -15,6 +15,7 @@ interface FilterReader
      * @param mixed $filter
      * @param ExprHandler $expression
      * @return null|Expression
+     * @throws PropertyNameNotFoundException
      */
     public static function read($filter, ExprHandler $expression);
 }
