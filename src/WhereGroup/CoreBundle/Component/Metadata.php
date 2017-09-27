@@ -224,10 +224,16 @@ class Metadata implements MetadataInterface
         $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
-        if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {
-            $uuid4 = Uuid::uuid4();
-            $p['_uuid'] = $p['fileIdentifier'] = $uuid4->toString();
+        $uuid4 = Uuid::uuid4();
+        $uuid = $uuid4->toString();
+
+        if (isset($p['fileIdentifier']) && !empty($p['fileIdentifier']) && strlen($p['fileIdentifier']) === 36) {
+            $uuid = $p['fileIdentifier'];
+        } elseif (isset($p['_uuid']) && !empty($p['_uuid']) && strlen($p['_uuid']) === 36) {
+            $uuid = $p['_uuid'];
         }
+
+        $p['_uuid'] = $p['fileIdentifier'] = $uuid;
 
         // Locked
         if (isset($p['_remove_lock']) || !isset($p['_locked'])) {
