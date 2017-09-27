@@ -156,6 +156,7 @@ var MetadorOl4Bridge = {
     },
 
     setSpatialFilter: function (geoFeature) {
+        var filter = this.createSpatialFilter(geoFeature);
         if (filter) {
             this.getSearch().set('spatial', filter);
         } else {
