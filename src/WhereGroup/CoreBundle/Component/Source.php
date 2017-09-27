@@ -42,8 +42,6 @@ class Source implements SourceInterface
      */
     public function get($id)
     {
-        $this->allValues();
-
         return $this->repo->findOneById($id);
     }
 
