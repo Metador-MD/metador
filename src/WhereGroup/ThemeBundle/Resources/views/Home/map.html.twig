@@ -1,14 +1,14 @@
 {% if isHome is defined and plugin_is_active('metador_map') %}
 <div class="map-dialog -js-map-dialog">
     <div class="map-menu">
-        <span class="btn medium -js-zoom-box">
+        <span class="btn medium -js-zoom-box" title="Ausschnitt aufziehen">
             <span class="icon-map"></span> Zoom
         </span>
-        <span class="btn medium -js-map-info">
+        <span class="btn medium -js-map-info" title="FeatureInfo aktivieren">
             <span class="icon-info"></span> Info
         </span>
 
-        <select class="input-element medium -js-crs-code">
+        <select class="input-element medium -js-crs-code" title="CRS">
             <option value="EPSG:4326">EPSG:4326</option>
             <option value="EPSG:4258">EPSG:4258</option>
             <option value="EPSG:31466">EPSG:31466</option>
@@ -22,7 +22,7 @@
 
         <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
 
-        <select class="input-element medium -js-geometry-type">
+        <select class="input-element medium -js-geometry-type" title="Geometrie">
             <option value="NONE">keine</option>
             <option value="load">geladene</option>
             <option value="BOX">Box</option>
@@ -35,7 +35,7 @@
             </form>
         </div>
 
-        <select class="input-element medium -js-spatial-operator">
+        <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
             <option value="intersects">Schneidet</option>
             <option value="contains">Innerhalb</option>
             <option value="within">Umfasst</option>
