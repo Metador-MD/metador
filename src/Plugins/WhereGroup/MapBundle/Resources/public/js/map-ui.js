@@ -29,14 +29,14 @@ $('.-js-crs-code').on('change', function () {
     MetadorOl4Bridge.changeCrs($(this).val());
 });
 
-$('.-js-spatial-operator').on('click', function () {
+$('.-js-spatial-operator option').on('click', function () {
     MetadorOl4Bridge.setSpatialFilter(null);
     if ($('.-js-geometry-type').val() !== 'NONE') {
         MetadorOl4Bridge.getSearch().find();
     }
 });
 
-$('.-js-geometry-type').on('click', function () {
+$('.-js-geometry-type option').on('click', function () {
     var geometryType = $(this).val();
     if (geometryType === 'load') {
         $('.-js-file-upload').click();
