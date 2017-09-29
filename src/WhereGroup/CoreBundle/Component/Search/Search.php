@@ -20,6 +20,7 @@ abstract class Search
         'uuid' => 'uuid',
         'searchfield' => 'searchfield',
         'date' => 'date',
+        'fileidentifier' => 'uuid',
         // ISO queryables
         'identifier' => 'uuid',
         'title' => 'title',
