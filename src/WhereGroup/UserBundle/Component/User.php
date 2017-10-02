@@ -154,7 +154,12 @@ class User implements UserInterface
     public function getUserFromSession()
     {
         $token = $this->tokenStorage->getToken();
-        return is_object($token) ? $token->getUser() : null;
+
+        if (!is_object($token) || $token->getUser() === 'anon.') {
+            return null;
+        }
+
+        return $token->getUser();
     }
 
     /**

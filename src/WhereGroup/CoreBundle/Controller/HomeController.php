@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Component\Search\Expression;
+use WhereGroup\CoreBundle\Component\Search\ExprHandler;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Search\SearchInterface;
@@ -69,6 +71,33 @@ class HomeController extends Controller
     public function searchAction()
     {
         $params = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $user   = $this->get('metador_user')->getUserFromSession();
+        $filter = [];
+
+        // Set source filter
+        if (isset($params['source']) && !empty($params['source'])) {
+            $filter['and'][] = ['eq' =>['source' => $params['source']]];
+        }
+
+        // Set public filter if user is not logged in.
+        if (is_null($user)) {
+            $filter['and'][] = ['eq' => ['public' => true]];
+
+        // Filter for logged in user.
+        } else {
+            $filter['and'][] = [
+                'or' => [
+                    ['eq' => ['public'     => true]],
+                    ['eq' => ['insertuser' => $user->getId()]],
+                    ['in' => ['groups'     => $user->getRoles()]]
+                ]
+            ];
+        }
+
+        // Set spatial filter
+        if (isset($params['spatial']) && $params['spatial']) {
+            $filter['and'][] = $params['spatial'];
+        }
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');
@@ -76,11 +105,7 @@ class HomeController extends Controller
             ->setPage(isset($params['page']) ? $params['page'] : 1)
             ->setHits(isset($params['hits']) ? $params['hits'] : 10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
-            ->setSource(isset($params['source']) ? $params['source'] : '');
-
-        if (isset($params['spatial']) && $params['spatial']) {
-            $search->setExpression(JsonFilterReader::read($params['spatial'], $search->createExpression()));
-        }
+            ->setExpression(JsonFilterReader::read($filter, $search->createExpression()));
 
         try {
             $searchResponse = $search->find();

@@ -10,7 +10,7 @@ abstract class Search
 {
     /* mapping: query property name to entity Metador property */
     const MAP_QUERY2SOURCE = array(
-        'bboxn' => 'bboxn',
+        'bboxn'          => 'bboxn',
         'bboxe'          => 'bboxe',
         'bboxs'          => 'bboxs',
         'bboxw'          => 'bboxw',
@@ -18,7 +18,10 @@ abstract class Search
         'public'         => 'public',
         'hierarchylevel' => 'hierarchyLevel',
         'uuid'           => 'uuid',
+        'groups'         => 'groups',
         'searchfield'    => 'searchfield',
+        'source'         => 'source',
+        'insertuser'     => 'insertUser',
         'date'           => 'date',
         'fileidentifier' => 'uuid',
         // ISO queryables
