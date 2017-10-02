@@ -2,7 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class UuidExtension
