@@ -31,7 +31,7 @@ class DatabaseSearch extends Search implements SearchInterface
     }
 
     /**
-     * @return $this
+     * @return array
      */
     public function find()
     {
@@ -60,8 +60,10 @@ class DatabaseSearch extends Search implements SearchInterface
             $this->qb->andWhere($this->alias.'.profile = :profileX')->setParameter('profileX', $this->getProfile());
         }
 
-
-        return $this;
+        return [
+            'paging' => $this->getResultPaging(),
+            'rows'   => $this->getResult()
+        ];
     }
 
     /**

@@ -3297,7 +3297,14 @@ input.input-element, .md input.btn {
   height: 30px; }
 
 .md .search-content {
-  padding: 20px; }
+  padding: 20px;
+  overflow-y: scroll;
+  z-index: 1;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 .md .search-content > .search-content-left {
   float: left;
@@ -3923,3 +3930,12 @@ input.input-element, .md input.btn {
 
 .search-result > .result-footer > .right > .link:not(:last-child) {
   border-right: 1px solid #e1e1e1; }
+
+.md .paging {
+  display: block; }
+
+.md .paging .change-page {
+  cursor: pointer; }
+
+.md .paging .disabled {
+  color: #e1e1e1; }

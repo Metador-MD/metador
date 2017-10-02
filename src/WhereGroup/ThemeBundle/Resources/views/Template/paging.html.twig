@@ -1,21 +1,23 @@
-<div class="paging">
-    <div class="left">
-        {% if paging.prevPage is defined %}
-            <a href="{{ path(path_name, { page: paging.prevPage }) }}">
-                <span class="icon-arrow-left"></span>
-            </a>
-        {% endif %}
-    </div>
-    <div class="center">
-        {% if paging.count > 0 %}
-            Seite {{ paging.currentPage }} von {{ paging.pages }}
-        {% endif %}
-    </div>
-    <div class="right">
-        {% if paging.nextPage is defined %}
-            <a href="{{ path(path_name, { page: paging.nextPage }) }}">
-                <span class="icon-arrow-right"></span>
-            </a>
-        {% endif %}
+<div class="grid space padding paging">
+    <div class="row r-3">
+        <div class="col c-1-8">
+            {% if paging.prevPage is defined %}
+                <span class="icon-arrow-left change-page" data-change-page="{{ paging.prevPage }}"></span>
+            {% else %}
+                <span class="icon-arrow-left disabled"></span>
+            {% endif %}
+        </div>
+        <div class="col c-3-4 text-center">
+            {% if paging.count > 0 %}
+                Seite {{ paging.currentPage }} von {{ paging.pages }}
+            {% endif %}
+        </div>
+        <div class="col c-1-8 text-right">
+            {% if paging.nextPage is defined %}
+                <span class="icon-arrow-right change-page" data-change-page="{{ paging.nextPage }}"></span>
+            {% else %}
+                <span class="icon-arrow-right disabled"></span>
+            {% endif %}
+        </div>
     </div>
 </div>

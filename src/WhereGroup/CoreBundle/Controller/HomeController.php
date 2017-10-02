@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -73,25 +74,25 @@ class HomeController extends Controller
         $search = $this->get('metador_metadata_search');
         $search
             ->setPage(isset($params['page']) ? $params['page'] : 1)
-            ->setHits(10)
+            ->setHits(2)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
             ->setSource(isset($params['source']) ? $params['source'] : '');
 
         if (isset($params['spatial']) && $params['spatial']) {
-            $exprHandler = $search->createExpression();
-            $expr = JsonFilterReader::read($params['spatial'], $exprHandler);
-            $search->setExpression($expr);
+            $search->setExpression(JsonFilterReader::read($params['spatial'], $search->createExpression()));
         }
 
-        $results = $search->find()->getResult();
-
-        $html = $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
-            'rows'   => $results,
-            'paging' => $search->getResultPaging(),
-        ));
+        try {
+            $searchResponse = $search->find();
+        } catch (NoResultException $e) {
+            $searchResponse = [];
+        }
 
         $response = [
-            'html'  => $html,
+            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
+                'rows'   => $searchResponse['rows'],
+                'paging' => $searchResponse['paging'],
+            )),
             'debug' => $params,
         ];
 
