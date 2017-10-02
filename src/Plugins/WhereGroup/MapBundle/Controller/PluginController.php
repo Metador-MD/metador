@@ -8,7 +8,7 @@ use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\GmlJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
-use Rhumsaa\Uuid\Console\Exception;
+use Ramsey\Uuid\Console\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
