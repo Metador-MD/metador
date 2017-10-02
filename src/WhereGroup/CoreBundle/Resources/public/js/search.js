@@ -19,7 +19,7 @@ Search.prototype = {
 
         this.set('page', 1);
         this.set('hits', 10);
-        
+
         this.searchFieldElement.val(this.get('terms', ''));
 
         $(document).on('keyup', '#searchfield', function() {
