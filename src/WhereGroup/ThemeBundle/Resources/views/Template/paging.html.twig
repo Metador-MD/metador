@@ -1,3 +1,4 @@
+{% if paging.count is defined and paging.count > 0 %}
 <div class="grid space padding paging">
     <div class="row r-3">
         <div class="col c-1-8">
@@ -21,3 +22,4 @@
         </div>
     </div>
 </div>
+{% endif %}
