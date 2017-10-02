@@ -1,3 +1,5 @@
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}
+
 {% if rows is defined and rows is iterable %}
 {% for row in rows if is_granted('view', row.object|json_decode(true)) %}
 
@@ -86,3 +88,5 @@
     </div>
 {% endfor %}
 {% endif %}
+
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}

@@ -206,6 +206,9 @@ $search-content-left-width: 250px;
 
 .md .search-content {
     padding: $padding;
+    overflow-y: scroll;
+    z-index: 1;
+    @include pos(80px, 0, 0, 0);
     @extend .clearfix;
 
     & > .search-content-left {
