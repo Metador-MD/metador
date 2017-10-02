@@ -76,15 +76,19 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $metadataId
+     * Use ID or UUID
+     * @param $id
      * @param bool $dispatchEvent
      * @return EntityMetadata
-     * @throws \Exception
+     * @throws MetadataException
+     * @internal param $metadataId
      */
-    public function getById($metadataId, $dispatchEvent = true)
+    public function getById($id, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->repo->findOneById($metadataId);
+        $metadata = (is_string($id) && strlen($id) === 36)
+            ? $this->repo->findOneByUuid($id)
+            : $this->repo->findOneById($id);
 
         if (is_null($metadata)) {
             throw new MetadataException('Datensatz existiert nicht.');
@@ -127,29 +131,6 @@ class Metadata implements MetadataInterface
         $result = $parser->loadSchema(file_get_contents($schema))->parse();
 
         return $result['p'];
-    }
-
-    /**
-     * @param string $uuid
-     * @param bool $dispatchEvent
-     * @return EntityMetadata
-     * @throws \Exception
-     */
-    public function getByUUID($uuid, $dispatchEvent = true)
-    {
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->repo->findOneByUuid($uuid);
-
-        if (is_null($metadata)) {
-            throw new MetadataException('Datensatz existiert nicht.');
-        }
-
-        // EVENT ON LOAD
-        if ($dispatchEvent) {
-            $this->core->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
-        }
-
-        return $metadata;
     }
 
     /**
@@ -235,30 +216,29 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $uuid
+     * Use id or uuid
+     * @param $id
      * @return bool|EntityMetadata
      */
-    public function exists($uuid)
+    public function exists($id)
     {
         try {
-            return $this->getByUUID($uuid);
+            return $this->getById($id);
         } catch (MetadataException $e) {
             return false;
         }
     }
 
     /**
+     * Use id or uuid
      * @param $p
      * @param bool $id
-     * @param null $uuid
      * @return EntityMetadata
      */
-    public function saveObject($p, $id = null, $uuid = null)
+    public function saveObject($p, $id = null)
     {
         if (!is_null($id)) {
             $metadata = $this->getById($id);
-        } elseif (!is_null($uuid)) {
-            $metadata = $this->getByUUID($uuid);
         } else {
             $metadata = new EntityMetadata();
             unset($p['_id']);
@@ -376,6 +356,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * Use ID or UUID to delete Metadata.
      * @param $id
      * @return mixed|void
      */
@@ -399,6 +380,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * Use ID or UUID to delete Metadata.
      * @param $id
      * @return bool
      */
