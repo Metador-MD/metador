@@ -11,29 +11,30 @@ abstract class Search
     /* mapping: query property name to entity Metador property */
     const MAP_QUERY2SOURCE = array(
         'bboxn' => 'bboxn',
-        'bboxe' => 'bboxe',
-        'bboxs' => 'bboxs',
-        'bboxw' => 'bboxw',
-        'profile' => 'profile',
-        'public' => 'public',
+        'bboxe'          => 'bboxe',
+        'bboxs'          => 'bboxs',
+        'bboxw'          => 'bboxw',
+        'profile'        => 'profile',
+        'public'         => 'public',
         'hierarchylevel' => 'hierarchyLevel',
-        'uuid' => 'uuid',
-        'searchfield' => 'searchfield',
-        'date' => 'date',
+        'uuid'           => 'uuid',
+        'searchfield'    => 'searchfield',
+        'date'           => 'date',
         'fileidentifier' => 'uuid',
         // ISO queryables
-        'identifier' => 'uuid',
-        'title' => 'title',
-        'language' => 'language',
-        'anytext' => 'searchfield',
+        'identifier'     => 'uuid',
+        'title'          => 'title',
+        'language'       => 'language',
+        'anytext'        => 'searchfield',
     );
 
-    protected $hits = 10;
-    protected $page = 1;
-    protected $offset = 0;
-    protected $terms = '';
-    protected $source = '';
-    protected $profile = '';
+    protected $hits       = null;
+    protected $page       = null;
+    protected $offset     = null;
+    protected $terms      = null;
+    protected $source     = null;
+    protected $profile    = null;
+
     /* @var Expression $expression */
     protected $expression = null;
 
@@ -70,6 +71,10 @@ abstract class Search
      */
     public function setHits($hits)
     {
+        if (is_null($this->page)) {
+            $this->page = 1;
+        }
+
         $this->hits = (int)$hits;
         $this->offset = ($this->hits * $this->page) - $this->hits;
 
@@ -90,6 +95,10 @@ abstract class Search
      */
     public function setPage($page)
     {
+        if (is_null($this->hits)) {
+            $this->hits = 10;
+        }
+
         $this->page = (int)$page;
         $this->offset = ($this->hits * $this->page) - $this->hits;
 
@@ -120,7 +129,11 @@ abstract class Search
      */
     public function getResultPaging()
     {
-        $paging = new Paging($this->getResultCount(), $this->hits, $this->page);
+        $paging = new Paging(
+            $this->getResultCount(),
+            is_null($this->hits) ? 10 : $this->hits,
+            is_null($this->page) ? 1 : $this->page
+        );
 
         return $paging->calculate();
     }

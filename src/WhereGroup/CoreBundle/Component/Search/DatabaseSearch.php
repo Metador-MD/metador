@@ -71,12 +71,17 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function getResult()
     {
-        return $this->qb
-            ->select($this->alias.'.object')
-            ->setFirstResult($this->offset)
-            ->setMaxResults($this->hits)
-            ->getQuery()
-            ->getArrayResult();
+        $this->qb->select($this->alias.'.object');
+
+        if (!is_null($this->offset)) {
+            $this->qb->setFirstResult($this->offset);
+        }
+
+        if (!is_null($this->hits)) {
+            $this->qb->setMaxResults($this->hits);
+        }
+
+        return $this->qb->getQuery()->getArrayResult();
     }
 
     /**
