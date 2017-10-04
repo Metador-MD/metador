@@ -40,7 +40,7 @@ class JsonFilterReader implements FilterReader
         $items = array();
         foreach ($filter as $key => $value) {
             if (is_integer($key)) { // list
-                $items[] = self::getExpression($value, $expression, $parameters);
+                $items[] = self::getExpression($value, $expression, $parameters)[0];
                 continue;
             }
 
