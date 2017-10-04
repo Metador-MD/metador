@@ -91,6 +91,7 @@ $home-menu-height: 35px;
 
 .md .source {
     display: block;
+    z-index: 2;
 
     & > .source-list {
         margin: 0;

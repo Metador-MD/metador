@@ -2161,6 +2161,7 @@ input.input-element, .md input.btn {
   display: inline-block; }
 
 .md .tooltip > .tooltip-wrapper {
+  z-index: 2;
   display: none;
   min-width: 300px;
   max-width: 600px;
@@ -2186,8 +2187,7 @@ input.input-element, .md input.btn {
   right: 40px; }
 
 .md .tooltip:hover > .tooltip-wrapper {
-  display: block;
-  z-index: 1; }
+  display: block; }
 
 .md .tooltip-dialog {
   position: absolute;
@@ -3198,7 +3198,8 @@ input.input-element, .md input.btn {
   bottom: 10px; }
 
 .md .source {
-  display: block; }
+  display: block;
+  z-index: 2; }
 
 .md .source > .source-list {
   margin: 0;
