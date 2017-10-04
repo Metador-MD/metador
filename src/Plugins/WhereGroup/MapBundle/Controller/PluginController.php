@@ -5,10 +5,10 @@ namespace Plugins\WhereGroup\MapBundle\Controller;
 //use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
-use Plugins\WhereGroup\MapBundle\Component\XmlUtils\GmlJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
-use Ramsey\Uuid\Console\Exception;
+use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
+use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -18,8 +18,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
-use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
-use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 
 /**
  * Class PluginController
@@ -28,10 +26,10 @@ use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
  */
 class PluginController extends Controller
 {
-    static $shapeSupportedTypes = array(
+    public static $shapeSupportedTypes = array(
         1 => 'Point',
         3 => 'LineString',//'PolyLine',
-        5 => 'Polygon'
+        5 => 'Polygon',
     );
 
     /**
@@ -217,9 +215,9 @@ class PluginController extends Controller
                     );
                     $prj = $shapeFile->getPRJ();
                     $epsg = $this->findCrs($prj);
-                    if($epsg === null) {
+                    if ($epsg === null) {
                         throw new \Exception('Das Koordinatenreferenzsystem kann nicht ermittelt werden'
-                        .' bzw. ist nicht unterstützt.');
+                            .' bzw. ist nicht unterstützt.');
                     }
                     $shtype = $shapeFile->getShapeType();
                     if (!isset(self::$shapeSupportedTypes[$shtype])) {
@@ -310,14 +308,13 @@ class PluginController extends Controller
         }
 
         $this->get('metador_logger')->set($log);
-
     }
 
     private function findCrs($projDef)
     {
         $help = $this->prepareStr($projDef);
         $map = $this->getParameter('map_shape_epsg');
-        if ($map === null){
+        if ($map === null) {
             throw new \Exception('Kein Koordinatreferenzsystem ist vorhanden.');
         }
         foreach ($map as $key => $epsg) {

@@ -5,10 +5,9 @@ namespace Plugins\WhereGroup\MapBundle\Component;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 
 /**
- * Created by PhpStorm.
- * User: paul
- * Date: 02.05.17
- * Time: 11:12
+ * Class WmsCapabilitiesParser
+ * @package Plugins\WhereGroup\MapBundle\Component
+ * @author Paul Schmidt <panadium@gmx.de>
  */
 abstract class WmsCapabilitiesParser
 {
@@ -67,16 +66,16 @@ abstract class WmsCapabilitiesParser
         }
         try {
             $elm = $this->xpath->query($xpath, $contextElm)->item(0);
-            if(!$elm) {
+            if (!$elm) {
                 return null;
             }
             if ($elm->nodeType == XML_ATTRIBUTE_NODE) {
                 return $elm->value;
-            } else if ($elm->nodeType == XML_TEXT_NODE) {
+            } elseif ($elm->nodeType == XML_TEXT_NODE) {
                 return $elm->wholeText;
-            } else if ($elm->nodeType == XML_ELEMENT_NODE) {
+            } elseif ($elm->nodeType == XML_ELEMENT_NODE) {
                 return $elm;
-            } else if ($elm->nodeType == XML_CDATA_SECTION_NODE) {
+            } elseif ($elm->nodeType == XML_CDATA_SECTION_NODE) {
                 return $elm->wholeText;
             } else {
                 return null;
@@ -118,8 +117,9 @@ abstract class WmsCapabilitiesParser
 
         $version = $doc->documentElement->getAttribute("version");
         if ($version !== "1.1.1" && $version !== "1.3.0") {
-            throw new \Exception('Die WMS GetCapabilites Version "'. $version .'" ist nicht unterstützt.');
+            throw new \Exception('Die WMS GetCapabilites Version "'.$version.'" ist nicht unterstützt.');
         }
+
         return $doc;
     }
 
@@ -139,7 +139,7 @@ abstract class WmsCapabilitiesParser
             case "1.3.0":
                 return new WmsCapabilitiesParser130($doc);
             default:
-                throw new \Exception('Die WMS GetCapabilites Version "'. $version .'"  ist nicht unterstützt');
+                throw new \Exception('Die WMS GetCapabilites Version "'.$version.'"  ist nicht unterstützt');
         }
     }
 
@@ -157,7 +157,7 @@ abstract class WmsCapabilitiesParser
                 }
             }
         }
+
         return count($formats) > 0 ? $formats[0] : '';
     }
-
 }

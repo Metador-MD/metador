@@ -162,7 +162,6 @@ class ArrayParser
         if (isset($array[$key]) && count($keys) === 0) {
             return $array[$key];
         } elseif (isset($array[$key]) && count($keys) >= 1) {
-
             // Reindex array keys
             if ($reindex) {
                 self::reindexKeys($array[$key]);

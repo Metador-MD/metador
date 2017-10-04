@@ -176,8 +176,8 @@ class DatabaseExprHandler implements ExprHandler
 
     /**
      * @param string $property
-     * @param array  $items
-     * @param array  $parameters
+     * @param array $items
+     * @param array $parameters
      * @return Expr\Func
      * @throws PropertyNameNotFoundException
      */
@@ -229,6 +229,7 @@ class DatabaseExprHandler implements ExprHandler
     public function like($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
+
         return $expr->like(
             $this->getFullName($property),
             $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
@@ -248,6 +249,7 @@ class DatabaseExprHandler implements ExprHandler
     public function notLike($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
         $expr = new Expr();
+
         return $expr->notLike(
             $this->getFullName($property),
             $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
@@ -261,7 +263,8 @@ class DatabaseExprHandler implements ExprHandler
      * @param string $escapeChar
      * @param string $singleChar
      * @param string $wildCard
-     * @return mixed
+     * @return mixed|string
+     * @throws PropertyNameNotFoundException
      */
     private function valueForLike($property, $value, &$parameters, $escapeChar, $singleChar, $wildCard)
     {
@@ -275,6 +278,7 @@ class DatabaseExprHandler implements ExprHandler
             /* replace all $escapeChar at $value with $this->escapeChar */
             $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
         }
+
         return $valueX;
     }
 
@@ -493,11 +497,9 @@ class DatabaseExprHandler implements ExprHandler
                         $this->getFullName($this->spatialProperty[3]),
                         '<',
                         self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
-                    ),
+                    )
                 )
             );
-
-
         } else {
             // TODO St_Within($geometryA, $geometryB)
             throw new \Exception('Operation "within" for a spatial database is not yet implemented');

@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: paul
- * Date: 14.06.17
- * Time: 12:16
- */
 
 namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
-
+/**
+ * Class GmlReader
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class GmlReader
 {
     /**
@@ -19,7 +17,7 @@ class GmlReader
 
     public function read()
     {
-
+        ;
     }
 
     protected function readAttrs()
@@ -75,7 +73,7 @@ class GmlReader
             $dimension = 2;
             $srsName = '';
             if ($this->xmlReader->hasAttributes) {
-                if($this->xmlReader->moveToAttribute('srsName')){
+                if ($this->xmlReader->moveToAttribute('srsName')) {
                     $srsName = $this->xmlReader->value;
                 }
 //                if($this->xmlReader->moveToAttribute('dimension')){#???

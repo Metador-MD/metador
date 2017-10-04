@@ -8,7 +8,11 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
-
+/**
+ * Class Expression
+ * @package WhereGroup\CoreBundle\Component\Search
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class Expression
 {
     private $expression;
