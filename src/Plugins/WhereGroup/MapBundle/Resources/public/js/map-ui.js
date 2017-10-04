@@ -22,7 +22,9 @@ $('.-js-source').on('click', function () {
     $('.-js-profile-menu').removeClass('active');
     $('#source-' + $(this).attr('data-slug')).addClass('active');
     $('#search-result').html('');
-    MetadorOl4Bridge.getSearch().find();
+
+    search.set('page', 1);
+    search.find();
 });
 
 $('.-js-crs-code').on('change', function () {
@@ -32,7 +34,7 @@ $('.-js-crs-code').on('change', function () {
 $('.-js-spatial-operator').on('change', function () {
     MetadorOl4Bridge.setSpatialFilter(null);
     if ($('.-js-geometry-type').val() !== 'NONE') {
-        MetadorOl4Bridge.getSearch().find();
+        search.find();
     }
 });
 
@@ -83,13 +85,6 @@ $('#map-menu-load-wms-button').on('click', function () {
 });
 
 var MetadorOl4Bridge = {
-    getSearch: function () {
-        if (search) {
-            return search;
-        } else {
-            throw new Error("Search is not found");
-        }
-    },
     getOl: function () {
         if (window && window.spatial && window.spatial.map) {
             return window.spatial.map;
@@ -99,7 +94,7 @@ var MetadorOl4Bridge = {
     },
 
     updateMap: function () {
-        var spatial = this.getSearch().get('spatial');
+        var spatial = search.get('spatial');
         if (spatial) {
             var name;
             for (name in spatial) {
@@ -158,9 +153,9 @@ var MetadorOl4Bridge = {
     setSpatialFilter: function (geoFeature) {
         var filter = this.createSpatialFilter(geoFeature);
         if (filter) {
-            this.getSearch().set('spatial', filter);
+            search.set('spatial', filter);
         } else {
-            this.getSearch().set('spatial', null);
+            search.set('spatial', null);
         }
     },
 
