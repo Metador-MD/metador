@@ -20,10 +20,10 @@ class JsonFilterReader implements FilterReader
     {
         $parameters = array();
         $expression = self::getExpression($filter, $expression, $parameters);
-        if (is_array($expression) && count($expression) === 0) {
+        if (is_array($expression) && count($expression) !== 1) {
             return null;
         } else {
-            return new Expression($expression, $parameters);
+            return new Expression($expression[0], $parameters);
         }
     }
 
@@ -36,10 +36,6 @@ class JsonFilterReader implements FilterReader
      */
     private static function getExpression(array $filter, ExprHandler $expression, &$parameters)
     {
-        // property name and property value, ">=2" is for "in".
-        if (count($filter) >= 2 && !is_array($filter[0]) && !is_array($filter[1])) {
-            return $filter;
-        }
 
         $items = array();
         foreach ($filter as $key => $value) {
@@ -51,112 +47,74 @@ class JsonFilterReader implements FilterReader
             switch ($key) {
                 case 'and':
                     $list = self::getExpression($value, $expression, $parameters);
-
                     if (count($list) > 1) {
-                        return $expression->andx($list);
+                        $items[] = $expression->andx($list);
                     } elseif (count($list) === 1) {
-                        return $list[0];
+                        $items = $list;
                     }
-
-                    return null;
+                    break;
                 case 'or':
                     $list = self::getExpression($value, $expression, $parameters);
-
                     if (count($list) > 1) {
-                        return $expression->orx($list);
+                        $items[] = $expression->orx($list);
                     } elseif (count($list) === 1) {
-                        return $list[0];
+                        $items = $list;
                     }
-
-                    return null;
+                    break;
                 case 'not':
                     $item = self::getExpression($value, $expression, $parameters);
-
-                    return $expression->not($item);
+                    $items[] = $expression->not($item);
+                    break;
                 case 'eq':
-                    foreach ($value as $name => $val) {
-                        return $expression->eq($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->eq(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'like':
-                    $property = self::getExpression($value, $expression, $parameters);
-
-                    return $expression->like($property[0], $property[1], $parameters, '\\', '_', '*');
+                    $items[] = $expression->like(key($value), $value[key($value)], $parameters, '\\', '_', '*');
+                    break;
                 case 'notlike':
-                    $property = self::getExpression($value, $expression, $parameters);
-
-                    return $expression->notLike($property[0], $property[1], $parameters, '\\', '_', '*');
+                    $items[] = $expression->notLike(key($value), $value[key($value)], $parameters, '\\', '_', '*');
+                    break;
                 case 'in':
-                    $list = self::getExpression($value, $expression, $parameters);
-
-                    if (count($list) > 1) {
-                        return $expression->in($key, $list, $parameters);
-                    } elseif (count($list) === 1) {
-                        return $list[0];
-                    }
-
-                    return null;
+                    $items[] = $expression->in(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'between':
-                    foreach ($value as $name => $val) {
-                        return $expression->between($name, $val['lower'], $val['upper'], $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->between(
+                        key($value),
+                        $value[key($value)]['lower'],
+                        $value[key($value)]['upper'],
+                        $parameters
+                    );
+                    break;
                 case 'gt':
                 case '>':
-                    foreach ($value as $name => $val) {
-                        return $expression->gt($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->gt(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'gte':
                 case '>=':
-                    foreach ($value as $name => $val) {
-                        return $expression->gte($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->gte(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'lt':
                 case '<':
-                    foreach ($value as $name => $val) {
-                        return $expression->lt($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->lt(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'lte':
                 case '<=':
-                    foreach ($value as $name => $val) {
-                        return $expression->lte($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->lte(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'bbox':
-                    foreach ($value as $name => $val) {
-                        return $expression->bbox($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->bbox(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'intersects':
-                    foreach ($value as $name => $val) {
-                        return $expression->intersects($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->intersects(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'contains':
-                    foreach ($value as $name => $val) {
-                        return $expression->contains($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->contains(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'within':
-                    foreach ($value as $name => $val) {
-                        return $expression->within($name, $val, $parameters);
-                    }
-
-                    return null;
+                    $items[] = $expression->within(key($value), $value[key($value)], $parameters);
+                    break;
                 default:
-                    return null;
+                    throw new PropertyNameNotFoundException($key);
             }
         }
 
