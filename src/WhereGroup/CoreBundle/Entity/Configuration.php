@@ -139,4 +139,3 @@ class Configuration
         return $this;
     }
 }
-

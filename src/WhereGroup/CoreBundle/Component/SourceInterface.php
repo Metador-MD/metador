@@ -17,5 +17,4 @@ interface SourceInterface
     public function __construct(EntityManagerInterface $em);
 
     public function __destruct();
-
 }

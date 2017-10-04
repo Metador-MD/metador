@@ -34,20 +34,20 @@ class Finder
             $this->page = !is_null($this->page) ? (int)$this->page : 1;
             $this->hits = !is_null($this->hits) ? (int)$this->hits : 10;
 
-            $qb ->setFirstResult($this->page * $this->hits - $this->hits)
+            $qb->setFirstResult($this->page * $this->hits - $this->hits)
                 ->setMaxResults($this->hits);
         }
 
         // Sort
         if (!$count && !is_null($this->order)) {
-            $qb->orderBy("m." . $this->order, 'ASC');
+            $qb->orderBy("m.".$this->order, 'ASC');
         }
 
         // Search
         if (!is_null($this->terms)) {
             foreach (explode(" ", $this->terms) as $term) {
-                $qb ->andWhere('LOWER(m.searchfield) LIKE :term')
-                    ->setParameter('term', "%" . strtolower($term) . "%");
+                $qb->andWhere('LOWER(m.searchfield) LIKE :term')
+                    ->setParameter('term', "%".strtolower($term)."%");
             }
         }
 
@@ -72,7 +72,6 @@ class Finder
 
         // Owner or user in same group
         if (!$this->geoOffice && is_null($this->public) && !is_null($this->userId)) {
-
             $orx = $qb->expr()->orX();
             $orx->add($qb->expr()->eq('m.insertUser', (int)$this->userId));
             $orx->add($qb->expr()->eq('m.public', 'true'));
@@ -94,7 +93,7 @@ class Finder
 
         // Title
         if (!is_null($this->title)) {
-            $qb->expr()->like('u.title', $qb->expr()->literal('%' . $this->title . '%'));
+            $qb->expr()->like('u.title', $qb->expr()->literal('%'.$this->title.'%'));
         }
 
         if (!is_null($this->userEntries) && !is_null($this->userId)) {
