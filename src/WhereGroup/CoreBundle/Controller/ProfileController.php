@@ -232,14 +232,9 @@ class ProfileController extends Controller
         $metadata = $this->get('metador_metadata')->getById($id);
         $object1  = $metadata->getObject();
 
-        $className = $this->get('metador_plugin')->getPluginClassName($object1['_profile']);
-
-        $object2  = $this->get('metadata_import')->load(
-            $this->get('templating')->render(
-                $className . ":Export:metadata.xml.twig",
-                array("p" => $object1)
-            ),
-            $className
+        $object2 = $this->get('metador_metadata')->xmlToObject(
+            $this->get('metador_metadata')->objectToXml($object1),
+            $object1['_profile']
         );
 
         foreach ($object1 as $key => $value) {
