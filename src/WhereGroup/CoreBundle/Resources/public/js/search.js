@@ -42,6 +42,11 @@ Search.prototype = {
                 .val(window.btoa(JSON.stringify(self.getAll())))
                 .closest('form').submit();
         });
+
+        $(document).on('click', '.-js-reset-search', function() {
+            self.setObject('search-params', {});
+            window.location.reload();
+        });
     },
 
     initFilters: function() {
