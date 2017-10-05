@@ -17,7 +17,9 @@ Search.prototype = {
         this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
-
+        $(document).on('checkbox-click', '.-js-search-on-click', function() {
+            self.find();
+        });
 
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
@@ -31,26 +33,25 @@ Search.prototype = {
             self.set('page', $(this).attr('data-change-page'));
             self.find();
         });
-
-        this.initFilters();
     },
 
     initFilters: function() {
-        this.set('page', 1);
-        this.set('hits', 10);
-        this.searchFieldElement.val(this.get('terms', ''));
+        var self = this;
 
-        // var value = this.get('hierarchyLevel[dataset]');
+        self.set('page', 1);
+        self.set('hits', 10);
+        self.searchFieldElement.val(self.get('terms', ''));
 
-        // if (typeof value === 'undefined') {
-        //     value = "";
-        // }
+        $('.-js-search-filter').each(function () {
+            var name  = $(this).attr('name');
+            var value = self.get(name);
 
-        // console.log(value);
-        // console.log($('input[name="hierarchyLevel[dataset]]"'));
+            if (typeof value === 'undefined') {
+                value = "";
+            }
 
-        // $('input[name="hierarchyLevel[dataset]]"').val(value);
-
+            $('.-js-search-filter[name="' + name + '"]').val(value).change();
+        });
     },
 
     getAll: function() {
@@ -133,5 +134,6 @@ search.init();
 
 
 $( document ).ready(function() {
+    search.initFilters();
     search.find();
 });

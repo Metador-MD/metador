@@ -96,6 +96,24 @@ class HomeController extends Controller
             ];
         }
 
+        //
+        if (isset($params['hierarchyLevel']) && is_array($params['hierarchyLevel']) && !empty($params['hierarchyLevel'])) {
+            $subfilter = [];
+
+            foreach ($params['hierarchyLevel'] as $key => $value) {
+                if (empty($value)) {
+                    continue;
+                }
+                $subfilter['or'][] = ['eq' => ['hierarchyLevel' => $key]];
+            }
+
+            if (isset($subfilter['or'])) {
+                $filter['and'][] = $subfilter;
+            }
+
+            unset($subfilter);
+        }
+
         // Set spatial filter
         if (isset($params['spatial']) && $params['spatial']) {
             $filter['and'][] = $params['spatial'];
