@@ -242,7 +242,14 @@ $search-content-left-width: 250px;
         @extend .clearfix;
 
         & > .filter-content-row {
+            cursor: pointer;
+
+            @extend .no-user-select;
             @include medium-item();
+
+            &:hover {
+                background-color: $background;
+            }
         }
     }
 }

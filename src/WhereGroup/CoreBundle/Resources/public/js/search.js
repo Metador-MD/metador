@@ -14,13 +14,14 @@ Search.prototype = {
 
     init: function() {
         var self = this;
-        this.searchFieldElement = $('#searchfield');
+        this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
-        this.set('page', 1);
-        this.set('hits', 10);
 
-        this.searchFieldElement.val(this.get('terms', ''));
+
+        $(document).on('change', '.-js-search-filter', function() {
+            self.set($(this).attr('name'), $(this).val());
+        });
 
         $(document).on('keyup', '#searchfield', function() {
             search.keyup();
@@ -30,6 +31,25 @@ Search.prototype = {
             self.set('page', $(this).attr('data-change-page'));
             self.find();
         });
+
+        this.initFilters();
+    },
+
+    initFilters: function() {
+        this.set('page', 1);
+        this.set('hits', 10);
+        this.searchFieldElement.val(this.get('terms', ''));
+
+        // var value = this.get('hierarchyLevel[dataset]');
+
+        // if (typeof value === 'undefined') {
+        //     value = "";
+        // }
+
+        // console.log(value);
+        // console.log($('input[name="hierarchyLevel[dataset]]"'));
+
+        // $('input[name="hierarchyLevel[dataset]]"').val(value);
 
     },
 
