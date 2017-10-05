@@ -12,24 +12,17 @@ use WhereGroup\UserBundle\Component\UserInterface;
 interface MetadataInterface
 {
     /**
-     * @param $metadataId
+     * @param $id
      * @param bool $dispatchEvent
      * @return mixed
      */
-    public function getById($metadataId, $dispatchEvent = true);
+    public function getById($id, $dispatchEvent = true);
 
     /**
-     * @param $uuid
-     * @param bool $dispatchEvent
+     * @param $id
      * @return mixed
      */
-    public function getByUUID($uuid, $dispatchEvent = true);
-
-    /**
-     * @param $uuid
-     * @return mixed
-     */
-    public function exists($uuid);
+    public function exists($id);
 
     /**
      * @param $p
@@ -44,10 +37,9 @@ interface MetadataInterface
     /**
      * @param $p
      * @param null $id
-     * @param null $uuid
      * @return mixed
      */
-    public function saveObject($p, $id = null, $uuid = null);
+    public function saveObject($p, $id = null);
 
     /**
      * @param $id

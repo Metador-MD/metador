@@ -91,6 +91,7 @@ $home-menu-height: 35px;
 
 .md .source {
     display: block;
+    z-index: 2;
 
     & > .source-list {
         margin: 0;
@@ -206,6 +207,9 @@ $search-content-left-width: 250px;
 
 .md .search-content {
     padding: $padding;
+    overflow-y: scroll;
+    z-index: 1;
+    @include pos(80px, 0, 0, 0);
     @extend .clearfix;
 
     & > .search-content-left {

@@ -4,7 +4,7 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
@@ -76,15 +76,19 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $metadataId
+     * Use ID or UUID
+     * @param $id
      * @param bool $dispatchEvent
      * @return EntityMetadata
-     * @throws \Exception
+     * @throws MetadataException
+     * @internal param $metadataId
      */
-    public function getById($metadataId, $dispatchEvent = true)
+    public function getById($id, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->repo->findOneById($metadataId);
+        $metadata = (is_string($id) && strlen($id) === 36)
+            ? $this->repo->findOneByUuid($id)
+            : $this->repo->findOneById($id);
 
         if (is_null($metadata)) {
             throw new MetadataException('Datensatz existiert nicht.');
@@ -124,44 +128,9 @@ class Metadata implements MetadataInterface
         $schema = $this->core->locateResource('@' . $class . '/Resources/config/import.json');
 
         $parser = new XmlParser($xml, new XmlParserFunctions());
-        return $parser->loadSchema(file_get_contents($schema))->parse();
-    }
+        $result = $parser->loadSchema(file_get_contents($schema))->parse();
 
-    /**
-     * @param $p
-     * @return array
-     */
-    public function renderObject($p)
-    {
-
-
-
-
-
-        return isset($array['p']) ? $array['p'] : array();
-    }
-
-    /**
-     * @param string $uuid
-     * @param bool $dispatchEvent
-     * @return EntityMetadata
-     * @throws \Exception
-     */
-    public function getByUUID($uuid, $dispatchEvent = true)
-    {
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = $this->repo->findOneByUuid($uuid);
-
-        if (is_null($metadata)) {
-            throw new MetadataException('Datensatz existiert nicht.');
-        }
-
-        // EVENT ON LOAD
-        if ($dispatchEvent) {
-            $this->core->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
-        }
-
-        return $metadata;
+        return $result['p'];
     }
 
     /**
@@ -197,10 +166,6 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
-        if (empty($p['_source'])) {
-            throw new MetadataException("Datenquelle nicht gefunden");
-        }
-
         // DateStamp
         $dateStamp = new \DateTime();
         $p['_dateStamp'] = $dateStamp->format('Y-m-d');
@@ -224,10 +189,16 @@ class Metadata implements MetadataInterface
         $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
-        if (empty($p['_uuid']) && strlen($p['_uuid']) !== 36) {
-            $uuid4 = Uuid::uuid4();
-            $p['_uuid'] = $p['fileIdentifier'] = $uuid4->toString();
+        $uuid4 = Uuid::uuid4();
+        $uuid = $uuid4->toString();
+
+        if (isset($p['fileIdentifier']) && !empty($p['fileIdentifier']) && strlen($p['fileIdentifier']) === 36) {
+            $uuid = $p['fileIdentifier'];
+        } elseif (isset($p['_uuid']) && !empty($p['_uuid']) && strlen($p['_uuid']) === 36) {
+            $uuid = $p['_uuid'];
         }
+
+        $p['_uuid'] = $p['fileIdentifier'] = $uuid;
 
         // Locked
         if (isset($p['_remove_lock']) || !isset($p['_locked'])) {
@@ -245,30 +216,29 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param $uuid
+     * Use id or uuid
+     * @param $id
      * @return bool|EntityMetadata
      */
-    public function exists($uuid)
+    public function exists($id)
     {
         try {
-            return $this->getByUUID($uuid);
+            return $this->getById($id);
         } catch (MetadataException $e) {
             return false;
         }
     }
 
     /**
+     * Use id or uuid
      * @param $p
      * @param bool $id
-     * @param null $uuid
      * @return EntityMetadata
      */
-    public function saveObject($p, $id = null, $uuid = null)
+    public function saveObject($p, $id = null)
     {
         if (!is_null($id)) {
             $metadata = $this->getById($id);
-        } elseif (!is_null($uuid)) {
-            $metadata = $this->getByUUID($uuid);
         } else {
             $metadata = new EntityMetadata();
             unset($p['_id']);
@@ -298,10 +268,10 @@ class Metadata implements MetadataInterface
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
         if (!empty($p['bbox'][0]['nLatitude'])) {
-            $metadata->setBboxn((int)$p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe((int)$p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs((int)$p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw((int)$p['bbox'][0]['wLongitude']);
+            $metadata->setBboxn((float)$p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe((float)$p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs((float)$p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw((float)$p['bbox'][0]['wLongitude']);
         }
 
         $this->save($metadata);
@@ -386,6 +356,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * Use ID or UUID to delete Metadata.
      * @param $id
      * @return mixed|void
      */
@@ -409,6 +380,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * Use ID or UUID to delete Metadata.
      * @param $id
      * @return bool
      */

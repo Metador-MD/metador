@@ -73,7 +73,6 @@ class ConfigurationRepository extends EntityRepository
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
         try {
-
             $qb = $this->createQueryBuilder('c')
                 ->select('c')
                 ->where('c.key = :key')
@@ -88,7 +87,6 @@ class ConfigurationRepository extends EntityRepository
             }
 
             return $qb->getQuery()->getSingleResult();
-
         } catch (NoResultException $e) {
             return $default;
         }

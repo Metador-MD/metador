@@ -10,6 +10,11 @@ namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader as xaar;
 
+/**
+ * Class FeatureJsonWriter
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class FeatureJsonWriter implements IContextWriter
 {
     const MEMBER = 'member'; // wfs:member -> wfs 2.0, gml:featureMember -> wfs < 2.0

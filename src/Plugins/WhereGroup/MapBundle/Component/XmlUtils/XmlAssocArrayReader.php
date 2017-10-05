@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: paul
- * Date: 19.06.17
- * Time: 14:05
- */
 
 namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
-
+/**
+ * Class XmlAssocArrayReader
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class XmlAssocArrayReader implements IContextReader
 {
 
@@ -17,24 +15,21 @@ class XmlAssocArrayReader implements IContextReader
     const KEY_VALUE = '_value_';
     const KEY_CHILDREN = '_children_';
 
-    /**
-     * @var EXmlReader xml reader
-     */
+    /* @var EXmlReader xml reader */
     protected $xmlReader;
-    /**
-     * @var IContextWriter
-     */
+    /* @var IContextWriter */
     protected $writer;
-    /**
-     * @var array
-     */
+    /* @var array */
     protected $xmlAssocArray;
 
-    /**
-     * @var array
-     */
+    /* @var array */
     protected $path;
 
+    /**
+     * XmlAssocArrayReader constructor.
+     * @param EXmlReader $xmlReader
+     * @param IContextWriter|null $writer
+     */
     public function __construct(EXmlReader $xmlReader, IContextWriter $writer = null)
     {
         $this->xmlReader = $xmlReader;
@@ -50,11 +45,17 @@ class XmlAssocArrayReader implements IContextReader
         $this->xmlReader = $xmlReader;
     }
 
+    /**
+     * @return IContextWriter
+     */
     public function getWriter()
     {
         return $this->writer;
     }
 
+    /**
+     * Called by start element
+     */
     public function startElement()
     {
         $node = array(
@@ -75,11 +76,17 @@ class XmlAssocArrayReader implements IContextReader
         }
     }
 
+    /**
+     * Called by end element
+     */
     public function endElement()
     {
         $last = array_pop($this->path);
     }
 
+    /**
+     * @return array|null
+     */
     public function getAttrs()
     {
         if ($this->xmlReader->hasAttributes) {
@@ -97,12 +104,17 @@ class XmlAssocArrayReader implements IContextReader
         }
     }
 
+    /**
+     * Adds text
+     */
     public function addText()
     {
         $this->path[count($this->path) - 1][self::KEY_VALUE] = $this->xmlReader->value;
     }
 
-
+    /**
+     * Resets a path
+     */
     public function reset()
     {
         $this->xmlAssocArray = null;
@@ -112,6 +124,9 @@ class XmlAssocArrayReader implements IContextReader
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getContent()
     {
         return $this->writer->write($this->xmlAssocArray);

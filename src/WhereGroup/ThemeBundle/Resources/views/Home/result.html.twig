@@ -1,3 +1,11 @@
+{% if rows is defined and rows|length == 0 %}
+    <div class="notify info text-center">
+        {% trans %}Es konnten leider keine Daten gefunden werden.{% endtrans %}
+    </div>
+{% endif %}
+
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}
+
 {% if rows is defined and rows is iterable %}
 {% for row in rows if is_granted('view', row.object|json_decode(true)) %}
 
@@ -86,3 +94,5 @@
     </div>
 {% endfor %}
 {% endif %}
+
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}

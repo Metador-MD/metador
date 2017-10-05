@@ -13,11 +13,24 @@ Search.prototype = {
     timeoutId: null,
 
     init: function() {
+        var self = this;
         this.searchFieldElement = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
         this.set('page', 1);
+        this.set('hits', 10);
+
         this.searchFieldElement.val(this.get('terms', ''));
+
+        $(document).on('keyup', '#searchfield', function() {
+            search.keyup();
+        });
+
+        $(document).on('click', '[data-change-page]', function() {
+            self.set('page', $(this).attr('data-change-page'));
+            self.find();
+        });
+
     },
 
     getAll: function() {
@@ -99,11 +112,6 @@ var search = new Search();
 search.init();
 
 
-$(document).on('keyup', '#searchfield', function() {
-    search.keyup();
-});
-
 $( document ).ready(function() {
     search.find();
 });
-

@@ -65,12 +65,12 @@ class ArrayParserTest extends TestCase
 
     public function testDelete()
     {
-
+        ;
     }
 
     public function testIsEmpty()
     {
-
+        ;
     }
 
     public function testLength()

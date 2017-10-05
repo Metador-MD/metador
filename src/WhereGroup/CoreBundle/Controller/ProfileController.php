@@ -148,7 +148,6 @@ class ProfileController extends Controller
                     'id' => $id
                 ))
             );
-
         } catch (MetadataException $e) {
             $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), array());
         }
@@ -215,9 +214,23 @@ class ProfileController extends Controller
 
         if ($form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
-            $this->get('metador_logger')->flashSuccess('metadata', 'profile', 'delete', 'source', 'identifier', 'Erfolgreich gelöscht.');
+            $this->get('metador_logger')->flashSuccess(
+                'metadata',
+                'profile',
+                'delete',
+                'source',
+                'identifier',
+                'Erfolgreich gelöscht.'
+            );
         } else {
-            $this->get('metador_logger')->flashError('metadata', 'profile', 'delete', 'source', 'identifier', 'Eintrag konnte nicht gelöscht werden.');
+            $this->get('metador_logger')->flashError(
+                'metadata',
+                'profile',
+                'delete',
+                'source',
+                'identifier',
+                'Eintrag konnte nicht gelöscht werden.'
+            );
         }
 
         return $this->redirectToRoute('metador_home');
@@ -232,14 +245,9 @@ class ProfileController extends Controller
         $metadata = $this->get('metador_metadata')->getById($id);
         $object1  = $metadata->getObject();
 
-        $className = $this->get('metador_plugin')->getPluginClassName($object1['_profile']);
-
-        $object2  = $this->get('metadata_import')->load(
-            $this->get('templating')->render(
-                $className . ":Export:metadata.xml.twig",
-                array("p" => $object1)
-            ),
-            $className
+        $object2 = $this->get('metador_metadata')->xmlToObject(
+            $this->get('metador_metadata')->objectToXml($object1),
+            $object1['_profile']
         );
 
         foreach ($object1 as $key => $value) {
@@ -311,6 +319,7 @@ class ProfileController extends Controller
 
     /**
      * @param $profile
+     * @throws \Exception
      */
     private function init($profile)
     {

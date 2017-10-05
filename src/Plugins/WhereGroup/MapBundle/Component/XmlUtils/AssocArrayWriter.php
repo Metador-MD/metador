@@ -8,7 +8,11 @@
 
 namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
-
+/**
+ * Class AssocArrayWriter
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class AssocArrayWriter implements IContextWriter
 {
 
@@ -21,7 +25,7 @@ class AssocArrayWriter implements IContextWriter
 
     public function reset()
     {
-
+        ;
     }
 
     public function write(array $content)

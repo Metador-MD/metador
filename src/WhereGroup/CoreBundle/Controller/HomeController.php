@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -10,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Component\Search\Expression;
+use WhereGroup\CoreBundle\Component\Search\ExprHandler;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Search\SearchInterface;
@@ -68,30 +71,53 @@ class HomeController extends Controller
     public function searchAction()
     {
         $params = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $user   = $this->get('metador_user')->getUserFromSession();
+        $filter = [];
+
+        // Set source filter
+        if (isset($params['source']) && !empty($params['source'])) {
+            $filter['and'][] = ['eq' =>['source' => $params['source']]];
+        }
+
+        // Set public filter if user is not logged in.
+        if (is_null($user)) {
+            $filter['and'][] = ['eq' => ['public' => true]];
+
+        // Filter for logged in user.
+        } else {
+            $filter['and'][] = [
+                'or' => [
+                    ['eq' => ['public'     => true]],
+                    ['eq' => ['insertuser' => $user->getId()]],
+                    ['in' => ['groups'     => $user->getRoles()]]
+                ]
+            ];
+        }
+
+        // Set spatial filter
+        if (isset($params['spatial']) && $params['spatial']) {
+            $filter['and'][] = $params['spatial'];
+        }
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');
         $search
             ->setPage(isset($params['page']) ? $params['page'] : 1)
-            ->setHits(10)
+            ->setHits(isset($params['hits']) ? $params['hits'] : 10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
-            ->setSource(isset($params['source']) ? $params['source'] : '');
+            ->setExpression(JsonFilterReader::read($filter, $search->createExpression()));
 
-        if (isset($params['spatial']) && $params['spatial']) {
-            $exprHandler = $search->createExpression();
-            $expr = JsonFilterReader::read($params['spatial'], $exprHandler);
-            $search->setExpression($expr);
+        try {
+            $searchResponse = $search->find();
+        } catch (NoResultException $e) {
+            $searchResponse = [];
         }
 
-        $results = $search->find()->getResult();
-
-        $html = $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
-            'rows'   => $results,
-            'paging' => $search->getResultPaging(),
-        ));
-
         $response = [
-            'html'  => $html,
+            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
+                'rows'   => $searchResponse['rows'],
+                'paging' => $searchResponse['paging'],
+            )),
             'debug' => $params,
         ];
 

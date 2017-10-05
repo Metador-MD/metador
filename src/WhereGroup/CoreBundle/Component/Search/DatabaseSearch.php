@@ -21,9 +21,6 @@ class DatabaseSearch extends Search implements SearchInterface
     /**  @var string */
     protected $alias = 'm';
 
-    /** @var array|null */
-    protected $parameters = null;
-
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
     {
@@ -34,7 +31,7 @@ class DatabaseSearch extends Search implements SearchInterface
     }
 
     /**
-     * @return $this
+     * @return array
      */
     public function find()
     {
@@ -63,8 +60,10 @@ class DatabaseSearch extends Search implements SearchInterface
             $this->qb->andWhere($this->alias.'.profile = :profileX')->setParameter('profileX', $this->getProfile());
         }
 
-
-        return $this;
+        return [
+            'paging' => $this->getResultPaging(),
+            'rows'   => $this->getResult()
+        ];
     }
 
     /**
@@ -72,16 +71,23 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function getResult()
     {
-        return $this->qb
-            ->select($this->alias.'.object')
-            ->setFirstResult($this->offset)
-            ->setMaxResults($this->hits)
-            ->getQuery()
-            ->getArrayResult();
+        $this->qb->select($this->alias.'.object');
+
+        if (!is_null($this->offset)) {
+            $this->qb->setFirstResult($this->offset);
+        }
+
+        if (!is_null($this->hits)) {
+            $this->qb->setMaxResults($this->hits);
+        }
+
+        return $this->qb->getQuery()->getArrayResult();
     }
 
     /**
-     * @return int
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getResultCount()
     {
@@ -96,7 +102,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler($this->alias);
+        return new DatabaseExprHandler($this->alias, self::MAP_QUERY2SOURCE);
     }
 
     /**

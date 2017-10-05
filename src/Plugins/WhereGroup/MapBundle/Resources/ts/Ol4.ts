@@ -258,6 +258,23 @@ export class Ol4Map {
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
     }
 
+    activateFeatureInfo(
+        tooltipElm: HTMLElement,
+        callbackSelect: Function,
+        callbackUnSelect: Function,
+        callbackUnSelectAll: Function
+    ): void {
+        this.featureInfo.activate(tooltipElm, callbackSelect, callbackUnSelect, callbackUnSelectAll);
+    }
+
+    deactivateFeatureInfo(): void {
+        this.featureInfo.deactivate();
+    }
+
+    resetFeatureInfo() {
+        this.featureInfo.reset();
+    }
+
     getLayerTree(): LayerTree {
         return this.layertree;
     }
