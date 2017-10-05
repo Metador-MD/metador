@@ -31,11 +31,6 @@ $(document).on('click', '.-js-fieldset-toggle', function() {
     mainItem.addClass('minimize')
 });
 
-
-$(document).ready(function() {
-    $('.-js-show-tooltip').tooltip();
-});
-
 $(document).on('mousedown', '.-js-datepicker', function() {
     var self = this;
     $(self).Zebra_DatePicker({
@@ -48,3 +43,9 @@ $(document).on('mousedown', '.-js-datepicker', function() {
         //days: ['','']
     });
 });
+
+$(document).ready(function() {
+    $('.-js-show-tooltip').tooltip();
+    $('.-js-checkbox').checkbox();
+});
+

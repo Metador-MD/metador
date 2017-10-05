@@ -90,7 +90,7 @@
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -644,7 +644,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1041,7 +1041,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1168,7 +1168,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1357,7 +1357,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1536,7 +1536,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1652,7 +1652,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1858,7 +1858,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2015,7 +2015,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2312,7 +2312,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2439,7 +2439,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2685,7 +2685,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2910,7 +2910,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3090,7 +3090,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3335,10 +3335,14 @@ input.input-element, .md input.btn {
   padding: 10px 0; }
 
 .md .filter-wrapper > .filter-content > .filter-content-row {
+  cursor: pointer;
   font-size: .9em;
   padding: 0 15px;
   height: 30px;
   line-height: 30px; }
+
+.md .filter-wrapper > .filter-content > .filter-content-row:hover {
+  background-color: #f7f7f7; }
 
 ::-webkit-file-upload-button {
   cursor: pointer; }
@@ -3496,7 +3500,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3704,7 +3708,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3836,7 +3840,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

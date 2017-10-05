@@ -14,13 +14,16 @@ Search.prototype = {
 
     init: function() {
         var self = this;
-        this.searchFieldElement = $('#searchfield');
+        this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
-        this.set('page', 1);
-        this.set('hits', 10);
+        $(document).on('checkbox-click', '.-js-search-on-click', function() {
+            self.find();
+        });
 
-        this.searchFieldElement.val(this.get('terms', ''));
+        $(document).on('change', '.-js-search-filter', function() {
+            self.set($(this).attr('name'), $(this).val());
+        });
 
         $(document).on('keyup', '#searchfield', function() {
             search.keyup();
@@ -30,7 +33,25 @@ Search.prototype = {
             self.set('page', $(this).attr('data-change-page'));
             self.find();
         });
+    },
 
+    initFilters: function() {
+        var self = this;
+
+        self.set('page', 1);
+        self.set('hits', 10);
+        self.searchFieldElement.val(self.get('terms', ''));
+
+        $('.-js-search-filter').each(function () {
+            var name  = $(this).attr('name');
+            var value = self.get(name);
+
+            if (typeof value === 'undefined') {
+                value = "";
+            }
+
+            $('.-js-search-filter[name="' + name + '"]').val(value).change();
+        });
     },
 
     getAll: function() {
@@ -113,5 +134,6 @@ search.init();
 
 
 $( document ).ready(function() {
+    search.initFilters();
     search.find();
 });
