@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
+use WhereGroup\CoreBundle\Component\CsvResponse;
 use WhereGroup\CoreBundle\Component\Finder;
 use WhereGroup\CoreBundle\Component\Search\Expression;
 use WhereGroup\CoreBundle\Component\Search\ExprHandler;
@@ -73,7 +74,14 @@ class HomeController extends Controller
      */
     public function searchAction()
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $request   = $this->get('request_stack')->getCurrentRequest();
+        $download  = $request->request->get('filter');
+        $params    = $request->request->all();
+
+        if (!is_null($download)) {
+            $params = json_decode(base64_decode($download), true);
+        }
+
         $user   = $this->get('metador_user')->getUserFromSession();
         $filter = [];
 
@@ -97,7 +105,10 @@ class HomeController extends Controller
         }
 
         //
-        if (isset($params['hierarchyLevel']) && is_array($params['hierarchyLevel']) && !empty($params['hierarchyLevel'])) {
+        if (isset($params['hierarchyLevel'])
+            && is_array($params['hierarchyLevel'])
+            && !empty($params['hierarchyLevel'])) {
+
             $subfilter = [];
 
             foreach ($params['hierarchyLevel'] as $key => $value) {
@@ -121,16 +132,34 @@ class HomeController extends Controller
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');
+
         $search
-            ->setPage(isset($params['page']) ? $params['page'] : 1)
-            ->setHits(isset($params['hits']) ? $params['hits'] : 10)
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
             ->setExpression(JsonFilterReader::read($filter, $search->createExpression()));
+
+        if (is_null($download)) {
+            $search
+                ->setPage(isset($params['page']) ? $params['page'] : 1)
+                ->setHits(isset($params['hits']) ? $params['hits'] : 10);
+        }
 
         try {
             $searchResponse = $search->find();
         } catch (NoResultException $e) {
             $searchResponse = [];
+        }
+
+        if (!is_null($download)) {
+            $data = [];
+            if (isset($searchResponse['rows']) && is_array($searchResponse['rows'])) {
+                $data[] = ['uuid', 'title'];
+
+                foreach ($searchResponse['rows'] as $row) {
+                    $row = json_decode($row['object'], true);
+                    $data[] = [$row['_uuid'], $row['title']];
+                }
+            }
+            return new CsvResponse($data);
         }
 
         $response = [
