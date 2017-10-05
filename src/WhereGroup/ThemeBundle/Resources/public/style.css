@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?z2bev7');
-  src:  url('fonts/icomoon.eot?z2bev7#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?z2bev7') format('woff2'),
-    url('fonts/icomoon.ttf?z2bev7') format('truetype'),
-    url('fonts/icomoon.woff?z2bev7') format('woff'),
-    url('fonts/icomoon.svg?z2bev7#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?tfu9sf');
+  src:  url('fonts/icomoon.eot?tfu9sf#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?tfu9sf') format('woff2'),
+    url('fonts/icomoon.ttf?tfu9sf') format('truetype'),
+    url('fonts/icomoon.woff?tfu9sf') format('woff'),
+    url('fonts/icomoon.svg?tfu9sf#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -33,6 +33,12 @@
 }
 .icon-loop2:before {
   content: "\ea2e";
+}
+.icon-checkbox-checked:before {
+  content: "\ea52";
+}
+.icon-checkbox-unchecked:before {
+  content: "\ea53";
 }
 .icon-file-pdf2:before {
   content: "\eadf";
@@ -192,9 +198,6 @@
 }
 .icon-sort-amount-asc:before {
   content: "\ea4c";
-}
-.icon-checkbox-unchecked:before {
-  content: "\ea53";
 }
 .icon-embed:before {
   content: "\ea7f";
