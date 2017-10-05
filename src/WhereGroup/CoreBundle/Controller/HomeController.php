@@ -60,8 +60,11 @@ class HomeController extends Controller
         }
 
         return array(
-            'isHome'       => true,
-            'sourceConfig' => $sourceConfig,
+            'isHome'         => true,
+            'sourceConfig'   => $sourceConfig,
+            'hierarchyLevel' => $this
+                ->get('metador_configuration')
+                ->get('hierarchy_levels', 'plugin', 'metador_core')
         );
     }
 
@@ -88,8 +91,7 @@ class HomeController extends Controller
             $filter['and'][] = [
                 'or' => [
                     ['eq' => ['public'     => true]],
-                    ['eq' => ['insertuser' => $user->getId()]],
-                    ['in' => ['groups'     => $user->getRoles()]]
+                    ['eq' => ['insertuser' => $user->getId()]]
                 ]
             ];
         }
