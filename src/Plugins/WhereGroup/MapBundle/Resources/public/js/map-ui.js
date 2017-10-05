@@ -93,6 +93,10 @@ var MetadorOl4Bridge = {
         }
     },
 
+    getSearch: function() {
+        return search;
+    },
+
     updateMap: function () {
         var spatial = search.get('spatial');
         if (spatial) {

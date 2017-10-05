@@ -97,7 +97,8 @@ class HomeController extends Controller
         }
 
         //
-        if (isset($params['hierarchyLevel']) && is_array($params['hierarchyLevel']) && !empty($params['hierarchyLevel'])) {
+        if (isset($params['hierarchyLevel']) && is_array($params['hierarchyLevel'])
+            && !empty($params['hierarchyLevel'])) {
             $subfilter = [];
 
             foreach ($params['hierarchyLevel'] as $key => $value) {
@@ -143,8 +144,8 @@ class HomeController extends Controller
 
         $bboxParams = [];
 
-        if (!empty($results)) {
-            foreach ($results as $result) {
+        if (!empty($searchResponse['rows'])) {
+            foreach ($searchResponse['rows'] as $result) {
                 if (!isset($result['object'])) {
                     continue;
                 }
