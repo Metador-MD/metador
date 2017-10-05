@@ -18,16 +18,13 @@ class DatabaseSearch extends Search implements SearchInterface
     /** @var \Doctrine\ORM\QueryBuilder|null */
     protected $qb = null;
 
-    /**  @var string */
-    protected $alias = 'm';
-
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->qb = $em
             ->getRepository(self::ENTITY)
-            ->createQueryBuilder($this->alias);
+            ->createQueryBuilder('m');
     }
 
     /**
@@ -46,18 +43,18 @@ class DatabaseSearch extends Search implements SearchInterface
             $termCount = 0;
             foreach ($this->getTerms() as $term) {
                 $this->qb
-                    ->andWhere('LOWER('.$this->alias.'.searchfield) LIKE :termX'.$termCount)
+                    ->andWhere('LOWER(m.searchfield) LIKE :termX'.$termCount)
                     ->setParameter('termX'.$termCount, "%".strtolower($term)."%");
             }
             unset($termCount);
         }
 
         if (!empty($this->getSource())) {
-            $this->qb->andWhere($this->alias.'.source = :sourceX')->setParameter('sourceX', $this->getSource());
+            $this->qb->andWhere('m.source = :sourceX')->setParameter('sourceX', $this->getSource());
         }
 
         if (!empty($this->getProfile())) {
-            $this->qb->andWhere($this->alias.'.profile = :profileX')->setParameter('profileX', $this->getProfile());
+            $this->qb->andWhere('m.profile = :profileX')->setParameter('profileX', $this->getProfile());
         }
 
         return [
@@ -71,7 +68,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function getResult()
     {
-        $this->qb->select($this->alias.'.object');
+        $this->qb->select('m.object');
 
         if (!is_null($this->offset)) {
             $this->qb->setFirstResult($this->offset);
@@ -92,7 +89,7 @@ class DatabaseSearch extends Search implements SearchInterface
     public function getResultCount()
     {
         return $this->qb
-            ->select('count('.$this->alias.')')
+            ->select('count(m)')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -102,7 +99,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler($this->alias, self::MAP_QUERY2SOURCE);
+        return new DatabaseExprHandler('m', self::MAP_QUERY2SOURCE);
     }
 
     /**

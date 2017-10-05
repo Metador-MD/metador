@@ -37,6 +37,7 @@ abstract class Search
     protected $terms      = null;
     protected $source     = null;
     protected $profile    = null;
+    protected $groups     = null;
 
     /* @var Expression $expression */
     protected $expression = null;
@@ -175,6 +176,25 @@ abstract class Search
     public function setProfile($profile)
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * @return null|array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param array $groups
+     * @return $this
+     */
+    public function setGroups(array $groups)
+    {
+        $this->groups = $groups;
 
         return $this;
     }
