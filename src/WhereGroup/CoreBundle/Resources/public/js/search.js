@@ -33,6 +33,20 @@ Search.prototype = {
             self.set('page', $(this).attr('data-change-page'));
             self.find();
         });
+
+        $(document).on('click', '.-js-csv-download', function() {
+            var element = this;
+
+            $(element)
+                .find('input')
+                .val(window.btoa(JSON.stringify(self.getAll())))
+                .closest('form').submit();
+        });
+
+        $(document).on('click', '.-js-reset-search', function() {
+            self.setObject('search-params', {});
+            window.location.reload();
+        });
     },
 
     initFilters: function() {

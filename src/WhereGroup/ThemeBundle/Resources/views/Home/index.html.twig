@@ -25,7 +25,21 @@
             <div class="grid space responsive">
                 <div class="row r-2">
                     <div class="col c-1-4">
+                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                            <div class="filter-header">Tools</div>
+                            <div class="filter-content">
+                                <div class="filter-content-row -js-reset-search">
+                                    <span class="icon-checkmark"></span> {% trans %}Filter zurücksetzen{% endtrans %}
+                                </div>
 
+                                <div class="filter-content-row -js-csv-download">
+                                    <form action="{{ path('metador_search') }}" target="_blank" method="post">
+                                        <input type="hidden" name="filter" value="" />
+                                        <span class="icon-download"></span> {% trans %}CSV-Download{% endtrans %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         {% if hierarchyLevel is defined and hierarchyLevel is not empty %}
                         <div class="filter-wrapper" data-filter="hierarchyLevel">
                             <div class="filter-header">Hierarchy Level</div>
