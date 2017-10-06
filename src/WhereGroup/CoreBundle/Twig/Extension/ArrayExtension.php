@@ -93,9 +93,7 @@ class ArrayExtension extends \Twig_Extension
     {
         if (is_array($array)) {
             foreach ($array as $key => $value) {
-                if (!empty($value) && $key != "uuid") {
-                    return true;
-                }
+                return true;
             }
         } else {
             return !empty($array);
