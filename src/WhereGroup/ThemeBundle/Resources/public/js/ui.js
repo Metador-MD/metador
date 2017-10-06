@@ -38,7 +38,10 @@ $(document).on('mousedown', '.-js-datepicker', function() {
         offset:[-177,120],
         onSelect: function() {
             $(self).change();
-        }
+        },
+        onClear: function() {
+            $(self).change();
+        },
         //months: ['','']
         //days: ['','']
     });

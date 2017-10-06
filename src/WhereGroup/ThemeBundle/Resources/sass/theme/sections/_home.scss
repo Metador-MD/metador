@@ -247,7 +247,7 @@ $search-content-left-width: 250px;
             @extend .no-user-select;
             @include medium-item();
 
-            &:hover {
+            &:not(.no-hower):hover {
                 background-color: $background;
             }
         }

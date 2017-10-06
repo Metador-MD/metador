@@ -57,11 +57,12 @@ Search.prototype = {
         self.searchFieldElement.val(self.get('terms', ''));
 
         $('.-js-search-filter').each(function () {
-            var name  = $(this).attr('name');
-            var value = self.get(name);
+            var name         = $(this).attr('name');
+            var defaultValue = $(this).attr('data-value');
+            var value        = self.get(name);
 
             if (typeof value === 'undefined') {
-                value = "";
+                value = defaultValue;
             }
 
             $('.-js-search-filter[name="' + name + '"]').val(value).change();
@@ -101,7 +102,6 @@ Search.prototype = {
             self.set('terms', self.searchFieldElement.val());
             self.find();
         }, self.timeoutDelay);
-
     },
 
     find: function() {
