@@ -3341,7 +3341,7 @@ input.input-element, .md input.btn {
   height: 30px;
   line-height: 30px; }
 
-.md .filter-wrapper > .filter-content > .filter-content-row:hover {
+.md .filter-wrapper > .filter-content > .filter-content-row:not(.no-hower):hover {
   background-color: #f7f7f7; }
 
 ::-webkit-file-upload-button {

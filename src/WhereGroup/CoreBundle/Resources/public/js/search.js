@@ -17,12 +17,9 @@ Search.prototype = {
         this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
-        $(document).on('checkbox-click', '.-js-search-on-click', function() {
-            self.find();
-        });
-
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
+            self.find();
         });
 
         $(document).on('keyup', '#searchfield', function() {
@@ -57,11 +54,12 @@ Search.prototype = {
         self.searchFieldElement.val(self.get('terms', ''));
 
         $('.-js-search-filter').each(function () {
-            var name  = $(this).attr('name');
-            var value = self.get(name);
+            var name         = $(this).attr('name');
+            var defaultValue = $(this).attr('data-value');
+            var value        = self.get(name);
 
             if (typeof value === 'undefined') {
-                value = "";
+                value = defaultValue;
             }
 
             $('.-js-search-filter[name="' + name + '"]').val(value).change();
@@ -101,32 +99,37 @@ Search.prototype = {
             self.set('terms', self.searchFieldElement.val());
             self.find();
         }, self.timeoutDelay);
-
     },
 
     find: function() {
         var self = this;
 
-        self.set('source', $('.-js-source.active').attr('data-slug'));
+        if (typeof self.timeoutId !== 'undefined') {
+            window.clearTimeout(self.timeoutId);
+        }
 
-        $.ajax({
-            'url': self.searchFieldElement.attr('data-url'),
-            'type': 'POST',
-            'dataType': 'json',
-            'data': self.getAll(),
-            'success': function(data) {
-                self.searchResultElement.html('');
+        self.timeoutId = window.setTimeout(function() {
+            self.set('source', $('.-js-source.active').attr('data-slug'));
 
-                if (data && data.html) {
-                    self.searchResultElement.html(data.html);
+            $.ajax({
+                'url': self.searchFieldElement.attr('data-url'),
+                'type': 'POST',
+                'dataType': 'json',
+                'data': self.getAll(),
+                'success': function(data) {
+                    self.searchResultElement.html('');
+
+                    if (data && data.html) {
+                        self.searchResultElement.html(data.html);
+                    }
+
+                    metador.parseResponse(data);
+                },
+                'error': function() {
+                    self.searchResultElement.html('');
                 }
-
-                metador.parseResponse(data);
-            },
-            'error': function() {
-                self.searchResultElement.html('');
-            }
-        });
+            });
+        }, self.timeoutDelay);
     },
 
     clearMetadataMarks: function() {

@@ -31,7 +31,6 @@
 
             $(self.element).on('click', function() {
                 self.toggleValue();
-                $(this).trigger('checkbox-click');
             });
         },
 
@@ -42,15 +41,17 @@
                 if (typeof this.input.attr('data-group') !== 'undefined') {
                     var valuesEmpty  = true;
                     var groupMembers = $('[data-group="' + this.input.attr('data-group') + '"]');
+                    var defaultValue = (typeof this.input.attr('data-value') === 'undefined')
+                        ? 'true' : this.input.attr('data-value');
 
                     groupMembers.each(function() {
                         if ($(this).val() !== '') {
                             valuesEmpty = false;
                         }
-                    })
+                    });
 
                     if (valuesEmpty) {
-                        groupMembers.val('true').change();
+                        groupMembers.val(defaultValue).change();
                     }
                 }
 
