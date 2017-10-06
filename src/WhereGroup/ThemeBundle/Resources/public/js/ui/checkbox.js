@@ -31,7 +31,6 @@
 
             $(self.element).on('click', function() {
                 self.toggleValue();
-                $(this).trigger('checkbox-click');
             });
         },
 
