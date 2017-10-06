@@ -92,10 +92,8 @@ class ArrayExtension extends \Twig_Extension
     public function arrayHasValue($array)
     {
         if (is_array($array)) {
-            foreach ($array as $value) {
-                if (!empty($value)) {
-                    return true;
-                }
+            foreach ($array as $key => $value) {
+                return true;
             }
         } else {
             return !empty($array);
