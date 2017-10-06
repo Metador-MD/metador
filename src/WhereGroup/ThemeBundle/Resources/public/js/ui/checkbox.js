@@ -31,12 +31,29 @@
 
             $(self.element).on('click', function() {
                 self.toggleValue();
+                $(this).trigger('checkbox-click');
             });
         },
 
         toggleValue: function() {
             if (this.input.val() !== '') {
                 this.input.val('').change();
+
+                if (typeof this.input.attr('data-group') !== 'undefined') {
+                    var valuesEmpty  = true;
+                    var groupMembers = $('[data-group="' + this.input.attr('data-group') + '"]');
+
+                    groupMembers.each(function() {
+                        if ($(this).val() !== '') {
+                            valuesEmpty = false;
+                        }
+                    })
+
+                    if (valuesEmpty) {
+                        groupMembers.val('true').change();
+                    }
+                }
+
                 return;
             }
 
