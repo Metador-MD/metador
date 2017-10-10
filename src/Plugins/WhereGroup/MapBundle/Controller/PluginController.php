@@ -207,12 +207,26 @@ class PluginController extends Controller
                 $tempFolder = $tempPath.$file->getFilename();
                 $zip->extractTo($tempFolder);
                 $zip->close();
-                try {
-                    // Read all shapefiles
-                    $shapeFile = new ShapeFile(
-                        substr($tempFolder.'/'.$file->getClientOriginalName(), 0, -4),
-                        ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M
+                $onlyName = substr($file->getClientOriginalName(), 0, -4);
+                $files = $this->findFiles($tempFolder, $onlyName.'.shp');
+                if (count($files) === 0) {
+                    $this->get('metador_frontend_command')->displayError(
+                        $result,
+                        'Keine Shape Datei "'.$onlyName.'.shp'.'"ist vorhanden'
                     );
+
+                    return new AjaxResponse($result);
+                }
+                try {
+                    $basicName = substr($tempFolder.'/'.$files[0], 0, -4);
+                    $shapes = [
+                        'shp' => $this->getFileName($basicName, '.shp'),
+                        'shx' => $this->getFileName($basicName, '.shx'),
+                        'dbf' => $this->getFileName($basicName, '.dbf'),
+                        'prj' => $this->getFileName($basicName, '.prj'),
+                    ];
+                    // Read all shapefiles
+                    $shapeFile = new ShapeFile($shapes, ShapeFile::FLAG_SUPPRESS_Z + ShapeFile::FLAG_SUPPRESS_M);
                     $prj = $shapeFile->getPRJ();
                     $epsg = $this->findCrs($prj);
                     if ($epsg === null) {
@@ -253,7 +267,16 @@ class PluginController extends Controller
                         break; // only first geometry
                     }
                 } catch (\Exception $e) {
-                    $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
+                    switch ($e->getCode()) {
+                        case 0:
+                            $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
+                            break;
+                        default:
+                            $this->get('metador_frontend_command')->displayError(
+                                $result,
+                                "Die Shape Datei kann nicht ausgelesen werden: ".$e->getMessage()
+                            );
+                    }
                 } finally {
                     // remove all uploaded files
                     $fs = new Filesystem();
@@ -269,22 +292,35 @@ class PluginController extends Controller
 
         return new AjaxResponse($result);
     }
-//
-//    /**
-//     * @return Response
-//     * @Route("map/testaddwms", name="metador_admin_map_testadd")
-//     * @Method({"GET", "POST"})
-//     */
-//    public function testaddwmsAction()
-//    {
-////        TODO remove this action
-//        $url = 'http://osm-demo.wheregroup.com/service';
-//        $wms = new Wms();
-//        $this->get('metador_map')->update($url, $wms);
-//        $response = new Response();
-//
-//        return $response;
-//    }
+
+    private function getFileName($basicPath, $extension)
+    {
+        $file = $basicPath.$extension;
+        if (file_exists($file)) {
+            return $file;
+        } else {
+            throw new \Exception('Die Datei "'.$file.'" ist nicht vorhanden', 0);
+        }
+    }
+
+    /**
+     * @param string $dirPath
+     * @param string $fileRegex
+     * @return array
+     */
+    private function findFiles($dirPath, $fileRegex)
+    {
+        $matchedfiles = array();
+        $all = opendir($dirPath);
+        while ($file = readdir($all)) {
+            if (is_file($dirPath.'/'.$file) && strpos(strtolower($file), strtolower($fileRegex)) !== false) {
+                $matchedfiles[] = $file;
+            }
+        }
+        closedir($all);
+
+        return $matchedfiles;
+    }
 
     /**
      * Creates a flush message.
