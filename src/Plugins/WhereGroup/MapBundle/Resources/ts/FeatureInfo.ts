@@ -1,17 +1,17 @@
-import {UUID} from './Ol4';
+import {TITLE, UUID} from "./Ol4";
 import {dom} from './dom';
 
 export class FeatureInfo {
-    private static keyId: string = 'uuid';
-    private static keyTitle: string = 'title';
     private static itemTagName: string = 'span';
     private olMap: ol.Map;
     private tooltip: ol.Overlay;
+    private tooltipCoord: ol.Coordinate;
     private tooltipElm: HTMLElement;
     private layer: ol.layer.Vector;
     private callbackSelect: Function;
     private callbackUnSelect: Function;
     private callbackUnSelectAll: Function;
+    private select: ol.interaction.Select;
 
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
@@ -28,10 +28,11 @@ export class FeatureInfo {
     }
 
     activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+        const fi = this;
         this.callbackSelect = callbackSelect;
         this.callbackUnSelect = callbackUnSelect;
         this.callbackUnSelectAll = callbackUnSelectAll;
-        this.olMap.on('click', this.mapClick, this);
+        this.olMap.on('click', this.setTooltipPosition, this);
         this.tooltipElm = tooltipElm;
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltip = new ol.Overlay({
@@ -40,9 +41,26 @@ export class FeatureInfo {
             positioning: 'bottom-center'
         });
         this.olMap.addOverlay(this.tooltip);
+
+        this.select = new ol.interaction.Select({
+            multi: true,
+            layers: [this.layer],
+            filter: function (feature: ol.Feature) {
+                return true;
+            }
+        });
+
+        this.select.on('select', function (e) {
+            fi.showTooltip(e.target.getFeatures().getArray());
+        });
+        this.select.getFeatures().clear();
+        this.olMap.addInteraction(this.select);
     }
 
     public deactivate() {
+        this.select.getFeatures().clear();
+        this.olMap.removeInteraction(this.select);
+        this.select = null;
         this.callbackUnSelectAll();
         this.callbackSelect = null;
         this.callbackUnSelect = null;
@@ -50,7 +68,7 @@ export class FeatureInfo {
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();
         this.olMap.removeOverlay(this.tooltip);
-        this.olMap.un('click', this.mapClick, this);
+        this.olMap.un('click', this.setTooltipPosition, this);
     }
 
     private itemClick(e: Event) {
@@ -59,56 +77,60 @@ export class FeatureInfo {
             if (!dom.hasClass(tag, '-js-tooltip-item')) {
                 dom.addClass(this.tooltipElm, 'hidden');
             } else {
-                this.selectDataset(tag.getAttribute(FeatureInfo.dataAttrName(FeatureInfo.keyId)));
+                dom.removeClass(tag.parentElement, 'selected', 'span');
+                dom.addClass(tag, 'selected');
+                this.select.getFeatures().clear();
+                this.unSelectDataset();
+                const feature = this.layer.getSource().getFeatureById(tag.getAttribute('data-id'));
+                this.select.getFeatures().push(feature);
+                this.selectDataset(feature.get(UUID));
             }
         } else {
             e.stopPropagation();
         }
     }
 
-    private static dataAttrName(name: string) {
-        return 'data-' + name;
+    private setTooltipPosition(en: ol.MapBrowserEvent) {
+        this.tooltipCoord = en.coordinate;
     }
 
-    private mapClick(e: ol.MapBrowserEvent) {
-        // this.tooltipElm.innerHTML = '<span class="icon-plus-circle" style="position:absolute;right:2px;top:2px;"></span>';
+    private showTooltip(features: ol.Feature[]) {
         dom.remove('.-js-tooltip-item', this.tooltipElm);
-        let lay = this.layer;
-        let features: ol.Feature[] = new Array<ol.Feature>();
-        this.olMap.forEachFeatureAtPixel(e.pixel, function (feature: ol.Feature) {
-            features.push(feature);
-        }, {
-            layerFilter: function (layer) {
-                return layer.get(UUID) === lay.get(UUID);
-            }
-        });
+        this.unSelectDataset();
         if (features.length === 0) {
-            this.callbackUnSelectAll();
             dom.addClass(this.tooltipElm, 'hidden');
         } else if (features.length === 1) {
             dom.addClass(this.tooltipElm, 'hidden');
-            this.selectDataset(features[0].get(FeatureInfo.keyId));
+            this.selectDataset(features[0].get(UUID));
         } else {
             for (let feature of features) {
-                let title = feature.get(FeatureInfo.keyTitle);
+                if (!feature.getId()) {
+                    feature.setId(feature.get(UUID));
+                }
                 let attrs = {
-                    dataAttr: feature.get(FeatureInfo.keyId),
-                    title: title
+                    "title": feature.get(TITLE),
+                    "data-uuid": feature.get(UUID),
+                    "data-id": feature.getId()
                 };
-                attrs[FeatureInfo.dataAttrName(FeatureInfo.keyId)] = feature.get(FeatureInfo.keyId);
-                this.tooltipElm.appendChild(dom.create(FeatureInfo.itemTagName, attrs, ['-js-tooltip-item'], title));
+                this.tooltipElm.appendChild(
+                    dom.create(FeatureInfo.itemTagName, attrs, ['-js-tooltip-item', 'selected'], feature.get(TITLE))
+                );
+                this.selectDataset(feature.get(UUID));
             }
-            this.tooltip.setPosition(e.coordinate);
+            this.tooltip.setPosition(this.tooltipCoord);
             dom.removeClass(this.tooltipElm, 'hidden');
         }
     }
 
     private selectDataset(selector: string) {
-        this.callbackUnSelectAll();
         this.callbackSelect(selector);
     }
 
-    private unSelectDataset(selector: string) {
-        this.callbackUnSelect(selector);
+    private unSelectDataset(selector: string = null) {
+        if (selector !== null) {
+            this.callbackUnSelect(selector);
+        } else {
+            this.callbackUnSelectAll();
+        }
     }
 }

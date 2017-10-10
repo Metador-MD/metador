@@ -24,6 +24,9 @@
     & span {
       display: block;
       cursor: pointer;
+      &.selected {
+        font-weight: bold;
+      }
     }
   }
   & .tooltip:before {

@@ -96,24 +96,36 @@ export class dom {
 
     /**
      *
-     * @param element
+     * @param context
      * @param name
      * @returns {Element}
      */
-    static addClass(element: HTMLElement, name: string): HTMLElement | null {
-        element.classList.add(name);
-        return element;
+    static addClass(context: HTMLElement, name: string, selector: string = null): void {
+        if (selector) {
+            let list: NodeListOf<Element> = dom.find(selector, context);
+            for(let i = 0; i < list.length; i++) {
+                list[i].classList.add(name);
+            }
+        } else {
+            context.classList.add(name);
+        }
     };
 
     /**
      *
-     * @param element
+     * @param context
      * @param name
      * @returns {Element}
      */
-    static removeClass(element: HTMLElement, name: string): HTMLElement | null {
-        element.classList.remove(name);
-        return element;
+    static removeClass(context: Element, name: string, selector: string = null): void {
+        if (selector) {
+            let list: NodeListOf<Element> = dom.find(selector, context);
+            for(let i = 0; i < list.length; i++) {
+                list[i].classList.remove(name);
+            }
+        } else {
+            context.classList.remove(name);
+        }
     };
 
 
