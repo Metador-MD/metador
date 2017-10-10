@@ -207,17 +207,12 @@ class PluginController extends Controller
                 $tempFolder = $tempPath.$file->getFilename();
                 $zip->extractTo($tempFolder);
                 $zip->close();
-                $onlyName = substr($file->getClientOriginalName(), 0, -4);
-                $files = $this->findFiles($tempFolder, $onlyName.'.shp');
-                if (count($files) === 0) {
-                    $this->get('metador_frontend_command')->displayError(
-                        $result,
-                        'Keine Shape Datei "'.$onlyName.'.shp'.'"ist vorhanden'
-                    );
-
-                    return new AjaxResponse($result);
-                }
                 try {
+                    $onlyName = substr($file->getClientOriginalName(), 0, -4);
+                    $files = $this->findFiles($tempFolder, $onlyName.'.shp');
+                    if (count($files) === 0) {
+                        throw new \Exception('Keine Shape Datei "'.$onlyName.'.shp'.'" ist vorhanden.', 0);
+                    }
                     $basicName = substr($tempFolder.'/'.$files[0], 0, -4);
                     $shapes = [
                         'shp' => $this->getFileName($basicName, '.shp'),
