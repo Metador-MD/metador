@@ -56,7 +56,6 @@ export class FeatureInfo {
             }
         });
         this.select.on('select', function (e) {
-            console.log('select', e.target.getFeatures());
             if (e.target.getFeatures().getLength() === 0) {
                 fi.showTooltip();
             }
