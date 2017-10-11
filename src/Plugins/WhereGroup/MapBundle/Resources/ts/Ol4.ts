@@ -275,6 +275,10 @@ export class Ol4Map {
         this.featureInfo.reset();
     }
 
+    selectFeatures(uuids: string[]) {
+        this.featureInfo.selectFeatures(uuids);
+    }
+
     getLayerTree(): LayerTree {
         return this.layertree;
     }

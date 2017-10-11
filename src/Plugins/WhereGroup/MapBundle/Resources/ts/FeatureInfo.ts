@@ -16,34 +16,11 @@ export class FeatureInfo {
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
+        this.initSelect();
     }
 
-    reset() {
-        if (this.select) {
-            this.select.getFeatures().clear();
-        }
-        if (this.tooltipElm) {
-            dom.addClass(this.tooltipElm, 'hidden');
-        }
-        if (this.callbackUnSelectAll) {
-            this.callbackUnSelectAll();
-        }
-    }
-
-    activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+    private initSelect(){
         const fi = this;
-        this.callbackSelect = callbackSelect;
-        this.callbackUnSelect = callbackUnSelect;
-        this.callbackUnSelectAll = callbackUnSelectAll;
-        this.olMap.on('click', this.setTooltipPosition, this);
-        this.tooltipElm = tooltipElm;
-        this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
-        this.tooltip = new ol.Overlay({
-            element: this.tooltipElm,
-            offset: [0, -6],
-            positioning: 'bottom-center'
-        });
-        this.olMap.addOverlay(this.tooltip);
         let timestamp: number = 0;
         this.select = new ol.interaction.Select({
             multi: true,
@@ -63,14 +40,59 @@ export class FeatureInfo {
                 fi.showTooltip();
             }
         });
+    }
+
+    reset() {
+        if (this.select) {
+            this.select.getFeatures().clear();
+        }
+        if (this.tooltipElm) {
+            dom.addClass(this.tooltipElm, 'hidden');
+        }
+        if (this.callbackUnSelectAll) {
+            this.callbackUnSelectAll();
+        }
+    }
+
+    selectFeatures (uuids: string[]) {
+        const fi = this;
+        if (this.layer && this.select) {
+            this.reset();
+            this.layer.getSource().forEachFeature(
+                function (feature: ol.Feature) {
+                    for (const uuid of uuids) {
+                        if (feature.get(UUID) === uuid) {
+                            fi.select.getFeatures().push(feature);
+                        }
+                    }
+                }
+            )
+            this.showTooltip();
+        }
+    }
+
+    activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+        this.callbackSelect = callbackSelect;
+        this.callbackUnSelect = callbackUnSelect;
+        this.callbackUnSelectAll = callbackUnSelectAll;
+        this.olMap.on('click', this.setTooltipPosition, this);
+        this.tooltipElm = tooltipElm;
+        this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
+        this.tooltip = new ol.Overlay({
+            element: this.tooltipElm,
+            offset: [0, -6],
+            positioning: 'bottom-center'
+        });
+        this.olMap.addOverlay(this.tooltip);
+
         this.select.getFeatures().clear();
         this.olMap.addInteraction(this.select);
     }
 
-    public deactivate() {
+    deactivate() {
         this.select.getFeatures().clear();
         this.olMap.removeInteraction(this.select);
-        this.select = null;
+        // this.select = null;
         this.callbackUnSelectAll();
         this.callbackSelect = null;
         this.callbackUnSelect = null;

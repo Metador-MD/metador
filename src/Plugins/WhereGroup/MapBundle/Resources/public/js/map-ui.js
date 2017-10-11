@@ -246,5 +246,8 @@ var MetadorOl4Bridge = {
     showFeature: function (west, south, east, north, properties) {
         var geoFeature = this.createBboxGeoFeature(west, south, east, north, properties);
         this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', [geoFeature]));
+    },
+    selectFeatures: function (uuids) {
+        this.getOl().selectFeatures(uuids);
     }
 };
