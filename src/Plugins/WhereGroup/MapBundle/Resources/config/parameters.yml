@@ -3,6 +3,7 @@ parameters:
         "ETRS89_UTM_zone_32N": "EPSG:25832"
         "ETRS_1989_UTM_Zone_32N": "EPSG:25832"
         "GCS_WGS_1984": "EPSG:4326"
+        "Germany_Zone_2": "EPSG:31466"
 #        "undefined": "EPSG:4326"
 #        "undefined": "EPSG:4258"
 #        "undefined": "EPSG:31466"
