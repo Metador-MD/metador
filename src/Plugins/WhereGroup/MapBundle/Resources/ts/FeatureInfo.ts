@@ -41,17 +41,25 @@ export class FeatureInfo {
             positioning: 'bottom-center'
         });
         this.olMap.addOverlay(this.tooltip);
-
+        let timestamp: number = 0;
         this.select = new ol.interaction.Select({
             multi: true,
             layers: [this.layer],
             filter: function (feature: ol.Feature) {
+                timestamp = Date.now() + 5;
+                setTimeout(function(){
+                    if (Date.now() >= timestamp) {
+                        fi.showTooltip();
+                    }
+                }, 5);
                 return true;
             }
         });
-
         this.select.on('select', function (e) {
-            fi.showTooltip(e.target.getFeatures().getArray());
+            console.log('select', e.target.getFeatures());
+            if (e.target.getFeatures().getLength() === 0) {
+                fi.showTooltip();
+            }
         });
         this.select.getFeatures().clear();
         this.olMap.addInteraction(this.select);
@@ -75,6 +83,8 @@ export class FeatureInfo {
         if ((<any>e.target).tagName === FeatureInfo.itemTagName.toUpperCase()) {
             let tag = (<HTMLElement>e.target);
             if (!dom.hasClass(tag, '-js-tooltip-item')) {
+                this.select.getFeatures().clear();
+                this.unSelectDataset();
                 dom.addClass(this.tooltipElm, 'hidden');
             } else {
                 dom.removeClass(tag.parentElement, 'selected', 'span');
@@ -94,13 +104,18 @@ export class FeatureInfo {
         this.tooltipCoord = en.coordinate;
     }
 
-    private showTooltip(features: ol.Feature[]) {
+    private hideTooltip() {
+        dom.addClass(this.tooltipElm, 'hidden');
+    }
+
+    private showTooltip() {
+        const features: ol.Feature[] = this.select.getFeatures().getArray();
         dom.remove('.-js-tooltip-item', this.tooltipElm);
         this.unSelectDataset();
         if (features.length === 0) {
-            dom.addClass(this.tooltipElm, 'hidden');
+            this.hideTooltip();
         } else if (features.length === 1) {
-            dom.addClass(this.tooltipElm, 'hidden');
+            this.hideTooltip();
             this.selectDataset(features[0].get(UUID));
         } else {
             for (let feature of features) {
@@ -117,8 +132,8 @@ export class FeatureInfo {
                 );
                 this.selectDataset(feature.get(UUID));
             }
-            this.tooltip.setPosition(this.tooltipCoord);
             dom.removeClass(this.tooltipElm, 'hidden');
+            this.tooltip.setPosition(this.tooltipCoord);
         }
     }
 

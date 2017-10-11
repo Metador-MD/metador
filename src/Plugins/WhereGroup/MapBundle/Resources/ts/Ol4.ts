@@ -612,30 +612,4 @@ export function createBox() {
     );
 }
 
-export class GeomLoader {
-    private map: Ol4Map;
-    private form: HTMLFormElement;
-
-    public constructor(map: Ol4Map, form: HTMLFormElement) {
-        this.map = map;
-        this.form = form;
-        this.on();
-    }
-
-    public on() {
-        this.form.addEventListener('change', this.upload.bind(this), false);
-    }
-
-    private upload(e: Event) {
-        // console.log(e);
-        // HttpUtils.Http.sendForm(this.form, this.form.action, HttpUtils.HTTP_METHOD.POST, HttpUtils.HTTP_DATATYPE.json)
-        //     .then(function (value) {
-        //         console.log('Contents: ' + value);
-        //     })
-        //     .catch(function (reason) {
-        //         console.error(reason);
-        //     });
-    }
-}
-
 declare var metador: any;
