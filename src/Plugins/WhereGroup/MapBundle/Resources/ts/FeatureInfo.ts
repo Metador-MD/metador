@@ -19,6 +19,9 @@ export class FeatureInfo {
     }
 
     reset() {
+        if (this.select) {
+            this.select.getFeatures().clear();
+        }
         if (this.tooltipElm) {
             dom.addClass(this.tooltipElm, 'hidden');
         }
