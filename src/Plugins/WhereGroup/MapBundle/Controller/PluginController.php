@@ -211,7 +211,7 @@ class PluginController extends Controller
                     $onlyName = substr($file->getClientOriginalName(), 0, -4);
                     $files = $this->findFiles($tempFolder, $onlyName.'.shp');
                     if (count($files) === 0) {
-                        throw new \Exception('metador_frontend_command', 0);
+                        throw new \Exception('Die Shape Datei "'.$onlyName.'.shp'.'" ist nicht vorhanden.', 0);
                     }
                     $basicName = substr($tempFolder.'/'.$files[0], 0, -4);
                     $shapes = [
