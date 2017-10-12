@@ -21,7 +21,7 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
 /**
  * Class PluginController
  * @package Plugins\WhereGroup\DatasetBundle\Controller
- * @Route("/map", name="metador_admin_map_new")
+ * @Route("/map")
  */
 class PluginController extends Controller
 {
@@ -33,7 +33,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("loadwms/", name="metador_admin_map_loadwms")
+     * @Route("/loadwms/", name="metador_map_loadwms")
      * @Method({"GET"})
      */
     public function loadWmsAction()
@@ -58,7 +58,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("uploadgeom/", name="metador_admin_map_uploadgeom")
+     * @Route("/uploadgeom/", name="metador_map_uploadgeom")
      * @Method({"POST"})
      */
     public function uploadGeomAction()
@@ -239,6 +239,11 @@ class PluginController extends Controller
         $this->get('metador_logger')->set($log);
     }
 
+    /**
+     * @param string $projDef
+     * @return string|null
+     * @throws \Exception
+     */
     private function findCrs($projDef)
     {
         $help = $this->prepareStr($projDef);
@@ -255,11 +260,19 @@ class PluginController extends Controller
         return null;
     }
 
+    /**
+     * @param string $str
+     * @return mixed
+     */
     private function prepareStr($str)
     {
         return preg_replace('/[^0-9a-z]/', '', $str);
     }
 
+    /**
+     * @param string $dir
+     * @return bool
+     */
     private function delTree($dir)
     {
         $files = array_diff(scandir($dir), array('.', '..'));
@@ -270,6 +283,11 @@ class PluginController extends Controller
         return rmdir($dir);
     }
 
+    /**
+     * @param string $type
+     * @param array $part
+     * @return array|null
+     */
     private function shGeomToJson($type, $part)
     {
         switch ($type) {
