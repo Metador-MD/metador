@@ -20,3 +20,7 @@ parameters:
 
     # Default language
     locale: de
+
+    # Access constraint
+    api_access_ips: []
+    csw_access_ips: []
