@@ -104,11 +104,11 @@ $('form').ajaxForm({
         metadata.activateSubmitButton();
     },
     success: function(data) {
-        if (data && metadata && metadata.id) {
+        if (data && data.metadata && data.metadata.id) {
             $('[name="p[_id]"]').val(data.metadata.id);
         }
 
-        if (data && metadata && metadata.uuid) {
+        if (data && data.metadata && data.metadata.uuid) {
             $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
         }
 
