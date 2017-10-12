@@ -12,6 +12,7 @@ use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 
 /**
  * Class Metadata
@@ -477,10 +478,25 @@ class Metadata implements MetadataInterface
     protected function prepareSearchField($p)
     {
         $searchfield  = '';
-        $searchfield .= isset($p['_searchfield']) ? ' ' . strtolower($p['_searchfield']) : '';
-        $searchfield .= isset($p['title'])        ? ' ' . strtolower($p['title']) : '';
-        $searchfield .= isset($p['alternateTitle']) ? ' ' . strtolower($p['alternateTitle']) : '';
-        $searchfield .= isset($p['abstract'])     ? ' ' . strtolower($p['abstract']) : '';
+        $fields = ['_searchfield', 'title', 'alternateTitle', 'abstract'];
+
+        foreach ($fields as $field) {
+            $value = ArrayParser::get($p, $field, '');
+
+            if (is_array($value) && !empty($value)) {
+                $temp = '';
+
+                foreach ($value as $row) {
+                    if (is_string($row) && !empty($row)) {
+                        $temp .= ' ' . $row;
+                    }
+                }
+
+                $value = trim($temp);
+                unset($temp);
+            }
+            $searchfield .= trim($value);
+        }
 
         if (isset($p['keyword'])) {
             foreach ($p['keyword'] as $value) {
