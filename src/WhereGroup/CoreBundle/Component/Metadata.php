@@ -260,7 +260,6 @@ class Metadata implements MetadataInterface
         $metadata->setUuid($p['_uuid']);
         $metadata->setTitle($p['title']);
         $metadata->setAbstract($p['abstract']);
-        $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield($this->prepareSearchField($p));
@@ -278,6 +277,7 @@ class Metadata implements MetadataInterface
             $metadata->setBboxs($p['bbox'][0]['sLatitude']);
             $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
+        $metadata->setObject($p);
 
         $this->save($metadata);
 
