@@ -2,7 +2,6 @@
 
 namespace Plugins\WhereGroup\MapBundle\Controller;
 
-//use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
@@ -22,7 +21,7 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
 /**
  * Class PluginController
  * @package Plugins\WhereGroup\DatasetBundle\Controller
- * @Route("map/", name="metador_admin_map_new")
+ * @Route("/map", name="metador_admin_map_new")
  */
 class PluginController extends Controller
 {
@@ -31,107 +30,6 @@ class PluginController extends Controller
         3 => 'LineString',//'PolyLine',
         5 => 'Polygon',
     );
-
-    /**
-     * @Route("/", name="metador_admin_map")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
-
-        return array(
-            'rows' => $this->get('metador_map')->all(),
-        );
-    }
-
-    /**
-     * @Route("new/", name="metador_admin_map_new")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
-        $wms = new Wms();
-        $wms->setTitle(Wms::TITLE_DEFAULT); // set Title
-        $form = $this
-            ->createForm(WmsNewType::class, new Wms())
-            ->handleRequest($this->get('request_stack')->getCurrentRequest());
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
-
-            try {
-                $this->get('metador_map')->update($entity->getGcUrl(), $entity);
-                $this->get('metador_map')->save($entity);
-
-                return $this->redirectToRoute('metador_admin_map');
-            } catch (\Exception $e) {
-                $this->log('error', 'create', $e->getMessage());
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * @Route("edit/{id}", name="metador_admin_map_edit")
-     * @Method({"GET", "POST"})
-     * @Template("MetadorMapBundle:Plugin:new.html.twig")
-     */
-    public function editAction($id)
-    {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
-
-        $form = $this
-            ->createForm(WmsEditType::class, $this->get('metador_map')->get($id))
-            ->handleRequest($this->get('request_stack')->getCurrentRequest());
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('metador_map')->save($form->getData());
-
-            return $this->redirectToRoute('metador_admin_map');
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * @Route("confirm/{id}", name="metador_admin_map_confirm")
-     * @Method({"GET", "POST"})
-     * @param $id a wms id
-     * @Template()
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function confirmAction($id)
-    {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
-
-        $form = $this->createFormBuilder($this->get('metador_map')->get($id))
-            ->add('delete', 'submit', array(
-                'label' => 'löschen',
-            ))
-            ->getForm()
-            ->handleRequest($this->get('request_stack')->getCurrentRequest());
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
-
-            $this->get('metador_source')->remove($entity);
-
-            return $this->redirectToRoute('metador_admin_map');
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
 
     /**
      * @return Response
