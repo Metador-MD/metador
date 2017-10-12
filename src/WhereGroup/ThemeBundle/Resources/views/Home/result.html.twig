@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                {% if not array_is_empty(p, 'alternateTitle') %}
+                {% if not array_is_empty(p, 'alternateTitle') and p['alternateTitle'] is not iterable %}
                 <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
                     {{ p['alternateTitle']|teaser(80, true) }}
                 </div>
