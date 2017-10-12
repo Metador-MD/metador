@@ -19,7 +19,7 @@ export class FeatureInfo {
         this.initSelect();
     }
 
-    private initSelect(){
+    private initSelect() {
         const fi = this;
         let timestamp: number = 0;
         this.select = new ol.interaction.Select({
@@ -27,9 +27,11 @@ export class FeatureInfo {
             layers: [this.layer],
             filter: function (feature: ol.Feature) {
                 timestamp = Date.now() + 5;
-                setTimeout(function(){
+                setTimeout(function () {
                     if (Date.now() >= timestamp) {
-                        fi.showTooltip();
+                        if (fi.tooltipElm) {
+                            fi.showTooltip();
+                        }
                     }
                 }, 5);
                 return true;
@@ -37,7 +39,9 @@ export class FeatureInfo {
         });
         this.select.on('select', function (e) {
             if (e.target.getFeatures().getLength() === 0) {
-                fi.showTooltip();
+                if (fi.tooltipElm) {
+                    fi.showTooltip();
+                }
             }
         });
     }
@@ -54,7 +58,7 @@ export class FeatureInfo {
         }
     }
 
-    selectFeatures (uuids: string[]) {
+    selectFeatures(uuids: string[]) {
         const fi = this;
         if (this.layer && this.select) {
             this.reset();
@@ -67,7 +71,9 @@ export class FeatureInfo {
                     }
                 }
             )
-            this.showTooltip();
+            if (this.tooltipElm) {
+                this.showTooltip();
+            }
         }
     }
 
@@ -129,7 +135,9 @@ export class FeatureInfo {
     }
 
     private hideTooltip() {
-        dom.addClass(this.tooltipElm, 'hidden');
+        if (this.tooltipElm) {
+            dom.addClass(this.tooltipElm, 'hidden');
+        }
     }
 
     private showTooltip() {
