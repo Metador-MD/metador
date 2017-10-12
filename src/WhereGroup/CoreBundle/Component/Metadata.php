@@ -260,19 +260,24 @@ class Metadata implements MetadataInterface
         $metadata->setUuid($p['_uuid']);
         $metadata->setTitle($p['title']);
         $metadata->setAbstract($p['abstract']);
-        $metadata->setObject($p);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
         $metadata->setDate(new \DateTime($this->findDate($p)));
 
-        if (!empty($p['bbox'][0]['nLatitude'])) {
-            $metadata->setBboxn((float)$p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe((float)$p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs((float)$p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw((float)$p['bbox'][0]['wLongitude']);
+        if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
+            && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
+            $p['bbox'][0]['nLatitude']  = (float)$p['bbox'][0]['nLatitude'];
+            $p['bbox'][0]['eLongitude'] = (float)$p['bbox'][0]['eLongitude'];
+            $p['bbox'][0]['sLatitude']  = (float)$p['bbox'][0]['sLatitude'];
+            $p['bbox'][0]['wLongitude'] = (float)$p['bbox'][0]['wLongitude'];
+            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
+        $metadata->setObject($p);
 
         $this->save($metadata);
 

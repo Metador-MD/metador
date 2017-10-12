@@ -162,13 +162,15 @@ export class FeatureInfo {
     }
 
     private selectDataset(selector: string) {
-        this.callbackSelect(selector);
+        if (this.callbackSelect) {
+            this.callbackSelect(selector);
+        }
     }
 
     private unSelectDataset(selector: string = null) {
-        if (selector !== null) {
+        if (selector !== null && this.callbackUnSelect) {
             this.callbackUnSelect(selector);
-        } else {
+        } else if (selector === null && this.callbackUnSelectAll) {
             this.callbackUnSelectAll();
         }
     }
