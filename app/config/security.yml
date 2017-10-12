@@ -32,10 +32,12 @@ security:
         - { path: ^/bundles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: "%api_access_ips%" }
+        - { path: ^/api, roles: ROLE_NO_ACCESS }
+        - { path: ^/csw, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: "%csw_access_ips%" }
+        - { path: ^/csw, roles: ROLE_NO_ACCESS }
 
         # Todo: remove
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/csw, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/map, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         - { path: ^/admin, roles: ROLE_SYSTEM_GEO_OFFICE }

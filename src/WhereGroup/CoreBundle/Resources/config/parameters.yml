@@ -16,3 +16,6 @@ parameters:
     metador_plugin_dir: '%kernel.root_dir%/../src/Plugins/'
     maintenance_file: '%kernel.root_dir%/../web/maintenance.php'
     operates_on_url: ''
+
+    api_access_ips: []
+    csw_access_ips: []
