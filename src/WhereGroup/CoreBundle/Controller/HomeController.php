@@ -70,6 +70,9 @@ class HomeController extends Controller
         $download = $request->request->get('filter');
         $params = $request->request->all();
 
+        /** @var Search $search */
+        $search = $this->get('metador_metadata_search');
+
         if (!is_null($download)) {
             $params = json_decode(base64_decode($download), true);
         }
@@ -88,10 +91,12 @@ class HomeController extends Controller
 
             // Filter for logged in user.
         } else {
+            $search->setGroups($user->getRoles());
             $filter['and'][] = [
                 'or' => [
                     ['eq' => ['public' => true]],
                     ['eq' => ['insertuser' => $user->getId()]],
+                    ['in' => ['group.role'     => $user->getRoles()]]
                 ],
             ];
         }
@@ -128,9 +133,6 @@ class HomeController extends Controller
         if (isset($params['date']) && !empty($params['date']['to'])) {
             $filter['and'][] = ['lte' => ['date' => $params['date']['to']]];
         }
-
-        /** @var Search $search */
-        $search = $this->get('metador_metadata_search');
 
         $search
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
