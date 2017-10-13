@@ -480,7 +480,7 @@ export class Ol4Map {
         ).getGeom();
         let maxextent = this.maxExtent.getPolygonForExtent(this.olMap.getView().getProjection());
         if (maxextent.intersectsCoordinate(multiPoint.getPoint(0).getCoordinates())
-            && maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
+            || maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
             this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
         } else {
             metador.displayError('Die Geometrie ist außerhalb der räumlichen Erstreckung.');
