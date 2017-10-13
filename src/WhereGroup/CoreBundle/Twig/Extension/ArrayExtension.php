@@ -18,6 +18,7 @@ class ArrayExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('array_get', array($this, 'get')),
             new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
+            new \Twig_SimpleFunction('array_to_string', array($this, 'toString')),
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
             new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
@@ -46,6 +47,12 @@ class ArrayExtension extends \Twig_Extension
     public function isEmpty(array $array, $path, $reindex = false)
     {
         return ArrayParser::isEmpty($array, $path, $reindex);
+    }
+
+    public function toString(array $array)
+    {
+
+        return implode(", ", $array);
     }
 
     /**
