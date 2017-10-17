@@ -1,0 +1,50 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}Listenelement bearbeiten{% endblock %}
+
+{% block content %}
+    {% set param = { 'profile': listProfile, 'key': listKey } %}
+
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">Listenelement bearbeiten</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_lists_show', param) }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}zurück{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <div class="grid space responsive">
+        <form action="{{ path('metador_admin_lists_new', param) }}" method="post">
+            <input type="hidden" name="prev_key" value="{{ key }}" />
+            <div class="row r-2 margin-b">
+                <div class="col c-1-2">
+                    <div><label class="form-label">Wert:</label></div>
+                    <div class="form-field-wrapper">
+                        <textarea class="textarea" name="key">{{ key }}</textarea>
+                    </div>
+                </div>
+                <div class="col c-1-2">
+                    <div><label class="form-label">Beschreibung:</label></div>
+                    <div class="form-field-wrapper">
+                        <textarea class="textarea" name="value">{{ value }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1 text-right">
+                    <button class="btn success medium">
+                        <span class="icon-checkmark"></span> hinzufügen
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
