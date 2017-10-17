@@ -67,6 +67,12 @@ class PluginController extends Controller
         $result = array(
             'content' => null,
         );
+        if ($request->files->count() === 0) {
+            $this->get('metador_frontend_command')->displayError(
+                $result,
+                'Keine Datei wurde hochgeladen bzw. die Datei ist zu groß.'
+            );
+        }
         /** @var UploadedFile $file */
         foreach ($request->files as $file) {
             if (!$file instanceof UploadedFile) {
@@ -178,9 +184,6 @@ class PluginController extends Controller
                 }
             }
             break; // only first file
-        }
-        if (count($request->files) === null) {
-            $this->get('metador_frontend_command')->displayError($result, 'Keine Datei wurde hochgeladen.');
         }
 
         return new AjaxResponse($result);
