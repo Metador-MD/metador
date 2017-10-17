@@ -39,9 +39,9 @@ class ListsController extends Controller
     public function showAction($profile, $key)
     {
         return array(
-            'listProfile' => $profile,
-            'listKey'     => $key,
-            'list'        => $this->get('metador_configuration')->get($key, 'list-option', $profile)
+            'listProfile'  => $profile,
+            'listKey'      => $key,
+            'list'         => $this->get('metador_configuration')->get($key, 'list-option', $profile)
         );
     }
 
@@ -72,8 +72,9 @@ class ListsController extends Controller
         }
 
         return array(
-            'listProfile' => $profile,
-            'listKey'     => $key
+            'listProfile'  => $profile,
+            'listKey'      => $key,
+            'listTemplate' => $this->get('metador_configuration')->get($key, 'list-option-template', $profile),
         );
     }
 

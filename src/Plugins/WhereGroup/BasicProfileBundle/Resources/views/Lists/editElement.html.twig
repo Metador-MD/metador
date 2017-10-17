@@ -27,14 +27,28 @@
                 <div class="col c-1-2">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper">
-                        <textarea class="textarea" name="key">{{ key }}</textarea>
+                        {% if value is not iterable %}
+                            <textarea class="textarea" name="key">{{ key }}</textarea>
+                        {% else %}
+                            <input type="text" class="input" name="key" value="{{ key }}" />
+                        {% endif %}
+
                     </div>
                 </div>
                 <div class="col c-1-2">
+                    {% if value is not iterable %}
                     <div><label class="form-label">Beschreibung:</label></div>
                     <div class="form-field-wrapper">
                         <textarea class="textarea" name="value">{{ value }}</textarea>
                     </div>
+                    {% else %}
+                        {% for elementKey, elementVal in value  %}
+                            <div><label class="form-label">{{ elementKey|capitalize }}:</label></div>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="input" name="value[{{ elementKey }}]" value="{{ elementVal }}" />
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="row r-1">

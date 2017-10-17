@@ -26,14 +26,27 @@
                 <div class="col c-1-2">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper">
-                        <textarea class="textarea" name="key" placeholder="..."></textarea>
+                        {% if listTemplate is null %}
+                            <textarea class="textarea" name="key"></textarea>
+                        {% else %}
+                            <input type="text" class="input" name="key" />
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col c-1-2">
+                    {% if listTemplate is null %}
                     <div><label class="form-label">Beschreibung:</label></div>
                     <div class="form-field-wrapper">
-                        <textarea class="textarea" name="value" placeholder="..."></textarea>
+                        <textarea class="textarea" name="value"></textarea>
                     </div>
+                    {% else %}
+                        {% for templateElement in listTemplate  %}
+                            <div><label class="form-label">{{ templateElement|capitalize }}:</label></div>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="input" name="value[{{ templateElement }}]" />
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="row r-1">

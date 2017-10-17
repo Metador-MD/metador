@@ -39,7 +39,20 @@
         {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': key } %}
         <tr>
             <td>{{ key }}</td>
-            <td>{{ value }}</td>
+            <td>
+                {% if value is iterable %}
+                    <table class="table small">
+                    {% for subKey, subVal in value  %}
+                        <tr>
+                            <td>{{ subKey }}</td>
+                            <td>{{ subVal }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
             <td>
                 <a href="{{ path('metador_admin_lists_edit_element', param) }}">
                     <span class="icon-pencil"></span>

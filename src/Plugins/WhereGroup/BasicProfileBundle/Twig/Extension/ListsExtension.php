@@ -49,6 +49,11 @@ class ListsExtension extends \Twig_Extension
         $options = $this->conf->get($key, 'list-option', $profile);
 
         if (is_null($options)) {
+            // Save Template
+            if (is_array($default) && !is_string($default[key($default)])) {
+                $this->conf->set($key, array_keys($default[key($default)]), 'list-option-template', $profile);
+            }
+
             $options = $default;
             $this->conf->set($key, $options, 'list-option', $profile);
         }
