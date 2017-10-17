@@ -154,3 +154,22 @@ $(document).on('click', '.-js-toggle-switch', function () {
     $(this).find('.-js-toggle-switch-input').val('0');
     $(this).find('.-js-toggle-switch-icon').removeClass('icon-toggle-on').addClass('icon-toggle-off');
 });
+
+$(document).on('click', '.-js-set-fields', function () {
+    var fields = $(this).find(":selected").attr('data-fields');
+    var parent = $(this).closest('.' + $(this).attr('data-parent'));
+
+    if (typeof fields === 'undefined') {
+        return;
+    }
+
+    fields = JSON.parse(fields);
+
+    if (typeof fields !== 'object') {
+        return;
+    }
+
+    $.each(fields, function( index, value ) {
+        parent.find('.-js-field-' + index).val(value).change();
+    });
+});

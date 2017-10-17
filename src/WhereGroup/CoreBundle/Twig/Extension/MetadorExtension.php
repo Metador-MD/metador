@@ -100,7 +100,7 @@ class MetadorExtension extends \Twig_Extension
      */
     public function isSelected($value, $option)
     {
-        return $value == $option ? 'selected="selected"' : '';
+        return $value == $option ? 'selected=selected' : '';
     }
 
     /**
