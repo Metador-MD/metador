@@ -800,6 +800,16 @@ input.input-element, .md input.btn {
   width: -moz-calc(100% - 140px);
   width: calc(100% - 140px); }
 
+.md .form-field-wrapper.i5 > .input, .md .form-field-wrapper.i5 > .select, .md .form-field-wrapper.i5 > .textarea, .md .form-field-wrapper.i5 > .advanced-select {
+  width: -webkit-calc(100% - 175px);
+  width: -moz-calc(100% - 175px);
+  width: calc(100% - 175px); }
+
+.md .form-field-wrapper.i6 > .input, .md .form-field-wrapper.i6 > .select, .md .form-field-wrapper.i6 > .textarea, .md .form-field-wrapper.i6 > .advanced-select {
+  width: -webkit-calc(100% - 210px);
+  width: -moz-calc(100% - 210px);
+  width: calc(100% - 210px); }
+
 .md .form-field-wrapper > .select:not([multiple]), .md .form-field-wrapper > .advanced-select:not([multiple]) {
   padding-right: 40px;
   -webkit-appearance: none;
@@ -1379,6 +1389,9 @@ input.input-element, .md input.btn {
   height: 35px;
   line-height: 35px; }
 
+.md .table > thead > tr > th.icon-column {
+  width: 35px; }
+
 .md .table > thead > tr > th:not(:last-child) {
   border-right: 1px solid #e1e1e1; }
 
@@ -1404,11 +1417,20 @@ input.input-element, .md input.btn {
 .md .table.small {
   font-size: .8em; }
 
+.md .table.small > thead > tr > th.icon-column {
+  width: 20px; }
+
 .md .table.medium {
   font-size: .9em; }
 
+.md .table.medium > thead > tr > th.icon-column {
+  width: 30px; }
+
 .md .table.large {
   font-size: 1.1em; }
+
+.md .table.large > thead > tr > th.icon-column {
+  width: 40px; }
 
 .md .text-small {
   font-size: 0.8em; }

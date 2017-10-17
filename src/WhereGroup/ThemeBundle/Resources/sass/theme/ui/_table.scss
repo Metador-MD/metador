@@ -17,6 +17,10 @@
         height: $normal-item-height;
         line-height: $normal-item-height;
 
+        &.icon-column {
+            width: $normal-item-height;
+        }
+
         &:not(:last-child) {
             border-right: 1px solid $border;
         }
@@ -55,13 +59,22 @@
 
     &.small {
         font-size: $font-small;
+        & > thead > tr > th.icon-column {
+            width: $small-item-height;
+        }
     }
 
     &.medium {
         font-size: $font-medium;
+        & > thead > tr > th.icon-column {
+            width: $medium-item-height;
+        }
     }
 
     &.large {
         font-size: $font-large;
+        & > thead > tr > th.icon-column {
+            width: $large-item-height;
+        }
     }
 }

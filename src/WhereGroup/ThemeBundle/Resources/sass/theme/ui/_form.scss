@@ -163,6 +163,18 @@ $icon-color: darken($border, 20%);
         }
     }
 
+    &.i5 {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
+            @include calc('width', '100% - #{$normal-item-height * 5}');
+        }
+    }
+
+    &.i6 {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
+            @include calc('width', '100% - #{$normal-item-height * 6}');
+        }
+    }
+
     & > .select:not([multiple]), & > .advanced-select:not([multiple]) {
         padding-right: 40px;
         -webkit-appearance: none;
