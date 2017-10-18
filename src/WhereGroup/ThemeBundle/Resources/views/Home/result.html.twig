@@ -8,7 +8,6 @@
 
 {% if rows is defined and rows is iterable %}
 {% for row in rows if is_granted('view', row.object|json_decode(true)) %}
-
     {% set p = row.object|json_decode(true) %}
     {% set editable = app.user and is_granted('edit', p) %}
     {% set title = p.title is defined and p.title is not empty ? p.title|teaser(75, true) : 'noname' %}
