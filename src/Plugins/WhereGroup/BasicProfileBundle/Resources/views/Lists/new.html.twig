@@ -22,8 +22,8 @@
 
     <div class="grid space responsive">
         <form action="{{ path('metador_admin_lists_new', param) }}" method="post">
-            <div class="row r-2 margin-b">
-                <div class="col c-1-2">
+            <div class="row r-1">
+                <div class="col c-1">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper">
                         {% if listTemplate is null %}
@@ -33,12 +33,15 @@
                         {% endif %}
                     </div>
                 </div>
+            </div>
+            <hr class="line-separator"/>
+            <div class="col c-1 margin-b">
                 <div class="col c-1-2">
                     {% if listTemplate is null %}
-                    <div><label class="form-label">Beschreibung:</label></div>
-                    <div class="form-field-wrapper">
-                        <textarea class="textarea" name="value"></textarea>
-                    </div>
+                        <div><label class="form-label">Beschreibung:</label></div>
+                        <div class="form-field-wrapper">
+                            <textarea class="textarea" name="value"></textarea>
+                        </div>
                     {% else %}
                         {% for templateElement in listTemplate  %}
                             <div><label class="form-label">{{ templateElement|capitalize }}:</label></div>

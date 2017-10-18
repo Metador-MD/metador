@@ -23,8 +23,8 @@
     <div class="grid space responsive">
         <form action="{{ path('metador_admin_lists_new', param) }}" method="post">
             <input type="hidden" name="prev_key" value="{{ key }}" />
-            <div class="row r-2 margin-b">
-                <div class="col c-1-2">
+            <div class="row r-1">
+                <div class="col c-1">
                     <div><label class="form-label">Wert:</label></div>
                     <div class="form-field-wrapper">
                         {% if value is not iterable %}
@@ -35,12 +35,15 @@
 
                     </div>
                 </div>
-                <div class="col c-1-2">
+            </div>
+            <hr class="line-separator" />
+            <div class="row r-1 margin-b">
+                <div class="col c-1">
                     {% if value is not iterable %}
-                    <div><label class="form-label">Beschreibung:</label></div>
-                    <div class="form-field-wrapper">
-                        <textarea class="textarea" name="value">{{ value }}</textarea>
-                    </div>
+                        <div><label class="form-label">Beschreibung:</label></div>
+                        <div class="form-field-wrapper">
+                            <textarea class="textarea" name="value">{{ value }}</textarea>
+                        </div>
                     {% else %}
                         {% for elementKey, elementVal in value  %}
                             <div><label class="form-label">{{ elementKey|capitalize }}:</label></div>

@@ -124,6 +124,12 @@ html, body {
   right: 0;
   bottom: 0; }
 
+.no-m {
+  margin: 0; }
+
+.no-p {
+  padding: 0; }
+
 .clearfix:before, .md .grid .row:before, .md .form-wrapper:before, .md .form-field-wrapper:before, .md .info-box:before, .simple-select:before, .md .modal-dialog-wrapper:before, .md .modal-dialog-content:before, .md .fieldset:before, .md .fieldset2:before, .md .fieldset2 > .rows:before, .md .fieldset2 > .rows > .row:before, .top:before, .md .source > .source-list:before, .md .search-content:before, .md .filter-wrapper > .filter-content:before, .md .plugin:before, .md .metadata-settings-wrapper:before, .search-result:before, .clearfix:after, .md .grid .row:after, .md .form-wrapper:after, .md .form-field-wrapper:after, .md .info-box:after, .simple-select:after, .md .modal-dialog-wrapper:after, .md .modal-dialog-content:after, .md .fieldset:after, .md .fieldset2:after, .md .fieldset2 > .rows:after, .md .fieldset2 > .rows > .row:after, .top:after, .md .source > .source-list:after, .md .search-content:after, .md .filter-wrapper > .filter-content:after, .md .plugin:after, .md .metadata-settings-wrapper:after, .search-result:after {
   content: " ";
   display: table; }
@@ -1404,6 +1410,12 @@ input.input-element, .md input.btn {
 
 .md .table > tbody > tr > td {
   padding: 0 20px; }
+
+.md .table > tbody > tr > td.c1-3 {
+  width: 33.333%; }
+
+.md .table > tbody > tr > td.no-p {
+  padding: 0; }
 
 .md .table > tbody > tr > td:not(:last-child) {
   border-right: 1px solid #e1e1e1; }

@@ -38,6 +38,14 @@
             & > td {
                 padding: 0 $padding;
 
+                &.c1-3 {
+                    width: 33.333%;
+                }
+
+                &.no-p {
+                    padding: 0;
+                }
+
                 &:not(:last-child) {
                     border-right: 1px solid $border;
                 }

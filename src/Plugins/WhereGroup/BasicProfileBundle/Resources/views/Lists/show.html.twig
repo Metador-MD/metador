@@ -35,35 +35,41 @@
                 <th class="icon-column">#</th>
             </tr>
         </thead>
-    {% for key, value in list %}
-        {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': key } %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>
-                {% if value is iterable %}
-                    <table class="table small">
-                    {% for subKey, subVal in value  %}
-                        <tr>
-                            <td>{{ subKey }}</td>
-                            <td>{{ subVal }}</td>
-                        </tr>
-                    {% endfor %}
-                    </table>
-                {% else %}
-                    {{ value }}
-                {% endif %}
-            </td>
-            <td>
-                <a href="{{ path('metador_admin_lists_edit_element', param) }}">
-                    <span class="icon-pencil"></span>
-                </a>
-            </td>
-            <td>
-                <a href="{{ path('metador_admin_lists_confirm_element', param) }}">
-                    <span class="icon-bin2"></span>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
+        <tbody>
+            {% for key, value in list %}
+            {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': key } %}
+            <tr>
+                <td>
+                    <a href="{{ path('metador_admin_lists_edit_element', param) }}">
+                        {{ key|teaser(18, true) }}
+                    </a>
+                </td>
+                <td class="{% if value is iterable %}no-p{% endif %}">
+                    {% if value is iterable %}
+                        <table class="table small">
+                        {% for subKey, subVal in value  %}
+                            <tr>
+                                <td class="c1-3">{{ subKey|teaser(20, true) }}</td>
+                                <td>{{ subVal|teaser(35, true) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('metador_admin_lists_edit_element', param) }}">
+                        <span class="icon-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('metador_admin_lists_confirm_element', param) }}">
+                        <span class="icon-bin2"></span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
