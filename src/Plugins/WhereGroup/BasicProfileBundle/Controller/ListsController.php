@@ -33,73 +33,114 @@ class ListsController extends Controller
 
     /**
      * @Method("GET")
-     * @Route("/edit/{profile}/{key}/", name="metador_admin_lists_edit")
+     * @Route("/show/{profile}/{key}/", name="metador_admin_lists_show")
      * @Template()
-     * @param $profile
-     * @param $key
-     * @return array
      */
-    public function editAction($profile, $key)
+    public function showAction($profile, $key)
     {
         return array(
-            'listProfile' => $profile,
-            'listKey'     => $key,
-            'list'        => $this
-                ->get('metador_configuration')
-                ->get($key, 'list-option', $profile)
+            'listProfile'  => $profile,
+            'listKey'      => $key,
+            'list'         => $this->get('metador_configuration')->get($key, 'list-option', $profile)
         );
     }
 
     /**
-     * @Method("POST")
-     * @Route("/add/{profile}/{key}/", name="metador_admin_lists_add")
-     * @param $profile
-     * @param $key
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Method({"GET", "POST"})
+     * @Route("/new/{profile}/{key}/", name="metador_admin_lists_new")
+     * @Template()
      */
-    public function addAction($profile, $key)
+    public function newAction($profile, $key)
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $request = $this->get('request_stack')->getCurrentRequest();
 
-        if (!empty($params['new_list_item_key']) && !empty($params['new_list_item_value'])) {
+        if ($request->getMethod() === 'POST'
+            && !is_null($request->request->get('key', null))
+            && !is_null($request->request->get('value', null))) {
+
             $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
-            $value[$params['new_list_item_key']] = $params['new_list_item_value'];
+
+            if ($request->request->get('prev_key') !== $request->request->get('key')) {
+                unset($value[$request->request->get('prev_key')]);
+            }
+
+            $value[$request->request->get('key')] = $request->request->get('value');
+
             $this->get('metador_configuration')->set($key, $value, 'list-option', $profile);
+
+            return $this->redirectToRoute('metador_admin_lists_show', ['profile' => $profile, 'key' => $key]);
         }
 
-        return $this->redirectToRoute('metador_admin_lists_edit', array(
-            'profile' => $profile,
-            'key'     => $key
-        ));
+        return array(
+            'listProfile'  => $profile,
+            'listKey'      => $key,
+            'listTemplate' => $this->get('metador_configuration')->get($key, 'list-option-template', $profile),
+        );
     }
 
     /**
-     * @Method("POST")
-     * @Route("/update/{profile}/{key}/", name="metador_admin_lists_update")
-     * @param $profile
-     * @param $key
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Method({"GET", "POST"})
+     * @Route("/confirm/element/{profile}/{key}/{elementKey}", name="metador_admin_lists_confirm_element", defaults={
+     *     "elementKey"=""
+     * })
+     * @Template()
      */
-    public function updateAction($profile, $key)
+    public function confirmElementAction($profile, $key, $elementKey)
     {
-        $params = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $request = $this->get('request_stack')->getCurrentRequest();
 
-        if (!empty($params['item'])) {
-            $value = array();
-
-            foreach ($params['item'] as $item) {
-                if (isset($item['delete'])) {
-                    continue;
-                }
-                $value[$item['key']] = $item['value'];
-            }
-
+        if ($request->getMethod() === 'POST') {
+            $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+            unset($value[$elementKey]);
             $this->get('metador_configuration')->set($key, $value, 'list-option', $profile);
+
+            return $this->redirectToRoute('metador_admin_lists_show', ['profile' => $profile, 'key' => $key]);
         }
 
-        return $this->redirectToRoute('metador_admin_lists_edit', array(
-            'profile' => $profile,
-            'key'     => $key
-        ));
+        return array(
+            'listProfile'    => $profile,
+            'listKey'        => $key,
+            'listElementKey' => $elementKey
+        );
+    }
+
+    /**
+     * @Method("GET")
+     * @Route("/edit/element/{profile}/{key}/{elementKey}", name="metador_admin_lists_edit_element", defaults={
+     *     "elementKey"=""
+     * })
+     * @Template()
+     */
+    public function editElementAction($profile, $key, $elementKey)
+    {
+        $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+
+        return array(
+            'listProfile'    => $profile,
+            'listKey'        => $key,
+            'key'            => $elementKey,
+            'value'          => $value[$elementKey]
+        );
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/confirm/{profile}/{key}/", name="metador_admin_lists_confirm")
+     * @Template()
+     */
+    public function confirmAction($profile, $key)
+    {
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        if ($request->getMethod() === 'POST') {
+            $this->get('metador_configuration')->remove($key, 'list-option', $profile);
+
+            return $this->redirectToRoute('metador_admin_lists');
+        }
+
+        return array(
+            'listProfile'    => $profile,
+            'listKey'        => $key
+        );
     }
 }

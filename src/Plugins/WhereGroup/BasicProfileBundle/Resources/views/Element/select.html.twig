@@ -35,7 +35,7 @@
         </select>
         <span class="form-icon icon-question2 -js-show-help" {{ name|md_data_obj }}></span>
         {% if hasList and is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
-            <a href="{{ path('metador_admin_lists_edit', { 'profile': array_get(p, '_profile'), 'key': id }) }}" target="_blank" class="form-icon icon-cog"></a>
+            <a href="{{ path('metador_admin_lists_show', { 'profile': array_get(p, '_profile'), 'key': id }) }}" target="_blank" class="form-icon icon-cog"></a>
         {% endif %}
     </div>
 {% endif %}

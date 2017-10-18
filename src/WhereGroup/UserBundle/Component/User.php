@@ -25,13 +25,16 @@ class User implements UserInterface
      */
     private $em;
 
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository  */
+    private $repo;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository  */
+    private $groupRepo;
+
     /**
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
-
-    const USER_ENTITY = 'MetadorUserBundle:User';
-    const GROUP_ENTITY = 'MetadorUserBundle:Group';
 
     /**
      * User constructor.
@@ -47,6 +50,8 @@ class User implements UserInterface
         $this->tokenStorage = $tokenStorage;
         $this->em           = $em;
         $this->encoder      = $encoder;
+        $this->repo         = $em->getRepository('MetadorUserBundle:User');
+        $this->groupRepo    = $em->getRepository('MetadorUserBundle:Group');
     }
 
     public function __destruct()
@@ -61,7 +66,7 @@ class User implements UserInterface
      */
     public function get($id)
     {
-        $user = $this->getUserRepository()->findOneById($id);
+        $user = $this->repo->findOneById($id);
 
         if (!$user) {
             throw new MetadorException("Benutzer nicht gefunden.");
@@ -76,7 +81,7 @@ class User implements UserInterface
      */
     public function getByUsername($username)
     {
-        return $this->getUserRepository()->findOneByUsername($username);
+        return $this->repo->findOneByUsername($username);
     }
 
     /**
@@ -85,7 +90,7 @@ class User implements UserInterface
      */
     public function getGroupByName($groupname)
     {
-        return $this->getGroupRepository()->findOneByRole($groupname);
+        return $this->groupRepo->findOneByRole($groupname);
     }
 
     /**
@@ -93,7 +98,7 @@ class User implements UserInterface
      */
     public function findAll()
     {
-        return $this->getUserRepository()->findAllSorted();
+        return $this->repo->findAllSorted();
     }
 
     /**
@@ -103,7 +108,7 @@ class User implements UserInterface
      */
     public function insert(UserEntity $user)
     {
-        if ($this->getUserRepository()->findOneByUsername($user->getUsername())) {
+        if ($this->repo->findOneByUsername($user->getUsername())) {
             throw new MetadorException("Benutzer bereits vorhanden.");
         }
 
@@ -212,21 +217,5 @@ class User implements UserInterface
         }
 
         return $password;
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository
-     */
-    private function getUserRepository()
-    {
-        return $this->em->getRepository(self::USER_ENTITY);
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository
-     */
-    private function getGroupRepository()
-    {
-        return $this->em->getRepository(self::GROUP_ENTITY);
     }
 }
