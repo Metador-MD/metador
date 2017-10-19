@@ -1,0 +1,75 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}Auswahlliste bearbeiten{% endblock %}
+
+{% block content %}
+    {% set param = { 'profile': listProfile, 'key': listKey } %}
+
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">Auswahlliste bearbeiten</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_lists_new', param) }}" class="btn medium">
+                    <span class="icon-plus"></span> {% trans %}neu{% endtrans %}
+                </a>
+                <a href="{{ path('metador_admin_lists') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+                <a href="{{ path('metador_admin_lists_confirm', param) }}" class="btn error medium">
+                    <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <table class="table bordered">
+        <thead>
+            <tr>
+                <th>Wert</th>
+                <th>Beschreibung</th>
+                <th class="icon-column">#</th>
+                <th class="icon-column">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in list %}
+            {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': key } %}
+            <tr>
+                <td>
+                    <a href="{{ path('metador_admin_lists_edit_element', param) }}">
+                        {{ key|teaser(18, true) }}
+                    </a>
+                </td>
+                <td class="{% if value is iterable %}no-p{% endif %}">
+                    {% if value is iterable %}
+                        <table class="table small">
+                        {% for subKey, subVal in value  %}
+                            <tr>
+                                <td class="c1-3">{{ subKey|teaser(20, true) }}</td>
+                                <td>{{ subVal|teaser(35, true) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('metador_admin_lists_edit_element', param) }}">
+                        <span class="icon-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('metador_admin_lists_confirm_element', param) }}">
+                        <span class="icon-bin2"></span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
