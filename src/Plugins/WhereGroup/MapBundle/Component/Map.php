@@ -98,13 +98,13 @@ class Map implements MapInterface
      */
     private function getContent($url)
     {
-        $content = $this->browser->get($url);
+        $response = $this->browser->get($url);
 
-        if ($content === false) {
+        if ($response->content === false) {
             throw new \Exception('Die URL liefert keine Daten.');
         }
 
-        return $content;
+        return $response->content;
     }
 
     /**
