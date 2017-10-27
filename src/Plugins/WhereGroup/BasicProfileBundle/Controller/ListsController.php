@@ -59,7 +59,8 @@ class ListsController extends Controller
             && !is_null($request->request->get('value', null))) {
             $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
 
-            if ($request->request->get('prev_key') !== $request->request->get('key')) {
+            if ($request->request->get('prev_key') !== $request->request->get('key')
+                && $request->request->get('prev_key') !== null) {
                 unset($value[$request->request->get('prev_key')]);
             }
 
