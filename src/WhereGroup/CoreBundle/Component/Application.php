@@ -5,7 +5,6 @@ namespace WhereGroup\CoreBundle\Component;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-
 use WhereGroup\PluginBundle\Component\ApplicationIntegration as Integration;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
@@ -41,20 +40,17 @@ class Application
         RequestStack $requestStack,
         $env
     ) {
-        try {
-            $this->env                  = $env;
-            $this->authorizationChecker = $authorizationChecker;
-            $this->requestStack         = $requestStack;
-            $request = $this->requestStack->getCurrentRequest();
+        $this->env                  = $env;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->requestStack         = $requestStack;
+        $request = $this->requestStack->getCurrentRequest();
 
-            if ($request && $this->env === 'dev' && $request->attributes->get('_route') === '_wdt') {
-                return;
-            }
-
-            // dispatch event
-            $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
-        } catch (\Exception $e) {
+        if ($request && $this->env === 'dev' && $request->attributes->get('_route') === '_wdt') {
+            return;
         }
+
+        // dispatch event
+        $eventDispatcher->dispatch('application.loading', new ApplicationEvent($this, array()));
     }
 
     /**

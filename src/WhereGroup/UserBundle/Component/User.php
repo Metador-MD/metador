@@ -60,6 +60,22 @@ class User implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->repo->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countGroups()
+    {
+        return $this->groupRepo->count();
+    }
+
+    /**
      * @param $id
      * @return mixed
      * @throws MetadorException

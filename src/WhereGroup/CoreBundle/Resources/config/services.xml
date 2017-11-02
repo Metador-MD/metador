@@ -58,11 +58,13 @@
         </service>
         <service id="metador_wizard" class="%metador.wizard.class%" />
         <service id="metador_metadata" class="%metador.metadata.class%">
-            <argument type="service" id="metador_core" />
             <argument type="service" id="metador_user" />
             <argument type="service" id="metador_logger" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="metador_plugin" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="kernel" />
         </service>
         <service id="metador_logger" class="%metador.logger.class%">
             <argument type="service" id="session.flash_bag" />
@@ -94,6 +96,7 @@
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading" />
+            <argument type="service" id="metador_metadata" />
         </service>
         <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">
             <tag name="kernel.event_listener" event="application.health-check" method="onCheck" />

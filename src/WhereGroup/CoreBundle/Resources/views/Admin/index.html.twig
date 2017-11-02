@@ -21,9 +21,22 @@
         </div>
     {% endif %}
 
-    <ul class="app-information">
+
+    <div class="grid space row-space padding responsive">
         {% for item in applicationGet('app-information') %}
-            <li><span class="{{ item.icon }}"></span> {{ item.label|trans }}</li>
+            <div class="row r-3">
+                <div class="col c-1-3">
+                    <div class="app-info">
+                        <div class="app-info-head"><span class="{{ item.icon }}"></span> {{ item.label|trans }}</div>
+                        <div class="app-info-count">{% if item.count is defined %}{{ item.count }}{% endif %}</div>
+                        <div class="app-info-content">{% if item.content is defined %}{{ item.content|raw }}{% endif %}</div>
+                    </div>
+                </div>
+                <div class="col c-1-3">
+                </div>
+                <div class="col c-1-3">
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

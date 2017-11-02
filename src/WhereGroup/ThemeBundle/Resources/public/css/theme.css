@@ -4018,3 +4018,32 @@ input.input-element, .md input.btn {
 
 .md .paging .disabled {
   color: #e1e1e1; }
+
+.app-info {
+  border: 1px solid #e8ecf2;
+  background-color: #f2f4f8;
+  border-radius: 8px; }
+
+.app-info > .app-info-head {
+  background-color: #eff1f6;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 0 10px;
+  color: #4F5B66; }
+
+.app-info > .app-info-count {
+  border-top: 1px solid #e8ecf2;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  color: #A7ADBA; }
+
+.app-info > .app-info-content {
+  border-top: 1px solid #e8ecf2;
+  background-color: #eff1f6;
+  padding: 10px;
+  font-size: 12px; }

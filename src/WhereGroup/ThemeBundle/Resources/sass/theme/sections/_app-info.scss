@@ -1,0 +1,57 @@
+@import '../config';
+
+$color-gr-1: #1B2B34;
+$color-gr-2: #343D46;
+$color-gr-3: #4F5B66;
+$color-gr-4: #65737E;
+$color-gr-5: #A7ADBA;
+$color-gr-6: #C0C5CE;
+$color-gr-7: #CDD3DE;
+$color-gr-8: #D8DEE9;
+
+$color-red: #EC5f67;
+$color-orange: #F99157;
+$color-yellow: #FAC863;
+$color-green: #99C794;
+$color-cyan: #5FB3B3;
+$color-blue: #6699CC;
+$color-violet: #C594C5;
+$color-brown: #AB7967;
+
+.app-info {
+    $app-info-border: lighten($color-gr-8, 5%);
+    $app-info-light: lighten($color-gr-8, 8%);
+    $app-info-dark: lighten($color-gr-8, 7%);
+
+    border: 1px solid $app-info-border;
+    background-color: $app-info-light;
+    border-radius: 8px;
+
+    & > .app-info-head {
+        background-color: $app-info-dark;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        height: 30px;
+        line-height: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 0 10px;
+        color: $color-gr-3;
+    }
+
+    & > .app-info-count {
+        border-top: 1px solid $app-info-border;
+        font-weight: bold;
+        font-size: 40px;
+        text-align: center;
+        color: $color-gr-5;
+    }
+
+    & > .app-info-content {
+        border-top: 1px solid $app-info-border;
+        background-color: $app-info-dark;
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
