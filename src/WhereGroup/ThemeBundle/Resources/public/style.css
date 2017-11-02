@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?tfu9sf');
-  src:  url('fonts/icomoon.eot?tfu9sf#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?tfu9sf') format('woff2'),
-    url('fonts/icomoon.ttf?tfu9sf') format('truetype'),
-    url('fonts/icomoon.woff?tfu9sf') format('woff'),
-    url('fonts/icomoon.svg?tfu9sf#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?581ytd');
+  src:  url('fonts/icomoon.eot?581ytd#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?581ytd') format('woff2'),
+    url('fonts/icomoon.ttf?581ytd') format('truetype'),
+    url('fonts/icomoon.woff?581ytd') format('woff'),
+    url('fonts/icomoon.svg?581ytd#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -312,6 +312,9 @@
 }
 .icon-puzzle-piece:before {
   content: "\f12e";
+}
+.icon-rocket:before {
+  content: "\f135";
 }
 .icon-check-square:before {
   content: "\f14a";

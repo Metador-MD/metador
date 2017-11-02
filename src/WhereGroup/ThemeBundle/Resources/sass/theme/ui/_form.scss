@@ -90,6 +90,12 @@ $icon-color: darken($border, 20%);
     display: block;
     @extend .clearfix;
 
+    &.readonly {
+        opacity: 0.5;
+        background-color: darken($background, 2%);
+        color: black;
+    }
+
     &.row-space {
         margin-bottom: $padding;
     }

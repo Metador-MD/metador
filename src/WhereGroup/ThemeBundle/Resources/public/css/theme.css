@@ -744,6 +744,11 @@ input.input-element, .md input.btn {
   background-color: #fafafa;
   display: block; }
 
+.md .form-field-wrapper.readonly {
+  opacity: 0.5;
+  background-color: #f2f2f2;
+  color: black; }
+
 .md .form-field-wrapper.row-space {
   margin-bottom: 20px; }
 
@@ -1461,6 +1466,41 @@ input.input-element, .md input.btn {
 
 .md .margin-b {
   margin-bottom: 20px; }
+
+.md [class^="icon-"].label, [class*=" icon-"].label {
+  background-color: #f7f7f7;
+  border: 1px solid #eaeaea;
+  color: #777;
+  border-radius: 50%;
+  padding: 0 3px;
+  display: inline-block;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  width: 35px; }
+
+.md [class^="icon-"].label:hover, [class*=" icon-"].label:hover {
+  background-color: #eaeaea;
+  border: 1px solid #dedede;
+  color: #5e5e5e; }
+
+.md [class^="icon-"].label.small, [class*=" icon-"].label.small {
+  height: 20px;
+  line-height: 20px;
+  width: 20px; }
+
+.md [class^="icon-"].label.medium, [class*=" icon-"].label.medium {
+  height: 30px;
+  line-height: 30px;
+  width: 30px; }
+
+.md [class^="icon-"].label.large, [class*=" icon-"].label.large {
+  height: 40px;
+  line-height: 40px;
+  width: 40px; }
+
+.md .pointer {
+  cursor: pointer; }
 
 .md h1.title, .md h2.title, .md h3.title, .md h4.title, .md h5.title {
   color: #5e5e5e;
