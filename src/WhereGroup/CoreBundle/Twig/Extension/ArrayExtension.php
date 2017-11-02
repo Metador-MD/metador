@@ -23,6 +23,7 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
             new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
             new \Twig_SimpleFunction('array_has_value', array($this, 'arrayHasValue')),
+            new \Twig_SimpleFunction('array_to_string', array($this, 'arrayToString')),
         );
     }
 
@@ -107,6 +108,15 @@ class ArrayExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    public function arrayToString($array)
+    {
+        if (is_array($array)) {
+            return implode("", $array);
+        }
+
+        return $array;
     }
 
     /**
