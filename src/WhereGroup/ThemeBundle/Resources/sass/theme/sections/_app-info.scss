@@ -20,8 +20,8 @@ $color-brown: #AB7967;
 
 .app-info {
     $app-info-border: lighten($color-gr-8, 5%);
-    $app-info-light: lighten($color-gr-8, 8%);
-    $app-info-dark: lighten($color-gr-8, 7%);
+    $app-info-light: $background; // lighten($background, 2%)
+    $app-info-dark: darken($background, 2%);
 
     border: 1px solid $app-info-border;
     background-color: $app-info-light;
@@ -31,20 +31,28 @@ $color-brown: #AB7967;
         background-color: $app-info-dark;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
+        text-align: center;
         height: 30px;
         line-height: 30px;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 14px;
         padding: 0 10px;
-        color: $color-gr-3;
+        color: darken($border, 50%);
+
+        & > .app-info-icon {
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            color: darken($border, 5%);
+        }
     }
 
     & > .app-info-count {
         border-top: 1px solid $app-info-border;
         font-weight: bold;
-        font-size: 40px;
+        font-size: 25px;
         text-align: center;
-        color: $color-gr-5;
+        color: $primary;
     }
 
     & > .app-info-content {

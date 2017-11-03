@@ -93,4 +93,19 @@ class MetadataRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @return mixed
+     */
+    public function countAndGroupBySources()
+    {
+        return $this
+            ->getEntityManager()
+            ->getRepository(self::ENTITY)
+            ->createQueryBuilder('u')
+            ->select('u.source, count(u)')
+            ->groupBy('u.source')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

@@ -61,7 +61,7 @@ class ApplicationListener
                 $app->add(
                     $app->get('AppInformation', 'metadata-info')
                         ->icon('icon-database')
-                        ->label('Metadaten / DB')
+                        ->label('Metadaten')
                         ->count($this->metadata->count())
                         ->setRole('ROLE_SYSTEM_GEO_OFFICE')
                 );

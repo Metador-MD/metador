@@ -129,6 +129,14 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function countAndGroupBySources()
+    {
+        return $this->repo->countAndGroupBySources();
+    }
+
+    /**
      * @param $p
      * @return string
      */

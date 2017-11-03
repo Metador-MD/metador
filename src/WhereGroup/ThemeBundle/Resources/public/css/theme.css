@@ -4021,29 +4021,36 @@ input.input-element, .md input.btn {
 
 .app-info {
   border: 1px solid #e8ecf2;
-  background-color: #f2f4f8;
+  background-color: #f7f7f7;
   border-radius: 8px; }
 
 .app-info > .app-info-head {
-  background-color: #eff1f6;
+  background-color: #f2f2f2;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  text-align: center;
   height: 30px;
   line-height: 30px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 10px;
-  color: #4F5B66; }
+  color: #626262; }
+
+.app-info > .app-info-head > .app-info-icon {
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  color: #d4d4d4; }
 
 .app-info > .app-info-count {
   border-top: 1px solid #e8ecf2;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 25px;
   text-align: center;
-  color: #A7ADBA; }
+  color: #008ec0; }
 
 .app-info > .app-info-content {
   border-top: 1px solid #e8ecf2;
-  background-color: #eff1f6;
+  background-color: #f2f2f2;
   padding: 10px;
   font-size: 12px; }
