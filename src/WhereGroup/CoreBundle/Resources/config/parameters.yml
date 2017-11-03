@@ -16,3 +16,7 @@ parameters:
     metador_plugin_dir: '%kernel.root_dir%/../src/Plugins/'
     maintenance_file: '%kernel.root_dir%/../web/maintenance.php'
     operates_on_url: ''
+
+    cache_host: 127.0.0.1
+    cache_port: 11211
+    cache_enabled: false

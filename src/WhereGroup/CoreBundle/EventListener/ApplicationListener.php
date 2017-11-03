@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\MetadataInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
@@ -11,15 +12,18 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
-    protected $metadata;
+    private $metadata;
+    private $cache;
 
     /**
      * ApplicationListener constructor.
      * @param MetadataInterface $metadata
+     * @param Cache $cache
      */
-    public function __construct(MetadataInterface $metadata)
+    public function __construct(MetadataInterface $metadata, Cache $cache)
     {
         $this->metadata = $metadata;
+        $this->cache = $cache;
     }
 
     public function __destruct()
@@ -58,12 +62,25 @@ class ApplicationListener
             );
 
             if ($app->isRoute('metador_admin_index')) {
+                $stats = $this->cache->stats();
+                $usage = '-';
+
+                if (is_array($stats) && isset($stats[key($stats)]['limit_maxbytes']) && $stats[key($stats)]['bytes']) {
+                    $usage = round($stats[key($stats)]['bytes'] * 100 / $stats[key($stats)]['limit_maxbytes']) . '%';
+                }
+
                 $app->add(
                     $app->get('AppInformation', 'metadata-info')
                         ->icon('icon-database')
                         ->label('Metadaten')
                         ->count($this->metadata->count())
                         ->setRole('ROLE_SYSTEM_GEO_OFFICE')
+                )->add(
+                    $app->get('AppInformation', 'cache-info')
+                        ->icon('icon-database')
+                        ->label('Cache')
+                        ->count($usage)
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
                 );
             }
         }
