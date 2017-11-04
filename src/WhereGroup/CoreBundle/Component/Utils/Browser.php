@@ -17,6 +17,7 @@ class Browser
     private $proxyUser = '';
     private $proxyPass = '';
     private $proxyExclude = [];
+    private $header = [];
     private $conf;
 
     /**
@@ -66,23 +67,43 @@ class Browser
     }
 
     /**
-     * @param $url
-     * @return bool|\stdClass
+     * @return $this
      */
-    public function get($url)
+    public function clearHeader()
     {
-        return $this->doRequest('GET', $url, array(), null);
+        $this->header = [];
+        return $this;
+    }
+
+    /**
+     * @param $header
+     * @return $this
+     */
+    public function setHeader($header)
+    {
+        $this->header = $header;
+        return $this;
     }
 
     /**
      * @param $url
-     * @param array $header
+     * @return bool|\stdClass
+     * @internal param array $header
+     */
+    public function get($url)
+    {
+        return $this->doRequest('GET', $url, null);
+    }
+
+    /**
+     * @param $url
      * @param $data
      * @return bool|\stdClass
+     * @internal param array $header
      */
-    public function post($url, array $header, $data)
+    public function post($url, $data)
     {
-        return $this->doRequest('POST', $url, $header, $data);
+        return $this->doRequest('POST', $url, $data);
     }
 
     /**
@@ -99,12 +120,12 @@ class Browser
     /**
      * @param $method
      * @param $url
-     * @param array $header
      * @param $data
      * @return \stdClass
      * @throws MetadorException
+     * @internal param array $header
      */
-    private function doRequest($method, $url, array $header, $data)
+    private function doRequest($method, $url, $data)
     {
         $init    = curl_init();
         $urlInfo = parse_url($url);
@@ -149,8 +170,8 @@ class Browser
         curl_setopt($init, CURLOPT_CONNECTTIMEOUT, 0);
         curl_setopt($init, CURLOPT_TIMEOUT, $this->timeout);
 
-        if (!empty($header)) {
-            curl_setopt($init, CURLOPT_HTTPHEADER, $header);
+        if (!empty($this->header)) {
+            curl_setopt($init, CURLOPT_HTTPHEADER, $this->header);
         }
 
         if (!empty($this->proxyHost) && !in_array($urlInfo["host"], $this->proxyExclude)) {
