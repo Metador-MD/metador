@@ -63,10 +63,17 @@ class ApplicationListener
 
             if ($app->isRoute('metador_admin_index')) {
                 $stats = $this->cache->stats();
-                $usage = '-';
 
                 if (is_array($stats) && isset($stats[key($stats)]['limit_maxbytes']) && $stats[key($stats)]['bytes']) {
                     $usage = round($stats[key($stats)]['bytes'] * 100 / $stats[key($stats)]['limit_maxbytes']) . '%';
+
+                    $app->add(
+                        $app->get('AppInformation', 'cache-info')
+                            ->icon('icon-database')
+                            ->label('Cache')
+                            ->count($usage)
+                            ->setRole('ROLE_SYSTEM_SUPERUSER')
+                    );
                 }
 
                 $app->add(
@@ -75,12 +82,6 @@ class ApplicationListener
                         ->label('Metadaten')
                         ->count($this->metadata->count())
                         ->setRole('ROLE_SYSTEM_GEO_OFFICE')
-                )->add(
-                    $app->get('AppInformation', 'cache-info')
-                        ->icon('icon-database')
-                        ->label('Cache')
-                        ->count($usage)
-                        ->setRole('ROLE_SYSTEM_SUPERUSER')
                 );
             }
         }
