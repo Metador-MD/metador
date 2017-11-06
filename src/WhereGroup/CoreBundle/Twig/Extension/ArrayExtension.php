@@ -18,10 +18,12 @@ class ArrayExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('array_get', array($this, 'get')),
             new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
+            new \Twig_SimpleFunction('array_to_string', array($this, 'toString')),
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
             new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
             new \Twig_SimpleFunction('array_has_value', array($this, 'arrayHasValue')),
+            new \Twig_SimpleFunction('array_to_string', array($this, 'arrayToString')),
         );
     }
 
@@ -46,6 +48,12 @@ class ArrayExtension extends \Twig_Extension
     public function isEmpty(array $array, $path, $reindex = false)
     {
         return ArrayParser::isEmpty($array, $path, $reindex);
+    }
+
+    public function toString(array $array)
+    {
+
+        return implode(", ", $array);
     }
 
     /**
@@ -100,6 +108,15 @@ class ArrayExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    public function arrayToString($array)
+    {
+        if (is_array($array)) {
+            return implode("", $array);
+        }
+
+        return $array;
     }
 
     /**
