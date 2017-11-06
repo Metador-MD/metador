@@ -28,14 +28,18 @@ class ArrayExtension extends \Twig_Extension
     }
 
     /**
-     * @param array $array
+     * @param $array
      * @param $path
      * @param null $default
      * @param bool $reindex
      * @return array|null
      */
-    public function get(array $array, $path, $default = null, $reindex = false)
+    public function get($array, $path, $default = null, $reindex = false)
     {
+        if (!is_array($array)) {
+            return null;
+        }
+
         return ArrayParser::get($array, $path, $default, $reindex);
     }
 
