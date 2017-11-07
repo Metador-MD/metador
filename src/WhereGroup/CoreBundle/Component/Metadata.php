@@ -395,7 +395,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * Use ID or UUID to delete Metadata.
+     * Use ID or UUID to unlock Metadata.
      * @param $id
      * @return mixed|void
      */
