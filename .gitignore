@@ -2,6 +2,7 @@
 *~
 *.db
 *.db3
+*.sqlite
 *.cache
 *.phar
 *.TODO
