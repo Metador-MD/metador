@@ -136,6 +136,45 @@ class User implements UserInterface
     }
 
     /**
+     * @param $username
+     * @param $password
+     * @param string $email
+     */
+    public function createIfNotExists($username, $password, $email = '')
+    {
+        if (!$this->getByUsername($username)) {
+            $user = new UserEntity();
+
+            $user
+                ->setUsername($username)
+                ->setPassword($password)
+                ->setEmail($email)
+            ;
+
+            $this->insert($user);
+        }
+    }
+
+    /**
+     * @param $role
+     * @param $desciption
+     */
+    public function createGroupIfNotExists($role, $desciption = '')
+    {
+        if (!$this->groupRepo->findOneByRole($role)) {
+            $group = new Group();
+            $group
+                ->setRole($role)
+                ->setDescription($desciption)
+            ;
+
+            $this->em->persist($group);
+            $this->em->flush();
+        }
+
+    }
+
+    /**
      * @param UserEntity $user
      * @return $this
      */
