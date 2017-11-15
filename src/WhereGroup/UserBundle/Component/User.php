@@ -182,7 +182,6 @@ class User implements UserInterface
             $group
                 ->setRole($role)
                 ->setDescription($desciption)
-                ->ad
             ;
 
             $this->em->persist($group);
