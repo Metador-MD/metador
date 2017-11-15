@@ -139,8 +139,10 @@ class User implements UserInterface
      * @param $username
      * @param $password
      * @param string $email
+     * @param array $groups
+     * @return $this
      */
-    public function createIfNotExists($username, $password, $email = '')
+    public function createIfNotExists($username, $password, $email = '', $groups = [])
     {
         if (!$this->getByUsername($username)) {
             $user = new UserEntity();
@@ -151,13 +153,27 @@ class User implements UserInterface
                 ->setEmail($email)
             ;
 
+            if (!empty($groups)) {
+                foreach ($groups as $group) {
+                    $groupEntity = $this->getGroupByName($group);
+
+                    if ($groupEntity) {
+                        $user->addGroup($groupEntity);
+                    }
+                }
+
+            }
+
             $this->insert($user);
         }
+
+        return $this;
     }
 
     /**
      * @param $role
      * @param $desciption
+     * @return $this
      */
     public function createGroupIfNotExists($role, $desciption = '')
     {
@@ -166,12 +182,14 @@ class User implements UserInterface
             $group
                 ->setRole($role)
                 ->setDescription($desciption)
+                ->ad
             ;
 
             $this->em->persist($group);
             $this->em->flush();
         }
 
+        return $this;
     }
 
     /**
