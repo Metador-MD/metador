@@ -155,19 +155,20 @@ class ArrayParser
      * @param bool $reindex
      * @return null
      */
-    private static function arrayGet($array, $keys, $default = null, $reindex = false)
+    private static function arrayGet(array $array, $keys, $default = null, $reindex = false)
     {
         $key = array_shift($keys);
 
+        if ($reindex && is_array($array[$key])) {
+            self::reindexKeys($array[$key]);
+        }
+
         if (isset($array[$key]) && count($keys) === 0) {
             return $array[$key];
-        } elseif (isset($array[$key]) && count($keys) >= 1) {
-            // Reindex array keys
-            if ($reindex) {
-                self::reindexKeys($array[$key]);
-            }
+        }
 
-            return self::arrayGet($array[$key], $keys);
+        if (isset($array[$key]) && is_array($array[$key]) && count($keys) >= 1) {
+            return self::arrayGet($array[$key], $keys, $default);
         }
 
         return $default;
@@ -178,7 +179,7 @@ class ArrayParser
      */
     public static function reindexKeys(array &$array)
     {
-        if (is_array($array) && !self::hasStringKeys($array)) {
+        if (!self::hasStringKeys($array)) {
             $array = array_values($array);
         }
     }

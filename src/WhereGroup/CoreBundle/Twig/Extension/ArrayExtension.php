@@ -54,6 +54,10 @@ class ArrayExtension extends \Twig_Extension
         return ArrayParser::isEmpty($array, $path, $reindex);
     }
 
+    /**
+     * @param array $array
+     * @return string
+     */
     public function toString(array $array)
     {
 
@@ -101,6 +105,10 @@ class ArrayExtension extends \Twig_Extension
         return true;
     }
 
+    /**
+     * @param $array
+     * @return bool
+     */
     public function arrayHasValue($array)
     {
         if (is_array($array)) {
@@ -114,6 +122,10 @@ class ArrayExtension extends \Twig_Extension
         return false;
     }
 
+    /**
+     * @param $array
+     * @return string
+     */
     public function arrayToString($array)
     {
         if (is_array($array)) {

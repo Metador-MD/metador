@@ -48,20 +48,25 @@
                     $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
                 );
 
-
-            var count = $(this.element).attr('data-count');
-            this.changeElementNames(clone, count);
-
-            $(this.element).attr('data-count', ++count);
+            this.changeElementNames(clone, this.valueCount());
+            this.increaseValueCount();
 
             $(this.element).find('.-js-multi-fieldset-rows').append(clone);
 
             metadata.enableSubmitButton();
         },
 
-        changeElementNames: function(element, count, subCount) {
+        valueCount: function() {
+            return $(this.element).attr('data-count');
+        },
+
+        increaseValueCount: function() {
+            var count = this.valueCount();
+            $(this.element).attr('data-count', ++count);
+        },
+
+        changeElementNames: function(element, count) {
             var self = this;
-            subCount = (typeof subCount === 'undefined') ? 0 : parseInt(subCount);
 
             element.each(function() {
                 var node    = $(this).prop('nodeName');
@@ -69,60 +74,40 @@
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
+                // clear value
                 if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
                     $(this).val('');
                 }
 
-                if(typeof name !== 'undefined' && name !== false) {
-                    name = self.replaceCounter(
-                        /\[([\d]{1,3})\]/g,
-                        "[", "]", count, subCount, name
-                    );
-                    $(this).attr('name', name);
-                }
-
-                if(typeof id !== 'undefined' && id !== false) {
-                    id = self.replaceCounter(
-                        /_([\d]{1,3})[_]*/g,
-                        "_", "_", count, subCount, id
-                    );
-                    $(this).attr('id', id);
-                }
-
-                if(typeof obj_id !== 'undefined' && obj_id !== false) {
-                    obj_id = self.replaceCounter(
-                        /_([\d]{1,3})[_]*/g,
-                        "_", "_", count, subCount, obj_id
-                    );
-                    $(this).attr('data-obj-id', obj_id);
-                }
+                $(this).attr('name', self.replaceCounter(name, /\[([\d]{1,3})\]/g, count, "[", "]"));
+                $(this).attr('id', self.replaceCounter(id, /_([\d]{1,3})[_]*/g, count, "_", "_"));
+                $(this).attr('data-obj-id', self.replaceCounter(obj_id, /_([\d]{1,3})[_]*/g, count, "_", "_"));
 
                 if($(this).children().length > 0) {
-                    self.changeElementNames($(this).children(), count, subCount);
+                    self.changeElementNames($(this).children(), count);
                 }
             });
         },
 
-        replaceCounter: function(split, delimiterStart, delimiterEnd, count, subCount, string) {
-            var tokens    = string.split(split);
-            var newString = "";
-            var counter   = 0;
-
-            for (var i = 0; i < tokens.length; i++) {
-                if (tokens[i].match(/^[\d]{1,3}$/)) {
-
-                    if (counter === subCount) {
-                        tokens[i] = delimiterStart + count + delimiterEnd;
-                    } else {
-                        tokens[i] = delimiterStart + tokens[i] + delimiterEnd;
-                    }
-
-                    counter++;
-                }
-                newString += tokens[i];
+        replaceCounter: function(string, regex, count, delimiterStart, delimiterEnd) {
+            if(!string || string === false) {
+                return;
             }
 
-            return newString;
+            var tokens    = string.split(regex);
+            var increased = false;
+
+            for (var i = tokens.length -1; i >= 0; i--) {
+                if (tokens[i].match(/^[\d]{1,3}$/)) {
+                    tokens[i] = increased === false
+                        ? delimiterStart + count + delimiterEnd
+                        : delimiterStart + tokens[i] + delimiterEnd;
+
+                    increased = true;
+                }
+            }
+
+            return tokens.join('');
         }
     } );
 
