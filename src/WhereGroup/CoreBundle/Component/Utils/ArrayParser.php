@@ -62,11 +62,12 @@ class ArrayParser
      * @param array $array
      * @param $path
      * @param null $default
+     * @param bool $reindex
      * @return array|int|null
      */
-    public static function length(array $array, $path, $default = null)
+    public static function length(array $array, $path, $default = null, $reindex = false)
     {
-        $item = self::get($array, $path, $default);
+        $item = self::get($array, $path, $default, $reindex);
 
         if (is_array($item) || is_object($item)) {
             return count((array)$item);
@@ -159,7 +160,7 @@ class ArrayParser
     {
         $key = array_shift($keys);
 
-        if ($reindex && is_array($array[$key])) {
+        if ($reindex && isset($array[$key]) && is_array($array[$key])) {
             self::reindexKeys($array[$key]);
         }
 
@@ -168,7 +169,7 @@ class ArrayParser
         }
 
         if (isset($array[$key]) && is_array($array[$key]) && count($keys) >= 1) {
-            return self::arrayGet($array[$key], $keys, $default);
+            return self::arrayGet($array[$key], $keys, $default, $reindex);
         }
 
         return $default;

@@ -68,11 +68,12 @@ class ArrayExtension extends \Twig_Extension
      * @param array $array
      * @param $path
      * @param null $default
+     * @param bool $reindex
      * @return array|int|null
      */
-    public function length(array $array, $path, $default = null)
+    public function length(array $array, $path, $default = null, $reindex = false)
     {
-        return ArrayParser::length($array, $path, $default);
+        return ArrayParser::length($array, $path, $default, $reindex);
     }
 
     /**

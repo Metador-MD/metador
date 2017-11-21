@@ -161,7 +161,6 @@ class User implements UserInterface
                         $user->addGroup($groupEntity);
                     }
                 }
-
             }
 
             $this->insert($user);

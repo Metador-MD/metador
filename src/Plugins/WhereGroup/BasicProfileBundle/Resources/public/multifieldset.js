@@ -41,7 +41,9 @@
         add: function() {
             var clone = $(this.element).find('.-js-multi-fieldset-default-row').clone();
 
-            clone.removeClass('-js-multi-fieldset-default-row');
+            clone
+                .removeClass('-js-multi-fieldset-default-row')
+                .addClass('-js-duplicatable-ignore');
 
             clone.find('.-js-multi-fieldset-icons')
                 .append(
