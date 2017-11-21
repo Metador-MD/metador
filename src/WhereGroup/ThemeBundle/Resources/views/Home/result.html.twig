@@ -39,7 +39,7 @@
                             <span class="icon-eye"></span>
                         </div>
                         {% elseif not editable and p['_locked'] is defined and p['_locked'] %}
-                        <div class="result-icon" title="{% trans %}Datensatz ist derzeig gesperrt.{% endtrans %}">
+                        <div class="result-icon" title="{% trans %}Datensatz ist derzeitig gesperrt.{% endtrans %}">
                             <span class="icon-lock"></span>
                         </div>
                         {% elseif editable %}
