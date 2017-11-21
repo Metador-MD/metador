@@ -59,6 +59,12 @@
 
             labelClone.attr('data-tab', count).find('.-js-title-label').text('');
             contentClone.attr('data-tab-content', count);
+            contentClone.find('.-js-duplicatable-ignore').each(function() {
+                $(this).remove();
+            });
+            contentClone.find('.-js-multi-fieldset').each(function() {
+                $(this).multiFieldset();
+            });
 
             this.changeElementNames(contentClone, count, 0);
 
