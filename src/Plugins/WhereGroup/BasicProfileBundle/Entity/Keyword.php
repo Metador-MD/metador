@@ -51,7 +51,7 @@ class Keyword
     private $dateType = null;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, options={"default" : conditional}))
      * @Assert\NotBlank(message="Kardinalität darf nicht leer sein.")
      */
     private $cardinality = null;
