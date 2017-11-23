@@ -59,7 +59,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('public/app.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/metallic.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/metallic/zebra_datepicker.min.css') }}">
 
     {% if app.environment == 'dev' %}
         <link rel="stylesheet" href="https://i.icomoon.io/public/83c52ab735/Metador/style.css">
@@ -89,7 +89,7 @@
 {% block javascript %}
     {{ parent() }}
     <script src="{{ asset('public/app.min.js') }}"></script>
-    <script src="{{ asset('public/javascript/zebra_datepicker.js') }}"></script>
+    <script src="{{ asset('public/zebra_datepicker.min.js') }}"></script>
     <script src="{{ asset('bundles/metadorcore/js/core.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/js/session.js') }}"></script>
     <script src="{{ asset('bundles/metadortheme/js/ui.js') }}"></script>
