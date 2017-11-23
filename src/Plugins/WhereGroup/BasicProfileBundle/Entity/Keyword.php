@@ -51,6 +51,12 @@ class Keyword
     private $dateType = null;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="Kardinalität darf nicht leer sein.")
+     */
+    private $cardinality = null;
+
+    /**
      * @ORM\Column(type="json_array")
      */
 
@@ -141,6 +147,24 @@ class Keyword
     public function getDateType()
     {
         return $this->dateType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardinality()
+    {
+        return $this->cardinality;
+    }
+
+    /**
+     * @param mixed $cardinality
+     * @return Keyword
+     */
+    public function setCardinality($cardinality)
+    {
+        $this->cardinality = $cardinality;
+        return $this;
     }
 
     /**
