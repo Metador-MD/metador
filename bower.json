@@ -27,6 +27,7 @@
     "proj4js": "https://github.com/proj4js/proj4js/archive/2.4.3.zip",
     "OpenLayers": "https://github.com/openlayers/openlayers/releases/download/v4.0.1/v4.0.1-dist.zip",
     "jquery-form": "^4.2.1",
-    "highlightjs": "^9.10.0"
+    "highlightjs": "^9.10.0",
+    "jquery": "^2.2"
   }
 }

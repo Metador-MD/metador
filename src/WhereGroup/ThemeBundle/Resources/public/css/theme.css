@@ -153,6 +153,12 @@ html, body {
   margin: 0;
   background-color: transparent; }
 
+.hidden {
+  display: none; }
+
+.hidden.active {
+  display: block; }
+
 .md .grid .row {
   display: block; }
 

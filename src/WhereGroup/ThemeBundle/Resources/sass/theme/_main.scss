@@ -67,3 +67,11 @@ body {
     margin: 0;
     background-color: transparent;
 }
+
+.hidden {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}

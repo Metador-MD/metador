@@ -47,6 +47,25 @@ $(document).on('mousedown', '.-js-datepicker', function() {
     });
 });
 
+$(document).on('mousedown', '.-js-date-time-picker', function() {
+    var self = this;
+    $(self).Zebra_DatePicker({
+        show_icon: false,
+        show_week_number: 'Wk',
+        offset:[-177,120],
+        format: 'Y-m-dTH:i:sZ',
+        onSelect: function() {
+            $(self).change();
+        },
+        onClear: function() {
+            $(self).change();
+        },
+        //months: ['','']
+        //days: ['','']
+    });
+});
+
+
 $(document).ready(function() {
     $('.-js-show-tooltip').tooltip();
     $('.-js-checkbox').checkbox();

@@ -22,6 +22,7 @@ class ArrayExtension extends \Twig_Extension
             new \Twig_SimpleFunction('array_length', array($this, 'length')),
             new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
             new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
+            new \Twig_SimpleFunction('array_one_exists', array($this, 'oneExists')),
             new \Twig_SimpleFunction('array_has_value', array($this, 'arrayHasValue')),
             new \Twig_SimpleFunction('array_to_string', array($this, 'arrayToString')),
         );
@@ -104,6 +105,24 @@ class ArrayExtension extends \Twig_Extension
         }
 
         return true;
+    }
+
+    /**
+     * @param array $array
+     * @param array $paths
+     * @param null $find
+     * @param bool $reindex
+     * @return bool
+     */
+    public function oneExists(array $array, array $paths, $find = null, $reindex = false)
+    {
+        foreach ($paths as $path) {
+            if (!ArrayParser::isEmpty($array, $path, $reindex)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

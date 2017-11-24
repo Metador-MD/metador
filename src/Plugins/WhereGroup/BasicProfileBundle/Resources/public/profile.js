@@ -173,3 +173,19 @@ $(document).on('click', '.-js-set-fields', function () {
         parent.find('.-js-field-' + index).val(value).change();
     });
 });
+
+$(document).on('change', '.-js-change-view', function() {
+    var target = $('#' + $(this).find(":selected").attr('data-obj-id'));
+    var clearValues = $(this).hasClass('-js-change-view-clear-values');
+
+    target.siblings().each(function() {
+        $(this).removeClass('active');
+
+        if (clearValues) {
+            $(this).find('input').val('');
+            $(this).find('select').val('');
+            $(this).find('textarea').val('');
+        }
+    });
+    target.addClass('active');
+});
