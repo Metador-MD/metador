@@ -27,6 +27,7 @@
             <th>Identifier</th>
             <th>Datum</th>
             <th>Datumstyp</th>
+            <th>Kardinalität</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,11 @@
                 <td>
                     {% if keyword.repository %}
                         {{ keyword.dateType }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if keyword.cardinality %}
+                        {{ keyword.cardinality }}
                     {% endif %}
                 </td>
             </tr>

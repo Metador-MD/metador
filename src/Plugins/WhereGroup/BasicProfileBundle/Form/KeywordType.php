@@ -53,6 +53,14 @@ class KeywordType extends AbstractType
                     'publication' => 'Veröffentlichung',
                 ),
             ))
+            ->add('cardinality', ChoiceType::class, array(
+                'label'   => 'Kardinalität',
+                'choices' => array(
+                    'optional'    => 'Optional',
+                    'conditional' => 'Conditional',
+                    'mandatory'   => 'Mandatory',
+                ),
+            ))
             ->add('keywords', TextareaType::class, array(
                 'label'    => 'Schlüsselwörter',
                 'required' => false,
