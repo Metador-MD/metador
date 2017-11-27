@@ -170,7 +170,14 @@ $(document).on('click', '.-js-set-fields', function () {
     }
 
     $.each(fields, function( index, value ) {
-        parent.find('.-js-field-' + index).val(value).change();
+        var item = parent.find('.-js-field-' + index);
+        var node = item.prop('nodeName');
+
+        if (node === 'SELECT' || node === 'INPUT') {
+            item.val(value).change();
+        } else if (node === 'TEXTAREA') {
+            item.text(value).change();
+        }
     });
 });
 

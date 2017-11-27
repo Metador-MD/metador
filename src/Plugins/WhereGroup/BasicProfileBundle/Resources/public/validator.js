@@ -73,7 +73,12 @@ Validator.prototype = {
         }
 
         jQuery.each(validation[objKey], function(index, rule) {
+            var node   = $(item).prop('nodeName');
             var string = $(item).val();
+
+            if (node === 'TEXTAREA') {
+                string = $(item).text();
+            }
 
             if (rule.assert && !self.assert(rule.assert, string) ||
                 rule.regex && !self.assertRegex(rule.regex, string)) {
