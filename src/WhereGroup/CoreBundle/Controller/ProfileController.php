@@ -47,7 +47,8 @@ class ProfileController extends Controller
                 '_public'  => false,
                 '_groups'  => array()
             ),
-            'userGroups' => $this->getRoles()
+            'userGroups' => $this->getRoles(),
+            'profile'    => $profile
         )));
     }
 
@@ -75,7 +76,8 @@ class ProfileController extends Controller
 
         return new Response($this->get('metador_core')->render($template, array(
             'p' => $metadata->getObject(),
-            'userGroups' => $this->getRoles()
+            'userGroups' => $this->getRoles(),
+            'profile'    => $profile
         )));
     }
 
