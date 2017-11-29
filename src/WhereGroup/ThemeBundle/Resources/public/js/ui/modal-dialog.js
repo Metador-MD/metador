@@ -7,6 +7,7 @@
             width: 400,
             closeButton: true,
             closeButtonLabel: 'Close',
+            onOpen: function() {},
             beforeClose: function() {}
         };
 
@@ -24,9 +25,9 @@
     // Avoid Plugin.prototype conflicts
     $.extend( Plugin.prototype, {
         init: function() {
-            var self = this;
-            var title = $(self.element).attr('data-title');
-            var html  = $(self.element).html();
+            var self   = this;
+            var title  = $(self.element).attr('data-title');
+            var html   = $(self.element).html();
             var footer = $('<div></div>')
                 .addClass('modal-dialog-footer');
 
@@ -54,6 +55,17 @@
                 );
             }
 
+            var content = $('<div></div>')
+                .addClass('modal-dialog-content')
+                .html(html);
+
+            if (typeof self.settings.content === 'object') {
+                content = $('<div></div>')
+                    .addClass('modal-dialog-content')
+                    .append(self.settings.content);
+            }
+
+
             self.dialog = $('<div></div>')
                 .attr('id', self.id)
                 .addClass('modal-dialog-wrapper')
@@ -67,11 +79,7 @@
                                 .addClass('modal-dialog-header')
                                 .text(title)
                         )
-                        .append(
-                            $('<div></div>')
-                                .addClass('modal-dialog-content')
-                                .html(html)
-                        )
+                        .append(content)
                         .append(footer)
                 );
 
@@ -81,6 +89,7 @@
         open: function () {
             $('.md').append(this.dialog);
             this.dialog.show();
+            this.settings.onOpen();
         },
 
         hide: function () {
