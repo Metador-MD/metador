@@ -65,6 +65,9 @@
                     .append(self.settings.content);
             }
 
+            $(document).on('closeAllWindows', function() {
+               self.close();
+            });
 
             self.dialog = $('<div></div>')
                 .attr('id', self.id)
