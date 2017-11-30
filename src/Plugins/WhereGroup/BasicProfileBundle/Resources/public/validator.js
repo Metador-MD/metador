@@ -47,6 +47,10 @@ Validator.prototype = {
      * @param value
      */
     assertRegex: function(regex, value) {
+        if (value === null) {
+            return false;
+        }
+        
         return value.match(new RegExp(regex, "i"));
     },
 
