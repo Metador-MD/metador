@@ -50,7 +50,7 @@ Validator.prototype = {
         if (value === null) {
             return false;
         }
-        
+
         return value.match(new RegExp(regex, "i"));
     },
 
