@@ -224,8 +224,11 @@ export class Ol4Map {
         }
         this.olMap.addControl(new ol.control.ScaleLine());
 
+        let icon = document.createElement('span');
+        icon.className = "icon-earth";
         this.olMap.addControl(new ol.control.ZoomToExtent({
-            extent: this.maxExtent.getExtent(proj)
+            extent: this.maxExtent.getExtent(proj),
+            label: icon
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
