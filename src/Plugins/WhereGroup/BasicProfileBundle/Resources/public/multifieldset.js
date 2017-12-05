@@ -7,6 +7,22 @@ Fieldset.prototype = {
         this.element = element;
     },
 
+    // refactor
+    setValueByClass: function(classId, value) {
+        if (!classId || !value) {
+            return;
+        }
+
+        var item = $(this.element).find('.-js-multi-fieldset-default-row').find('input.' + classId);
+
+        if (item.val() !== '') {
+            this.addByClass(classId, value);
+            return;
+        }
+
+        item.val(value).change();
+    },
+
     setValue: function(objId, value) {
         if (!objId || !value) {
             return;
@@ -15,6 +31,8 @@ Fieldset.prototype = {
         var item = $(this.element).find('.-js-multi-fieldset-default-row').find('[data-obj-id="' + objId + '"]');
 
         if (item.val() !== '') {
+            console.log(item.val());
+
             this.add(objId, value);
             return;
         }
@@ -32,6 +50,31 @@ Fieldset.prototype = {
         });
 
         $(this.element).find('.row.-js-multi-field-row.-js-duplicatable-ignore').remove();
+    },
+
+    // refactor
+    addByClass: function(classId, value) {
+        var clone = $(this.element).find('.-js-multi-fieldset-default-row').clone();
+
+        clone
+            .removeClass('-js-multi-fieldset-default-row')
+            .addClass('-js-duplicatable-ignore');
+
+        clone.find('.-js-multi-fieldset-icons')
+            .append(
+                $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
+            );
+
+        this.changeElementNames(clone, this.valueCount());
+        this.increaseValueCount();
+
+        if (classId && value) {
+            clone.find('.' + classId).val(value).change();
+        }
+
+        $(this.element).find('.-js-multi-fieldset-rows').append(clone);
+
+        metadata.enableSubmitButton();
     },
 
     add: function(objId, value) {
