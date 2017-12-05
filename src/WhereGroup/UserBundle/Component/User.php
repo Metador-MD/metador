@@ -60,6 +60,22 @@ class User implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->repo->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countGroups()
+    {
+        return $this->groupRepo->count();
+    }
+
+    /**
      * @param $id
      * @return mixed
      * @throws MetadorException
@@ -115,6 +131,61 @@ class User implements UserInterface
         $user->setPassword($this->encodePassword($user, $user->getPassword()));
 
         $this->update($user);
+
+        return $this;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @param string $email
+     * @param array $groups
+     * @return $this
+     */
+    public function createIfNotExists($username, $password, $email = '', $groups = [])
+    {
+        if (!$this->getByUsername($username)) {
+            $user = new UserEntity();
+
+            $user
+                ->setUsername($username)
+                ->setPassword($password)
+                ->setEmail($email)
+            ;
+
+            if (!empty($groups)) {
+                foreach ($groups as $group) {
+                    $groupEntity = $this->getGroupByName($group);
+
+                    if ($groupEntity) {
+                        $user->addGroup($groupEntity);
+                    }
+                }
+            }
+
+            $this->insert($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $role
+     * @param $desciption
+     * @return $this
+     */
+    public function createGroupIfNotExists($role, $desciption = '')
+    {
+        if (!$this->groupRepo->findOneByRole($role)) {
+            $group = new Group();
+            $group
+                ->setRole($role)
+                ->setDescription($desciption)
+            ;
+
+            $this->em->persist($group);
+            $this->em->flush();
+        }
 
         return $this;
     }

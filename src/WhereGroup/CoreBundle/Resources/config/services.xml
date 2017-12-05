@@ -17,6 +17,7 @@
         <parameter key="metador.markdown.class">WhereGroup\CoreBundle\Component\Utils\Markdown</parameter>
         <parameter key="metador.database.search.class">WhereGroup\CoreBundle\Component\Search\DatabaseSearch</parameter>
         <parameter key="metador.browser.class">WhereGroup\CoreBundle\Component\Utils\Browser</parameter>
+        <parameter key="metador.cache.class">WhereGroup\CoreBundle\Component\Cache</parameter>
 
         <!-- EVENT LISTENER -->
         <parameter key="metador.app.listener.class">WhereGroup\CoreBundle\EventListener\ApplicationListener</parameter>
@@ -43,6 +44,11 @@
 
     <services>
         <!-- SERVICE -->
+        <service id="metador_cache" class="%metador.cache.class%">
+            <argument>%cache_host%</argument>
+            <argument>%cache_port%</argument>
+            <argument>%cache_enabled%</argument>
+        </service>
         <service id="metador_core" class="%metador.core.class%">
             <argument type="service" id="twig" />
             <argument type="service" id="event_dispatcher" />
@@ -51,18 +57,18 @@
             <argument type="service" id="kernel" />
         </service>
         <service id="metador.application" class="%metador.application.class%">
-            <argument type="service" id="event_dispatcher" />
             <argument type="service" id="security.authorization_checker" />
-            <argument type="service" id="request_stack" />
             <argument>%kernel.environment%</argument>
         </service>
         <service id="metador_wizard" class="%metador.wizard.class%" />
         <service id="metador_metadata" class="%metador.metadata.class%">
-            <argument type="service" id="metador_core" />
             <argument type="service" id="metador_user" />
             <argument type="service" id="metador_logger" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="metador_plugin" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="kernel" />
         </service>
         <service id="metador_logger" class="%metador.logger.class%">
             <argument type="service" id="session.flash_bag" />
@@ -76,6 +82,7 @@
         </service>
         <service id="metador_configuration" class="%metador.configuration.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="metador_cache" />
         </service>
         <service id="metador_source" class="%metador.source.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
@@ -94,6 +101,8 @@
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading" />
+            <argument type="service" id="metador_metadata" />
+            <argument type="service" id="metador_cache" />
         </service>
         <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">
             <tag name="kernel.event_listener" event="application.health-check" method="onCheck" />
@@ -127,6 +136,8 @@
         <service id="metador.twig.application" class="%metador.twig.application.class%">
             <argument type="service" id="metador.application" />
             <argument type="service" id="metador_plugin" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="request_stack" />
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.uuid" class="%metador.twig.uuid.class%">

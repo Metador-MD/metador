@@ -24,6 +24,54 @@
     margin-bottom: $padding;
 }
 
+.md [class^="icon-"], [class*=" icon-"] {
+    &.label {
+        background-color: darken($background, 0%);
+        border: 1px solid darken($background, 5%);
+        color: lighten($font, 20%);
+        border-radius: 50%;
+        padding: 0 3px;
+        display: inline-block;
+        text-align: center;
+
+        height: $normal-item-height;
+        line-height: $normal-item-height;
+        width: $normal-item-height;
+        //font-size: $font-normal;
+
+        &:hover {
+            background-color: darken($background, 5%);
+            border: 1px solid darken($background, 10%);
+            color: lighten($font, 10%);
+        }
+
+        &.small {
+            height: $small-item-height;
+            line-height: $small-item-height;
+            width: $small-item-height;
+            //font-size: $font-small;
+        }
+
+        &.medium {
+            height: $medium-item-height;
+            line-height: $medium-item-height;
+            width: $medium-item-height;
+            //font-size: $font-medium;
+        }
+
+        &.large {
+            height: $large-item-height;
+            line-height: $large-item-height;
+            width: $large-item-height;
+            //font-size: $font-large;
+        }
+    }
+}
+
+.md .pointer {
+    cursor: pointer;
+}
+
 .md h1.title,
 .md h2.title,
 .md h3.title,

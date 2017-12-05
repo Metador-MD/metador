@@ -153,6 +153,12 @@ html, body {
   margin: 0;
   background-color: transparent; }
 
+.hidden {
+  display: none; }
+
+.hidden.active {
+  display: block; }
+
 .md .grid .row {
   display: block; }
 
@@ -743,6 +749,11 @@ input.input-element, .md input.btn {
   border-radius: 2px;
   background-color: #fafafa;
   display: block; }
+
+.md .form-field-wrapper.readonly {
+  opacity: 0.5;
+  background-color: #f2f2f2;
+  color: black; }
 
 .md .form-field-wrapper.row-space {
   margin-bottom: 20px; }
@@ -1461,6 +1472,41 @@ input.input-element, .md input.btn {
 
 .md .margin-b {
   margin-bottom: 20px; }
+
+.md [class^="icon-"].label, [class*=" icon-"].label {
+  background-color: #f7f7f7;
+  border: 1px solid #eaeaea;
+  color: #777;
+  border-radius: 50%;
+  padding: 0 3px;
+  display: inline-block;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  width: 35px; }
+
+.md [class^="icon-"].label:hover, [class*=" icon-"].label:hover {
+  background-color: #eaeaea;
+  border: 1px solid #dedede;
+  color: #5e5e5e; }
+
+.md [class^="icon-"].label.small, [class*=" icon-"].label.small {
+  height: 20px;
+  line-height: 20px;
+  width: 20px; }
+
+.md [class^="icon-"].label.medium, [class*=" icon-"].label.medium {
+  height: 30px;
+  line-height: 30px;
+  width: 30px; }
+
+.md [class^="icon-"].label.large, [class*=" icon-"].label.large {
+  height: 40px;
+  line-height: 40px;
+  width: 40px; }
+
+.md .pointer {
+  cursor: pointer; }
 
 .md h1.title, .md h2.title, .md h3.title, .md h4.title, .md h5.title {
   color: #5e5e5e;
@@ -2959,7 +3005,7 @@ input.input-element, .md input.btn {
   z-index: 2;
   margin: 0 0 20px; }
 
-.md .left-menu > .menu-item {
+.menu-item {
   position: relative;
   padding: 0 20px;
   cursor: pointer;
@@ -2973,33 +3019,33 @@ input.input-element, .md input.btn {
   height: 30px;
   line-height: 30px; }
 
-.md .left-menu > .menu-item .error-count {
+.menu-item .error-count {
   float: right;
   color: #e15b36; }
 
-.md .left-menu > .menu-item > a {
+.menu-item > a {
   display: block;
   text-decoration: none;
   font-size: 0.9em; }
 
-.md .left-menu > .menu-item span[class^="icon-"] {
+.menu-item span[class^="icon-"] {
   height: 30px;
   line-height: 30px;
   margin-right: 10px; }
 
-.md .left-menu > .menu-item:hover {
+.menu-item:hover {
   color: #000;
   background-color: #eaeaea; }
 
-.md .left-menu > .menu-item.act.error, .md .left-menu > .menu-item.error {
+.menu-item.act.error, .menu-item.error {
   box-shadow: inset 3px 0 0 #e15b36; }
 
-.md .left-menu > .menu-item.act {
+.menu-item.act {
   background-color: #fff;
   box-shadow: inset 3px 0 0 #008ec0;
   border: 1px solid #eaeaea; }
 
-.md .left-menu > .menu-item.act:after, .md .left-menu > .menu-item.act:before {
+.menu-item.act:after, .menu-item.act:before {
   right: -22px;
   top: 50%;
   border: solid transparent;
@@ -3011,16 +3057,16 @@ input.input-element, .md input.btn {
   border-right-color: white;
   z-index: 2; }
 
-.md .left-menu > .menu-item.act:after {
+.menu-item.act:after {
   border-width: 8px;
   margin-top: -8px; }
 
-.md .left-menu > .menu-item.act:before {
+.menu-item.act:before {
   border-right-color: #e5e5e5;
   border-width: 9px;
   margin-top: -9px; }
 
-.md .left-menu .menu-title {
+.menu-title {
   font-weight: bold;
   color: #777;
   background-color: #eaeaea;
@@ -3978,3 +4024,39 @@ input.input-element, .md input.btn {
 
 .md .paging .disabled {
   color: #e1e1e1; }
+
+.app-info {
+  border: 1px solid #e8ecf2;
+  background-color: #f7f7f7;
+  border-radius: 8px; }
+
+.app-info > .app-info-head {
+  background-color: #f2f2f2;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0 10px;
+  color: #626262; }
+
+.app-info > .app-info-head > .app-info-icon {
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  color: #d4d4d4; }
+
+.app-info > .app-info-count {
+  border-top: 1px solid #e8ecf2;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  color: #008ec0; }
+
+.app-info > .app-info-content {
+  border-top: 1px solid #e8ecf2;
+  background-color: #f2f2f2;
+  padding: 10px;
+  font-size: 12px; }

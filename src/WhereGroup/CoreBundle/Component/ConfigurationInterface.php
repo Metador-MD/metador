@@ -13,8 +13,9 @@ interface ConfigurationInterface
     /**
      * ConfigurationInterface constructor.
      * @param EntityManagerInterface $em
+     * @param Cache $cache
      */
-    public function __construct(EntityManagerInterface $em);
+    public function __construct(EntityManagerInterface $em, Cache $cache);
 
     public function __destruct();
 

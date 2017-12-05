@@ -1,3 +1,123 @@
+var Fieldset = function() {};
+
+Fieldset.prototype = {
+    element: null,
+
+    setElement: function (element) {
+        this.element = element;
+    },
+
+    setValue: function(objId, value) {
+        if (!objId || !value) {
+            return;
+        }
+
+        var item = $(this.element).find('.-js-multi-fieldset-default-row').find('[data-obj-id="' + objId + '"]');
+
+        if (item.val() !== '') {
+            this.add(objId, value);
+            return;
+        }
+
+        item.val(value);
+    },
+
+    clear: function () {
+        $(this.element).find('.row.-js-multi-field-row .-js-user-input').each(function() {
+            var node    = $(this).prop('nodeName');
+
+            if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
+                $(this).val('');
+            }
+        });
+
+        $(this.element).find('.row.-js-multi-field-row.-js-duplicatable-ignore').remove();
+    },
+
+    add: function(objId, value) {
+        var clone = $(this.element).find('.-js-multi-fieldset-default-row').clone();
+
+        clone
+            .removeClass('-js-multi-fieldset-default-row')
+            .addClass('-js-duplicatable-ignore');
+
+        clone.find('.-js-multi-fieldset-icons')
+            .append(
+                $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
+            );
+
+        this.changeElementNames(clone, this.valueCount());
+        this.increaseValueCount();
+
+        if (objId && value) {
+            clone.find('[data-obj-id="' + objId + '"]').val(value);
+        }
+
+        $(this.element).find('.-js-multi-fieldset-rows').append(clone);
+
+        metadata.enableSubmitButton();
+    },
+
+    remove: function(element) {
+        $(element).closest('.-js-multi-field-row').remove();
+        metadata.enableSubmitButton();
+    },
+
+    valueCount: function() {
+        return $(this.element).attr('data-count');
+    },
+
+    increaseValueCount: function() {
+        var count = this.valueCount();
+        $(this.element).attr('data-count', ++count);
+    },
+
+    changeElementNames: function(element, count) {
+        var self = this;
+
+        element.each(function() {
+            var node    = $(this).prop('nodeName');
+            var name    = $(this).attr('name');
+            var id      = $(this).attr('id');
+            var obj_id  = $(this).attr('data-obj-id');
+
+            // clear value
+            if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
+                $(this).val('');
+            }
+
+            $(this).attr('name', self.replaceCounter(name, /\[([\d]{1,3})\]/g, count, "[", "]"));
+            $(this).attr('id', self.replaceCounter(id, /_([\d]{1,3})[_]*/g, count, "_", "_"));
+            $(this).attr('data-obj-id', self.replaceCounter(obj_id, /_([\d]{1,3})[_]*/g, count, "_", "_"));
+
+            if($(this).children().length > 0) {
+                self.changeElementNames($(this).children(), count);
+            }
+        });
+    },
+
+    replaceCounter: function(string, regex, count, delimiterStart, delimiterEnd) {
+        if(!string || string === false) {
+            return;
+        }
+
+        var tokens    = string.split(regex);
+        var increased = false;
+
+        for (var i = tokens.length -1; i >= 0; i--) {
+            if (tokens[i].match(/^[\d]{1,3}$/)) {
+                tokens[i] = increased === false
+                    ? delimiterStart + count + delimiterEnd
+                    : delimiterStart + tokens[i] + delimiterEnd;
+
+                increased = true;
+            }
+        }
+
+        return tokens.join('');
+    }
+};
+
 ;( function( $, window, document, undefined ) {
     "use strict";
 
@@ -13,7 +133,7 @@
         this.settings = $.extend( {}, defaults, options );
         this._defaults = defaults;
         this._name = pluginName;
-
+        this.fieldset = new Fieldset();
         this.init();
     }
 
@@ -21,108 +141,17 @@
     $.extend( Plugin.prototype, {
         init: function() {
             var self = this;
+            this.fieldset.setElement(this.element);
 
             $(this.element).on('click', '.-js-multi-fieldset-add', function() {
-                self.add();
+                self.fieldset.add();
                 return false;
             });
 
             $(this.element).on('click', '.-js-multi-fieldset-remove', function() {
-                self.remove(this);
+                self.fieldset.remove(this);
                 return false;
             });
-        },
-
-        remove: function(element) {
-            $(element).closest('.-js-multi-field-row').remove();
-            metadata.enableSubmitButton();
-        },
-
-        add: function() {
-            var clone = $(this.element).find('.-js-multi-fieldset-default-row').clone();
-
-            clone.removeClass('-js-multi-fieldset-default-row');
-
-            clone.find('.-js-multi-fieldset-icons')
-                .append(
-                    $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
-                );
-
-
-            var count = $(this.element).attr('data-count');
-            this.changeElementNames(clone, count);
-
-            $(this.element).attr('data-count', ++count);
-
-            $(this.element).find('.-js-multi-fieldset-rows').append(clone);
-
-            metadata.enableSubmitButton();
-        },
-
-        changeElementNames: function(element, count, subCount) {
-            var self = this;
-            subCount = (typeof subCount === 'undefined') ? 0 : parseInt(subCount);
-
-            element.each(function() {
-                var node    = $(this).prop('nodeName');
-                var name    = $(this).attr('name');
-                var id      = $(this).attr('id');
-                var obj_id  = $(this).attr('data-obj-id');
-
-                if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
-                    $(this).val('');
-                }
-
-                if(typeof name !== 'undefined' && name !== false) {
-                    name = self.replaceCounter(
-                        /\[([\d]{1,3})\]/g,
-                        "[", "]", count, subCount, name
-                    );
-                    $(this).attr('name', name);
-                }
-
-                if(typeof id !== 'undefined' && id !== false) {
-                    id = self.replaceCounter(
-                        /_([\d]{1,3})[_]*/g,
-                        "_", "_", count, subCount, id
-                    );
-                    $(this).attr('id', id);
-                }
-
-                if(typeof obj_id !== 'undefined' && obj_id !== false) {
-                    obj_id = self.replaceCounter(
-                        /_([\d]{1,3})[_]*/g,
-                        "_", "_", count, subCount, obj_id
-                    );
-                    $(this).attr('data-obj-id', obj_id);
-                }
-
-                if($(this).children().length > 0) {
-                    self.changeElementNames($(this).children(), count, subCount);
-                }
-            });
-        },
-
-        replaceCounter: function(split, delimiterStart, delimiterEnd, count, subCount, string) {
-            var tokens    = string.split(split);
-            var newString = "";
-            var counter   = 0;
-
-            for (var i = 0; i < tokens.length; i++) {
-                if (tokens[i].match(/^[\d]{1,3}$/)) {
-
-                    if (counter === subCount) {
-                        tokens[i] = delimiterStart + count + delimiterEnd;
-                    } else {
-                        tokens[i] = delimiterStart + tokens[i] + delimiterEnd;
-                    }
-
-                    counter++;
-                }
-                newString += tokens[i];
-            }
-
-            return newString;
         }
     } );
 

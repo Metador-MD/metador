@@ -3,8 +3,10 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Twig_Environment;
+use Symfony\Component\HttpKernel\KernelInterface;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
@@ -30,49 +32,64 @@ class Metadata implements MetadataInterface
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var Core  */
-    protected $core;
-
     /** @var Logger  */
     protected $logger;
 
     /** @var  Plugin */
     protected $plugin;
 
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
+
+    /** @var Twig_Environment */
+    protected $templating;
+
+    /** @var KernelInterface */
+    protected $kernel;
+
+
     const ENTITY = 'MetadorCoreBundle:Metadata';
 
     /**
      * Metadata constructor.
-     * @param Core $core
      * @param UserInterface $user
      * @param Logger $logger
-     * @param EntityManagerInterface $em
      * @param Plugin $plugin
+     * @param EntityManagerInterface $em
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Twig_Environment $templating
+     * @param KernelInterface $kernel
      */
     public function __construct(
-        Core $core,
         UserInterface $user,
         Logger $logger,
+        Plugin $plugin,
         EntityManagerInterface $em,
-        Plugin $plugin
+        EventDispatcherInterface $eventDispatcher,
+        Twig_Environment $templating,
+        KernelInterface $kernel
     ) {
-        $this->em = $em;
-        $this->core = $core;
-        $this->user = $user;
-        $this->logger = $logger;
-        $this->repo = $em->getRepository(self::ENTITY);
-        $this->plugin = $plugin;
+        $this->em              = $em;
+        $this->user            = $user;
+        $this->logger          = $logger;
+        $this->repo            = $em->getRepository(self::ENTITY);
+        $this->plugin          = $plugin;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->templating      = $templating;
+        $this->kernel          = $kernel;
     }
 
     public function __destruct()
     {
         unset(
-            $this->core,
-            $this->user,
-            $this->repo,
-            $this->logger,
             $this->em,
-            $this->plugin
+            $this->user,
+            $this->logger,
+            $this->repo,
+            $this->plugin,
+            $this->eventDispatcher,
+            $this->templating,
+            $this->kernel
         );
     }
 
@@ -97,10 +114,26 @@ class Metadata implements MetadataInterface
 
         // EVENT ON LOAD
         if ($dispatchEvent) {
-            $this->core->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
+            $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
         }
 
         return $metadata;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->repo->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countAndGroupBySources()
+    {
+        return $this->repo->countAndGroupBySources();
     }
 
     /**
@@ -111,7 +144,7 @@ class Metadata implements MetadataInterface
     {
         $class = $this->plugin->getPluginClassName($p['_profile']);
 
-        $xml = $this->core->render($class .":Export:metadata.xml.twig", array(
+        $xml = $this->templating->render($class .":Export:metadata.xml.twig", array(
             "p" => $p
         ));
 
@@ -126,7 +159,7 @@ class Metadata implements MetadataInterface
     public function xmlToObject($xml, $profile)
     {
         $class  = $this->plugin->getPluginClassName($profile);
-        $schema = $this->core->locateResource('@' . $class . '/Resources/config/import.json');
+        $schema = $this->kernel->locateResource('@' . $class . '/Resources/config/import.json');
 
         $parser = new XmlParser($xml, new XmlParserFunctions());
         $result = $parser->loadSchema(file_get_contents($schema))->parse();
@@ -362,7 +395,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * Use ID or UUID to delete Metadata.
+     * Use ID or UUID to unlock Metadata.
      * @param $id
      * @return mixed|void
      */
@@ -396,7 +429,7 @@ class Metadata implements MetadataInterface
 
         // EVENT PRE DELETE
         $event = new MetadataChangeEvent($metadata, array());
-        $this->core->dispatch('metadata.pre_delete', $event);
+        $this->eventDispatcher->dispatch('metadata.pre_delete', $event);
 
         foreach ($metadata->getGroups() as $group) {
             $metadata->removeGroups($group);
@@ -423,7 +456,7 @@ class Metadata implements MetadataInterface
         // EVENT PRE SAVE
         if ($dispatchEvent) {
             $event  = new MetadataChangeEvent($entity, array());
-            $this->core->dispatch('metadata.pre_save', $event);
+            $this->eventDispatcher->dispatch('metadata.pre_save', $event);
         }
 
         // SAVE TO DATABASE
@@ -458,7 +491,7 @@ class Metadata implements MetadataInterface
 
             // EVENT POST SAVE
             if ($dispatchEvent) {
-                $this->core->dispatch('metadata.post_save', $event);
+                $this->eventDispatcher->dispatch('metadata.post_save', $event);
             }
 
             return true;
