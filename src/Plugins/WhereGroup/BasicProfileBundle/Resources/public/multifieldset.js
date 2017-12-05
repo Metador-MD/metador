@@ -31,8 +31,6 @@ Fieldset.prototype = {
         var item = $(this.element).find('.-js-multi-fieldset-default-row').find('[data-obj-id="' + objId + '"]');
 
         if (item.val() !== '') {
-            console.log(item.val());
-
             this.add(objId, value);
             return;
         }

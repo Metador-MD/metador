@@ -79,8 +79,8 @@ Validator.prototype = {
         jQuery.each(validation[objKey], function(index, rule) {
             var string = $(item).val();
 
-            if (rule.frontend && rule.frontend === false) {
-                return false;
+            if (rule.frontend === false) {
+                return true;
             }
 
             if (rule.assert && !self.assert(rule.assert, string) ||
