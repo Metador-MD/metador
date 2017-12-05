@@ -79,6 +79,10 @@ Validator.prototype = {
         jQuery.each(validation[objKey], function(index, rule) {
             var string = $(item).val();
 
+            if (rule.frontend && rule.frontend === false) {
+                return false;
+            }
+
             if (rule.assert && !self.assert(rule.assert, string) ||
                 rule.regex && !self.assertRegex(rule.regex, string)) {
 
@@ -100,14 +104,10 @@ Validator.prototype = {
             if (valid) {
                 delete self.validation[source][key];
             }
-
-            errorCount += Object.keys(self.validation[source]).length;
-
-
         });
 
         jQuery.each(sources, function(index, source) {
-            self.setErrorCount(errorCount, source);
+            self.setErrorCount(Object.keys(self.validation[source]).length, source);
         });
 
         return valid;

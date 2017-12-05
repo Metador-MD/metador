@@ -3005,7 +3005,7 @@ input.input-element, .md input.btn {
   z-index: 2;
   margin: 0 0 20px; }
 
-.md .left-menu > .menu-item {
+.menu-item {
   position: relative;
   padding: 0 20px;
   cursor: pointer;
@@ -3019,33 +3019,33 @@ input.input-element, .md input.btn {
   height: 30px;
   line-height: 30px; }
 
-.md .left-menu > .menu-item .error-count {
+.menu-item .error-count {
   float: right;
   color: #e15b36; }
 
-.md .left-menu > .menu-item > a {
+.menu-item > a {
   display: block;
   text-decoration: none;
   font-size: 0.9em; }
 
-.md .left-menu > .menu-item span[class^="icon-"] {
+.menu-item span[class^="icon-"] {
   height: 30px;
   line-height: 30px;
   margin-right: 10px; }
 
-.md .left-menu > .menu-item:hover {
+.menu-item:hover {
   color: #000;
   background-color: #eaeaea; }
 
-.md .left-menu > .menu-item.act.error, .md .left-menu > .menu-item.error {
+.menu-item.act.error, .menu-item.error {
   box-shadow: inset 3px 0 0 #e15b36; }
 
-.md .left-menu > .menu-item.act {
+.menu-item.act {
   background-color: #fff;
   box-shadow: inset 3px 0 0 #008ec0;
   border: 1px solid #eaeaea; }
 
-.md .left-menu > .menu-item.act:after, .md .left-menu > .menu-item.act:before {
+.menu-item.act:after, .menu-item.act:before {
   right: -22px;
   top: 50%;
   border: solid transparent;
@@ -3057,16 +3057,16 @@ input.input-element, .md input.btn {
   border-right-color: white;
   z-index: 2; }
 
-.md .left-menu > .menu-item.act:after {
+.menu-item.act:after {
   border-width: 8px;
   margin-top: -8px; }
 
-.md .left-menu > .menu-item.act:before {
+.menu-item.act:before {
   border-right-color: #e5e5e5;
   border-width: 9px;
   margin-top: -9px; }
 
-.md .left-menu .menu-title {
+.menu-title {
   font-weight: bold;
   color: #777;
   background-color: #eaeaea;
