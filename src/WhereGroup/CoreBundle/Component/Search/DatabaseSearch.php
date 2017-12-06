@@ -32,6 +32,9 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function find()
     {
+        if ($this->getGroups()) {
+            $this->qb->leftJoin('m.groups', 'g');
+        }
         if ($this->expression) {
             $this->qb
                 ->add('where', $this->expression->getExpression())
@@ -59,7 +62,7 @@ class DatabaseSearch extends Search implements SearchInterface
 
         return [
             'paging' => $this->getResultPaging(),
-            'rows'   => $this->getResult()
+            'rows' => $this->getResult(),
         ];
     }
 
@@ -99,7 +102,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler('m', self::MAP_QUERY2SOURCE);
+        return new DatabaseExprHandler(['metadata' => 'm', 'group' => 'g'], 'metadata', self::MAP_QUERY2SOURCE);
     }
 
     /**

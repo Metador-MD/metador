@@ -18,7 +18,7 @@
 
         <input id="map-menu-load-wms-input" type="text" class="input-element medium input"
                placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
-               data-url="{{ url('metador_admin_map_loadwms') }}"/>
+               data-url="{{ url('metador_map_loadwms') }}"/>
 
         <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
 
@@ -30,7 +30,7 @@
         </select>
 
         <div style="display: none">
-            <form id="file-upload-form" action="{{ path('metador_admin_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
+            <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
                 <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
             </form>
         </div>

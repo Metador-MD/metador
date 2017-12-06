@@ -224,8 +224,11 @@ export class Ol4Map {
         }
         this.olMap.addControl(new ol.control.ScaleLine());
 
+        let icon = document.createElement('span');
+        icon.className = "icon-earth";
         this.olMap.addControl(new ol.control.ZoomToExtent({
-            extent: this.maxExtent.getExtent(proj)
+            extent: this.maxExtent.getExtent(proj),
+            label: icon
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
@@ -480,7 +483,7 @@ export class Ol4Map {
         ).getGeom();
         let maxextent = this.maxExtent.getPolygonForExtent(this.olMap.getView().getProjection());
         if (maxextent.intersectsCoordinate(multiPoint.getPoint(0).getCoordinates())
-            && maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
+            || maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
             this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
         } else {
             metador.displayError('Die Geometrie ist außerhalb der räumlichen Erstreckung.');
