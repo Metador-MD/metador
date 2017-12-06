@@ -91,6 +91,19 @@ class ListsController extends Controller
 
         if ($request->getMethod() === 'POST') {
             $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+
+            $pointer = 0;
+
+            foreach ($value as $listKey => $listValue) {
+                if ($pointer === (int)$elementKey) {
+                    $elementKey = $listKey;
+                    break;
+                }
+
+                ++$pointer;
+            }
+
+
             unset($value[$elementKey]);
             $this->get('metador_configuration')->set($key, $value, 'list-option', $profile);
 
@@ -114,6 +127,17 @@ class ListsController extends Controller
     public function editElementAction($profile, $key, $elementKey)
     {
         $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+
+        $pointer = 0;
+
+        foreach ($value as $listKey => $listValue) {
+            if ($pointer === (int)$elementKey) {
+                $elementKey = $listKey;
+                break;
+            }
+
+            ++$pointer;
+        }
 
         return array(
             'listProfile'    => $profile,
