@@ -1,18 +1,21 @@
 .md .map-dialog .map {
-  & .ol-control.ol-zoom {
-    right: 8px;
-    left: auto;
-    top: 28px;
-  }
-  & .ol-control.ol-zoom-extent {
-    right: 8px;
-    left: auto;
-    top: 90px;
-  }
+    & .ol-control.ol-zoom {
+        right: 8px;
+        left: auto;
+        top: 28px;
+    }
+
+    & .ol-control.ol-zoom-extent {
+        right: 8px;
+        left: auto;
+        top: 96px;
+    }
+
   & .ol-scale-line {
     left: auto;
     right: 8px;
   }
+
   & .tooltip {
     position: relative;
     background: rgba(0, 60, 136, 0.5); // ol button bgcolor
@@ -29,6 +32,7 @@
       }
     }
   }
+
   & .tooltip:before {
     border-top: 6px solid rgba(0, 0, 0, 0.5);
     border-right: 6px solid transparent;
@@ -40,6 +44,7 @@
     left: 50%;
     border-top-color: rgba(0, 60, 136, 0.5);
   }
+
   & .hidden {
     display: none;
   }
