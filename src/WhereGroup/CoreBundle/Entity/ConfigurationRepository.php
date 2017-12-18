@@ -69,6 +69,7 @@ class ConfigurationRepository extends EntityRepository
      * @param $filterValue
      * @param null $default
      * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
@@ -154,8 +155,10 @@ class ConfigurationRepository extends EntityRepository
     /**
      * @param $key
      * @param $value
-     * @param $filterType
-     * @param $filterValue
+     * @param string $filterType
+     * @param string $filterValue
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')
     {

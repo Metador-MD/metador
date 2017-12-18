@@ -37,7 +37,7 @@
         </thead>
         <tbody>
             {% for key, value in list %}
-            {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': key } %}
+            {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': loop.index0 } %}
             <tr>
                 <td>
                     <a href="{{ path('metador_admin_lists_edit_element', param) }}">

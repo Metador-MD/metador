@@ -26,9 +26,14 @@ class DatabaseExprHandler implements ExprHandler
     private $wildCard;
 
     /**
+     * @var array
+     */
+    private $aliasMap;
+
+    /**
      * @var string
      */
-    private $alias;
+    private $defaultAlias;
 
     /**
      * @var array|string
@@ -42,7 +47,8 @@ class DatabaseExprHandler implements ExprHandler
 
     /**
      * DatabaseExprHandler constructor.
-     * @param string $alias
+     * @param array $aliasMap
+     * @param string $defaultAlias
      * @param  array|string $spatialProperty
      * array: names of ordinate columns - array(w,s,e,n)
      * string: geometry column name
@@ -51,14 +57,16 @@ class DatabaseExprHandler implements ExprHandler
      * @param string $wildCard
      */
     public function __construct(
-        $alias,
+        array $aliasMap,
+        $defaultAlias,
         array $propertyMap,
         $spatialProperty = array('bboxw', 'bboxs', 'bboxe', 'bboxn'),
         $escapeChar = '\\',
         $singleChar = '_',
         $wildCard = '%'
     ) {
-        $this->alias = $alias;
+        $this->aliasMap = $aliasMap;
+        $this->defaultAlias = $defaultAlias;
         $this->spatialProperty = $spatialProperty;
         $this->escapeChar = $escapeChar;
         $this->singleChar = $singleChar;
@@ -76,27 +84,18 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param string $name
-     * @return string
-     * @throws PropertyNameNotFoundException
-     */
-    private function getName($name)
-    {
-        try {
-            return $this->propertyMap[strtolower($name)];
-        } catch (\Exception $e) {
-            throw new PropertyNameNotFoundException($name);
-        }
-    }
-
-    /**
      * @param $name
      * @return string
      * @throws PropertyNameNotFoundException
      */
-    private function getFullName($name)
+    private function getName($name, $delimiter = '.')
     {
-        return $this->alias.'.'.$this->getName($name);
+        $splittedName = explode('.', $name);
+        /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
+        $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
+        $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
+
+        return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
     }
 
     /**
@@ -108,7 +107,7 @@ class DatabaseExprHandler implements ExprHandler
      */
     private function addParameter($property, $value, &$parameters)
     {
-        $hlp = $this->getName($property);
+        $hlp = $this->getName($property, '_');
         $name = $hlp.count($parameters);
         $parameters[$name] = $value;
 
@@ -185,7 +184,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->in($this->getFullName($property), self::addParameter($property, $items, $parameters));
+        return $expr->in($this->getName($property), self::addParameter($property, $items, $parameters));
     }
 
     /**
@@ -199,7 +198,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->eq($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->eq($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -213,7 +212,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->neq($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->neq($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -231,7 +230,7 @@ class DatabaseExprHandler implements ExprHandler
         $expr = new Expr();
 
         return $expr->like(
-            $this->getFullName($property),
+            $this->getName($property),
             $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
         );
     }
@@ -251,7 +250,7 @@ class DatabaseExprHandler implements ExprHandler
         $expr = new Expr();
 
         return $expr->notLike(
-            $this->getFullName($property),
+            $this->getName($property),
             $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
         );
     }
@@ -295,7 +294,7 @@ class DatabaseExprHandler implements ExprHandler
         $expr = new Expr();
 
         return $expr->between(
-            $this->getFullName($property),
+            $this->getName($property),
             self::addParameter($property, $lower, $parameters),
             self::addParameter($property, $upper, $parameters)
         );
@@ -312,7 +311,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->gt($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->gt($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -326,7 +325,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->gte($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->gte($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -340,7 +339,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->lt($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->lt($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -354,7 +353,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->lte($this->getFullName($property), self::addParameter($property, $value, $parameters));
+        return $expr->lte($this->getName($property), self::addParameter($property, $value, $parameters));
     }
 
     /**
@@ -366,7 +365,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->isNull($this->getFullName($property));
+        return $expr->isNull($this->getName($property));
     }
 
     /**
@@ -378,7 +377,7 @@ class DatabaseExprHandler implements ExprHandler
     {
         $expr = new Expr();
 
-        return $expr->isNotNull($this->getFullName($property));
+        return $expr->isNotNull($this->getName($property));
     }
 
     /**
@@ -432,22 +431,22 @@ class DatabaseExprHandler implements ExprHandler
             return new Expr\Andx(
                 array(
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[0]),
+                        $this->getName($this->spatialProperty[0]),
                         '<=',
                         self::addParameter($this->spatialProperty[0], floatval($bbox[0]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[2]),
+                        $this->getName($this->spatialProperty[2]),
                         '>=',
                         self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[1]),
+                        $this->getName($this->spatialProperty[1]),
                         '<=',
                         self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[3]),
+                        $this->getName($this->spatialProperty[3]),
                         '>=',
                         self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
                     ),
@@ -479,25 +478,25 @@ class DatabaseExprHandler implements ExprHandler
             return new Expr\Andx(
                 array(
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[0]),
+                        $this->getName($this->spatialProperty[0]),
                         '>',
                         self::addParameter($this->spatialProperty[0], floatval($bbox[0]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[2]),
+                        $this->getName($this->spatialProperty[2]),
                         '<',
                         self::addParameter($this->spatialProperty[2], floatval($bbox[2]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[1]),
+                        $this->getName($this->spatialProperty[1]),
                         '>',
                         self::addParameter($this->spatialProperty[1], floatval($bbox[1]), $parameters)
                     ),
                     new Expr\Comparison(
-                        $this->getFullName($this->spatialProperty[3]),
+                        $this->getName($this->spatialProperty[3]),
                         '<',
                         self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
-                    )
+                    ),
                 )
             );
         } else {
