@@ -25,16 +25,19 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password',
+            ->add(
+                'password',
                 RepeatedType::class,
                 array(
                     'type' => PasswordType::class,
                     'invalid_message' => 'Die Passwörten stimmen nicht überein!',
                     'required' => false,
                     'first_options'  => array('label' => 'Passwort'),
-                    'second_options' => array('label' => 'Password wiederholen')))
+                    'second_options' => array('label' => 'Password wiederholen'))
+            )
             ->add('email', null, array('required' => false))
-            ->add('groups',
+            ->add(
+                'groups',
                 EntityType::class,
                 array(
                     'class'        =>  'MetadorUserBundle:Group',
