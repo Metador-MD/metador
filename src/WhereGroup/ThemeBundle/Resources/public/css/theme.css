@@ -2244,7 +2244,6 @@ input.input-element, .md input.btn {
   z-index: 2;
   display: none;
   min-width: 300px;
-  max-width: 600px;
   position: absolute;
   height: 40px; }
 

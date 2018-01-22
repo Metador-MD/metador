@@ -31,6 +31,7 @@ class ProfileController extends Controller
      * @param $source
      * @param $profile
      * @return Response
+     * @throws \Exception
      */
     public function newAction($source, $profile)
     {
@@ -58,6 +59,8 @@ class ProfileController extends Controller
      * @param $profile
      * @param $id
      * @return Response
+     * @throws MetadataException
+     * @throws \Exception
      */
     public function editAction($profile, $id)
     {
@@ -202,6 +205,7 @@ class ProfileController extends Controller
      * @Method("POST")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws MetadataException
      */
     public function deleteAction($id)
     {

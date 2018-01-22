@@ -368,6 +368,7 @@ class Metadata implements MetadataInterface
     /**
      * @param $id
      * @return mixed|void
+     * @throws MetadataException
      */
     public function lock($id)
     {
@@ -390,7 +391,7 @@ class Metadata implements MetadataInterface
         $this->save($entity, false);
 
         $this->success($entity, 'lock', '%title% gesperrt.', array(
-            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
         ));
     }
 
@@ -398,6 +399,7 @@ class Metadata implements MetadataInterface
      * Use ID or UUID to unlock Metadata.
      * @param $id
      * @return mixed|void
+     * @throws MetadataException
      */
     public function unlock($id)
     {
@@ -414,14 +416,15 @@ class Metadata implements MetadataInterface
         $this->save($entity, false);
 
         $this->success($entity, 'unlock', '%title% freigegeben.', array(
-            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
         ));
     }
 
     /**
      * Use ID or UUID to delete Metadata.
      * @param $id
-     * @return bool
+     * @return void
+     * @throws MetadataException
      */
     public function deleteById($id)
     {
@@ -486,7 +489,7 @@ class Metadata implements MetadataInterface
 
         if ($success) {
             $this->success($entity, 'update', '%title% gespeichert.', array(
-                'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
             ));
 
             // EVENT POST SAVE
@@ -498,7 +501,7 @@ class Metadata implements MetadataInterface
         }
 
         $this->error($entity, 'update', '%title% konnte nicht gespeichert werden.', array(
-            'title' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
         ));
 
         return false;

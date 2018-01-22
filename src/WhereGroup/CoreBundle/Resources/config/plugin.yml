@@ -29,7 +29,7 @@ metador_core:
             label: Proxy Password
         hierarchy_levels:
             type: multi
-            label: Unterstützte hierarchy level
+            label: Unterstützte Hierarchy Level
             options:
                 service: Dienst
                 series: Datensatzreihe
