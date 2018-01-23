@@ -27,7 +27,6 @@ class PluginController extends Controller
     /**
      * @Route("/", name="metador_admin_plugin")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -35,15 +34,14 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:index.html.twig', array(
             'plugins' => $this->get('metador_plugin')->getPlugins('origin')
-        );
+        ));
     }
 
     /**
      * @Route("/update", name="metador_admin_plugin_update")
      * @Method("POST")
-     * @Template()
      */
     public function updateAction()
     {
@@ -60,19 +58,18 @@ class PluginController extends Controller
             }
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:update.html.twig', array(
             'plugins' => implode(',', $plugins)
-        );
+        ));
     }
 
     /**
      * @Route("/import", name="metador_admin_plugin_import")
      * @Method("GET")
-     * @Template()
      */
     public function importAction()
     {
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
             'form' => $this
                 ->createFormBuilder(new Plugin())
                 ->add('attachment', 'file', array('label' => 'Datei', 'label_attr' => array(
@@ -85,13 +82,12 @@ class PluginController extends Controller
                 )))
                 ->getForm()
                 ->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/upload", name="metador_admin_plugin_upload")
      * @Method("POST")
-     * @Template("MetadorPluginBundle:Plugin:import.html.twig")
      */
     public function uploadAction(Request $request)
     {
@@ -175,21 +171,20 @@ class PluginController extends Controller
             return $this->redirectToRoute('metador_admin_plugin');
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm")
      * @Method("GET")
-     * @Template()
      */
     public function confirmAction($plugin)
     {
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:confirm.html.twig', array(
             'pluginKey' => $plugin
-        );
+        ));
     }
 
     /**
@@ -206,7 +201,6 @@ class PluginController extends Controller
     /**
      * @Route("/view/{plugin}", name="metador_admin_plugin_view")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function viewAction($plugin)
     {
@@ -219,7 +213,7 @@ class PluginController extends Controller
             return $this->forward($plugin . ':Plugin:view');
         }
 
-        return array();
+        return $this->render('MetadorPluginBundle:Plugin:view.html.twig');
     }
 
     /**

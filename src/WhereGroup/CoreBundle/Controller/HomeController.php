@@ -21,7 +21,6 @@ class HomeController extends Controller
     /**
      * @Route("/", name="metador_home")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Home:index.html.twig")
      */
     public function indexAction()
     {
@@ -52,13 +51,13 @@ class HomeController extends Controller
             );
         }
 
-        return array(
+        return $this->render("MetadorThemeBundle:Home:index.html.twig", array(
             'isHome' => true,
             'sourceConfig' => $sourceConfig,
             'hierarchyLevel' => $this
                 ->get('metador_configuration')
                 ->get('hierarchy_levels', 'plugin', 'metador_core'),
-        );
+        ));
     }
 
     /**

@@ -19,21 +19,19 @@ class SourceController extends Controller
     /**
      * @Route("/", name="metador_admin_source")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return array(
+        return $this->render('MetadorCoreBundle:Source:index.html.twig', array(
             'sources' => $this->get('metador_source')->all()
-        );
+        ));
     }
 
     /**
      * @Route("/new/", name="metador_admin_source_new")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function newAction()
     {
@@ -70,17 +68,16 @@ class SourceController extends Controller
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        return array(
+        return $this->render('MetadorCoreBundle:Source:new.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/edit/{id}", name="metador_admin_source_edit")
      * @Method({"GET", "POST"})
-     * @Template("MetadorCoreBundle:Source:new.html.twig")
      * @param $id
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction($id)
     {
@@ -106,15 +103,14 @@ class SourceController extends Controller
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        return array(
+        return $this->render('MetadorCoreBundle:Source:new.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/confirm/{id}", name="metador_admin_source_confirm")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function confirmAction($id)
     {
@@ -144,9 +140,9 @@ class SourceController extends Controller
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        return array(
+        return $this->render('MetadorCoreBundle:Source:confirm.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**

@@ -16,7 +16,6 @@ class AdminController extends Controller
     /**
      * @Route("/", name="metador_admin_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -24,8 +23,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        return array(
+        return $this->render("@MetadorCore/Admin/index.html.twig", array(
             'log' => $this->get('metador_healthcheck')->check()
-        );
+        ));
     }
 }

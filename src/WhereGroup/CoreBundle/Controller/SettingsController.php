@@ -18,7 +18,6 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction($fragment)
     {
@@ -62,11 +61,10 @@ class SettingsController extends Controller
             $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
-        return array(
+        return $this->render('@MetadorCore/Settings/index.html.twig', array(
             'fragment' => $fragment,
             'pluginConfiguration' => $pluginConfiguration
-
-        );
+        ));
     }
 
     /**
