@@ -1,12 +1,12 @@
-where_group_core:
+wheregroup_core:
     resource: "@MetadorCoreBundle/Controller/"
     type:     annotation
 
-where_group_user:
+wheregroup_user:
     resource: "@MetadorUserBundle/Controller/"
     type:     annotation
 
-where_group_plugin:
+wheregroup_plugin:
     resource: "@MetadorPluginBundle/Controller/"
     type:     annotation
 
