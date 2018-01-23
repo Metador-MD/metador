@@ -7,6 +7,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig_Environment;
 use Symfony\Component\HttpKernel\KernelInterface;
+use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
@@ -139,6 +140,10 @@ class Metadata implements MetadataInterface
     /**
      * @param $p
      * @return string
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function objectToXml($p)
     {
@@ -155,6 +160,7 @@ class Metadata implements MetadataInterface
      * @param $xml
      * @param $profile
      * @return array|mixed
+     * @throws \Exception
      */
     public function xmlToObject($xml, $profile)
     {
@@ -268,6 +274,8 @@ class Metadata implements MetadataInterface
      * @param $p
      * @param bool $id
      * @return EntityMetadata
+     * @throws MetadataException
+     * @throws \Exception
      */
     public function saveObject($p, $id = null)
     {
@@ -324,10 +332,13 @@ class Metadata implements MetadataInterface
      * @param $operation
      * @param $message
      * @param array $messageParams
+     * @param null $path
+     * @param array $params
      * @return mixed|void
      */
-    public function log($type, $metadata, $operation, $message, $messageParams = array())
+    public function log($type, $metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
     {
+        /** @var Log $log */
         $log = $this->logger->newLog();
         $log
             ->setType($type)
@@ -337,7 +348,15 @@ class Metadata implements MetadataInterface
             ->setSource($metadata->getSource())
             ->setIdentifier($metadata->getUuid())
             ->setMessage($message, $messageParams)
-            ->setUser($metadata->getUpdateUser());
+            ->setUsername($this->user->getUsernameFromSession())
+        ;
+
+        if (!is_null($path)) {
+            $log
+                ->setPath($path)
+                ->setParams($params)
+            ;
+        }
         $this->logger->set($log);
     }
 
@@ -346,11 +365,13 @@ class Metadata implements MetadataInterface
      * @param $operation
      * @param $message
      * @param array $messageParams
+     * @param null $path
+     * @param array $params
      * @return mixed
      */
-    public function success($metadata, $operation, $message, $messageParams = array())
+    public function success($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
     {
-        $this->log('success', $metadata, $operation, $message, $messageParams);
+        $this->log('success', $metadata, $operation, $message, $messageParams, $path, $params);
     }
 
     /**
@@ -358,9 +379,11 @@ class Metadata implements MetadataInterface
      * @param $operation
      * @param $message
      * @param array $messageParams
+     * @param null $path
+     * @param array $params
      * @return mixed
      */
-    public function error($metadata, $operation, $message, $messageParams = array())
+    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
     {
         $this->log('error', $metadata, $operation, $message, $messageParams);
     }
@@ -388,11 +411,11 @@ class Metadata implements MetadataInterface
             ->setLockTime($this->getTimestamp());
 
 
-        $this->save($entity, false);
+        $this->save($entity, false, false);
 
         $this->success($entity, 'lock', '%title% gesperrt.', array(
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ));
+        ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
     }
 
     /**
@@ -417,7 +440,7 @@ class Metadata implements MetadataInterface
 
         $this->success($entity, 'unlock', '%title% freigegeben.', array(
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ));
+        ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
     }
 
     /**
@@ -438,7 +461,7 @@ class Metadata implements MetadataInterface
             $metadata->removeGroups($group);
         }
 
-        $this->success($metadata, 'unlock', '%title% gelöscht.', array(
+        $this->success($metadata, 'delete', '%title% gelöscht.', array(
             'title' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
         ));
 
@@ -452,10 +475,17 @@ class Metadata implements MetadataInterface
     /**
      * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
      * @param bool $dispatchEvent
+     * @param bool $log
      * @return bool
      */
-    public function save($entity, $dispatchEvent = true)
+    public function save($entity, $dispatchEvent = true, $log = true)
     {
+        $operation = 'create';
+
+        if ($entity->getInsertTime() != $entity->getUpdateTime()) {
+            $operation = 'update';
+        }
+
         // EVENT PRE SAVE
         if ($dispatchEvent) {
             $event  = new MetadataChangeEvent($entity, array());
@@ -488,21 +518,26 @@ class Metadata implements MetadataInterface
         }
 
         if ($success) {
-            $this->success($entity, 'update', '%title% gespeichert.', array(
-                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-            ));
-
             // EVENT POST SAVE
             if ($dispatchEvent) {
                 $this->eventDispatcher->dispatch('metadata.post_save', $event);
             }
 
+            if ($log) {
+                $this->success($entity, $operation, '%title% gespeichert.', array(
+                    '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+                ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+            }
+
             return true;
         }
 
-        $this->error($entity, 'update', '%title% konnte nicht gespeichert werden.', array(
-            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ));
+        if ($log) {
+            $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
+                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+
+        }
 
         return false;
     }

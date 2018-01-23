@@ -141,6 +141,7 @@ class User implements UserInterface
      * @param string $email
      * @param array $groups
      * @return $this
+     * @throws MetadorException
      */
     public function createIfNotExists($username, $password, $email = '', $groups = [])
     {

@@ -70,15 +70,26 @@ class UserController extends Controller
         if ($form->isValid()) {
             try {
                 $this->get('metador_user')->insert($user);
-                $this->get('metador_logger')->success(
-                    'application',
-                    'user',
-                    'create',
-                    'source',
-                    'identifier',
-                    'Benutzer %username% wurde erstellt.',
-                    array('%username%' => $user->getUsername())
-                );
+
+                $log = $this->get('metador_logger')->newLog();
+
+                $log->setType('success')
+                    ->setFlashMessage()
+                    ->setCategory('application')
+                    ->setSubcategory('user')
+                    ->setOperation('create')
+                    ->setIdentifier($user->getId())
+                    ->setMessage('Benutzer %username% wurde erstellt.')
+                    ->setMessageParameter(array('%username%' => $user->getUsername()))
+                    ->setUsername($this->get('metador_user')->getUsernameFromSession())
+                    ->setPath('metador_admin_user_edit')
+                    ->setParams(array('id' => $user->getId()))
+                ;
+
+                $this->get('metador_logger')->set($log);
+
+                unset($log);
+
             // todo eigene Exception
             } catch (MetadorException $e) {
                 $this->get('metador_logger')->warning(
@@ -250,7 +261,8 @@ class UserController extends Controller
             ->setIdentifier($id)
             ->setMessage($message)
             ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+            ->setUsername($this->get('metador_user')->getUsernameFromSession())
+        ;
 
         $this->get('metador_logger')->set($log);
 
