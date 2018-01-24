@@ -2,21 +2,14 @@
 
 namespace Plugins\WhereGroup\MapBundle\Controller;
 
-use Plugins\WhereGroup\MapBundle\Component\XmlUtils\EXmlReader;
-use Plugins\WhereGroup\MapBundle\Component\XmlUtils\FeatureJsonWriter;
-use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use ShapeFile\ShapeFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
-use WhereGroup\CoreBundle\Component\AjaxResponse;
 
 /**
  * @Route("/admin/map")
@@ -26,21 +19,19 @@ class AdminController extends Controller
     /**
      * @Route("/", name="metador_admin_map")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return array(
+        return $this->render('@MetadorMap/Admin/index.html.twig', array(
             'rows' => $this->get('metador_map')->all(),
-        );
+        ));
     }
 
     /**
      * @Route("/new/", name="metador_admin_map_new")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function newAction()
     {
@@ -64,15 +55,16 @@ class AdminController extends Controller
             }
         }
 
-        return array(
+        return $this->render('@MetadorMap/Admin/new.html.twig', array(
             'form' => $form->createView(),
-        );
+        ));
     }
 
     /**
      * @Route("/edit/{id}", name="metador_admin_map_edit")
      * @Method({"GET", "POST"})
-     * @Template("MetadorMapBundle:Admin:new.html.twig")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction($id)
     {
@@ -88,24 +80,23 @@ class AdminController extends Controller
             return $this->redirectToRoute('metador_admin_map');
         }
 
-        return array(
+        return $this->render('@MetadorMap/Admin/new.html.twig', array(
             'form' => $form->createView(),
-        );
+        ));
     }
 
     /**
      * @Route("/confirm/{id}", name="metador_admin_map_confirm")
      * @Method({"GET", "POST"})
      * @param $id a wms id
-     * @Template()
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function confirmAction($id)
     {
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this->createFormBuilder($this->get('metador_map')->get($id))
-            ->add('delete', 'submit', array(
+            ->add('delete', SubmitType::class, array(
                 'label' => 'löschen',
             ))
             ->getForm()
@@ -119,8 +110,8 @@ class AdminController extends Controller
             return $this->redirectToRoute('metador_admin_map');
         }
 
-        return array(
+        return $this->render('@MetadorMap/Admin/confirm.html.twig', array(
             'form' => $form->createView(),
-        );
+        ));
     }
 }

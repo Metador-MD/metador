@@ -2,15 +2,13 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
-use WhereGroup\CoreBundle\Entity\Metadata;
-use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\UserBundle\Entity\User;
 
 /**
@@ -177,6 +175,11 @@ class ProfileController extends Controller
     /**
      * @Route("/{profile}/confirm/{id}", name="metadata_confirm")
      * @Method("GET")
+     * @param $profile
+     * @param $id
+     * @return Response
+     * @throws MetadataException
+     * @throws \Exception
      */
     public function confirmAction($profile, $id)
     {
@@ -186,14 +189,14 @@ class ProfileController extends Controller
 
         $this->init($profile);
 
-        return $this->get('templating')->renderResponse(
+        return $this->render(
             $this->getTemplate('confirm'),
             array(
                 'id'      => $id,
                 'profile' => $profile,
                 'form'    => $this
                     ->createFormBuilder($metadata)
-                    ->add('delete', 'submit', array('label' => 'ok'))
+                    ->add('delete', SubmitType::class, array('label' => 'ok'))
                     ->getForm()
                     ->createView(),
             )
@@ -214,11 +217,11 @@ class ProfileController extends Controller
         $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
 
         $form = $this->createFormBuilder($metadata)
-            ->add('delete', 'submit', array('label' => 'ok'))
+            ->add('delete', SubmitType::class, array('label' => 'ok'))
             ->getForm()
-            ->submit($this->get('request_stack')->getCurrentRequest());
+            ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
             $this->get('metador_logger')->flashSuccess(
                 'metadata',
@@ -244,7 +247,13 @@ class ProfileController extends Controller
 
     /**
      * @Route("/profile/test/{id}", name="metadata_test")
-     * @Template()
+     * @param $id
+     * @return Response
+     * @throws MetadataException
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function testAction($id)
     {
@@ -271,9 +280,9 @@ class ProfileController extends Controller
         $this->flatten($object1, $arr1);
         $this->flatten($object2, $arr2);
 
-        return array(
+        return $this->render('@MetadorCore/Profile/test.html.twig', array(
             'result' => $this->test($arr1, $arr2)
-        );
+        ));
     }
 
     /**

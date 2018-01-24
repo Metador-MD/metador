@@ -2,12 +2,10 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WhereGroup\CoreBundle\Entity\Source;
 use WhereGroup\CoreBundle\Form\SourceType;
 
@@ -117,7 +115,7 @@ class SourceController extends Controller
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_source')->get($id))
-            ->add('delete', 'submit', array(
+            ->add('delete', SubmitType::class, array(
                 'label' => 'löschen'
             ))
             ->getForm()

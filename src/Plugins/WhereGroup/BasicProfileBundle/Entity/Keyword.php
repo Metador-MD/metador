@@ -170,7 +170,7 @@ class Keyword
     /**
      * Set keywords
      *
-     * @param string $keywords
+     * @param array $keywords
      *
      * @return Keyword
      */
@@ -184,7 +184,7 @@ class Keyword
     /**
      * Get keywords
      *
-     * @return string
+     * @return array
      */
     public function getKeywords()
     {

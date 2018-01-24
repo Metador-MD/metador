@@ -44,24 +44,24 @@
 
     <services>
         <!-- SERVICE -->
-        <service id="metador_cache" class="%metador.cache.class%">
+        <service id="metador_cache" class="%metador.cache.class%" public="true">
             <argument>%cache_host%</argument>
             <argument>%cache_port%</argument>
             <argument>%cache_enabled%</argument>
         </service>
-        <service id="metador_core" class="%metador.core.class%">
+        <service id="metador_core" class="%metador.core.class%" public="true">
             <argument type="service" id="twig" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="kernel" />
         </service>
-        <service id="metador.application" class="%metador.application.class%">
+        <service id="metador.application" class="%metador.application.class%" public="true">
             <argument type="service" id="security.authorization_checker" />
             <argument>%kernel.environment%</argument>
         </service>
-        <service id="metador_wizard" class="%metador.wizard.class%" />
-        <service id="metador_metadata" class="%metador.metadata.class%">
+        <service id="metador_wizard" class="%metador.wizard.class%" public="true" />
+        <service id="metador_metadata" class="%metador.metadata.class%" public="true">
             <argument type="service" id="metador_user" />
             <argument type="service" id="metador_logger" />
             <argument type="service" id="metador_plugin" />
@@ -70,31 +70,31 @@
             <argument type="service" id="twig" />
             <argument type="service" id="kernel" />
         </service>
-        <service id="metador_logger" class="%metador.logger.class%">
+        <service id="metador_logger" class="%metador.logger.class%" public="true">
             <argument type="service" id="session.flash_bag" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
             <argument type="service" id="metador_user" />
         </service>
-        <service id="metador_healthcheck" class="%metador.healthcheck.class%">
+        <service id="metador_healthcheck" class="%metador.healthcheck.class%" public="true">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="translator.default" />
         </service>
-        <service id="metador_configuration" class="%metador.configuration.class%">
+        <service id="metador_configuration" class="%metador.configuration.class%" public="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="metador_cache" />
         </service>
-        <service id="metador_source" class="%metador.source.class%">
+        <service id="metador_source" class="%metador.source.class%" public="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="metador_frontend_command" class="%metador.frontend.command.class%">
+        <service id="metador_frontend_command" class="%metador.frontend.command.class%" public="true">
             <argument type="service" id="metador_core" />
         </service>
-        <service id="metador_markdown" class="%metador.markdown.class%" />
-        <service id="metador_metadata_search" class="%metador.database.search.class%">
+        <service id="metador_markdown" class="%metador.markdown.class%" public="true" />
+        <service id="metador_metadata_search" class="%metador.database.search.class%" public="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="metador_browser" class="%metador.browser.class%">
+        <service id="metador_browser" class="%metador.browser.class%" public="true">
             <argument type="service" id="metador_configuration" />
         </service>
 
