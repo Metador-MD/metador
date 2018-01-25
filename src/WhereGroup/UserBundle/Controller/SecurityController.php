@@ -14,11 +14,18 @@ use WhereGroup\CoreBundle\Entity\Log;
 class SecurityController extends Controller
 {
     /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Request $request)
+    {
+    }
+
+    /**
      *
      * @Route("/login/failure", name="login_failure")
      * @Method("GET")
      */
-    public function loginAction()
+    public function loginFailureAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 

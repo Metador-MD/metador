@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $this
-                ->createForm(new UserType(), new User())
+                ->createForm(UserType::class, new User())
                 ->createView()
         ));
     }
@@ -56,7 +56,7 @@ class UserController extends Controller
         $user = new User();
 
         $form = $this
-            ->createForm(new UserType(), $user)
+            ->createForm(UserType::class, $user)
             ->handleRequest($request);
 
         if ($user->getPicture() !== null) {
@@ -152,7 +152,7 @@ class UserController extends Controller
             $oldPicture = $user->getPicture();
 
             $form = $this
-                ->createForm(new UserType(), $user)
+                ->createForm(UserType::class, $user)
                 ->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
