@@ -10,7 +10,7 @@
 
     <services>
         <!-- SERVICE -->
-        <service id="metador_user" class="%metador.user.class%">
+        <service id="metador_user" class="%metador.user.class%" public="true">
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.user_password_encoder.generic" />
