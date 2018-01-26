@@ -37,7 +37,8 @@
         <div class="notify error">
             {{ form_errors(form) }}
             {{ form_errors(form.username) }}
-            {{ form_errors(form.password) }}
+            {{ form_errors(form.password.first) }}
+            {{ form_errors(form.password.second) }}
             {{ form_errors(form.email) }}
             {{ form_errors(form.groups) }}
             {{ form_errors(form.picture) }}
@@ -54,23 +55,31 @@
                 </div>
             </div>
             <div class="col c-1-2">
-                <div>{{ form_label(form.password, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div>{{ form_label(form.groups, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                 <div class="form-field-wrapper">
-                    {{ form_widget(form.password, { 'attr': {'class': 'input'}}) }}
+                    {{ form_widget(form.groups, { 'attr': {'class': 'select'}}) }}
                 </div>
             </div>
         </div>
-        <div class="row r-2">
-            <div class="col c-1-2">
+        <div class="row r-1">
+            <div class="col c-1">
                 <div>{{ form_label(form.email, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                 <div class="form-field-wrapper">
                     {{ form_widget(form.email, { 'attr': {'class': 'input'}}) }}
                 </div>
             </div>
+        </div>
+        <div class="row r-2">
             <div class="col c-1-2">
-                <div>{{ form_label(form.groups, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div>{{ form_label(form.password.first, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                 <div class="form-field-wrapper">
-                    {{ form_widget(form.groups, { 'attr': {'class': 'select'}}) }}
+                    {{ form_widget(form.password.first, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.password.second, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.password.second, { 'attr': {'class': 'input'}}) }}
                 </div>
             </div>
         </div>
