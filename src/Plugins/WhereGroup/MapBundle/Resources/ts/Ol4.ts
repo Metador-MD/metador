@@ -224,8 +224,11 @@ export class Ol4Map {
         }
         this.olMap.addControl(new ol.control.ScaleLine());
 
+        let icon = document.createElement('span');
+        icon.className = "icon-earth";
         this.olMap.addControl(new ol.control.ZoomToExtent({
-            extent: this.maxExtent.getExtent(proj)
+            extent: this.maxExtent.getExtent(proj),
+            label: icon
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
@@ -256,6 +259,27 @@ export class Ol4Map {
         this.drawer = new Ol4Drawer(vLayer);
         this.dragzoom = new DragZoom(this.olMap);
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
+    }
+
+    activateFeatureInfo(
+        tooltipElm: HTMLElement,
+        callbackSelect: Function,
+        callbackUnSelect: Function,
+        callbackUnSelectAll: Function
+    ): void {
+        this.featureInfo.activate(tooltipElm, callbackSelect, callbackUnSelect, callbackUnSelectAll);
+    }
+
+    deactivateFeatureInfo(): void {
+        this.featureInfo.deactivate();
+    }
+
+    resetFeatureInfo() {
+        this.featureInfo.reset();
+    }
+
+    selectFeatures(uuids: string[]) {
+        this.featureInfo.selectFeatures(uuids);
     }
 
     getLayerTree(): LayerTree {
@@ -312,7 +336,8 @@ export class Ol4Map {
                     this.olMap.getView().getProjection(),
                     options['visible'],
                     parseFloat(options['opacity'])
-                )
+                ),
+                true
             );
         } else {
             console.error(options['type'] + ' is not supported.');
@@ -430,28 +455,47 @@ export class Ol4Map {
         this.vecSource.showFeatures(this.hgLayer, geoJson);
     }
 
+    getFirstGeomForSearch(): object {
+        let features = this.drawer.getLayer().getSource().getFeatures();
+        if(features.length === 0) {
+            return null;
+        }
+        let geojson = new ol.format.GeoJSON().writeFeatureObject(
+            features[0],
+            {
+                'dataProjection': METADOR_EPSG,
+                'featureProjection': this.getProjection()
+            }
+        );
+        geojson['bbox'] = new Ol4Geom(features[0].getGeometry(), this.getProjection())
+            .getExtent(ol.proj.get(METADOR_EPSG));
+        return geojson;
+    }
+
     drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
         let ol4map = this;
         let olMap = this.olMap;
         this.vecSource.clearFeatures(this.drawer.getLayer());
         this.vecSource.showFeatures(this.drawer.getLayer(), geoJson);
-        if (onDrawEnd !== null) {
-            onDrawEnd(geoJson);
-        }
         let multiPoint: ol.geom.MultiPoint = <ol.geom.MultiPoint> Ol4Extent.fromArray(
             this.drawer.getLayer().getSource().getExtent(),
             this.olMap.getView().getProjection()
         ).getGeom();
         let maxextent = this.maxExtent.getPolygonForExtent(this.olMap.getView().getProjection());
         if (maxextent.intersectsCoordinate(multiPoint.getPoint(0).getCoordinates())
-            && maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
+            || maxextent.intersectsCoordinate(multiPoint.getPoint(1).getCoordinates())) {
             this.zoomToExtent(this.drawer.getLayer().getSource().getExtent());
         } else {
             metador.displayError('Die Geometrie ist außerhalb der räumlichen Erstreckung.');
         }
+        let geoFeature = this.getFirstGeomForSearch();
+        if (onDrawEnd !== null && geoFeature) {
+            onDrawEnd(geoFeature);
+        }
     }
 
     drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+        this.setDoubleClickZoom(false);
         let ol4map = this;
         let olMap = this.olMap;
         const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType;
@@ -479,6 +523,8 @@ export class Ol4Map {
                             'featureProjection': ol4map.getProjection()
                         }
                     );
+                    geojson['bbox'] = new Ol4Geom(e.feature.getGeometry(), ol4map.getProjection())
+                        .getExtent(ol.proj.get(METADOR_EPSG));
                     onDrawEnd(geojson);
                     olMap.removeInteraction(drawer.getInteraction());
                 }
@@ -486,6 +532,20 @@ export class Ol4Map {
         } else {
             this.getDrawer().getLayer().getSource().clear();
             onDrawEnd(null);
+            this.setDoubleClickZoom(true);
+        }
+    }
+
+    /**
+     * Activates / deactivates interaction ol.interaction.DoubleClickZoom
+     * @param {boolean} state
+     */
+    private setDoubleClickZoom(state: boolean) {
+        for (let interaction of this.olMap.getInteractions().getArray()) {
+            if (interaction instanceof ol.interaction.DoubleClickZoom) {
+                interaction.setActive(state);
+                break;
+            }
         }
     }
 }
@@ -557,32 +617,6 @@ export function createBox() {
             return geometry;
         }
     );
-}
-
-export class GeomLoader {
-    private map: Ol4Map;
-    private form: HTMLFormElement;
-
-    public constructor(map: Ol4Map, form: HTMLFormElement) {
-        this.map = map;
-        this.form = form;
-        this.on();
-    }
-
-    public on() {
-        this.form.addEventListener('change', this.upload.bind(this), false);
-    }
-
-    private upload(e: Event) {
-        // console.log(e);
-        // HttpUtils.Http.sendForm(this.form, this.form.action, HttpUtils.HTTP_METHOD.POST, HttpUtils.HTTP_DATATYPE.json)
-        //     .then(function (value) {
-        //         console.log('Contents: ' + value);
-        //     })
-        //     .catch(function (reason) {
-        //         console.error(reason);
-        //     });
-    }
 }
 
 declare var metador: any;

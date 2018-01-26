@@ -25,18 +25,48 @@
             <div class="grid space responsive">
                 <div class="row r-2">
                     <div class="col c-1-4">
-                        <div class="filter-wrapper">
-                            <div class="filter-header">Profil</div>
+                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                            <div class="filter-header">{% trans %}Tools{% endtrans %}</div>
                             <div class="filter-content">
-                                <div class="filter-content-row"><span class="icon-check-square"></span> Dataset</div>
-                                <div class="filter-content-row"><span class="icon-square-o"></span> Service</div>
+                                <div class="filter-content-row -js-reset-search">
+                                    <span class="icon-checkmark"></span> {% trans %}Filter zurücksetzen{% endtrans %}
+                                </div>
+
+                                <div class="filter-content-row -js-csv-download">
+                                    <form action="{{ path('metador_search') }}" target="_blank" method="post">
+                                        <input type="hidden" name="filter" value="" />
+                                        <span class="icon-download"></span> {% trans %}CSV-Download{% endtrans %}
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div class="filter-wrapper">
-                            <div class="filter-header">Profil</div>
+                        {% if hierarchyLevel is defined and hierarchyLevel is not empty %}
+                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                            <div class="filter-header">{% trans %}Hierarchy Level{% endtrans %}</div>
                             <div class="filter-content">
-                                <div class="filter-content-row"><span class="icon-check-square"></span> Dataset</div>
-                                <div class="filter-content-row"><span class="icon-square-o"></span> Service</div>
+                                {% for name in hierarchyLevel|sort %}
+                                    <div class="filter-content-row -js-checkbox -js-search-on-click">
+                                        <input type="hidden" name="hierarchyLevel[{{ name }}]" data-group="hierarchyLevel" data-value="true" value="true" class="-js-checkbox-input -js-search-filter" />
+                                        <span class="icon-checkbox-checked -js-checkbox-icon"></span> {{ name|capitalize }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                            <div class="filter-header">{% trans %}Datum{% endtrans %}</div>
+                            <div class="filter-content">
+                                <div class="filter-content-row no-hower">
+                                    <div class="form-field-wrapper medium">
+                                        <input type="text" name="date[from]" value="" data-value="" placeholder="{% trans %}Datum von{% endtrans %}" class="input -js-datepicker -js-search-filter" />
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="filter-content-row no-hower">
+                                    <div class="form-field-wrapper medium">
+                                        <input type="text" name="date[to]" value="" data-value="" placeholder="{% trans %}Datum bis{% endtrans %}" class="input -js-datepicker -js-search-filter" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,6 +82,5 @@
 
 {% block javascript %}
     {{ parent() }}
-    <script src="{{ asset('bundles/metadorcore/js/storage.js') }}"></script>
     <script src="{{ asset('bundles/metadorcore/js/search.js') }}"></script>
 {% endblock %}

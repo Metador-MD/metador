@@ -34,7 +34,11 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
         // set default values: all available layers, a first founded format
         $wms->setLayers($wms->getLayerList());
         $wms->setFormat(
-            $this->selectFormat($wms->getFormats(), array('image/png', 'image/jpg', 'image/jpeg', 'image/gif')));
+            $this->selectFormat(
+                $wms->getFormats(),
+                array('image/png', 'image/jpg', 'image/jpeg', 'image/gif')
+            )
+        );
     }
 
     /**
@@ -55,8 +59,12 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
      */
     private function parseCapabilityRequest(Wms &$wms, \DOMElement $contextElm)
     {
-        $wms->setGcUrl($this->getValue('./GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href',
-            $contextElm));
+        $wms->setGcUrl(
+            $this->getValue(
+                './GetCapabilities/DCPType/HTTP/Get/OnlineResource/@xlink:href',
+                $contextElm
+            )
+        );
         $wms->setGmUrl($this->getValue('./GetMap/DCPType/HTTP/Get/OnlineResource/@xlink:href', $contextElm));
         $formatList = $this->xpath->query('./GetMap/Format', $contextElm);
         if ($formatList !== null) {
@@ -64,7 +72,6 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
                 $wms->addFormat($this->getValue('./text()', $item));
             }
         }
-
     }
 
     /**
@@ -75,14 +82,14 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
     private function parseLayer(Wms &$wms, \DOMElement $contextElm)
     {
         $name = $this->getValue('./Name/text()', $contextElm);
-        if ($name !== null) {
+        /* @var \DOMNodeList $tempList */
+        $tempList = $this->xpath->query('./Layer', $contextElm);
+        // add only named layer and no root or group layer
+        if ($name !== null && $tempList->length === 0) {
             $wms->addToLayerList($name);
         }
-        $tempList = $this->xpath->query('./Layer', $contextElm);
-        if ($tempList !== null) {
-            foreach ($tempList as $item) {
-                $this->parseLayer($wms, $item);
-            }
+        foreach ($tempList as $item) {
+            $this->parseLayer($wms, $item);
         }
     }
 }

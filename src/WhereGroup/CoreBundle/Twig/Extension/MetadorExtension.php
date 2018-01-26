@@ -51,7 +51,7 @@ class MetadorExtension extends \Twig_Extension
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
         $string = str_replace(array('[', ']'), array('_','_'), $string);
         $string = str_replace("__", "_", $string);
-        return ltrim(rtrim($string, "_"), "_");
+        return trim($string, "\t\n\r_");
     }
 
     /**
@@ -60,10 +60,7 @@ class MetadorExtension extends \Twig_Extension
      */
     public function getDataObject($string)
     {
-        $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
-        $string = str_replace(array('[', ']'), array('_','_'), $string);
-        $string = str_replace("__", "_", $string);
-        return 'data-obj-id="' . rtrim($string, "_") . '"';
+        return 'data-obj-id="' . $this->getObjectId($string) . '"';
     }
 
     /**
@@ -103,7 +100,7 @@ class MetadorExtension extends \Twig_Extension
      */
     public function isSelected($value, $option)
     {
-        return $value == $option ? 'selected="selected"' : '';
+        return $value == $option ? 'selected=selected' : '';
     }
 
     /**

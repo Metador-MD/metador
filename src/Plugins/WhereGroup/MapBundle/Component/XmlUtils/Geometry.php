@@ -8,7 +8,11 @@
 
 namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
-
+/**
+ * Class Geometry
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class Geometry
 {
     const POINT = 1;

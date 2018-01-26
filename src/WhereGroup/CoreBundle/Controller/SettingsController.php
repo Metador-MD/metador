@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Yaml\Yaml;
 use WhereGroup\CoreBundle\Entity\Source;
 
@@ -18,7 +17,6 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction($fragment)
     {
@@ -62,11 +60,10 @@ class SettingsController extends Controller
             $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
-        return array(
+        return $this->render('@MetadorCore/Settings/index.html.twig', array(
             'fragment' => $fragment,
             'pluginConfiguration' => $pluginConfiguration
-
-        );
+        ));
     }
 
     /**

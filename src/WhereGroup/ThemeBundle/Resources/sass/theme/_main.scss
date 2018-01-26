@@ -27,6 +27,14 @@ body {
     @include pos(0, 0, 0, 0);
 }
 
+.no-m {
+    margin: 0;
+}
+
+.no-p {
+    padding: 0;
+}
+
 .clearfix:before,
 .clearfix:after {
     content: " ";
@@ -58,4 +66,12 @@ body {
     padding: 0;
     margin: 0;
     background-color: transparent;
+}
+
+.hidden {
+    display: none;
+
+    &.active {
+        display: block;
+    }
 }

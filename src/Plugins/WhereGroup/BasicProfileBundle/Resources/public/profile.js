@@ -2,6 +2,7 @@
 
 $('.-js-duplicatable-area').multiForm();
 $('.-js-multi-input').multiInput();
+$('.-js-multi-fieldset').multiFieldset();
 
 var MetadataForm = function() {};
 
@@ -103,11 +104,11 @@ $('form').ajaxForm({
         metadata.activateSubmitButton();
     },
     success: function(data) {
-        if (data && metadata && metadata.id) {
+        if (data && data.metadata && data.metadata.id) {
             $('[name="p[_id]"]').val(data.metadata.id);
         }
 
-        if (data && metadata && metadata.uuid) {
+        if (data && data.metadata && data.metadata.uuid) {
             $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
         }
 
@@ -152,4 +153,46 @@ $(document).on('click', '.-js-toggle-switch', function () {
 
     $(this).find('.-js-toggle-switch-input').val('0');
     $(this).find('.-js-toggle-switch-icon').removeClass('icon-toggle-on').addClass('icon-toggle-off');
+});
+
+$(document).on('click', '.-js-set-fields', function () {
+    var fields = $(this).find(":selected").attr('data-fields');
+    var parent = $(this).closest('.' + $(this).attr('data-parent'));
+
+    if (typeof fields === 'undefined') {
+        return;
+    }
+
+    fields = JSON.parse(fields);
+
+    if (typeof fields !== 'object') {
+        return;
+    }
+
+    $.each(fields, function( index, value ) {
+        var item = parent.find('.-js-field-' + index);
+        var node = item.prop('nodeName');
+
+        if (node === 'SELECT' || node === 'INPUT') {
+            item.val(value).change();
+        } else if (node === 'TEXTAREA') {
+            item.text(value).change();
+        }
+    });
+});
+
+$(document).on('change', '.-js-change-view', function() {
+    var target = $('#' + $(this).find(":selected").attr('data-obj-id'));
+    var clearValues = $(this).hasClass('-js-change-view-clear-values');
+
+    target.siblings().each(function() {
+        $(this).removeClass('active');
+
+        if (clearValues) {
+            $(this).find('input').val('');
+            $(this).find('select').val('');
+            $(this).find('textarea').val('');
+        }
+    });
+    target.addClass('active');
 });

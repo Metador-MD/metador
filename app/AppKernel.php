@@ -1,24 +1,19 @@
 <?php
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Class AppKernel
- */
 class AppKernel extends Kernel
 {
     private $plguinConfigFolder = '/../var/config/';
     private $pluginConfigFile   = 'plugins.yml';
     private $pluginRoutingFile  = 'plugins_routing.yml';
 
-    /**
-     * @return array
-     */
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -34,8 +29,7 @@ class AppKernel extends Kernel
             new WhereGroup\ThemeBundle\MetadorThemeBundle(),
             new WhereGroup\UserBundle\MetadorUserBundle(),
             new WhereGroup\PluginBundle\MetadorPluginBundle(),
-
-        );
+        ];
 
         // Check file exists
         $this->checkPluginConfiguration($this->pluginRoutingFile);
@@ -52,37 +46,43 @@ class AppKernel extends Kernel
             }
         }
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+
+            if ('dev' === $this->getEnvironment()) {
+                $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
         }
 
         return $bundles;
     }
 
-    /**
-     * @return string
-     */
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
     public function getCacheDir()
     {
-        return $this->rootDir . '/../var/cache/' . $this->environment;
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
     }
 
-    /**
-     * @return string
-     */
     public function getLogDir()
     {
-        return $this->rootDir . '/../var/logs';
+        return dirname(__DIR__).'/var/logs';
     }
 
-    /**
-     * @param LoaderInterface $loader
-     */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        $loader->load(function (ContainerBuilder $container) {
+            $container->setParameter('container.autowiring.strict_mode', true);
+            $container->setParameter('container.dumper.inline_class_loader', true);
+
+            $container->addObjectResource($this);
+        });
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 

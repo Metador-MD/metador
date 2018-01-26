@@ -54,6 +54,20 @@ class Source implements SourceInterface
     }
 
     /**
+     * @return array
+     */
+    public function allValues()
+    {
+        $array = array();
+
+        foreach ($this->all() as $source) {
+            $array[$source->getSlug()] = $source->getName();
+        }
+
+        return $array;
+    }
+
+    /**
      * @param $slug
      * @return mixed
      */

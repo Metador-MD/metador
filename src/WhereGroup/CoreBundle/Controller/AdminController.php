@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin")
@@ -16,7 +15,6 @@ class AdminController extends Controller
     /**
      * @Route("/", name="metador_admin_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -24,8 +22,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        return array(
+        return $this->render("@MetadorCore/Admin/index.html.twig", array(
             'log' => $this->get('metador_healthcheck')->check()
-        );
+        ));
     }
 }

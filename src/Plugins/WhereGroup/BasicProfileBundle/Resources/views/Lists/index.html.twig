@@ -7,7 +7,6 @@
 
     <hr class="line-separator" />
 
-
     <table id="table-log" class="table bordered small">
         <thead>
         <tr>
@@ -21,7 +20,7 @@
             {% for item in list %}
                 <tr>
                     <td>
-                        <a href="{{ path('metador_admin_lists_edit', { 'profile': key, 'key': item.key }) }}">{{ key }}</a>
+                        <a href="{{ path('metador_admin_lists_show', { 'profile': key, 'key': item.key }) }}">{{ key }}</a>
                     </td>
                     <td>{{ item.key }}</td>
                     <td>{{ item.value|length }}</td>

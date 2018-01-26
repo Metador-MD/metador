@@ -12,15 +12,16 @@ class ArrayParser
      * @param array $array
      * @param $path
      * @param null $default
+     * @param bool $reindex
      * @return array|null
      */
-    public static function get(array $array, $path, $default = null)
+    public static function get(array $array, $path, $default = null, $reindex = false)
     {
         if (empty($path) || trim($path) === "") {
             return $array;
         }
 
-        return self::arrayGet($array, self::explodePath($path), $default);
+        return self::arrayGet($array, self::explodePath($path), $default, $reindex);
     }
 
     /**
@@ -49,32 +50,35 @@ class ArrayParser
     /**
      * @param $array
      * @param $path
+     * @param bool $reindex
      * @return bool
      */
-    public static function isEmpty($array, $path)
+    public static function isEmpty($array, $path, $reindex = false)
     {
-        return empty(self::get($array, $path));
+        return empty(self::get($array, $path, null, $reindex));
     }
 
     /**
      * @param array $array
      * @param $path
+     * @param null $default
+     * @param bool $reindex
      * @return array|int|null
      */
-    public static function length(array $array, $path)
+    public static function length(array $array, $path, $default = null, $reindex = false)
     {
-        $item = self::get($array, $path);
+        $item = self::get($array, $path, $default, $reindex);
 
         if (is_array($item) || is_object($item)) {
             return count((array)$item);
         }
 
         if (is_string($item)) {
-            return strlen($item);
+            return (int)strlen($item);
         }
 
         if (is_numeric($item)) {
-            return $item;
+            return (int)$item;
         }
 
         return null;
@@ -84,11 +88,12 @@ class ArrayParser
      * @param $array
      * @param $path
      * @param null $find
+     * @param bool $reindex
      * @return bool
      */
-    public static function exists($array, $path, $find = null)
+    public static function exists($array, $path, $find = null, $reindex = false)
     {
-        $result = self::get($array, $path);
+        $result = self::get($array, $path, null, $reindex);
 
         if (!is_null($result) && is_null($find)) {
             return true;
@@ -107,11 +112,12 @@ class ArrayParser
      * @param array $array
      * @param $path
      * @param $value
+     * @param bool $reindex
      * @return mixed
      */
-    public static function append(array &$array, $path, $value)
+    public static function append(array &$array, $path, $value, $reindex = false)
     {
-        $item = self::get($array, $path);
+        $item = self::get($array, $path, null, $reindex);
 
         if ($item === null) {
             $item = $value;
@@ -147,20 +153,47 @@ class ArrayParser
      * @param $array
      * @param $keys
      * @param null $default
+     * @param bool $reindex
      * @return null
      */
-    private static function arrayGet($array, $keys, $default = null)
+    private static function arrayGet(array $array, $keys, $default = null, $reindex = false)
     {
         $key = array_shift($keys);
 
+        if ($reindex && isset($array[$key]) && is_array($array[$key])) {
+            self::reindexKeys($array[$key]);
+        }
+
         if (isset($array[$key]) && count($keys) === 0) {
             return $array[$key];
-        } elseif (isset($array[$key]) && count($keys) >= 1) {
-            return self::arrayGet($array[$key], $keys);
+        }
+
+        if (isset($array[$key]) && is_array($array[$key]) && count($keys) >= 1) {
+            return self::arrayGet($array[$key], $keys, $default, $reindex);
         }
 
         return $default;
     }
+
+    /**
+     * @param array $array
+     */
+    public static function reindexKeys(array &$array)
+    {
+        if (!self::hasStringKeys($array)) {
+            $array = array_values($array);
+        }
+    }
+
+    /**
+     * @param array $array
+     * @return bool
+     */
+    private static function hasStringKeys(array $array)
+    {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
+    }
+
 
     /**
      * @param array $array

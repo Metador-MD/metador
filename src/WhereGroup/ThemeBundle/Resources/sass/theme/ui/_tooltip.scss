@@ -6,12 +6,11 @@
     display: inline-block;
 
     & > .tooltip-wrapper {
+        z-index: 2;
         display: none;
         min-width: 300px;
-        max-width: 600px;
         position: absolute;
         height: 40px;
-        //border: 1px solid red;
 
         &.left {
             left: 0;
@@ -40,7 +39,6 @@
 
     &:hover > .tooltip-wrapper {
         display: block;
-        z-index: 1;
     }
 }
 

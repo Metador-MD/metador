@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+
 /**
  * Class FrontendCommand
  * @package WhereGroup\CoreBundle\Component
@@ -27,7 +29,7 @@ class FrontendCommand
      */
     public function redirect(&$response, $url)
     {
-        $response = $this->runMethod('metador', 'redirect', $url, $response);
+        $this->runMethod('metador', 'redirect', $url, $response);
 
         return $this;
     }
@@ -39,7 +41,7 @@ class FrontendCommand
      */
     public function changeLocation(&$response, $url)
     {
-        $response = $this->runMethod('metador', 'changeLocation', $url, $response);
+        $this->runMethod('metador', 'changeLocation', $url, $response);
 
         return $this;
     }
@@ -52,7 +54,7 @@ class FrontendCommand
      */
     public function displayInfo(&$response, $message, $parameters = array())
     {
-        $response = $this->runMethod(
+        $this->runMethod(
             'metador',
             'displayInfo',
             $this->core->translate($message, $parameters),
@@ -70,7 +72,7 @@ class FrontendCommand
      */
     public function displaySuccess(&$response, $message, $parameters = array())
     {
-        $response = $this->runMethod(
+        $this->runMethod(
             'metador',
             'displaySuccess',
             $this->core->translate($message, $parameters),
@@ -88,7 +90,7 @@ class FrontendCommand
      */
     public function displayWarning(&$response, $message, $parameters = array())
     {
-        $response = $this->runMethod(
+        $this->runMethod(
             'metador',
             'displayWarning',
             $this->core->translate($message, $parameters),
@@ -106,7 +108,7 @@ class FrontendCommand
      */
     public function displayError(&$response, $message, $parameters = array())
     {
-        $response = $this->runMethod(
+        $this->runMethod(
             'metador',
             'displayError',
             $this->core->translate($message, $parameters),
@@ -121,11 +123,11 @@ class FrontendCommand
      * @param $method
      * @param $argument
      * @param $response
-     * @return array
+     * @return FrontendCommand
      */
-    private function runMethod($class, $method, $argument, &$response)
+    public function runMethod($class, $method, $argument, &$response)
     {
-        return array_merge_recursive($response, array(
+        $response = ArrayParser::merge($response, array(
             'METADOR' => array(
                 'runMethod' => array(
                     array(
@@ -136,5 +138,29 @@ class FrontendCommand
                 )
             )
         ));
+
+        return $this;
+    }
+
+    /**
+     * @param $function
+     * @param $argument
+     * @param $response
+     * @return FrontendCommand
+     */
+    public function runFunction($function, $argument, &$response)
+    {
+        $response =  array_merge_recursive($response, array(
+            'METADOR' => array(
+                'runFunction' => array(
+                    array(
+                        'function' => $function,
+                        'argument' => $argument
+                    )
+                )
+            )
+        ));
+
+        return $this;
     }
 }

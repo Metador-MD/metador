@@ -25,13 +25,16 @@ class User implements UserInterface
      */
     private $em;
 
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository  */
+    private $repo;
+
+    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository  */
+    private $groupRepo;
+
     /**
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
-
-    const USER_ENTITY = 'MetadorUserBundle:User';
-    const GROUP_ENTITY = 'MetadorUserBundle:Group';
 
     /**
      * User constructor.
@@ -47,11 +50,29 @@ class User implements UserInterface
         $this->tokenStorage = $tokenStorage;
         $this->em           = $em;
         $this->encoder      = $encoder;
+        $this->repo         = $em->getRepository('MetadorUserBundle:User');
+        $this->groupRepo    = $em->getRepository('MetadorUserBundle:Group');
     }
 
     public function __destruct()
     {
         unset($this->trokenStorage, $this->em, $this->encoder);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->repo->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countGroups()
+    {
+        return $this->groupRepo->count();
     }
 
     /**
@@ -61,7 +82,7 @@ class User implements UserInterface
      */
     public function get($id)
     {
-        $user = $this->getUserRepository()->findOneById($id);
+        $user = $this->repo->findOneById($id);
 
         if (!$user) {
             throw new MetadorException("Benutzer nicht gefunden.");
@@ -76,7 +97,7 @@ class User implements UserInterface
      */
     public function getByUsername($username)
     {
-        return $this->getUserRepository()->findOneByUsername($username);
+        return $this->repo->findOneByUsername($username);
     }
 
     /**
@@ -85,7 +106,7 @@ class User implements UserInterface
      */
     public function getGroupByName($groupname)
     {
-        return $this->getGroupRepository()->findOneByRole($groupname);
+        return $this->groupRepo->findOneByRole($groupname);
     }
 
     /**
@@ -93,7 +114,7 @@ class User implements UserInterface
      */
     public function findAll()
     {
-        return $this->getUserRepository()->findAllSorted();
+        return $this->repo->findAllSorted();
     }
 
     /**
@@ -103,13 +124,69 @@ class User implements UserInterface
      */
     public function insert(UserEntity $user)
     {
-        if ($this->getUserRepository()->findOneByUsername($user->getUsername())) {
+        if ($this->repo->findOneByUsername($user->getUsername())) {
             throw new MetadorException("Benutzer bereits vorhanden.");
         }
 
         $user->setPassword($this->encodePassword($user, $user->getPassword()));
 
         $this->update($user);
+
+        return $this;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @param string $email
+     * @param array $groups
+     * @return $this
+     * @throws MetadorException
+     */
+    public function createIfNotExists($username, $password, $email = '', $groups = [])
+    {
+        if (!$this->getByUsername($username)) {
+            $user = new UserEntity();
+
+            $user
+                ->setUsername($username)
+                ->setPassword($password)
+                ->setEmail($email)
+            ;
+
+            if (!empty($groups)) {
+                foreach ($groups as $group) {
+                    $groupEntity = $this->getGroupByName($group);
+
+                    if ($groupEntity) {
+                        $user->addGroup($groupEntity);
+                    }
+                }
+            }
+
+            $this->insert($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $role
+     * @param $desciption
+     * @return $this
+     */
+    public function createGroupIfNotExists($role, $desciption = '')
+    {
+        if (!$this->groupRepo->findOneByRole($role)) {
+            $group = new Group();
+            $group
+                ->setRole($role)
+                ->setDescription($desciption)
+            ;
+
+            $this->em->persist($group);
+            $this->em->flush();
+        }
 
         return $this;
     }
@@ -154,7 +231,12 @@ class User implements UserInterface
     public function getUserFromSession()
     {
         $token = $this->tokenStorage->getToken();
-        return is_object($token) ? $token->getUser() : null;
+
+        if (!is_object($token) || $token->getUser() === 'anon.') {
+            return null;
+        }
+
+        return $token->getUser();
     }
 
     /**
@@ -207,21 +289,5 @@ class User implements UserInterface
         }
 
         return $password;
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository
-     */
-    private function getUserRepository()
-    {
-        return $this->em->getRepository(self::USER_ENTITY);
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository
-     */
-    private function getGroupRepository()
-    {
-        return $this->em->getRepository(self::GROUP_ENTITY);
     }
 }

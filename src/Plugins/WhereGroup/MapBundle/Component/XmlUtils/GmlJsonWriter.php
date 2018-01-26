@@ -10,6 +10,11 @@ namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
 use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader as xaar;
 
+/**
+ * Class GmlJsonWriter
+ * @package Plugins\WhereGroup\MapBundle\Component\XmlUtils
+ * @author Paul Schmidt <panadium@gmx.de>
+ */
 class GmlJsonWriter implements IContextWriter
 {
     const POINT = 'Point';
@@ -57,37 +62,41 @@ class GmlJsonWriter implements IContextWriter
         $json = array(
             'coordinates' => array(),
         );
-        if ($this->srsName === null && isset($content[0][xaar::KEY_ATTRS]) && isset($content[0][xaar::KEY_ATTRS]['srsName'])) {
+        if ($this->srsName === null
+            && isset($content[0][xaar::KEY_ATTRS])
+            && isset($content[0][xaar::KEY_ATTRS]['srsName'])) {
             $this->srsName = $content[0][xaar::KEY_ATTRS]['srsName'];
         }
 
-        return $this->findGml_v3_3($content);
+        return $this->findGmlV3($content);
     }
 
-    private function findGml_v3_3(array $content)// GML v.3.3
+    private function findGmlV3(array $content) // GML v.3.3
     {
         $c = $content[0];
         switch ($c[xaar::KEY_NAME]) {
             case 'gml:Point':
                 return $this->createJson(
-                    $this->coordsToGJ($this->findCoords_v3($c[xaar::KEY_CHILDREN][0]))[0],
+                    $this->coordsToGJ($this->findCoordsV3($c[xaar::KEY_CHILDREN][0]))[0],
                     self::POINT
                 );
             case 'gml:MultiPoint': // gml:MultiPoint/gml:pointMember[?]/gml:Point/gml:pos
                 $coords = array();
                 foreach ($c[xaar::KEY_CHILDREN] as $pm) {
                     $coords[] =
-                        $this->coordsToGJ($this->findCoords_v3($pm[xaar::KEY_CHILDREN][0][xaar::KEY_CHILDREN][0]))[0];
+                        $this->coordsToGJ($this->findCoordsV3($pm[xaar::KEY_CHILDREN][0][xaar::KEY_CHILDREN][0]))[0];
                 }
 
                 return $this->createJson($coords, self::MULTIPOINT);
             case 'gml:LineString':
                 return $this->createJson(
-                    $this->coordsToGJ($this->findCoords_v3($c[xaar::KEY_CHILDREN][0])), self::LINESTRING);
+                    $this->coordsToGJ($this->findCoordsV3($c[xaar::KEY_CHILDREN][0])),
+                    self::LINESTRING
+                );
             case 'gml:Polygon':
                 $coords = array();
                 foreach ($c[xaar::KEY_CHILDREN] as $ring) {
-                    $coords[] = $this->coordsToGJ($this->findCoords_v3($ring));
+                    $coords[] = $this->coordsToGJ($this->findCoordsV3($ring));
                 }
 
                 return $this->createJson($coords, self::POLYGON);
@@ -112,10 +121,11 @@ class GmlJsonWriter implements IContextWriter
     }
 
     /**
-     * @param $item array
-     * @return array|null
+     * @param $item
+     * @return array
+     * @throws \Exception
      */
-    private function findCoords_v3($item)
+    private function findCoordsV3($item)
     {
         switch ($item[xaar::KEY_NAME]) {
 //            case 'gml:coordinates': # @decimal default ".", @cs default ",", ts" default "&#x20;"  GMLv2.X
@@ -128,7 +138,7 @@ class GmlJsonWriter implements IContextWriter
 //                break;
             default:
                 if (isset($item[xaar::KEY_CHILDREN])) {
-                    return $this->findCoords_v3($item[xaar::KEY_CHILDREN][0]);
+                    return $this->findCoordsV3($item[xaar::KEY_CHILDREN][0]);
                 } else {
                     throw new \Exception('GML v3.x: Koordinaten können nicht ausgelesen werden.');
                 }
@@ -136,6 +146,12 @@ class GmlJsonWriter implements IContextWriter
     }
 
 
+    /**
+     * @param $ordinates
+     * @param int $fromDim
+     * @param int $toDim
+     * @return array
+     */
     public static function coordsToGJ($ordinates, $fromDim = 2, $toDim = 2)
     {
         $result = array();
@@ -166,8 +182,9 @@ class GmlJsonWriter implements IContextWriter
     }
 
     /**
-     * @param $name
-     * @return array linked crs
+     * @param $href
+     * @param $type
+     * @return array
      */
     public static function linkedCrs($href, $type)
     {

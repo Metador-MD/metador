@@ -147,7 +147,10 @@ class ConfigurationTest extends KernelTestCase
 
     public function testObject()
     {
-        $object = new Configuration($this->container->get('doctrine.orm.entity_manager'));
+        $object = new Configuration(
+            $this->container->get('doctrine.orm.entity_manager'),
+            $this->container->get('metador_cache')
+        );
 
         $this->assertInstanceOf(ConfigurationInterface::class, $object);
 

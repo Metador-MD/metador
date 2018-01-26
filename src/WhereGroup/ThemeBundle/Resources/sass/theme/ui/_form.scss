@@ -90,6 +90,12 @@ $icon-color: darken($border, 20%);
     display: block;
     @extend .clearfix;
 
+    &.readonly {
+        opacity: 0.5;
+        background-color: darken($background, 2%);
+        color: black;
+    }
+
     &.row-space {
         margin-bottom: $padding;
     }
@@ -160,6 +166,18 @@ $icon-color: darken($border, 20%);
     &.i4 {
         & > .input, & > .select, & > .textarea, & > .advanced-select {
             @include calc('width', '100% - #{$normal-item-height * 4}');
+        }
+    }
+
+    &.i5 {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
+            @include calc('width', '100% - #{$normal-item-height * 5}');
+        }
+    }
+
+    &.i6 {
+        & > .input, & > .select, & > .textarea, & > .advanced-select {
+            @include calc('width', '100% - #{$normal-item-height * 6}');
         }
     }
 
@@ -361,5 +379,13 @@ $icon-color: darken($border, 20%);
             border-left: 4px solid $error;
         }
 
+    }
+}
+
+.md .form-field-wrapper > .select.helper-select {
+    background-color: lighten($info, 30%);
+
+    &:hover {
+        background-color: lighten($info, 25%);
     }
 }

@@ -1,36 +1,88 @@
-import {UUID} from './Ol4';
+import {TITLE, UUID} from "./Ol4";
 import {dom} from './dom';
 
 export class FeatureInfo {
-    private static buttonSelector: string = '.-js-map-info';
-    private static selectClass: string = 'select';
-    private static keyId: string = 'uuid';
-    private static keyTitle: string = 'title';
-    private static keyAlternateTitle: string = 'alternateTitle';
     private static itemTagName: string = 'span';
     private olMap: ol.Map;
     private tooltip: ol.Overlay;
+    private tooltipCoord: ol.Coordinate;
     private tooltipElm: HTMLElement;
     private layer: ol.layer.Vector;
+    private callbackSelect: Function;
+    private callbackUnSelect: Function;
+    private callbackUnSelectAll: Function;
+    private select: ol.interaction.Select;
 
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
-        dom.findFirst(FeatureInfo.buttonSelector).addEventListener('click', this.buttonClick.bind(this), false);
+        this.initSelect();
     }
 
-    private buttonClick(e) {
-        if (!dom.hasClass(e.currentTarget, 'success')) {
-            this.activate();
-        } else {
-            this.deactivate();
+    private initSelect() {
+        const fi = this;
+        let timestamp: number = 0;
+        this.select = new ol.interaction.Select({
+            multi: true,
+            layers: [this.layer],
+            filter: function (feature: ol.Feature) {
+                timestamp = Date.now() + 5;
+                setTimeout(function () {
+                    if (Date.now() >= timestamp) {
+                        if (fi.tooltipElm) {
+                            fi.showTooltip();
+                        }
+                    }
+                }, 5);
+                return true;
+            }
+        });
+        this.select.on('select', function (e) {
+            if (e.target.getFeatures().getLength() === 0) {
+                if (fi.tooltipElm) {
+                    fi.showTooltip();
+                }
+            }
+        });
+    }
+
+    reset() {
+        if (this.select) {
+            this.select.getFeatures().clear();
+        }
+        if (this.tooltipElm) {
+            dom.addClass(this.tooltipElm, 'hidden');
+        }
+        if (this.callbackUnSelectAll) {
+            this.callbackUnSelectAll();
         }
     }
 
-    private activate() {
-        dom.addClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
-        this.olMap.on('click', this.mapClick, this);
-        this.tooltipElm = dom.create('div', {}, ['tooltip', 'hidden']);
+    selectFeatures(uuids: string[]) {
+        const fi = this;
+        if (this.layer && this.select) {
+            this.reset();
+            this.layer.getSource().forEachFeature(
+                function (feature: ol.Feature) {
+                    for (const uuid of uuids) {
+                        if (feature.get(UUID) === uuid) {
+                            fi.select.getFeatures().push(feature);
+                        }
+                    }
+                }
+            )
+            if (this.tooltipElm) {
+                this.showTooltip();
+            }
+        }
+    }
+
+    activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+        this.callbackSelect = callbackSelect;
+        this.callbackUnSelect = callbackUnSelect;
+        this.callbackUnSelectAll = callbackUnSelectAll;
+        this.olMap.on('click', this.setTooltipPosition, this);
+        this.tooltipElm = tooltipElm;
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
@@ -38,66 +90,96 @@ export class FeatureInfo {
             positioning: 'bottom-center'
         });
         this.olMap.addOverlay(this.tooltip);
+
+        this.select.getFeatures().clear();
+        this.olMap.addInteraction(this.select);
     }
 
-    private deactivate() {
-        dom.removeClass(<HTMLElement>dom.findFirst(FeatureInfo.buttonSelector), 'success');
+    deactivate() {
+        this.select.getFeatures().clear();
+        this.olMap.removeInteraction(this.select);
+        // this.select = null;
+        this.callbackUnSelectAll();
+        this.callbackSelect = null;
+        this.callbackUnSelect = null;
+        this.callbackUnSelectAll = null;
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();
         this.olMap.removeOverlay(this.tooltip);
-        this.olMap.un('click', this.mapClick, this);
+        this.olMap.un('click', this.setTooltipPosition, this);
     }
 
     private itemClick(e: Event) {
         if ((<any>e.target).tagName === FeatureInfo.itemTagName.toUpperCase()) {
-            this.selectDataset((<HTMLElement>e.target).getAttribute(FeatureInfo.dataAttrName(FeatureInfo.keyId)));
+            let tag = (<HTMLElement>e.target);
+            if (!dom.hasClass(tag, '-js-tooltip-item')) {
+                this.select.getFeatures().clear();
+                this.unSelectDataset();
+                dom.addClass(this.tooltipElm, 'hidden');
+            } else {
+                dom.removeClass(tag.parentElement, 'selected', 'span');
+                dom.addClass(tag, 'selected');
+                this.select.getFeatures().clear();
+                this.unSelectDataset();
+                const feature = this.layer.getSource().getFeatureById(tag.getAttribute('data-id'));
+                this.select.getFeatures().push(feature);
+                this.selectDataset(feature.get(UUID));
+            }
         } else {
             e.stopPropagation();
         }
     }
 
-    private static dataAttrName(name: string) {
-        return 'data-' + name;
+    private setTooltipPosition(en: ol.MapBrowserEvent) {
+        this.tooltipCoord = en.coordinate;
     }
 
-    private mapClick(e: ol.MapBrowserEvent) {
-        this.tooltipElm.innerHTML = '';
-        let lay = this.layer;
-        let features: ol.Feature[] = new Array<ol.Feature>();
-        this.olMap.forEachFeatureAtPixel(e.pixel, function (feature: ol.Feature) {
-            features.push(feature);
-        }, {
-            layerFilter: function (layer) {
-                return layer.get(UUID) === lay.get(UUID);
-            }
-        });
+    private hideTooltip() {
+        if (this.tooltipElm) {
+            dom.addClass(this.tooltipElm, 'hidden');
+        }
+    }
+
+    private showTooltip() {
+        const features: ol.Feature[] = this.select.getFeatures().getArray();
+        dom.remove('.-js-tooltip-item', this.tooltipElm);
+        this.unSelectDataset();
         if (features.length === 0) {
-            dom.addClass(this.tooltipElm, 'hidden');
+            this.hideTooltip();
         } else if (features.length === 1) {
-            dom.addClass(this.tooltipElm, 'hidden');
-            this.selectDataset(features[0].get(FeatureInfo.keyId));
+            this.hideTooltip();
+            this.selectDataset(features[0].get(UUID));
         } else {
             for (let feature of features) {
-                let dataAttr = FeatureInfo.dataAttrName(FeatureInfo.keyId);
-                let title = feature.get(FeatureInfo.keyTitle);
-                let aTitle = feature.get(FeatureInfo.keyAlternateTitle);
+                if (!feature.getId()) {
+                    feature.setId(feature.get(UUID));
+                }
                 let attrs = {
-                    dataAttr: feature.get(FeatureInfo.keyId),
-                    title: aTitle ? title + ' / ' + aTitle : title
+                    "title": feature.get(TITLE),
+                    "data-uuid": feature.get(UUID),
+                    "data-id": feature.getId()
                 };
-                attrs[FeatureInfo.dataAttrName(FeatureInfo.keyId)] = feature.get(FeatureInfo.keyId);
-                this.tooltipElm.appendChild(dom.create(FeatureInfo.itemTagName, attrs, [], title));
+                this.tooltipElm.appendChild(
+                    dom.create(FeatureInfo.itemTagName, attrs, ['-js-tooltip-item', 'selected'], feature.get(TITLE))
+                );
+                this.selectDataset(feature.get(UUID));
             }
-            this.tooltip.setPosition(e.coordinate);
             dom.removeClass(this.tooltipElm, 'hidden');
+            this.tooltip.setPosition(this.tooltipCoord);
         }
     }
 
     private selectDataset(selector: string) {
-        console.log('set class ' + FeatureInfo.selectClass + ' for dataset' + selector);
+        if (this.callbackSelect) {
+            this.callbackSelect(selector);
+        }
     }
 
-    private unSelectDataset() {
-        console.log('remove class ' + FeatureInfo.selectClass + ' for all datasets');
+    private unSelectDataset(selector: string = null) {
+        if (selector !== null && this.callbackUnSelect) {
+            this.callbackUnSelect(selector);
+        } else if (selector === null && this.callbackUnSelectAll) {
+            this.callbackUnSelectAll();
+        }
     }
 }

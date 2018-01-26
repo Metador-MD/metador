@@ -12,7 +12,7 @@
 
     <services>
         <!-- SERVICE -->
-        <service id="metador_map" class="%metador.map.class%">
+        <service id="metador_map" class="%metador.map.class%" public="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="metador_browser" />
         </service>

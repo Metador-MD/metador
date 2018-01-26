@@ -2,25 +2,30 @@
 
 namespace WhereGroup\UserBundle\Controller;
 
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\SecurityContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WhereGroup\CoreBundle\Entity\Log;
-use Wheregroup\UserBundle\Entity\User;
 
+/**
+ * Class SecurityController
+ * @package WhereGroup\UserBundle\Controller
+ */
 class SecurityController extends Controller
 {
+    /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Request $request)
+    {
+    }
+
     /**
      *
      * @Route("/login/failure", name="login_failure")
      * @Method("GET")
-     * @Template("MetadorThemeBundle:Home:index.html.twig")
      */
-    public function loginAction()
+    public function loginFailureAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 

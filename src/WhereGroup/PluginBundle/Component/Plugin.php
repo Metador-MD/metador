@@ -8,6 +8,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
+use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\ConfigurationInterface;
 
 /**
@@ -26,10 +27,12 @@ class Plugin
     protected $plugins = array();
     protected $routing = array();
     protected $configuration = null;
+    protected $cache;
 
     /**
      * Plugin constructor.
      * @param ConfigurationInterface $configuration
+     * @param Cache $cache
      * @param $rootDir
      * @param $cacheDir
      * @param $environment
@@ -38,6 +41,7 @@ class Plugin
      */
     public function __construct(
         ConfigurationInterface $configuration,
+        Cache $cache,
         $rootDir,
         $cacheDir,
         $environment,
@@ -45,13 +49,15 @@ class Plugin
         $pluginPaths = null
     ) {
         // get plugin path's
+        $this->cache = $cache;
         $this->rootDir           = $rootDir . '/';
         $this->cacheDir          = $cacheDir;
         $this->env               = $environment;
         $this->configurationFile = $this->rootDir . $configFolder . 'plugins.yml';
         $this->routingFile       = $this->rootDir . $configFolder . 'plugins_routing.yml';
         $this->pluginPaths       = $pluginPaths;
-        $this->configuration = $configuration;
+        $this->configuration     = $configuration;
+        $this->routing           = $this->getPluginRouting();
 
         if (is_null($this->pluginPaths)) {
             $this->pluginPaths       = array(
@@ -61,7 +67,6 @@ class Plugin
 
         // load configuration
         $configuration = $this->getPluginConfiguration();
-        $this->routing = $this->getPluginRouting();
         $plugins       = $this->findPlugins();
 
         // remove not existing bundles

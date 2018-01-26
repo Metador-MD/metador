@@ -13,7 +13,7 @@ use WhereGroup\CoreBundle\Component\Finder;
  */
 class MetadataRepository extends EntityRepository
 {
-    private $entity = 'MetadorCoreBundle:Metadata';
+    const ENTITY = 'MetadorCoreBundle:Metadata';
 
     /**
      * @param $profile
@@ -22,7 +22,7 @@ class MetadataRepository extends EntityRepository
     public function getAllByProfile($profile)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT * FROM $this->entity p WHERE p.profile = :profile"
+            "SELECT * FROM " . self::ENTITY . " p WHERE p.profile = :profile"
         )
         ->setParameter('profile', $profile)
         ->getResult();
@@ -35,7 +35,7 @@ class MetadataRepository extends EntityRepository
     public function getDataObject($id)
     {
         $json = $this->getEntityManager()->createQuery(
-            "SELECT p.object AS object FROM $this->entity p WHERE p.id = :id"
+            "SELECT p.object AS object FROM " . self::ENTITY . " p WHERE p.id = :id"
         )->setParameter('id', $id)->getResult();
 
         if (isset($json[0]['object'])) {
@@ -61,7 +61,6 @@ class MetadataRepository extends EntityRepository
 
         $finder->getFilter($qb);
 
-
         // Get Results
         return $qb->getQuery()->getResult();
     }
@@ -70,14 +69,43 @@ class MetadataRepository extends EntityRepository
      * @param Finder $finder
      * @return mixed
      */
-    public function count($finder)
+//    public function count($finder)
+//    {
+//        $qb = $this->createQueryBuilder('m');
+//
+//        $qb->select($qb->expr()->count('m'));
+//
+//        $finder->getFilter($qb, true);
+//
+//        return $qb->getQuery()->getSingleScalarResult();
+//    }
+
+    /**
+     * @return mixed
+     */
+    public function count()
     {
-        $qb = $this->createQueryBuilder('m');
+        return $this
+            ->getEntityManager()
+            ->getRepository(self::ENTITY)
+            ->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
-        $qb->select($qb->expr()->count('m'));
-
-        $finder->getFilter($qb, true);
-
-        return $qb->getQuery()->getSingleScalarResult();
+    /**
+     * @return mixed
+     */
+    public function countAndGroupBySources()
+    {
+        return $this
+            ->getEntityManager()
+            ->getRepository(self::ENTITY)
+            ->createQueryBuilder('u')
+            ->select('u.source, count(u)')
+            ->groupBy('u.source')
+            ->getQuery()
+            ->getArrayResult();
     }
 }

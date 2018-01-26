@@ -8,13 +8,25 @@ Metador.prototype = {
     },
 
     parseResponse: function (data) {
-        if (data && data.METADOR && data.METADOR.runMethod) {
-            $(data.METADOR.runMethod).each(function (index, params) {
-                  if(typeof window[params.class][params.method] === 'function'){
-                    window[params.class][params.method](params.argument);
-                }
-            });
+        if (data && data.METADOR) {
+            if (data.METADOR.runMethod) {
+                $(data.METADOR.runMethod).each(function (index, params) {
+                    if(typeof window[params.class][params.method] === 'function'){
+                        window[params.class][params.method](params.argument);
+                    }
+                });
+            } else if (data.METADOR.runFunction) {
+                $(data.METADOR.runFunction).each(function (index, params) {
+                    if(typeof window[params.function] === 'function'){
+                        window[params.function](params.argument);
+                    }
+                });
+            }
+
+            return;
         }
+
+        window.location = Configuration.basedir + 'logout/';
 
         return false;
     },

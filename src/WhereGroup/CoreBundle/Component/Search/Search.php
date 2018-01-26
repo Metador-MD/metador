@@ -2,19 +2,58 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
-use WhereGroup\CoreBundle\Component\Search\Paging;
-
 /**
  * Class Search
  * @package WhereGroup\CoreBundle\Component\Search
  */
 abstract class Search
 {
-    protected $hits = 10;
-    protected $page = 1;
-    protected $offset = 0;
-    protected $terms = '';
-    protected $source = '';
+    /* mapping: query property name to entity Metador property */
+    const MAP_QUERY2SOURCE = [
+        'metadata' => [
+            'bboxn' => 'bboxn',
+            'bboxe' => 'bboxe',
+            'bboxs' => 'bboxs',
+            'bboxw' => 'bboxw',
+            'profile' => 'profile',
+            'public' => 'public',
+            'hierarchylevel' => 'hierarchyLevel',
+            'uuid' => 'uuid',
+            'groups' => 'groups',
+            'searchfield' => 'searchfield',
+            'source' => 'source',
+            'insertuser' => 'insertUser',
+            'date' => 'date',
+            'fileidentifier' => 'uuid',
+            // ISO queryables
+            'identifier' => 'uuid',
+            'title' => 'title',
+            'language' => 'language',
+            'anytext' => 'searchfield',
+        ],
+        'group' => [
+            'role' => 'role'
+        ]
+    ];
+
+    protected $hits       = null;
+    protected $page       = null;
+    protected $offset     = null;
+    protected $terms      = null;
+    protected $source     = null;
+    protected $profile    = null;
+    protected $groups     = null;
+
+    /* @var Expression $expression */
+    protected $expression = null;
+
+    /**
+     * @return array
+     */
+    public function getTerms()
+    {
+        return explode(' ', $this->terms);
+    }
 
     /**
      * @param $terms
@@ -28,26 +67,6 @@ abstract class Search
     }
 
     /**
-     * @return array
-     */
-    public function getTerms()
-    {
-        return explode(' ', $this->terms);
-    }
-
-    /**
-     * @param $hits
-     * @return $this
-     */
-    public function setHits($hits)
-    {
-        $this->hits = (int)$hits;
-        $this->offset = ($this->hits * $this->page) - $this->hits;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getHits()
@@ -56,12 +75,16 @@ abstract class Search
     }
 
     /**
-     * @param $page
+     * @param $hits
      * @return $this
      */
-    public function setPage($page)
+    public function setHits($hits)
     {
-        $this->page = (int)$page;
+        if (is_null($this->page)) {
+            $this->page = 1;
+        }
+
+        $this->hits = (int)$hits;
         $this->offset = ($this->hits * $this->page) - $this->hits;
 
         return $this;
@@ -76,6 +99,22 @@ abstract class Search
     }
 
     /**
+     * @param $page
+     * @return $this
+     */
+    public function setPage($page)
+    {
+        if (is_null($this->hits)) {
+            $this->hits = 10;
+        }
+
+        $this->page = (int)$page;
+        $this->offset = ($this->hits * $this->page) - $this->hits;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getOffset()
@@ -84,13 +123,36 @@ abstract class Search
     }
 
     /**
+     * @param $offset
+     * @return $this
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = (int)$offset;
+
+        return $this;
+    }
+
+    /**
      * @return \stdClass
      */
     public function getResultPaging()
     {
-        $paging = new Paging($this->getResultCount(), $this->hits, $this->page);
+        $paging = new Paging(
+            $this->getResultCount(),
+            is_null($this->hits) ? 10 : $this->hits,
+            is_null($this->page) ? 1 : $this->page
+        );
 
         return $paging->calculate();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 
     /**
@@ -107,8 +169,54 @@ abstract class Search
     /**
      * @return string
      */
-    public function getSource()
+    public function getProfile()
     {
-        return $this->source;
+        return $this->profile;
     }
+
+    /**
+     * @param $profile
+     * @return $this
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * @return null|array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param array $groups
+     * @return $this
+     */
+    public function setGroups(array $groups)
+    {
+        $this->groups = $groups;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    abstract public function getResultCount();
+
+    /**
+     * @return ExprHandler
+     */
+    abstract public function createExpression();
+
+    /**
+     * @param Expression $expression
+     * @return mixed
+     */
+    abstract public function setExpression(Expression $expression);
 }

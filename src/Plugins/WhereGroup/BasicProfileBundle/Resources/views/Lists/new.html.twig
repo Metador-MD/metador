@@ -1,0 +1,64 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}Listenelement erstellen{% endblock %}
+
+{% block content %}
+    {% set param = { 'profile': listProfile, 'key': listKey } %}
+
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">Listenelement erstellen</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_lists_show', param) }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}zurück{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <div class="grid space responsive">
+        <form action="{{ path('metador_admin_lists_new', param) }}" method="post">
+            <div class="row r-1">
+                <div class="col c-1">
+                    <div><label class="form-label">Wert:</label></div>
+                    <div class="form-field-wrapper">
+                        {% if listTemplate is null %}
+                            <textarea class="textarea" name="key"></textarea>
+                        {% else %}
+                            <input type="text" class="input" name="key" />
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <hr class="line-separator"/>
+            <div class="col c-1 margin-b">
+                <div class="col c-1-2">
+                    {% if listTemplate is null %}
+                        <div><label class="form-label">Beschreibung:</label></div>
+                        <div class="form-field-wrapper">
+                            <textarea class="textarea" name="value"></textarea>
+                        </div>
+                    {% else %}
+                        {% for templateElement in listTemplate  %}
+                            <div><label class="form-label">{{ templateElement|capitalize }}:</label></div>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="input" name="value[{{ templateElement }}]" />
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1 text-right">
+                    <button class="btn success medium">
+                        <span class="icon-checkmark"></span> hinzufügen
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

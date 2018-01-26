@@ -1,28 +1,8 @@
-<div>
-    <div style="float: left; width: 70%;">
-        {% if p['title'] is defined and p['title'] is not empty %}
-        <h1>{{ p['title'] }}</h1>
-        {% endif %}
-
-        {% if p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}
-            <p style="font-style: italic;">{{ p['alternateTitle'] }}</p>
-        {% endif %}
-
-        <hr style="border: 0; border-top: 1px solid silver;">
-
-        {% if p['abstract'] is defined and p['abstract'] is not empty %}
-            <p>{{ p['abstract'] }}</p>
-        {% endif %}
-    </div>
-    <div style="float: right; width: 25%;">
-        {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
-        <img src="{{ p['browserGraphic'] }}" height="200px;" width="200px;" style="border: 1px solid silver;" />
-        {% endif %}
-    </div>
-</div>
-
-<hr style="clear: both; border: 0; border-top: 1px solid silver;"/>
-
-
-
-
+{% block center %}
+    <style>
+    .pdf-gap{
+        height: 0;
+    }
+       </style>
+    {% include '@MetadorServiceProfile/Export/view.html.twig' %}
+{% endblock %}

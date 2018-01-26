@@ -31,6 +31,10 @@
                 html = $('#' + $(self.element).attr('data-tooltip-id')).html();
             }
 
+            if (typeof $(self.element).attr('data-width') !== 'undefined') {
+                this.settings.width = $(self.element).attr('data-width');
+            }
+
             var position = 'left';
             var top = $(self.element).outerHeight() - 2;
             var tooltip = $('<div></div>')
@@ -47,6 +51,7 @@
                     $('<div></div>')
                         .addClass('tooltip-dialog')
                         .html(html)
+                        .css('width', this.settings.width)
                 );
 
             $(self.element).append(tooltip);

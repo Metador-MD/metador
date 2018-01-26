@@ -27,6 +27,10 @@ $space: $padding;
             @include calc('width', '#{$width} - #{$space*3/4}');
         }
 
+        @at-root .md .grid.space .row.r-6 #{$selector} {
+            @include calc('width', '#{$width} - #{$space*5/6}');
+        }
+
         @at-root .md .grid.space .row.r-8 #{$selector} {
             @include calc('width', '#{$width} - #{$space*7/8}');
         }
@@ -53,7 +57,9 @@ $space: $padding;
         @include col('.c-2-3', '66.666%');
         @include col('.c-1-4', '25%');
         @include col('.c-3-4', '75%');
+        @include col('.c-1-6', '16.666%');
         @include col('.c-1-8', '12.5%');
+
 
         & > .col {
             float: left;
@@ -81,6 +87,10 @@ $space: $padding;
     }
 
     &.row-space .row {
+        margin-bottom: $padding;
+    }
+
+    &.grid-space {
         margin-bottom: $padding;
     }
 

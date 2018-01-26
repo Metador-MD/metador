@@ -7,7 +7,7 @@
 
 namespace Plugins\WhereGroup\MapBundle\Component\XmlUtils;
 
-use \XMLReader;
+use XMLReader;
 
 /**
  * Description of EXmlReader
@@ -49,6 +49,13 @@ class EXmlReader extends XMLReader
         $this->toOutputReader = null;
     }
 
+    /**
+     * @param $uri
+     * @param array $readers
+     * @param null $encoding
+     * @param null $readOptions
+     * @return null|EXmlReader
+     */
     public static function create($uri, array $readers = array(), $encoding = null, $readOptions = null)
     {
         if (!$uri) {
@@ -70,8 +77,7 @@ class EXmlReader extends XMLReader
             foreach ($path as $value) {
                 $this->readers[$value] = $reader;
             }
-        }
-        else {
+        } else {
             $this->readers[$path] = $reader;
         }
     }
@@ -153,7 +159,6 @@ class EXmlReader extends XMLReader
     public function read()
     {
         if (parent::read()) {
-
             switch ($this->nodeType) {
                 case EXmlReader::ELEMENT:
                     $this->fromRoot();
@@ -178,6 +183,7 @@ class EXmlReader extends XMLReader
                     } else {
                         return true;
                     }
+                    break;
                 default:
                     ;
             }
@@ -203,5 +209,4 @@ class EXmlReader extends XMLReader
     {
         return $this->toOutputReader->getContent();
     }
-
 }

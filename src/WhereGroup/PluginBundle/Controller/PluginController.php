@@ -3,12 +3,13 @@
 namespace WhereGroup\PluginBundle\Controller;
 
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Finder\Finder;
@@ -27,7 +28,6 @@ class PluginController extends Controller
     /**
      * @Route("/", name="metador_admin_plugin")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -35,15 +35,14 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:index.html.twig', array(
             'plugins' => $this->get('metador_plugin')->getPlugins('origin')
-        );
+        ));
     }
 
     /**
      * @Route("/update", name="metador_admin_plugin_update")
      * @Method("POST")
-     * @Template()
      */
     public function updateAction()
     {
@@ -52,7 +51,7 @@ class PluginController extends Controller
         }
 
         $plugins = array();
-        $array   = $this->get('request')->request->all();
+        $array   = $this->get('request_stack')->getCurrentRequest()->request->all();
 
         foreach ($array['plugin'] as $key => $value) {
             if ($value == 1) {
@@ -60,38 +59,38 @@ class PluginController extends Controller
             }
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:update.html.twig', array(
             'plugins' => implode(',', $plugins)
-        );
+        ));
     }
 
     /**
      * @Route("/import", name="metador_admin_plugin_import")
      * @Method("GET")
-     * @Template()
      */
     public function importAction()
     {
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
             'form' => $this
                 ->createFormBuilder(new Plugin())
-                ->add('attachment', 'file', array('label' => 'Datei', 'label_attr' => array(
+                ->add('attachment', FileType::class, array('label' => 'Datei', 'label_attr' => array(
                     'class' => 'plugin-label plugin-row'
                 ), 'attr' => array(
                     'class' => 'plugin-row'
                 )))
-                ->add('save', 'submit', array('label' => 'Importieren', 'attr' => array(
+                ->add('save', SubmitType::class, array('label' => 'Importieren', 'attr' => array(
                     'class' => 'plugin-row'
                 )))
                 ->getForm()
                 ->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/upload", name="metador_admin_plugin_upload")
      * @Method("POST")
-     * @Template("MetadorPluginBundle:Plugin:import.html.twig")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function uploadAction(Request $request)
     {
@@ -101,19 +100,19 @@ class PluginController extends Controller
         $tempPath   = $kernelPath . '/../var/temp/';
 
         $form = $this->createFormBuilder(new Plugin())
-            ->add('attachment', 'file', array('label' => 'Datei', 'label_attr' => array(
+            ->add('attachment', FileType::class, array('label' => 'Datei', 'label_attr' => array(
                 'class' => 'plugin-label plugin-row'
             ), 'attr' => array(
                 'class' => 'plugin-row'
             )))
-            ->add('save', 'submit', array('label' => 'Importieren', 'attr' => array(
+            ->add('save', SubmitType::class, array('label' => 'Importieren', 'attr' => array(
                 'class' => 'plugin-row'
             )))
             ->getForm();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
             $file = $form['attachment']->getData();
 
@@ -175,26 +174,29 @@ class PluginController extends Controller
             return $this->redirectToRoute('metador_admin_plugin');
         }
 
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**
      * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm")
      * @Method("GET")
-     * @Template()
+     * @param $plugin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirmAction($plugin)
     {
-        return array(
+        return $this->render('MetadorPluginBundle:Plugin:confirm.html.twig', array(
             'pluginKey' => $plugin
-        );
+        ));
     }
 
     /**
      * @Route("/delete/{plugin}", name="metador_admin_plugin_delete")
      * @Method("POST")
+     * @param $plugin
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction($plugin)
     {
@@ -206,7 +208,8 @@ class PluginController extends Controller
     /**
      * @Route("/view/{plugin}", name="metador_admin_plugin_view")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @param $plugin
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($plugin)
     {
@@ -219,7 +222,7 @@ class PluginController extends Controller
             return $this->forward($plugin . ':Plugin:view');
         }
 
-        return array();
+        return $this->render('MetadorPluginBundle:Plugin:view.html.twig');
     }
 
     /**
@@ -230,7 +233,7 @@ class PluginController extends Controller
     {
         return new JsonResponse(
             $this->get('metador_plugin')->update(
-                $this->get('request')->request->all()
+                $this->get('request_stack')->getCurrentRequest()->request->all()
             )
         );
     }

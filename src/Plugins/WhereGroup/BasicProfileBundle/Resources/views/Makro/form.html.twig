@@ -1,68 +1,11 @@
-{% macro input(id, value, placeholder, label, type, class, validatorSources) %}
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" data-validator-source="{{ validatorSources }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-    </div>
+{% macro input(options) %}
+    {% include '@MetadorBasicProfile/Element/input.html.twig' with options only %}
 {% endmacro %}
 
-{% macro select(id, value, label, options, type, class, validatorSources) %}
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <select name="{{ id }}" id="{{ id|md_id }}" class="select -js-user-input {{ class }}" data-validator-source="{{ validatorSources }}" {{ id|md_data_obj }}>
-            {% for optionValue, optionLabel in options  %}
-                <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel|trans }}</option>
-            {% endfor %}
-        </select>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-    </div>
+{% macro text(options) %}
+    {% include '@MetadorBasicProfile/Element/text.html.twig' with options only %}
 {% endmacro %}
 
-{% macro text(id, value, placeholder, label, type, class, validatorSources) %}
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-    <div class="form-field-wrapper i2 -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }} placeholder="{{ placeholder }}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-    </div>
-{% endmacro %}
-
-{% macro multi_input(id, values, placeholder, label, type, class) %}
-    {% set array = [] %}
-
-    {% for value in values if value != '' %}
-        {% set array = array|merge([value]) %}
-    {% endfor %}
-
-    {% set value = array|first ? array|first : '' %}
-
-    <div class="grid space responsive">
-        <div class="row r-1 -js-multi-input">
-            <div class="col c-1 -js-multi-input-col">
-                <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}</label>
-                <div class="form-field-wrapper row-space i4 -js-validation-wrapper -js-multi-input-col">
-                    <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-                    <input name="{{ id }}" id="{{ id|md_id }}" type="text" value="{{ value }}" class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
-                    <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-                    <span class="form-icon icon-bin2 -js-multi-input-clear"></span>
-                    <span class="form-icon icon-plus -js-multi-input-add"></span>
-                </div>
-                <div class="-js-multi-inputs">
-                    {% for value in array if array is iterable %}
-                        {% if not loop.first and value is not empty%}
-                            <div class="-js-multi-input-col">
-                                <div class="form-field-wrapper row-space i2 -js-validation-wrapper">
-                                    <input name="{{ id }}" type="text" value="{{ value }}"  class="input -js-user-input {{ class }}" {{ id|md_data_obj }} {% if placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}/>
-                                    <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
-                                    <span class="form-icon icon-bin2 -js-multi-input-remove"></span>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
+{% macro select(options) %}
+    {% include '@MetadorBasicProfile/Element/select.html.twig' with options only %}
 {% endmacro %}

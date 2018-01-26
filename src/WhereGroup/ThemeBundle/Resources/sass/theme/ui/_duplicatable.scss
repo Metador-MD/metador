@@ -3,6 +3,8 @@
 @import '../extensions';
 
 .duplicatable-area {
+    margin-bottom: $padding;
+
     .duplicatable-content {
         background-color: $white;
         border: 1px solid $border;

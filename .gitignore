@@ -2,11 +2,10 @@
 *~
 *.db
 *.db3
+*.sqlite
 *.cache
 *.phar
 *.TODO
-app/SymfonyRequirements.php
-app/check.php
 
 # IDE'S
 *.sublime-workspace
@@ -15,15 +14,17 @@ app/check.php
 .project
 
 # PROJECT FOLDERS
-app/config/parameters.yml
-bin/*
-!bin/console
-vendor
-web/bundles
-bower_components
-node_modules
-var/cache
-var/logs
+/.web-server-pid
+/app/config/parameters.yml
+/bower_components/
+/node_modules/
+/bin/
+/build/
+/vendor/
+/web/bundles/
+/web/assets/
+/var/cache/
+/var/logs/
 
 # Ignore or allow Plugins
 src/Plugins/*

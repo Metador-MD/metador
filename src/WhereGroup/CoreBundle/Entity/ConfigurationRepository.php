@@ -69,11 +69,11 @@ class ConfigurationRepository extends EntityRepository
      * @param $filterValue
      * @param null $default
      * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
         try {
-
             $qb = $this->createQueryBuilder('c')
                 ->select('c')
                 ->where('c.key = :key')
@@ -88,7 +88,6 @@ class ConfigurationRepository extends EntityRepository
             }
 
             return $qb->getQuery()->getSingleResult();
-
         } catch (NoResultException $e) {
             return $default;
         }
@@ -156,8 +155,10 @@ class ConfigurationRepository extends EntityRepository
     /**
      * @param $key
      * @param $value
-     * @param $filterType
-     * @param $filterValue
+     * @param string $filterType
+     * @param string $filterValue
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')
     {

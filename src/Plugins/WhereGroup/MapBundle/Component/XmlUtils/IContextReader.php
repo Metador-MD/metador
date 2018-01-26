@@ -39,5 +39,4 @@ interface IContextReader
      * @return mixed
      */
     public function getContent();
-
 }

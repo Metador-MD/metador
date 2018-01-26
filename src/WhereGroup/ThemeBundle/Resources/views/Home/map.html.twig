@@ -1,20 +1,14 @@
 {% if isHome is defined and plugin_is_active('metador_map') %}
 <div class="map-dialog -js-map-dialog">
     <div class="map-menu">
-        <span class="btn medium -js-zoom-box">
+        <span class="btn medium -js-zoom-box" title="Ausschnitt aufziehen">
             <span class="icon-map"></span> Zoom
         </span>
-        <span class="btn medium -js-map-info">
+        <span class="btn medium -js-map-info" title="FeatureInfo aktivieren">
             <span class="icon-info"></span> Info
         </span>
 
-        <select class="input-element medium -js-draw-type">
-            <option value="NONE">None</option>
-            <option value="BOX">Box</option>
-            <option value="POLYGON">Polygon</option>
-        </select>
-
-        <select class="input-element medium -js-crs-code">
+        <select class="input-element medium -js-crs-code" title="CRS">
             <option value="EPSG:4326">EPSG:4326</option>
             <option value="EPSG:4258">EPSG:4258</option>
             <option value="EPSG:31466">EPSG:31466</option>
@@ -24,16 +18,29 @@
 
         <input id="map-menu-load-wms-input" type="text" class="input-element medium input"
                placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
-               data-url="{{ url('metador_admin_map_loadwms') }}"/>
+               data-url="{{ url('metador_map_loadwms') }}"/>
 
         <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
 
-        <form id="file-upload-form" action="{{ path('metador_admin_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
-            <div class="btn medium file-upload">
-                Upload
+        <select class="input-element medium -js-geometry-type" title="Geometrie">
+            <option value="NONE">keine</option>
+            <option value="load">geladene</option>
+            <option value="BOX">Box</option>
+            <option value="POLYGON">Polygon</option>
+        </select>
+
+        <div style="display: none">
+            <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
                 <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
+            <option value="intersects">Schneidet</option>
+            <option value="contains">Umfasst</option>
+            <option value="within">Innerhalb</option>
+        </select>
+
     </div>
     <div class="map-dialog-left-menu -js-map-dialog active">
         <div class="map-dialog-left-content -js-map-menu">

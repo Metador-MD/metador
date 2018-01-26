@@ -6,7 +6,7 @@
 .md .map-dialog .map .ol-control.ol-zoom-extent {
   right: 8px;
   left: auto;
-  top: 90px; }
+  top: 96px; }
 
 .md .map-dialog .map .ol-scale-line {
   left: auto;
@@ -24,6 +24,9 @@
 .md .map-dialog .map .tooltip span {
   display: block;
   cursor: pointer; }
+
+.md .map-dialog .map .tooltip span.selected {
+  font-weight: bold; }
 
 .md .map-dialog .map .tooltip:before {
   border-top: 6px solid rgba(0, 0, 0, 0.5);

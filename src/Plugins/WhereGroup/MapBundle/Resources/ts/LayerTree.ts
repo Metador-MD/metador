@@ -1,5 +1,5 @@
 import {dom} from './dom';
-import {TITLE, UUID, Ol4Map} from "./Ol4";
+import {Ol4Map, TITLE, UUID} from "./Ol4";
 
 // import * as $ from 'jquery';
 
@@ -178,8 +178,14 @@ export class LayerTree {
     }
 
     private dragEnter(e) {
-        if (this.currentLayer !== e.toElement) {
-            this.tree.insertBefore(this.currentLayer, e.toElement.draggable ? e.toElement : e.toElement.parentElement);
+        if (this.currentLayer && e.target !== undefined && this.currentLayer !== e.target) {
+            try {
+                this.tree.insertBefore(
+                    this.currentLayer,
+                    e.target.draggable ? e.target : e.target.parentElement
+                );
+            } catch (e) {
+            }
         }
     }
 

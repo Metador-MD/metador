@@ -1,11 +1,18 @@
+{% if rows is defined and rows|length == 0 %}
+    <div class="notify info text-center">
+        {% trans %}Es konnten leider keine Daten gefunden werden.{% endtrans %}
+    </div>
+{% endif %}
+
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}
+
 {% if rows is defined and rows is iterable %}
 {% for row in rows if is_granted('view', row.object|json_decode(true)) %}
-
     {% set p = row.object|json_decode(true) %}
     {% set editable = app.user and is_granted('edit', p) %}
-    {% set title = p.title is defined ? p.title|teaser(75, true) : 'noname' %}
+    {% set title = p.title is defined and p.title is not empty ? p.title|teaser(75, true) : 'noname' %}
 
-    <div class="search-result">
+    <div class="search-result" data-metadata-uuid="{{ p['_uuid'] }}">
         <div class="result-header">
             <div class="left">
                 {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
@@ -32,7 +39,7 @@
                             <span class="icon-eye"></span>
                         </div>
                         {% elseif not editable and p['_locked'] is defined and p['_locked'] %}
-                        <div class="result-icon" title="{% trans %}Datensatz ist derzeig gesperrt.{% endtrans %}">
+                        <div class="result-icon" title="{% trans %}Datensatz ist derzeitig gesperrt.{% endtrans %}">
                             <span class="icon-lock"></span>
                         </div>
                         {% elseif editable %}
@@ -46,20 +53,19 @@
                         </div>
                     </div>
                 </div>
-
+                {% if not array_is_empty(p, 'alternateTitle') and p['alternateTitle'] is not iterable %}
                 <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
-                    {% if p['alternateTitle'] is defined %}
-                        {{ p['alternateTitle']|teaser(80, true) }}
-                    {% endif %}
+                    {{ p['alternateTitle']|teaser(80, true) }}
                 </div>
+                {% endif %}
 
                 <hr class="line-separator">
 
+                {% if not array_is_empty(p, 'abstract') %}
                 <div class="md-result-abstract" {% if p['abstract']|length > 400 %}title="{{ p['abstract'] }}"{% endif %}>
-                    {% if p['abstract'] is defined %}
-                        {{ p['abstract']|teaser(400) }}
-                    {% endif %}
+                    {{ p['abstract']|teaser(400) }}
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="result-footer">
@@ -74,6 +80,7 @@
             </div>
             <div class="right">
                 {% if app.environment == 'dev' %}
+                    <a href="{{ path('metadata_test', { 'id' : p['_id'] }) }}" class="link">test</a>
                     <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link">object</a>
                     <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link">json</a>
                 {% endif %}
@@ -86,3 +93,5 @@
     </div>
 {% endfor %}
 {% endif %}
+
+{% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}

@@ -13,8 +13,9 @@ interface ConfigurationInterface
     /**
      * ConfigurationInterface constructor.
      * @param EntityManagerInterface $em
+     * @param Cache $cache
      */
-    public function __construct(EntityManagerInterface $em);
+    public function __construct(EntityManagerInterface $em, Cache $cache);
 
     public function __destruct();
 
@@ -50,6 +51,13 @@ interface ConfigurationInterface
      * @return mixed
      */
     public function getAll($filterType = null, $filterValue = null);
+
+    /**
+     * @param null $filterType
+     * @param null $filterValue
+     * @return mixed
+     */
+    public function getValues($filterType = null, $filterValue = null);
 
     /**
      * @param string $filterType

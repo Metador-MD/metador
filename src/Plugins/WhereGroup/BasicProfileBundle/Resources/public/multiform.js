@@ -27,6 +27,11 @@
                 return false;
             });
 
+            $(this.element).on('change', '.-js-duplicatable-title', function() {
+                self.titleChange(this);
+                return false;
+            });
+
             $(this.element).on('click', '.-js-duplicatable-area-add', function() {
                 self.add();
                 return false;
@@ -54,6 +59,12 @@
 
             labelClone.attr('data-tab', count).find('.-js-title-label').text('');
             contentClone.attr('data-tab-content', count);
+            contentClone.find('.-js-duplicatable-ignore').each(function() {
+                $(this).remove();
+            });
+            contentClone.find('.-js-multi-fieldset').each(function() {
+                $(this).multiFieldset();
+            });
 
             this.changeElementNames(contentClone, count, 0);
 
@@ -154,12 +165,13 @@
             subCount = (typeof subCount === 'undefined') ? 0 : parseInt(subCount);
 
             element.each(function() {
+                var node    = $(this).prop('nodeName');
                 var name    = $(this).attr('name');
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
-                if ($(this).val() !== '') {
-                    $(this).val('')
+                if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
+                    $(this).val('');
                 }
 
                 if(typeof name !== 'undefined' && name !== false) {
@@ -172,7 +184,7 @@
 
                 if(typeof id !== 'undefined' && id !== false) {
                     id = self.replaceCounter(
-                        /_([\d]{1,3})_/g,
+                        /_([\d]{1,3})[_]*/g,
                         "_", "_", count, subCount, id
                     );
                     $(this).attr('id', id);
@@ -180,13 +192,13 @@
 
                 if(typeof obj_id !== 'undefined' && obj_id !== false) {
                     obj_id = self.replaceCounter(
-                        /_([\d]{1,3})_/g,
+                        /_([\d]{1,3})[_]*/g,
                         "_", "_", count, subCount, obj_id
                     );
                     $(this).attr('data-obj-id', obj_id);
                 }
 
-                if($(this).children().size() > 0) {
+                if($(this).children().length > 0) {
                     self.changeElementNames($(this).children(), count, subCount);
                 }
             });

@@ -4,14 +4,35 @@ namespace WhereGroup\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class UserRepository
+ * @package WhereGroup\UserBundle\Entity
+ */
 class UserRepository extends EntityRepository
 {
-    private $entity = 'MetadorUserBundle:User';
+    const ENTITY = 'MetadorUserBundle:User';
 
+    /**
+     * @return array
+     */
     public function findAllSorted()
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT p FROM $this->entity p ORDER BY p.username"
+            "SELECT p FROM " . self::ENTITY . " p ORDER BY p.username"
         )->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this
+            ->getEntityManager()
+            ->getRepository(self::ENTITY)
+            ->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

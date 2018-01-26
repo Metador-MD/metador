@@ -1,13 +1,13 @@
 {% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
 
-{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as profileForm %}
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
 
 {% block center %}
-    <form action="{{ path('metadata_save', {source: metadataSource, profile: metadataProfil}) }}" method="post" id="metadata-form" autocomplete="off">
-        <input type="hidden" name="p[_id]" value="{% if p['_id'] is defined and p['_id'] is not empty %}{{ p['_id'] }}{% endif %}" />
-        <input type="hidden" name="p[fileIdentifier]" value="{% if p['fileIdentifier'] is defined and p['fileIdentifier'] is not empty %}{{ p['fileIdentifier'] }}{% endif %}" />
-        <input type="hidden" name="p[_source]" value="{{ metadataSource }}" />
-        <input type="hidden" name="p[_profile]" value="{{ metadataProfil }}" />
+    <form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
+        <input type="hidden" name="p[_id]" value="{{ array_get(p, '_id', '') }}" />
+        <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
+        <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
+        <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
         <input type="hidden" name="p[hierarchyLevel]" value="dataset" />
 
         <div class="center menu">

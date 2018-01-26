@@ -13,11 +13,77 @@ Search.prototype = {
     timeoutId: null,
 
     init: function() {
-        this.searchFieldElement = $('#searchfield');
+        var self = this;
+        this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
-        this.setParam('page', 1);
 
-        this.searchFieldElement.val(this.getParam('terms', ''));
+        $(document).on('change', '.-js-search-filter', function() {
+            self.set($(this).attr('name'), $(this).val());
+            self.find();
+        });
+
+        $(document).on('keyup', '#searchfield', function() {
+            search.keyup();
+        });
+
+        $(document).on('click', '[data-change-page]', function() {
+            self.set('page', $(this).attr('data-change-page'));
+            self.find();
+        });
+
+        $(document).on('click', '.-js-csv-download', function() {
+            var element = this;
+
+            $(element)
+                .find('input')
+                .val(window.btoa(JSON.stringify(self.getAll())))
+                .closest('form').submit();
+        });
+
+        $(document).on('click', '.-js-reset-search', function() {
+            self.setObject('search-params', {});
+            window.location.reload();
+        });
+    },
+
+    initFilters: function() {
+        var self = this;
+
+        self.set('page', 1);
+        self.set('hits', 10);
+        self.searchFieldElement.val(self.get('terms', ''));
+
+        $('.-js-search-filter').each(function () {
+            var name         = $(this).attr('name');
+            var defaultValue = $(this).attr('data-value');
+            var value        = self.get(name);
+
+            if (typeof value === 'undefined') {
+                value = defaultValue;
+            }
+
+            $('.-js-search-filter[name="' + name + '"]').val(value).change();
+        });
+    },
+
+    getAll: function() {
+        return this.getObject('search-params', {});
+    },
+
+    get: function(key, defaultValue) {
+        var params = this.getObject('search-params', {});
+
+        if (params[key]) {
+            return params[key];
+        }
+
+        return defaultValue;
+    },
+
+    set: function(key, value) {
+        var params = this.getObject('search-params', {});
+        params[key] = value;
+        this.setObject('search-params', params);
     },
 
     keyup: function() {
@@ -29,38 +95,53 @@ Search.prototype = {
 
         self.timeoutId = window.setTimeout(function() {
             self.timeoutId = undefined;
-            self.setParam('page', 1);
-            self.setParam('terms', self.searchFieldElement.val());
+            self.set('page', 1);
+            self.set('terms', self.searchFieldElement.val());
             self.find();
-
         }, self.timeoutDelay);
-
     },
 
     find: function() {
         var self = this;
 
-        $.ajax({
-            'url': self.searchFieldElement.attr('data-url'),
-            'type': 'POST',
-            'dataType': 'json',
-            'data': {
-                'source': $('.-js-source.active').attr('data-slug'),
-                'terms': self.getParam('terms')
-            },
-            'success': function(data) {
-                self.searchResultElement.html('');
+        if (typeof self.timeoutId !== 'undefined') {
+            window.clearTimeout(self.timeoutId);
+        }
 
-                if (data && data.html) {
-                    self.searchResultElement.html(data.html);
+        self.timeoutId = window.setTimeout(function() {
+            self.set('source', $('.-js-source.active').attr('data-slug'));
+
+            $.ajax({
+                'url': self.searchFieldElement.attr('data-url'),
+                'type': 'POST',
+                'dataType': 'json',
+                'data': self.getAll(),
+                'success': function(data) {
+                    self.searchResultElement.html('');
+
+                    if (data && data.html) {
+                        self.searchResultElement.html(data.html);
+                    }
+
+                    metador.parseResponse(data);
+                },
+                'error': function() {
+                    self.searchResultElement.html('');
                 }
+            });
+        }, self.timeoutDelay);
+    },
 
-                metador.parseResponse(data);
-            },
-            'error': function() {
-                self.searchResultElement.html('');
-            }
-        });
+    clearMetadataMarks: function() {
+        $('[data-metadata-uuid]').removeClass('marked');
+    },
+
+    markMetadata: function(uuid) {
+        $('[data-metadata-uuid="' + uuid + '"]').addClass('marked');
+    },
+
+    unmarkMetadata: function(uuid) {
+        $('[data-metadata-uuid="' + uuid + '"]').removeClass('marked');
     }
 };
 
@@ -69,11 +150,7 @@ var search = new Search();
 search.init();
 
 
-$(document).on('keyup', '#searchfield', function() {
-    search.keyup();
-});
-
 $( document ).ready(function() {
+    search.initFilters();
     search.find();
 });
-

@@ -2,12 +2,11 @@
 
 namespace WhereGroup\UserBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\UserBundle\Form\UserType;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
@@ -23,43 +22,42 @@ class UserController extends Controller
     /**
      *
      * @Route("/", name="metador_admin_user")
-     * @Template()
      */
     public function indexAction()
     {
-        return array(
+        return $this->render('@MetadorUser/User/index.html.twig', array(
             'users' => $this->get('metador_user')->findAll(),
-        );
+        ));
     }
 
     /**
      * Displays a form to create a new User entity.
      *
      * @Route("/new", name="metador_admin_user_new")
-     * @Template()
      */
     public function newAction()
     {
-        return array(
+        return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $this
-                ->createForm(new UserType(), new User())
+                ->createForm(UserType::class, new User())
                 ->createView()
-        );
+        ));
     }
 
     /**
      *
      * @Route("/create", name="metador_admin_user_create")
      * @Method("POST")
-     * @Template("MetadorUserBundle:User:new.html.twig")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
         $user = new User();
 
         $form = $this
-            ->createForm(new UserType(), $user)
-            ->submit($request);
+            ->createForm(UserType::class, $user)
+            ->handleRequest($request);
 
         if ($user->getPicture() !== null) {
             $picture = new PictureTransformation($user->getPicture());
@@ -67,18 +65,29 @@ class UserController extends Controller
             $user->setPicture($picture->getImageBase64Encode());
         }
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->get('metador_user')->insert($user);
-                $this->get('metador_logger')->success(
-                    'application',
-                    'user',
-                    'create',
-                    'source',
-                    'identifier',
-                    'Benutzer %username% wurde erstellt.',
-                    array('%username%' => $user->getUsername())
-                );
+
+                $log = $this->get('metador_logger')->newLog();
+
+                $log->setType('success')
+                    ->setFlashMessage()
+                    ->setCategory('application')
+                    ->setSubcategory('user')
+                    ->setOperation('create')
+                    ->setIdentifier($user->getId())
+                    ->setMessage('Benutzer %username% wurde erstellt.')
+                    ->setMessageParameter(array('%username%' => $user->getUsername()))
+                    ->setUsername($this->get('metador_user')->getUsernameFromSession())
+                    ->setPath('metador_admin_user_edit')
+                    ->setParams(array('id' => $user->getId()))
+                ;
+
+                $this->get('metador_logger')->set($log);
+
+                unset($log);
+
             // todo eigene Exception
             } catch (MetadorException $e) {
                 $this->get('metador_logger')->warning(
@@ -94,15 +103,14 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return array(
+        return $this->render('@MetadorUser/User/new.html.twig', array(
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
      *
      * @Route("/edit/{id}", name="metador_admin_user_edit")
-     * @Template("MetadorUserBundle:User:new.html.twig")
      */
     public function editAction($id)
     {
@@ -120,18 +128,20 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return array(
+        return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $this
                 ->createForm(UserType::class, $user)
                 ->createView()
-        );
+        ));
     }
 
     /**
      *
      * @Route("/update/{id}", name="metador_admin_user_update")
      * @Method("POST")
-     * @Template("MetadorUserBundle:User:new.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function updateAction(Request $request, $id)
     {
@@ -142,10 +152,10 @@ class UserController extends Controller
             $oldPicture = $user->getPicture();
 
             $form = $this
-                ->createForm(new UserType(), $user)
-                ->submit($request);
+                ->createForm(UserType::class, $user)
+                ->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 if ($user->getPassword() != "" && $oldPassword != $user->getPassword()) {
                     $user->setPassword(
                         $this->get('metador_user')->encodePassword($user, $user->getPassword())
@@ -188,22 +198,21 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return array(
+        return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $form->createView(),
-        );
+        ));
     }
 
     /**
      * @Method({"GET", "POST"})
      * @Route("/delete/{id}", name="metador_admin_user_confirm")
-     * @Template()
      */
     public function confirmAction($id)
     {
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_user')->get($id))
-            ->add('delete', 'submit', array(
+            ->add('delete', SubmitType::class, array(
                 'label' => 'löschen'
             ))
             ->getForm()
@@ -226,9 +235,9 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return array(
+        return $this->render('@MetadorUser/User/confirm.html.twig', array(
             'form' => $form->createView()
-        );
+        ));
     }
 
 
@@ -250,7 +259,8 @@ class UserController extends Controller
             ->setIdentifier($id)
             ->setMessage($message)
             ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+            ->setUsername($this->get('metador_user')->getUsernameFromSession())
+        ;
 
         $this->get('metador_logger')->set($log);
 

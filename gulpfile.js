@@ -25,8 +25,6 @@ const gulp      = require('gulp'),
     browserify = require("browserify"),
     tsify = require("tsify"),
     source = require('vinyl-source-stream');
-//
-// var tsProject   = ts.createProject('./tsconfig.json');
 
 var conf = {
     assets: {
@@ -40,7 +38,7 @@ var conf = {
             'web/assets/vendor/OpenLayers/ol.css'
         ],
         copy: [
-            'web/assets/vendor/zebra_datepicker/public/**/*',
+            'web/assets/vendor/zebra_datepicker/dist/**/*',
             'web/assets/vendor/OpenLayers/ol.js',
             'web/assets/vendor/OpenLayers/ol-debug.js'
         ],
@@ -60,18 +58,9 @@ var conf = {
         dest   : '/../public/css/',
         options: {
             outputStyle  : 'compressed',
-            includePaths : [] //'src/WhereGroup/ThemeBundle/Resources/styleguide'
+            includePaths : []
         }
     }
-    // ,
-    // ts: {
-    //     files  : 'src/**/ts/*.ts',
-    //     entries: ['src/Plugins/WhereGroup/MapBundle/Resources/ts/map.ts'],
-    //     target: {
-    //         dir: 'src/Plugins/WhereGroup/MapBundle/Resources/public/js/',
-    //         file: 'map.js'
-    //     }
-    // }
 }
 
 gulp.task('clean', () => {

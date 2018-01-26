@@ -1,11 +1,316 @@
-{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+{% import 'MetadorBasicProfileBundle:Makro:export.html.twig' as export %}
 
-{% block center %}
-<div class="center">
-    <div class="center-right">
-        <div class="content">
-            {% include '@MetadorServiceProfile/Export/pdf.html.twig' %}
-        </div>
-    </div>
-</div>
-{% endblock %}
+<style>
+{#    .view-table, th, td{
+        border: 1px solid black;
+    }#}
+    .view-table{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+    .view-header-one{
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+    .view-row-one{
+        border-bottom: 5px solid #4dacfe;
+    }
+    .view-header-two{
+        font-size: 1.25em;
+        font-weight: bold;
+        color: #4dacfe;
+    }
+    .view-header-three{
+        font-size: 1em;
+        font-weight: bold;
+    }
+    .view-bastract{
+        width:80%;
+    }
+    .view-update-time-label{
+        width:80%;
+        text-align: right;
+    }
+    .view-update-time{
+        width: 20%;
+        font-size: 1.25em;
+        text-align: center;
+    }
+    .view-property-label{
+        width:30%;
+    }
+    .view-property{
+        width:70%;
+    }
+</style>
+    {# identification #}
+<table class="view-table">
+    <thead>
+        {{ export.document_header(p['title']) }}
+    </thead>
+    <tbody>
+        <tr>
+            {% if p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}
+                <th colspan="2" class="view-header-two"><i>{{ p['alternateTitle'] }}</i></th>
+            {% else %}
+            <th colspan="2" class="view-header-two">Kein Alternativtitel</th>
+            {% endif %}
+        </tr>
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+        <tr>
+            {% if p['_update_time'] is defined and p['_update_time'] is not empty %}
+            <td class="view-header-two view-update-time-label">Letzte Aktualisierung:</td>
+                <td class="view-update-time"><i>{{ p['_update_time'] }}</i></td>
+            {% else %}
+                <td><i>Kein Datum</i></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+        <tr>
+            {% if p['abstract'] is defined and p['abstract'] is not empty %}
+                <td class="pdf-bastract">{{ p['abstract'] }}</td>
+            {% else %}
+            <td class="view-header-two"></td>
+            {% endif %}
+            {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
+                <td><img style="max-width: 200px; max-height: 200px;" src="{{ p['browserGraphic'] }}"></td>
+            {% else %}
+            <td style="max-width: 200px;" class="view-header-two"></td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>
+<div class="html-gap pdf-gap"></div>
+{# metadata  #}
+<table class="view-table">
+    <thead>
+        <tr>
+            <th colspan="2" class="view-row-one view-header-one">Metadaten</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+        <tr>
+            <td class="view-property-label view-header-three">Sprache der Metadaten</td>
+            {% if p['metadataLanguage'] is defined and p['metadataLanguage'] is not empty %}
+            <td class="view-property">{{ p['metadataLanguage'] }}</td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+
+        {% if not array_is_empty(p, 'responsiblePartyMetadata:0:organisationName') %}
+
+            {{ export.title('Für Metadaten verantwortliche Stelle') }}
+
+            {% for responsible in p['responsiblePartyMetadata']%}
+                {{ export.line('Name der Organisation', responsible['organisationName']) }}
+                {{ export.line('Zuständige Person', responsible['individualName']) }}
+                {{ export.line('Straße und Hausnummer / Postfach', responsible['deliveryPoint']) }}
+                {{ export.line('Ort', responsible['city']) }}
+                {{ export.line('PLZ', responsible['postalCode']) }}
+                {{ export.line('Bundesland', responsible['administrativeArea']) }}
+                {{ export.line('Staat', responsible['country']) }}
+                {{ export.line('Telefonnummer', responsible['voice']) }}
+                {{ export.line('Faxnummer', responsible['facsimile']) }}
+                {{ export.line('E-Mail', responsible['electronicMailAddress']) }}
+                {{ export.line('Internetadresse', responsible['onlineResource']) }}
+                <tr>
+                    <td colspan="2" class="html-gap pdf-gap"></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+        {{ export.title('Angaben zur Metadatenspezifikation') }}
+        {{ export.line('Spezifikation', p['metadataStandardName']) }}
+        {{ export.line('Version', '') }}
+        {{ export.line('Browser Bild', p['browserGraphic']) }}
+    </tbody>
+</table>
+{#<div class="html-gap pdf-gap"></div>#}
+{# classification #}
+   {# <table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Klassifizierung</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Geodatendienst</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="view-property-label view-header-three">Version</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="html-gap pdf-gap"></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="view-row-two view-header-two">Dienste Operationen</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="html-gap pdf-gap"></td>
+            </tr>
+            <tr>
+                <td class="view-property-label view-header-three">Operation</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="view-property-label view-header-three">Platform</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="view-property-label view-header-three">URL</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+{#    <div>
+        <div class="html-gap pdf-gap"></div>
+    </div>#}
+    {# keyword #}
+{#    <table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Schlüsselwort</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+    {# geographic #}
+{#    <table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Geografischer Standort</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+    {# temporal #}
+    {#<table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Zeitbezug</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+    {# conformity #}
+    {#<table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Übereinstimmung</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+    {# constraints #}
+{#    <table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Beschränkungen</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}
+    {# responsibleparty #}
+    {#<table class="view-table">
+        <thead>
+            <tr>
+                <tr>
+                    <th colspan="4" class="view-row-one">
+                        <div class="view-header-one">Zuständige Stelle</div>
+                    </th>
+                </tr>
+            </tr>
+            <tr>
+                <th colspan="2" class="gap-row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view-property-label view-header-three">Property</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>#}

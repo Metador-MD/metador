@@ -1,4 +1,4 @@
-{% if name is not defined or label is not defined or p is not defined %}
+{% if name is not defined or p is not defined %}
     <div class="notify error">
         The options <strong>name, label</strong> and <strong>p</strong> are required!
     </div>
@@ -10,10 +10,13 @@
     {% set class = class is defined ? class : '' %}
     {% set validatorSources = validatorSources is defined ? validatorSources : '' %}
 
-    <label for="{{ id|md_id }}" class="form-label">{{ label|trans }}:</label>
+    {% if label is defined and label is not empty %}
+        <label for="{{ id }}" class="form-label">{{ label|trans }}:</label>
+    {% endif %}
+
     <div class="form-field-wrapper i2 -js-validation-wrapper">
         <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <textarea name="{{ id }}" id="{{ id|md_id }}" class="textarea -js-user-input" {{ id|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}{% endif %}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
-        <span class="form-icon icon-question2 -js-show-help" {{ id|md_data_obj }}></span>
+        <textarea name="{{ name }}" id="{{ id }}" class="textarea -js-user-input" {{ name|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}{% endif %}" data-validator-source="{{ validatorSources }}">{{ value }}</textarea>
+        <span class="form-icon icon-question2 -js-show-help" {{ name|md_data_obj }}></span>
     </div>
 {% endif %}

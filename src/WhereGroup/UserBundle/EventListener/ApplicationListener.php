@@ -4,6 +4,7 @@ namespace WhereGroup\UserBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
+use WhereGroup\UserBundle\Component\UserInterface;
 
 /**
  * Class ApplicationListener
@@ -12,19 +13,25 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
 class ApplicationListener
 {
     protected $requestStack;
+    protected $user;
 
     /**
      * ApplicationListener constructor.
      * @param RequestStack $requestStack
+     * @param UserInterface $user
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, UserInterface $user)
     {
         $this->requestStack = $requestStack;
+        $this->user = $user;
     }
 
     public function __destruct()
     {
-        unset($this->requestStack);
+        unset(
+            $this->requestStack,
+            $this->user
+        );
     }
 
     /**
@@ -51,6 +58,22 @@ class ApplicationListener
                     ->active($app->isController('group'))
                     ->setRole('ROLE_SYSTEM_SUPERUSER')
             );
+
+            if ($app->isRoute('metador_admin_index')) {
+                $app->add(
+                    $app->get('AppInformation', 'user-info')
+                        ->icon('icon-user')
+                        ->label('Benutzer')
+                        ->count($this->user->count())
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
+                )->add(
+                    $app->get('AppInformation', 'group-info')
+                        ->icon('icon-users')
+                        ->label('Gruppen')
+                        ->count($this->user->countGroups())
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
+                );
+            }
         }
     }
 }

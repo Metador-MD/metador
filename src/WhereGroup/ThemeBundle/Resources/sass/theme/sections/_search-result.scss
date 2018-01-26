@@ -64,6 +64,11 @@ $image-size: 80px;
     margin-bottom: $padding;
     @extend .clearfix;
 
+    &.marked {
+        border: 1px solid darken($border, 10%);
+        background-color: darken($background, 10%);
+    }
+
     & > .result-header {
         margin-bottom: $padding;
 
@@ -106,3 +111,14 @@ $image-size: 80px;
 }
 
 
+.md .paging {
+    display: block;
+
+    & .change-page {
+        cursor: pointer;
+    }
+
+    & .disabled {
+        color: $border;
+    }
+}

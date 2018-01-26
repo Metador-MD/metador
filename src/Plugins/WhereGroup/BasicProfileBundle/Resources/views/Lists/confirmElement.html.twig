@@ -1,0 +1,40 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block title %}Listenelement löschen{% endblock %}
+
+{% block content %}
+    {% set param = { 'profile': listProfile, 'key': listKey } %}
+
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">Listenelement löschen</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_lists_show', param) }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}zurück{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {% set param = { 'profile': listProfile, 'key': listKey, 'elementKey': listElementKey } %}
+
+    <form action="{{ path('metador_admin_lists_confirm_element', param) }}" method="post">
+        <div class="grid space row-space responsive notify error remove-last-space">
+            <div class="row r-1">
+                <div class="col c-1 text-center">
+                    Sind Sie sicher das sie den Eintrag löschen möchten?
+                </div>
+            </div>
+            <div class="row r-1">
+                <div class="col c-1 text-right">
+                    <button class="btn error">{% trans %}löschen{% endtrans %}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

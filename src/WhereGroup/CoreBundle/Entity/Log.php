@@ -20,6 +20,8 @@ class Log
     protected $username = null;
     protected $dateTime = null;
     protected $flashMessage = false;
+    protected $path = '';
+    protected $params = array();
 
     /**
      * Log constructor.
@@ -53,6 +55,42 @@ class Log
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     * @return Log
+     */
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return Log
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+        return $this;
     }
 
     /**
