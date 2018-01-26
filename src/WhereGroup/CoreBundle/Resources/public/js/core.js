@@ -22,7 +22,11 @@ Metador.prototype = {
                     }
                 });
             }
+
+            return;
         }
+
+        window.location = Configuration.basedir + 'logout/';
 
         return false;
     },
