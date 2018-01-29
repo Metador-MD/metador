@@ -25,7 +25,9 @@ class WmsEditType extends AbstractType
         $builder
             ->add('gcUrl', TextType::class, array(
                 'label' => 'GetCapabilities Url (schreibgeschützt)',
-                'read_only' => 'true',
+                'attr' => array(
+                    'readonly' => true,
+                ),
             ))
             ->add('title', TextType::class, array(
                 'label' => 'Title',
