@@ -290,4 +290,23 @@ class User implements UserInterface
 
         return $password;
     }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        /** @var User $user */
+        $user = $this->getUserFromSession();
+
+        $roles = array();
+
+        foreach ($user->getRoles() as $role) {
+            if (!strstr($role, 'ROLE_SYSTEM_')) {
+                $roles[] = $role;
+            }
+        }
+
+        return $roles;
+    }
 }

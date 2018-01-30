@@ -46,7 +46,7 @@ class ProfileController extends Controller
                 '_public'  => false,
                 '_groups'  => array()
             ),
-            'userGroups' => $this->getRoles(),
+            'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
         )));
     }
@@ -77,28 +77,9 @@ class ProfileController extends Controller
 
         return new Response($this->get('metador_core')->render($template, array(
             'p' => $metadata->getObject(),
-            'userGroups' => $this->getRoles(),
+            'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
         )));
-    }
-
-    /**
-     * @return array
-     */
-    private function getRoles()
-    {
-        /** @var User $user */
-        $user = $this->get('metador_user')->getUserFromSession();
-
-        $roles = array();
-
-        foreach ($user->getRoles() as $role) {
-            if (!strstr($role, 'ROLE_SYSTEM_')) {
-                $roles[] = $role;
-            }
-        }
-
-        return $roles;
     }
 
     /**
