@@ -118,7 +118,7 @@
 
         & > .left {
             float: left;
-            font-size: 1.4em;
+            font-size: 1.0em;
             color: $font;
             @extend .no-user-select;
             @include medium-item(false);

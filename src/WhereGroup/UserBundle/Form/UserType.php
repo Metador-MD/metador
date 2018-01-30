@@ -3,6 +3,7 @@
 namespace WhereGroup\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -24,7 +25,16 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password', PasswordType::class, array('required' => false))
+            ->add(
+                'password',
+                RepeatedType::class,
+                array(
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'Die Passwörten stimmen nicht überein!',
+                    'required' => false,
+                    'first_options'  => array('label' => 'Passwort'),
+                    'second_options' => array('label' => 'Password wiederholen'))
+            )
             ->add('email', null, array('required' => false))
             ->add(
                 'groups',
