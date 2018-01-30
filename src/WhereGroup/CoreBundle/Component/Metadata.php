@@ -295,6 +295,10 @@ class Metadata implements MetadataInterface
             $metadata->setInsertTime($date->getTimestamp());
         }
 
+        if (isset($p['_parent'])) {
+            $metadata->setParent($p['_parent']);
+        }
+
         $metadata->setPublic($p['_public']);
         $metadata->setLocked($p['_locked']);
         $metadata->setUpdateUser($user);

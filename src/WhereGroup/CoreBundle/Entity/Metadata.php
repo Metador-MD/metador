@@ -82,6 +82,11 @@ class Metadata
     private $profile;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $parent;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $title;
@@ -584,6 +589,24 @@ class Metadata
     public function setSource($source)
     {
         $this->source = $source;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     * @return Metadata
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
         return $this;
     }
 }
