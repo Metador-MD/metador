@@ -20,3 +20,6 @@ parameters:
     cache_host: 127.0.0.1
     cache_port: 11211
     cache_enabled: false
+
+    result_template: 'MetadorTheme/Home/result.html.twig'
+

@@ -61,6 +61,8 @@ class HomeController extends Controller
 
     /**
      * @Route("/public/search/", name="metador_search")
+     * @throws \Twig\Error\Error
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
      */
     public function searchAction()
     {
@@ -163,8 +165,8 @@ class HomeController extends Controller
         }
 
         $response = [
-            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
-                'rows' => $searchResponse['rows'],
+            'html' => $this->get('templating')->render('@' . $this->getParameter('result_template'), array(
+                'rows'   => $searchResponse['rows'],
                 'paging' => $searchResponse['paging'],
             )),
             'debug' => $params,
