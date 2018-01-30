@@ -28,6 +28,7 @@ class MetadorExtension extends \Twig_Extension
             new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('md_boolean', array($this, 'booleanFilter')),
             new \Twig_SimpleFilter('md_array_path', array($this, 'arrayPath')),
+            new \Twig_SimpleFilter('md_first_key', array($this, 'firstKey')),
         );
     }
 
@@ -40,6 +41,16 @@ class MetadorExtension extends \Twig_Extension
         $string = str_replace(array('[', ']'), array('_','_'), strtolower($string));
         $string = str_replace("__", "_", $string);
         return ltrim(rtrim($string, "_"), "_");
+    }
+
+    /**
+     * @param $string
+     * @return string
+     */
+    public function firstKey($string)
+    {
+        preg_match('/p\[([^\]]+)\].*/s', $string, $match);
+        return isset($match[1]) ? $match[1] : '';
     }
 
     /**
