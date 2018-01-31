@@ -41,6 +41,7 @@ class KeywordType extends AbstractType
 
         $help = $this->plugin->getActiveProfiles();
         $profiles = array_combine(array_keys($help), array_keys($help));
+
         $builder
             ->add('identifier', TextType::class, array('label' => 'Identifier'))
             ->add('title', TextType::class, array('label' => 'Titel'))
@@ -48,17 +49,17 @@ class KeywordType extends AbstractType
             ->add('dateType', ChoiceType::class, array(
                 'label'   => 'Beschreibung',
                 'choices' => array(
-                    'creation'    => 'Erstellungsdatum',
-                    'revision'    => 'Überarbeitung',
-                    'publication' => 'Veröffentlichung',
+                    'Erstellungsdatum' => 'creation',
+                    'Überarbeitung'    => 'revision',
+                    'Veröffentlichung' => 'publication',
                 ),
             ))
             ->add('cardinality', ChoiceType::class, array(
                 'label'   => 'Kardinalität',
                 'choices' => array(
-                    'optional'    => 'Optional',
-                    'conditional' => 'Conditional',
-                    'mandatory'   => 'Mandatory',
+                    'Optional'    => 'optional',
+                    'Conditional' => 'conditional',
+                    'Mandatory'   => 'mandatory',
                 ),
             ))
             ->add('keywords', TextareaType::class, array(

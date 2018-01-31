@@ -38,7 +38,7 @@ class KeywordController extends Controller
         $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this
-            ->createForm($this->get("keyword_form_type"), new Keyword())
+            ->createForm(KeywordType::class, new Keyword())
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,7 +75,7 @@ class KeywordController extends Controller
             ->findOneById($id);
 
         $form = $this
-            ->createForm($this->get("keyword_form_type"), $entity)
+            ->createForm(KeywordType::class, $entity)
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
