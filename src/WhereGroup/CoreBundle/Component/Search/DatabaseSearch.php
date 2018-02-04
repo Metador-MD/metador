@@ -43,13 +43,13 @@ class DatabaseSearch extends Search implements SearchInterface
 
         // Searchterms
         if (is_array($this->getTerms())) {
-            $termCount = 0;
+            $index = 0;
             foreach ($this->getTerms() as $term) {
                 $this->qb
-                    ->andWhere('LOWER(m.searchfield) LIKE :termX'.$termCount)
-                    ->setParameter('termX'.$termCount, "%".strtolower($term)."%");
+                    ->andWhere('LOWER(m.searchfield) LIKE :termX'.$index)
+                    ->setParameter('termX'.$index, "%".strtolower($term)."%");
             }
-            unset($termCount);
+            unset($index);
         }
 
         if (!empty($this->getSource())) {
@@ -57,12 +57,16 @@ class DatabaseSearch extends Search implements SearchInterface
         }
 
         if (!empty($this->getProfile())) {
-            $this->qb->andWhere('m.profile = :profileX')->setParameter('profileX', $this->getProfile());
+            if (is_array($this->getProfile())) {
+                $this->qb->andWhere($this->qb->expr()->in('m.profile', $this->getProfile()));
+            } elseif (is_string($this->getProfile())) {
+                $this->qb->andWhere('m.profile = :profileX')->setParameter('profileX', $this->getProfile());
+            }
         }
 
         return [
             'paging' => $this->getResultPaging(),
-            'rows' => $this->getResult(),
+            'rows'   => $this->getResult(),
         ];
     }
 

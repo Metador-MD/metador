@@ -167,7 +167,7 @@ abstract class Search
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getProfile()
     {
