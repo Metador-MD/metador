@@ -87,6 +87,12 @@ Fieldset.prototype = {
                 $('<span></span>').addClass('icon icon-bin2 -js-multi-fieldset-remove')
             );
 
+        // Remove this
+        clone.find('.-js-add-operateson').each(function() {
+            $(this).operatesonDialog();
+        });
+
+
         this.changeElementNames(clone, this.valueCount());
         this.increaseValueCount();
 
