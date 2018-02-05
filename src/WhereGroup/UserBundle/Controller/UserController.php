@@ -70,7 +70,6 @@ class UserController extends Controller
                 $this->get('metador_user')->insert($user);
 
                 $log = $this->get('metador_logger')->newLog();
-
                 $log->setType('success')
                     ->setFlashMessage()
                     ->setCategory('application')
@@ -83,21 +82,24 @@ class UserController extends Controller
                     ->setPath('metador_admin_user_edit')
                     ->setParams(array('id' => $user->getId()))
                 ;
-
                 $this->get('metador_logger')->set($log);
-
                 unset($log);
 
             // todo eigene Exception
             } catch (MetadorException $e) {
-                $this->get('metador_logger')->warning(
-                    'application',
-                    'user',
-                    'create',
-                    'source',
-                    'identifier',
-                    $e->getMessage()
-                );
+                $log = $this->get('metador_logger')->newLog();
+                $log->setType('error')
+                    ->setFlashMessage()
+                    ->setCategory('application')
+                    ->setSubcategory('user')
+                    ->setOperation('create')
+                    ->setIdentifier('')
+                    ->setMessage('Benutzer %username% existiert bereits.')
+                    ->setMessageParameter(array('%username%' => $user->getUsername()))
+                    ->setUsername($this->get('metador_user')->getUsernameFromSession())
+                ;
+                $this->get('metador_logger')->set($log);
+                unset($log);
             }
 
             return $this->redirectToRoute('metador_admin_user');
