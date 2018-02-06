@@ -8,8 +8,8 @@ cache:
 before_script:
 #  - phpdismod xdebug
   - composer update --no-progress
-  - bin/console --env=test doctrine:database:create
-  - bin/console --env=test doctrine:schema:create
+  - vendor/bin/console --env=test doctrine:database:create
+  - vendor/bin/console --env=test doctrine:schema:create
 #  - phpenmod xdebug
 
 stages:
@@ -19,9 +19,9 @@ stages:
 test_job:
     stage: test
     script:
-        - bin/phpunit -c app/ --coverage-html /packages/report/metador2/coverage
-        - bin/phpcpd src/
-        - bin/phpcs -n --extensions=php --standard=PSR2 src/
+        - vendor/bin/phpunit -c app/ --coverage-html /packages/report/metador2/coverage
+        - vendor/bin/phpcpd src/
+        - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
 
 deploy_job:
     stage: deploy
