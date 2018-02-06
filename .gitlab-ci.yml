@@ -8,8 +8,8 @@ cache:
 before_script:
 #  - phpdismod xdebug
   - composer update --no-progress
-  - vendor/bin/console --env=test doctrine:database:create
-  - vendor/bin/console --env=test doctrine:schema:create
+  - bin/console --env=test doctrine:database:create
+  - bin/console --env=test doctrine:schema:create
 #  - phpenmod xdebug
 
 stages:
