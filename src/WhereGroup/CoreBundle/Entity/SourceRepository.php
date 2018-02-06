@@ -15,7 +15,7 @@ class SourceRepository extends EntityRepository
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function count()
+    public function countAll()
     {
         return $this
             ->getEntityManager()

@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use WhereGroup\CoreBundle\Entity\Source as SourceEntity;
 
 /**
@@ -31,14 +32,20 @@ class Source implements SourceInterface
 
     /**
      * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function count()
     {
-        return (int)$this->repo->count();
+        try {
+            return (int)$this->repo->countAll();
+        } catch (NoResultException $e) {
+            return 0;
+        }
     }
 
     /**
      * @param $id
+     * @return
      */
     public function get($id)
     {
@@ -79,6 +86,7 @@ class Source implements SourceInterface
     /**
      * @param $entity
      * @return $this
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save($entity)
     {
@@ -92,6 +100,7 @@ class Source implements SourceInterface
      * @param $name
      * @param string $description
      * @param bool $system
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function set($slug, $name, $description = '', $system = false)
     {
@@ -107,6 +116,7 @@ class Source implements SourceInterface
     /**
      * @param $entity
      * @return $this
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($entity)
     {
