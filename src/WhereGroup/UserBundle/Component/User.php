@@ -2,6 +2,8 @@
 
 namespace WhereGroup\UserBundle\Component;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User as UserEntity;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
@@ -61,18 +63,28 @@ class User implements UserInterface
 
     /**
      * @return mixed
+     * @throws NonUniqueResultException
      */
     public function count()
     {
-        return $this->repo->count();
+        try {
+            return $this->repo->countAll();
+        } catch (NoResultException $e) {
+            return 0;
+        }
     }
 
     /**
      * @return mixed
+     * @throws NonUniqueResultException
      */
     public function countGroups()
     {
-        return $this->groupRepo->count();
+        try {
+            return $this->groupRepo->countAll();
+        } catch (NoResultException $e) {
+            return 0;
+        }
     }
 
     /**

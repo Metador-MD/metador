@@ -66,24 +66,11 @@ class MetadataRepository extends EntityRepository
     }
 
     /**
-     * @param Finder $finder
      * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-//    public function count($finder)
-//    {
-//        $qb = $this->createQueryBuilder('m');
-//
-//        $qb->select($qb->expr()->count('m'));
-//
-//        $finder->getFilter($qb, true);
-//
-//        return $qb->getQuery()->getSingleScalarResult();
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function count()
+    public function countAll()
     {
         return $this
             ->getEntityManager()

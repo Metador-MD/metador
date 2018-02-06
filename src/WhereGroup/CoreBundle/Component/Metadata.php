@@ -3,6 +3,8 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig_Environment;
@@ -123,10 +125,15 @@ class Metadata implements MetadataInterface
 
     /**
      * @return mixed
+     * @throws NonUniqueResultException
      */
     public function count()
     {
-        return $this->repo->count();
+        try {
+            return $this->repo->countAll();
+        } catch (NoResultException $e) {
+            return 0;
+        }
     }
 
     /**
