@@ -61,11 +61,16 @@ class Configuration implements ConfigurationInterface
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
         $cacheKey = $this->generateKey($key, $filterType, $filterValue);
-        $value = $this->cache->get($cacheKey);
+        $value    = $this->cache->get($cacheKey);
 
         if (!$value) {
             $value = $this->repo->getValue($key, $filterType, $filterValue, $default);
             $this->cache->set($cacheKey, $value);
+            return $value;
+        }
+
+        if (is_object($value)) {
+            return (array)$value;
         }
 
         return $value;

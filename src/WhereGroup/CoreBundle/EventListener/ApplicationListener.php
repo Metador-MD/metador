@@ -33,6 +33,7 @@ class ApplicationListener
 
     /**
      * @param ApplicationEvent $event
+     * @throws \Exception
      */
     public function onLoading(ApplicationEvent $event)
     {
@@ -71,7 +72,7 @@ class ApplicationListener
                         $app->get('AppInformation', 'cache-info')
                             ->icon('icon-database')
                             ->label('Cache')
-                            ->count($usage)
+                            ->count($stats[key($stats)]['curr_items'])
                             ->setRole('ROLE_SYSTEM_SUPERUSER')
                     );
                 }
