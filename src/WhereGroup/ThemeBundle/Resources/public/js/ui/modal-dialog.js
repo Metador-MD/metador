@@ -7,8 +7,9 @@
             width: 400,
             closeButton: true,
             closeButtonLabel: 'Close',
-            onOpen: function() {},
-            beforeClose: function() {}
+            onClose: $.noop,
+            onOpen: $.noop,
+            beforeClose: $.noop
         };
 
     // The actual plugin constructor
@@ -100,6 +101,9 @@
         },
 
         close: function () {
+            if (this.settings && typeof this.settings.onClose === 'function') {
+                this.settings.onClose();
+            }
             this.settings.beforeClose();
             this.dialog.remove();
         },
