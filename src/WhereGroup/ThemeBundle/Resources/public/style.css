@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?p7q9p6');
-  src:  url('fonts/icomoon.eot?p7q9p6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?p7q9p6') format('woff2'),
-    url('fonts/icomoon.ttf?p7q9p6') format('truetype'),
-    url('fonts/icomoon.woff?p7q9p6') format('woff'),
-    url('fonts/icomoon.svg?p7q9p6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?xjn8x0');
+  src:  url('fonts/icomoon.eot?xjn8x0#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?xjn8x0') format('woff2'),
+    url('fonts/icomoon.ttf?xjn8x0') format('truetype'),
+    url('fonts/icomoon.woff?xjn8x0') format('woff'),
+    url('fonts/icomoon.svg?xjn8x0#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -43,29 +43,14 @@
 .icon-checkbox-unchecked:before {
   content: "\ea53";
 }
-.icon-file-pdf2:before {
-  content: "\eadf";
-}
 .icon-home:before {
   content: "\e900";
 }
 .icon-pencil:before {
   content: "\e905";
 }
-.icon-image:before {
-  content: "\e90d";
-}
 .icon-file-text:before {
   content: "\e922";
-}
-.icon-files-empty:before {
-  content: "\e925";
-}
-.icon-file-text2:before {
-  content: "\e926";
-}
-.icon-copy:before {
-  content: "\e92c";
 }
 .icon-stack:before {
   content: "\e92e";
@@ -76,23 +61,11 @@
 .icon-map:before {
   content: "\e94b";
 }
-.icon-map2:before {
-  content: "\e94c";
-}
-.icon-clock:before {
-  content: "\e94e";
-}
-.icon-calendar:before {
-  content: "\e953";
-}
 .icon-download:before {
   content: "\e960";
 }
 .icon-upload:before {
   content: "\e961";
-}
-.icon-floppy-disk:before {
-  content: "\e962";
 }
 .icon-database:before {
   content: "\e964";
@@ -109,9 +82,6 @@
 .icon-hour-glass:before {
   content: "\e979";
 }
-.icon-search:before {
-  content: "\e986";
-}
 .icon-maximize:before {
   content: "\e98b";
 }
@@ -127,32 +97,17 @@
 .icon-cog:before {
   content: "\e994";
 }
-.icon-magic-wand:before {
-  content: "\e997";
-}
-.icon-meter:before {
-  content: "\e9a6";
-}
 .icon-bin2:before {
   content: "\e9ad";
 }
 .icon-accessibility:before {
   content: "\e9b2";
 }
-.icon-target:before {
-  content: "\e9b3";
-}
 .icon-power:before {
   content: "\e9b5";
 }
 .icon-switch:before {
   content: "\e9b6";
-}
-.icon-power-cord:before {
-  content: "\e9b7";
-}
-.icon-clipboard:before {
-  content: "\e9b8";
 }
 .icon-menu:before {
   content: "\e9bd";
@@ -165,15 +120,6 @@
 }
 .icon-eye:before {
   content: "\e9ce";
-}
-.icon-warning:before {
-  content: "\ea07";
-}
-.icon-notification:before {
-  content: "\ea08";
-}
-.icon-question:before {
-  content: "\ea09";
 }
 .icon-plus:before {
   content: "\ea0a";
@@ -190,23 +136,11 @@
 .icon-checkmark:before {
   content: "\ea10";
 }
-.icon-checkmark2:before {
-  content: "\ea11";
-}
 .icon-arrow-right:before {
   content: "\ea34";
 }
 .icon-arrow-left:before {
   content: "\ea38";
-}
-.icon-sort-amount-asc:before {
-  content: "\ea4c";
-}
-.icon-embed:before {
-  content: "\ea7f";
-}
-.icon-embed2:before {
-  content: "\ea80";
 }
 .icon-terminal:before {
   content: "\ea81";
@@ -217,9 +151,6 @@
 .icon-github4:before {
   content: "\eab4";
 }
-.icon-file-pdf:before {
-  content: "\eada";
-}
 .icon-inspire:before {
   content: "\e901";
 }
@@ -228,18 +159,6 @@
 }
 .icon-search2:before {
   content: "\f002";
-}
-.icon-th-list:before {
-  content: "\f00b";
-}
-.icon-cog2:before {
-  content: "\f013";
-}
-.icon-gear:before {
-  content: "\f013";
-}
-.icon-tag:before {
-  content: "\f02b";
 }
 .icon-tags:before {
   content: "\f02c";
@@ -256,9 +175,6 @@
 .icon-chevron-right:before {
   content: "\f054";
 }
-.icon-plus-circle:before {
-  content: "\f055";
-}
 .icon-info-circle:before {
   content: "\f05a";
 }
@@ -270,9 +186,6 @@
 }
 .icon-sign-out:before {
   content: "\f08b";
-}
-.icon-square-o:before {
-  content: "\f096";
 }
 .icon-wrench:before {
   content: "\f0ad";
