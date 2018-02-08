@@ -26,6 +26,7 @@ class SettingsController extends Controller
         $configuration = $this->get('metador_configuration');
 
         $pluginConfiguration = array();
+        $sources = $this->get('metador_source')->all();
 
         foreach ($this->getSettings() as $pluginKey => $pluginInfo) {
             // normalize
@@ -43,8 +44,6 @@ class SettingsController extends Controller
 
                 // Set active profiles as options
                 if (isset($setting['optionSource']) && $setting['optionSource'] === 'source') {
-                    $sources = $this->get('metador_source')->all();
-
                     /** @var Source $source */
                     foreach ($sources as $source) {
                         $pluginInfo['settings'][$settingKey]['options'][$source->getSlug()] = $source->getName();
