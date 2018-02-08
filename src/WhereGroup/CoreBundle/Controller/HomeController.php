@@ -39,7 +39,7 @@ class HomeController extends Controller
             $sourceConfigProfiles = array();
 
             foreach ($profileConfig as $key => $profile) {
-                if (in_array($source->getSlug(), $profile['source'])) {
+                if (is_array($profile['source']) && in_array($source->getSlug(), $profile['source'])) {
                     $sourceConfigProfiles[$key] = $profile['name'];
                 }
             }
