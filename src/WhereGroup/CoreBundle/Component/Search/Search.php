@@ -11,25 +11,26 @@ abstract class Search
     /* mapping: query property name to entity Metador property */
     const MAP_QUERY2SOURCE = [
         'metadata' => [
-            'bboxn' => 'bboxn',
-            'bboxe' => 'bboxe',
-            'bboxs' => 'bboxs',
-            'bboxw' => 'bboxw',
-            'profile' => 'profile',
-            'public' => 'public',
+            'bboxn'          => 'bboxn',
+            'bboxe'          => 'bboxe',
+            'bboxs'          => 'bboxs',
+            'bboxw'          => 'bboxw',
+            'profile'        => 'profile',
+            'public'         => 'public',
             'hierarchylevel' => 'hierarchyLevel',
-            'uuid' => 'uuid',
-            'groups' => 'groups',
-            'searchfield' => 'searchfield',
-            'source' => 'source',
-            'insertuser' => 'insertUser',
-            'date' => 'date',
+            'uuid'           => 'uuid',
+            'groups'         => 'groups',
+            'searchfield'    => 'searchfield',
+            'source'         => 'source',
+            'insertuser'     => 'insertUser',
+            'date'           => 'date',
             'fileidentifier' => 'uuid',
+
             // ISO queryables
-            'identifier' => 'uuid',
-            'title' => 'title',
-            'language' => 'language',
-            'anytext' => 'searchfield',
+            'identifier'     => 'uuid',
+            'title'          => 'title',
+            'language'       => 'language',
+            'anytext'        => 'searchfield',
         ],
         'group' => [
             'role' => 'role'
