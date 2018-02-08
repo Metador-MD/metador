@@ -20,7 +20,7 @@ class SourceController extends Controller
      */
     public function indexAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return $this->render('MetadorCoreBundle:Source:index.html.twig', array(
             'sources' => $this->get('metador_source')->all()
@@ -33,7 +33,7 @@ class SourceController extends Controller
      */
     public function newAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this
             ->createForm(SourceType::class, new Source())
@@ -76,10 +76,11 @@ class SourceController extends Controller
      * @Method({"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this
             ->createForm(SourceType::class, $this->get('metador_source')->get($id))
@@ -109,10 +110,11 @@ class SourceController extends Controller
     /**
      * @Route("/confirm/{id}", name="metador_admin_source_confirm")
      * @Method({"GET", "POST"})
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function confirmAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_source')->get($id))
             ->add('delete', SubmitType::class, array(

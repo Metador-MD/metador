@@ -35,7 +35,7 @@ class KeywordController extends Controller
      */
     public function newAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this
             ->createForm(KeywordType::class, new Keyword())
@@ -67,7 +67,7 @@ class KeywordController extends Controller
      */
     public function editAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $entity = $this
             ->getDoctrine()
@@ -101,7 +101,7 @@ class KeywordController extends Controller
      */
     public function confirmAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $entity = $this
             ->getDoctrine()

@@ -20,7 +20,7 @@ class SettingsController extends Controller
      */
     public function indexAction($fragment)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         /** @var  Configuration $configurationManager */
         $configuration = $this->get('metador_configuration');

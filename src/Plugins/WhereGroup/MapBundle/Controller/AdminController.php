@@ -22,7 +22,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         return $this->render('@MetadorMap/Admin/index.html.twig', array(
             'rows' => $this->get('metador_map')->all(),
@@ -35,7 +35,7 @@ class AdminController extends Controller
      */
     public function newAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
         $wms = new Wms();
         $wms->setTitle(Wms::TITLE_DEFAULT); // set Title
         $form = $this
@@ -68,7 +68,7 @@ class AdminController extends Controller
      */
     public function editAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this
             ->createForm(WmsEditType::class, $this->get('metador_map')->get($id))
@@ -93,7 +93,7 @@ class AdminController extends Controller
      */
     public function confirmAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this->createFormBuilder($this->get('metador_map')->get($id))
             ->add('delete', SubmitType::class, array(

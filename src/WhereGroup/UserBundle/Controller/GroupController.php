@@ -25,7 +25,7 @@ class GroupController extends Controller
      */
     public function indexAction()
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return $this->render('@MetadorUser/Group/index.html.twig', array(
             'groups' => $this->getRepository()->findAllSorted()
@@ -123,7 +123,7 @@ class GroupController extends Controller
      */
     public function confirmAction($id)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->getRepository()->findOneById($id))
             ->add('delete', SubmitType::class, array(

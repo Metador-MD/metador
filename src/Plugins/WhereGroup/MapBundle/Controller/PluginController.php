@@ -37,7 +37,6 @@ class PluginController extends Controller
      */
     public function loadWmsAction()
     {
-//        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
         $url = urldecode($this->get('request_stack')->getCurrentRequest()->query->get('url'));
         try {
             $wms = new Wms();

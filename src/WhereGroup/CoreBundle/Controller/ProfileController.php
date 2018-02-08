@@ -33,7 +33,7 @@ class ProfileController extends Controller
      */
     public function newAction($source, $profile)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
 
         $template = $this
                 ->get('metador_plugin')
@@ -88,7 +88,7 @@ class ProfileController extends Controller
      */
     public function saveAction($source, $profile)
     {
-        $this->get('metador_core')->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
 
         $response = array();
         $uuid = false;
