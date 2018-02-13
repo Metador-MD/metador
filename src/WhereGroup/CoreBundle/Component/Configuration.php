@@ -65,7 +65,6 @@ class Configuration implements ConfigurationInterface
 
         if ($value === false) {
             $value = $this->repo->getValue($key, $filterType, $filterValue, $default);
-
             $this->cache->set($cacheKey, $value);
             return $value;
         }
@@ -100,11 +99,11 @@ class Configuration implements ConfigurationInterface
     public function getAll($filterType = null, $filterValue = null)
     {
         $cacheKey = $this->generateKey('', $filterType, $filterValue);
-        $values = $this->get($cacheKey);
+        $values = $this->cache->get($cacheKey);
 
-        if (!$values) {
+        if ($values === false) {
             $values = $this->repo->all($filterType, $filterValue);
-            $this->set($cacheKey, $values);
+            $this->cache->set($cacheKey, $values);
         }
 
         return $values;
@@ -122,7 +121,7 @@ class Configuration implements ConfigurationInterface
         $cacheKey = $this->generateKey('', $filterType, $filterValue);
         $config = $this->cache->get($cacheKey);
 
-        if (!$config) {
+        if ($config === false) {
             $config = array();
 
             foreach ($this->getAll($filterType, $filterValue) as $row) {
