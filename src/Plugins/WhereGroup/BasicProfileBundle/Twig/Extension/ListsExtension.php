@@ -43,6 +43,8 @@ class ListsExtension extends \Twig_Extension
      * @param null $sort
      * @param null $direction
      * @return string
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getListOptions($profile, $key, $default = array(), $sort = null, $direction = null)
     {

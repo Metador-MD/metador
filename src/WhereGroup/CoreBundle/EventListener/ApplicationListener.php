@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use Twig_Environment;
 use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\MetadataInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
@@ -14,16 +15,19 @@ class ApplicationListener
 {
     private $metadata;
     private $cache;
+    private $templating;
 
     /**
      * ApplicationListener constructor.
      * @param MetadataInterface $metadata
      * @param Cache $cache
+     * @param Twig_Environment $templating
      */
-    public function __construct(MetadataInterface $metadata, Cache $cache)
+    public function __construct(MetadataInterface $metadata, Cache $cache, Twig_Environment $templating)
     {
         $this->metadata = $metadata;
         $this->cache = $cache;
+        $this->templating = $templating;
     }
 
     public function __destruct()
@@ -70,6 +74,7 @@ class ApplicationListener
 
                     $app->add(
                         $app->get('AppInformation', 'cache-info')
+                            ->content($this->templating->render('@MetadorCore/Admin/cacheTemplate.html.twig'))
                             ->icon('icon-database')
                             ->label('Cache')
                             ->count($stats[key($stats)]['curr_items'])

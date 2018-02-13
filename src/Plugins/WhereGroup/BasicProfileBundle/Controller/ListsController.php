@@ -18,6 +18,8 @@ class ListsController extends Controller
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $lists = array();
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $profileKey => $profile) {
@@ -38,6 +40,8 @@ class ListsController extends Controller
      */
     public function showAction($profile, $key)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         return $this->render('@MetadorBasicProfile/Lists/show.html.twig', array(
             'listProfile'  => $profile,
             'listKey'      => $key,
@@ -56,6 +60,8 @@ class ListsController extends Controller
      */
     public function newAction($profile, $key)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $request = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->getMethod() === 'POST'
@@ -96,6 +102,8 @@ class ListsController extends Controller
      */
     public function confirmElementAction($profile, $key, $elementKey)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $request = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->getMethod() === 'POST') {
@@ -137,6 +145,8 @@ class ListsController extends Controller
      */
     public function editElementAction($profile, $key, $elementKey)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
 
         $pointer = 0;
@@ -167,6 +177,8 @@ class ListsController extends Controller
      */
     public function confirmAction($profile, $key)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
+
         $request = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->getMethod() === 'POST') {
