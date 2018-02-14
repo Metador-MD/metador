@@ -21,7 +21,7 @@ class Log
     protected $dateTime = null;
     protected $flashMessage = false;
     protected $path = '';
-    protected $params = array();
+    protected $params = [];
 
     /**
      * Log constructor.
@@ -67,11 +67,17 @@ class Log
 
     /**
      * @param string $path
+     * @param array $params
      * @return Log
      */
-    public function setPath(string $path)
+    public function setPath(string $path, array $params = [])
     {
         $this->path = $path;
+
+        if ($params != []) {
+            $this->params = $params;
+        }
+
         return $this;
     }
 

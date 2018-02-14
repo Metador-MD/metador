@@ -8,6 +8,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\LoggingEvent;
 use WhereGroup\UserBundle\Component\UserInterface;
+use WhereGroup\UserBundle\Entity\User;
 
 /**
  * Class Logging
@@ -64,17 +65,13 @@ class Logger
     public function set(Log $log)
     {
         // Find user
-        /** @var UserInterface $user */
+        /** @var User $user */
         $user = $log->getUser();
 
         if (is_null($user) && is_null($log->getUsername())) {
-            $user = $this->userService->getUserFromSession();
-        } elseif (is_null($user)) {
-            $user = $this->userService->getByUsername($log->getUsername());
-        }
-
-        if (is_null($user)) {
-            $log->setUser($user);
+            $log->setUsername($this->userService->getUsernameFromSession());
+        } elseif (is_null($log->getUsername()) && $user instanceof User) {
+            $log->setUsername($user->getUsername());
         }
 
         // Translate message
