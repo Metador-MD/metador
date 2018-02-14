@@ -5,19 +5,20 @@ namespace WhereGroup\CoreBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use WhereGroup\UserBundle\Component\UserInterface;
 
+/**
+ * Class TaskManagerEvent
+ * @package WhereGroup\CoreBundle\Event
+ */
 class TaskManagerEvent extends Event
 {
     /** @var  UserInterface $user */
-    private $user;
     private $messages;
 
     /**
      * TaskManagerEvent constructor.
-     * @param $user
      */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user = $user;
         $this->messages = array();
     }
 
@@ -35,13 +36,5 @@ class TaskManagerEvent extends Event
     public function getMessages()
     {
         return $this->messages;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

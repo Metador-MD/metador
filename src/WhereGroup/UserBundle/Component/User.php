@@ -256,9 +256,14 @@ class User implements UserInterface
      */
     public function getUsernameFromSession()
     {
-        $user = $this->tokenStorage->getToken()->getUser();
+        $username = '';
 
-        return $user->getUsername();
+        if (!is_null($this->tokenStorage->getToken())) {
+            $user = $this->tokenStorage->getToken()->getUser();
+            $username = $user->getUsername();
+        }
+
+        return $username;
     }
 
     /**
