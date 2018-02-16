@@ -99,10 +99,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function flashInfo($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
-    }
+//    public function flashInfo($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+//    }
 
     /**
      * @param $category
@@ -115,10 +115,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function flashSuccess($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
-    }
+//    public function flashSuccess($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+//    }
 
     /**
      * @param $category
@@ -131,10 +131,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function flashWarning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
-    }
+//    public function flashWarning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+//    }
 
     /**
      * @param $category
@@ -147,10 +147,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function flashError($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
-    }
+//    public function flashError($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, true, $username);
+//    }
 
     /**
      * @param $category
@@ -163,10 +163,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function info($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
-    }
+//    public function info($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('info', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+//    }
 
     /**
      * @param $category
@@ -179,10 +179,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function success($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
-    }
+//    public function success($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('success', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+//    }
 
     /**
      * @param $category
@@ -195,10 +195,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function warning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
-    }
+//    public function warning($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('warning', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, false, $username);
+//    }
 
     /**
      * @param $category
@@ -211,10 +211,10 @@ class Logger
      * @param null $username
      * @return Logger
      */
-    public function error($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
-    {
-        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, flase, $username);
-    }
+//    public function error($category, $subcategory, $operation, $source, $identifier, $message, $parameters = array(), $username = null)
+//    {
+//        return $this->log('error', $category, $subcategory, $operation, $source, $identifier, $message, $parameters, flase, $username);
+//    }
 
     /**
      *
@@ -230,37 +230,37 @@ class Logger
      * @param $username
      * @return Logger
      */
-    public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
-    {
-        $translatedMessage = $this->translator->trans($message, $parameters);
-
-        if (is_object($username)) {
-            $user = $username;
-            unset($username);
-        } elseif (!empty($username)) {
-            $user = $this->userService->getByUsername($username);
-        } else {
-            $user = $this->userService->getUserFromSession();
-        }
-
-        if ($display) {
-            $this->flashBag->add($type, $translatedMessage);
-        }
-
-        $log = new Log();
-        $log->setType($type)
-            ->setCategory($category)
-            ->setSubcategory($subcategory)
-            ->setOperation($operation)
-            ->setSource($source)
-            ->setIdentifier($identifier)
-            ->setMessage($translatedMessage)
-            ->setUsername($user->getUsername());
-
-        $event = new LoggingEvent($log);
-
-        $this->eventDispatcher->dispatch('metador.log', $event);
-
-        return $this;
-    }
+//    public function log($type, $category, $subcategory, $operation, $source, $identifier, $message, $parameters, $display, $username)
+//    {
+//        $translatedMessage = $this->translator->trans($message, $parameters);
+//
+//        if (is_object($username)) {
+//            $user = $username;
+//            unset($username);
+//        } elseif (!empty($username)) {
+//            $user = $this->userService->getByUsername($username);
+//        } else {
+//            $user = $this->userService->getUserFromSession();
+//        }
+//
+//        if ($display) {
+//            $this->flashBag->add($type, $translatedMessage);
+//        }
+//
+//        $log = new Log();
+//        $log->setType($type)
+//            ->setCategory($category)
+//            ->setSubcategory($subcategory)
+//            ->setOperation($operation)
+//            ->setSource($source)
+//            ->setIdentifier($identifier)
+//            ->setMessage($translatedMessage)
+//            ->setUsername($user->getUsername());
+//
+//        $event = new LoggingEvent($log);
+//
+//        $this->eventDispatcher->dispatch('metador.log', $event);
+//
+//        return $this;
+//    }
 }

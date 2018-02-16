@@ -117,7 +117,7 @@ class PluginController extends Controller
             $file = $form['attachment']->getData();
 
             if (!$file instanceof UploadedFile) {
-                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Datei-Upload ist fehlgeschlagen.');
+                $this->setFlashError('upload', '4711', 'Datei-Upload ist fehlgeschlagen.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -125,7 +125,7 @@ class PluginController extends Controller
             $extension = $file->guessExtension();
 
             if (!$extension || $extension !== 'zip') {
-                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Hochgeladene Datei ist kein Metador Plugin.');
+                $this->setFlashError('upload', '4711', 'Hochgeladene Datei ist kein Metador Plugin.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -137,7 +137,7 @@ class PluginController extends Controller
             $zip = new \ZipArchive;
 
             if ($zip->open($pluginFile->getRealPath()) !== true) {
-                $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Entpacken fehlgeschlagen.');
+                $this->setFlashError('upload', '4711', 'Entpacken fehlgeschlagen.');
                 return $this->redirectToRoute('metador_admin_plugin');
             }
 
@@ -163,7 +163,7 @@ class PluginController extends Controller
                 }
 
                 if ($fs->exists($copyPath . '/' . $folder->getFilename())) {
-                    $this->get('metador_logger')->flashError('system', 'plugin', 'upload', 'source', 'identifier', 'Plugin ist existiert bereits.');
+                    $this->setFlashError('upload', '4711', 'Plugin ist existiert bereits.');
                 } else {
                     $fs->mirror($folder->getRealPath(), $copyPath . $folder->getFilename());
                 }
@@ -269,5 +269,80 @@ class PluginController extends Controller
         return new JsonResponse(
             $this->get('metador_plugin')->clearCache()
         );
+    }
+
+
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('warning')
+            ->setFlashMessage()
+            ->setCategory('system')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession())
+        ;
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('success')
+            ->setFlashMessage()
+            ->setCategory('system')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashError($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('error')
+            ->setFlashMessage()
+            ->setCategory('system')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
     }
 }

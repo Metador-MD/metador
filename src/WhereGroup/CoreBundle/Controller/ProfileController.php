@@ -204,23 +204,9 @@ class ProfileController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
-            $this->get('metador_logger')->flashSuccess(
-                'metadata',
-                'profile',
-                'delete',
-                'source',
-                'identifier',
-                'Erfolgreich gelöscht.'
-            );
+            $this->setFlashSuccess('delete', $id, 'Erfolgreich gelöscht.');
         } else {
-            $this->get('metador_logger')->flashError(
-                'metadata',
-                'profile',
-                'delete',
-                'source',
-                'identifier',
-                'Eintrag konnte nicht gelöscht werden.'
-            );
+            $this->setFlashError('delete', $id, 'Eintrag konnte nicht gelöscht werden.');
         }
 
         return $this->redirectToRoute('metador_home');
@@ -336,5 +322,53 @@ class ProfileController extends Controller
     private function getTemplate($name)
     {
         return $this->data['template'] . $name . '.html.twig';
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('success')
+            ->setFlashMessage()
+            ->setCategory('metadata')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
+    }
+
+    /**
+     * @param $operation
+     * @param $id
+     * @param $message
+     * @param array $parameter
+     */
+    private function setFlashError($operation, $id, $message, $parameter = array())
+    {
+        $log = $this->get('metador_logger')->newLog();
+
+        $log->setType('success')
+            ->setFlashMessage()
+            ->setCategory('metadata')
+            ->setOperation($operation)
+            ->setIdentifier($id)
+            ->setMessage($message)
+            ->setMessageParameter($parameter)
+            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+
+        $this->get('metador_logger')->set($log);
+
+        unset($log);
     }
 }

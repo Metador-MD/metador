@@ -68,13 +68,12 @@ class GroupController extends Controller
             if (!$roleExists) {
                 $em->persist($entity);
                 $em->flush();
-
-                $this->get('metador_logger')->success('application', 'group', 'create', 'source', $entity->getId(), 'Gruppe erfolgreich hinzugefügt.');
+                $this->setFlashSuccess('create', $entity->getId(), 'Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->get('metador_logger')->success('application', 'group', 'create', 'source', $entity->getId(), 'Gruppe existiert bereits.');
+                $this->setFlashSuccess('create', $entity->getId(), 'Gruppe existiert bereits.');
             }
         } else {
-            $this->get('metador_logger')->flashWarning('application', 'group', 'create', 'source', $entity->getId(), 'Gruppe konnte nicht hinzugefügt werden!');
+            $this->setFlashWarning('create', $entity->getId(), 'Gruppe konnte nicht hinzugefügt werden!');
         }
 
         return $this->redirect($this->generateUrl('metador_admin_group'));
