@@ -94,7 +94,8 @@ class DatabaseExprHandler implements ExprHandler
         /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
         $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
         $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
-        if (!isset($this->aliasMap[$alias]) || !isset($this->aliasMap[$alias][$propertyName])) {
+
+        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
             throw new PropertyNameNotFoundException($name);
         }
 
