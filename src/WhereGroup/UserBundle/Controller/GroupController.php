@@ -68,9 +68,9 @@ class GroupController extends Controller
             if (!$roleExists) {
                 $em->persist($entity);
                 $em->flush();
-                $this->setFlashSuccess('create', $entity->getId(), 'Gruppe erfolgreich hinzugefügt.');
+                $this->log('success', 'create', $entity->getId(), 'Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->setFlashSuccess('create', $entity->getId(), 'Gruppe existiert bereits.');
+                $this->log('success', 'create', $entity->getId(), 'Gruppe existiert bereits.');
             }
         } else {
             $this->setFlashWarning('create', $entity->getId(), 'Gruppe konnte nicht hinzugefügt werden!');
@@ -140,7 +140,8 @@ class GroupController extends Controller
             $em->remove($entity);
             $em->flush();
 
-            $this->setFlashSuccess(
+            $this->log(
+                'success',
                 'delete',
                 $id,
                 'Gruppe %group% erfolgreich gelöscht.',
@@ -188,44 +189,17 @@ class GroupController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    private function log($type, $operation, $id, $message, $parameter = array())
     {
         $log = $this->get('metador_logger')->newLog();
 
-        $log->setType('warning')
+        $log->setType($type)
             ->setFlashMessage()
             ->setCategory('application')
             ->setSubcategory('group')
             ->setOperation($operation)
             ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
-
-        $this->get('metador_logger')->set($log);
-
-        unset($log);
-    }
-
-    /**
-     * @param $operation
-     * @param $id
-     * @param $message
-     * @param array $parameter
-     */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
-    {
-        $log = $this->get('metador_logger')->newLog();
-
-        $log->setType('success')
-            ->setFlashMessage()
-            ->setCategory('application')
-            ->setSubcategory('group')
-            ->setOperation($operation)
-            ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+            ->setMessage($message, $parameter);
 
         $this->get('metador_logger')->set($log);
 
