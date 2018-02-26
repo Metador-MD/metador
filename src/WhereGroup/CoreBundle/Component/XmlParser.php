@@ -42,6 +42,7 @@ class XmlParser
     /**
      * Constructor
      * @param string $xml XML
+     * @param XmlParserFunctions $functions
      */
     public function __construct($xml, XmlParserFunctions $functions)
     {

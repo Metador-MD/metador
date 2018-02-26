@@ -1080,6 +1080,13 @@ input.input-element, .md input.btn {
 .md .btn {
   cursor: pointer; }
 
+.md .btn.no-style {
+  border: none;
+  background-color: transparent; }
+
+.md .btn.no-style:hover {
+  border: none; }
+
 .md .spinn, .md span[class^="icon-spinner"] {
   display: inline-block;
   line-height: 1;

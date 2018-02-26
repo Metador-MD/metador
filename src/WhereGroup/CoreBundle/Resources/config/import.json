@@ -1,0 +1,22 @@
+{
+    "_cmd": {
+        "_addNamespaces": {
+            "gmd": "http://www.isotc211.org/2005/gmd",
+            "gco": "http://www.isotc211.org/2005/gco",
+            "srv": "http://www.isotc211.org/2005/srv",
+            "gml": "http://www.opengis.net/gml",
+            "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+        },
+        "_removeEmptyValues": false,
+        "_sortResult": true
+    },
+    "p": {
+        "_path": "/*",
+        "_data": {
+            "dateStamp": "gmd:dateStamp/gco:Date/text()",
+            "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
+            "hierarchyLevel": "gmd:hierarchyLevel/gmd:MD_ScopeCode/text()",
+            "title": "gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()"
+        }
+    }
+}

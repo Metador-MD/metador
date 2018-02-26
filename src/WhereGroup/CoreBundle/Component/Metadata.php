@@ -181,6 +181,19 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * @param $string
+     * @return array
+     */
+    public function parseXML($string)
+    {
+        $parser = new XmlParser($string, new XmlParserFunctions());
+
+        return $parser->loadSchema(file_get_contents(
+            $this->kernel->locateResource('@MetadorCoreBundle/Resources/config/import.json')
+        ))->parse();
+    }
+
+    /**
      * @param $p
      * @param null $source
      * @param null $profile
@@ -280,11 +293,13 @@ class Metadata implements MetadataInterface
      * Use id or uuid
      * @param $p
      * @param bool $id
+     * @param bool $dispatchEvent
+     * @param bool $log
      * @return EntityMetadata
      * @throws MetadataException
      * @throws \Exception
      */
-    public function saveObject($p, $id = null)
+    public function saveObject($p, $id = null, $dispatchEvent = true, $log = true)
     {
         if (!is_null($id)) {
             $metadata = $this->getById($id);
@@ -332,7 +347,7 @@ class Metadata implements MetadataInterface
         }
         $metadata->setObject($p);
 
-        $this->save($metadata);
+        $this->save($metadata, $dispatchEvent, $log);
 
         return $metadata;
     }
@@ -473,7 +488,7 @@ class Metadata implements MetadataInterface
         }
 
         $this->success($metadata, 'delete', '%title% gelöscht.', array(
-            'title' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
+            '%title%' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
         ));
 
         // DELETE

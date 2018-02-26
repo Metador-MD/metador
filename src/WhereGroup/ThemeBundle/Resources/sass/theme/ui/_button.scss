@@ -5,6 +5,16 @@
 .md .btn {
     @extend .input-element;
     cursor: pointer;
+
+
+    &.no-style{
+        border: none;
+        background-color: transparent;
+
+        &:hover {
+            border: none;
+        }
+    }
 }
 
 .md .spinn,
