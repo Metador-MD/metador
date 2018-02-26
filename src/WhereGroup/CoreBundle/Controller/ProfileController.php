@@ -204,9 +204,9 @@ class ProfileController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
-            $this->setFlashSuccess('delete', $id, 'Erfolgreich gelöscht.');
+            $this->log('succes', 'delete', $id, 'Erfolgreich gelöscht.');
         } else {
-            $this->setFlashError('delete', $id, 'Eintrag konnte nicht gelöscht werden.');
+            $this->log('error', 'delete', $id, 'Eintrag konnte nicht gelöscht werden.');
         }
 
         return $this->redirectToRoute('metador_home');
@@ -330,42 +330,16 @@ class ProfileController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    private function log($type, $operation, $id, $message, $parameter = array())
     {
         $log = $this->get('metador_logger')->newLog();
 
-        $log->setType('success')
+        $log->setType($type)
             ->setFlashMessage()
             ->setCategory('metadata')
             ->setOperation($operation)
             ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
-
-        $this->get('metador_logger')->set($log);
-
-        unset($log);
-    }
-
-    /**
-     * @param $operation
-     * @param $id
-     * @param $message
-     * @param array $parameter
-     */
-    private function setFlashError($operation, $id, $message, $parameter = array())
-    {
-        $log = $this->get('metador_logger')->newLog();
-
-        $log->setType('success')
-            ->setFlashMessage()
-            ->setCategory('metadata')
-            ->setOperation($operation)
-            ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+            ->setMessage($message, $parameter);
 
         $this->get('metador_logger')->set($log);
 

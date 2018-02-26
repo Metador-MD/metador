@@ -108,15 +108,12 @@ class UserController extends Controller
     {
         try {
             $user = $this->get('metador_user')->get($id);
-            $this->setFlashSuccess('edit', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
+            $this->log('success', 'edit', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
         } catch (MetadorException $e) {
-            $this->setFlashError('edit', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
+            $this->log('error', 'edit', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
 
             return $this->redirectToRoute('metador_admin_user');
-        }
-
-        $this->get('metador_logger')->set($log);
-        unset($log);
+        };
 
         return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $this
@@ -135,16 +132,6 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $log = $this->get('metador_logger')->newLog();
-
-        $log->setCategory('application')
-            ->setSubcategory('user')
-            ->setOperation('create')
-            ->setIdentifier($id)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession())
-            ->setPath('metador_admin_user_edit')
-            ->setParams(array('id' => $id));
-
         try {
             $user = $this->get('metador_user')->get($id);
 
@@ -173,12 +160,12 @@ class UserController extends Controller
                 }
 
                 $this->get('metador_user')->update($user);
-                $this->setFlashSuccess('update', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
+                $this->log('success', 'update', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
 
                 return $this->redirectToRoute('metador_admin_user');
             }
         } catch (MetadorException $e) {
-            $this->setFlashError('update', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
+            $this->log('error', 'update', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
 
             return $this->redirectToRoute('metador_admin_user');
         }
@@ -210,9 +197,9 @@ class UserController extends Controller
                 $id     = $entity->getId();
 
                 $this->get('metador_user')->delete($entity);
-                $this->setFlashError('confirm', $id, 'Benutzer '.$name.' erfolgreich gelöscht.');
+                $this->log('success', 'confirm', $id, 'Benutzer '.$name.' erfolgreich gelöscht.');
             } catch (\Exception $e) {
-                $this->setFlashError('confirm', $id, 'Benutzer '.$name.' konnte nicht gelöscht werden.');
+                $this->log('error', 'confirm', $id, 'Benutzer '.$name.' konnte nicht gelöscht werden.');
             }
 
             return $this->redirectToRoute('metador_admin_user');
@@ -229,44 +216,18 @@ class UserController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    private function log($type, $operation, $id, $message, $parameter = array())
     {
         $log = $this->get('metador_logger')->newLog();
 
-        $log->setType('success')
+        $log->setType($type)
+            ->setMessage($message, $parameter)
+            ->setPath('metador_admin_user_edit')
             ->setFlashMessage()
             ->setCategory('application')
             ->setSubcategory('user')
             ->setOperation($operation)
-            ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
-
-        $this->get('metador_logger')->set($log);
-
-        unset($log);
-    }
-
-    /**
-     * @param $operation
-     * @param $id
-     * @param $message
-     * @param array $parameter
-     */
-    private function setFlashError($operation, $id, $message, $parameter = array())
-    {
-        $log = $this->get('metador_logger')->newLog();
-
-        $log->setType('error')
-            ->setFlashMessage()
-            ->setCategory('application')
-            ->setSubcategory('user')
-            ->setOperation($operation)
-            ->setIdentifier($id)
-            ->setMessage($message)
-            ->setMessageParameter($parameter)
-            ->setUsername($this->get('metador_user')->getUsernameFromSession());
+            ->setIdentifier($id);
 
         $this->get('metador_logger')->set($log);
 
