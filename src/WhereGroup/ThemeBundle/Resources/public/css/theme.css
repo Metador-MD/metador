@@ -1082,7 +1082,9 @@ input.input-element, .md input.btn {
 
 .md .btn.no-style {
   border: none;
-  background-color: transparent; }
+  background-color: transparent;
+  margin: 0;
+  padding: 0; }
 
 .md .btn.no-style:hover {
   border: none; }
