@@ -55,17 +55,6 @@ class UserController extends Controller
     {
         $user = new User();
 
-        $log = $this->get('metador_logger')->newLog();
-
-        $log->setCategory('application')
-            ->setSubcategory('user')
-            ->setOperation('create')
-            ->setIdentifier($user->getId())
-            ->setUsername($this->get('metador_user')->getUsernameFromSession())
-            ->setPath('metador_admin_user_edit')
-            ->setParams(array('id' => $user->getId()))
-            ->setMessageParameter(array('%username%' => $user->getUsername()));
-
         $form = $this
             ->createForm(UserType::class, $user)
             ->handleRequest($request);
@@ -79,18 +68,14 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->get('metador_user')->insert($user);
-
-                $log->setType('success')
-                    ->setMessage('Benutzer %username% wurde erstellt.');
-
-            // todo eigene Exception
+                $this->log('success', 'edit', $user->getId(), 'Benutzer %username% wurde erfolgreich erstellt.', [
+                    '%username%' => $user->getUsername()
+                ]);
             } catch (MetadorException $e) {
-                $log->setType('error')
-                    ->setMessage('Benutzer %username% konnte nicht erstellt werden.');
+                $this->log('error', 'edit', $user->getId(), 'Benutzer %username% konnte nicht erstellt werden.', [
+                    '%username%' => $user->getUsername()
+                ]);
             }
-
-            $this->get('metador_logger')->set($log);
-            unset($log);
 
             return $this->redirectToRoute('metador_admin_user');
         }
@@ -108,9 +93,13 @@ class UserController extends Controller
     {
         try {
             $user = $this->get('metador_user')->get($id);
-            $this->log('success', 'edit', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
+            $this->log('success', 'edit', $id, 'Benutzer %username% wurde erfolgreich bearbeitet.', [
+                '%username%' => $user->getUsername()
+            ]);
         } catch (MetadorException $e) {
-            $this->log('error', 'edit', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
+            $this->log('error', 'edit', $id, 'Benutzer %username% konnte nicht bearbeitet werden.', [
+                '%username%' => $user->getUsername()
+            ]);
 
             return $this->redirectToRoute('metador_admin_user');
         };
@@ -160,12 +149,17 @@ class UserController extends Controller
                 }
 
                 $this->get('metador_user')->update($user);
-                $this->log('success', 'update', $id, 'Benutzer '.$user->getUsername().' wurde erstellt.');
+
+                $this->log('success', 'update', $id, 'Benutzer %username% wurde erstellt.', [
+                    '%username%' => $user->getUsername()
+                ]);
 
                 return $this->redirectToRoute('metador_admin_user');
             }
         } catch (MetadorException $e) {
-            $this->log('error', 'update', $id, 'Benutzer '.$user->getUsername().' konnte nicht erstellt werden.');
+            $this->log('error', 'update', $id, 'Benutzer %username% konnte nicht erstellt werden.', [
+                '%username%' => $user->getUsername()
+            ]);
 
             return $this->redirectToRoute('metador_admin_user');
         }
@@ -197,9 +191,13 @@ class UserController extends Controller
                 $id     = $entity->getId();
 
                 $this->get('metador_user')->delete($entity);
-                $this->log('success', 'confirm', $id, 'Benutzer '.$name.' erfolgreich gelöscht.');
+                $this->log('success', 'confirm', $id, 'Benutzer %username% erfolgreich gelöscht.', [
+                    '%username%' => $name
+                ]);
             } catch (\Exception $e) {
-                $this->log('error', 'confirm', $id, 'Benutzer '.$name.' konnte nicht gelöscht werden.');
+                $this->log('error', 'confirm', $id, 'Benutzer %username% konnte nicht gelöscht werden.', [
+                    '%username%' => $name
+                ]);
             }
 
             return $this->redirectToRoute('metador_admin_user');
@@ -222,12 +220,15 @@ class UserController extends Controller
 
         $log->setType($type)
             ->setMessage($message, $parameter)
-            ->setPath('metador_admin_user_edit')
             ->setFlashMessage()
             ->setCategory('application')
             ->setSubcategory('user')
             ->setOperation($operation)
             ->setIdentifier($id);
+
+        if (!empty($id)) {
+            $log->setPath('metador_admin_user_edit', ['id' => $id]);
+        }
 
         $this->get('metador_logger')->set($log);
 

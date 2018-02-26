@@ -70,10 +70,8 @@ class GroupController extends Controller
                 $em->flush();
                 $this->log('success', 'create', $entity->getId(), 'Gruppe erfolgreich hinzugefügt.');
             } else {
-                $this->log('success', 'create', $entity->getId(), 'Gruppe existiert bereits.');
+                $this->log('warning', 'create', $entity->getId(), 'Gruppe existiert bereits.');
             }
-        } else {
-            $this->setFlashWarning('create', $entity->getId(), 'Gruppe konnte nicht hinzugefügt werden!');
         }
 
         return $this->redirect($this->generateUrl('metador_admin_group'));
