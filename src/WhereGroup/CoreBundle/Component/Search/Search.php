@@ -44,6 +44,7 @@ abstract class Search
     protected $source     = null;
     protected $profile    = null;
     protected $groups     = null;
+    protected $public     = null;
 
     /* @var Expression $expression */
     protected $expression = null;
@@ -192,6 +193,17 @@ abstract class Search
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @param $public
+     * @return Search
+     */
+    public function setPublic($public)
+    {
+        $this->public = (boolean)$public;
+
+        return $this;
     }
 
     /**

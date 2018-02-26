@@ -21,3 +21,6 @@ parameters:
     # Access constraint
     api_access_ips: []
     csw_access_ips: []
+
+    # Cache
+    cache_enabled: false

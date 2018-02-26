@@ -21,12 +21,19 @@ class CronExtension extends \Twig_Extension
     }
 
     /**
-     * @param $string
+     * @param $entity
      * @return \DateTime
      */
-    public function cronNextRunDate($string)
+    public function cronNextRunDate($entity)
     {
-        return CronExpression::factory($string)->getNextRunDate();
+        return CronExpression::factory(trim(
+            $entity->getMin() . ' ' .
+            $entity->getHour() . ' ' .
+            $entity->getDayOfMonth() . ' ' .
+            $entity->getMonth() . ' ' .
+            $entity->getDayOfWeek() . ' ' .
+            $entity->getYear()
+        ))->getNextRunDate();
     }
 
     /**
