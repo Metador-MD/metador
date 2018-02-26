@@ -167,9 +167,12 @@
         <service id="metador.twig.array" class="%metador.twig.array.class%">
             <tag name="twig.extension" />
         </service>
+        <service id="metador.twig.cron" class="WhereGroup\CoreBundle\Twig\Extension\CronExtension">
+            <tag name="twig.extension" />
+        </service>
 
         <!-- Voter -->
-        <service id="metador.metadata_voter" class="%metador.metadata.voter.class%" public="false">
+        <service id="metador.metadata_voter" class="%metador.metadata.voter.class%">
             <argument type="service" id="security.access.decision_manager"/>
             <tag name="security.voter" />
         </service>

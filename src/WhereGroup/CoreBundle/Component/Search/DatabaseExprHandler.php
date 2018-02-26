@@ -95,6 +95,10 @@ class DatabaseExprHandler implements ExprHandler
         $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
         $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
 
+        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
+            throw new PropertyNameNotFoundException($name);
+        }
+
         return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
     }
 

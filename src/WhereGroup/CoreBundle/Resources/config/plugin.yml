@@ -4,6 +4,10 @@ metador_core:
     name: Hauptanwendung
     active: true
     settings:
+        date_format:
+            type: string
+            label: Datumsformat
+            default: 'd.m.Y'
         session_timeout_popup:
             frontend: true
             default: 60

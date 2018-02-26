@@ -56,6 +56,10 @@ class DatabaseSearch extends Search implements SearchInterface
             $this->qb->andWhere('m.source = :sourceX')->setParameter('sourceX', $this->getSource());
         }
 
+        if (!is_null($this->public)) {
+            $this->qb->andWhere('m.public = :public')->setParameter('public', $this->public);
+        }
+
         if (!empty($this->getProfile())) {
             if (is_array($this->getProfile())) {
                 $this->qb->andWhere($this->qb->expr()->in('m.profile', $this->getProfile()));

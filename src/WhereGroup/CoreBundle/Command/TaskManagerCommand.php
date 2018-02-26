@@ -31,36 +31,43 @@ class TaskManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $log = $this->getContainer()->get('metador_logger')->newLog();
-        $log->setType('info')
-            ->setCategory('system')
-            ->setSubcategory('taskmanager')
-            ->setOperation('start')
-            ->setMessage('Aufgaben werden ausgeführt.')
-        ;
-        $this->getContainer()->get('metador_logger')->set($log);
+        try {
+            $this->log('info', 'Aufgaben werden ausgeführt.');
+            $event = new TaskManagerEvent();
 
-        $event = new TaskManagerEvent();
+            $fs = new Filesystem();
+            $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
 
-        $fs = new Filesystem();
-        $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
+            if (!$input->getOption('force') && $fs->exists($filePath)) {
+                $this->log('error', 'Taskmanager kann nicht gestartet werden.');
+                exit -1;
+            }
 
-        if ($input->getOption('force') || !$fs->exists($filePath)) {
             $fs->touch($filePath);
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
             $fs->remove($filePath);
-        }
 
-        foreach ($event->getMessages() as $message) {
-            $output->writeln($message);
+            foreach ($event->getMessages() as $message) {
+                $output->writeln($message);
+            }
+        } catch (\Exception $e) {
+            $this->log('error', $e->getMessage());
         }
+    }
 
+    /**
+     * @param $type
+     * @param $message
+     */
+    private function log($type, $message)
+    {
         $log = $this->getContainer()->get('metador_logger')->newLog();
-        $log->setType('info')
+        $log->setType($type)
             ->setCategory('system')
             ->setSubcategory('taskmanager')
-            ->setOperation('done')
-            ->setMessage('Aufgaben wurden ausgeführt.')
+            ->setOperation('start')
+            ->setMessage($message)
+            ->setUsername('')
         ;
         $this->getContainer()->get('metador_logger')->set($log);
     }
