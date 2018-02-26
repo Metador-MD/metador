@@ -45,14 +45,8 @@
             "fileIdentifier": "gmd:fileIdentifier[1]/gco:CharacterString/text()",
             "hierarchyLevel": "gmd:hierarchyLevel/gmd:MD_ScopeCode/text()",
             "hierarchyLevelName": "gmd:hierarchyLevelName/*/text()",
-            "identifier": {
-                "_asArray": true,
-                "_path": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*",
-                "_data": {
-                    "code": "gmd:code/gco:CharacterString/text()",
-                    "codespace": "gmd:codeSpace/gco:CharacterString/text()"
-                }
-            },
+            "identifierCode": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString/text()",
+            "identifierCodespace": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString/text()",
             "keyword": {
                 "_asArray": true,
                 "_path": "gmd:identificationInfo[1]/*/gmd:descriptiveKeywords/*",

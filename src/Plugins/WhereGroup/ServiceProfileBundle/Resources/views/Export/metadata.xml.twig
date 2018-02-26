@@ -206,17 +206,15 @@
                         </gmd:date>
                     {% endif %}
 
-                    {% for key in array_get(p, 'identifier') %}
-                        {% if array_all_exists(key, ['code', 'codespace']) %}
-                            <gmd:identifier>
-                                <gmd:MD_Identifier>
-                                    <gmd:code>
-                                        <gco:CharacterString>{{ key['codespace'] }}{{ key['code'] }}</gco:CharacterString>
-                                    </gmd:code>
-                                </gmd:MD_Identifier>
-                            </gmd:identifier>
-                        {% endif %}
-                    {% endfor %}
+                    {% if array_all_exists(p, ['identifierCode', 'identifierCodespace']) %}
+                        <gmd:identifier>
+                            <gmd:MD_Identifier>
+                                <gmd:code>
+                                    <gco:CharacterString>{{ p['identifierCodespace'] }}{{ p['identifierCode'] }}</gco:CharacterString>
+                                </gmd:code>
+                            </gmd:MD_Identifier>
+                        </gmd:identifier>
+                    {% endif %}
                 </gmd:CI_Citation>
             </gmd:citation>
 
