@@ -25,12 +25,11 @@ abstract class Search
             'insertuser'     => 'insertUser',
             'date'           => 'date',
             'fileidentifier' => 'uuid',
-
-            // ISO queryables
             'identifier'     => 'uuid',
             'title'          => 'title',
             'language'       => 'language',
             'anytext'        => 'searchfield',
+            'keywords'       => 'subject',
         ],
         'group' => [
             'role' => 'role'
@@ -45,9 +44,29 @@ abstract class Search
     protected $profile    = null;
     protected $groups     = null;
     protected $public     = null;
+    protected $keyword    = null;
 
     /* @var Expression $expression */
     protected $expression = null;
+
+    /**
+     * @return null
+     */
+    public function getKeyword()
+    {
+        return $this->keyword;
+    }
+
+    /**
+     * @param $keyword
+     * @return Search
+     */
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
 
     /**
      * @return array
@@ -56,6 +75,7 @@ abstract class Search
     {
         return explode(' ', $this->terms);
     }
+
 
     /**
      * @param $terms

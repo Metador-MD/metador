@@ -26,6 +26,7 @@ class Finder
 
     /**
      * @param QueryBuilder $qb
+     * @param bool $count
      */
     public function getFilter($qb, $count = false)
     {

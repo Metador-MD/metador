@@ -144,6 +144,12 @@ class Metadata
     private $bboxw;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $keywords;
+
+
+    /**
      * Metadata constructor.
      */
     public function __construct()
@@ -607,6 +613,25 @@ class Metadata
     public function setParent($parent)
     {
         $this->parent = $parent;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * @param mixed $keywords
+     * @return Metadata
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
         return $this;
     }
 }

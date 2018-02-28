@@ -68,6 +68,22 @@ class DatabaseSearch extends Search implements SearchInterface
             }
         }
 
+        if (!empty($this->getKeyword())) {
+            if (is_array($this->getKeyword())) {
+                $index = 0;
+                foreach ($this->getKeyword() as $keyword) {
+                    $this->qb
+                        ->andWhere('m.keywords LIKE :keywordX'.$index)
+                        ->setParameter('keywordX'.$index, "%".strtolower($keyword)."%");
+                }
+                unset($index);
+            } elseif (is_string($this->getKeyword())) {
+                $this->qb
+                    ->andWhere('m.keywords LIKE :keywordX')
+                    ->setParameter('keywordX', '%' . strtolower($this->getKeyword()) . '%');
+            }
+        }
+
         return [
             'paging' => $this->getResultPaging(),
             'rows'   => $this->getResult(),
