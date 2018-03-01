@@ -97,6 +97,9 @@
         <service id="metador_browser" class="%metador.browser.class%" public="true">
             <argument type="service" id="metador_configuration" />
         </service>
+        <service id="metador_csv_export" class="WhereGroup\CoreBundle\Component\CsvExport" public="true">
+            <argument type="service" id="security.authorization_checker" />
+        </service>
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
@@ -116,6 +119,7 @@
             <argument>%database_password%</argument>
             <argument>%database_path%</argument>
         </service>
+
 
         <!-- TWIG EXTENSION -->
         <service id="metador.twig.extension" class="%metador.twig.class%">

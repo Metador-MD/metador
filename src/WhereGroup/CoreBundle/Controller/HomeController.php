@@ -151,17 +151,11 @@ class HomeController extends Controller
         }
 
         if (!is_null($download)) {
-            $data = [];
-            if (isset($searchResponse['rows']) && is_array($searchResponse['rows'])) {
-                $data[] = ['uuid', 'title'];
-
-                foreach ($searchResponse['rows'] as $row) {
-                    $row = json_decode($row['object'], true);
-                    $data[] = [$row['_uuid'], $row['title']];
-                }
-            }
-
-            return new CsvResponse($data);
+            return new CsvResponse(
+                $this->get('metador_csv_export')->buildCsvArray(
+                    isset($searchResponse['rows']) ? $searchResponse['rows'] : []
+                )
+            );
         }
 
         $response = [
