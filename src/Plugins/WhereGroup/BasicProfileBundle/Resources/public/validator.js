@@ -23,22 +23,31 @@ Validator.prototype = {
         return isValid;
     },
 
-    /**
-     *
-     * @param assert
-     * @param value
-     * @returns {*}
-     */
-    assert: function(assert, value) {
-        var regex = ".*";
+    isEmpty: function(string) {
+        return (string == '');
+    },
 
-        if (assert === 'notBlank') {
-            regex = "^.+$";
-        } else if (assert === 'url') {
-            regex = "^(https?|ftp):\\/\\/(((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|[\uE000-\uF8FF]|\\/|\\?)*)?(\\#((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$";
-        }
+    isUrl: function(string) {
+        return this.assertRegex("^(https?|ftp):\\/\\/(((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|[\uE000-\uF8FF]|\\/|\\?)*)?(\\#((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$", string);
+    },
 
-        return this.assertRegex(regex, value);
+    allEmpty: function(value, items, item, rule)
+    {
+        var self   = this;
+        var valid  = !self.isEmpty(value);
+        var parent = $(item).closest('.' + rule.parent);
+
+        jQuery.each(rule.siblings, function(index, sibling) {
+            var item    = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
+            var value   = item.val();
+            items.push(item);
+
+            if (typeof value !== 'undefined' && !self.isEmpty(value) === true) {
+                valid = true;
+            }
+        });
+
+        return !valid;
     },
 
     /**
@@ -48,7 +57,7 @@ Validator.prototype = {
      */
     assertRegex: function(regex, value) {
         if (value === null) {
-            return false;
+            return true;
         }
 
         return value.match(new RegExp(regex, "i"));
@@ -60,12 +69,15 @@ Validator.prototype = {
      * @returns {boolean}
      */
     validate: function(item) {
-        var self = this;
-        var valid = true;
-        var key = $(item).attr('id');
-        var objKey = $(item).attr('data-obj-id');
-        var sources = $(item).attr('data-validator-source');
+        var self       = this;
+        var valid      = true;
+        var value      = $(item).val();
+        var items      = [];
+        var objKey     = $(item).attr('data-obj-id');
+        var sources    = $(item).attr('data-validator-source');
         var errorCount = 0;
+
+        items.push($(item));
 
         if (sources) {
             sources = sources.split(',');
@@ -76,37 +88,39 @@ Validator.prototype = {
             return true;
         }
 
+        // Check validation rules
         jQuery.each(validation[objKey], function(index, rule) {
-            var string = $(item).val();
-
             if (rule.frontend === false) {
                 return true;
             }
 
-            if (rule.assert && !self.assert(rule.assert, string) ||
-                rule.regex && !self.assertRegex(rule.regex, string)) {
-
-                self.itemInvalid(item, rule.message);
+            if (rule.regex && !self.assertRegex(rule.regex, value)
+                || rule.assert === 'notBlank' && self.isEmpty(value)
+                || rule.assert === 'url' && !self.isUrl(value)
+                || rule.assert === 'oneIsMandatory' && self.allEmpty(value, items, item, rule)) {
+                self.itemInvalid(items, rule);
                 valid = false;
                 return false;
             }
 
-            self.itemValid(item, rule.message);
+            self.itemValid(items, rule);
         });
+
 
         jQuery.each(sources, function(index, source) {
             if (typeof self.validation[source] === 'undefined') {
                 self.validation[source] = [];
             }
 
-            self.validation[source][key] = true;
+            jQuery.each(items, function(index, item) {
+                var key = item.attr('id');
+                self.validation[source][key] = true;
 
-            if (valid) {
-                delete self.validation[source][key];
-            }
-        });
+                if (valid) {
+                    delete self.validation[source][key];
+                }
+            });
 
-        jQuery.each(sources, function(index, source) {
             self.setErrorCount(Object.keys(self.validation[source]).length, source);
         });
 
@@ -149,8 +163,12 @@ Validator.prototype = {
      * @param item
      * @param message
      */
-    itemValid: function(item, message) {
-        this.setItemStatus(item, true, message);
+    itemValid: function(items, rule) {
+        var self = this;
+
+        jQuery.each(items, function(index, item) {
+            self.setItemStatus(item, true, rule.message);
+        });
     },
 
     /**
@@ -158,8 +176,12 @@ Validator.prototype = {
      * @param item
      * @param message
      */
-    itemInvalid: function(item, message) {
-        this.setItemStatus(item, false, message);
+    itemInvalid: function(items, rule) {
+        var self = this;
+
+        jQuery.each(items, function(index, item) {
+            self.setItemStatus(item, false, rule.message);
+        });
     },
 
     /**
