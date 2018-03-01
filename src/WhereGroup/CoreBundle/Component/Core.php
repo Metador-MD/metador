@@ -71,6 +71,9 @@ class Core
      * @param $name
      * @param array $context
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function render($name, array $context = array())
     {

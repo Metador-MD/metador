@@ -37,6 +37,8 @@ class ExportController extends Controller
      */
     public function jsonAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+
         $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
 
@@ -52,6 +54,8 @@ class ExportController extends Controller
      */
     public function objAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+
         $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
 
