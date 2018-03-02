@@ -29,7 +29,7 @@ abstract class Search
             'title'          => 'title',
             'language'       => 'language',
             'anytext'        => 'searchfield',
-            'keywords'       => 'subject',
+            'subject'        => 'keywords',
         ],
         'group' => [
             'role' => 'role'
