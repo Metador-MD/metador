@@ -50,6 +50,49 @@ Validator.prototype = {
         return !valid;
     },
 
+    allOrNothingEmpty: function(value, items, item, rule)
+    {
+        var self  = this;
+        var count = 1;
+        var empty = 0;
+
+        if (self.isEmpty(value) === true) {
+            empty++;
+        }
+
+        var parent = $(item).closest('.' + rule.parent);
+
+        jQuery.each(rule.siblings, function(index, sibling) {
+            var item    = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
+            var value   = item.val();
+            items.push(item);
+
+            count++;
+            if (self.isEmpty(value) === true) {
+                empty++;
+            }
+        });
+
+        return (count === empty || empty === 0) ? true : false;
+    },
+
+    mandatoryIfSiblingsNotEmpty: function(value, items, item, rule) {
+        var self  = this;
+        var siblingsEmpty = true;
+        var empty = self.isEmpty(value);
+
+        var parent = $(item).closest('.' + rule.parent);
+
+        jQuery.each(rule.siblings, function(index, sibling) {
+            var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
+            if (self.isEmpty(item.val()) === false) {
+                siblingsEmpty = false;
+            }
+        });
+
+        return (siblingsEmpty === false && empty === true) ? false : true;
+    },
+
     /**
      *
      * @param regex
@@ -97,15 +140,26 @@ Validator.prototype = {
             if (rule.regex && !self.assertRegex(rule.regex, value)
                 || rule.assert === 'notBlank' && self.isEmpty(value)
                 || rule.assert === 'url' && !self.isUrl(value)
-                || rule.assert === 'oneIsMandatory' && self.allEmpty(value, items, item, rule)) {
+                || rule.assert === 'oneIsMandatory' && self.allEmpty(value, items, item, rule)
+                || rule.assert === 'allOrNothing' && !self.allOrNothingEmpty(value, items, item, rule)
+                || rule.assert === 'mandatoryIfSiblingNotEmpty' && !self.mandatoryIfSiblingsNotEmpty(value, items, item, rule)
+            ) {
                 self.itemInvalid(items, rule);
                 valid = false;
                 return false;
             }
 
+            if (rule.assert === 'testSiblings') {
+                var parent = $(item).closest('.' + rule.parent);
+
+                jQuery.each(rule.siblings, function(index, sibling) {
+                    var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
+                    self.validate(item);
+                });
+            }
+
             self.itemValid(items, rule);
         });
-
 
         jQuery.each(sources, function(index, source) {
             if (typeof self.validation[source] === 'undefined') {

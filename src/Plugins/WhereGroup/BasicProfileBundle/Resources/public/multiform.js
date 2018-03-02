@@ -29,7 +29,6 @@
 
             $(this.element).on('change', '.-js-duplicatable-title', function() {
                 self.titleChange(this);
-                return false;
             });
 
             $(this.element).on('click', '.-js-duplicatable-area-add', function() {
