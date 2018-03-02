@@ -93,6 +93,28 @@ Validator.prototype = {
         return (siblingsEmpty === false && empty === true) ? false : true;
     },
 
+    onlyOne: function(value, items, item, rule) {
+        var self  = this;
+        var count = 0;
+
+        if (!self.isEmpty(value)) {
+            count++;
+        }
+
+        var parent = $(item).closest('.' + rule.parent);
+
+        jQuery.each(rule.siblings, function(index, sibling) {
+            var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
+            items.push(item);
+
+            if (self.isEmpty(item.val()) === false) {
+                count++;
+            }
+        });
+
+        return (count !== 1) ? false : true;
+    },
+
     /**
      *
      * @param regex
@@ -141,6 +163,7 @@ Validator.prototype = {
                 || rule.assert === 'notBlank' && self.isEmpty(value)
                 || rule.assert === 'url' && !self.isUrl(value)
                 || rule.assert === 'oneIsMandatory' && self.allEmpty(value, items, item, rule)
+                || rule.assert === 'onlyOne' && !self.onlyOne(value, items, item, rule)
                 || rule.assert === 'allOrNothing' && !self.allOrNothingEmpty(value, items, item, rule)
                 || rule.assert === 'mandatoryIfSiblingNotEmpty' && !self.mandatoryIfSiblingsNotEmpty(value, items, item, rule)
             ) {
