@@ -146,7 +146,7 @@ class SourceController extends Controller
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        $this->get('event_dispatcher')->dispatch('source.condirm_delete', $event);
+        $this->get('event_dispatcher')->dispatch('source.confirm_delete', $event);
 
         return $this->render('MetadorCoreBundle:Source:confirm.html.twig', array(
             'form'     => $form->createView(),

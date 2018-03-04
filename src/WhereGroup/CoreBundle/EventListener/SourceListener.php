@@ -3,10 +3,11 @@
 namespace WhereGroup\CoreBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use WhereGroup\CoreBundle\Event\SourceEvent;
 
 /**
- * Class ApplicationListener
+ * Class SourceListener
  * @package WhereGroup\CoreBundle\EventListener
  */
 class SourceListener
@@ -27,13 +28,24 @@ class SourceListener
         unset($this->repo);
     }
 
+    /**
+     * @param SourceEvent $event
+     * @throws NonUniqueResultException
+     */
     public function onConfirm(SourceEvent $event)
     {
-        $event->addMessage("Alle in der Datenquelle vorhandenen Metadaten gehen verloren.");
+        $count = $this->repo->countBySource($event->getSlug());
+
+        if ($count > 0) {
+            $event->addMessage("Es werden %count% Metadaten gelöscht.", ['%count%' => $count]);
+        }
     }
 
+    /**
+     * @param SourceEvent $event
+     */
     public function onPostDelete(SourceEvent $event)
     {
-
+        $this->repo->deleteBySource($event->getSlug());
     }
 }

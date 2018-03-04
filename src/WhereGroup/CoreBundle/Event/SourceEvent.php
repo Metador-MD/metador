@@ -14,7 +14,6 @@ class SourceEvent extends Event
 {
     /** @var  UserInterface $user */
     private $messages;
-
     private $slug;
 
     /**
@@ -47,11 +46,15 @@ class SourceEvent extends Event
 
     /**
      * @param $message
+     * @param $parameter
      * @return SourceEvent
      */
-    public function addMessage($message)
+    public function addMessage($message, $parameter = [])
     {
-        $this->messages[] = $message;
+        $this->messages[]  = [
+            'message'   => $message,
+            'parameter' => $parameter
+        ];
         return $this;
     }
 

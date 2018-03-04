@@ -29,8 +29,8 @@
         <div class="row r-1">
             <div class="col c-1">
                 <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
+                    {% for row in messages %}
+                        <li>{{ row['message']|trans(row['parameter']) }}</li>
                     {% endfor %}
                 </ul>
             </div>

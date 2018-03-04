@@ -120,7 +120,8 @@
             <argument>%database_path%</argument>
         </service>
         <service id="metador.core.source.listener" class="WhereGroup\CoreBundle\EventListener\SourceListener">
-            <tag name="kernel.event_listener" event="source.condirm_delete" method="onConfirm" />
+            <tag name="kernel.event_listener" event="source.confirm_delete" method="onConfirm" />
+            <tag name="kernel.event_listener" event="source.post_delete" method="onPostDelete" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 

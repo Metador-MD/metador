@@ -4,6 +4,8 @@ namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use WhereGroup\CoreBundle\Component\Finder;
 
@@ -47,6 +49,44 @@ class MetadataRepository extends EntityRepository
         }
 
         return false;
+    }
+
+    /**
+     * @param $source
+     * @return int|mixed
+     * @throws NonUniqueResultException
+     */
+    public function countBySource($source)
+    {
+        try {
+            return $this
+                ->getEntityManager()
+                ->getRepository(self::ENTITY)
+                ->createQueryBuilder('u')
+                ->select('count(u.id)')
+                ->where('u.source = :source')
+                ->setParameter('source', $source)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * @param $source
+     * @return $this
+     */
+    public function deleteBySource($source)
+    {
+        $this
+            ->getEntityManager()
+            ->createQuery('delete from MetadorCoreBundle:Metadata u where u.source = :source')
+            ->setParameter('source', $source)
+            ->execute()
+        ;
+
+        return $this;
     }
 
     /**
