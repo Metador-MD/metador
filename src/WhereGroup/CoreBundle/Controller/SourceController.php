@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Entity\Source;
+use WhereGroup\CoreBundle\Event\SourceEvent;
 use WhereGroup\CoreBundle\Form\SourceType;
 
 /**
@@ -30,6 +31,7 @@ class SourceController extends Controller
     /**
      * @Route("/new/", name="metador_admin_source_new")
      * @Method({"GET", "POST"})
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function newAction()
     {
@@ -123,12 +125,21 @@ class SourceController extends Controller
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
+        $event = new SourceEvent();
+        $this->get('event_dispatcher')->dispatch('source.pre_delete', $event);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $name   = $entity->getName();
             $id     = $entity->getId();
 
+            $event = new SourceEvent($entity);
+            $this->get('event_dispatcher')->dispatch('source.pre_delete', $event);
+
             $this->get('metador_source')->remove($entity);
+
+            $this->get('event_dispatcher')->dispatch('source.post_delete', $event);
 
             $this->setFlashSuccess(
                 'edit',
@@ -139,6 +150,9 @@ class SourceController extends Controller
 
             return $this->redirectToRoute('metador_admin_source');
         }
+
+        $event = new SourceEvent($form->getData());
+        $this->get('event_dispatcher')->dispatch('source.condirm_delete', $event);
 
         return $this->render('MetadorCoreBundle:Source:confirm.html.twig', array(
             'form' => $form->createView()
