@@ -19,7 +19,7 @@ stages:
 test_job:
     stage: test
     script:
-        - vendor/bin/phpunit -c ./ --coverage-html /packages/report/metador2/coverage
+        - vendor/bin/phpunit -c ./
         - vendor/bin/phpcpd src/
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
 

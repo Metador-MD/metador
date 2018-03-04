@@ -562,7 +562,6 @@ class Metadata implements MetadataInterface
             $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
                 '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
             ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
-
         }
 
         return false;
