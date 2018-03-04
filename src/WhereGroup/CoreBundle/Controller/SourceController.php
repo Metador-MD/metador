@@ -125,20 +125,15 @@ class SourceController extends Controller
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
-        $event = new SourceEvent();
-        $this->get('event_dispatcher')->dispatch('source.pre_delete', $event);
-
+        $event = new SourceEvent($form->getData()->getSlug());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $name   = $entity->getName();
             $id     = $entity->getId();
 
-            $event = new SourceEvent($entity);
             $this->get('event_dispatcher')->dispatch('source.pre_delete', $event);
-
             $this->get('metador_source')->remove($entity);
-
             $this->get('event_dispatcher')->dispatch('source.post_delete', $event);
 
             $this->setFlashSuccess(
@@ -151,11 +146,11 @@ class SourceController extends Controller
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        $event = new SourceEvent($form->getData());
         $this->get('event_dispatcher')->dispatch('source.condirm_delete', $event);
 
         return $this->render('MetadorCoreBundle:Source:confirm.html.twig', array(
-            'form' => $form->createView()
+            'form'     => $form->createView(),
+            'messages' => $event->getMessages()
         ));
     }
 

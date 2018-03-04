@@ -15,34 +15,33 @@ class SourceEvent extends Event
     /** @var  UserInterface $user */
     private $messages;
 
-    /** @var Source */
-    private $entity;
+    private $slug;
 
     /**
      * TaskManagerEvent constructor.
-     * @param Source $entity
+     * @param $slug
      */
-    public function __construct($entity = null)
+    public function __construct($slug)
     {
         $this->messages = array();
-        $this->entity   = $entity;
+        $this->setSlug($slug);
     }
 
     /**
-     * @return Source
+     * @return mixed
      */
-    public function getEntity()
+    public function getSlug()
     {
-        return $this->entity;
+        return $this->slug;
     }
 
     /**
-     * @param Source $entity
+     * @param mixed $slug
      * @return SourceEvent
      */
-    public function setEntity($entity)
+    public function setSlug($slug)
     {
-        $this->entity = $entity;
+        $this->slug = $slug;
         return $this;
     }
 

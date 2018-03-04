@@ -119,7 +119,10 @@
             <argument>%database_password%</argument>
             <argument>%database_path%</argument>
         </service>
-
+        <service id="metador.core.source.listener" class="WhereGroup\CoreBundle\EventListener\SourceListener">
+            <tag name="kernel.event_listener" event="source.condirm_delete" method="onConfirm" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
 
         <!-- TWIG EXTENSION -->
         <service id="metador.twig.extension" class="%metador.twig.class%">

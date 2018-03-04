@@ -54,6 +54,7 @@ class HealthCheckListener
 
     /**
      * @param HealthCheckEvent $healthCheck
+     * @throws \Doctrine\ORM\ORMException
      */
     public function onCheck(HealthCheckEvent $healthCheck)
     {
