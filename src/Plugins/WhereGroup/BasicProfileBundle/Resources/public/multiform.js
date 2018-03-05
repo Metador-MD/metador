@@ -101,13 +101,18 @@
 
             $(item).each(function() {
                 // Todo: clear checkbox $(this).prop("tagName");
-                // Todo: chane -js-address-uuid to something like -js-remove-readonly
-                if ($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid') && $(this).val() !== '') {
-                    $(this).val('');
-                }
-
                 if ($(this).children().size() > 0) {
                     self.clearInputValues($(this).children());
+                }
+
+                var node = $(this).prop('nodeName');
+
+                // Todo: chane -js-address-uuid to something like -js-remove-readonly
+                if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA')
+                    && $(this).val() !== ''
+                    && ($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid'))
+                    && $(this).val() !== '') {
+                    $(this).val('');
                 }
             });
         },
