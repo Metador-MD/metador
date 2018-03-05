@@ -25,7 +25,7 @@
             <div class="grid space responsive">
                 <div class="row r-2">
                     <div class="col c-1-4">
-                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                        <div class="filter-wrapper">
                             <div class="filter-header">{% trans %}Tools{% endtrans %}</div>
                             <div class="filter-content">
                                 <div class="filter-content-row -js-reset-search">
@@ -53,7 +53,21 @@
                             </div>
                         </div>
                         {% endif %}
-                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                        <div class="filter-wrapper" data-filter="sort">
+                            <div class="filter-header">{% trans %}Sortierung{% endtrans %}</div>
+                            <div class="filter-content">
+                                <div class="filter-content-row no-hower">
+                                    <div class="form-field-wrapper medium">
+                                        <select name="sort" class="select -js-search-filter">
+                                            <option value="title">{% trans %}Titel{% endtrans %}</option>
+                                            <option value="date">{% trans %}Datum{% endtrans %}</option>
+                                            <option value="hierarchyLevel">{% trans %}Hierarchieebene{% endtrans %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-wrapper" data-filter="date">
                             <div class="filter-header">{% trans %}Datum{% endtrans %}</div>
                             <div class="filter-content">
                                 <div class="filter-content-row no-hower">

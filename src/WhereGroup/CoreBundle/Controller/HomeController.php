@@ -80,6 +80,11 @@ class HomeController extends Controller
         $user = $this->get('metador_user')->getUserFromSession();
         $filter = [];
 
+
+        if (isset($params['sort'])) {
+            $search->setSort($params['sort']);
+        }
+
         // Set source filter
         if (isset($params['source']) && !empty($params['source'])) {
             $filter['and'][] = ['eq' => ['source' => $params['source']]];

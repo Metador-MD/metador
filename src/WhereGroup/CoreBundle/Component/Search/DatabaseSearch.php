@@ -105,7 +105,28 @@ class DatabaseSearch extends Search implements SearchInterface
             $this->qb->setMaxResults($this->hits);
         }
 
+        if (!empty($this->getSort())) {
+            if (is_string($this->getSort()) && $this->tableExists($this->getSort())) {
+                $this->qb->orderBy('m.' . $this->getSort());
+            } elseif (is_array($this->getSort())) {
+                foreach ($this->getSort() as $sort) {
+                    if ($this->tableExists($sort)) {
+                        $this->qb->addOrderBy('m.' . $sort);
+                    }
+                }
+            }
+        }
+
         return $this->qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param $table
+     * @return null
+     */
+    private function tableExists($table)
+    {
+        return in_array($table, ['title', 'date', 'hierarchyLevel']) ? true : false;
     }
 
     /**

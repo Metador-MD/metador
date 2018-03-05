@@ -45,9 +45,28 @@ abstract class Search
     protected $groups     = null;
     protected $public     = null;
     protected $keyword    = null;
+    protected $sort       = null;
 
     /* @var Expression $expression */
     protected $expression = null;
+
+    /**
+     * @return null
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    /**
+     * @param null $sort
+     * @return Search
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+        return $this;
+    }
 
     /**
      * @return null
