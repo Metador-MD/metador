@@ -333,6 +333,7 @@ class Metadata implements MetadataInterface
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
         $metadata->setDate(new \DateTime($this->findDate($p)));
+        $metadata->setDateStamp($date);
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
             && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
@@ -647,10 +648,6 @@ class Metadata implements MetadataInterface
             return $metadataObject['creationDate'];
         }
 
-        if (empty($metadataObject['_dateStamp'])) {
-            throw new \Exception("dateStamp empty!");
-        }
-
-        return $metadataObject['_dateStamp'];
+        return null;
     }
 }

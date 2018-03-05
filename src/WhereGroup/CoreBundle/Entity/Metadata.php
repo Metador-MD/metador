@@ -124,6 +124,11 @@ class Metadata
     private $date;
 
     /**
+     * @ORM\Column(type="date", nullable=true, name="`dateStamp`")
+     */
+    private $dateStamp;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $bboxn;
@@ -632,6 +637,24 @@ class Metadata
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateStamp()
+    {
+        return $this->dateStamp;
+    }
+
+    /**
+     * @param mixed $dateStamp
+     * @return Metadata
+     */
+    public function setDateStamp($dateStamp)
+    {
+        $this->dateStamp = $dateStamp;
         return $this;
     }
 }

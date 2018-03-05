@@ -82,7 +82,9 @@ class HomeController extends Controller
 
 
         if (isset($params['sort'])) {
-            $search->setSort($params['sort']);
+            $search->setSort(
+                empty($params['sort']) ? 'title' : $params['sort']
+            );
         }
 
         // Set source filter

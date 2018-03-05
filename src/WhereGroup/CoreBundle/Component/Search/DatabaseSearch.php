@@ -57,7 +57,7 @@ class DatabaseSearch extends Search implements SearchInterface
         }
 
         if (!is_null($this->public)) {
-            $this->qb->andWhere('m.public = :public')->setParameter('public', $this->public);
+            $this->qb->andWhere('m.public = :public')->setParameter('public', (boolean)$this->public);
         }
 
         if (!empty($this->getProfile())) {
@@ -126,7 +126,7 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     private function tableExists($table)
     {
-        return in_array($table, ['title', 'date', 'hierarchyLevel']) ? true : false;
+        return in_array($table, ['title', 'date', 'hierarchyLevel', 'dateStamp']) ? true : false;
     }
 
     /**
