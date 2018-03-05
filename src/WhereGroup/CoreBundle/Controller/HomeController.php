@@ -185,7 +185,7 @@ class HomeController extends Controller
                     continue;
                 }
 
-                $bbox = ArrayParser::get($p, 'bbox:0', null, true);
+                $bbox = ArrayParser::get($p, 'bbox', null, true);
 
                 if (isset($p['_uuid']) && !empty($p['_uuid']) &&
                     isset($p['title']) && !empty($p['title']) &&
