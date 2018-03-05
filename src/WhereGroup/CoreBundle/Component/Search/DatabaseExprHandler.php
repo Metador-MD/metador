@@ -235,7 +235,11 @@ class DatabaseExprHandler implements ExprHandler
 
         return $expr->like(
             $this->getName($property),
-            $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
+            self::addParameter(
+                $property,
+                $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard),
+                $parameters
+            )
         );
     }
 
@@ -260,27 +264,22 @@ class DatabaseExprHandler implements ExprHandler
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
-     * @param array $parameters
-     * @param string $escapeChar
-     * @param string $singleChar
-     * @param string $wildCard
-     * @return mixed|string
-     * @throws PropertyNameNotFoundException
+     * @param $property
+     * @param $value
+     * @param $parameters
+     * @param $escapeChar
+     * @param $singleChar
+     * @param $wildCard
+     * @return null|string|string[]
      */
     private function valueForLike($property, $value, &$parameters, $escapeChar, $singleChar, $wildCard)
     {
-        if ($escapeChar === $this->escapeChar && $singleChar === $this->singleChar && $wildCard === $this->wildCard) {
-            $valueX = self::addParameter($property, $value, $parameters);
-        } else {
-            /* replace all $wildCards at $value with $this->wildCard */
-            $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
-            /* replace all $singleChar at $value with $this->singleChar */
-            $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
-            /* replace all $escapeChar at $value with $this->escapeChar */
-            $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
-        }
+        /* replace all $wildCards at $value with $this->wildCard */
+        $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
+        /* replace all $singleChar at $value with $this->singleChar */
+        $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
+        /* replace all $escapeChar at $value with $this->escapeChar */
+        $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
 
         return $valueX;
     }
