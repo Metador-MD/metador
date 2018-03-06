@@ -174,7 +174,7 @@
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
-                if ($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid') && (node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
+                if (($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid')) && (node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA') && $(this).val() !== '') {
                     $(this).val('');
                 }
 
