@@ -1,0 +1,27 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+    <div class="center">
+        <div class="center-right">
+            <div class="content">
+                <h2 class="title">X-Path</h2>
+
+                <div class="form-field-wrapper">
+                    <textarea class="textarea -js-find-xpath" value="/*" data-url="{{ path('metadata_xpath', { id: id }) }}">/*</textarea>
+                </div>
+
+                <div class="-js-find-xpath-result"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/metadorcore/js/xpath.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/import-test.css') }}">
+{% endblock %}

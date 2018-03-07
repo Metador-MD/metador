@@ -4,23 +4,77 @@
 <div class="center">
     <div class="center-right">
         <div class="content">
-            <h1 style="display:block;text-align:right;color:{% if result['status'] == 1 %}green{% else %}red{% endif %};">
-                <span class="icon-accessibility"></span>
-            </h1>
-            <hr/>
+            <h2 class="title">Error</h2>
 
-            {% for key,value in result['data'] if value == 0 %}
-                <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
-            {% endfor %}
+            <table class="table bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if result['error'] is defined and result['error'] is iterable %}
+                {% for row in result['error'] %}
+                    <tr>
+                        {% if row['k1'] == row['k2'] %}
+                            <td class="test-normal" title="{{ row['k1'] }}" colspan="2"><strong>{{ row['k1']|teaser(27, true) }}</strong></td>
+                            <td class="test-normal" title="{{ row['v1'] }}">{{ row['v1']|teaser(27, true) }}</td>
+                            <td class="test-normal" title="{{ row['v2'] }}">{{ row['v2']|teaser(27, true) }}</td>
+                        {% else %}
+                            <td class="test-normal" title="{{ row['k1'] }}"><strong>{{ row['k1']|teaser(27, true) }}</strong></td>
+                            <td class="test-normal" title="{{ row['v1'] }}">{{ row['v1']|teaser(27, true) }}</td>
+                            <td class="test-normal" title="{{ row['k2'] }}"><strong>{{ row['k2']|teaser(27, true) }}</strong></td>
+                            <td class="test-normal" title="{{ row['v2'] }}">{{ row['v2']|teaser(27, true) }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
 
-            {% for key,value in result['data']  if value == 1 %}
-                <div style="color:{% if value == 1 %}green{% else %}red{% endif %}";>{{ key }}</div>
-            {% endfor %}
+            <table class="table bordered margin-b">
+                <thead>
+                <tr>
+                    <th>Keys has empty values</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if result['info'] is defined and result['info'] is iterable %}
+                    {% for row in result['info'] %}
+                        <tr>
+                            <td class="test-normal" colspan="2"><strong>{{ row['k1'] }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
 
-            {% for key,value in result['data']  if value == 2 %}
-                <div style="color:blue";>{{ key }}</div>
-            {% endfor %}
+            <table class="table bordered margin-b">
+                <thead>
+                <tr>
+                    <th>Values are equal</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if result['success'] is defined and result['success'] is iterable %}
+                    {% for row in result['success'] %}
+                        <tr>
+                            <td class="test-normal" colspan="2"><strong>{{ row['k1'] }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 {% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/import-test.css') }}">
+{% endblock %}
+

@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
-use WhereGroup\UserBundle\Entity\User;
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 
 /**
  * @Route("/metadata")
@@ -85,6 +86,11 @@ class ProfileController extends Controller
     /**
      * @Route("/{source}/{profile}/save", name="metadata_save")
      * @Method("POST")
+     * @param $source
+     * @param $profile
+     * @return AjaxResponse
+     * @throws MetadataException
+     * @throws \Exception
      */
     public function saveAction($source, $profile)
     {
@@ -213,6 +219,61 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route("/profile/xpath/{id}", name="metadata_xpath")
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @throws MetadataException
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function xpathAction($id, Request $request)
+    {
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+
+
+        if ($request->getMethod() == 'POST') {
+            $query = $request->request->get('xpath', '/*');
+            $xml   = $this->get('metador_metadata')->objectToXml($metadata->getObject());
+            $xml   = preg_replace('/(>)([\t\n ^<]+)(<)/s', '${1}${3}', $xml);
+
+            $doc = new \DOMDocument();
+            $doc->loadXml($xml);
+            $doc->preserveWhiteSpace = false;
+            $doc->formatOutput = true;
+
+            $xpath   = new \DOMXPath($doc);
+            $entries = @$xpath->query($query);
+            $html    = '';
+
+            if ($entries != false) {
+                foreach ($entries as $entry) {
+                    if ($entry instanceof \DOMElement) {
+                        /** @var \DOMElement $entry */
+                        $entry->ownerDocument->preserveWhiteSpace = false;
+                        $entry->ownerDocument->formatOutput = true;
+
+                        $html .= '<pre class="xml-code">'
+                            . htmlentities($entry->ownerDocument->saveXML($entry)) . '</pre>';
+                    } elseif ($entry instanceof \DOMText) {
+                        /** @var \DOMText $entry */
+                        $html .= '<pre class="xml-code">' . htmlentities($entry->wholeText) . '</pre>';
+                    }
+                }
+            }
+
+            return new AjaxResponse(['html' => $html]);
+        }
+
+        return $this->render('@MetadorCore/Profile/xpath.html.twig', array(
+            'id' => $id
+        ));
+    }
+
+    /**
      * @Route("/profile/test/{id}", name="metadata_test")
      * @param $id
      * @return Response
@@ -226,77 +287,133 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
         $object1  = $metadata->getObject();
-
-        $object2 = $this->get('metador_metadata')->xmlToObject(
+        $object2  = $this->get('metador_metadata')->xmlToObject(
             $this->get('metador_metadata')->objectToXml($object1),
             $object1['_profile']
         );
 
-        foreach ($object1 as $key => $value) {
-            if (substr($key, 0, 1) !== '_') {
+        $arr1 = array();
+        $arr2 = array();
+
+        ArrayParser::flatten($object1, $arr1, true);
+        ArrayParser::flatten($object2, $arr2, true);
+
+        ksort($arr1);
+        ksort($arr2);
+
+        dump($arr1);
+        dump($arr2);
+
+
+
+        $key1 = array_keys($arr1);
+        $key2 = array_keys($arr2);
+
+        $p1 = 0;
+        $p2 = 0;
+
+        $result = [];
+
+
+
+        while (isset($key1[$p1]) || isset($key2[$p2])) {
+            if (isset($key1[$p1]) && isset($key2[$p2])) {
+                if ($key1[$p1] == $key2[$p2]) {
+                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], $key2[$p2], $arr2[$key2[$p2]]);
+                    $p1++;
+                    $p2++;
+                    continue;
+                }
+
+                if (in_array($key1[$p1], $key2) && !in_array($key2[$p2], $key1)) {
+                    $this->prepareTestResult($result, null, null, $key2[$p2], $arr2[$key2[$p2]]);
+                    $p2++;
+                    continue;
+                }
+
+                if (in_array($key2[$p2], $key1) && !in_array($key1[$p1], $key2)) {
+                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                    $p1++;
+                    continue;
+                }
+
+                if (!in_array($key2[$p2], $key1) && !in_array($key1[$p1], $key2)) {
+                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                    $p1++;
+                    continue;
+                }
+            } elseif (isset($key1[$p1]) && !isset($key2[$p2])) {
+                $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                $p1++;
+                continue;
+            } elseif (!isset($key1[$p1]) && isset($key2[$p2])) {
+                $this->prepareTestResult($result, null, null, $key2[$p2], $arr2[$key2[$p2]]);
+                $p2++;
                 continue;
             }
 
-            $object2[$key] = $value;
+            $p1++;
+            $p2++;
         }
 
-        $object2['_profile'] = $object1['_profile'];
-
-        $arr1 = array();
-        $arr2 = array();
-        $this->flatten($object1, $arr1);
-        $this->flatten($object2, $arr2);
-
         return $this->render('@MetadorCore/Profile/test.html.twig', array(
-            'result' => $this->test($arr1, $arr2)
+            'result' => $result,
         ));
     }
 
     /**
-     * @param $arr1
-     * @param $arr2
-     * @return array
+     * @param $result
+     * @param $k1
+     * @param $v1
+     * @param $k2
+     * @param $v2
      */
-    private function test($arr1, $arr2)
+    private function prepareTestResult(&$result, $k1, $v1, $k2, $v2)
     {
-        ksort($arr1);
-        ksort($arr2);
+        $ignoreList = [
+            '_id',
+            '_insert_time',
+            '_insert_user',
+            '_lock_time',
+            '_lock_user',
+            '_locked',
+            '_profile',
+            '_public',
+            '_remove_lock',
+            '_source',
+            '_update_time',
+            '_update_user',
+            '_username',
+            '_uuid',
+        ];
 
-        $result = array(
-            'status' => 1,
-            'data'   => array()
-        );
-
-        foreach ($arr1 as $key => $value) {
-            if (isset($arr2[$key]) && $value === $arr2[$key]) {
-                $result['data'][$key] = ($value !== "") ? 1 : 2;
-            } else {
-                $result['data'][$key] = 0;
-                $result['status'] = 0;
-            }
+        if (in_array($k1, $ignoreList) || in_array($k2, $ignoreList)) {
+            return;
         }
 
-        return $result;
+        $status = 'error';
+
+        if (!empty($v1) && !is_null($k1) && !is_null($k2) && $this->normalize($v1) === $this->normalize($v2)) {
+            $status = 'success';
+        } elseif (!is_null($k1) && !is_null($k2) && $this->normalize($v1) === $this->normalize($v2)) {
+            $status = 'info';
+        }
+
+        $result[$status][] = [
+            'k1' => $k1,
+            'v1' => $v1,
+            'k2' => $k2,
+            'v2' => $v2,
+        ];
     }
 
     /**
-     * @param $array
-     * @param $result
-     * @param null $prefix
+     * @param $string
+     * @return mixed
      */
-    private function flatten($array, &$result, $prefix = null)
+    private function normalize($string)
     {
-        foreach ($array as $key => $value) {
-            if (!is_null($prefix)) {
-                $key = $prefix . '_' . $key;
-            }
-
-            if (is_array($value)) {
-                $this->flatten($value, $result, $key);
-            } else {
-                $result[$key] = $value;
-            }
-        }
+        return str_replace("\r\n", "\n", $string);
     }
 
     /**
@@ -325,6 +442,7 @@ class ProfileController extends Controller
     }
 
     /**
+     * @param $type
      * @param $operation
      * @param $id
      * @param $message

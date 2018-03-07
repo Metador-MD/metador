@@ -1,0 +1,29 @@
+@import "theme/config";
+@import "theme/mixins";
+@import "theme/extensions";
+@import "theme/main";
+
+.test-success {
+    color: $success;
+    font-size: 12px;
+}
+
+.test-error {
+    color: $error;
+    font-size: 12px;
+}
+
+.test-info {
+    color: $info;
+    font-size: 12px;
+}
+
+.test-normal {
+    color: $font;
+    font-size: 13px;
+}
+
+.xml-code {
+    font-size: 12px;
+    //font-weight: bold;
+}
