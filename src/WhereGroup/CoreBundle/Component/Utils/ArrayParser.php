@@ -177,6 +177,51 @@ class ArrayParser
 
     /**
      * @param array $array
+     * @param $result
+     * @param bool $reindex
+     * @param null $prefix
+     * @param bool $removeEmptyValues
+     */
+    public static function flatten(array $array, array &$result, $reindex = false, $prefix = null, $removeEmptyValues = false)
+    {
+        foreach ($array as $key => $value) {
+            if (!is_null($prefix)) {
+                $key = $prefix . '_' . $key;
+            }
+
+            if (is_array($value)) {
+                if ($reindex) {
+                    self::reindexKeys($value);
+                }
+                self::flatten($value, $result, $reindex, $key);
+            } elseif (!$removeEmptyValues || ($removeEmptyValues && $value !== '')) {
+                $result[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * @param array $array
+     * @param $reindex
+     */
+    public static function clearEmptyValues(array &$array, $reindex = false)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                if ($reindex) {
+                    self::reindexKeys($value);
+                }
+                self::clearEmptyValues($array[$key], $reindex);
+            } else {
+                if ($value === '') {
+                    unset($array[$key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array $array
      */
     public static function reindexKeys(array &$array)
     {
