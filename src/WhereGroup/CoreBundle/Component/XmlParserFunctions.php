@@ -2,26 +2,45 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+
 /**
  * Class XmlParserFunctions
  * @package WhereGroup\CoreBundle\Component
  * @author A. R. Pour
+ * @codingStandardsIgnoreStart
  */
 class XmlParserFunctions
 {
-
     /**
-     * @param $method
+     * @param $methods
      * @param $data
      * @param null $args
      * @return mixed
      */
-    public function get($method, $data, $args = null)
+    public function get($methods, $data, $args = null)
     {
-        if (method_exists($this, $method)) {
-            $data = call_user_func('self::' . $method, $data, $args);
+        if (is_string($methods)) {
+            $methods = [$methods];
         }
 
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                $data = call_user_func('self::' . $method, $data, $args);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @param null $args
+     * @return mixed
+     */
+    protected function _removeEmptyValues($data, $args = null)
+    {
+        ArrayParser::clearEmptyValues($data);
         return $data;
     }
 
@@ -40,7 +59,7 @@ class XmlParserFunctions
             }
 
             if (is_array($val)) {
-                $newKey = $this->replaceKey($val);
+                $newKey = $this->_replaceKey($val);
 
                 if ($newKey && !is_array($newKey)) {
                     unset($val['#KEY#']);
@@ -135,4 +154,5 @@ class XmlParserFunctions
             isset($args[1]) ? $args[1] : time()
         );
     }
+    /** @codingStandardsIgnoreEnd */
 }

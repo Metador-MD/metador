@@ -301,11 +301,6 @@ class ProfileController extends Controller
         ksort($arr1);
         ksort($arr2);
 
-        dump($arr1);
-        dump($arr2);
-
-
-
         $key1 = array_keys($arr1);
         $key2 = array_keys($arr2);
 
@@ -313,8 +308,6 @@ class ProfileController extends Controller
         $p2 = 0;
 
         $result = [];
-
-
 
         while (isset($key1[$p1]) || isset($key2[$p2])) {
             if (isset($key1[$p1]) && isset($key2[$p2])) {

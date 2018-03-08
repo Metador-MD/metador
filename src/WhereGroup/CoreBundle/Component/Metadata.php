@@ -13,6 +13,7 @@ use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
+use WhereGroup\CoreBundle\Event\MetadataLoadFromXmlEvent;
 use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
@@ -177,7 +178,12 @@ class Metadata implements MetadataInterface
         $parser = new XmlParser($xml, new XmlParserFunctions());
         $result = $parser->loadSchema(file_get_contents($schema))->parse();
 
-        return $result['p'];
+        $result['p']['_profile'] = $profile;
+
+        $event = new MetadataLoadFromXmlEvent($result['p'], $profile);
+        $this->eventDispatcher->dispatch('metadata.load_from_xml', $event);
+
+        return $event->getObject();
     }
 
     /**

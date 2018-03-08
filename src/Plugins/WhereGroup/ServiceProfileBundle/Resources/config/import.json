@@ -47,7 +47,7 @@
             "hierarchyLevelName": "gmd:hierarchyLevelName/*/text()",
             "identifierCode": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString/text()",
             "identifierCodespace": "gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString/text()",
-            "keyword": {
+            "keywords": {
                 "_asArray": true,
                 "_path": "gmd:identificationInfo[1]/*/gmd:descriptiveKeywords/*",
                 "_function": "replaceKey",

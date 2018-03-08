@@ -121,6 +121,10 @@
             var key = $(element).closest('[data-tab-content]').attr('data-tab-content');
             var label = $(element).val();
 
+            if (label.length > 45) {
+                label = label.substr(0, 45) + ' ...';
+            }
+
             this.setLabel(label);
             this.setTabLabel(key, label);
         },

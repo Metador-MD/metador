@@ -176,9 +176,15 @@ class XmlParser
                         $tmp = $this->getValue($path.$val, $context);
                     }
 
-                    if ($this->removeEmptyValues
-                        && ($tmp === "" || $tmp === array())
-                        && (is_array($val) && isset($val[1]) && $val[1] !== '_asArray')) {
+                    if ($key == 'spatialResolutionDistance') {
+                        $x = 3;
+                    }
+
+                    if ($this->removeEmptyValues && (
+                        $tmp === ""
+                        || $tmp === array()
+                        || (is_array($val) && isset($val[1]) && $val[1] !== '_asArray')
+                    )) {
                         continue;
                     }
 

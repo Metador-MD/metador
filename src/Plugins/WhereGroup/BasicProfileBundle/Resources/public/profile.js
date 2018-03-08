@@ -189,9 +189,9 @@ $(document).on('change', '.-js-change-view', function() {
         $(this).removeClass('active');
 
         if (clearValues) {
-            $(this).find('input').val('');
-            $(this).find('select').val('');
-            $(this).find('textarea').val('');
+            $(this).find('input').not('.-js-keep-value').val('');
+            $(this).find('select').not('.-js-keep-value').val('');
+            $(this).find('textarea').not('.-js-keep-value').val('');
         }
     });
     target.addClass('active');

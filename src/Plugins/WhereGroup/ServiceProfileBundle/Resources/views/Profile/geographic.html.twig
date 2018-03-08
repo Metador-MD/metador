@@ -3,7 +3,7 @@
 <div class="mdtab-content" data-mdtab-content="geographic">
     <h1 class="title">{% trans %}Geografischer Standort{% endtrans %}</h1>
 
-    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'bbox') }}">
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'bbox', []) }}">
         <div class="head">
             <div class="left">{% trans %}Bounding Box{% endtrans %}</div>
             <div class="right">

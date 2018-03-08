@@ -4,15 +4,12 @@
 <div class="center">
     <div class="center-right">
         <div class="content">
-            <h2 class="title">Error</h2>
 
+        {% if result['error'] is defined and result['error'] is not empty %}
             <table class="table bordered">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="4">Error</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,7 +31,9 @@
                 {% endif %}
                 </tbody>
             </table>
+        {% endif %}
 
+        {% if result['info'] is defined and result['info'] is not empty %}
             <table class="table bordered margin-b">
                 <thead>
                 <tr>
@@ -51,7 +50,9 @@
                 {% endif %}
                 </tbody>
             </table>
+        {% endif %}
 
+        {% if result['success'] is defined and result['success'] is not empty %}
             <table class="table bordered margin-b">
                 <thead>
                 <tr>
@@ -68,6 +69,7 @@
                 {% endif %}
                 </tbody>
             </table>
+        {% endif %}
         </div>
     </div>
 </div>
