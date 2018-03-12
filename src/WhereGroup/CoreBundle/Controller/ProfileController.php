@@ -261,6 +261,11 @@ class ProfileController extends Controller
                     } elseif ($entry instanceof \DOMText) {
                         /** @var \DOMText $entry */
                         $html .= '<pre class="xml-code">' . htmlentities($entry->wholeText) . '</pre>';
+                    } elseif ($entry instanceof \DOMAttr) {
+                        /** @var \DOMAttr $entry */
+                        $html .= '<pre class="xml-code">' . htmlentities($entry->nodeValue) . '</pre>';
+                    } else {
+                        $html .= get_class($entry) . ' is not supported.';
                     }
                 }
             }
@@ -269,8 +274,41 @@ class ProfileController extends Controller
         }
 
         return $this->render('@MetadorCore/Profile/xpath.html.twig', array(
-            'id' => $id
+            'id'    => $id,
+            'xpath' => $request->get('xpath', '/*')
         ));
+    }
+
+    /**
+     * @param array $array
+     * @param array $xpath
+     * @param string $subkey
+     * @param string $path
+     */
+    private function parseXpaths(array $array, array &$xpath, $subkey = "", $path = "")
+    {
+        foreach ($array as $key => $value) {
+            if (in_array($key, ['_cmd', '_asArray'])) {
+                continue;
+            }
+
+            if (is_array($value) && isset($value['_path']) && isset($value['_data'])) {
+                $this->parseXpaths(
+                    $value['_data'],
+                    $xpath,
+                    $subkey . '_' . $key,
+                    $path . '/' . $value['_path']
+                );
+                continue;
+            }
+
+            if (is_string($value)) {
+                $xpath[
+                    substr($subkey . '_' . $key, 3)
+                ] = '/' . ltrim($path . '/' . $value, '/');
+                continue;
+            }
+        }
     }
 
     /**
@@ -292,6 +330,13 @@ class ProfileController extends Controller
             $object1['_profile']
         );
 
+        $class  = $this->get('metador_plugin')->getPluginClassName($object1['_profile']);
+        $file   = $this->get('kernel')->locateResource('@' . $class . '/Resources/config/import.json');
+        $schema = json_decode(file_get_contents($file), true);
+        $xpath = [];
+
+        $this->parseXpaths($schema, $xpath);
+
         $arr1 = array();
         $arr2 = array();
 
@@ -312,35 +357,35 @@ class ProfileController extends Controller
         while (isset($key1[$p1]) || isset($key2[$p2])) {
             if (isset($key1[$p1]) && isset($key2[$p2])) {
                 if ($key1[$p1] == $key2[$p2]) {
-                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], $key2[$p2], $arr2[$key2[$p2]]);
+                    $this->prepareTestResult($result, $xpath, $key1[$p1], $arr1[$key1[$p1]], $key2[$p2], $arr2[$key2[$p2]]);
                     $p1++;
                     $p2++;
                     continue;
                 }
 
                 if (in_array($key1[$p1], $key2) && !in_array($key2[$p2], $key1)) {
-                    $this->prepareTestResult($result, null, null, $key2[$p2], $arr2[$key2[$p2]]);
+                    $this->prepareTestResult($result, $xpath, null, null, $key2[$p2], $arr2[$key2[$p2]]);
                     $p2++;
                     continue;
                 }
 
                 if (in_array($key2[$p2], $key1) && !in_array($key1[$p1], $key2)) {
-                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                    $this->prepareTestResult($result, $xpath, $key1[$p1], $arr1[$key1[$p1]], null, null);
                     $p1++;
                     continue;
                 }
 
                 if (!in_array($key2[$p2], $key1) && !in_array($key1[$p1], $key2)) {
-                    $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                    $this->prepareTestResult($result, $xpath, $key1[$p1], $arr1[$key1[$p1]], null, null);
                     $p1++;
                     continue;
                 }
             } elseif (isset($key1[$p1]) && !isset($key2[$p2])) {
-                $this->prepareTestResult($result, $key1[$p1], $arr1[$key1[$p1]], null, null);
+                $this->prepareTestResult($result, $xpath, $key1[$p1], $arr1[$key1[$p1]], null, null);
                 $p1++;
                 continue;
             } elseif (!isset($key1[$p1]) && isset($key2[$p2])) {
-                $this->prepareTestResult($result, null, null, $key2[$p2], $arr2[$key2[$p2]]);
+                $this->prepareTestResult($result, $xpath, null, null, $key2[$p2], $arr2[$key2[$p2]]);
                 $p2++;
                 continue;
             }
@@ -351,6 +396,7 @@ class ProfileController extends Controller
 
         return $this->render('@MetadorCore/Profile/test.html.twig', array(
             'result' => $result,
+            'id'     => $id
         ));
     }
 
@@ -361,7 +407,7 @@ class ProfileController extends Controller
      * @param $k2
      * @param $v2
      */
-    private function prepareTestResult(&$result, $k1, $v1, $k2, $v2)
+    private function prepareTestResult(&$result, $xpath, $k1, $v1, $k2, $v2)
     {
         $ignoreList = [
             '_id',
@@ -392,11 +438,19 @@ class ProfileController extends Controller
             $status = 'info';
         }
 
+        $i1 = preg_replace('/_[0-9]+_/', '_', $k1);
+        $i2 = preg_replace('/_[0-9]+_/', '_', $k2);
+
+        $x1 = isset($xpath[$i1]) ? $xpath[$i1] : '';
+        $x2 = isset($xpath[$i2]) ? $xpath[$i2] : '';
+
         $result[$status][] = [
             'k1' => $k1,
             'v1' => $v1,
+            'x1' => $x1,
             'k2' => $k2,
             'v2' => $v2,
+            'x2' => $x2,
         ];
     }
 
