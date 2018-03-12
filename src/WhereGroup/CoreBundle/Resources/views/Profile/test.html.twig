@@ -9,7 +9,7 @@
             <table class="table bordered margin-b">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="icon-column">#</th>
                         <th colspan="4">Error</th>
                     </tr>
                 </thead>
@@ -18,19 +18,28 @@
                 {% for row in result['error'] %}
                     <tr>
                         {% if row['k1'] == row['k2'] %}
-                            <td>
-                                <form action="{{ path('metadata_xpath', { id: id }) }}" target="_blank">
+                            <td class="icon-column">
+                                <form action="{{ path('metadata_xpath', { id: id }) }}" target="_blank" method="get">
                                     <input type="hidden" name="xpath" value="{{ row['x1'] }}" />
-                                    <button type="submit">x</button>
+                                    <button type="submit" class="btn no-style">
+                                        <span class="icon-tree"></span>
+                                    </button>
                                 </form>
                             </td>
                             <td class="test-normal" title="{{ row['k1'] }}" colspan="2">
-
                                 <strong>{{ row['k1']|teaser(27, true) }}</strong>
                             </td>
                             <td class="test-normal" title="{{ row['v1'] }}">{{ row['v1']|teaser(27, true) }}</td>
                             <td class="test-normal" title="{{ row['v2'] }}">{{ row['v2']|teaser(27, true) }}</td>
                         {% else %}
+                            <td class="icon-column">
+                                <form action="{{ path('metadata_xpath', { id: id }) }}" target="_blank" method="get">
+                                    <input type="hidden" name="xpath" value="{{ row['x1'] }}" />
+                                    <button type="submit" class="btn no-style">
+                                        <span class="icon-tree"></span>
+                                    </button>
+                                </form>
+                            </td>
                             <td class="test-normal" title="{{ row['k1'] }}"><strong>{{ row['k1']|teaser(27, true) }}</strong></td>
                             <td class="test-normal" title="{{ row['v1'] }}">{{ row['v1']|teaser(27, true) }}</td>
                             <td class="test-normal" title="{{ row['k2'] }}"><strong>{{ row['k2']|teaser(27, true) }}</strong></td>
