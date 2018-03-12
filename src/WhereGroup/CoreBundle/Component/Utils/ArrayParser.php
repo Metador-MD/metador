@@ -202,20 +202,28 @@ class ArrayParser
 
     /**
      * @param array $array
-     * @param $reindex
+     * @param bool $reindex
+     * @param bool $removeEmptyArrays
      */
-    public static function clearEmptyValues(array &$array, $reindex = false)
+    public static function clearEmptyValues(array &$array, $reindex = false, $removeEmptyArrays = false)
     {
         foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                if ($reindex) {
-                    self::reindexKeys($value);
+            if (is_array($array[$key])) {
+                if (!empty($array[$key]) && $reindex === true) {
+                    self::reindexKeys($array[$key]);
                 }
-                self::clearEmptyValues($array[$key], $reindex);
-            } else {
-                if ($value === '') {
+
+                self::clearEmptyValues($array[$key], $reindex, $removeEmptyArrays);
+
+                if (empty($array[$key]) && $removeEmptyArrays === true) {
                     unset($array[$key]);
                 }
+
+                continue;
+            }
+
+            if ($array[$key] === '') {
+                unset($array[$key]);
             }
         }
     }
