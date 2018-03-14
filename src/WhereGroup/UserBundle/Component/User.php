@@ -4,6 +4,7 @@ namespace WhereGroup\UserBundle\Component;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User as UserEntity;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
@@ -257,9 +258,10 @@ class User implements UserInterface
     public function getUsernameFromSession()
     {
         $username = '';
+        $token = $this->tokenStorage->getToken();
 
-        if (!is_null($this->tokenStorage->getToken())) {
-            $user = $this->tokenStorage->getToken()->getUser();
+        if (!is_null($token) &&  !($token instanceof AnonymousToken)) {
+            $user = $token->getUser();
             $username = $user->getUsername();
         }
 
