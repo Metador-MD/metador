@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig_Environment;
 use Symfony\Component\HttpKernel\KernelInterface;
+use WhereGroup\CoreBundle\Component\Metadata\Validator;
 use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
@@ -51,6 +52,8 @@ class Metadata implements MetadataInterface
     /** @var KernelInterface */
     protected $kernel;
 
+    /** @var Validator */
+    public $validator;
 
     const ENTITY = 'MetadorCoreBundle:Metadata';
 
@@ -59,6 +62,7 @@ class Metadata implements MetadataInterface
      * @param UserInterface $user
      * @param Logger $logger
      * @param Plugin $plugin
+     * @param Validator $validator
      * @param EntityManagerInterface $em
      * @param EventDispatcherInterface $eventDispatcher
      * @param Twig_Environment $templating
@@ -68,6 +72,7 @@ class Metadata implements MetadataInterface
         UserInterface $user,
         Logger $logger,
         Plugin $plugin,
+        Validator $validator,
         EntityManagerInterface $em,
         EventDispatcherInterface $eventDispatcher,
         Twig_Environment $templating,
@@ -76,8 +81,9 @@ class Metadata implements MetadataInterface
         $this->em              = $em;
         $this->user            = $user;
         $this->logger          = $logger;
-        $this->repo            = $em->getRepository(self::ENTITY);
         $this->plugin          = $plugin;
+        $this->validator       = $validator;
+        $this->repo            = $em->getRepository(self::ENTITY);
         $this->eventDispatcher = $eventDispatcher;
         $this->templating      = $templating;
         $this->kernel          = $kernel;
@@ -89,8 +95,9 @@ class Metadata implements MetadataInterface
             $this->em,
             $this->user,
             $this->logger,
-            $this->repo,
             $this->plugin,
+            $this->validator,
+            $this->repo,
             $this->eventDispatcher,
             $this->templating,
             $this->kernel
@@ -519,17 +526,18 @@ class Metadata implements MetadataInterface
             $operation = 'update';
         }
 
-        // EVENT PRE SAVE
-        if ($dispatchEvent) {
-            $event  = new MetadataChangeEvent($entity, array());
-            $this->eventDispatcher->dispatch('metadata.pre_save', $event);
-        }
-
         // SAVE TO DATABASE
         $this->em->beginTransaction();
         $success = false;
+        $event = new MetadataChangeEvent($entity, array());
+
 
         try {
+            // EVENT PRE SAVE
+            if ($dispatchEvent) {
+                $this->eventDispatcher->dispatch('metadata.pre_save', $event);
+            }
+
             $hasId = $entity->getId();
 
             $this->em->persist($entity);
