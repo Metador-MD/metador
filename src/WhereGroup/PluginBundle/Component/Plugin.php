@@ -2,6 +2,7 @@
 
 namespace WhereGroup\PluginBundle\Component;
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -28,11 +29,13 @@ class Plugin
     protected $routing = array();
     protected $configuration = null;
     protected $cache;
+    protected $kernel;
 
     /**
      * Plugin constructor.
      * @param ConfigurationInterface $configuration
      * @param Cache $cache
+     * @param KernelInterface $kernel
      * @param $rootDir
      * @param $cacheDir
      * @param $environment
@@ -42,6 +45,7 @@ class Plugin
     public function __construct(
         ConfigurationInterface $configuration,
         Cache $cache,
+        KernelInterface $kernel,
         $rootDir,
         $cacheDir,
         $environment,
@@ -49,7 +53,8 @@ class Plugin
         $pluginPaths = null
     ) {
         // get plugin path's
-        $this->cache = $cache;
+        $this->cache             = $cache;
+        $this->kernel            = $kernel;
         $this->rootDir           = $rootDir . '/';
         $this->cacheDir          = $cacheDir;
         $this->env               = $environment;
@@ -153,6 +158,25 @@ class Plugin
         }
 
         return $result;
+    }
+
+    /**
+     * @param $profile
+     * @param $resource
+     * @return bool|string
+     * @throws \Exception
+     */
+    public function getResource($profile, $resource)
+    {
+        $filepath = $this->kernel->locateResource(
+            '@' . $this->getPluginClassName($profile) . '/Resources/' . $resource
+        );
+
+        if (!file_exists($filepath) || !is_readable($filepath)) {
+            throw new \Exception("File not found or not readable!");
+        }
+
+        return file_get_contents($filepath);
     }
 
     /**

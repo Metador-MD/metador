@@ -531,7 +531,6 @@ class Metadata implements MetadataInterface
         $success = false;
         $event = new MetadataChangeEvent($entity, array());
 
-
         try {
             // EVENT PRE SAVE
             if ($dispatchEvent) {
