@@ -49,15 +49,19 @@
                 &:not(:last-child) {
                     border-right: 1px solid $border;
                 }
+
+                &.icon-column {
+                    width: $normal-item-height;
+                }
             }
 
-            &:nth-child(1n) {
+            &:not(.no-bg):nth-child(1n) {
                 & > td {
                     background-color: $background;
                 }
             }
 
-            &:nth-child(2n) {
+            &:not(.no-bg):nth-child(2n) {
                 & > td {
                     background-color: lighten($background, 2%);
                 }

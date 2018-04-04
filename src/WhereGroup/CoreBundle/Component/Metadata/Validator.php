@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component\Metadata;
 
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 use WhereGroup\PluginBundle\Component\Plugin;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -33,10 +34,12 @@ class Validator
 
     /**
      * @param array $p
+     * @param $debug
      * @return bool
+     * @throws MetadataException
      * @throws \Exception
      */
-    public function isValid(array $p)
+    public function isValid(array $p, &$debug = null)
     {
         if (!isset($p['_public']) || (isset($p['_public']) && $p['_public'] === '0')) {
             return true;
@@ -52,43 +55,211 @@ class Validator
             throw new MetadataException("Can not decode validation.json");
         }
 
-        $x = $p;
-        $error = [];
+        $errors = [];
 
-        $this->prepairObject($x);
-        $this->testObject($x, $rules, $error);
-
-        dump($x);
+        if (!$this->objectIsValid($p, $rules, $debug)) {
+            return false;
+        }
 
         return true;
     }
 
     /**
-     * @param $array
+     * @param $p
      * @param $rules
-     * @param $error
+     * @param $debug
+     * @return bool
      */
-    private function testObject(&$array, $rules, &$error)
+    public function objectIsValid($p, $rules, &$debug)
     {
-        foreach ($array as $key => $val) {
-            if (is_array($val)) {
-                $this->testObject($array[$key], $rules, $error);
+        $metadataObject = $p;
+        $tempRules = $rules;
+
+        $this->prepairObject($metadataObject);
+
+        if (!isset($debug['errors'])) {
+            $debug['errors'] = [];
+        }
+
+        $this->testObject($metadataObject, $rules, $tempRules, $debug);
+
+        // p_spatialresolutiondistance
+        if (!is_null($debug) && is_array($tempRules) && !empty($tempRules)) {
+            foreach ($tempRules as $key => $rules) {
+                foreach ($rules as $index => $rule) {
+                    if (isset($rule['assert']) && !in_array($rule['assert'], [
+                        'notBlank', 'oneIsMandatory', 'onlyOne'
+                    ])) {
+                        continue;
+                    }
+
+                    $debug['object'][$key][$index] = [
+                        'test' => $rule,
+                        'missingData' => true
+                    ];
+                }
+
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $p
+     * @param $rules
+     * @param $tempRules
+     * @param $debug
+     * @param array $parent
+     */
+    private function testObject(&$p, $rules, &$tempRules, &$debug, $parent = [])
+    {
+        foreach ($p as $key => $val) {
+            if (is_array($val) && ArrayParser::hasStringKeys($val)) {
+                $this->testObject($p[$key], $rules, $tempRules, $debug, $val);
                 continue;
             }
 
             if (isset($rules[$key])) {
-                foreach ($rules[$key] as $rule) {
-                    if (isset($rule['assert']) && $rule['assert'] === 'notBlank' && trim($val) === '') {
-                        $error[] = ['key' => $key, 'message' => $rule['message']];
-                        continue;
+                unset($tempRules[$key]);
+
+                foreach ($rules[$key] as $index => $rule) {
+                    $debug['object'][$key][$index] = ['test' => $rule, 'untested' => true, 'invalid' => true];
+
+                    // notBlank
+                    if (isset($rule['assert']) && $rule['assert'] === 'notBlank') {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        if ($this->isNotEmpty($val)) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
+
+                    // allOrNothing
+                    } elseif (isset($rule['assert']) && $rule['assert'] === 'allOrNothing') {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        $count = $this->countEmptyElements($p, $parent, $rule);
+
+                        if (($this->isNotEmpty($val) && $count === 0)
+                            || ($this->isEmpty($val) && $count === count($rule['siblings']))) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
+
+                    // onlyOne
+                    } elseif (isset($rule['assert']) && $rule['assert'] === 'onlyOne') {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        $count = $this->countNotEmptyElements($p, $parent, $rule);
+
+                        if (($this->isNotEmpty($val) && $count === 0) || ($this->isEmpty($val) && $count === 1)) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
+
+                    // mandatoryIfSiblingNotEmpty
+                    } elseif (isset($rule['assert']) && $rule['assert'] === 'mandatoryIfSiblingNotEmpty') {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        $count = $this->countNotEmptyElements($p, $parent, $rule);
+
+                        if (($count >= 1 && $this->isNotEmpty($val)) || $count === 0) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
+
+                    } elseif (isset($rule['assert']) && $rule['assert'] === 'testSiblings') {
+                        unset(
+                            $debug['object'][$key][$index]['untested'],
+                            $debug['object'][$key][$index]['invalid']
+                        );
+
+                    // oneIsMandatory
+                    } elseif (isset($rule['assert']) && $rule['assert'] === 'oneIsMandatory') {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        $count = $this->countNotEmptyElements($p, $parent, $rule);
+
+                        if ($this->isNotEmpty($val) || $count >= 1) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
+
+                    // regex
+                    } elseif (isset($rule['regex'])) {
+                        unset($debug['object'][$key][$index]['untested']);
+
+                        if (preg_match("/" . $rule['regex'] . "/", $val)) {
+                            unset($debug['object'][$key][$index]['invalid']);
+                        }
                     }
-
-
-
-                    $x = $rule;
                 }
+
+                continue;
+            }
+
+            $debug['noRules'][$key] = 'NO RULE!';
+        }
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    private function isEmpty($value)
+    {
+        if (is_string($value)) {
+            $value = trim($value);
+        }
+
+        return empty($value);
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    private function isNotEmpty($value)
+    {
+        return !$this->isEmpty($value);
+    }
+
+    /**
+     * @param $arr1
+     * @param $arr2
+     * @param $rule
+     * @return bool|int
+     */
+    private function countEmptyElements($arr1, $arr2, $rule)
+    {
+        $array = empty($arr2) ? $arr1 : $arr2;
+
+        if (empty($array) || !is_array($array) || !isset($rule['siblings']) || empty($rule['siblings'])) {
+            return false;
+        }
+
+        $count = 0;
+
+        foreach ($rule['siblings'] as $key) {
+            if ((isset($array[$key]) && $this->isEmpty($array[$key])) || !isset($array[$key])) {
+                ++$count;
             }
         }
+
+        return $count;
+    }
+
+    /**
+     * @param $arr1
+     * @param $arr2
+     * @param $rule
+     * @return bool|int
+     */
+    private function countNotEmptyElements($arr1, $arr2, $rule)
+    {
+        $count = $this->countEmptyElements($arr1, $arr2, $rule);
+
+        if ($count === false) {
+            return false;
+        }
+
+        return count($rule['siblings']) - $count;
     }
 
     /**
