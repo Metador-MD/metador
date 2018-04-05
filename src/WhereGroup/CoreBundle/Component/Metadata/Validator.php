@@ -55,13 +55,7 @@ class Validator
             throw new MetadataException("Can not decode validation.json");
         }
 
-        $errors = [];
-
-        if (!$this->objectIsValid($p, $rules, $debug)) {
-            return false;
-        }
-
-        return true;
+        return $this->objectIsValid($p, $rules, $debug);
     }
 
     /**
@@ -83,7 +77,6 @@ class Validator
 
         $this->testObject($metadataObject, $rules, $tempRules, $debug);
 
-        // p_spatialresolutiondistance
         if (!is_null($debug) && is_array($tempRules) && !empty($tempRules)) {
             foreach ($tempRules as $key => $rules) {
                 foreach ($rules as $index => $rule) {
@@ -97,12 +90,13 @@ class Validator
                         'test' => $rule,
                         'missingData' => true
                     ];
-                }
 
+                    $debug['errors'][] = $rule;
+                }
             }
         }
 
-        return false;
+        return empty($debug['errors']) ? true : false;
     }
 
     /**
@@ -114,7 +108,7 @@ class Validator
      */
     private function testObject(&$p, $rules, &$tempRules, &$debug, $parent = [])
     {
-        foreach ($p as $key => $val) {
+        foreach ($p as $key => &$val) {
             if (is_array($val) && ArrayParser::hasStringKeys($val)) {
                 $this->testObject($p[$key], $rules, $tempRules, $debug, $val);
                 continue;
@@ -132,6 +126,8 @@ class Validator
 
                         if ($this->isNotEmpty($val)) {
                             unset($debug['object'][$key][$index]['invalid']);
+
+                            continue;
                         }
 
                     // allOrNothing
@@ -143,6 +139,7 @@ class Validator
                         if (($this->isNotEmpty($val) && $count === 0)
                             || ($this->isEmpty($val) && $count === count($rule['siblings']))) {
                             unset($debug['object'][$key][$index]['invalid']);
+                            continue;
                         }
 
                     // onlyOne
@@ -153,6 +150,7 @@ class Validator
 
                         if (($this->isNotEmpty($val) && $count === 0) || ($this->isEmpty($val) && $count === 1)) {
                             unset($debug['object'][$key][$index]['invalid']);
+                            continue;
                         }
 
                     // mandatoryIfSiblingNotEmpty
@@ -163,6 +161,7 @@ class Validator
 
                         if (($count >= 1 && $this->isNotEmpty($val)) || $count === 0) {
                             unset($debug['object'][$key][$index]['invalid']);
+                            continue;
                         }
 
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'testSiblings') {
@@ -170,6 +169,7 @@ class Validator
                             $debug['object'][$key][$index]['untested'],
                             $debug['object'][$key][$index]['invalid']
                         );
+                        continue;
 
                     // oneIsMandatory
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'oneIsMandatory') {
@@ -179,6 +179,7 @@ class Validator
 
                         if ($this->isNotEmpty($val) || $count >= 1) {
                             unset($debug['object'][$key][$index]['invalid']);
+                            continue;
                         }
 
                     // regex
@@ -187,8 +188,11 @@ class Validator
 
                         if (preg_match("/" . $rule['regex'] . "/", $val)) {
                             unset($debug['object'][$key][$index]['invalid']);
+                            continue;
                         }
                     }
+
+                    $debug['errors'][] = $rule;
                 }
 
                 continue;
@@ -226,19 +230,34 @@ class Validator
      * @param $rule
      * @return bool|int
      */
-    private function countEmptyElements($arr1, $arr2, $rule)
+    private function countEmptyElements(&$arr1, &$arr2, $rule)
     {
-        $array = empty($arr2) ? $arr1 : $arr2;
-
-        if (empty($array) || !is_array($array) || !isset($rule['siblings']) || empty($rule['siblings'])) {
+        if (!isset($rule['siblings']) || empty($rule['siblings'])) {
             return false;
         }
 
         $count = 0;
 
         foreach ($rule['siblings'] as $key) {
-            if ((isset($array[$key]) && $this->isEmpty($array[$key])) || !isset($array[$key])) {
+            // Search in siblings
+            if (is_array($arr2) && !empty($arr2)) {
+                if ((isset($arr2[$key]) && $this->isEmpty($arr2[$key])) || !isset($arr2[$key])) {
+                    ++$count;
+                }
+
+                if (!isset($arr2[$key])) {
+                    $arr2[$key] = '';
+                }
+                continue;
+            }
+
+            // Search in parent array
+            if ((isset($arr1[$key]) && $this->isEmpty($arr1[$key])) || !isset($arr1[$key])) {
                 ++$count;
+            }
+
+            if (!isset($arr1[$key])) {
+                $arr1[$key] = '';
             }
         }
 
@@ -251,7 +270,7 @@ class Validator
      * @param $rule
      * @return bool|int
      */
-    private function countNotEmptyElements($arr1, $arr2, $rule)
+    private function countNotEmptyElements(&$arr1, &$arr2, $rule)
     {
         $count = $this->countEmptyElements($arr1, $arr2, $rule);
 
@@ -276,6 +295,8 @@ class Validator
 
             $validatorArrayKey = $subkey . strtolower($key);
             $validatorKey = preg_replace('/(_[\d]+_?)/s', '', $validatorArrayKey);
+
+            $keys[$validatorKey] = null;
 
             if (is_array($val)) {
                 $array[$validatorArrayKey] = $val;
