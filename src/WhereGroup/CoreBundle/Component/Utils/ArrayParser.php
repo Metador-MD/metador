@@ -242,11 +242,10 @@ class ArrayParser
      * @param array $array
      * @return bool
      */
-    private static function hasStringKeys(array $array)
+    public static function hasStringKeys(array $array)
     {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
-
 
     /**
      * @param array $array

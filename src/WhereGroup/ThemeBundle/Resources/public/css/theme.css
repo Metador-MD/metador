@@ -1440,10 +1440,13 @@ input.input-element, .md input.btn {
 .md .table > tbody > tr > td:not(:last-child) {
   border-right: 1px solid #e1e1e1; }
 
-.md .table > tbody > tr:nth-child(1n) > td {
+.md .table > tbody > tr > td.icon-column {
+  width: 35px; }
+
+.md .table > tbody > tr:not(.no-bg):nth-child(1n) > td {
   background-color: #f7f7f7; }
 
-.md .table > tbody > tr:nth-child(2n) > td {
+.md .table > tbody > tr:not(.no-bg):nth-child(2n) > td {
   background-color: #fcfcfc; }
 
 .md .table.small {

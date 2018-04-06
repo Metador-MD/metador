@@ -1,0 +1,85 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+    <div class="center">
+        <div class="center-right">
+            <div class="content">
+                <h2 class="title">Validate</h2>
+
+                {% if debug['object'] is defined and debug['object'] is iterable %}
+                <table class="table bordered margin-b">
+                    <thead>
+                        <tr>
+                            <th colspan="2">With Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, rules in debug['object'] %}
+                        <tr>
+                            <td class="test-normal">{{ key }}</td>
+                            <td class="test-normal no-p">
+                            {% if rules is iterable %}
+                                <table class="table">
+                                {% for rule in rules %}
+                                    <tr class="no-bg">
+                                        <td class="icon-column">
+                                            {% if rule['untested'] is defined %}
+                                                <span class="icon-cross" title="untested"></span>
+                                            {% elseif rule['missingData'] is defined %}
+                                                <span class="icon-minus" title="missing data"></span>
+                                            {% else %}
+                                                <span class="icon-checkmark" title="tested"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="icon-column">
+                                            {% if rule['invalid'] is defined %}
+                                                <span class="icon-cross" title="invalid"></span>
+                                            {% elseif rule['missingData'] is defined %}
+                                                <span class="icon-minus" title="missing data"></span>
+                                            {% else %}
+                                                <span class="icon-checkmark" title="valid"></span>
+                                            {% endif %}
+                                        </td>
+                                        {% if rule['test']['assert'] is defined %}
+                                            <td style="width: 80px;"><strong>assert</strong></td>
+                                            <td>{{ rule['test']['assert'] }}</td>
+                                        {% elseif rule['test']['regex'] is defined %}
+                                            <td style="width: 80px;"><strong>regex</strong></td>
+                                            <td>{{ rule['test']['regex']|teaser(40, 1) }}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </table>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if debug['noRules'] is defined and debug['noRules'] is iterable %}
+                    <table class="table bordered margin-b">
+                        <thead>
+                        <tr>
+                            <th>Without Rules</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, val in debug['noRules'] %}
+                            <tr>
+                                <td class="test-normal">{{ key }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/metadortheme/css/import-test.css') }}">
+{% endblock %}

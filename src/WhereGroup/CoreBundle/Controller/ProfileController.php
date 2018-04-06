@@ -195,7 +195,6 @@ class ProfileController extends Controller
      * @Method("POST")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws MetadataException
      */
     public function deleteAction($id)
     {
@@ -216,6 +215,27 @@ class ProfileController extends Controller
         }
 
         return $this->redirectToRoute('metador_home');
+    }
+
+    /**
+     * @Route("/profile/validate/{id}", name="metadata_validate")
+     * @param $id
+     * @return Response
+     */
+    public function validateAction($id)
+    {
+        $metadata = $this->get('metador_metadata')->getById($id);
+
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+
+        $debug = [];
+
+        $this->get('metador_metadata_validator')->isValid($metadata->getObject(), $debug);
+
+        return $this->render('@MetadorCore/Profile/validate.html.twig', array(
+            'id'    => $id,
+            'debug' => $debug
+        ));
     }
 
     /**

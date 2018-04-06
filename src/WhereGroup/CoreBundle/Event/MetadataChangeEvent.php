@@ -12,6 +12,7 @@ class MetadataChangeEvent extends Event
 {
     protected $dataset;
     protected $config;
+    protected $errors;
 
     /**
      * MetadataChangeEvent constructor.
@@ -46,5 +47,25 @@ class MetadataChangeEvent extends Event
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @param $message
+     * @param array $params
+     * @return MetadataChangeEvent
+     */
+    public function addError($message, $params = [])
+    {
+        $this->errors[] = ['message' => $message, 'params' => $params];
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }
