@@ -129,7 +129,6 @@ class Validator
 
                             continue;
                         }
-
                     // allOrNothing
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'allOrNothing') {
                         unset($debug['object'][$key][$index]['untested']);
@@ -141,7 +140,6 @@ class Validator
                             unset($debug['object'][$key][$index]['invalid']);
                             continue;
                         }
-
                     // onlyOne
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'onlyOne') {
                         unset($debug['object'][$key][$index]['untested']);
@@ -152,7 +150,6 @@ class Validator
                             unset($debug['object'][$key][$index]['invalid']);
                             continue;
                         }
-
                     // mandatoryIfSiblingNotEmpty
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'mandatoryIfSiblingNotEmpty') {
                         unset($debug['object'][$key][$index]['untested']);
@@ -163,14 +160,12 @@ class Validator
                             unset($debug['object'][$key][$index]['invalid']);
                             continue;
                         }
-
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'testSiblings') {
                         unset(
                             $debug['object'][$key][$index]['untested'],
                             $debug['object'][$key][$index]['invalid']
                         );
                         continue;
-
                     // oneIsMandatory
                     } elseif (isset($rule['assert']) && $rule['assert'] === 'oneIsMandatory') {
                         unset($debug['object'][$key][$index]['untested']);
@@ -181,7 +176,6 @@ class Validator
                             unset($debug['object'][$key][$index]['invalid']);
                             continue;
                         }
-
                     // regex
                     } elseif (isset($rule['regex'])) {
                         unset($debug['object'][$key][$index]['untested']);
