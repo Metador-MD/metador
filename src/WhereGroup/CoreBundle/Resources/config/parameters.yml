@@ -21,5 +21,9 @@ parameters:
     cache_port: 11211
     cache_enabled: false
 
+    solr_host: ~
+    solr_port: ~
+    solr_path: ~
+
     result_template: 'MetadorTheme/Home/result.html.twig'
 
