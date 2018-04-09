@@ -9,6 +9,7 @@ namespace WhereGroup\CoreBundle\Component;
 class Solr
 {
     public $client;
+    public $query;
 
     /**
      * Solr constructor.
@@ -24,6 +25,8 @@ class Solr
                 'port'     => $port,
                 'path'     => $path
             ]);
+
+            $this->query = new \SolrQuery();
         }
     }
 
@@ -45,13 +48,20 @@ class Solr
     public function ping()
     {
         try {
-            $pingresponse = $this->client->ping();
+            $this->client->ping();
             return true;
         } catch (\SolrClientException $e) {
-            $data = $e->getMessage();
         }
 
         return false;
+    }
+
+    /**
+     * @return \SolrQuery
+     */
+    public function newQuery()
+    {
+        return new \SolrQuery();
     }
 
     /**
