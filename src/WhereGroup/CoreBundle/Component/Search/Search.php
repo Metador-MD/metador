@@ -257,6 +257,17 @@ abstract class Search
     }
 
     /**
+     * @param Expression $expression
+     * @return $this
+     */
+    public function setExpression(Expression $expression)
+    {
+        $this->expression = $expression;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     abstract public function getResultCount();
@@ -265,10 +276,4 @@ abstract class Search
      * @return ExprHandler
      */
     abstract public function createExpression();
-
-    /**
-     * @param Expression $expression
-     * @return mixed
-     */
-    abstract public function setExpression(Expression $expression);
 }
