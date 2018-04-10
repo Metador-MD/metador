@@ -6,6 +6,10 @@
             <div class="content">
                 <h2 class="title">Validate</h2>
 
+                {% if message is not empty %}
+                    <div class="notify info">{{ message }}</div>
+                {% endif %}
+
                 {% if debug['object'] is defined and debug['object'] is iterable %}
                 <table class="table bordered margin-b">
                     <thead>

@@ -225,16 +225,22 @@ class ProfileController extends Controller
     public function validateAction($id)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
 
         $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
 
-        $debug = [];
+        $message = "You can only validate public metadata.";
+        $debug   = [];
 
-        $this->get('metador_metadata_validator')->isValid($metadata->getObject(), $debug);
+        if ($p['_public'] === "1") {
+            $this->get('metador_metadata_validator')->isValid($p, $debug);
+            $message = "";
+        }
 
         return $this->render('@MetadorCore/Profile/validate.html.twig', array(
-            'id'    => $id,
-            'debug' => $debug
+            'id'      => $id,
+            'debug'   => $debug,
+            'message' => $message
         ));
     }
 
