@@ -17,6 +17,14 @@ Search.prototype = {
         this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
+        var source = self.get('source', null);
+
+        if (source !== null) {
+            $('.-js-source[data-slug="' + source + '"]')
+                .addClass('active')
+                .siblings().removeClass('active');
+        }
+        
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
             self.find();
