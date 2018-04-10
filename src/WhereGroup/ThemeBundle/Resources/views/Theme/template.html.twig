@@ -3,7 +3,7 @@
 {% block title %}Metador{% endblock %}
 
 {% block body %}
-    {% set systemMessage = get_setting('system_message') %}
+    {% set systemMessage = get_setting('system_message', 'plugin', 'metador_core') %}
     <div class="md {% if systemMessage %}sys-msg{% endif %}">
         <div class="progressbar"><div class="progress -js-progress"></div></div>
         {% if systemMessage %}
