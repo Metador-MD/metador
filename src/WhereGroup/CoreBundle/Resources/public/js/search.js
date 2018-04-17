@@ -20,11 +20,9 @@ Search.prototype = {
         var source = self.get('source', null);
 
         if (source !== null) {
-            $('.-js-source[data-slug="' + source + '"]')
-                .addClass('active')
-                .siblings().removeClass('active');
+            $('.-js-source[data-slug="' + source + '"]').click();
         }
-        
+
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
             self.find();
