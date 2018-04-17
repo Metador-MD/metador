@@ -241,7 +241,7 @@ class Metadata implements MetadataInterface
 
         // DateStamp
         $dateStamp = new \DateTime();
-        $p['_dateStamp'] = $dateStamp->format('Y-m-d');
+        $p['dateStamp'] = $dateStamp->format('Y-m-d');
 
 
         // Username
@@ -254,11 +254,11 @@ class Metadata implements MetadataInterface
         }
 
         if (!isset($p['_insert_time'])) {
-            $p['_insert_time'] = $p['_dateStamp'];
+            $p['_insert_time'] = $p['dateStamp'];
         }
 
         $p['_update_user'] = $p['_username'];
-        $p['_update_time'] = $p['_dateStamp'];
+        $p['_update_time'] = $p['dateStamp'];
         $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
@@ -321,7 +321,7 @@ class Metadata implements MetadataInterface
             unset($p['_id']);
         }
 
-        $date = new \DateTime($p['_dateStamp']);
+        $date = new \DateTime($p['dateStamp']);
 
         $user = $this->user->getByUsername($p['_username']);
 

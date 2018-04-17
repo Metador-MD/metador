@@ -435,26 +435,30 @@ class ProfileController extends Controller
      */
     private function prepareTestResult(&$result, $xpath, $k1, $v1, $k2, $v2)
     {
-        $ignoreList = [
-            '_id',
-            '_insert_time',
-            '_insert_user',
-            '_lock_time',
-            '_lock_user',
-            '_locked',
-            '_profile',
-            '_public',
-            '_remove_lock',
-            '_source',
-            '_update_time',
-            '_update_user',
-            '_username',
-            '_uuid',
-        ];
-
-        if (in_array($k1, $ignoreList) || in_array($k2, $ignoreList)) {
+        if (substr($k1, 0, 1) === '_' || substr($k2, 0, 1) === '_') {
             return;
         }
+
+        // $ignoreList = [
+        //     '_id',
+        //     '_insert_time',
+        //     '_insert_user',
+        //     '_lock_time',
+        //     '_lock_user',
+        //     '_locked',
+        //     '_profile',
+        //     '_public',
+        //     '_remove_lock',
+        //     '_source',
+        //     '_update_time',
+        //     '_update_user',
+        //     '_username',
+        //     '_uuid',
+        // ];
+
+        // if (in_array($k1, $ignoreList) || in_array($k2, $ignoreList)) {
+        //     return;
+        // }
 
         $status = 'error';
 
@@ -502,7 +506,7 @@ class ProfileController extends Controller
         $this->data['user'] = $this->get('metador_user')->getUserFromSession();
         $this->data['template'] = $this->data['className'] . ':Profile:';
         $this->data['p'] = $this->data['request']->request->get('p', array());
-        $this->data['p']['_dateStamp'] = date("Y-m-d");
+        $this->data['p']['dateStamp'] = date("Y-m-d");
     }
 
     /**
