@@ -112,7 +112,7 @@
             },
             "title": "gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/text()",
             "topicCategory": ["gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()", "_asArray"],
-            "uselimitation": ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()", "_asArray"]
+            "useLimitation": ["gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/*/text()", "_asArray"]
         }
     }
 }
