@@ -1,13 +1,13 @@
 
 {% if p['_id'] is not defined or is_granted('edit', p) %}
-    <div class="simple-select -js-metadata-save disabled">
-        <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close" disabled>
+    <div class="simple-select -js-metadata-save">
+        <button type="submit" class="simple-select-default-button metadata-save-button -js-metadata-button" name="submit" value="close">
             <span class="icon-download -js-metadata-button-status"></span>
             {% trans %}Speichern und beenden{% endtrans %}
         </button>
         <div class="simple-select-button">&nbsp;
             <div class="simple-select-options">
-                <button type="submit" class="simple-select-option metadata-save-button -js-metadata-button" name="submit" value="save" disabled>
+                <button type="submit" class="simple-select-option metadata-save-button -js-metadata-button" name="submit" value="save">
                     <span class="form-icon icon-download"></span>
                     {% trans %}Zwischenstand speichern{% endtrans %}
                 </button>
