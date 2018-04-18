@@ -132,6 +132,17 @@ class Metadata implements MetadataInterface
     }
 
     /**
+     * @param $parentUuid
+     * @return array
+     */
+    public function getChildren($parentUuid)
+    {
+        return $this->repo->findBy([
+            'parent' => $parentUuid
+        ]);
+    }
+
+    /**
      * @return mixed
      * @throws NonUniqueResultException
      */
@@ -359,6 +370,7 @@ class Metadata implements MetadataInterface
             $metadata->setBboxs($p['bbox'][0]['sLatitude']);
             $metadata->setBboxw($p['bbox'][0]['wLongitude']);
         }
+
         $metadata->setObject($p);
 
         $this->save($metadata, $dispatchEvent, $log);
@@ -579,6 +591,22 @@ class Metadata implements MetadataInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository
+     */
+    public function getRepository()
+    {
+        return $this->repo;
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager()
+    {
+        return $this->em;
     }
 
     /**

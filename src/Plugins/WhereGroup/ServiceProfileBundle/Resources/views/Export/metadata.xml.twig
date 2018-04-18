@@ -354,12 +354,12 @@
             {% endif %}
 
             <!-- Nutzungseinschränkungen -->
-            {% if p['uselimitation'] is defined %}
-                {% for uselimitation in p['uselimitation'] %}
+            {% if not array_is_empty(p, 'useLimitation') %}
+                {% for useLimitation in array_get(p, 'useLimitation') %}
                     <gmd:resourceConstraints>
                         <gmd:MD_LegalConstraints>
                             <gmd:useLimitation>
-                                <gco:CharacterString>Nutzungseinschränkungen: {{ uselimitation }}</gco:CharacterString>
+                                <gco:CharacterString>{{ useLimitation }}</gco:CharacterString>
                             </gmd:useLimitation>
                         </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
@@ -367,15 +367,15 @@
             {% endif %}
 
             <!-- Nutzungsbedingungen -->
-            {% if p['useconstraints'] is defined %}
-                {% for row in p['useconstraints'] %}
+            {% if not array_is_empty(p,'useConstraints') %}
+                {% for row in p['useConstraints'] %}
                     <gmd:resourceConstraints>
                         <gmd:MD_LegalConstraints>
-                            {% if row.useconstraints is defined %}
+                            {% if row.useConstraints is defined %}
                                 <gmd:useConstraints>
                                     <gmd:MD_RestrictionCode
                                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
-                                        codeListValue="{{ row.useconstraints }}" />
+                                        codeListValue="{{ row.useConstraints }}" />
                                 </gmd:useConstraints>
                             {% endif %}
                             {% if row.otherconstraints is defined and row.otherconstraints is not empty %}
@@ -385,7 +385,7 @@
                                         codeListValue="otherRestrictions" />
                                 </gmd:useConstraints>
                                 <gmd:otherConstraints>
-                                    <gco:CharacterString>Nutzungsbedingungen: {{ row.otherconstraints }}</gco:CharacterString>
+                                    <gco:CharacterString>{{ row.otherconstraints }}</gco:CharacterString>
                                 </gmd:otherConstraints>
                             {% endif %}
                         </gmd:MD_LegalConstraints>
@@ -394,7 +394,7 @@
             {% endif %}
 
             <!-- Zugriffseinschränkungen -->
-            {% if p['accessConstraints'] is defined %}
+            {% if not array_is_empty(p,'accessConstraints') %}
                 {% for row in p['accessConstraints'] %}
                     <gmd:resourceConstraints>
                         <gmd:MD_LegalConstraints>
