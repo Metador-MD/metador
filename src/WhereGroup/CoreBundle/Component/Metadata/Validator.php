@@ -92,6 +92,10 @@ class Validator
                     ];
 
                     $debug['errors'][] = $rule;
+                    $debug['messages'][] = [
+                        'key'     => $key,
+                        'message' => $rule['message']
+                    ];
                 }
             }
         }

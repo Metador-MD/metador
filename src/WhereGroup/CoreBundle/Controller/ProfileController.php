@@ -245,6 +245,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route("/profile/error/{id}", name="metadata_error")
+     * @param $id
+     * @return Response
+     */
+    public function errorAction($id)
+    {
+        $metadata = $this->get('metador_metadata')->getById($id);
+        $p = $metadata->getObject();
+        $this->denyAccessUnlessGranted(array('view', 'edit'), $p);
+
+        return $this->render('@MetadorCore/Profile/errors.html.twig', array(
+            'p' => $p
+        ));
+    }
+
+    /**
      * @Route("/profile/xpath/{id}", name="metadata_xpath")
      * @param $id
      * @param Request $request
