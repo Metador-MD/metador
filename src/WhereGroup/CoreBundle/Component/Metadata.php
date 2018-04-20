@@ -250,6 +250,10 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
+        if (!isset($p['_groups']) || !is_array($p['_groups'])) {
+            $p['_groups'] = [];
+        }
+
         // DateStamp
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');

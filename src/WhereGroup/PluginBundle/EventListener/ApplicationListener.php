@@ -12,6 +12,7 @@ class ApplicationListener
 {
     /**
      * @param ApplicationEvent $event
+     * @throws \Exception
      */
     public function onLoading(ApplicationEvent $event)
     {

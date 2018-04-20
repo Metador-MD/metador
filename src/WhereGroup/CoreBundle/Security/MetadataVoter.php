@@ -137,7 +137,7 @@ class MetadataVoter extends Voter
         }
 
         if (!isset($subject['_groups']) || !is_array($subject['_groups'])) {
-            throw new MetadorException('_groups is missing in Dataobject!');
+            $subject['_groups'] = [];
         }
 
         // can edit if user is in the same group
