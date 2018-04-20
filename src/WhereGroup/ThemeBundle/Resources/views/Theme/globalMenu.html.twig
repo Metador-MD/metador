@@ -9,7 +9,10 @@
 
         {# USE TEMPLATE #}
     {% else %}
-        <a href="{{ path(item.path, item.params) }}" class="header-menu-item button {% if item.active is defined and item.active %}active{% endif %}" {% if item.target is defined %}target="{{ item.target }}"{% endif %}>
+        <a href="{{ path(item.path, item.params) }}" class="header-menu-item button {% if item.active is defined and item.active %}active{% endif %}"
+           {% if item.target is defined %}target="{{ item.target }}"{% endif %}
+           {% if item.title is defined %}title="{{ item.title }}"{% endif %}
+        >
             {% if item.icon is defined %}
                 <span class="{{ item.icon }}"></span>
             {% endif %}

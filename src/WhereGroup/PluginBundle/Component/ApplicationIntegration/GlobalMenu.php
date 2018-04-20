@@ -71,4 +71,14 @@ class GlobalMenu extends Base
         $this->data[$this->prefix]['target'] = $target;
         return $this;
     }
+
+    /**
+     * @param $title
+     * @return $this
+     */
+    public function title($title)
+    {
+        $this->data[$this->prefix]['title'] = $title;
+        return $this;
+    }
 }
