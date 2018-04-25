@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\PDFExport;
+use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 
 /**
  * @Route("/public/export")
@@ -18,14 +19,18 @@ class ExportController extends Controller
     /**
      * @Route("/xml/{id}", name="metador_export_xml")
      * @Method("GET")
+     * @param $id
+     * @return Response
+     * @throws MetadataException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
      */
     public function xmlAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
-
+        $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
-
         return $this->xmlResponse(
             $this->get('metador_metadata')->objectToXml($p)
         );
@@ -34,16 +39,16 @@ class ExportController extends Controller
     /**
      * @Route("/json/{id}", name="metador_export_json")
      * @Method("GET")
+     * @param $id
+     * @return JsonResponse
+     * @throws MetadataException
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
      */
     public function jsonAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
-
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
-
+        $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
-
         ksort($p);
         return new JsonResponse($p);
     }
@@ -51,16 +56,16 @@ class ExportController extends Controller
     /**
      * @Route("/obj/{id}", name="metador_export_obj")
      * @Method("GET")
+     * @param $id
+     * @return Response
+     * @throws MetadataException
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
      */
     public function objAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
-
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
-
+        $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
-
         ksort($p);
         return new Response('<pre>' . print_r($p, 1) . '</pre>');
     }
@@ -68,18 +73,15 @@ class ExportController extends Controller
     /**
      * @Route("/pdf/{id}", name="metador_export_pdf")
      * @Method("GET")
+     * @param $id
+     * @throws MetadataException
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
      */
     public function pdfAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
-
+        $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
-
-        $className = $this
-            ->get('metador_plugin')
-            ->getPluginClassName($p['_profile']);
-
+        $className = $this->get('metador_plugin')->getPluginClassName($p['_profile']);
         $html = $this->render($className . ":Export:pdf.html.twig", array(
             "p" => $p
         ));
@@ -95,21 +97,19 @@ class ExportController extends Controller
     }
 
     /**
-    * @Route("/html/{id}", name="metador_export_html")
-    * @Method("GET")
-    */
+     * @Route("/html/{id}", name="metador_export_html")
+     * @Method("GET")
+     * @param $id
+     * @return Response
+     * @throws MetadataException
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws \Exception
+     */
     public function htmlAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
-
-        $this->get('metador_core')
-            ->denyAccessUnlessGranted('view', $p);
-
-        $className = $this
-            ->get('metador_plugin')
-            ->getPluginClassName($p['_profile']);
-
+        $p = $this->findObject($id);
+        $this->get('metador_core')->denyAccessUnlessGranted('view', $p);
+        $className = $this->get('metador_plugin')->getPluginClassName($p['_profile']);
         return $this->render($className . ":Export:html.html.twig", array(
             "p" => $p
         ));
@@ -125,5 +125,25 @@ class ExportController extends Controller
         $response->headers->set('Content-Type', 'text/xml');
         $response->setContent("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" . $xml);
         return $response;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws MetadataException
+     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     */
+    private function findObject($id)
+    {
+        $search = $this->get('metador_metadata_search');
+        $response = $search
+            ->setExpression(JsonFilterReader::read(['and' => ['eq' => ['id' => $id]]], $search->createExpression()))
+            ->find();
+
+        if (!isset($response['rows'][0]) || $response['rows'][0]->id != $id) {
+            throw new MetadataException("Metadata not found!");
+        }
+
+        return json_decode($response['rows'][0]->object, true);
     }
 }

@@ -11,6 +11,7 @@ abstract class Search
     /* mapping: query property name to entity Metador property */
     const MAP_QUERY2SOURCE = [
         'metadata' => [
+            'id'             => 'id',
             'bboxn'          => 'bboxn',
             'bboxe'          => 'bboxe',
             'bboxs'          => 'bboxs',
