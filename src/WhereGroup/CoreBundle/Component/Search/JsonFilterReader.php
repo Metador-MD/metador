@@ -9,7 +9,6 @@ namespace WhereGroup\CoreBundle\Component\Search;
  */
 class JsonFilterReader implements FilterReader
 {
-
     /**
      * @param mixed $filter
      * @param ExprHandler $expression
@@ -20,6 +19,7 @@ class JsonFilterReader implements FilterReader
     {
         $parameters = array();
         $expression = self::getExpression($filter, $expression, $parameters);
+
         if (is_array($expression) && count($expression) !== 1) {
             return null;
         } else {
@@ -36,8 +36,8 @@ class JsonFilterReader implements FilterReader
      */
     private static function getExpression(array $filter, ExprHandler $expression, &$parameters)
     {
-
         $items = array();
+
         foreach ($filter as $key => $value) {
             if (is_integer($key)) { // list
                 $items[] = self::getExpression($value, $expression, $parameters)[0];

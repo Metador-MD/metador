@@ -35,6 +35,7 @@ class DatabaseSearch extends Search implements SearchInterface
         if ($this->getGroups()) {
             $this->qb->leftJoin('m.groups', 'g');
         }
+
         if ($this->expression) {
             $this->qb
                 ->add('where', $this->expression->getExpression())

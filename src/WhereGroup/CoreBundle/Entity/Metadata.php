@@ -38,11 +38,17 @@ class Metadata
      * @ORM\Column(type="integer", nullable=true)
      */
     private $lockTime;
+
     /**
      * @ORM\ManyToOne(targetEntity="WhereGroup\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="insertuser_id", referencedColumnName="id")
      */
     private $insertUser;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $insertUsername;
 
     /**
      * @ORM\ManyToOne(targetEntity="WhereGroup\UserBundle\Entity\User")
@@ -655,6 +661,25 @@ class Metadata
     public function setDateStamp($dateStamp)
     {
         $this->dateStamp = $dateStamp;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getInsertUsername()
+    {
+        return $this->insertUsername;
+    }
+
+    /**
+     * @param mixed $insertUsername
+     * @return Metadata
+     */
+    public function setInsertUsername($insertUsername)
+    {
+        $this->insertUsername = $insertUsername;
         return $this;
     }
 }

@@ -362,6 +362,7 @@ class Metadata implements MetadataInterface
         $metadata->setSource($p['_source']);
         $metadata->setDate(new \DateTime($this->findDate($p)));
         $metadata->setDateStamp($date);
+        $metadata->setInsertUsername($p['_insert_user']);
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
             && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {

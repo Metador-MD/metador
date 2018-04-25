@@ -2,187 +2,174 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
-use Doctrine\ORM\Query\Expr;
-
 /**
- * Interface ExprHandler
+ * Class ExprHandler
  * @package WhereGroup\CoreBundle\Component\Search
  */
-interface ExprHandler
+abstract class ExprHandler
 {
+    /**
+     * @var string
+     */
+    protected $escapeChar = '\\';
+
+    /**
+     * @var string
+     */
+    protected $singleChar = '_';
+
+    /**
+     * @var string
+     */
+    protected $wildCard = '%';
+
+    /**
+     * @var array
+     */
+    protected $aliasMap;
+
+    /**
+     * @var string
+     */
+    protected $defaultAlias;
+
+    /**
+     * @var array|string
+     */
+    protected $spatialProperty = array('bboxw', 'bboxs', 'bboxe', 'bboxn');
+
+    /**
+     * @var array
+     */
+    protected $propertyMap;
+
+    /**
+     * DatabaseExprHandler constructor.
+     * @param array $aliasMap
+     * @param string $defaultAlias
+     * @param array $propertyMap
+     */
+    public function __construct(
+        array $aliasMap,
+        $defaultAlias,
+        array $propertyMap
+    ) {
+        $this->aliasMap = $aliasMap;
+        $this->defaultAlias = $defaultAlias;
+        $this->setPropertyMap($propertyMap);
+    }
+
     /**
      * @param array $propertyMap
      * @return mixed
      */
-    public function setPropertyMap(array $propertyMap);
+    public function setPropertyMap(array $propertyMap)
+    {
+        $this->propertyMap = $propertyMap;
+    }
 
     /**
-     * @param array $items
-     * @return mixed
-     * @throws PropertyNameNotFoundException
+     * @param $property
+     * @param $value
+     * @param $parameters
+     * @param $escapeChar
+     * @param $singleChar
+     * @param $wildCard
+     * @return null|string|string[]
      */
-    public function andx(array $items);
+    protected function valueForLike($property, $value, &$parameters, $escapeChar, $singleChar, $wildCard)
+    {
+        /* replace all $wildCards at $value with $this->wildCard */
+        $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
+        /* replace all $singleChar at $value with $this->singleChar */
+        $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
+        /* replace all $escapeChar at $value with $this->escapeChar */
+        $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
+
+        return $valueX;
+    }
 
     /**
-     * @param array $items
-     * @return mixed
+     * @param $name
+     * @param string $delimiter
+     * @return string
      * @throws PropertyNameNotFoundException
      */
-    public function orx(array $items);
+    protected function getName($name, $delimiter = '.')
+    {
+        $splittedName = explode('.', $name);
 
-    /**
-     * @param Expr $item
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function not($item);
+        /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
+        $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
+        $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
 
-    /**
-     * @param string $propertyName
-     * @param array $items
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function in($propertyName, array $items, &$parameters);
+        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
+            throw new PropertyNameNotFoundException($name);
+        }
 
-    /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function eq($propertyName, $value, &$parameters);
-
-    /**
-     * @param string $property
-     * @param mixed $value
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function neq($property, $value, &$parameters);
-
-    /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @param string $escapeChar
-     * @param string $singleChar
-     * @param string $wildCard
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function like($propertyName, $value, &$parameters, $escapeChar, $singleChar, $wildCard);
-
-    /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @param string $escapeChar
-     * @param string $singleChar
-     * @param string $wildCard
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function notLike($propertyName, $value, &$parameters, $escapeChar, $singleChar, $wildCard);
-
-    /**
-     * @param string $propertyName
-     * @param mixed $lower
-     * @param mixed $upper
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function between($propertyName, $lower, $upper, &$parameters);
-
-    /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function gt($propertyName, $value, &$parameters);
-
-    /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function gte($propertyName, $value, &$parameters);
+        return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
+    }
 
     /**
      * @param string $property
      * @param mixed $value
      * @param array $parameters
-     * @return mixed
+     * @return string
      * @throws PropertyNameNotFoundException
      */
-    public function lt($property, $value, &$parameters);
+    protected function addParameter($property, $value, &$parameters)
+    {
+        $hlp = $this->getName($property, '_');
+        $name = $hlp.count($parameters);
+        $parameters[$name] = $value;
+
+        return ':'.$name;
+    }
 
     /**
-     * @param string $propertyName
-     * @param mixed $value
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
+     * Creates a regex.
+     * @param string $escape
+     * @param string $character
+     * @return string
      */
-    public function lte($propertyName, $value, &$parameters);
+    protected static function getRegex($escape, $character)
+    {
+        $first = self::addEscape($escape);
+        $second = self::addEscape($character);
+
+        return '/(?<!'.$first.')('.$second.')/';
+    }
 
     /**
-     * @param string $property
-     * @return mixed
-     * @throws PropertyNameNotFoundException
+     * @param $character
+     * @return string
      */
-    public function isNull($property);
+    protected static function addEscape($character)
+    {
+        if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
+            return '\\'.$character;
+        } else {
+            return $character;
+        }
+    }
 
     /**
-     * @param string $propertyName
-     * @return mixed
-     * @throws PropertyNameNotFoundException
+     * @param $x
+     * @param $y
+     * @param array|null $bbox
+     * @return array
      */
-    public function isNotNull($propertyName);
+    protected static function addToBbox($x, $y, array $bbox = null)
+    {
+        if ($bbox === null) {
+            return array($x, $y, $x, $y);
+        } else {
+            $bbox[0] = min($bbox[0], $x);
+            $bbox[1] = min($bbox[1], $y);
+            $bbox[2] = max($bbox[2], $x);
+            $bbox[3] = max($bbox[3], $y);
 
-    /**** geo spatial ****/
-
-    /**
-     * @param string $propertyName
-     * @param array $geoFeature GeoJSON or an array(w,s,e,n)
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function bbox($propertyName, $geoFeature, &$parameters);
-
-    /**
-     * @param string  $propertyName property name
-     * @param string|array $geoFeature property name or GeoJson
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function intersects($propertyName, $geoFeature, &$parameters);
-
-    /**
-     * @param string $propertyName property name
-     * @param string|array $geoFeature property name or GeoJson
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function contains($propertyName, $geoFeature, &$parameters);
-
-    /**
-     * @param string $propertyName property name
-     * @param string|array $geoFeature property name or GeoJson
-     * @param array $parameters
-     * @return mixed
-     * @throws PropertyNameNotFoundException
-     */
-    public function within($propertyName, $geoFeature, &$parameters);
+            return $bbox;
+        }
+    }
 }

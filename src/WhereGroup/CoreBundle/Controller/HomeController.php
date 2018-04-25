@@ -30,7 +30,7 @@ class HomeController extends Controller
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
 
             $profileConfig[$key] = array(
-                'name' => $profile['name'],
+                'name'   => $profile['name'],
                 'source' => is_null($configuration) ? array() : $configuration,
             );
         }
@@ -80,7 +80,6 @@ class HomeController extends Controller
         $user = $this->get('metador_user')->getUserFromSession();
         $filter = [];
 
-
         if (isset($params['sort'])) {
             $search->setSort(
                 empty($params['sort']) ? 'title' : $params['sort']
@@ -96,13 +95,13 @@ class HomeController extends Controller
         if (is_null($user)) {
             $filter['and'][] = ['eq' => ['public' => true]];
 
-            // Filter for logged in user.
+        // Filter for logged in user.
         } else {
             $search->setGroups($user->getRoles());
             $filter['and'][] = [
                 'or' => [
-                    ['eq' => ['public' => true]],
-                    ['eq' => ['insertuser' => $user->getId()]],
+                    ['eq' => ['public'         => true]],
+                    ['eq' => ['insertUsername' => $user->getUsername()]],
                     ['in' => ['group.role'     => $user->getRoles()]]
                 ],
             ];
@@ -137,6 +136,7 @@ class HomeController extends Controller
         if (isset($params['date']) && !empty($params['date']['from'])) {
             $filter['and'][] = ['gte' => ['date' => $params['date']['from']]];
         }
+
         if (isset($params['date']) && !empty($params['date']['to'])) {
             $filter['and'][] = ['lte' => ['date' => $params['date']['to']]];
         }

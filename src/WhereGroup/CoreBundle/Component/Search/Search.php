@@ -23,6 +23,7 @@ abstract class Search
             'searchfield'    => 'searchfield',
             'source'         => 'source',
             'insertuser'     => 'insertUser',
+            'insertusername' => 'insertUsername',
             'date'           => 'date',
             'fileidentifier' => 'uuid',
             'identifier'     => 'uuid',
