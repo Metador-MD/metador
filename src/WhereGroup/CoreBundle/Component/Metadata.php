@@ -345,8 +345,8 @@ class Metadata implements MetadataInterface
             $metadata->setInsertTime($date->getTimestamp());
         }
 
-        if (isset($p['_parent'])) {
-            $metadata->setParent($p['_parent']);
+        if (isset($p['parentIdentifier'])) {
+            $metadata->setParent($p['parentIdentifier']);
         }
 
         $metadata->setPublic($p['_public']);
