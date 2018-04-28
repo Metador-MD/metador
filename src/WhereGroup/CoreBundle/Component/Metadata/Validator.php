@@ -6,6 +6,7 @@ use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 use WhereGroup\PluginBundle\Component\Plugin;
 use Symfony\Component\HttpKernel\KernelInterface;
+use WhereGroup\CoreBundle\Component\Configuration;
 
 /**
  * Class Validator
@@ -16,19 +17,25 @@ class Validator
     /** @var  Plugin */
     protected $plugin;
 
+    /** @var Configuration  */
+    private $conf;
+
     /**
      * Validator constructor.
      * @param Plugin $plugin
+     * @param Configuration $conf
      */
-    public function __construct(Plugin $plugin)
+    public function __construct(Plugin $plugin, Configuration $conf)
     {
         $this->plugin = $plugin;
+        $this->conf   = $conf;
     }
 
     public function __destruct()
     {
         unset(
-            $this->plugin
+            $this->plugin,
+            $this->conf
         );
     }
 
@@ -75,7 +82,7 @@ class Validator
             $debug['errors'] = [];
         }
 
-        $this->testObject($metadataObject, $rules, $tempRules, $debug);
+        $this->testObject($metadataObject, $rules, $tempRules, $debug, [], $p['_profile']);
 
         if (!is_null($debug) && is_array($tempRules) && !empty($tempRules)) {
             foreach ($tempRules as $key => $rules) {
@@ -104,17 +111,41 @@ class Validator
     }
 
     /**
+     * @param $profile
+     * @param $key
+     * @param $val
+     * @param $debug
+     */
+    private function testListOption($profile, $key, $val, &$debug)
+    {
+        $list = $this->conf->get($key, 'list-option', $profile);
+
+        if (is_array($list) && !isset($list[$val])) {
+            $debug['errors'][] = 'Unknown list value';
+            $debug['messages'][] = [
+                'key'     => $key,
+                'message' => "Der Wert '" . $val . "' ist in der Liste nicht enthalten."
+            ];
+        }
+    }
+
+    /**
      * @param $p
      * @param $rules
      * @param $tempRules
      * @param $debug
      * @param array $parent
+     * @param string $profile
      */
-    private function testObject(&$p, $rules, &$tempRules, &$debug, $parent = [])
+    private function testObject(&$p, $rules, &$tempRules, &$debug, $parent = [], $profile = "")
     {
         foreach ($p as $key => &$val) {
+
+            // Test List
+            $this->testListOption($profile, $key, $val, $debug);
+
             if (is_array($val) && ArrayParser::hasStringKeys($val)) {
-                $this->testObject($p[$key], $rules, $tempRules, $debug, $val);
+                $this->testObject($p[$key], $rules, $tempRules, $debug, $val, $profile);
                 continue;
             }
 

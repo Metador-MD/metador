@@ -78,6 +78,7 @@
         </service>
         <service id="metador_metadata_validator" class="WhereGroup\CoreBundle\Component\Metadata\Validator" public="true">
             <argument type="service" id="metador_plugin" />
+            <argument type="service" id="metador_configuration" />
         </service>
         <service id="metador_logger" class="%metador.logger.class%" public="true">
             <argument type="service" id="session.flash_bag" />

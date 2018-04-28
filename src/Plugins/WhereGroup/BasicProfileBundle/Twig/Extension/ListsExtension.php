@@ -48,6 +48,8 @@ class ListsExtension extends \Twig_Extension
      */
     public function getListOptions($profile, $key, $default = array(), $sort = null, $direction = null)
     {
+        $key = preg_replace('/(_[\d]+_?)/s', '', $key);
+
         $options = $this->conf->get($key, 'list-option', $profile);
 
         if (is_null($options)) {
