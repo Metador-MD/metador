@@ -140,10 +140,20 @@ class ExportController extends Controller
             ->setExpression(JsonFilterReader::read(['and' => ['eq' => ['id' => $id]]], $search->createExpression()))
             ->find();
 
-        if (!isset($response['rows'][0]) || $response['rows'][0]->id != $id) {
+        if (!isset($response['rows'][0])) {
             throw new MetadataException("Metadata not found!");
         }
 
-        return json_decode($response['rows'][0]->object, true);
+        if (is_object($response['rows'][0])) {
+            $p = json_decode($response['rows'][0]->object, true);
+        } elseif (is_array($response['rows'][0])) {
+            $p = json_decode($response['rows'][0]['object'], true);
+        }
+
+        if (!is_array($p) || !isset($p['_id']) || $p['_id'] != $id) {
+            throw new MetadataException("Metadata not found!");
+        }
+
+        return $p;
     }
 }
