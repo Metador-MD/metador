@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function indexAction()
     {
         $profileConfig = array();
-        $sourceConfig = array();
+        $sourceConfig  = array();
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
@@ -66,9 +66,9 @@ class HomeController extends Controller
      */
     public function searchAction()
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
+        $request  = $this->get('request_stack')->getCurrentRequest();
         $download = $request->request->get('filter');
-        $params = $request->request->all();
+        $params   = $request->request->all();
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');

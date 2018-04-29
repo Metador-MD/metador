@@ -31,21 +31,22 @@ class TaskManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $fs = new Filesystem();
+        $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
+
+        if (!$input->getOption('force') && $fs->exists($filePath)) {
+            $output->writeln("Taskmanager is locked");
+            $this->log('error', 'Taskmanager kann nicht gestartet werden.');
+            exit -1;
+        }
+
+        $fs->touch($filePath);
+
         try {
             $this->log('info', 'Aufgaben werden ausgeführt.');
             $event = new TaskManagerEvent();
 
-            $fs = new Filesystem();
-            $filePath = $this->getContainer()->get("kernel")->getRootDir() . '/../var/config/TASKMANAGER.LOCK';
-
-            if (!$input->getOption('force') && $fs->exists($filePath)) {
-                $this->log('error', 'Taskmanager kann nicht gestartet werden.');
-                exit -1;
-            }
-
-            $fs->touch($filePath);
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
-            $fs->remove($filePath);
 
             foreach ($event->getMessages() as $message) {
                 $output->writeln($message);
@@ -53,6 +54,8 @@ class TaskManagerCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $this->log('error', $e->getMessage());
         }
+
+        $fs->remove($filePath);
     }
 
     /**
