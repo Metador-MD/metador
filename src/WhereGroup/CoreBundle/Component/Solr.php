@@ -114,7 +114,7 @@ class Solr
         $doc->addField('anyText', json_encode($anyText));
         unset($anyText);
 
-        $updateResponse =  $this->solr->client->addDocument($doc);
-        $this->solr->client->commit();
+        $updateResponse =  $this->client->addDocument($doc);
+        $this->client->commit();
     }
 }
