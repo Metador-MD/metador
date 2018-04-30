@@ -3,8 +3,10 @@
     <div class="row r-3">
         <div class="col c-1-8">
             {% if paging.prevPage is defined %}
+                <span class="icon-step-backward change-page" data-change-page="1"></span>
                 <span class="icon-arrow-left change-page" data-change-page="{{ paging.prevPage }}"></span>
             {% else %}
+                <span class="icon-step-backward disabled"></span>
                 <span class="icon-arrow-left disabled"></span>
             {% endif %}
         </div>
@@ -16,8 +18,10 @@
         <div class="col c-1-8 text-right">
             {% if paging.nextPage is defined %}
                 <span class="icon-arrow-right change-page" data-change-page="{{ paging.nextPage }}"></span>
+                <span class="icon-step-forward change-page" data-change-page="{{ paging.pages }}"></span>
             {% else %}
                 <span class="icon-arrow-right disabled"></span>
+                <span class="icon-step-forward disabled"></span>
             {% endif %}
         </div>
     </div>
