@@ -118,6 +118,22 @@ class Validator
      */
     private function testListOption($profile, $key, $val, &$debug)
     {
+        if (is_array($val)) {
+            foreach ($val as $string) {
+                $list = $this->conf->get($key, 'list-option', $profile);
+
+                if (is_array($list) && !isset($list[$string])) {
+                    $debug['errors'][] = 'Unknown list value';
+                    $debug['messages'][] = [
+                        'key'     => $key,
+                        'message' => "Der Wert '" . $string . "' ist in der Liste nicht enthalten."
+                    ];
+                }
+            }
+            return;
+        }
+        
+
         $list = $this->conf->get($key, 'list-option', $profile);
 
         if (is_array($list) && !isset($list[$val])) {
