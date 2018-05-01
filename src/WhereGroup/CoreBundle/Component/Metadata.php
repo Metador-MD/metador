@@ -277,8 +277,7 @@ class Metadata implements MetadataInterface
         $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
 
         // UUID
-        $uuid4 = Uuid::uuid4();
-        $uuid = $uuid4->toString();
+        $uuid = $this->generateUuid();
 
         if (isset($p['fileIdentifier']) && !empty($p['fileIdentifier']) && strlen($p['fileIdentifier']) === 36) {
             $uuid = $p['fileIdentifier'];
@@ -301,6 +300,12 @@ class Metadata implements MetadataInterface
         $p['hierarchyLevel'] = isset($p['hierarchyLevel']) ? $p['hierarchyLevel'] : '';
 
         return $this;
+    }
+
+    public function generateUuid()
+    {
+        $uuid4 = Uuid::uuid4();
+        return $uuid4->toString();
     }
 
     /**
