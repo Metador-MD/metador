@@ -132,7 +132,7 @@ class Validator
             }
             return;
         }
-        
+
 
         $list = $this->conf->get($key, 'list-option', $profile);
 
@@ -156,7 +156,6 @@ class Validator
     private function testObject(&$p, $rules, &$tempRules, &$debug, $parent = [], $profile = "")
     {
         foreach ($p as $key => &$val) {
-
             // Test List
             $this->testListOption($profile, $key, $val, $debug);
 
