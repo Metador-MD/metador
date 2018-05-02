@@ -234,7 +234,7 @@ class ProfileController extends Controller
         $message = "You can only validate public metadata.";
         $debug   = [];
 
-        if ($p['_public'] === "1") {
+        if ($p['_public'] == true) {
             $this->get('metador_metadata_validator')->isValid($p, $debug);
             $message = "";
         }
