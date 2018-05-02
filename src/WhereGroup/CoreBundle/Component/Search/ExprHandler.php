@@ -172,4 +172,22 @@ abstract class ExprHandler
             return $bbox;
         }
     }
+
+
+    /**
+     * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
+     * @return array|mixed|null
+     */
+    private static function bboxForGeoJson(array $geoFeature)
+    {
+        if (isset($geoFeature['bbox'])) {
+            return $geoFeature['bbox'];
+        } elseif (isset($geoFeature['geometry'])) {
+            return self::createBbox($geoFeature['geometry']['coordinates']);
+        } elseif (isset($geoFeature['coordinates'])) {
+            return self::createBbox($geoFeature['coordinates']);
+        }
+
+        return null;
+    }
 }
