@@ -371,27 +371,4 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
             throw new \Exception('Operation "intersects" for a spatial database is not yet implemented');
         }
     }
-
-
-
-    /**
-     * @param array $coordinates
-     * @return array|null
-     */
-    private static function createBbox(array $coordinates)
-    {
-        $bbox = null;
-
-        if (!is_array($coordinates[0])) {
-            return self::addToBbox($coordinates[0], $coordinates[1]);
-        } elseif (!is_array($coordinates[0][0])) {
-            foreach ($coordinates as $coord) {
-                $bbox = self::addToBbox($coord[0], $coord[1], $bbox);
-            }
-
-            return $bbox;
-        } else {
-            return self::createBbox($coordinates[0]);
-        }
-    }
 }

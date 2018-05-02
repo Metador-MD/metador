@@ -178,7 +178,7 @@ abstract class ExprHandler
      * @param array $geoFeature GeoJSON "Feature" or GeoJSON "geometry"
      * @return array|mixed|null
      */
-    private static function bboxForGeoJson(array $geoFeature)
+    protected static function bboxForGeoJson(array $geoFeature)
     {
         if (isset($geoFeature['bbox'])) {
             return $geoFeature['bbox'];
@@ -189,5 +189,26 @@ abstract class ExprHandler
         }
 
         return null;
+    }
+
+    /**
+     * @param array $coordinates
+     * @return array|null
+     */
+    protected static function createBbox(array $coordinates)
+    {
+        $bbox = null;
+
+        if (!is_array($coordinates[0])) {
+            return self::addToBbox($coordinates[0], $coordinates[1]);
+        } elseif (!is_array($coordinates[0][0])) {
+            foreach ($coordinates as $coord) {
+                $bbox = self::addToBbox($coord[0], $coord[1], $bbox);
+            }
+
+            return $bbox;
+        }
+
+        return self::createBbox($coordinates[0]);
     }
 }
