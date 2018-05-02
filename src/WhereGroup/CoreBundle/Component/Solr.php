@@ -112,6 +112,10 @@ class Solr
         $doc->addField('insertUsername', $p['_insert_user']);
         $doc->addField('insertTime', $p['_insert_time']);
         $doc->addField('group.role', isset($p['_group']) ? implode(' ', $p['_group']) : '');
+        $doc->addField('bboxn', $metadata->getBboxn());
+        $doc->addField('bboxe', $metadata->getBboxe());
+        $doc->addField('bboxs', $metadata->getBboxs());
+        $doc->addField('bboxw', $metadata->getBboxw());
 
         $anyText = $p;
         if (isset($anyText['processStep2']['responsibleParty'])) {
