@@ -25,6 +25,7 @@ Search.prototype = {
 
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
+            self.set('page', 1);
             self.find();
         });
 
