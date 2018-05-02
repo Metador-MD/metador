@@ -1,7 +1,9 @@
-<div class="helptext" {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}contentEditable="true"{% endif %}>
+<div class="helptext">
     {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
-        {{ html }}
+        <div class="form-field-wrapper">
+            <textarea id="helptext" class="textarea" style="min-height: 200px;">{{ html }}</textarea>
+        </div>
     {% else %}
-        {{ html|raw }}
+        {{ html|md2html }}
     {% endif %}
 </div>

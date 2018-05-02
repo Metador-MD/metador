@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -442,8 +444,38 @@ class ProfileController extends Controller
         ));
     }
 
+
+    /**
+     * @Route("/profile/help", name="metadata_help")
+     * @param Request $request
+     * @return AjaxResponse
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
+     * @throws \Twig\Error\Error
+     */
+    public function helpAction(Request $request)
+    {
+        $data = [];
+
+        if ($request->getMethod() === 'POST') {
+            $this->get('metador_configuration')->set(
+                $request->request->get('key', ''),
+                $request->request->get('val', ''),
+                'profile',
+                'helptext'
+            );
+        } elseif ($request->getMethod() === 'GET') {
+            $data['html'] = $this->get('templating')->render('@MetadorTheme/Template/helptext.html.twig', [
+                'html' => $this->get('metador_configuration')->get($request->get('key', ''), 'profile', 'helptext', '')
+            ]);
+        }
+
+        return new AjaxResponse($data);
+    }
+
     /**
      * @param $result
+     * @param $xpath
      * @param $k1
      * @param $v1
      * @param $k2
@@ -454,27 +486,6 @@ class ProfileController extends Controller
         if (substr($k1, 0, 1) === '_' || substr($k2, 0, 1) === '_') {
             return;
         }
-
-        // $ignoreList = [
-        //     '_id',
-        //     '_insert_time',
-        //     '_insert_user',
-        //     '_lock_time',
-        //     '_lock_user',
-        //     '_locked',
-        //     '_profile',
-        //     '_public',
-        //     '_remove_lock',
-        //     '_source',
-        //     '_update_time',
-        //     '_update_user',
-        //     '_username',
-        //     '_uuid',
-        // ];
-
-        // if (in_array($k1, $ignoreList) || in_array($k2, $ignoreList)) {
-        //     return;
-        // }
 
         $status = 'error';
 
