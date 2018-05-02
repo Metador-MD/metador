@@ -10,6 +10,9 @@ class Solr
 {
     public $client;
     public $query;
+    public $host;
+    public $port;
+    public $path;
 
     /**
      * Solr constructor.
@@ -19,6 +22,10 @@ class Solr
      */
     public function __construct($host, $port, $path)
     {
+        $this->host = $host;
+        $this->port = $port;
+        $this->path = $path;
+
         if (!empty($host) && !empty($port) && !empty($path)) {
             $this->client = new \SolrClient([
                 'hostname' => $host,
