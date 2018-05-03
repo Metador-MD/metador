@@ -135,4 +135,15 @@ class MetadataRepository extends EntityRepository
             ->getQuery()
             ->getArrayResult();
     }
+
+    /**
+     * @return mixed
+     */
+    public function truncate()
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('DELETE FROM ' . self::ENTITY)
+            ->execute();
+    }
 }
