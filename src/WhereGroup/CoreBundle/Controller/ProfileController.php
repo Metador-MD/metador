@@ -197,6 +197,7 @@ class ProfileController extends Controller
      * @Method("POST")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws MetadataException
      */
     public function deleteAction($id)
     {
@@ -223,6 +224,7 @@ class ProfileController extends Controller
      * @Route("/profile/validate/{id}", name="metadata_validate")
      * @param $id
      * @return Response
+     * @throws MetadataException
      */
     public function validateAction($id)
     {
@@ -250,6 +252,7 @@ class ProfileController extends Controller
      * @Route("/profile/error/{id}", name="metadata_error")
      * @param $id
      * @return Response
+     * @throws MetadataException
      */
     public function errorAction($id)
     {

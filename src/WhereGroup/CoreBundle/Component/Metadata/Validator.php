@@ -78,8 +78,8 @@ class Validator
 
         $this->prepairObject($metadataObject);
 
-        if (!isset($debug['errors'])) {
-            $debug['errors'] = [];
+        if (!isset($debug['hasErrors'])) {
+            $debug['hasErrors'] = false;
         }
 
         $this->testObject($metadataObject, $rules, $tempRules, $debug, [], $p['_profile']);
@@ -94,11 +94,11 @@ class Validator
                     }
 
                     $debug['object'][$key][$index] = [
-                        'test' => $rule,
+                        'test'        => $rule,
                         'missingData' => true
                     ];
 
-                    $debug['errors'][] = $rule;
+                    $debug['hasErrors'] = true;
                     $debug['messages'][] = [
                         'key'     => $key,
                         'message' => $rule['message']
@@ -107,7 +107,7 @@ class Validator
             }
         }
 
-        return empty($debug['errors']) ? true : false;
+        return !$debug['hasErrors'];
     }
 
     /**
@@ -123,7 +123,7 @@ class Validator
                 $list = $this->conf->get($key, 'list-option', $profile);
 
                 if (is_array($list) && !isset($list[$string])) {
-                    $debug['errors'][] = 'Unknown list value';
+                    $debug['hasErrors'] = true;
                     $debug['messages'][] = [
                         'key'     => $key,
                         'message' => "Der Wert '" . $string . "' ist in der Liste nicht enthalten."
@@ -133,11 +133,10 @@ class Validator
             return;
         }
 
-
         $list = $this->conf->get($key, 'list-option', $profile);
 
         if (is_array($list) && !isset($list[$val])) {
-            $debug['errors'][] = 'Unknown list value';
+            $debug['hasErrors'] = true;
             $debug['messages'][] = [
                 'key'     => $key,
                 'message' => "Der Wert '" . $val . "' ist in der Liste nicht enthalten."
@@ -236,7 +235,7 @@ class Validator
                         }
                     }
 
-                    $debug['errors'][] = $rule;
+                    $debug['hasErrors'] = true;
                 }
 
                 continue;
@@ -329,7 +328,7 @@ class Validator
      * @param $array
      * @param string $subkey
      */
-    private function prepairObject(&$array, $subkey = 'p_')
+    public function prepairObject(&$array, $subkey = 'p_')
     {
         foreach ($array as $key => $val) {
             if (substr($key, 0, 1) == '_') {

@@ -1,6 +1,7 @@
 {% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
 
 {% block center %}
+    {% set supplementalinformation = null %}
     <div class="center">
         <div class="center-right">
             <div class="content">
@@ -15,9 +16,38 @@
                         </thead>
                         <tbody>
                         {% for error in p['_error'] %}
+                            {% if error.data is defined %}
+                                {% set supplementalinformation = error.data %}
+                            {% endif %}
                             <tr>
                                 <td class="test-normal">{{ error.key }}</td>
                                 <td class="test-normal">{{ error.message }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if supplementalinformation is defined and supplementalinformation is not empty %}
+                    <h2 class="title">{% trans %}Supplemental Information{% endtrans %}</h2>
+                    <table class="table bordered margin-b">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Key{% endtrans %}</th>
+                            <th>{% trans %}Old{% endtrans %}</th>
+                            <th>{% trans %}New{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, row in supplementalinformation %}
+                            <tr>
+                                <td class="test-normal">{{ key }}</td>
+                                <td class="test-normal">
+                                    {% if row.x is defined %}{{ row.x }}{% endif %}
+                                </td>
+                                <td class="test-normal">
+                                    {% if row.y is defined %}{{ row.y }}{% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
