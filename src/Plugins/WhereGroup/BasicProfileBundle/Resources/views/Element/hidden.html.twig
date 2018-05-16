@@ -1,0 +1,11 @@
+{% if name is not defined or p is not defined %}
+    <div class="notify error">
+        The options <strong>name</strong> and <strong>p</strong> are required!
+    </div>
+{% else %}
+    {% set id = name|md_id %}
+    {% set default = default is defined ? default : '' %}
+    {% set value = array_get(p, name|md_array_path, default, true) %}
+    {% set class = class is defined ? class : '' %}
+    <input type="hidden" name="{{ name }}" id="{{ id }}" value="{{ value }}" class="{{ class }}" />
+{% endif %}

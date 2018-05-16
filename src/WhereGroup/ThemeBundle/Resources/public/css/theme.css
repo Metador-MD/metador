@@ -90,7 +90,7 @@
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -656,7 +656,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1068,7 +1068,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1204,7 +1204,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1393,7 +1393,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1628,7 +1628,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1744,7 +1744,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1950,7 +1950,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2107,7 +2107,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2403,7 +2403,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2530,7 +2530,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2594,6 +2594,45 @@ input.input-element, .md input.btn {
   right: 0;
   bottom: 0; }
 
+.md .center > .center-right > .content-menu {
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+  z-index: 2; }
+
+.md .center > .center-right > .content-menu > .content-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 30px;
+  display: none; }
+
+.md .center > .center-right > .content-menu > .content-menu-list.act {
+  display: block; }
+
+.md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #e1e1e1;
+  border-bottom-width: 0;
+  background-color: #f7f7f7;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  font-size: .9em; }
+
+.md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item.act.error, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item.error {
+  box-shadow: inset 0 2px 0 #e15b36; }
+
+.md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item.act {
+  bottom: -1px;
+  background-color: #fff;
+  box-shadow: inset 0 2px 0 #008ec0; }
+
 .md .center > .center-right > .content {
   padding: 20px 40px;
   border: 1px solid #e1e1e1;
@@ -2603,7 +2642,7 @@ input.input-element, .md input.btn {
   z-index: 1;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.03);
   position: absolute;
-  top: 0;
+  top: 30px;
   left: 0;
   right: 0;
   bottom: 10px; }
@@ -2776,7 +2815,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3001,7 +3040,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3181,7 +3220,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3591,7 +3630,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3799,7 +3838,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -3931,7 +3970,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

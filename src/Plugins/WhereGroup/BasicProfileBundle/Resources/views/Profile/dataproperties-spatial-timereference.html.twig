@@ -1,0 +1,235 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Dateneigenschaften</h1>
+
+<h2 class="title">
+    {% if profile == 'metador_series_profile' %}
+        {{ form_element.inheritance({ 'name' : 'p[referenceSystemInfo]', 'p': p }) }}
+    {% endif %}
+    Referenzsystem
+</h2>
+
+{% set id = 'p[referenceSystemInfo]' %}
+{% if p['referenceSystemInfo'] is not defined %}
+    {% set p = p|merge({'referenceSystemInfo': [{}]}) %}
+{% endif %}
+
+<div class="grid space responsive -js-set-fields-parent">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'            : 'p[referenceSystemInfo][0][title]',
+                'label'           : 'Titel',
+                'validatorSources': tabId ~ ',' ~ id|md_id,
+                'class'           : '-js-duplicatable-title -js-set-fields',
+                'hasList'         : true,
+                'data'            : {
+                    'parent': '-js-set-fields-parent'
+                },
+                'defaultList'     : {
+                    '': {
+                        'title': '',
+                        'code': '',
+                        'codeSpace': '',
+                        'date': '',
+                        'dateType': '',
+                        'version': ''
+                    },
+                    'DHDN UTM 32-N': {
+                        'title': 'DHDN UTM 32-N',
+                        'code': 'urn:ogc:def:crs:EPSG:25832',
+                        'codeSpace': 'http://www.epsg-registry.org',
+                        'date': '2008-11-18',
+                        'dateType': 'publication',
+                        'version': '6.18.3'
+                    }
+                },
+                'p'               : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[referenceSystemInfo][0][code]',
+                'label'           : 'EPSG-Code',
+                'class'           : '-js-field-code',
+                'readonly'        : true,
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+    </div>
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[referenceSystemInfo][0][date]',
+                'label'           : 'Datum',
+                'class'           : '-js-field-date',
+                'readonly'        : true,
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[referenceSystemInfo][0][codeSpace]',
+                'label'           : 'Namensraum der EPSG',
+                'type'            : 'optional',
+                'class'           : '-js-field-codeSpace',
+                'readonly'        : true,
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+    </div>
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[referenceSystemInfo][0][dateType]',
+                'label'           : 'Art des Datums',
+                'default'         : 'publication',
+                'class'           : '-js-field-dateType',
+                'readonly'        : true,
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[referenceSystemInfo][0][version]',
+                'label'           : 'Version',
+                'readonly'        : true,
+                'class'           : '-js-field-version',
+                'type'            : 'optional',
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+    </div>
+</div>
+
+<h2 class="title">Ausdehnungsinformation - Begrenzungsrechteck</h2>
+
+<div class="grid space responsive">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[bbox][nLatitude]',
+                'label'           : 'Nördlichste Koordinate (Latitude)',
+                'validatorSources': tabId ~ ',' ~ id|md_id,
+                'class'           : '-js-duplicatable-title',
+                'p'               : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[bbox][eLongitude]',
+                'label'           : 'Östlichste Koordinate (Longitude)',
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+    </div>
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[bbox][sLatitude]',
+                'label'           : 'Südlichste Koordinate (Latitude)',
+                'validatorSources': tabId ~ ',' ~ id|md_id,
+                'class'           : '-js-duplicatable-title',
+                'p'               : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[bbox][wLongitude]',
+                'label'           : 'Westlichste Koordinate (Longitude)',
+                'validatorSources': tabId,
+                'p'               : p
+            }) }}
+        </div>
+    </div>
+    <div class="row r-1">
+        <div class="col c-1">
+            {{ form_element.select({
+                'name'    : 'p[bbox][extentTypeCode]',
+                'label': 'Umschluss, Ausschluss',
+                'default' : '',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    '': '',
+                    'false': 'Umschluss',
+                    'true': 'Ausschluss',
+                },
+                'p'       : p
+            }) }}
+        </div>
+    </div>
+
+    <h2 class="title">Zeitspanne der Gültigkeit</h2>
+
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[temporalExtentBegin]',
+                'label'           : 'Anfang',
+                'type'            : 'optional',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'p'               : p
+            })
+            }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[temporalExtentEnd]',
+                'label'           : 'Ende',
+                'type'            : 'optional',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'p'               : p
+            })
+            }}
+        </div>
+    </div>
+
+    <h2 class="title">Erstellung, Veröffentlichung, Aktualisierung (Pflichtfeld)</h2>
+
+    <p>Datumswerte können mehrmals vorkommen (max. eins von einer Datumsart).</p>
+
+    <div class="row r-3 -js-validation-area">
+        <div class="col c-1-3">
+            {{ form_element.input({
+                'name'            : 'p[creationDate]',
+                'label'           : 'Erstellungsdatum',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'type'            : 'conditional',
+                'p'               : p
+            })
+            }}
+        </div>
+        <div class="col c-1-3">
+            {{ form_element.input({
+                'name'            : 'p[publicationDate]',
+                'label'           : 'Veröffentlichung',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'type'            : 'conditional',
+                'p'               : p
+            })
+            }}
+        </div>
+        <div class="col c-1-3">
+            {{ form_element.input({
+                'name'            : 'p[revisionDate]',
+                'label'           : 'Überarbeitung',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'type'            : 'conditional',
+                'p'               : p
+            })
+            }}
+        </div>
+    </div>
+</div>

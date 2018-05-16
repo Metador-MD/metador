@@ -1,30 +1,86 @@
 {% if name is not defined or p is not defined %}
-<div class="notify error">
-    The options <strong>name, label</strong> and <strong>p</strong> are required!
-</div>
+    <div class="notify error">
+        The options <strong>name, label</strong> and <strong>p</strong> are required!
+    </div>
 {% else %}
-    {% set icons = 1 %}
+    {% set iconCount = 3 %}
+
     {% set id = name|md_id %}
     {% set type = type is defined ? type : 'mandatory' %}
     {% set default = default is defined ? default : '' %}
     {% set value = array_get(p, name|md_array_path, default, true) %}
     {% set class = class is defined ? class : '' %}
     {% set validatorSources = validatorSources is defined ? validatorSources : '' %}
-    {% set showHelp = showHelp is defined ? showHelp : true %}
+    {% set showHelp = help is not defined or help != false ? true : false %}
 
-    {% if showHelp %}
-        {% set icons = icons + 1 %}
+    {% if readonly is not defined %}
+        {% set readonly = false %}
+    {% endif %}
+
+    {% set showOptions = options is defined and options is not empty and not readonly ? true : false %}
+
+    {% if inherited is not defined %}
+        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
+            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
+    {% endif %}
+
+    {% if inherited %}
+        {% set readonly = true %}
+    {% endif %}
+
+    {% set wizard = false %}
+    {% if wizardClass is defined and wizardClass is not empty %}
+        {% set wizard = true %}
+        {% set iconCount = iconCount +1 %}
+    {% endif %}
+
+    {% if not showOptions %}
+        {% set iconCount = iconCount -1 %}
+    {% endif %}
+
+    {% if not showHelp %}
+        {% set iconCount = iconCount -1 %}
+    {% endif %}
+
+    {% if type == null %}
+        {% set iconCount = iconCount -1 %}
     {% endif %}
 
     {% if label is defined and label is not empty %}
-        <label for="{{ id }}" class="form-label">{{ label|trans }}:</label>
+        {% if inheritance is defined and inheritance == true %}
+            {% include '@MetadorBasicProfile/Element/inheritance.html.twig' %}
+        {% endif %}
+        <label for="{{ id }}" class="form-label">{{ label }}:</label>
     {% endif %}
 
-    <div class="form-field-wrapper i{{ icons }} -js-validation-wrapper">
-        <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
-        <input name="{{ name }}" id="{{ id }}" value="{{ value }}" data-validator-source="{{ validatorSources }}" class="input -js-user-input {{ class }}" {{ name|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}" {% endif %}/>
+    <div class="form-field-wrapper i{{ iconCount }} -js-validation-wrapper {% if readonly is defined and readonly == true %}readonly{% endif %}">
+        {% if inherited  %}
+            <span class="form-icon-type rs left icon-tree"></span>
+        {% elseif type != null %}
+            <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
+        {% endif %}
+
+        <input name="{{ name }}" id="{{ id }}" value="{{ value }}" data-validator-source="{{ validatorSources }}" class="input -js-user-input {{ class }}" {{ name|md_data_obj }} {% if placeholder is defined %}placeholder="{{ placeholder }}"{% endif %} {% if readonly is defined and readonly == true %}readonly{% endif %}/>
+
+        {% if options is defined and options is not empty %}
+        <select class="select helper-select -js-switch-select" style="display:none;">
+            <option value="-" disabled selected>Option auswählen</option>
+            {% for optionValue, optionLabel in options  %}
+                <option value="{{ optionValue }}" {{ md_select(value, optionValue) }}>{{ optionLabel }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
         {% if showHelp %}
-            <span class="form-icon icon-question2 -js-show-help" {{ name|md_data_obj }}></span>
+        <span class="form-icon icon-question2 -js-show-help" {{ name|md_data_obj }} title="{{ name }}"></span>
+        {% endif %}
+
+        {% if showOptions %}
+            <span class="form-icon icon-search2 -js-switch-button"></span>
+        {% endif %}
+
+        {% if wizard %}
+            <span class="form-icon icon-search2 {{ wizardClass }}"></span>
         {% endif %}
     </div>
 {% endif %}

@@ -1,0 +1,156 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Qualitätsangabe</h1>
+
+<h2 class="title">
+    {% if profile == 'lvermgeo_series_profile' %}
+        {{ form_element.inheritance({ 'name' : 'p[report]', 'p': p }) }}
+    {% endif %}
+    Übereinstimmung
+</h2>
+
+{% set id = 'p[report]' %}
+{% if p['report'] is not defined %}
+    {% set p = p|merge({'report': [{}]}) %}
+{% endif %}
+
+{{ form_element.duplicatable_area_start(p, id, 'title') }}
+    {% for report in p['report'] %}
+        <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
+            <div class="grid space responsive -js-set-fields-parent">
+                <div class="row row-1">
+                    <div class="col c-1">
+                        {{ form_element.select({
+                            'name'            : 'temp[]',
+                            'label'           : 'Auswahl',
+                            'class'           : '-js-set-fields',
+                            'hasList'         : true,
+                            'data'            : {
+                                'parent': '-js-set-fields-parent'
+                            },
+                            'defaultList'     : {
+                                '': {
+                                    'name': '',
+                                    'title': '',
+                                    'edition': '',
+                                    'creationDate': '',
+                                    'publicationDate': '',
+                                    'revisionDate': '',
+                                    'explanation': ''
+                                },
+                                'VERORDNUNG_1089_2010': {
+                                    'name': 'VERORDNUNG 1089/2010',
+                                    'title': 'VERORDNUNG (EG) Nr. 1089/2010 DER KOMMISSION vom 23. November 2010 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Interoperabilität von Geodatensätzen und -diensten',
+                                    'edition': '1.0',
+                                    'creationDate': '',
+                                    'publicationDate': '2010-12-08',
+                                    'revisionDate': '',
+                                    'explanation': 'See the referenced Specification'
+                                }
+                            },
+                            'readonly' : p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['report'] is defined ? true : false,
+                            'value' : '',
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                </div>
+                <div class="row row-1">
+                    <div class="col c-1">
+                        {{ form_element.text({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][title]',
+                            'label'           : 'Name der Richtlinie, Norm, Spezifikation',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'readonly'        : true,
+                            'class'           : '-js-field-title -js-duplicatable-title',
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                </div>
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][edition]',
+                            'label'           : 'Version, Edition',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'class'           : '-js-field-edition',
+                            'readonly'        : true,
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                    <div class="col c-1-2"></div>
+                </div>
+
+                <p>Datumswerte können mehrmals vorkommen (max. eins von einer Datumsart).</p>
+
+                <div class="row r-3 -js-validation-area">
+                    <div class="col c-1-3">
+                        {{ form_element.input({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][creationDate]',
+                            'label'           : 'Erstellungsdatum',
+                            'validatorSources': tabId,
+                            'type'            : 'conditional',
+                            'readonly'        : true,
+                            'class'           : '-js-field-creationDate',
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                    <div class="col c-1-3">
+                        {{ form_element.input({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][publicationDate]',
+                            'label'           : 'Veröffentlichung',
+                            'validatorSources': tabId,
+                            'type'            : 'conditional',
+                            'class'           : '-js-field-publicationDate',
+                            'readonly'        : true,
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                    <div class="col c-1-3">
+                        {{ form_element.input({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][revisionDate]',
+                            'label'           : 'Überarbeitung',
+                            'validatorSources': tabId,
+                            'type'            : 'conditional',
+                            'class'           : '-js-field-revisionDate',
+                            'readonly'        : true,
+                            'p'               : p
+                        })
+                        }}
+                    </div>
+                </div>
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][explanation]',
+                            'label'           : 'Angabe zur Konformität',
+                            'validatorSources': tabId,
+                            'class'           : '-js-field-explanation',
+                            'readonly'        : true,
+                            'p'               : p
+                        }) }}
+                    </div>
+                    <div class="col c-1-2">
+                        {{ form_element.select({
+                            'name'            : 'p[report][' ~ loop.index0 ~ '][pass]',
+                            'label'           : 'Konformitätsgrad',
+                            'validatorSources': tabId,
+                            'options'         : {
+                                ''               : '',
+                                'unknown'        : 'Nicht überprüft (unknown)',
+                                'true'           : 'Konform (conformant)',
+                                'false'          : 'Nicht konform (not conformant)'
+                            },
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{{ form_element.duplicatable_area_end() }}

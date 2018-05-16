@@ -1,0 +1,7 @@
+{% for menuItemKey, menuItem in menu %}
+    {% for subMenuItemKey, subMenuItem in menuItem.templates %}
+        <div class="mdtab-content{% if loop.parent.loop.index0 == 0 and loop.index0 == 0 %} act{% endif %}" data-menu-content="{{ subMenuItemKey }}">
+            {% include subMenuItem.path with { 'tabId': 'menu-' ~ menuItemKey ~ ',' ~ 'menu-' ~ subMenuItemKey } %}
+        </div>
+    {% endfor %}
+{% endfor %}

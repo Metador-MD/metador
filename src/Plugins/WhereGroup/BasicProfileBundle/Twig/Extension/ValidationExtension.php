@@ -50,7 +50,7 @@ class ValidationExtension extends \Twig_Extension
         $file = $pluginPath . '/Resources/config/validation.json';
 
         if (!$pluginPath || !file_exists($file)) {
-            return "";
+            return json_encode([], JSON_FORCE_OBJECT);
         }
 
         $validatonRules = json_decode(file_get_contents($file), true);

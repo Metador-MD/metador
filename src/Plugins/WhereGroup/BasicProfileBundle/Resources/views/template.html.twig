@@ -1,0 +1,69 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+    <form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
+        <input type="hidden" name="p[_id]" value="{{ array_get(p, '_id', '') }}" />
+        <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
+        <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
+        <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
+
+        {% if not array_is_empty(p, '_originSource') %}
+            <input type="hidden" name="p[_originSource]" value="{{ array_get(p, '_originSource') }}" />
+        {% endif %}
+        {% if profile == 'metador_dataset_profile' %}
+            <input type="hidden" name="p[hierarchyLevel]" value="dataset" />
+        {% elseif profile == 'metador_series_profile' %}
+            <input type="hidden" name="p[hierarchyLevel]" value="series" />
+            <input type="hidden" name="p[hierarchyLevelName]" value="Produkt" />
+        {% elseif profile == 'metador_service_profile' %}
+            <input type="hidden" name="p[hierarchyLevel]" value="service" />
+        {% elseif profile == 'metador_tile_profile' %}
+            <input type="hidden" name="p[hierarchyLevel]" value="tile" />
+            <input type="hidden" name="p[hierarchyLevelName]" value="Datensatz zu einem Produkt" />
+            <input type="hidden" name="p[levelDescription]" value="Datensatz zu einem Produkt" />
+        {% endif %}
+        <div class="center menu">
+            <div class="center-left">
+                {% include '@MetadorBasicProfile/Profile/settings.html.twig' %}
+                <div class="left-menu-content">
+                    {% include "@MetadorBasicProfile/Profile/saveButton.html.twig" %}
+                </div>
+                <div class="left-menu-content">
+                    {% block leftMenu %}{% endblock %}
+
+                </div>
+            </div>
+            <div class="center-right">
+                <div class="content-menu">
+                    {% block subMenu %}{% endblock %}
+                </div>
+                <div class="content">
+                    {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/metadorbasicprofile/css/profile.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('bundles/lvermgeobasicprofile/css/lvermgeo.css') }}">#}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        var validation = {{ read_validation_rules(array_get(p, '_profile', '')) }};
+    </script>
+    <script src="{{ asset('bundles/metadorbasicprofile/multiinput.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/multiform.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/multifieldset.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/validator.js') }}"></script>
+    <script src="{{ asset('bundles/metadorbasicprofile/help.js') }}"></script>
+    {#<script src="{{ asset('bundles/lvermgeobasicprofile/aggregationinfo.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/lvermgeobasicprofile/operateson.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/lvermgeobasicprofile/profile.js') }}"></script>#}
+{% endblock %}

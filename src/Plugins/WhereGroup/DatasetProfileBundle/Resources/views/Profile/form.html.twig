@@ -1,64 +1,77 @@
-{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+{#{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}#}
+{% extends 'MetadorBasicProfileBundle::template.html.twig' %}
 
-{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+{% set menu = {
+    'metadata': {
+        'label': 'Metadateneigenschaften',
+        'templates': {
+            'metadata': {
+                'label': 'Metadateneigenschaften',
+                'path': 'MetadorBasicProfileBundle:Profile:metadata.html.twig'
+            }
+        }
+    },
+    'dataproperties': {
+        'label': 'Dateneigenschaften',
+        'templates': {
+            'dataproperties-description': {
+                'label': 'Beschreibung',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-description.html.twig'
+            },
+            'dataproperties-spatial-timereference': {
+                'label': 'Raum- und Zeitbezug',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-spatial-timereference.html.twig'
+            },
+            'dataproperties-classification': {
+                'label': 'Klassifizierung',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-classification.html.twig'
+            },
+            'dataproperties-classification': {
+                'label': 'Formate',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-format.html.twig'
+            }
+        }
+    },
+    'constraints': {
+        'label': 'Rechtliches',
+        'templates': {
+            'constraints-description': {
+                'label': 'Rechtliches',
+                'path': 'MetadorBasicProfileBundle:Profile:distribution-constraints.html.twig'
+            },
+            'constraints-description': {
+                'label': 'Rechtliches',
+                'path': 'MetadorBasicProfileBundle:Profile:distribution-constraints.html.twig'
+            },
+            'qualityindication-conformity': {
+                'label': 'Übereinstimmung',
+                'path': 'MetadorBasicProfileBundle:Profile:qualityindication-conformity.html.twig'
+            }
+        }
+    },
+    'responsibility': {
+        'label': 'Verantwortlichkeit',
+        'templates': {
+            'responsibility-responsibleParty': {
+                'label': 'Datensatz',
+                'path': 'MetadorBasicProfileBundle:Profile:responsibility-responsibleParty.html.twig'
+            },
+            'responsibility-contact': {
+                'label': 'Metadaten',
+                'path': 'MetadorBasicProfileBundle:Profile:responsibility-contact.html.twig'
+            }
+        }
+    }
+}%}
 
-{% block center %}
-    <form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
-        <input type="hidden" name="p[_id]" value="{{ array_get(p, '_id', '') }}" />
-        <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
-        <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
-        <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
-        <input type="hidden" name="p[hierarchyLevel]" value="dataset" />
-
-        <div class="center menu">
-            <div class="center-left">
-                <ul class="left-menu">
-                    <li data-mdtab="metadata" class="act"><span>{% trans %}Metadatensatz{% endtrans %}</span></li>
-                    <li data-mdtab="identification"><span>{% trans %}Identifikation{% endtrans %}</span></li>
-                    <li data-mdtab="classification"><span>{% trans %}Klassifizierung{% endtrans %}</span></li>
-                    <li data-mdtab="keyword"><span>{% trans %}Schlüsselwort{% endtrans %}</span></li>
-                    <li data-mdtab="geographic"><span>{% trans %}Geografischer{% endtrans %}</span></li>
-                    <li data-mdtab="temporal"><span>{% trans %}Zeitbezug{% endtrans %}</span></li>
-                    <li data-mdtab="quality"><span>{% trans %}Qualität{% endtrans %}</span></li>
-                    <li data-mdtab="conformity"><span>{% trans %}Übereinstimmung{% endtrans %}</span></li>
-                    <li data-mdtab="constraints"><span>{% trans %}Beschränkungen{% endtrans %}</span></li>
-                    <li data-mdtab="responsibleparty"><span>{% trans %}Zuständige Stelle{% endtrans %}</span></li>
-                </ul>
-                <div class="left-menu-content">
-                    {% if app.user and metadata is not defined or (metadata is defined and is_granted('edit', metadata)) %}
-                        <button class="btn margin-b -js-metadata-button full" type="submit" name="submit" value="save" disabled>
-                            <span class="icon-download -js-metadata-button-status"></span> {% trans %}speichern{% endtrans %}
-                        </button>
-
-                        <button class="btn info full" type="submit" name="submit" value="close">
-                            <span class="icon-checkmark"></span> {% trans %}freigeben{% endtrans %}
-                        </button>
-                    {% else %}
-                        no!
-                    {% endif %}
-                </div>
-            </div>
-            <div class="center-right">
-                <div class="content">
-                    {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
-
-                    {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
-                    {% include 'MetadorDatasetProfileBundle:Profile:identification.html.twig' %}
-                    <div class="mdtab-content" data-mdtab-content="classification"></div>
-                    <div class="mdtab-content" data-mdtab-content="keyword"></div>
-                    <div class="mdtab-content" data-mdtab-content="geographic"></div>
-                    <div class="mdtab-content" data-mdtab-content="temporal"></div>
-                    <div class="mdtab-content" data-mdtab-content="quality"></div>
-                    <div class="mdtab-content" data-mdtab-content="conformity"></div>
-                    <div class="mdtab-content" data-mdtab-content="constraints"></div>
-                    <div class="mdtab-content" data-mdtab-content="responsibleparty"></div>
-                </div>
-            </div>
-        </div>
-    </form>
+{% block leftMenu %}
+    {% include '@MetadorBasicProfile/Element/menu.html.twig' with {'menu' : menu} %}
 {% endblock %}
 
-{% block javascript %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
+{% block subMenu %}
+    {% include '@MetadorBasicProfile/Element/subMenu.html.twig' with {'menu' : menu} %}
+{% endblock %}
+
+{% block content %}
+    {% include '@MetadorBasicProfile/Element/menuContent.html.twig' with {'menu' : menu} %}
 {% endblock %}

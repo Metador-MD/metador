@@ -1,0 +1,10 @@
+{% for menuItemKey, menuItem in menu %}
+    <ul class="content-menu-list{% if loop.index0 == 0 %} act{% endif %}" data-submenu-parent="{{ menuItemKey }}">
+        {% for subMenuItemKey, subMenuItem in menuItem.templates %}
+            <li class="content-menu-list-item -js-activate-submenu{% if loop.index0 == 0 %} act{% endif %}" id="menu-{{ subMenuItemKey }}" data-submenu="{{ subMenuItemKey }}">
+                <span class="menu-label">{{ subMenuItem.label }}</span>
+                {#<span class="-js-error-count error-count"></span>#}
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}

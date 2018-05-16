@@ -1,0 +1,61 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+{% if keyword is not empty %}
+    {% set readonly = false %}
+    {% set inherited = false %}
+    {% if p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['keywords' ~ keyword.identifier] is defined %}
+        {% set readonly = true %}
+        {% set inherited = true %}
+    {% endif %}
+
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'keywords:' ~ keyword.identifier ~ ':keywords', [{}]) }}">
+        <div class="head">
+            <div class="left">
+                {% if p['_profile'] == 'lvermgeo_series_profile' and is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+                    {% set inheritance_enabled = false %}
+                    {% if p['_inheritance']['keywords' ~ keyword.identifier] is defined and p['_inheritance']['keywords' ~ keyword.identifier] == 1 %}
+                        {% set inheritance_enabled = true %}
+                    {% endif %}
+
+                    <input type="checkbox" name="p[_inheritance][keywords{{ keyword.identifier }}]" value="1" {% if inheritance_enabled %}checked{% endif %} />
+                {% endif %}
+
+                {{ keyword.title }}:
+            </div>
+            <div class="right">
+                {% if not readonly %}
+                    <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="rows -js-multi-fieldset-rows">
+            {% for key in 0 .. array_length(p, 'keywords:' ~ keyword.identifier ~ ':keywords', [{}]) -1 %}
+                <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                    <div class="row-content">
+                        <div class="grid space responsive">
+                            <div class="row r-1">
+                                <div class="col c-1">
+                                    {{ form_element.input({
+                                        'name'    : 'p[keywords][' ~ keyword.identifier ~ '][keywords][' ~ key ~ ']',
+                                        'default' : '',
+                                        'options' : keyword.keywords,
+                                        'type'    : keyword.cardinality,
+                                        'validatorSources': validatorSources,
+                                        'readonly' : readonly,
+                                        'inherited' : inherited,
+                                        'p'       : p
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-icon -js-multi-fieldset-icons">
+                        {% if loop.index0 > 0 and not readonly %}
+                            <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

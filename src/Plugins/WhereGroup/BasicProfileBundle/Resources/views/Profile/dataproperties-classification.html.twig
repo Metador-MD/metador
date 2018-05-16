@@ -1,0 +1,146 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Dateneigenschaften</h1>
+
+<h2 class="title">Klassifizierung</h2>
+
+<div class="grid space grid-space responsive">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'    : 'p[presentationForm]',
+                'label'   : 'Form des Datenbestandes',
+                'default' : '',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    '': '',
+                    'documentDigital' : 'digitales Dokument, primäre Textdokumente',
+                    'documentHardcopy': 'analoges Dokument, primäre Textdokumente',
+                    'imageDigital'    : 'digitales Bild',
+                    'imageHardcopy'   : 'analoges Bild',
+                    'mapDigital'      : 'digitale Karte',
+                    'mapHardcopy'     : 'analoge Karte',
+                    'modelDigital'    : 'digitales Modell, Repräsentation eines Objekts, Prozesses',
+                    'modelHardcopy'   : 'analoges Modell, dreidimensionales, physisches Modell',
+                    'profileDigital'  : 'digitales vertikales Profil',
+                    'profileHardcopy' : 'analoges vertikales Profil',
+                    'tableDigital'    : 'digitale Tabelle',
+                    'tableHardcopy'   : 'analoge Tabelle',
+                    'videoDigital'    : 'digitales Video',
+                    'videoHardcopy'   : 'analoges Video'
+                },
+                'inheritance': (profile == 'metador_series_profile') ? true : false,
+                'p'       : p
+            }) }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'    : 'p[spatialRepresentationType]',
+                'label'   : 'Art des Datenbestandes',
+                'default' : '',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    ''           : '',
+                    'vector'     : 'Vektordaten',
+                    'grid'       : 'Rasterdaten',
+                    'textTable'  : 'Text oder Tabelle',
+                    'tin'        : 'triangular irregular network',
+                    'stereoModel': '3D Sicht aus Stereobildern',
+                    'video'      : 'Videodaten'
+                },
+                'inheritance': (profile == 'metador_series_profile') ? true : false,
+                'p' : p
+            }) }}
+        </div>
+    </div>
+</div><!-- end .grid -->
+
+{% set readonly = false %}
+{% if p['_profile'] == 'metador_tile_profile' and p['_inheritance']['topicCategory'] is defined %}
+    {% set readonly = true %}
+{% endif %}
+
+<div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'topicCategory', [{}]) }}">
+    <div class="head">
+        <div class="left">
+            {% if profile == 'metador_series_profile' %}
+                {{ form_element.inheritance({ 'name' : 'p[topicCategory]', 'p': p }) }}
+            {% endif %}
+            Thematische Einordnung:
+        </div>
+        <div class="right">
+            {% if not readonly %}
+                <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="rows -js-multi-fieldset-rows">
+        {% for key in 0 .. array_length(p, 'topicCategory', [{}]) -1 %}
+            <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-1">
+                            <div class="col c-1">
+                                {{ form_element.select({
+                                    'name'    : 'p[topicCategory][' ~ key ~ ']',
+                                    'default' : '',
+                                    'validatorSources': tabId,
+                                    'hasList' : true,
+                                    'defaultList': {
+                                        '': '',
+                                        'farming':'Landwirtschaft',
+                                        'biota':'Biologie',
+                                        'boundaries':'Grenzen',
+                                        'climatology/meteorology':'Klima/Meteorlogie',
+                                        'atmosphere':'Atmosphäre',
+                                        'economy':'Wirtschaft',
+                                        'elevation':'Höhenangaben',
+                                        'environment':'Umwelt',
+                                        'geoscientificInformation':'Geowissenschaften',
+                                        'health':'Gesundheitswesen',
+                                        'imageryBaseMapsEarthCover':'Oberflächenbeschreibung',
+                                        'intelligenceMilitary':'Militär und Aufklärung',
+                                        'inlandWaters':'Binnengewässer',
+                                        'location':'Ortsangaben',
+                                        'oceans':'Meere',
+                                        'planningCadastre':'Planungsunterlagen, Kataster',
+                                        'society':'Gesellschaft',
+                                        'structure':'Bauwerke',
+                                        'transportation':'Verkehrswesen',
+                                        'utilitiesCommunication':'Ver- und Entsorgung, Kommunikation'
+                                    },
+                                    'p'       : p
+                                    })
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-icon -js-multi-fieldset-icons">
+                    {% if loop.index0 > 0 and not readonly %}
+                        <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<h3 class="title">Schlüsselwörter</h3>
+{% for repo in get_keywords(p['_profile']) %}
+    {% if repo is defined and repo is not empty and repo.repository == true %}
+        {% include '@MetadorBasicProfile/Element/keyword-repo.html.twig' with {
+            'keyword': repo,
+            'validatorSources': tabId,
+            'p': p
+        } %}
+    {% elseif repo is defined and repo is not empty and repo.repository == false %}
+        {% include '@MetadorBasicProfile/Element/keyword.html.twig' with {
+            'keyword': repo,
+            'validatorSources': tabId,
+            'p': p
+        } %}
+    {% endif %}
+{% endfor %}

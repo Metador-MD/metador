@@ -1,0 +1,228 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Dateneigenschaften</h1>
+
+<h2 class="title">Ressourcen-Identifikator</h2>
+
+<div class="grid space grid-space responsive">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[identifierCode]',
+                'label'           : 'Identifikator (code)',
+                'validatorSources': tabId,
+                'readonly'        : true,
+                'type'            : null,
+                'p'               : p
+            })}}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'            : 'p[identifierCodespace]',
+                'label'           : 'Namensraum (codespace)',
+                'validatorSources': tabId,
+                'hasList'         : true,
+                'defaultList'     : {
+                    ''            : '',
+                },
+                'p'               : p,
+            })}}
+        </div>
+    </div>
+</div>
+
+<h2 class="title">Beschreibung</h2>
+
+<div class="grid space grid-space responsive">
+    <div class="row r-1 margin-b">
+        <div class="col c-1">
+            {{ form_element.input({
+                'name'            : 'p[title]',
+                'label'           : 'Titel',
+                'validatorSources': tabId,
+                'p'               : p
+            })
+            }}
+        </div>
+    </div>
+    <br/>
+
+    {% set readonly = false %}
+    {% if p['_profile'] == 'metador_tile_profile' and p['_inheritance']['alternateTitle'] is defined %}
+        {% set readonly = true %}
+    {% endif %}
+
+    <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'alternateTitle', [{}]) }}">
+        <div class="head">
+            <div class="left">Alternativtitel:</div>
+            <div class="right">
+                {% if not readonly %}
+                    <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="rows -js-multi-fieldset-rows">
+            {% for key in 0 .. array_length(p, 'alternateTitle', [{}]) -1 %}
+                <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                    <div class="row-content">
+                        <div class="grid space responsive">
+                            <div class="row r-1">
+                                <div class="col c-1">
+                                    {{ form_element.input({
+                                        'name'    : 'p[alternateTitle][' ~ loop.index0 ~ ']',
+                                        'validatorSources': tabId,
+                                        'type'    : 'optional',
+                                        'p'       : p
+                                    })}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-icon -js-multi-fieldset-icons">
+                        {% if loop.index0 > 0 and not readonly %}
+                            <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row r-1">
+        <div class="col c-1">
+            {{ form_element.select({
+                'name'    : 'p[identLanguage]',
+                'label'   : 'Sprache des Datenbestandes',
+                'default' : 'ger',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    ''   : '',
+                    'ger': 'Deutsch',
+                    'eng': 'Englisch'
+                },
+                'p'       : p
+                })
+            }}
+        </div>
+    </div>
+    <div class="row r-1">
+        <div class="col c-1">
+            {{ form_element.text({
+                'name'            : 'p[abstract]',
+                'label'           : 'Kurzbeschreibung',
+                'validatorSources': tabId,
+                'p'               : p
+                })
+            }}
+        </div>
+    </div>
+</div><!-- end .grid -->
+{% set readonly = false %}
+{% if p['_profile'] == 'metador_tile_profile' and p['_inheritance']['graphicOverview'] is defined %}
+    {% set readonly = true %}
+{% endif %}
+
+<div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'graphicOverview', [{}]) }}">
+    <div class="head">
+        <div class="left">Bild</div>
+        <div class="right">
+            {% if not readonly %}
+                <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="rows -js-multi-fieldset-rows">
+        <div class="row">
+            <div class="row-content">
+                <div class="grid space responsive">
+                    <div class="row r-1">
+                        <div class="col c-1 form-label">
+                            Dateibeschreibung
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for key in 0 .. array_length(p, 'graphicOverview', [{}]) -1 %}
+            <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% endif %}">
+                <div class="row-content">
+                    <div class="grid space responsive">
+                        <div class="row r-1">
+                            <div class="col c-1 -js-graphic-overview">
+                                <input type="hidden" class="-js-graphic-overview-description" name="p[graphicOverview][{{ loop.index0 }}][fileDescription]" value="{{ array_get(p, 'graphicOverview:' ~  loop.index0 ~ ':fileDescription', '', true) }}" />
+                                {% include '@MetadorBasicProfile/Element/select.html.twig' with {
+                                    'name'    : 'p[graphicOverview][' ~ loop.index0 ~ '][fileName]',
+                                    'default' : '',
+                                    'validatorSources': tabId,
+                                    'type'    : 'optional',
+                                    'hasList' : true,
+                                    'class'   : '-js-browser-image',
+                                    'defaultList': {
+                                        '': '',
+                                    },
+                                    'p'       : p
+                                } only %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-icon -js-multi-fieldset-icons">
+                    {% if loop.index0 > 0 and not readonly %}
+                        <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<h2 class="title">Ressourcenverweis</h2>
+<div class="grid space grid-space responsive">
+
+    <div class="row r-1">
+        <div class="col c-1">
+        {{ form_element.input({
+            'name'            : 'p[transferOptions][url]',
+            'label'           : 'Adresse für den Online-Zugriff',
+            'validatorSources': tabId,
+            'p'               : p
+            })
+        }}
+        </div>
+    </div>
+
+    <div class="row r-1">
+        <div class="col c-1">
+        {{ form_element.input({
+            'name'            : 'p[transferOptions][urlDescription]',
+            'label'           : 'Beschreibung der URL',
+            'type'            : 'optional',
+            'validatorSources': tabId,
+            'p'               : p
+            })
+        }}
+        </div>
+    </div>
+
+    <div class="row r-1">
+        <div class="col c-1">
+            {{ form_element.select({
+                'name'            : 'p[transferOptions][function]',
+                'label'           : 'Funktion der URL',
+                'default'         : '',
+                'validatorSources': tabId,
+                'hasList'         : true,
+                'defaultList'     : {
+                    ''              :'',
+                    'download'      : 'Download-Link / Downloaddienst',
+                    'information'   : 'Produktbeschreibungen / Darstellungsdiensten',
+                    'offlineAccess' : 'Offline Zugang',
+                    'order'         : 'Auftrag',
+                    'search'        : 'Suche'
+                },
+                'p'               : p,
+                })
+            }}
+        </div>
+    </div>
+</div>

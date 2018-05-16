@@ -196,3 +196,66 @@ $(document).on('change', '.-js-change-view', function() {
     });
     target.addClass('active');
 });
+
+var enableMenuContent = function(menuContentId) {
+    $('[data-menu-content]').removeClass('act');
+    $('[data-menu-content="' + menuContentId + '"]').addClass('act');
+};
+
+var enableSubMenu = function(menuId, subMenuId) {
+    $('[data-submenu-parent]').removeClass('act');
+    $('[data-submenu-parent="' + menuId + '"]').addClass('act');
+
+    $('.-js-activate-submenu').removeClass('act');
+    $('.-js-activate-submenu[data-submenu="' + subMenuId + '"]').addClass('act');
+
+    enableMenuContent(subMenuId);
+};
+
+var enableMenu = function(menuId, subMenuId) {
+    $('.-js-activate-menu').removeClass('act');
+    $('.-js-activate-menu[data-menu="' + menuId + '"]').addClass('act');
+
+    enableSubMenu(menuId, subMenuId);
+};
+
+$(document).on('click', '.-js-activate-menu', function () {
+    enableMenu($(this).attr('data-menu'), $(this).attr('data-submenu'));
+});
+
+$(document).on('click', '.-js-activate-submenu', function () {
+    enableSubMenu($(this).closest('[data-submenu-parent]').attr('data-submenu-parent'), $(this).attr('data-submenu'));
+});
+
+$(document).on('click', '.-js-switch-button', function () {
+    if ($(this).hasClass('icon-search2')) {
+        $(this).parent().find('input').hide();
+        $(this).parent().find('.-js-switch-select').val('-').show();
+
+        $(this).toggleClass('icon-search2 icon-cross');
+        return;
+    }
+
+    $(this).parent().find('.-js-switch-select').hide();
+    $(this).parent().find('input').show();
+    $(this).toggleClass('icon-search2 icon-cross');
+});
+
+$(document).on('change', '.-js-switch-select', function () {
+    var value = $(this).val();
+    $(this).hide();
+    $(this).parent().find('input').show().val(value);
+    $(this).parent().find('.-js-switch-button').toggleClass('icon-search2 icon-cross');
+});
+
+$(document).on('change', '.-js-browser-image', function () {
+    $(this)
+        .closest('.-js-graphic-overview')
+        .find('.-js-graphic-overview-description')
+        .val($(this).find('option:selected').text());
+});
+
+$('.-js-add-address').addressDialog();
+// $('.-js-add-aggregationinfo').aggregationinfoDialog();
+// $('.-js-add-operateson').operatesonDialog();
+// $('.-js-show-help').help();

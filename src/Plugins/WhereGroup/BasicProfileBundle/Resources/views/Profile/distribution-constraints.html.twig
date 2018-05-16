@@ -1,0 +1,141 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Rechtliches</h1>
+
+<h2 class="title">
+    {% if profile == 'lvermgeo_series_profile' %}
+        {{ form_element.inheritance({ 'name' : 'p[useLimitation]', 'p': p }) }}
+    {% endif %}
+    Eignungsbeschränkungen
+</h2>
+
+{% set id = 'p[useLimitation]' %}
+{% if p['useLimitation'] is not defined %}
+    {% set p = p|merge({'useLimitation': [{}]}) %}
+{% endif %}
+
+{{ form_element.duplicatable_area_start(p, id, 'useLimitation', 'optional') }}
+    {% for useLimitation in p['useLimitation'] %}
+        <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
+            <div class="grid space responsive">
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.input({
+                            'name'            : 'p[useLimitation][' ~ loop.index0 ~ '][useLimitation]',
+                            'label'           : 'Einschränkung der Eignung',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'class'           : '-js-duplicatable-title',
+                            'p'               : p
+                        })}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{{ form_element.duplicatable_area_end() }}
+
+<h2 class="title">
+    {% if profile == 'lvermgeo_series_profile' %}
+        {{ form_element.inheritance({ 'name' : 'p[useConstraints]', 'p': p }) }}
+    {% endif %}
+    Nutzungsbedingungen
+</h2>
+
+{% set id = 'p[useConstraints]' %}
+{% if p['useConstraints'] is not defined %}
+    {% set p = p|merge({'useConstraints': [{}]}) %}
+{% endif %}
+
+{{ form_element.duplicatable_area_start(p, id, 'RestrictionCode') }}
+    {% for useConstraints in p['useConstraints'] %}
+        <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
+            <div class="grid space responsive">
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.select({
+                            'name'            : 'p[useConstraints][' ~ loop.index0 ~ '][RestrictionCode]',
+                            'label'           : 'Nutzungseinschränkung',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'hasList'         : true,
+                            'class'           : '-js-duplicatable-title',
+                            'defaultList'     : {
+                                '' : 'otherRestrictions',
+                                'copyright': 'copyright',
+                                'patent': 'patent',
+                                'patentPending': 'patentPending',
+                                'trademark': 'trademark',
+                                'license': 'license',
+                                'intellectualPropertyRights': 'intellectualPropertyRights',
+                                'restricted': 'restricted'
+                            },
+                            'p'               : p
+                        })}}
+                    </div>
+                </div>
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.text({
+                            'name'            : 'p[useConstraints][' ~ loop.index0 ~ '][otherConstraints]',
+                            'label'           : 'weitere Beschreibung der Einschränkung',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                        })}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{{ form_element.duplicatable_area_end() }}
+
+<h2 class="title">
+    {% if profile == 'lvermgeo_series_profile' %}
+        {{ form_element.inheritance({ 'name' : 'p[accessConstraints]', 'p': p }) }}
+    {% endif %}
+    Zugangsbeschränkungen
+</h2>
+
+{% set id = 'p[accessConstraints]' %}
+{% if p['accessConstraints'] is not defined %}
+    {% set p = p|merge({'accessConstraints': [{}]}) %}
+{% endif %}
+
+{{ form_element.duplicatable_area_start(p, id, 'RestrictionCode') }}
+    {% for useConstraints in p['useConstraints'] %}
+        <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
+            <div class="grid space responsive">
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.select({
+                            'name'            : 'p[accessConstraints][' ~ loop.index0 ~ '][RestrictionCode]',
+                            'label'           : 'Nutzungseinschränkung',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'hasList'         : true,
+                            'class'           : '-js-duplicatable-title',
+                            'defaultList'     : {
+                                '' : 'otherRestrictions',
+                                'copyright': 'copyright',
+                                'patent': 'patent',
+                                'patentPending': 'patentPending',
+                                'trademark': 'trademark',
+                                'license': 'license',
+                                'intellectualPropertyRights': 'intellectualPropertyRights',
+                                'restricted': 'restricted'
+                            },
+                            'p'               : p
+                        })}}
+                    </div>
+                </div>
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.text({
+                            'name'            : 'p[accessConstraints][' ~ loop.index0 ~ '][otherConstraints]',
+                            'label'           : 'Beschreibung der Zugriffs- bzw. Zugangseinschränkung',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                        })}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{{ form_element.duplicatable_area_end() }}

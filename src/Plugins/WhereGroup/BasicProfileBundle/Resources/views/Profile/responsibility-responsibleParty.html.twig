@@ -1,0 +1,303 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Verantwortlichkeit</h1>
+
+{% if profile == 'lvermgeo_service_profile' %}
+    <h2 class="title">Verantwortlichkeit für den Dienst</h2>
+{% else %}
+    <h2 class="title">
+        {% if profile == 'lvermgeo_series_profile' %}
+            {{ form_element.inheritance({ 'name' : 'p[responsibleParty]', 'p': p }) }}
+        {% endif %}
+        Verantwortlichkeit für den Datensatz
+    </h2>
+{% endif %}
+
+{% set id = 'p[responsibleParty]' %}
+{% if p['responsibleParty'] is not defined %}
+    {% set p = p|merge({'responsibleParty': [{}]}) %}
+{% endif %}
+
+{% set readonly = false %}
+{% if p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['responsibleParty'] is defined %}
+    {% set readonly = true %}
+{% endif %}
+
+{{ form_element.duplicatable_area_start(p, id, 'organisationName', null, '-js-add-address', {
+    'url': path('metador_admin_address_api_all')
+}) }}
+    {% for responsibleParty in p['responsibleParty'] %}
+        <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
+            <div class="grid space responsive">
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][uuid]',
+                            'label'           : 'UUID',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'readonly'        : true,
+                            'class'           : '-js-address-uuid',
+                            'p'               : p
+                        }) }}
+                    </div>
+                </div>
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][organisationName]',
+                            'label'           : 'Name der Organisation',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'class'           : '-js-duplicatable-title -js-address-organisationName',
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][individualName]',
+                            'label'           : 'Zuständige Person / Organisationseinheit',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'type'            : 'optional',
+                            'class'           : '-js-address-individualName',
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+
+                    {% if profile == 'lvermgeo_service_profile' %}
+                        <div class="col c-1-2">
+                            {{ form_element.input({
+                                'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][positionName]',
+                                'label'           : 'Funktion des Adressdatenbestandes',
+                                'validatorSources': tabId ~ ',' ~ id|md_id,
+                                'readonly'        : true,
+                                'default'         : 'Verantwortlich für die Erstellung des Dienstes',
+                                'p'               : p
+                            })}}
+                        </div>
+                    {% else %}
+                        <div class="col c-1-2">
+                            {{ form_element.input({
+                                'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][positionName]',
+                                'label'           : 'Funktion des Adressdatenbestandes',
+                                'validatorSources': tabId ~ ',' ~ id|md_id,
+                                'readonly'        : true,
+                                'default'         : 'Verantwortlich für die Erstellung der Daten',
+                                'p'               : p
+                            })}}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row r-2 margin-b">
+                    <div class="col c-1-2">
+                        {{ form_element.select({
+                            'name'    : 'p[responsibleParty][' ~ loop.index0 ~ '][role]',
+                            'label'   : 'Rolle',
+                            'default' : '',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'hasList' : true,
+                            'class'           : '-js-address-role',
+                            'defaultList': {
+                                '': '',
+                                'pointOfContact'        : 'Ansprechpartner',
+                                'resourceProvider'      : 'Anbieter',
+                                'owner'                : 'Eigentümer',
+                                'user'                  : 'Nutzer',
+                                'distributor'           : 'Vertrieb',
+                                'originator'            : 'Urheber',
+                                'principalInvestigator' : 'Projektleitung',
+                                'processor'             : 'Bearbeiter',
+                                'publisher'             : 'Herausgeber',
+                                'author'                : 'Autor'
+                            },
+                            'p'       : p
+                            })
+                        }}
+                    </div>
+                    <div class="col c-1-2">
+                    </div>
+                </div>
+
+                <div class="row r-1">
+                    <div class="col c-1">
+                        <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'responsibleParty:' ~ loop.index0 ~ ':email', [{}]) }}">
+                            <div class="head">
+                                <div class="left">E-Mail:</div>
+                                <div class="right">
+                                    {% if not readonly %}
+                                        <span class="icon medium icon-plus -js-multi-fieldset-add"></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="rows -js-multi-fieldset-rows">
+                                {% for key in 0 .. array_length(p, 'responsibleParty:' ~ loop.index0 ~ ':email', [{}], true) -1 %}
+                                    <div class="row -js-multi-field-row {% if loop.index0 == 0 %}-js-multi-fieldset-default-row{% else %}-js-duplicatable-ignore{% endif %}">
+                                        <div class="row-content">
+                                            <div class="grid space responsive">
+                                                <div class="row r-1">
+                                                    <div class="col c-1">
+                                                        {{ form_element.input({
+                                                            'name'            : 'p[responsibleParty][' ~ loop.parent.loop.index0 ~ '][email][' ~ key ~ ']',
+                                                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                                                            'class'           : '-js-address-email',
+                                                            'p'               : p
+                                                        })}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row-icon -js-multi-fieldset-icons">
+                                            {% if loop.index0 > 0 and not readonly %}
+                                                <span class="icon icon-bin2 -js-multi-fieldset-remove"></span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.select({
+                            'name'    : 'p[responsibleParty][' ~ loop.index0 ~ '][country]',
+                            'label'   : 'Land / Staat',
+                            'default' : '',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'hasList' : true,
+                            'class'           : '-js-address-country',
+                            'defaultList': {
+                               '': '',
+                               'DE': 'Deutschland'
+                            },
+                            'p'       : p
+                            })
+                        }}
+                    </div>
+                    <div class="col c-1-2">
+                        {{ form_element.select({
+                            'name'    : 'p[responsibleParty][' ~ loop.index0 ~ '][administrativeArea]',
+                            'label'   : 'Bundesland',
+                            'default' : '',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'hasList' : true,
+                            'class'           : '-js-address-administrativeArea',
+                            'defaultList': {
+                                '':'',
+                                'Baden-Württemberg':'Baden-Württemberg',
+                                'Bayern':'Bayern',
+                                'Berlin':'Berlin',
+                                'Brandenburg':'Brandenburg',
+                                'Bremen':'Bremen',
+                                'Hamburg':'Hamburg',
+                                'Hessen':'Hessen',
+                                'Mecklenburg-Vorpommern':'Mecklenburg-Vorpommern',
+                                'Niedersachsen':'Niedersachsen',
+                                'Nordrhein-Westfalen':'Nordrhein-Westfalen',
+                                'Rheinland-Pfalz':'Rheinland-Pfalz',
+                                'Saarland':'Saarland',
+                                'Sachsen-Anhalt':'Sachsen-Anhalt',
+                                'Schleswig-Holstein':'Schleswig-Holstein',
+                                'Thüringen':'Thüringen',
+                            },
+                            'p'       : p
+                            })
+                        }}
+                    </div>
+                </div>
+
+                <div class="row r-1">
+                    <div class="col c-1">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][deliveryPoint]',
+                            'label'           : 'Straße und Hausnummer / Postfach',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-deliveryPoint',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][city]',
+                            'label'           : 'Stadt / Ort',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-city',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][postalCode]',
+                            'label'           : 'PLZ',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-postalCode',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+
+                <div class="row r-2">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][voice]',
+                            'label'           : 'Telefonnummer',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-voice',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                           'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][facsimile]',
+                            'label'           : 'Faxnummer',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-facsimile',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+
+                <div class="row r-2 -js-validation-area">
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][url]',
+                            'label'           : 'Internetadresse',
+                            'type'            : 'conditional',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'class'           : '-js-address-url',
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                    <div class="col c-1-2">
+                        {{ form_element.input({
+                            'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][urlDescription]',
+                            'label'           : 'Beschreibung der Internetadresse',
+                            'type'            : 'optional',
+                            'class'           : '-js-address-urlDescription',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'p'               : p
+                            })
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{{ form_element.duplicatable_area_end() }}

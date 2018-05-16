@@ -1,0 +1,8 @@
+<ul class="left-menu">
+    {% for menuItemKey, menuItem in menu %}
+        <li class="menu-item -js-activate-menu{% if loop.index0 == 0 %} act{% endif %}" data-menu="{{ menuItemKey }}" data-submenu="{{ menuItem.templates|keys|first }}" id="menu-{{ menuItemKey }}">
+            <span class="menu-label">{{ menuItem.label }}</span>
+            <span class="-js-error-count error-count"></span>
+        </li>
+    {% endfor %}
+</ul>

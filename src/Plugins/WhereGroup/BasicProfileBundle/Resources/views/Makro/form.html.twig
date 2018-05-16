@@ -1,3 +1,7 @@
+{% macro inheritance(options) %}
+    {% include '@MetadorBasicProfile/Element/inheritance.html.twig' with options only %}
+{% endmacro %}
+
 {% macro input(options) %}
     {% include '@MetadorBasicProfile/Element/input.html.twig' with options only %}
 {% endmacro %}
@@ -8,4 +12,65 @@
 
 {% macro select(options) %}
     {% include '@MetadorBasicProfile/Element/select.html.twig' with options only %}
+{% endmacro %}
+
+{% macro hidden(options) %}
+    {% include '@MetadorBasicProfile/Element/hidden.html.twig' with options only %}
+{% endmacro %}
+
+{% macro duplicatable_area_start(p, id, titleRow, type, wizardClass, wizardAttributes) %}
+    {% set wizard = false %}
+
+    {% if wizardClass is defined and wizardClass is not empty %}
+        {% set wizard = true %}
+    {% endif %}
+
+    {% set readonly = false %}
+    {% if p['_profile'] == 'metador_tile_profile' and p['_inheritance'][id|md_first_key] is defined %}
+        {% set readonly = true %}
+    {% endif %}
+
+    {% if p is empty or p is not iterable or id is empty or titleRow is empty %}
+        <div class="notify error">
+            Parameters <strong>p, id</strong> or <strong>titleRow</strong> empty!
+        </div>
+    {% else %}
+        {% set key  = id|md_array_path %}
+        {% set type = type is defined and type is not empty ? type : 'mandatory'  %}
+
+        <div class="duplicatable-area -js-duplicatable-area" data-count="{{ array_length(p, key) }}">
+            <div class="form-field-wrapper {% if wizard and not readonly %}i5{% else %}i4{% endif %}" id="{{ id|md_id }}">
+                <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
+                <div class="advanced-select -js-advanced-select">
+                    <span class="-js-current-title-label">{{ array_get(p, key ~ ':0:' ~ titleRow, '', true)|teaser(45, true) }}</span>
+                    <div class="advanced-select-options -js-advanced-select-options">
+                        {% for row in array_get(p, key, null, true) %}
+                            <div class="advanced-select-option -js-advanced-select-option {% if loop.index0 == 0 %}act{% endif %}" data-tab="{{ loop.index0 }}">
+                                <span class="-js-title-label">{{ array_get(row, titleRow, '')|teaser(45, true) }}</span>
+
+                                {% if not readonly %}
+                                    <span class="form-icon icon-bin2 right -js-duplicatable-area-remove"></span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <span class="form-icon icon-question2 right -js-show-help" {{ id|md_data_obj }}></span>
+
+                {% if not readonly %}
+                    <span class="form-icon icon-plus right -js-duplicatable-area-add"></span>
+                {% endif %}
+
+                {% if wizard and not readonly %}
+                    <span class="form-icon icon-search2 right {{ wizardClass }}"{% for name, value in wizardAttributes %}{{ ' data-' ~ name ~ '=' ~ value ~ '' }}{% endfor %}></span>
+                {% endif %}
+                <span class="form-icon -js-data-count-label">{{ array_length(p, key) }}</span>
+            </div>
+            <div class="duplicatable-content -js-duplicatable-content">
+    {% endif %}
+{% endmacro %}
+
+{% macro duplicatable_area_end() %}
+        </div>
+    </div>
 {% endmacro %}
