@@ -1,0 +1,1396 @@
+<gmd:MD_Metadata
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+
+    {% if not array_is_empty(p,'fileIdentifier') %}
+        <gmd:fileIdentifier>
+            <gco:CharacterString>{{ p['fileIdentifier']|e }}</gco:CharacterString>
+        </gmd:fileIdentifier>
+    {% endif %}
+
+    {% if not array_is_empty(p,'language') %}
+        <gmd:language>
+            <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="{{ p['language']|e }}">{{ p['language']|e }}</gmd:LanguageCode>
+        </gmd:language>
+    {% endif %}
+
+    {% if not array_is_empty(p,'characterSet') %}
+        <gmd:characterSet>
+            <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{{ p['characterSet']|e }}">{{ p['characterSet']|e }}</gmd:MD_CharacterSetCode>
+        </gmd:characterSet>
+    {% endif %}
+
+    {% if not array_is_empty(p,'parentIdentifier') %}
+        <gmd:parentIdentifier>
+            <gco:CharacterString>{{ p['parentIdentifier']|e }}</gco:CharacterString>
+        </gmd:parentIdentifier>
+    {% endif %}
+
+    {% if not array_is_empty(p,'hierarchyLevel') %}
+        <gmd:hierarchyLevel>
+            <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="{{ p['hierarchyLevel']|e }}">{{ p['hierarchyLevel']|e }}</gmd:MD_ScopeCode>
+        </gmd:hierarchyLevel>
+    {% endif %}
+
+    {% if not array_is_empty(p,'hierarchyLevelName') %}
+        <gmd:hierarchyLevelName>
+            <gco:CharacterString>{{ p['hierarchyLevelName']|e }}</gco:CharacterString>
+        </gmd:hierarchyLevelName>
+    {% endif %}
+
+    {% if not array_is_empty(p, 'contact') %}
+    {% for contact in array_get(p, 'contact') %}
+        {% if array_all_exists(contact, ['uuid','organisationName','positionName','email','role','country','url']) %}
+        <gmd:contact>
+        <gmd:CI_ResponsibleParty uuid="{{ contact['uuid']|e }}">
+            {% if not array_is_empty(contact, 'individualName') %}
+            <gmd:individualName>
+                <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
+            </gmd:individualName>
+            {% endif %}
+            {% if not array_is_empty(contact, 'organisationName') %}
+            <gmd:organisationName>
+                <gco:CharacterString>{{ contact['organisationName']|e }}</gco:CharacterString>
+            </gmd:organisationName>
+            {% endif %}
+            {% if not array_is_empty(contact, 'positionName') %}
+            <gmd:positionName>
+                <gco:CharacterString>{{ contact['positionName']|e }}</gco:CharacterString>
+            </gmd:positionName>
+            {% endif %}
+            <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:phone>
+                        <gmd:CI_Telephone>
+                            {% if not array_is_empty(contact, 'voice') %}
+                            <gmd:voice>
+                                <gco:CharacterString>{{ contact['voice']|e }}</gco:CharacterString>
+                            </gmd:voice>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'facsimile') %}
+                            <gmd:facsimile>
+                                <gco:CharacterString>{{ contact['facsimile']|e }}</gco:CharacterString>
+                            </gmd:facsimile>
+                            {% endif %}
+                        </gmd:CI_Telephone>
+                    </gmd:phone>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                            {% if not array_is_empty(contact, 'deliveryPoint') %}
+                            <gmd:deliveryPoint>
+                                <gco:CharacterString>{{ contact['deliveryPoint']|e }}</gco:CharacterString>
+                            </gmd:deliveryPoint>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'city') %}
+                            <gmd:city>
+                                <gco:CharacterString>{{ contact['city']|e }}</gco:CharacterString>
+                            </gmd:city>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'administrativeArea') %}
+                            <gmd:administrativeArea>
+                                <gco:CharacterString>{{ contact['administrativeArea']|e }}</gco:CharacterString>
+                            </gmd:administrativeArea>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'postalCode') %}
+                            <gmd:postalCode>
+                                <gco:CharacterString>{{ contact['postalCode']|e }}</gco:CharacterString>
+                            </gmd:postalCode>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'country') %}
+                            <gmd:country>
+                                <gco:CharacterString>{{ contact['country']|e }}</gco:CharacterString>
+                            </gmd:country>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'email') %}
+                                {% for email in array_get(contact, 'email', {}) %}
+                                    {% if email is defined and email is not empty %}
+                                        <gmd:electronicMailAddress>
+                                            <gco:CharacterString>{{ email|e }}</gco:CharacterString>
+                                        </gmd:electronicMailAddress>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </gmd:CI_Address>
+                    </gmd:address>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                            {% if not array_is_empty(contact, 'url') %}
+                            <gmd:linkage>
+                                <gmd:URL>{{ contact['url']|e }}</gmd:URL>
+                            </gmd:linkage>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'urlDescription') %}
+                            <gmd:description>
+                                <gco:CharacterString>{{ contact['urlDescription']|e }}</gco:CharacterString>
+                            </gmd:description>
+                            {% endif %}
+                        </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+            {% if not array_is_empty(contact, 'role') %}
+                <gmd:role>
+                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="{{ array_get(contact, 'role') }}">{{ array_get(contact, 'role') }}</gmd:CI_RoleCode>
+                </gmd:role>
+            {% endif %}
+        </gmd:CI_ResponsibleParty>
+        </gmd:contact>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% if p['dateStamp'] is defined and p['dateStamp'] is not empty %}
+    <gmd:dateStamp>
+        <gco:Date>{{ p['dateStamp']|e }}</gco:Date>
+    </gmd:dateStamp>
+    {% endif %}
+    {% if p['standardName'] is defined and p['standardName'] is not empty %}
+    <gmd:metadataStandardName>
+        <gco:CharacterString>{{ p['standardName']|e }}</gco:CharacterString>
+    </gmd:metadataStandardName>
+    {% endif %}
+    {% if p['standardVersion'] is defined and p['standardVersion'] is not empty %}
+    <gmd:metadataStandardVersion>
+        <gco:CharacterString>{{ p['standardVersion']|e }}</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+    {% endif %}
+    {% if not array_is_empty(p, 'referenceSystemInfo') %}
+    {% for referenceSystemInfo in array_get(p, 'referenceSystemInfo', {}) %}
+    {% if referenceSystemInfo.title is defined and referenceSystemInfo.title is not empty %}
+    <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier>
+                <gmd:RS_Identifier>
+                    <gmd:authority>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>{{ referenceSystemInfo['title']|e }}</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>{{ referenceSystemInfo['date']|e }}</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ referenceSystemInfo['dateType']|e }}">{{ referenceSystemInfo['dateType']|e }}</gmd:CI_DateTypeCode>
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                        </gmd:CI_Citation>
+                    </gmd:authority>
+                    <gmd:code>
+                        <gco:CharacterString>{{ referenceSystemInfo['code']|e }}</gco:CharacterString>
+                    </gmd:code>
+                    {% if referenceSystemInfo['codeSpace'] is defined %}
+                    <gmd:codeSpace>
+                        <gco:CharacterString>{{ referenceSystemInfo['codeSpace']|e }}</gco:CharacterString>
+                    </gmd:codeSpace>
+                    {% endif %}
+                    {% if referenceSystemInfo['version'] is defined %}
+                    <gmd:version>
+                        <gco:CharacterString>{{ referenceSystemInfo['version']|e }}</gco:CharacterString>
+                    </gmd:version>
+                    {% endif %}
+                </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification {% if p['identifierString'] is defined and p['hierarchyLevel'] == 'dataset' %}id="{{ p['identifierString'] }}"{% endif %}>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    {% if not array_is_empty(p, 'title') %}
+                    <gmd:title>
+                        <gco:CharacterString>{{ p['title']}}</gco:CharacterString>
+                    </gmd:title>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'alternateTitle') %}
+                        {% for alternateTitle in array_get(p, 'alternateTitle', {}) %}
+                            {% if alternateTitle is defined and alternateTitle is not empty %}
+                            <gmd:alternateTitle>
+                                <gco:CharacterString>{{ alternateTitle|e }}</gco:CharacterString>
+                            </gmd:alternateTitle>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {% if not array_is_empty(p, 'creationDate') %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['creationDate']|e }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'publicationDate') %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['publicationDate']|e }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'revisionDate') %}
+                        <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>{{ p['revisionDate']|e }}</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'edition') %}
+                    <gmd:edition>
+                        <gco:CharacterString>{{ p['edition']|e }}</gco:CharacterString>
+                    </gmd:edition>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'editionDate') %}
+                    <gmd:editionDate>
+                        <gco:Date>{{ p['editionDate']|e }}</gco:Date>
+                    </gmd:editionDate>
+                    {% endif %}
+                    {% if array_exists(p, 'identifierString') %}
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>{{ p['identifierString']|e }}</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'presentationForm') %}
+                    <gmd:presentationForm>
+                        <gmd:CI_PresentationFormCode codeListValue="{{ p['presentationForm']|e }}" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_PresentationFormCode">{{ p['presentationForm']|e }}</gmd:CI_PresentationFormCode>
+                    </gmd:presentationForm>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'isbn') %}
+                    <gmd:ISBN>
+                        <gco:CharacterString>{{ p['isbn']|e }}</gco:CharacterString>
+                    </gmd:ISBN>
+                    {% endif %}
+                </gmd:CI_Citation>
+            </gmd:citation>
+            {% if not array_is_empty(p, 'abstract') %}
+            <gmd:abstract>
+                <gco:CharacterString>{{ p['abstract']|e }}</gco:CharacterString>
+            </gmd:abstract>
+            {% endif %}
+            {% if not array_is_empty(p, 'purpose') %}
+            <gmd:purpose>
+                <gco:CharacterString>{{ p['purpose']|e }}</gco:CharacterString>
+            </gmd:purpose>
+            {% endif %}
+            {% if not array_is_empty(p, 'status') %}
+            <gmd:status>
+                <gmd:MD_ProgressCode codeListValue="{{ p['status']|e }}" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode">{{ p['status']|e }}</gmd:MD_ProgressCode>
+            </gmd:status>
+            {% endif %}
+            {% if not array_is_empty(p, 'responsibleParty') %}
+            {% for contact in array_get(p, 'responsibleParty', {}) %}
+            {% if array_all_exists(contact, ['uuid','organisationName','positionName','email','role','country','url']) %}
+            <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty uuid="{{ contact['uuid']|e }}">
+                    {% if not array_is_empty(contact, 'individualName') %}
+                        <gmd:individualName>
+                            <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
+                        </gmd:individualName>
+                    {% endif %}
+                    {% if not array_is_empty(contact, 'organisationName') %}
+                        <gmd:organisationName>
+                            <gco:CharacterString>{{ contact['organisationName']|e }}</gco:CharacterString>
+                        </gmd:organisationName>
+                    {% endif %}
+                    {% if not array_is_empty(contact, 'positionName') %}
+                        <gmd:positionName>
+                            <gco:CharacterString>{{ contact['positionName']|e }}</gco:CharacterString>
+                        </gmd:positionName>
+                    {% endif %}
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:phone>
+                                <gmd:CI_Telephone>
+                                    {% if not array_is_empty(contact, 'voice') %}
+                                        <gmd:voice>
+                                            <gco:CharacterString>{{ contact['voice']|e }}</gco:CharacterString>
+                                        </gmd:voice>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'facsimile') %}
+                                        <gmd:facsimile>
+                                            <gco:CharacterString>{{ contact['facsimile']|e }}</gco:CharacterString>
+                                        </gmd:facsimile>
+                                    {% endif %}
+                                </gmd:CI_Telephone>
+                            </gmd:phone>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    {% if not array_is_empty(contact, 'deliveryPoint') %}
+                                        <gmd:deliveryPoint>
+                                            <gco:CharacterString>{{ contact['deliveryPoint']|e }}</gco:CharacterString>
+                                        </gmd:deliveryPoint>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'city') %}
+                                        <gmd:city>
+                                            <gco:CharacterString>{{ contact['city']|e }}</gco:CharacterString>
+                                        </gmd:city>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'administrativeArea') %}
+                                        <gmd:administrativeArea>
+                                            <gco:CharacterString>{{ contact['administrativeArea']|e }}</gco:CharacterString>
+                                        </gmd:administrativeArea>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'postalCode') %}
+                                        <gmd:postalCode>
+                                            <gco:CharacterString>{{ contact['postalCode']|e }}</gco:CharacterString>
+                                        </gmd:postalCode>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'country') %}
+                                        <gmd:country>
+                                            <gco:CharacterString>{{ contact['country']|e }}</gco:CharacterString>
+                                        </gmd:country>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'email') %}
+                                        {% for email in array_get(contact, 'email', {}) %}
+                                            {% if email is defined and email is not empty %}
+                                                <gmd:electronicMailAddress>
+                                                    <gco:CharacterString>{{ email|e }}</gco:CharacterString>
+                                                </gmd:electronicMailAddress>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </gmd:CI_Address>
+                            </gmd:address>
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                    {% if not array_is_empty(contact, 'url') %}
+                                        <gmd:linkage>
+                                            <gmd:URL>{{ contact['url']|e }}</gmd:URL>
+                                        </gmd:linkage>
+                                    {% endif %}
+                                    {% if not array_is_empty(contact, 'urlDescription') %}
+                                        <gmd:description>
+                                            <gco:CharacterString>{{ contact['urlDescription']|e }}</gco:CharacterString>
+                                        </gmd:description>
+                                    {% endif %}
+                                </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    {% if not array_is_empty(contact, 'role') %}
+                        <gmd:role>
+                            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="{{ array_get(contact, 'role') }}">{{ array_get(contact, 'role') }}</gmd:CI_RoleCode>
+                        </gmd:role>
+                    {% endif %}
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% if not array_is_empty(p, 'maintenanceFrequencyCode') and not array_is_empty(p, 'maintenanceNote') %}
+            <gmd:resourceMaintenance>
+                <gmd:MD_MaintenanceInformation>
+                    {% if p['maintenanceFrequencyCode'] is defined and p['maintenanceFrequencyCode'] is not empty %}
+                    <gmd:maintenanceAndUpdateFrequency>
+                        <gmd:MD_MaintenanceFrequencyCode codeListValue="{{ p['maintenanceFrequencyCode']|e }}" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_MaintenanceFrequencyCode">{{ p['maintenanceFrequencyCode']|e }}</gmd:MD_MaintenanceFrequencyCode>
+                    </gmd:maintenanceAndUpdateFrequency>
+                    {% endif %}
+                    {% if p['maintenanceNote'] is defined and p['maintenanceNote'] is not empty %}
+                    <gmd:maintenanceNote>
+                        <gco:CharacterString>{{ p['maintenanceNote']|e }}</gco:CharacterString>
+                    </gmd:maintenanceNote>
+                    {% endif %}
+                </gmd:MD_MaintenanceInformation>
+            </gmd:resourceMaintenance>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'graphicOverview') %}
+                {% for graphicOverview in array_get(p, 'graphicOverview') %}
+                    {% if graphicOverview['fileName'] is defined and graphicOverview['fileName'] is not empty %}
+                    <gmd:graphicOverview>
+                        <gmd:MD_BrowseGraphic>
+                            {% if array_get(graphicOverview, 'fileName') %}
+                            <gmd:fileName>
+                                <gco:CharacterString>{{ graphicOverview['fileName']|e }}</gco:CharacterString>
+                            </gmd:fileName>
+                            {% endif %}
+                            {% if array_get(graphicOverview, 'fileDescription') %}
+                            <gmd:fileDescription>
+                                <gco:CharacterString>{{ graphicOverview['fileDescription']|e }}</gco:CharacterString>
+                            </gmd:fileDescription>
+                            {% endif %}
+                            {% if array_get(graphicOverview, 'fileType') %}
+                            <gmd:fileType>
+                                <gco:CharacterString>{{ graphicOverview['fileType']|e }}</gco:CharacterString>
+                            </gmd:fileType>
+                            {% endif %}
+                        </gmd:MD_BrowseGraphic>
+                    </gmd:graphicOverview>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'keywords') %}
+                {% for key, keyword in array_get(p, 'keywords') %}
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords id="{{ key|e }}">
+                            {% if keyword['keywords'] is defined and keyword['keywords'] is iterable %}
+                                {% for k in keyword['keywords'] %}
+                                    {% if k is defined and k is not empty %}
+                                    <gmd:keyword>
+                                        <gco:CharacterString>{{ k|e }}</gco:CharacterString>
+                                    </gmd:keyword>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% if keyword['name'] is defined and keyword['name'] is not empty and keyword['date'] is defined and keyword['date'] is not empty %}
+                                <gmd:thesaurusName>
+                                    <gmd:CI_Citation>
+                                        <gmd:title>
+                                            <gco:CharacterString>{{ keyword['name']|e }}</gco:CharacterString>
+                                        </gmd:title>
+                                        <gmd:date>
+                                            <gmd:CI_Date>
+                                                <gmd:date>
+                                                    <gco:Date>{{ keyword['date']|e }}</gco:Date>
+                                                </gmd:date>
+                                                <gmd:dateType>
+                                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="{{ keyword['type']|e }}">{{ keyword['type']|e }}</gmd:CI_DateTypeCode>
+                                                </gmd:dateType>
+                                            </gmd:CI_Date>
+                                        </gmd:date>
+                                    </gmd:CI_Citation>
+                                </gmd:thesaurusName>
+                            {% endif %}
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'useLimitation') %}
+                {% for useLimitation in array_get(p, 'useLimitation') %}
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useLimitation>
+                                {% if useLimitation is defined and useLimitation is not empty %}
+                                    {% for useLimitation in useLimitation %}
+                                        <gco:CharacterString>{{ useLimitation }}</gco:CharacterString>
+                                    {% endfor %}
+                                {% endif %}
+                            </gmd:useLimitation>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p,'useConstraints') %}
+            {% for constraint in array_get(p, 'useConstraints') %}
+                {% if constraint.otherConstraints is defined and constraint.otherConstraints is not empty %}
+                <gmd:resourceConstraints>
+                    <gmd:MD_LegalConstraints>
+                        {% if constraint.RestrictionCode is defined and constraint.RestrictionCode is not empty %}
+                            <gmd:useConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="{{ constraint.RestrictionCode }}">{{ constraint.RestrictionCode }}</gmd:MD_RestrictionCode>
+                            </gmd:useConstraints>
+                        {% endif %}
+                        <gmd:useConstraints>
+                            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                        </gmd:useConstraints>
+                        <gmd:otherConstraints>
+                            <gco:CharacterString>{{ constraint.otherConstraints|e }}</gco:CharacterString>
+                        </gmd:otherConstraints>
+                    </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p,'accessConstraints') %}
+            {% for constraint in array_get(p, 'accessConstraints') %}
+                <gmd:resourceConstraints>
+                    <gmd:MD_LegalConstraints>
+                        {% if constraint.RestrictionCode is defined and constraint.RestrictionCode is not empty %}
+                            <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="{{ constraint.RestrictionCode|e }}">{{ constraint.RestrictionCode|e }}</gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                        {% endif %}
+                        <gmd:accessConstraints>
+                            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                        </gmd:accessConstraints>
+                        {% if constraint.otherConstraints is defined and constraint.otherConstraints is not empty %}
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>{{ constraint.otherConstraints|e }}</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        {% else %}
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Es gelten keine Bedingungen</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        {% endif %}
+                    </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+            {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'aggregationInfo') %}
+            {% for aggregationInfo in array_get(p, 'aggregationInfo') %}
+                {% if (aggregationInfo.code is defined and aggregationInfo.code is not empty) and (aggregationInfo.associationType is defined and aggregationInfo.associationType is not empty) %}
+                <gmd:aggregationInfo>
+                    <gmd:MD_AggregateInformation>
+                        <gmd:aggregateDataSetIdentifier>
+                            <gmd:MD_Identifier>
+                                {% if aggregationInfo.code is defined and aggregationInfo.code is not empty %}
+                                <gmd:code>
+                                    <gco:CharacterString>{{ aggregationInfo.code }}</gco:CharacterString>
+                                </gmd:code>
+                                {% endif %}
+                            </gmd:MD_Identifier>
+                        </gmd:aggregateDataSetIdentifier>
+                        {% if aggregationInfo.associationType is defined and aggregationInfo.associationType is not empty %}
+                        <gmd:associationType>
+                            <gmd:DS_AssociationTypeCode codeList="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="{{ aggregationInfo.associationType }}">{{ aggregationInfo.associationType }}</gmd:DS_AssociationTypeCode>
+                        </gmd:associationType>
+                        {% endif %}
+                    </gmd:MD_AggregateInformation>
+                </gmd:aggregationInfo>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'spatialRepresentationType') %}
+            <gmd:spatialRepresentationType>
+                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="{{ p['spatialRepresentationType']|e }}">{{ p['spatialRepresentationType']|e }}</gmd:MD_SpatialRepresentationTypeCode>
+            </gmd:spatialRepresentationType>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'spatialResolutionDenominator') %}
+                <gmd:spatialResolution>
+                    <gmd:MD_Resolution>
+                        <gmd:equivalentScale>
+                            <gmd:MD_RepresentativeFraction>
+                                <gmd:denominator>
+                                    <gco:Integer>{{ array_get(p, 'spatialResolutionDenominator')|e }}</gco:Integer>
+                                </gmd:denominator>
+                            </gmd:MD_RepresentativeFraction>
+                        </gmd:equivalentScale>
+                    </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+            {% endif %}
+            {% if not array_is_empty(p, 'spatialResolutionDistance') %}
+                <gmd:spatialResolution>
+                    <gmd:MD_Resolution>
+                        <gmd:distance>
+                            <gco:Distance uom="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/uom/ML_gmxUom.xml#m">{{ array_get(p, 'spatialResolutionDistance')|e }}</gco:Distance>
+                        </gmd:distance>
+                    </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'identLanguage') %}
+                <gmd:language>
+                    <gmd:LanguageCode codeListValue="{{ p['identLanguage']|e }}" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode">{{ p['identLanguage']|e }}</gmd:LanguageCode>
+                </gmd:language>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'identCharacterSet') %}
+                <gmd:characterSet>
+                    <gmd:MD_CharacterSetCode codeListValue="{{ p['identCharacterSet']|e }}" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode">{{ p['identCharacterSet']|e }}</gmd:MD_CharacterSetCode>
+                </gmd:characterSet>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'topicCategory') %}
+                {% for topicCategory in array_get(p, 'topicCategory') %}
+                    <gmd:topicCategory>
+                        <gmd:MD_TopicCategoryCode>{{ topicCategory }}</gmd:MD_TopicCategoryCode>
+                    </gmd:topicCategory>
+                {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'environmentDescription') %}
+                <gmd:environmentDescription>
+                    <gco:CharacterString>{{ p['environmentDescription']|e }}</gco:CharacterString>
+                </gmd:environmentDescription>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'geographicIdentifier') %}
+            <gmd:extent>
+                <gmd:EX_Extent>
+                    <gmd:geographicElement>
+                        <gmd:EX_GeographicDescription>
+                            <gmd:geographicIdentifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>{{ p['geographicIdentifier']|e }}</gco:CharacterString>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:geographicIdentifier>
+                        </gmd:EX_GeographicDescription>
+                    </gmd:geographicElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'extentDescription') %}
+                <gmd:extent>
+                    <gmd:EX_Extent>
+                        <gmd:description>
+                            <gco:CharacterString>{{ p['extentDescription']|e }}</gco:CharacterString>
+                        </gmd:description>
+                    </gmd:EX_Extent>
+                </gmd:extent>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'bbox') %}
+                <gmd:extent>
+                    <gmd:EX_Extent>
+                        <gmd:geographicElement>
+                            <gmd:EX_GeographicBoundingBox>
+                                <gmd:extentTypeCode>
+                                    <gco:Boolean>{{ p['bbox']['extentTypeCode']|e }}</gco:Boolean>
+                                </gmd:extentTypeCode>
+                                <gmd:westBoundLongitude>
+                                    <gco:Decimal>{{ p['bbox']['wLongitude']|e }}</gco:Decimal>
+                                </gmd:westBoundLongitude>
+                                <gmd:eastBoundLongitude>
+                                    <gco:Decimal>{{ p['bbox']['eLongitude']|e }}</gco:Decimal>
+                                </gmd:eastBoundLongitude>
+                                <gmd:southBoundLatitude>
+                                    <gco:Decimal>{{ p['bbox']['sLatitude']|e }}</gco:Decimal>
+                                </gmd:southBoundLatitude>
+                                <gmd:northBoundLatitude>
+                                    <gco:Decimal>{{ p['bbox']['nLatitude']|e }}</gco:Decimal>
+                                </gmd:northBoundLatitude>
+                            </gmd:EX_GeographicBoundingBox>
+                        </gmd:geographicElement>
+                    </gmd:EX_Extent>
+                </gmd:extent>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'temporalExtentBegin') and not array_is_empty(p, 'temporalExtentEnd') %}
+            <gmd:extent>
+                <gmd:EX_Extent>
+                        <gmd:temporalElement>
+                            <gmd:EX_TemporalExtent>
+                                <gmd:extent>
+                                    <gml:TimePeriod gml:id="temporalextent">
+                                        {% if not array_is_empty(p, 'temporalExtentBegin') %}
+                                        <gml:beginPosition>{{ p['temporalExtentBegin']|e }}</gml:beginPosition>
+                                        {% endif %}
+                                        {% if not array_is_empty(p, 'temporalExtentEnd') %}
+                                        <gml:endPosition>{{ p['temporalExtentEnd']|e }}</gml:endPosition>
+                                        {% endif %}
+                                    </gml:TimePeriod>
+                                </gmd:extent>
+                            </gmd:EX_TemporalExtent>
+                        </gmd:temporalElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'polygon') %}
+                {% if p['polygon']['srsName'] is defined and p['polygon']['srsName'] is not empty %}
+                <gmd:extent>
+                    <gmd:EX_Extent>
+                        <gmd:geographicElement>
+                            <gmd:EX_BoundingPolygon>
+                                {% if p['polygon']['extentTypeCode'] is defined and p['polygon']['extentTypeCode'] is not empty %}
+                                    <gmd:extentTypeCode>
+                                        <gco:Boolean>{{ p['polygon']['extentTypeCode']|e }}</gco:Boolean>
+                                    </gmd:extentTypeCode>
+                                {% endif %}
+                                {% if p['polygon']['srsName'] is defined %}
+                                    <gmd:polygon>
+                                        <gml:Polygon gml:id="polygon" srsName="{{ p['polygon']['srsName']|e }}">
+                                            <gml:exterior>
+                                                <gml:LinearRing>
+                                                    {% if p['polygon']['srsDimension'] is defined and p['polygon']['posList'] is defined %}
+                                                        <gml:posList srsDimension="{{ p['polygon']['srsDimension']|e }}">{{ p['polygon']['posList']|e }}</gml:posList>
+                                                    {% endif %}
+                                                </gml:LinearRing>
+                                            </gml:exterior>
+                                        </gml:Polygon>
+                                    </gmd:polygon>
+                                {% endif %}
+                            </gmd:EX_BoundingPolygon>
+                        </gmd:geographicElement>
+                    </gmd:EX_Extent>
+                </gmd:extent>
+                {% endif %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'vertical') %}
+                {% if p['vertical']['name'] is defined and p['vertical']['name'] is not empty %}
+                <gmd:extent>
+                    <gmd:EX_Extent>
+                        <gmd:verticalElement>
+                            <gmd:EX_VerticalExtent>
+                                {% if p['vertical']['min'] is defined %}
+                                    <gmd:minimumValue>
+                                        <gco:Real>{{ p['vertical']['min']|e }}</gco:Real>
+                                    </gmd:minimumValue>
+                                {% endif %}
+                                {% if p['vertical']['max'] is defined %}
+                                    <gmd:maximumValue>
+                                        <gco:Real>{{ p['vertical']['max']|e }}</gco:Real>
+                                    </gmd:maximumValue>
+                                {% endif %}
+                                {% if p['vertical']['identifier'] is defined %}
+                                <gmd:verticalCRS>
+                                    <gml:VerticalCRS gml:id="epsg">
+                                        <gml:identifier codeSpace="urn:ogc:def:crs:EPSG">{{ p['vertical']['identifier']|e }}</gml:identifier>
+                                        <gml:name>{{ p['vertical']['name']|e }}</gml:name>
+                                        <gml:remarks>{{ p['vertical']['remarks']|e }}</gml:remarks>
+                                        <gml:scope>{{ p['vertical']['scope']|e }}</gml:scope>
+                                        <gml:verticalCS nilReason="unknown"></gml:verticalCS>
+                                        <gml:verticalDatum nilReason="unknown"></gml:verticalDatum>
+                                    </gml:VerticalCRS>
+                                </gmd:verticalCRS>
+                                {% endif %}
+                    </gmd:EX_VerticalExtent>
+                </gmd:verticalElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+                {% endif %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'supplementalInformation') %}
+                <gmd:supplementalInformation>
+                    <gco:CharacterString>{{ p['supplementalInformation']|e }}</gco:CharacterString>
+                </gmd:supplementalInformation>
+            {% endif %}
+
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+
+    <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+            {% if not array_is_empty(p, 'distributionFormat') %}
+                {% for distributionFormat in array_get(p, 'distributionFormat') %}
+                    {% if array_all_exists(distributionFormat, ['name', 'version', 'specification']) %}
+                    <gmd:distributionFormat>
+                        <gmd:MD_Format>
+                            <gmd:name>
+                                <gco:CharacterString>{{ distributionFormat.name }}</gco:CharacterString>
+                            </gmd:name>
+                            <gmd:version>
+                                <gco:CharacterString>{{ distributionFormat.version }}</gco:CharacterString>
+                            </gmd:version>
+                            <gmd:specification>
+                                <gco:CharacterString>{{ distributionFormat.specification }}</gco:CharacterString>
+                            </gmd:specification>
+                            <gmd:fileDecompressionTechnique>
+                                <gco:CharacterString>{{ distributionFormat.fileDecompressionTechnique|default('none') }}</gco:CharacterString>
+                            </gmd:fileDecompressionTechnique>
+                        </gmd:MD_Format>
+                    </gmd:distributionFormat>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'distributionContact') or not array_is_empty(p, 'orderProcess') or not array_is_empty(p, 'distributorFormat') %}
+            <gmd:distributor>
+                <gmd:MD_Distributor>
+                    {% for contact in array_get(p, 'distributionContact') %}
+                    {% if array_all_exists(contact, ['uuid','organisationName','positionName','role','email','country','administrativeArea','url']) %}
+                    <gmd:distributorContact>
+                        <gmd:CI_ResponsibleParty uuid="{{ contact['uuid']|e }}">
+                            {% if not array_is_empty(contact, 'individualName') %}
+                                <gmd:individualName>
+                                    <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
+                                </gmd:individualName>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'organisationName') %}
+                                <gmd:organisationName>
+                                    <gco:CharacterString>{{ contact['organisationName']|e }}</gco:CharacterString>
+                                </gmd:organisationName>
+                            {% endif %}
+                            {% if not array_is_empty(contact, 'positionName') %}
+                                <gmd:positionName>
+                                    <gco:CharacterString>{{ contact['positionName']|e }}</gco:CharacterString>
+                                </gmd:positionName>
+                            {% endif %}
+                            <gmd:contactInfo>
+                                <gmd:CI_Contact>
+                                    <gmd:phone>
+                                        <gmd:CI_Telephone>
+                                            {% if not array_is_empty(contact, 'voice') %}
+                                                <gmd:voice>
+                                                    <gco:CharacterString>{{ contact['voice']|e }}</gco:CharacterString>
+                                                </gmd:voice>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'facsimile') %}
+                                                <gmd:facsimile>
+                                                    <gco:CharacterString>{{ contact['facsimile']|e }}</gco:CharacterString>
+                                                </gmd:facsimile>
+                                            {% endif %}
+                                        </gmd:CI_Telephone>
+                                    </gmd:phone>
+                                    <gmd:address>
+                                        <gmd:CI_Address>
+                                            {% if not array_is_empty(contact, 'deliveryPoint') %}
+                                                <gmd:deliveryPoint>
+                                                    <gco:CharacterString>{{ contact['deliveryPoint']|e }}</gco:CharacterString>
+                                                </gmd:deliveryPoint>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'city') %}
+                                                <gmd:city>
+                                                    <gco:CharacterString>{{ contact['city']|e }}</gco:CharacterString>
+                                                </gmd:city>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'administrativeArea') %}
+                                                <gmd:administrativeArea>
+                                                    <gco:CharacterString>{{ contact['administrativeArea']|e }}</gco:CharacterString>
+                                                </gmd:administrativeArea>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'postalCode') %}
+                                                <gmd:postalCode>
+                                                    <gco:CharacterString>{{ contact['postalCode']|e }}</gco:CharacterString>
+                                                </gmd:postalCode>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'country') %}
+                                                <gmd:country>
+                                                    <gco:CharacterString>{{ contact['country']|e }}</gco:CharacterString>
+                                                </gmd:country>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'email') %}
+                                                {% for email in array_get(contact, 'email', {}) %}
+                                                    {% if email is defined and email is not empty %}
+                                                        <gmd:electronicMailAddress>
+                                                            <gco:CharacterString>{{ email|e }}</gco:CharacterString>
+                                                        </gmd:electronicMailAddress>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </gmd:CI_Address>
+                                    </gmd:address>
+                                    <gmd:onlineResource>
+                                        <gmd:CI_OnlineResource>
+                                            {% if not array_is_empty(contact, 'url') %}
+                                                <gmd:linkage>
+                                                    <gmd:URL>{{ contact['url']|e }}</gmd:URL>
+                                                </gmd:linkage>
+                                            {% endif %}
+                                            {% if not array_is_empty(contact, 'urlDescription') %}
+                                                <gmd:description>
+                                                    <gco:CharacterString>{{ contact['urlDescription']|e }}</gco:CharacterString>
+                                                </gmd:description>
+                                            {% endif %}
+                                        </gmd:CI_OnlineResource>
+                                    </gmd:onlineResource>
+                                    {% if not array_is_empty(contact, 'hoursOfService') %}
+                                    <gmd:hoursOfService>
+                                        <gco:CharacterString>{{ contact['hoursOfService']|e }}</gco:CharacterString>
+                                    </gmd:hoursOfService>
+                                    {% endif %}
+                                </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                            {% if not array_is_empty(contact, 'role') %}
+                                <gmd:role>
+                                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="{{ array_get(contact, 'role') }}">{{ array_get(contact, 'role') }}</gmd:CI_RoleCode>
+                                </gmd:role>
+                            {% endif %}
+                        </gmd:CI_ResponsibleParty>
+                    </gmd:distributorContact>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if not array_is_empty(p, 'orderProcess') %}
+                        {% for orderProcess in array_get(p, 'orderProcess') %}
+                            {% if orderProcess.fees is defined and orderProcess.fees is not empty
+                            or orderProcess.instructions is defined and orderProcess.instructions is not empty
+                            or orderProcess.turnaround is defined and orderProcess.turnaround is not empty
+                            %}
+                            <gmd:distributionOrderProcess>
+                                <gmd:MD_StandardOrderProcess>
+                                    {% if orderProcess.fees is defined and orderProcess.fees is not empty %}
+                                        <gmd:fees>
+                                            <gco:CharacterString>{{ orderProcess.fees }}</gco:CharacterString>
+                                        </gmd:fees>
+                                    {% endif %}
+                                    {% if orderProcess.instructions is defined and orderProcess.instructions is not empty %}
+                                        <gmd:orderingInstructions>
+                                            <gco:CharacterString>{{ orderProcess.instructions }}</gco:CharacterString>
+                                        </gmd:orderingInstructions>
+                                    {% endif %}
+                                    {% if orderProcess.turnaround is defined and orderProcess.turnaround is not empty %}
+                                        <gmd:turnaround>
+                                            <gco:CharacterString>{{ orderProcess.turnaround }}</gco:CharacterString>
+                                        </gmd:turnaround>
+                                    {% endif %}
+                                </gmd:MD_StandardOrderProcess>
+                            </gmd:distributionOrderProcess>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if not array_is_empty(p, 'distributorFormat') %}
+                        {% for distributorFormat in array_get(p, 'distributorFormat') %}
+                            {% if array_all_exists(distributorFormat, ['name', 'version', 'specification']) %}
+                                <gmd:distributorFormat>
+                                    <gmd:MD_Format>
+                                        <gmd:name>
+                                            <gco:CharacterString>{{ distributorFormat.name }}</gco:CharacterString>
+                                        </gmd:name>
+                                        <gmd:version>
+                                            <gco:CharacterString>{{ distributorFormat.version }}</gco:CharacterString>
+                                        </gmd:version>
+                                        <gmd:specification>
+                                            <gco:CharacterString>{{ distributorFormat.specification }}</gco:CharacterString>
+                                        </gmd:specification>
+                                        <gmd:fileDecompressionTechnique>
+                                            <gco:CharacterString>{{ distributorFormat.fileDecompressionTechnique|default('none') }}</gco:CharacterString>
+                                        </gmd:fileDecompressionTechnique>
+                                    </gmd:MD_Format>
+                                </gmd:distributorFormat>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </gmd:MD_Distributor>
+            </gmd:distributor>
+            {% endif %}
+
+            {% if not array_is_empty(p, 'transferOptions') %}
+                <gmd:transferOptions>
+                    <gmd:MD_DigitalTransferOptions>
+                        {%  if p['transferOptions']['unitsOfDistribution'] is defined %}
+                            <gmd:unitsOfDistribution>
+                                <gco:CharacterString>{{ p['transferOptions']['unitsOfDistribution']|e }}</gco:CharacterString>
+                            </gmd:unitsOfDistribution>
+                        {% endif %}
+                        <gmd:onLine>
+                            <gmd:CI_OnlineResource>
+                                {%  if p['transferOptions']['url'] is defined %}
+                                    <gmd:linkage>
+                                        <gmd:URL>{{ p['transferOptions']['url']|e }}</gmd:URL>
+                                    </gmd:linkage>
+                                {% endif %}
+                                {%  if p['transferOptions']['urlDescription'] is defined %}
+                                    <gmd:description>
+                                        <gco:CharacterString>{{ p['transferOptions']['urlDescription']|e }}</gco:CharacterString>
+                                    </gmd:description>
+                                {% endif %}
+                                {%  if p['transferOptions']['function'] is defined %}
+                                    <gmd:function>
+                                        <gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml" codeListValue="{{ p['transferOptions']['function']|e }}">{{ p['transferOptions']['function']|e }}</gmd:CI_OnLineFunctionCode>
+                                    </gmd:function>
+                                {% endif %}
+                            </gmd:CI_OnlineResource>
+                        </gmd:onLine>
+                    </gmd:MD_DigitalTransferOptions>
+                </gmd:transferOptions>
+            {% endif %}
+        </gmd:MD_Distribution>
+    </gmd:distributionInfo>
+
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:scope>
+                <gmd:DQ_Scope>
+                    {% if not array_is_empty(p,'hierarchyLevel') %}
+                    <gmd:level>
+                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="{{ p['hierarchyLevel']|e }}">{{ p['hierarchyLevel']|e }}</gmd:MD_ScopeCode>
+                    </gmd:level>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'levelDescription') %}
+                        <gmd:levelDescription>
+                            <gmd:MD_ScopeDescription>
+                                <gmd:other>
+                                    <gco:CharacterString>{{ array_get(p, 'levelDescription')|e }}</gco:CharacterString>
+                                </gmd:other>
+                            </gmd:MD_ScopeDescription>
+                        </gmd:levelDescription>
+                    {% endif %}
+                </gmd:DQ_Scope>
+            </gmd:scope>
+
+            {% if not array_is_empty(p, 'report') %}
+            {% for report in array_get(p, 'report') %}
+            {% if array_all_exists(report, ['title']) %}
+            <gmd:report>
+                <gmd:DQ_DomainConsistency xsi:type="gmd:DQ_DomainConsistency_Type">
+                    <gmd:result>
+                        <gmd:DQ_ConformanceResult xsi:type="gmd:DQ_ConformanceResult_Type">
+                            <gmd:specification>
+                                <gmd:CI_Citation>
+                                    {% if report.title is defined %}
+                                    <gmd:title>
+                                        <gco:CharacterString>{{ report.title }}</gco:CharacterString>
+                                    </gmd:title>
+                                    {% endif %}
+                                    {% if report.creationDate is defined and report.creationDate is not empty %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ report.creationDate|date("Y-m-d")|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if report.publicationDate is defined and report.publicationDate is not empty %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ report.publicationDate|date("Y-m-d")|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if report.revisionDate is defined and report.revisionDate is not empty %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ report.revisionDate|date("Y-m-d")|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if report.edition is defined and report.edition is not empty %}
+                                    <gmd:edition>
+                                        <gco:CharacterString>{{ report.edition|e }}</gco:CharacterString>
+                                    </gmd:edition>
+                                    {% endif %}
+                                </gmd:CI_Citation>
+                            </gmd:specification>
+                            {% if report.explanation is defined %}
+                            <gmd:explanation>
+                                <gco:CharacterString>{{ report.explanation|e }}</gco:CharacterString>
+                            </gmd:explanation>
+                            {% endif %}
+                            {% if report.pass is defined and report.pass is not sameas('unknown') %}
+                            <gmd:pass>
+                                <gco:Boolean>{{ report.pass|e }}</gco:Boolean>
+                            </gmd:pass>
+                            {% else %}
+                                <gmd:pass gco:nilReason="unknown"/>
+                            {% endif %}
+                        </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                </gmd:DQ_DomainConsistency>
+            </gmd:report>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if not array_is_empty(p, 'quantitativeResult') %}
+            {% for result in array_get(p, 'quantitativeResult', {}) %}
+                {% if result.valueType is defined and result.valueType is not empty
+                   and result.valueUnit is defined and result.valueUnit is not empty
+                   and result.value is defined and result.value is not empty
+                %}
+                <gmd:report>
+                    <gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                        <gmd:result>
+                            <gmd:DQ_QuantitativeResult>
+                                {% if result.valueType is defined %}
+                                <gmd:valueType>
+                                    <gco:RecordType>{{ result.valueType }}</gco:RecordType>
+                                </gmd:valueType>
+                                {% endif %}
+                                <gmd:valueUnit>
+                                {% if result.valueUnit is defined %}
+                                <gml:UnitDefinition gml:id="einheit">
+                                    <gml:identifier codeSpace="SI">{{ result.valueUnit }}</gml:identifier>
+                                </gml:UnitDefinition>
+                                {% endif %}
+                                </gmd:valueUnit>
+                                {% if result.value is defined %}
+                                <gmd:value>
+                                    <gco:Record>{{ result.value }}</gco:Record>
+                                </gmd:value>
+                                {% endif %}
+                            </gmd:DQ_QuantitativeResult>
+                        </gmd:result>
+                    </gmd:DQ_AbsoluteExternalPositionalAccuracy>
+                </gmd:report>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    {% if not array_is_empty(p, 'lineageStatement') %}
+                        <gmd:statement>
+                            <gco:CharacterString>{{ array_get(p, 'lineageStatement')|e }}</gco:CharacterString>
+                        </gmd:statement>
+                    {% endif %}
+
+                    {% if array_one_exists(p, ['processStep:description', 'processStep:rationale']) %}
+                        <gmd:processStep>
+                            <gmd:LI_ProcessStep>
+                                {% if not array_is_empty(p, 'processStep:description') %}
+                                    <gmd:description>
+                                        <gco:CharacterString>{{ array_get(p, 'processStep:description')|e }}</gco:CharacterString>
+                                    </gmd:description>
+                                {% endif %}
+                                {% if not array_is_empty(p, 'processStep:rationale') %}
+                                    <gmd:rationale>
+                                        <gco:CharacterString>{{ array_get(p, 'processStep:rationale')|e }}</gco:CharacterString>
+                                    </gmd:rationale>
+                                {% endif %}
+                            </gmd:LI_ProcessStep>
+                        </gmd:processStep>
+                    {% endif %}
+                    {% if not array_is_empty(p, 'processStep2') %}
+                        {% for processStep in array_get(p, 'processStep2') %}
+                        {% if not array_is_empty(processStep, 'description') %}
+                        <gmd:processStep>
+                            <gmd:LI_ProcessStep>
+                                {% if not array_is_empty(processStep, 'description') %}
+                                    <gmd:description>
+                                        <gco:CharacterString>{{ array_get(processStep, 'description')|e }}</gco:CharacterString>
+                                    </gmd:description>
+                                {% endif %}
+                                {% if not array_is_empty(processStep, 'rationale') %}
+                                    <gmd:rationale>
+                                        <gco:CharacterString>{{ array_get(processStep, 'rationale')|e }}</gco:CharacterString>
+                                    </gmd:rationale>
+                                {% endif %}
+                                {% if not array_is_empty(processStep, 'dateTime') %}
+                                    <gmd:dateTime>
+                                        <gco:DateTime>{{ array_get(processStep, 'dateTime')|e }}</gco:DateTime>
+                                    </gmd:dateTime>
+                                {% elseif not array_is_empty(processStep, 'sourceDescription') %}
+                                    <gmd:source>
+                                        <gmd:LI_Source>
+                                            <gmd:description>
+                                                <gco:CharacterString>{{ array_get(processStep, 'sourceDescription')|e }}</gco:CharacterString>
+                                            </gmd:description>
+                                        </gmd:LI_Source>
+                                    </gmd:source>
+                                {% elseif is_granted('ROLE_SYSTEM_USER') %}
+                                    <gmd:processor>
+                                        <gmd:CI_ResponsibleParty uuid="{{ array_get(processStep, 'responsibleParty:uuid')|e }}">
+                                            {% if not array_is_empty(processStep, 'responsibleParty:individualName') %}
+                                                <gmd:individualName>
+                                                    <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:individualName')|e }}</gco:CharacterString>
+                                                </gmd:individualName>
+                                            {% endif %}
+                                            {% if not array_is_empty(processStep, 'responsibleParty:organisationName') %}
+                                                <gmd:organisationName>
+                                                    <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:organisationName')|e }}</gco:CharacterString>
+                                                </gmd:organisationName>
+                                            {% endif %}
+                                            {% if not array_is_empty(processStep, 'responsibleParty:positionName') %}
+                                                <gmd:positionName>
+                                                    <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:positionName')|e }}</gco:CharacterString>
+                                                </gmd:positionName>
+                                            {% endif %}
+                                            <gmd:contactInfo>
+                                                <gmd:CI_Contact>
+                                                    <gmd:phone>
+                                                        <gmd:CI_Telephone>
+                                                            {% if not array_is_empty(processStep, 'responsibleParty:voice') %}
+                                                                <gmd:voice>
+                                                                    <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:voice')|e }}</gco:CharacterString>
+                                                                </gmd:voice>
+                                                            {% endif %}
+                                                            {% if not array_is_empty(processStep, 'responsibleParty:facsimile') %}
+                                                                <gmd:facsimile>
+                                                                    <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:facsimile')|e }}</gco:CharacterString>
+                                                                </gmd:facsimile>
+                                                            {% endif %}
+                                                        </gmd:CI_Telephone>
+                                                    </gmd:phone>
+                                                    <gmd:address>
+                                                        <gmd:CI_Address>
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:deliveryPoint') %}
+                                                            <gmd:deliveryPoint>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:deliveryPoint')|e }}</gco:CharacterString>
+                                                            </gmd:deliveryPoint>
+                                                        {% endif %}
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:city') %}
+                                                            <gmd:city>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:city')|e }}</gco:CharacterString>
+                                                            </gmd:city>
+                                                        {% endif %}
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:administrativeArea') %}
+                                                            <gmd:administrativeArea>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:administrativeArea')|e }}</gco:CharacterString>
+                                                            </gmd:administrativeArea>
+                                                        {% endif %}
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:postalCode') %}
+                                                            <gmd:postalCode>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:postalCode')|e }}</gco:CharacterString>
+                                                            </gmd:postalCode>
+                                                        {% endif %}
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:country') %}
+                                                            <gmd:country>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:country')|e }}</gco:CharacterString>
+                                                            </gmd:country>
+                                                        {% endif %}
+                                                           {% if not array_is_empty(processStep, 'responsibleParty:email') %}
+                                                                {% for email in array_get(processStep, 'responsibleParty:email') %}
+                                                                    <gmd:electronicMailAddress>
+                                                                        <gco:CharacterString>{{ email|e }}</gco:CharacterString>
+                                                                    </gmd:electronicMailAddress>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </gmd:CI_Address>
+                                                    </gmd:address>
+                                                    <gmd:onlineResource>
+                                                        <gmd:CI_OnlineResource>
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:url') %}
+                                                            <gmd:linkage>
+                                                                <gmd:URL>{{ array_get(processStep, 'responsibleParty:url')|e }}</gmd:URL>
+                                                            </gmd:linkage>
+                                                        {% endif %}
+                                                        {% if not array_is_empty(processStep, 'responsibleParty:urlDescription') %}
+                                                            <gmd:description>
+                                                                <gco:CharacterString>{{ array_get(processStep, 'responsibleParty:urlDescription')|e }}</gco:CharacterString>
+                                                            </gmd:description>
+                                                        {% endif %}
+                                                        </gmd:CI_OnlineResource>
+                                                    </gmd:onlineResource>
+                                                </gmd:CI_Contact>
+                                            </gmd:contactInfo>
+                                            {% if not array_is_empty(processStep, 'responsibleParty:role') %}
+                                                <gmd:role>
+                                                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="{{ array_get(processStep, 'responsibleParty:role')|e }}">{{ array_get(processStep, 'responsibleParty:role')|e }}</gmd:CI_RoleCode>
+                                                </gmd:role>
+                                            {% endif %}
+                                        </gmd:CI_ResponsibleParty>
+                                    </gmd:processor>
+                                {% endif %}
+                                </gmd:LI_ProcessStep>
+                            </gmd:processStep>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if not array_is_empty(p, 'source') %}
+                    {% for source in array_get(p, 'source', {}) %}
+                    {% if array_all_exists(source, ['description','citationTitle','citationAlternateTitle']) %}
+                    <gmd:source>
+                        <gmd:LI_Source>
+                            {% if source['description'] is defined and  source['description'] is not empty %}
+                            <gmd:description>
+                                <gco:CharacterString>{{ source['description']|e }}</gco:CharacterString>
+                            </gmd:description>
+                            {% endif %}
+                            {% if not array_is_empty(source, 'citationTitle')     or not array_is_empty(source, 'citationAlternateTitle:0')
+                                or not array_is_empty(source, 'citationCreation') or not array_is_empty(source, 'citationPublication')
+                                or not array_is_empty(source, 'citationRevision')
+                            %}
+                            <gmd:sourceCitation>
+                                <gmd:CI_Citation>
+                                    {% if source['citationTitle'] is defined and source['citationTitle'] is not empty %}
+                                    <gmd:title>
+                                        <gco:CharacterString>{{ source['citationTitle']|e }}</gco:CharacterString>
+                                    </gmd:title>
+                                    {% endif %}
+                                    {% if not array_is_empty(source, 'citationAlternateTitle:0') %}
+                                        {% for citationAlternateTitle in array_get(source, 'citationAlternateTitle', {}) %}
+                                            {% if citationAlternateTitle is defined and citationAlternateTitle is not empty %}
+                                            <gmd:alternateTitle>
+                                                <gco:CharacterString>{{ citationAlternateTitle|e }}</gco:CharacterString>
+                                            </gmd:alternateTitle>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if not array_is_empty(source, 'citationCreation') %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ source['citationCreation']|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if not array_is_empty(source, 'citationPublication') %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ source['citationPublication']|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if not array_is_empty(source, 'citationRevision') %}
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>{{ source['citationRevision']|e }}</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    {% endif %}
+                                    {% if source['citationEdition'] is defined and source['citationEdition'] is not empty %}
+                                        <gmd:edition>
+                                            <gco:CharacterString>{{ source['citationEdition']|e }}</gco:CharacterString>
+                                        </gmd:edition>
+                                    {% endif %}
+                                </gmd:CI_Citation>
+                            </gmd:sourceCitation>
+                            {% endif %}
+
+                            {% if not array_is_empty(source, 'sourceExtent') %}
+                                {% for sourceExtent in array_get(source, 'sourceExtent', {}) %}
+                                    <gmd:sourceExtent>
+                                        <gmd:EX_Extent>
+                                            <gmd:geographicElement>
+                                                <gmd:EX_BoundingPolygon>
+                                                    {% if not array_is_empty(sourceExtent, 'extentTypeCode') %}
+                                                        <gmd:extentTypeCode>
+                                                            <gco:Boolean>{{ array_get(sourceExtent, 'extentTypeCode') }}</gco:Boolean>
+                                                        </gmd:extentTypeCode>
+                                                    {% endif %}
+                                                    {% if not array_is_empty(sourceExtent, 'srsName') %}
+                                                        <gmd:polygon>
+                                                            <gml:Polygon gml:id="polygon_lineage" srsName="{{ array_get(sourceExtent, 'srsName') }}">
+                                                                <gml:exterior>
+                                                                    <gml:LinearRing>
+                                                                        <gml:posList srsDimension="{{ array_get(sourceExtent, 'dimension') }}">{{ array_get(sourceExtent, 'posList') }}</gml:posList>
+                                                                    </gml:LinearRing>
+                                                                </gml:exterior>
+                                                            </gml:Polygon>
+                                                        </gmd:polygon>
+                                                    {% endif %}
+                                                </gmd:EX_BoundingPolygon>
+                                            </gmd:geographicElement>
+                                        </gmd:EX_Extent>
+                                    </gmd:sourceExtent>
+                                {% endfor %}
+                            {% endif %}
+                        </gmd:LI_Source>
+                    </gmd:source>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

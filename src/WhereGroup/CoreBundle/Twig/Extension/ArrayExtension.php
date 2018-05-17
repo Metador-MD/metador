@@ -131,15 +131,18 @@ class ArrayExtension extends \Twig_Extension
      */
     public function arrayHasValue($array)
     {
+        $option = false;
         if (is_array($array)) {
-            foreach ($array as $key => $value) {
-                return true;
-            }
+            array_walk_recursive($array, function($item, $key) use(&$option) {
+               if ($item !== "") {
+                    $option = true;
+                    return;
+               }
+            });
+            return $option;
         } else {
             return !empty($array);
         }
-
-        return false;
     }
 
     /**
@@ -163,3 +166,5 @@ class ArrayExtension extends \Twig_Extension
         return "metador_array";
     }
 }
+
+
