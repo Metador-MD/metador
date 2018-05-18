@@ -1,0 +1,477 @@
+{
+    "p_language": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_standardname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_standardversion": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_identifiercode": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!",
+            "frontend": false
+        }
+    ],
+    "p_identifiercodespace": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_title": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_identlanguage": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_identcharacterset": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_abstract": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_transferoptions_unitsofdistribution": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_transferoptions_url": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_transferoptions_function": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_referencesysteminfo_title":
+    [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_bbox_nlatitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_elongitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_slatitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_wlongitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_extenttypecode": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_presentationform": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_spatialrepresentationtype": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_topiccategory": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributionformat_name" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_distributionformat_version" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_distributionformat_specification" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_useconstraints_otherconstraints": [
+        {
+            "assert": "notBlank",
+            "message": "Dateneigenschaften_Klassifizierung"
+        }
+    ],
+    "p_accessconstraints_otherconstraints": [
+        {
+            "assert": "notBlank",
+            "message": "Dateneigenschaften_Klassifizierung"
+        }
+    ],
+    "p_report_title": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_edition": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_explanation": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_pass": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_lineagestatement": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_processstep_description": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributioncontact_organisationname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributioncontact_role": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributioncontact_email": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributioncontact_country": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributioncontact_administrativearea": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_organisationname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_positionname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!",
+            "frontend": false
+        }
+    ],
+    "p_responsibleparty_role": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_email": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_country": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_administrativearea": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_organisationname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_email": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_administrativearea": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_country": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_creationdate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_publicationdate", "p_revisiondate"
+            ]
+        }
+    ],
+    "p_publicationdate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_creationdate", "p_revisiondate"
+            ]
+        }
+    ],
+    "p_revisiondate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_publicationdate", "p_creationdate"
+            ]
+        }
+    ],
+    "p_aggregationinfo_code": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-set-fields-parent",
+            "siblings": [
+                "p_aggregationinfo_associationtype"
+            ]
+        }
+    ],
+    "p_aggregationinfo_associationtype": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-set-fields-parent",
+            "siblings": [
+                "p_aggregationinfo_code"
+            ]
+        }
+    ],
+    "p_spatialresolutiondenominator": [
+        {
+            "assert": "onlyOne",
+            "message": "Nur eins der Felder darf ausgefüllt sein!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_spatialresolutiondistance"
+            ]
+        }
+    ],
+    "p_spatialresolutiondistance": [
+        {
+            "assert": "onlyOne",
+            "message": "Nur eins der Felder darf ausgefüllt sein!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_spatialresolutiondenominator"
+            ]
+        }
+    ],
+    "p_vertical_identifier": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_vertical_remarks", "p_vertical_scope", "p_vertical_min", "p_vertical_max"]
+        }
+    ],
+    "p_vertical_remarks": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_vertical_identifier", "p_vertical_scope", "p_vertical_min", "p_vertical_max"]
+        }
+    ],
+    "p_vertical_scope": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_vertical_identifier", "p_vertical_remarks", "p_vertical_min", "p_vertical_max"]
+        }
+    ],
+    "p_vertical_min": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_vertical_identifier", "p_vertical_remarks", "p_vertical_scope", "p_vertical_max"]
+        }
+    ],
+    "p_vertical_max": [
+        {
+            "assert": "allOrNothing",
+            "message": "Alle Felder ausfüllen oder alle Felder leer lassen!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_vertical_identifier", "p_vertical_remarks", "p_vertical_scope", "p_vertical_min"]
+        }
+    ],
+    "p_processstep2_responsibleparty_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_processstep2_responsibleparty_urldescription"]
+        }
+    ],
+    "p_processstep2_responsibleparty_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_processstep2_responsibleparty_url"]
+        }
+    ],
+    "p_distributioncontact_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_distributioncontact_urldescription"]
+        }
+    ],
+    "p_distributioncontact_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_distributioncontact_url"]
+        }
+    ],
+    "p_responsibleparty_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_responsibleparty_urldescription"]
+        }
+    ],
+    "p_responsibleparty_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_responsibleparty_url"]
+        }
+    ],
+    "p_contact_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_contact_urldescription"]
+        }
+    ],
+    "p_contact_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_contact_url"]
+        }
+    ]
+}

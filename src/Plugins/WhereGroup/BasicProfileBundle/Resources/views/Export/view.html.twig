@@ -47,188 +47,188 @@
         word-break: break-word;
     }
 </style>
-{#<table class="view-table">#}
-    {#<tbody>#}
-        {#{{ export.topic_one(array_get(p, 'title')) }}#}
-        {#{% if p['alternateTitle'] is defined and p['alternateTitle'] is iterable %}#}
-            {#{% for title in p['alternateTitle']  %}#}
-                {#<tr>#}
-                    {#<th colspan="2" class="view-header-two"><i>{{ title }}</i></th>#}
-                {#</tr>#}
-            {#{% endfor %}#}
-        {#{% elseif p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}#}
-            {#<tr>#}
-                {#<th colspan="2" class="view-header-two"><i>{{ array_get(p, 'alternateTitle', '') }}</i></th>#}
-            {#</tr>#}
-        {#{% endif %}#}
-        {#<tr>#}
-            {#<td colspan="2" class="html-gap pdf-gap"></td>#}
-        {#</tr>#}
-        {#<tr>#}
-            {#<td class="view-header-two view-update-time-label">Letzte Aktualisierung:</td>#}
-            {#<td class="view-update-time"><i>{{ array_get(p, '_update_time', '') }}</i></td>#}
-        {#</tr>#}
-        {#<tr>#}
-            {#<td colspan="2" class="html-gap pdf-gap"></td>#}
-        {#</tr>#}
-        {#<tr>#}
-            {#<td>{{ array_get(p, 'abstract', '') }}</td>#}
-            {#<td><img style="max-width: 200px; max-height: 200px;" src="{{ array_get(p, 'graphicOverview:0:fileName','') }}"></td>#}
-        {#</tr>#}
-    {#</tbody>#}
-{#</table>#}
+<table class="view-table">
+    <tbody>
+        {{ export.topic_one(array_get(p, 'title')) }}
+        {% if p['alternateTitle'] is defined and p['alternateTitle'] is iterable %}
+            {% for title in p['alternateTitle']  %}
+                <tr>
+                    <th colspan="2" class="view-header-two"><i>{{ title }}</i></th>
+                </tr>
+            {% endfor %}
+        {% elseif p['alternateTitle'] is defined and p['alternateTitle'] is not empty %}
+            <tr>
+                <th colspan="2" class="view-header-two"><i>{{ array_get(p, 'alternateTitle', '') }}</i></th>
+            </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+        <tr>
+            <td class="view-header-two view-update-time-label">Letzte Aktualisierung:</td>
+            <td class="view-update-time"><i>{{ array_get(p, '_update_time', '') }}</i></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="html-gap pdf-gap"></td>
+        </tr>
+        <tr>
+            <td>{{ array_get(p, 'abstract', '') }}</td>
+            <td><img style="max-width: 200px; max-height: 200px;" src="{{ array_get(p, 'graphicOverview:0:fileName','') }}"></td>
+        </tr>
+    </tbody>
+</table>
 <div class="html-gap pdf-gap"></div>
-{#<table class="view-table">#}
-        {#{% if array_has_value(array_get(p,'fileIdentifier'))#}
-            {#or array_has_value(array_get(p,'dateStamp'))#}
-            {#or array_has_value(array_get(p,'hierarchyLevel'))#}
-            {#or array_has_value(array_get(p,'characterSet'))#}
-            {#or array_has_value(array_get(p,'language'))#}
-            {#or array_has_value(array_get(p,'standardName'))#}
-            {#or array_has_value(array_get(p,'standardVersion'))#}
-        {#%}#}
-            {#{{ export.topic_two('Metadateneigenschaften') }}#}
-        {#{% endif %}#}
+<table class="view-table">
+        {% if array_has_value(array_get(p,'fileIdentifier'))
+            or array_has_value(array_get(p,'dateStamp'))
+            or array_has_value(array_get(p,'hierarchyLevel'))
+            or array_has_value(array_get(p,'characterSet'))
+            or array_has_value(array_get(p,'language'))
+            or array_has_value(array_get(p,'standardName'))
+            or array_has_value(array_get(p,'standardVersion'))
+        %}
+            {{ export.topic_two('Metadateneigenschaften') }}
+        {% endif %}
 
-        {#{% if array_has_value(array_get(p,'fileIdentifier'))#}
-            {#or array_has_value(array_get(p,'dateStamp'))#}
-            {#or array_has_value(array_get(p,'hierarchyLevel'))#}
-        {#%}#}
-            {#{{ export.topic_three('Identifikation/Beziehung') }}#}
-        {#{% endif %}#}
+        {% if array_has_value(array_get(p,'fileIdentifier'))
+            or array_has_value(array_get(p,'dateStamp'))
+            or array_has_value(array_get(p,'hierarchyLevel'))
+        %}
+            {{ export.topic_three('Identifikation/Beziehung') }}
+        {% endif %}
 
-        {#<tr><td colspan="2" class="html-gap pdf-gap"></td></tr>#}
-        {#{{ export.line('File-Identifikator', array_get(p,'fileIdentifier', '')) }}#}
-        {#{{ export.line('Letzte Änderung', array_get(p,'dateStamp', '')) }}#}
-        {#{{ export.line('Beschreibung der Hierarchieebene', array_get(p,'hierarchyLevel', '')) }}#}
+        <tr><td colspan="2" class="html-gap pdf-gap"></td></tr>
+        {{ export.line('File-Identifikator', array_get(p,'fileIdentifier', '')) }}
+        {{ export.line('Letzte Änderung', array_get(p,'dateStamp', '')) }}
+        {{ export.line('Beschreibung der Hierarchieebene', array_get(p,'hierarchyLevel', '')) }}
 
-        {#{% if array_has_value(array_get(p,'characterSet'))#}
-            {#or array_has_value(array_get(p,'language'))#}
-            {#or array_has_value(array_get(p,'standardName'))#}
-            {#or array_has_value(array_get(p,'standardVersion'))#}
-        {#%}#}
-            {#{{ export.topic_three('Beschreibung') }}#}
-        {#{% endif %}#}
-        {#{{ export.line('Zeichencodestandard', array_get(p,'characterSet', '')) }}#}
-        {#{{ export.line('Sprache', array_get(p,'language', '')) }}#}
-        {#{{ export.line('Spezifikation', array_get(p,'standardName', '')) }}#}
-        {#{{ export.line('Version der Spezifikation', array_get(p,'standardVersion', '')) }}#}
-{#</table>#}
+        {% if array_has_value(array_get(p,'characterSet'))
+            or array_has_value(array_get(p,'language'))
+            or array_has_value(array_get(p,'standardName'))
+            or array_has_value(array_get(p,'standardVersion'))
+        %}
+            {{ export.topic_three('Beschreibung') }}
+        {% endif %}
+        {{ export.line('Zeichencodestandard', array_get(p,'characterSet', '')) }}
+        {{ export.line('Sprache', array_get(p,'language', '')) }}
+        {{ export.line('Spezifikation', array_get(p,'standardName', '')) }}
+        {{ export.line('Version der Spezifikation', array_get(p,'standardVersion', '')) }}
+</table>
 <div class="html-gap pdf-gap"></div>
-{#<table class="view-table">#}
-    {#{% if array_has_value(array_get(p,'identifierCode', ''))#}
-        {#or array_has_value(array_get(p,'identifierCodespace', ''))#}
-        {#or array_has_value(array_get(p,'title', ''))#}
-        {#or array_has_value(array_get(p,'alternateTitle', ''))#}
-        {#or array_has_value(array_get(p,'identLanguage', ''))#}
-        {#or array_has_value(array_get(p,'abstract', ''))#}
-        {#or array_has_value(array_get(p,'graphicOverview', ''))#}
-        {#or array_has_value(array_get(p,'referenceSystemInfo', ''))#}
-        {#or array_has_value(array_get(p,'bbox',''))#}
-        {#or array_has_value(array_get(p,'temporalExtentBegin',''))#}
-        {#or array_has_value(array_get(p,'transferOptions', ''))#}
-        {#or array_has_value(array_get(p,'dcp', ''))#}
-        {#or array_has_value(array_get(p,'creationDate',''))#}
-        {#or array_has_value(array_get(p,'publicationDate',''))#}
-        {#or array_has_value(array_get(p,'revisionDate',''))#}
-        {#or array_has_value(array_get(p,'distributionFormat',''))#}
-    {#%}#}
-        {#{{ export.topic_two('Dateneigenschaften') }}#}
-    {#{% endif %}#}
+<table class="view-table">
+    {% if array_has_value(array_get(p,'identifierCode', ''))
+        or array_has_value(array_get(p,'identifierCodespace', ''))
+        or array_has_value(array_get(p,'title', ''))
+        or array_has_value(array_get(p,'alternateTitle', ''))
+        or array_has_value(array_get(p,'identLanguage', ''))
+        or array_has_value(array_get(p,'abstract', ''))
+        or array_has_value(array_get(p,'graphicOverview', ''))
+        or array_has_value(array_get(p,'referenceSystemInfo', ''))
+        or array_has_value(array_get(p,'bbox',''))
+        or array_has_value(array_get(p,'temporalExtentBegin',''))
+        or array_has_value(array_get(p,'transferOptions', ''))
+        or array_has_value(array_get(p,'dcp', ''))
+        or array_has_value(array_get(p,'creationDate',''))
+        or array_has_value(array_get(p,'publicationDate',''))
+        or array_has_value(array_get(p,'revisionDate',''))
+        or array_has_value(array_get(p,'distributionFormat',''))
+    %}
+        {{ export.topic_two('Dateneigenschaften') }}
+    {% endif %}
 
-    {#{% if array_has_value(array_get(p,'identifierCode', ''))#}
-        {#or array_has_value(array_get(p,'identifierCodespace', ''))#}
-    {#%}#}
-        {#{{ export.topic_three('Ressourcen-Identifikator') }}#}
-    {#{% endif %}#}
-    {#{{ export.line('Identifikator (code)', array_get(p,'identifierCode', '')) }}#}
-    {#{{ export.line('Namensraum (codespace)', array_get(p,'identifierCodespace', '')) }}#}
+    {% if array_has_value(array_get(p,'identifierCode', ''))
+        or array_has_value(array_get(p,'identifierCodespace', ''))
+    %}
+        {{ export.topic_three('Ressourcen-Identifikator') }}
+    {% endif %}
+    {{ export.line('Identifikator (code)', array_get(p,'identifierCode', '')) }}
+    {{ export.line('Namensraum (codespace)', array_get(p,'identifierCodespace', '')) }}
 
-    {#{% if array_has_value(array_get(p,'title', ''))#}
-        {#or array_has_value(array_get(p,'alternateTitle', ''))#}
-        {#or array_has_value(array_get(p,'identLanguage', ''))#}
-        {#or array_has_value(array_get(p,'abstract', ''))#}
-    {#%}#}
-        {#{{ export.topic_three('Beschreibung') }}#}
-    {#{% endif %}#}
+    {% if array_has_value(array_get(p,'title', ''))
+        or array_has_value(array_get(p,'alternateTitle', ''))
+        or array_has_value(array_get(p,'identLanguage', ''))
+        or array_has_value(array_get(p,'abstract', ''))
+    %}
+        {{ export.topic_three('Beschreibung') }}
+    {% endif %}
 
-    {#{{ export.line('Titel', array_get(p,'title', '')) }}#}
-    {#{{ export.multiline_value('Alternativtitel', array_get(p,'alternateTitle','')) }}#}
-    {#{{ export.line('Sprache des Datenbestandes', array_get(p,'identLanguage', '')) }}#}
-    {#{{ export.line('Kurzbeschreibung', array_get(p,'abstract', '')) }}#}
+    {{ export.line('Titel', array_get(p,'title', '')) }}
+    {{ export.multiline_value('Alternativtitel', array_get(p,'alternateTitle','')) }}
+    {{ export.line('Sprache des Datenbestandes', array_get(p,'identLanguage', '')) }}
+    {{ export.line('Kurzbeschreibung', array_get(p,'abstract', '')) }}
 
-    {#{% if array_has_value(array_get(p,'graphicOverview')) %}#}
-        {#{{ export.topic_three('Vorschaubild') }}#}
-    {#{% endif %}#}
-    {#{% for  graphic in array_get(p,'graphicOverview', '') %}#}
-        {#{% if  graphic.fileDescription is defined %}#}
-            {#{{ export.line('Browser Bild Beschreibung', graphic.fileDescription) }}#}
-        {#{% endif %}#}
-        {#{{ export.line('Browser Bild', graphic.fileName) }}#}
-    {#{% endfor %}#}
+    {% if array_has_value(array_get(p,'graphicOverview')) %}
+        {{ export.topic_three('Vorschaubild') }}
+    {% endif %}
+    {% for  graphic in array_get(p,'graphicOverview', '') %}
+        {% if  graphic.fileDescription is defined %}
+            {{ export.line('Browser Bild Beschreibung', graphic.fileDescription) }}
+        {% endif %}
+        {{ export.line('Browser Bild', graphic.fileName) }}
+    {% endfor %}
 
-    {#{% if array_has_value(array_get(p,'transferOptions'))#}
-        {#or array_has_value(array_get(p,'operationName',''))%}#}
-        {#{{ export.topic_three('Ressourcenverweis') }}#}
-    {#{% endif %}#}
-    {#{% if is_granted('ROLE_SYSTEM_USER') %}#}
-        {#{{ export.line('Standard-Aufrufparameter der Schnittstelle', array_get(p,'operationName','')) }}#}
-        {#{% if array_get(p,'hierarchyLevel', '') == 'service' %}#}
-            {#{{ export.line('Softwaretechnische Basis für den Aufruf', array_get(p,'dcp', '')) }}#}
-        {#{% endif %}#}
-        {#{{ export.line('Adresse für den Online-Zugriff', array_get(p,'transferOptions:url'))}}#}
-        {#{{ export.line('Beschreibung der URL', array_get(p,'transferOptions:urlDescription')) }}#}
-        {#{{ export.line('Funktion der URL', array_get(p,'transferOptions:function')) }}#}
-    {#{% endif %}#}
+    {% if array_has_value(array_get(p,'transferOptions'))
+        or array_has_value(array_get(p,'operationName',''))%}
+        {{ export.topic_three('Ressourcenverweis') }}
+    {% endif %}
+    {% if is_granted('ROLE_SYSTEM_USER') %}
+        {{ export.line('Standard-Aufrufparameter der Schnittstelle', array_get(p,'operationName','')) }}
+        {% if array_get(p,'hierarchyLevel', '') == 'service' %}
+            {{ export.line('Softwaretechnische Basis für den Aufruf', array_get(p,'dcp', '')) }}
+        {% endif %}
+        {{ export.line('Adresse für den Online-Zugriff', array_get(p,'transferOptions:url'))}}
+        {{ export.line('Beschreibung der URL', array_get(p,'transferOptions:urlDescription')) }}
+        {{ export.line('Funktion der URL', array_get(p,'transferOptions:function')) }}
+    {% endif %}
 
-    {#{% if array_has_value(array_get(p,'referenceSystemInfo','')) %}#}
-        {#{{ export.topic_three('Referenzsystem') }}#}
-    {#{% endif %}#}
-    {#{% for key, referenceSystemInfo in array_get(p,'referenceSystemInfo', '') %}#}
-        {#{{ export.line('Titel',array_get(p,'referenceSystemInfo:' ~ key ~ ':title')) }}#}
-        {#{{ export.line('EPSG-Code', array_get(p,'referenceSystemInfo:' ~ key ~ ':code'))}}#}
-        {#{{ export.line('Datum', array_get(p,'referenceSystemInfo:' ~ key ~ ':date')) }}#}
-        {#{{ export.line('Namensraum der EPSG', array_get(p,'referenceSystemInfo:' ~ key ~ ':codeSpace')) }}#}
-        {#{{ export.line('Art des Datums', array_get(p,'referenceSystemInfo:' ~ key ~ ':dateType')) }}#}
-        {#{{ export.line('Version', array_get(p,'referenceSystemInfo:' ~ key ~ ':version')) }}#}
-    {#{% endfor %}#}
+    {% if array_has_value(array_get(p,'referenceSystemInfo','')) %}
+        {{ export.topic_three('Referenzsystem') }}
+    {% endif %}
+    {% for key, referenceSystemInfo in array_get(p,'referenceSystemInfo', '') %}
+        {{ export.line('Titel',array_get(p,'referenceSystemInfo:' ~ key ~ ':title')) }}
+        {{ export.line('EPSG-Code', array_get(p,'referenceSystemInfo:' ~ key ~ ':code'))}}
+        {{ export.line('Datum', array_get(p,'referenceSystemInfo:' ~ key ~ ':date')) }}
+        {{ export.line('Namensraum der EPSG', array_get(p,'referenceSystemInfo:' ~ key ~ ':codeSpace')) }}
+        {{ export.line('Art des Datums', array_get(p,'referenceSystemInfo:' ~ key ~ ':dateType')) }}
+        {{ export.line('Version', array_get(p,'referenceSystemInfo:' ~ key ~ ':version')) }}
+    {% endfor %}
 
-    {#{% if array_has_value(array_get(p,'bbox','')) %}#}
-        {#{{ export.topic_three('Ausdehnungsinformation - Begrenzungsrechteck') }}#}
-    {#{% endif %}#}
-    {#{{ export.line('Nördlichste Koordinate (Latitude)', array_get(p,'bbox:nLatitude')) }}#}
-    {#{{ export.line('Östlichste Koordinate (Longitude)', array_get(p,'bbox:eLongitude')) }}#}
-    {#{{ export.line('Südlichste Koordinate (Latitude)', array_get(p,'bbox:sLatitude')) }}#}
-    {#{{ export.line('Westlichste Koordinate (Longitude)', array_get(p,'bbox:wLongitude')) }}#}
-    {#{{ export.line('Umschliesst, Ausschliesst', array_get(p,'bbox:extentTypeCode')) }}#}
+    {% if array_has_value(array_get(p,'bbox','')) %}
+        {{ export.topic_three('Ausdehnungsinformation - Begrenzungsrechteck') }}
+    {% endif %}
+    {{ export.line('Nördlichste Koordinate (Latitude)', array_get(p,'bbox:nLatitude')) }}
+    {{ export.line('Östlichste Koordinate (Longitude)', array_get(p,'bbox:eLongitude')) }}
+    {{ export.line('Südlichste Koordinate (Latitude)', array_get(p,'bbox:sLatitude')) }}
+    {{ export.line('Westlichste Koordinate (Longitude)', array_get(p,'bbox:wLongitude')) }}
+    {{ export.line('Umschliesst, Ausschliesst', array_get(p,'bbox:extentTypeCode')) }}
 
-    {#{% if array_has_value(array_get(p,'temporalExtentBegin',''))#}
-        {#or array_has_value(array_get(p,'temporalExtentEnd',''))#}
-    {#%}#}
-        {#{{ export.topic_three('Zeitspanne der Gültigkeit') }}#}
-    {#{% endif %}#}
-    {#{{ export.line('Anfang', array_get(p,'temporalExtentBegin','')) }}#}
-    {#{{ export.line('Ende', array_get(p,'temporalExtentEnd','')) }}#}
+    {% if array_has_value(array_get(p,'temporalExtentBegin',''))
+        or array_has_value(array_get(p,'temporalExtentEnd',''))
+    %}
+        {{ export.topic_three('Zeitspanne der Gültigkeit') }}
+    {% endif %}
+    {{ export.line('Anfang', array_get(p,'temporalExtentBegin','')) }}
+    {{ export.line('Ende', array_get(p,'temporalExtentEnd','')) }}
 
-    {#{% if array_has_value(array_get(p,'creationDate',''))#}
-        {#or array_has_value(array_get(p,'publicationDate',''))#}
-        {#or array_has_value(array_get(p,'revisionDate','')) %}#}
-        {#{{ export.topic_three('Erstellung, Veröffentlichung, Aktualisierung') }}#}
-    {#{% endif %}#}
-    {#{{ export.line('Erstellungsdatum', array_get(p,'creationDate','')) }}#}
-    {#{{ export.line('Veröffentlichung', array_get(p,'publicationDate','')) }}#}
-    {#{{ export.line('Überarbeitung', array_get(p,'revisionDate','')) }}#}
+    {% if array_has_value(array_get(p,'creationDate',''))
+        or array_has_value(array_get(p,'publicationDate',''))
+        or array_has_value(array_get(p,'revisionDate','')) %}
+        {{ export.topic_three('Erstellung, Veröffentlichung, Aktualisierung') }}
+    {% endif %}
+    {{ export.line('Erstellungsdatum', array_get(p,'creationDate','')) }}
+    {{ export.line('Veröffentlichung', array_get(p,'publicationDate','')) }}
+    {{ export.line('Überarbeitung', array_get(p,'revisionDate','')) }}
 
-    {#{% if array_has_value(array_get(p,'distributionFormat:0')) %}#}
-        {#{{ export.topic_three('Formate') }}#}
-    {#{% endif %}#}
-    {#{% for key, distributionFormat in array_get(p,'distributionFormat', '') %}#}
-        {#{{ export.line('Bezeichnung', array_get(p,'distributionFormat:' ~ key ~ ':name')) }}#}
-        {#{{ export.line('Version', array_get(p,'distributionFormat:' ~ key ~ ':version')) }}#}
-        {#{{ export.line('Spezifikation', array_get(p,'distributionFormat:' ~ key ~ ':specification')) }}#}
-        {#{{ export.line('Dekompressionsmethode', array_get(p,'distributionFormat:' ~ key ~ ':fileDecompressionTechnique')) }}#}
-    {#{% endfor %}#}
-{#</table>#}
+    {% if array_has_value(array_get(p,'distributionFormat:0')) %}
+        {{ export.topic_three('Formate') }}
+    {% endif %}
+    {% for key, distributionFormat in array_get(p,'distributionFormat', '') %}
+        {{ export.line('Bezeichnung', array_get(p,'distributionFormat:' ~ key ~ ':name')) }}
+        {{ export.line('Version', array_get(p,'distributionFormat:' ~ key ~ ':version')) }}
+        {{ export.line('Spezifikation', array_get(p,'distributionFormat:' ~ key ~ ':specification')) }}
+        {{ export.line('Dekompressionsmethode', array_get(p,'distributionFormat:' ~ key ~ ':fileDecompressionTechnique')) }}
+    {% endfor %}
+</table>
 <div class="html-gap pdf-gap"></div>
 <table class="view-table">
     {% if array_has_value(array_get(p,'useLimitation:0',''))

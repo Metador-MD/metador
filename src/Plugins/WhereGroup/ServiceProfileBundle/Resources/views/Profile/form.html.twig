@@ -1,96 +1,76 @@
-{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+{% extends 'MetadorBasicProfileBundle::template.html.twig' %}
 
-{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+{% set menu = {
+    'metadata': {
+        'label': 'Metadateneigenschaften',
+        'templates': {
+            'metadata': {
+                'label': 'Metadateneigenschaften',
+                'path': 'MetadorBasicProfileBundle:Profile:metadata.html.twig'
+            }
+        }
+    },
+    'dataproperties': {
+        'label': 'Dateneigenschaften',
+        'templates': {
+            'dataproperties-description': {
+                'label': 'Beschreibung',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-description.html.twig'
+            },
+            'dataproperties-spatial-timereference': {
+                'label': 'Raum- und Zeitbezug',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-spatial-timereference.html.twig'
+            },
+            'dataproperties-classification': {
+                'label': 'Klassifizierung',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-classification.html.twig'
+            },
+            'dataproperties-classification': {
+                'label': 'Formate',
+                'path': 'MetadorBasicProfileBundle:Profile:dataproperties-format.html.twig'
+            }
+        }
+    },
+    'constraints': {
+        'label': 'Rechtliches',
+        'templates': {
+            'constraints-description': {
+                'label': 'Rechtliches',
+                'path': 'MetadorBasicProfileBundle:Profile:distribution-constraints.html.twig'
+            },
+            'constraints-description': {
+                'label': 'Rechtliches',
+                'path': 'MetadorBasicProfileBundle:Profile:distribution-constraints.html.twig'
+            },
+            'qualityindication-conformity': {
+                'label': 'Übereinstimmung',
+                'path': 'MetadorBasicProfileBundle:Profile:qualityindication-conformity.html.twig'
+            }
+        }
+    },
+    'responsibility': {
+        'label': 'Verantwortlichkeit',
+        'templates': {
+            'responsibility-responsibleParty': {
+                'label': 'Datensatz',
+                'path': 'MetadorBasicProfileBundle:Profile:responsibility-responsibleParty.html.twig'
+            },
+            'responsibility-contact': {
+                'label': 'Metadaten',
+                'path': 'MetadorBasicProfileBundle:Profile:responsibility-contact.html.twig'
+            }
+        }
+    }
+}%}
 
-{% block center %}
-<form action="{{ path('metadata_save', {source: array_get(p, '_source', ''), profile: array_get(p, '_profile', '')}) }}" method="post" id="metadata-form" autocomplete="off">
-    <input type="hidden" name="p[_id]" value="{{ array_get(p, '_id', '') }}" />
-    <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
-    <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
-    <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
-    <input type="hidden" name="p[hierarchyLevel]" value="service" />
-
-    <div class="center menu">
-        <div class="center-left">
-            {% include '@MetadorBasicProfile/Profile/settings.html.twig' %}
-
-            <div class="left-menu-content">
-                <ul class="left-menu">
-                    <li class="menu-item act" data-mdtab="identification" id="tab-identification">
-                        <span>{% trans %}Identifikation{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li data-mdtab="metadata" id="tab-metadata" class="menu-item">
-                        <span>{% trans %}Metadatensatz{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="classification" id="tab-classification">
-                        <span>{% trans %}Klassifizierung{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="keyword" id="tab-keyword">
-                        <span>{% trans %}Schlüsselwort{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="geographic" id="tab-geographic">
-                        <span>{% trans %}Geografischer Standort{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="temporal" id="tab-temporal">
-                        <span>{% trans %}Zeitbezug{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="conformity" id="tab-conformity">
-                        <span>{% trans %}Übereinstimmung{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="constraints" id="tab-constraints">
-                        <span>{% trans %}Beschränkungen{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                    <li class="menu-item" data-mdtab="responsibleparty" id="tab-responsibleparty">
-                        <span>{% trans %}Zuständige Stelle{% endtrans %}</span>
-                        <span class="-js-error-count error-count"></span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="left-menu-content">
-                {% include "@MetadorBasicProfile/Profile/saveButton.html.twig" %}
-            </div>
-        </div>
-        <div class="center-right">
-            <div class="content">
-                {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}
-
-                {% include 'MetadorServiceProfileBundle:Profile:identification.html.twig' %}
-                {% include 'MetadorBasicProfileBundle:Profile:metadata.html.twig' %}
-                {% include 'MetadorServiceProfileBundle:Profile:classification.html.twig' %}
-                <div class="mdtab-content" data-mdtab-content="keyword"></div>
-                {% include 'MetadorServiceProfileBundle:Profile:geographic.html.twig' %}
-                <div class="mdtab-content" data-mdtab-content="temporal"></div>
-                <div class="mdtab-content" data-mdtab-content="conformity"></div>
-                <div class="mdtab-content" data-mdtab-content="constraints"></div>
-                <div class="mdtab-content" data-mdtab-content="responsibleparty"></div>
-            </div>
-        </div>
-    </div>
-</form>
+{% block leftMenu %}
+    {% include '@MetadorBasicProfile/Element/menu.html.twig' with {'menu' : menu} %}
 {% endblock %}
 
-{% block css %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/metadorbasicprofile/css/profile.css') }}">
+{% block subMenu %}
+    {% include '@MetadorBasicProfile/Element/subMenu.html.twig' with {'menu' : menu} %}
 {% endblock %}
 
-{% block javascript %}
-    {{ parent() }}
-    <script>
-        var validation = {{ read_validation_rules(array_get(p, '_profile', '')) }};
-    </script>
-    <script src="{{ asset('bundles/metadorbasicprofile/multiinput.js') }}"></script>
-    <script src="{{ asset('bundles/metadorbasicprofile/multiform.js') }}"></script>
-    <script src="{{ asset('bundles/metadorbasicprofile/multifieldset.js') }}"></script>
-    <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
-    <script src="{{ asset('bundles/metadorbasicprofile/validator.js') }}"></script>
+{% block content %}
+    {% include '@MetadorBasicProfile/Element/menuContent.html.twig' with {'menu' : menu} %}
 {% endblock %}
