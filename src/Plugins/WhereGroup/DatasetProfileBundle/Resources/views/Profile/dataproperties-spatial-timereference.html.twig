@@ -166,32 +166,32 @@
         </div>
     </div>
 
-    {#<h2 class="title">Zeitspanne der Gültigkeit</h2>#}
+    <h2 class="title">Zeitspanne der Gültigkeit</h2>
 
-    {#<div class="row r-2">#}
-        {#<div class="col c-1-2">#}
-            {#{{ form_element.input({#}
-                {#'name'            : 'p[temporalExtentBegin]',#}
-                {#'label'           : 'Anfang',#}
-                {#'type'            : 'optional',#}
-                {#'validatorSources': tabId,#}
-                {#'class'           : '-js-datepicker',#}
-                {#'p'               : p#}
-            {#})#}
-            {#}}#}
-        {#</div>#}
-        {#<div class="col c-1-2">#}
-            {#{{ form_element.input({#}
-                {#'name'            : 'p[temporalExtentEnd]',#}
-                {#'label'           : 'Ende',#}
-                {#'type'            : 'optional',#}
-                {#'validatorSources': tabId,#}
-                {#'class'           : '-js-datepicker',#}
-                {#'p'               : p#}
-            {#})#}
-            {#}}#}
-        {#</div>#}
-    {#</div>#}
+    <div class="row r-2">
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[temporalExtentBegin]',
+                'label'           : 'Anfang',
+                'type'            : 'optional',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'p'               : p
+            })
+            }}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.input({
+                'name'            : 'p[temporalExtentEnd]',
+                'label'           : 'Ende',
+                'type'            : 'optional',
+                'validatorSources': tabId,
+                'class'           : '-js-datepicker',
+                'p'               : p
+            })
+            }}
+        </div>
+    </div>
 
     <h2 class="title">Erstellung, Veröffentlichung, Aktualisierung (Pflichtfeld)</h2>
 
