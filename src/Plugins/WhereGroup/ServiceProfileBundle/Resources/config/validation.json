@@ -1,29 +1,36 @@
 {
-    "p_responsiblepartymetadata_organisationname": [
+    "p_language": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_metadatastandardname": [
+    "p_hierarchylevelname": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_metadatastandardversion": [
+    "p_identifiercode": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!",
+            "frontend": false
+        }
+    ],
+    "p_identifiercodespace": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
-        }
-    ],
-    "p_browsergraphic": [
-        {
-            "assert": "url",
-            "message": "Eingabe ist keine gültige URL"
         }
     ],
     "p_title": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_identlanguage": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
@@ -35,44 +42,263 @@
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_identifiercode": [
+    "p_transferoptions_url": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_servicetype": [
+    "p_transferoptions_function": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_servicetypeversion": [
+    "p_operateson_uuidref": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         }
     ],
-    "p_containsoperationsname": [
-        {
-            "assert": "notBlank",
-            "message": "Eingabe darf nicht leer sein!"
-        }
-    ],
-    "p_containsoperationsdcp": [
-        {
-            "assert": "notBlank",
-            "message": "Eingabe darf nicht leer sein!"
-        }
-    ],
-    "p_containsoperationsurl": [
+    "p_bbox_nlatitude": [
         {
             "assert": "notBlank",
             "message": "Eingabe darf nicht leer sein!"
         },
         {
-            "assert": "url",
-            "message": "Eingabe ist keine gültige URL"
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_elongitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_slatitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_wlongitude": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        },
+        {
+            "regex": "^-?[\\d]+([\\.]?[\\d]+)?$",
+            "message": "Eingabe muss eine Zahl sein!"
+        }
+    ],
+    "p_bbox_extenttypecode": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_presentationform": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_spatialrepresentationtype": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_topiccategory": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_distributionformat_name" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_distributionformat_version" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_distributionformat_specification" : [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein"
+        }
+    ],
+    "p_useconstraints_otherconstraints": [
+        {
+            "assert": "notBlank",
+            "message": "Dateneigenschaften_Klassifizierung"
+        }
+    ],
+    "p_accessconstraints_otherconstraints": [
+        {
+            "assert": "notBlank",
+            "message": "Dateneigenschaften_Klassifizierung"
+        }
+    ],
+    "p_report_title": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_edition": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_explanation": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_report_pass": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_organisationname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_positionname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!",
+            "frontend": false
+        }
+    ],
+    "p_responsibleparty_role": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_email": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_country": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_administrativearea": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_responsibleparty_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_responsibleparty_urldescription"]
+        }
+    ],
+    "p_responsibleparty_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_responsibleparty_url"]
+        }
+    ],
+    "p_contact_organisationname": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_email": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_administrativearea": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_country": [
+        {
+            "assert": "notBlank",
+            "message": "Eingabe darf nicht leer sein!"
+        }
+    ],
+    "p_contact_url": [
+        {
+            "assert": "mandatoryIfSiblingNotEmpty",
+            "message": "Muss ausgefüllt werden sobald eine Beschreibung eingegeben wurde!",
+            "parent": "-js-validation-area",
+            "siblings": ["p_contact_urldescription"]
+        }
+    ],
+    "p_contact_urldescription": [
+        {
+            "assert": "testSiblings",
+            "parent": "-js-validation-area",
+            "message": "",
+            "siblings": ["p_contact_url"]
+        }
+    ],
+    "p_creationdate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_publicationdate", "p_revisiondate"
+            ]
+        }
+    ],
+    "p_publicationdate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_creationdate", "p_revisiondate"
+            ]
+        }
+    ],
+    "p_revisiondate": [
+        {
+            "assert": "oneIsMandatory",
+            "message": "Mindestens eine Angabe verpflichtend!",
+            "parent": "-js-validation-area",
+            "siblings": [
+                "p_publicationdate", "p_creationdate"
+            ]
         }
     ]
 }
