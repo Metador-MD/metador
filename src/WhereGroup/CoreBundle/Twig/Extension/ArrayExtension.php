@@ -166,5 +166,3 @@ class ArrayExtension extends \Twig_Extension
         return "metador_array";
     }
 }
-
-
