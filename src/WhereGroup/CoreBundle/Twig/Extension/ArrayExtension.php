@@ -133,11 +133,11 @@ class ArrayExtension extends \Twig_Extension
     {
         $option = false;
         if (is_array($array)) {
-            array_walk_recursive($array, function($item, $key) use(&$option) {
-               if ($item !== "") {
+            array_walk_recursive($array, function ($item, $key) use (&$option) {
+                if ($item !== "") {
                     $option = true;
                     return;
-               }
+                }
             });
             return $option;
         } else {
