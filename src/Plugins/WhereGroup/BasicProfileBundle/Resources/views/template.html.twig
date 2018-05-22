@@ -6,10 +6,13 @@
         <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
         <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
         <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
+        <input type="hidden" name="p[_characterSet]" value="{{ array_get(p, '_characterSet', 'utf8') }}" />
+        <input type="hidden" name="p[_standardName]" value="{{ array_get(p, '_standardName', 'ISO19115') }}" />
+        <input type="hidden" name="p[_standardVersion]" value="{{ array_get(p, '_standardVersion', '2005/PDAM 1') }}" />
 
         {% if not array_is_empty(p, '_originSource') %}
             <input type="hidden" name="p[_originSource]" value="{{ array_get(p, '_originSource') }}" />
-        {% endif %}
+        {% endif %}d
         {% if profile == 'metador_dataset_profile' %}
             <input type="hidden" name="p[hierarchyLevel]" value="dataset" />
         {% elseif profile == 'metador_series_profile' %}
