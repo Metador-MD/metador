@@ -1,0 +1,108 @@
+{% import 'MetadorBasicProfileBundle:Makro:form.html.twig' as form_element %}
+
+<h1 class="title">Metadateneigenschaften</h1>
+
+<div class="grid space row-space responsive">
+    {% if not array_is_empty(p, 'fileIdentifier') or not array_is_empty(p, 'dateStamp') %}
+        <div class="row r-1">
+            <div class="col c-1">
+                <h2 class="title no-m">Identifikation/Beziehung</h2>
+            </div>
+        </div>
+        <div class="row r-2">
+            {% if not array_is_empty(p, 'fileIdentifier') %}
+                <div class="col c-1-2">
+                    {{ form_element.input({
+                        'name'    : 'p[fileIdentifier]',
+                        'label'   : 'File-Identifikator',
+                        'type'    : null,
+                        'readonly': true,
+                        'p'       : p
+                    })}}
+                </div>
+            {% endif %}
+            {% if not array_is_empty(p, 'dateStamp') %}
+                <div class="col c-1-2">
+                    {{ form_element.input({
+                        'name'    : 'p[dateStamp]',
+                        'label'   : 'Letzte Änderung',
+                        'type'    : null,
+                        'readonly': true,
+                        'p'       : p
+                    })}}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if not array_is_empty(p, 'hierarchyLevelName') %}
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ form_element.input({
+                    'name'    : 'p[hierarchyLevelName]',
+                    'label'   : 'Beschreibung der Hierarchieebene',
+                    'readonly': true,
+                    'p'       : p
+                })
+                }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not array_is_empty(p, 'parentIdentifier') %}
+        <div class="row r-1">
+            <div class="col c-1">
+                {{ form_element.input({
+                    'name'    : 'p[parentIdentifier]',
+                    'label'   : 'Parent-Identifikator',
+                    'readonly': true,
+                    'p'       : p
+                })
+                }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row r-1">
+        <div class="col c-1">
+            <h2 class="title no-m">Beschreibung</h2>
+        </div>
+    </div>
+
+    <input type="hidden" name="p[characterSet]" value="utf8" />
+
+    <div class="row row r-2">
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'    : 'p[hierarchyLevelName]',
+                'label'   : 'Beschreibung der Hierarchieebene',
+                'default' : '',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    '': '',
+                    'Darstellungsdienst': 'Darstellungsdienst',
+                    'Downloaddienst'    : 'Downloaddienst'
+                },
+                'p'       : p
+            })}}
+        </div>
+        <div class="col c-1-2">
+            {{ form_element.select({
+                'name'    : 'p[language]',
+                'label'   : 'Sprache',
+                'default' : 'ger',
+                'validatorSources': tabId,
+                'hasList' : true,
+                'defaultList': {
+                    ''   : '',
+                    'ger': 'Deutsch',
+                    'eng': 'Englisch'
+                },
+                'inheritance': (profile == 'lvermgeo_series_profile') ? true : false,
+                'p'       : p
+            })
+            }}
+        </div>
+    </div>
+</div>

@@ -80,6 +80,7 @@
 <div class="html-gap pdf-gap"></div>
 <table class="view-table">
         {% if array_has_value(array_get(p,'fileIdentifier'))
+            or array_has_value(array_get(p,'operatesOn',''))
             or array_has_value(array_get(p,'dateStamp'))
             or array_has_value(array_get(p,'hierarchyLevel'))
             or array_has_value(array_get(p,'characterSet'))
@@ -101,6 +102,12 @@
         {{ export.line('File-Identifikator', array_get(p,'fileIdentifier', '')) }}
         {{ export.line('Letzte Änderung', array_get(p,'dateStamp', '')) }}
         {{ export.line('Beschreibung der Hierarchieebene', array_get(p,'hierarchyLevel', '')) }}
+
+        {% if array_has_value(array_get(p,'operatesOn','')) %}
+            {{ export.topic_three('Daten-Service-Kopplung') }}
+        {% endif %}
+        {{ export.multiline_keyvalue('URI', array_get(p,'operatesOn','')) }}
+        {{ export.line('Kopplungsart der Dienst-/Daten-Metadaten', array_get(p,'couplingType','')) }}
 
         {% if array_has_value(array_get(p,'characterSet'))
             or array_has_value(array_get(p,'language'))
