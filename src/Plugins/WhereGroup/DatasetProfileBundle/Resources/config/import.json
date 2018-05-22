@@ -59,14 +59,8 @@
             },
             "title": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:title/*/text()",
             "alternateTitle": ["gmd:identificationInfo[1]/*/gmd:citation/*/gmd:alternateTitle/gco:CharacterString/text()", "_asArray"],
-            "edition": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:edition/*/text()",
-            "editionDate": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:editionDate/*/text()",
             "presentationForm": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:presentationForm/gmd:CI_PresentationFormCode/@codeListValue",
-            "isbn": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:ISBN/*/text()",
             "abstract": "gmd:identificationInfo[1]/*/gmd:abstract/*/text()",
-            "purpose": "gmd:identificationInfo[1]/*/gmd:purpose/*/text()",
-            "status": "gmd:identificationInfo[1]/*/gmd:status/gmd:MD_ProgressCode/@codeListValue",
-            "identifierString": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/*/text()",
             "responsibleParty": {
                 "_asArray": true,
                 "_path": "gmd:identificationInfo[1]/*/gmd:pointOfContact/gmd:CI_ResponsibleParty",
@@ -88,8 +82,6 @@
                     "urlDescription": "gmd:contactInfo/*/gmd:onlineResource/*/gmd:description/*/text()"
                 }
             },
-            "maintenanceFrequencyCode" : "gmd:identificationInfo[1]/*/gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/*/text()",
-            "maintenanceNote" : "gmd:identificationInfo[1]/*/gmd:resourceMaintenance/*/gmd:maintenanceNote/*/text()",
             "graphicOverview": {
                 "_asArray": true,
                 "_path": "gmd:identificationInfo[1]/*/gmd:graphicOverview/gmd:MD_BrowseGraphic",
@@ -133,23 +125,9 @@
                     "otherConstraints": "*/gmd:otherConstraints/*/text()"
                 }
             },
-            "aggregationInfo": {
-                "_asArray": true,
-                "_path": "gmd:identificationInfo[1]/*/gmd:aggregationInfo/gmd:MD_AggregateInformation",
-                "_data": {
-                    "code": "gmd:aggregateDataSetIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString/text()",
-                    "associationType": "gmd:associationType/gmd:DS_AssociationTypeCode/text()"
-                }
-            },
             "spatialRepresentationType": "gmd:identificationInfo[1]/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode/@codeListValue",
-            "spatialResolutionDenominator": "gmd:identificationInfo[1]/*/gmd:spatialResolution/*/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer/text()",
-            "spatialResolutionDistance": "gmd:identificationInfo[1]/*/gmd:spatialResolution/*/gmd:distance/gco:Distance/text()",
             "identLanguage": "gmd:identificationInfo[1]/*/gmd:language/*/text()",
-            "identCharacterSet": "gmd:identificationInfo[1]/*/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue",
             "topicCategory": ["gmd:identificationInfo[1]/*/gmd:topicCategory/*/text()", "_asArray"],
-            "environmentDescription": "gmd:identificationInfo[1]/*/gmd:environmentDescription/*/text()",
-            "extentDescription": "gmd:identificationInfo[1]/*/gmd:extent/*/gmd:description/*/text()",
-            "geographicIdentifier": "gmd:identificationInfo[1]/*/gmd:extent/*/gmd:geographicElement/*/gmd:geographicIdentifier/*/gmd:code/*/text()",
             "bbox": {
                 "_asArray": false,
                 "_path": "gmd:identificationInfo[1]/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox",
@@ -161,62 +139,8 @@
                     "wLongitude": "gmd:westBoundLongitude/gco:Decimal/text()"
                 }
             },
-            "polygon": {
-                "_asArray": false,
-                "_path": "gmd:identificationInfo[1]/*/gmd:extent/*/gmd:geographicElement/gmd:EX_BoundingPolygon",
-                "_data": {
-                    "extentTypeCode": "gmd:extentTypeCode/*/text()",
-                    "srsName": "gmd:polygon/gml:Polygon/@srsName",
-                    "srsDimension": "gmd:polygon/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList/@srsDimension",
-                    "posList": "gmd:polygon/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList/text()"
-                }
-            },
             "temporalExtentBegin": "gmd:identificationInfo[1]/*/*/*/gmd:temporalElement/*/*/gml:TimePeriod/gml:beginPosition/text()",
             "temporalExtentEnd": "gmd:identificationInfo[1]/*/*/*/gmd:temporalElement/*/*/gml:TimePeriod/gml:endPosition/text()",
-            "vertical": {
-                "_asArray": false,
-                "_path": "gmd:identificationInfo[1]/*/gmd:extent/*/gmd:verticalElement/gmd:EX_VerticalExtent",
-                "_data": {
-                    "name": "gmd:verticalCRS/gml:VerticalCRS/gml:name/text()",
-                    "identifier": "gmd:verticalCRS/gml:VerticalCRS/gml:identifier/text()",
-                    "remarks": "gmd:verticalCRS/gml:VerticalCRS/gml:remarks/text()",
-                    "scope": "gmd:verticalCRS/gml:VerticalCRS/gml:scope/text()",
-                    "min": "gmd:minimumValue/*/text()",
-                    "max": "gmd:maximumValue/*/text()"
-                }
-            },
-            "supplementalInformation": "gmd:identificationInfo[1]/*/gmd:supplementalInformation/gco:CharacterString/text()",
-            "distributionContact": {
-                "_asArray": true,
-                "_path": "gmd:distributionInfo[1]/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty",
-                "_data": {
-                    "uuid": "@uuid",
-                    "individualName": "gmd:individualName/*/text()",
-                    "organisationName": "gmd:organisationName/*/text()",
-                    "positionName": "gmd:positionName/*/text()",
-                    "role": "gmd:role/gmd:CI_RoleCode/text()",
-                    "email": ["gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()", "_asArray"],
-                    "country": "gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
-                    "administrativeArea": "gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()",
-                    "deliveryPoint": "gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
-                    "city": "gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
-                    "postalCode": "gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
-                    "voice": "gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
-                    "facsimile": "gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
-                    "url": "gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()",
-                    "urlDescription": "gmd:contactInfo/*/gmd:onlineResource/*/gmd:description/*/text()",
-                    "hoursOfService": "gmd:contactInfo/*/gmd:hoursOfService/*/text()"
-                }
-            },
-            "orderProcess": {
-                "_asArray": true,
-                "_path": "gmd:distributionInfo[1]/*/gmd:distributor/*/gmd:distributionOrderProcess",
-                "_data": {
-                    "fees": "gmd:MD_StandardOrderProcess/gmd:fees/*/text()",
-                    "instructions": "gmd:MD_StandardOrderProcess/gmd:orderingInstructions/*/text()",
-                    "turnaround": "gmd:MD_StandardOrderProcess/gmd:turnaround/*/text()"
-                }
-            },
             "distributionFormat": {
                 "_asArray": true,
                 "_path": "gmd:distributionInfo[1]/*/gmd:distributionFormat/*",
@@ -225,26 +149,6 @@
                     "version": "gmd:version/*/text()",
                     "specification": "gmd:specification/*/text()",
                     "fileDecompressionTechnique": "gmd:fileDecompressionTechnique/*/text()"
-                }
-            },
-            "distributorFormat": {
-                "_asArray": true,
-                "_path": "gmd:distributionInfo[1]/*/gmd:distributor/*/gmd:distributorFormat/*",
-                "_data": {
-                    "name": "gmd:name/*/text()",
-                    "version": "gmd:version/*/text()",
-                    "specification": "gmd:specification/*/text()",
-                    "fileDecompressionTechnique": "gmd:fileDecompressionTechnique/*/text()"
-                }
-            },
-            "transferOptions": {
-                "_asArray": false,
-                "_path": "gmd:distributionInfo[1]/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions",
-                "_data": {
-                    "unitsOfDistribution": "gmd:unitsOfDistribution/*/text()",
-                    "url": "gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL/text()",
-                    "urlDescription": "gmd:onLine/gmd:CI_OnlineResource/gmd:description/*/text()",
-                    "function": "gmd:onLine/gmd:CI_OnlineResource/gmd:function/*/text()"
                 }
             },
             "report": {
@@ -258,73 +162,6 @@
                     "edition": "gmd:specification/gmd:CI_Citation/gmd:edition/*/text()",
                     "explanation": "gmd:explanation/*/text()",
                     "pass": "gmd:pass/*/text() or gmd:pass/*/@gco:nilReason"
-                }
-            },
-            "quantitativeResult": {
-                "_asArray": true,
-                "_path": "gmd:dataQualityInfo[1]/*/gmd:report/*/gmd:result/gmd:DQ_QuantitativeResult",
-                "_data": {
-                    "valueUnit": "gmd:valueUnit/*/gml:identifier/text()",
-                    "valueType": "gmd:valueType/*/text()",
-                    "value": "gmd:value/*/text()"
-                }
-            },
-            "lineageStatement": "gmd:dataQualityInfo[1]/*/gmd:lineage/gmd:LI_Lineage/gmd:statement/*/text()",
-            "processStep": {
-                "_asArray": false,
-                "_path": "gmd:dataQualityInfo[1]/gmd:DQ_DataQuality/gmd:lineage/*/gmd:processStep[1]",
-                "_data": {
-                    "description": "gmd:LI_ProcessStep/gmd:description/*/text()",
-                    "rationale": "gmd:LI_ProcessStep/gmd:rationale/*/text()"
-                }
-            },
-            "processStep2": {
-                "_asArray": true,
-                "_function": ["_removeEmptyValues"],
-                "_path": "gmd:dataQualityInfo[1]/*/gmd:lineage/*/gmd:processStep[position()>1 and position()<=last()]",
-                "_data": {
-                    "description": "*/gmd:description/*/text()",
-                    "rationale": "*/gmd:rationale/*/text()",
-                    "dateTime": "*/gmd:dateTime/*/text()",
-                    "responsibleParty_uuid": "*/gmd:processor/gmd:CI_ResponsibleParty/@uuid",
-                    "responsibleParty_individualName": "*/gmd:processor/*/gmd:individualName/*/text()",
-                    "responsibleParty_organisationName": "*/gmd:processor/*/gmd:organisationName/*/text()",
-                    "responsibleParty_positionName": "*/gmd:processor/*/gmd:positionName/*/text()",
-                    "responsibleParty_email": ["*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()", "_asArray"],
-                    "responsibleParty_role": "*/gmd:processor/*/gmd:role/gmd:CI_RoleCode/text()",
-                    "responsibleParty_country": "*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:country/*/text()",
-                    "responsibleParty_administrativeArea": "*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea/*/text()",
-                    "responsibleParty_deliveryPoint": "*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*/text()",
-                    "responsibleParty_city": "*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:city/*/text()",
-                    "responsibleParty_postalCode": "*/gmd:processor/*/gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*/text()",
-                    "responsibleParty_voice": "*/gmd:processor/*/gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()",
-                    "responsibleParty_facsimile": "*/gmd:processor/*/gmd:contactInfo/*/gmd:phone/*/gmd:facsimile/*/text()",
-                    "responsibleParty_url": "*/gmd:processor/*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()",
-                    "responsibleParty_urlDescription": "*/gmd:processor/*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:description/*/text()",
-                    "sourceDescription": "*/gmd:source/gmd:LI_Source/gmd:description/*/text()"
-                }
-            },
-            "source": {
-                "_asArray": true,
-                "_path": "gmd:dataQualityInfo[1]/*/gmd:lineage/*/gmd:source/*",
-                "_data": {
-                    "description": "gmd:description/*/text()",
-                    "citationTitle": "gmd:sourceCitation/gmd:CI_Citation/gmd:title/*/text()",
-                    "citationAlternateTitle": ["gmd:sourceCitation/gmd:CI_Citation/gmd:alternateTitle/*/text()", "_asArray"],
-                    "citationEdition": "gmd:sourceCitation/gmd:CI_Citation/gmd:edition/*/text()",
-                    "citationCreation": "gmd:sourceCitation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
-                    "citationRevision": "gmd:sourceCitation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()",
-                    "citationPublication": "gmd:sourceCitation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication' or ./*/gmd:dateType/*/text()='publication']/*/*/gco:Date/text()",
-                    "sourceExtent": {
-                        "_asArray": true,
-                        "_path": "gmd:sourceExtent/*/gmd:geographicElement/*",
-                        "_data": {
-                            "extentTypeCode": "gmd:extentTypeCode/*/text()",
-                            "srsName": "gmd:polygon/*/@srsName",
-                            "dimension": "gmd:polygon/*/gml:exterior/*/gml:posList/@srsDimension",
-                            "posList": "gmd:polygon/*/gml:exterior/*/gml:posList/text()"
-                        }
-                    }
                 }
             }
         }
