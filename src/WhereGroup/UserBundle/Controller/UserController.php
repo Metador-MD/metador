@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use WhereGroup\PluginBundle\Component\ApplicationIntegration\Profile;
 use WhereGroup\UserBundle\Entity\User;
+use WhereGroup\UserBundle\Form\ProfileType;
 use WhereGroup\UserBundle\Form\UserType;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 use WhereGroup\CoreBundle\Component\PictureTransformation;
@@ -15,13 +17,12 @@ use WhereGroup\CoreBundle\Component\PictureTransformation;
 /**
  * User controller.
  *
- * @Route("/admin/user")
  */
 class UserController extends Controller
 {
     /**
      *
-     * @Route("/", name="metador_admin_user")
+     * @Route("/admin/user/", name="metador_admin_user")
      */
     public function indexAction()
     {
@@ -33,7 +34,7 @@ class UserController extends Controller
     /**
      * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="metador_admin_user_new")
+     * @Route("/admin/user/new", name="metador_admin_user_new")
      */
     public function newAction()
     {
@@ -46,7 +47,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/create", name="metador_admin_user_create")
+     * @Route("/admin/user/create", name="metador_admin_user_create")
      * @Method("POST")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -113,7 +114,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/update/{id}", name="metador_admin_user_update")
+     * @Route("/admin/user/update/{id}", name="metador_admin_user_update")
      * @Method("POST")
      * @param Request $request
      * @param $id
@@ -171,7 +172,10 @@ class UserController extends Controller
 
     /**
      * @Method({"GET", "POST"})
-     * @Route("/delete/{id}", name="metador_admin_user_confirm")
+     * @Route("/admin/user/delete/{id}", name="metador_admin_user_confirm")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws MetadorException
      */
     public function confirmAction($id)
     {
@@ -205,6 +209,56 @@ class UserController extends Controller
 
         return $this->render('@MetadorUser/User/confirm.html.twig', array(
             'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/user/profile/{id}", name="metador_user_profile")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function profileAction($id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+
+
+        try {
+            $user = $this->get('metador_user')->get($id);
+            $oldPassword = $user->getPassword();
+
+            $form = $this
+                ->createForm(ProfileType::class, $user)
+                ->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($user->getPassword() != "" && $oldPassword != $user->getPassword()) {
+                    $user->setPassword(
+                        $this->get('metador_user')->encodePassword($user, $user->getPassword())
+                    );
+                } else {
+                    $user->setPassword($oldPassword);
+                }
+
+                $this->get('metador_user')->update($user);
+
+                $this->log('success', 'update', $id, 'Kennwort für %username% wurde erfolgreich geändert.', [
+                    '%username%' => $user->getUsername()
+                ]);
+
+                return $this->redirectToRoute('metador_home');
+            }
+        } catch (MetadorException $e) {
+            $this->log('error', 'update', $id, 'Kennwort für %username% konnte nicht geändert werden.', [
+                '%username%' => $user->getUsername()
+            ]);
+
+            return $this->redirectToRoute('metador_home');
+        }
+
+        return $this->render('@MetadorUser/User/profile.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 
