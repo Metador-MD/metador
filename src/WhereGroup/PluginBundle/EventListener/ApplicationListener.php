@@ -18,13 +18,15 @@ class ApplicationListener
     {
         $app = $event->getApplication();
 
-        $app->add(
-            $app->get('AdminMenu', 'plugin')
-                ->icon('icon-puzzle-piece')
-                ->label('Plugins')
-                ->path('metador_admin_plugin')
-                ->active($app->isBundle('plugin'))
-                ->setRole('ROLE_SYSTEM_SUPERUSER')
-        );
+        if ($app->routeStartsWith('metador_admin')) {
+            $app->add(
+                $app->get('AdminMenu', 'plugin')
+                    ->icon('icon-puzzle-piece')
+                    ->label('Plugins')
+                    ->path('metador_admin_plugin')
+                    ->active($app->isBundle('plugin'))
+                    ->setRole('ROLE_SYSTEM_SUPERUSER')
+            );
+        }
     }
 }
