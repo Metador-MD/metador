@@ -263,6 +263,7 @@ class UserController extends Controller
     }
 
     /**
+     * @param $type
      * @param $operation
      * @param $id
      * @param $message
