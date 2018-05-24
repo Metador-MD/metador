@@ -148,7 +148,11 @@ class HomeController extends Controller
         if (is_null($download)) {
             $search
                 ->setPage(isset($params['page']) ? $params['page'] : 1)
-                ->setHits(isset($params['hits']) ? $params['hits'] : 10);
+                ->setHits(
+                    $this
+                        ->get('metador_configuration')
+                        ->get('search_hits', 'plugin', 'metador_core', 10)
+                );
         }
 
         try {
