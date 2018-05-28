@@ -48,6 +48,7 @@
                 <div class="row r-1">
                     <div class="col c-1">
                         <a href="{{ path('logout') }}" class="btn medium info full">{% trans %}logout{% endtrans %}</a>
+                        <a href="{{ path('metador_user_profile', { id: app.user.id }) }}" class="link">{% trans %}Passwort ändern{% endtrans %}</a>
                     </div>
                 </div>
             {% endif %}

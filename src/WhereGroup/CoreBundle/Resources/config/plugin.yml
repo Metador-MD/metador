@@ -31,6 +31,16 @@ metador_core:
         proxy_pass:
             type: string
             label: Proxy Password
+        search_hits:
+            type: string
+            label: Suchergebnisse pro Seite
+            default: 10
+            description: Legt die Anzahl der Suchergebnisse pro Seite fest.
+        popup_search_hits:
+            type: string
+            label: Suchergebnisse pro Seite in Pop-Up's
+            default: 5
+            description: Legt die Anzahl der Suchergebnisse pro Seite fest.
         hierarchy_levels:
             type: multi
             label: Unterstützte Hierarchy Level

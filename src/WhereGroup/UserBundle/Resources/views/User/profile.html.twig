@@ -1,0 +1,58 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% set title  = 'Profil bearbeiten'|trans %}
+{% set path   = 'metador_user_profile' %}
+{% set params = {id: form.vars.value.id} %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{# CONTENT #}
+{% block center %}
+<div class="center">
+<div class="center-right">
+<div class="content">
+    <h1 class="title dm">{{ title }}</h1>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.password.first) }}
+            {{ form_errors(form.password.second) }}
+        </div>
+    {% endif %}
+
+    <div class="grid space responsive">
+        <div class="row r-2 margin-b">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.password.first, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.password.first, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.password.second, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.password.second, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1 margin-b">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+</div>
+</div>
+{% endblock %}
