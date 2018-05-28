@@ -39,9 +39,8 @@
 
     {% if not array_is_empty(p, 'contact') %}
     {% for contact in array_get(p, 'contact') %}
-        {% if array_all_exists(contact, ['uuid','organisationName','positionName','email','role','country','url']) %}
         <gmd:contact>
-            <gmd:CI_ResponsibleParty uuid="{{ contact['uuid']|e }}">
+            <gmd:CI_ResponsibleParty uuid="{#{ contact['uuid']|e }#}">
                 {% if not array_is_empty(contact, 'individualName') %}
                 <gmd:individualName>
                     <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
@@ -134,7 +133,6 @@
                 {% endif %}
             </gmd:CI_ResponsibleParty>
         </gmd:contact>
-        {% endif %}
     {% endfor %}
     {% endif %}
     {% if p['dateStamp'] is defined and p['dateStamp'] is not empty %}
@@ -142,14 +140,14 @@
         <gco:Date>{{ p['dateStamp']|e }}</gco:Date>
     </gmd:dateStamp>
     {% endif %}
-    {% if p['_standardName'] is defined and p['_standardName'] is not empty %}
+    {% if p['standardName'] is defined and p['standardName'] is not empty %}
     <gmd:metadataStandardName>
-        <gco:CharacterString>{{ p['_standardName']|e }}</gco:CharacterString>
+        <gco:CharacterString>{{ p['standardName']|e }}</gco:CharacterString>
     </gmd:metadataStandardName>
     {% endif %}
-    {% if p['_standardVersion'] is defined and p['_standardVersion'] is not empty %}
+    {% if p['standardVersion'] is defined and p['standardVersion'] is not empty %}
     <gmd:metadataStandardVersion>
-        <gco:CharacterString>{{ p['_standardVersion']|e }}</gco:CharacterString>
+        <gco:CharacterString>{{ p['standardVersion']|e }}</gco:CharacterString>
     </gmd:metadataStandardVersion>
     {% endif %}
     {% if not array_is_empty(p, 'referenceSystemInfo') %}
@@ -252,6 +250,15 @@
                             </gmd:CI_Date>
                         </gmd:date>
                     {% endif %}
+                    {% if not array_is_empty(p, 'identifierString') %}
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>{{ p['identifierString'] }}</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                    {% endif %}
                     {% if not array_is_empty(p, 'presentationForm') %}
                     <gmd:presentationForm>
                         <gmd:CI_PresentationFormCode codeListValue="{{ p['presentationForm']|e }}" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_PresentationFormCode">{{ p['presentationForm']|e }}</gmd:CI_PresentationFormCode>
@@ -266,9 +273,8 @@
             {% endif %}
             {% if not array_is_empty(p, 'responsibleParty') %}
             {% for contact in array_get(p, 'responsibleParty', {}) %}
-            {% if array_all_exists(contact, ['uuid','organisationName','positionName','email','role','country','url']) %}
             <gmd:pointOfContact>
-                <gmd:CI_ResponsibleParty uuid="{{ contact['uuid']|e }}">
+                <gmd:CI_ResponsibleParty uuid="{#{ contact['uuid']|e }#}">
                     {% if not array_is_empty(contact, 'individualName') %}
                         <gmd:individualName>
                             <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
@@ -361,7 +367,6 @@
                     {% endif %}
                 </gmd:CI_ResponsibleParty>
             </gmd:pointOfContact>
-            {% endif %}
             {% endfor %}
             {% endif %}
             {% if not array_is_empty(p, 'graphicOverview') %}
@@ -500,6 +505,15 @@
                     <gmd:topicCategory>
                         <gmd:MD_TopicCategoryCode>{{ topicCategory }}</gmd:MD_TopicCategoryCode>
                     </gmd:topicCategory>
+                {% endfor %}
+            {% endif %}
+            {% if not array_is_empty(p, 'serviceTypeVersion') %}
+                {% for serviceTypeVersion in array_get(p, 'serviceTypeVersion', {}) %}
+                    {% if serviceTypeVersion is defined and serviceTypeVersion is not empty %}
+                        <srv:serviceTypeVersion>
+                            <gco:CharacterString>{{ serviceTypeVersion|e }}</gco:CharacterString>
+                        </srv:serviceTypeVersion>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
             {% if not array_is_empty(p, 'bbox') %}

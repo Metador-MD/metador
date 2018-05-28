@@ -256,6 +256,5 @@ $(document).on('change', '.-js-browser-image', function () {
 });
 
 $('.-js-add-address').addressDialog();
-// $('.-js-add-aggregationinfo').aggregationinfoDialog();
-// $('.-js-add-operateson').operatesonDialog();
-// $('.-js-show-help').help();
+$('.-js-add-operateson').operatesonDialog();
+$('.-js-show-help').help();

@@ -18,6 +18,7 @@
             "language": "gmd:language[1]/gmd:LanguageCode/text()",
             "characterSet": "gmd:characterSet[1]/gmd:MD_CharacterSetCode/@codeListValue",
             "hierarchyLevel": "gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/text()",
+            "identifierString": "gmd:identificationInfo[1]/*/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/*/text()",
             "contact": {
                 "_asArray": true,
                 "_path": "gmd:contact/gmd:CI_ResponsibleParty",
@@ -151,17 +152,27 @@
                     "fileDecompressionTechnique": "gmd:fileDecompressionTechnique/*/text()"
                 }
             },
+            "transferOptions": {
+                "_asArray": false,
+                "_path": "gmd:distributionInfo[1]/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions",
+                "_data": {
+                    "unitsOfDistribution": "gmd:unitsOfDistribution/*/text()",
+                    "url": "gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL/text()",
+                    "urlDescription": "gmd:onLine/gmd:CI_OnlineResource/gmd:description/*/text()",
+                    "function": "gmd:onLine/gmd:CI_OnlineResource/gmd:function/*/text()"
+                }
+            },
             "report": {
                 "_asArray": true,
                 "_path": "gmd:dataQualityInfo[1]/*/gmd:report/*/gmd:result/gmd:DQ_ConformanceResult",
                 "_data": {
                     "title": "gmd:specification/*/gmd:title/*/text()",
                     "creationDate": "gmd:specification/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation' or ./*/gmd:dateType/*/text()='creation']/*/*/gco:Date/text()",
-                    "revisionDate": "gmd:specification/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()",
+                    "revisionDate": ["gmd:specification/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision' or ./*/gmd:dateType/*/text()='revision']/*/*/gco:Date/text()","_asText"],
                     "publicationDate": "gmd:specification/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication' or ./*/gmd:dateType/*/text()='publication']/*/*/gco:Date/text()",
                     "edition": "gmd:specification/gmd:CI_Citation/gmd:edition/*/text()",
                     "explanation": "gmd:explanation/*/text()",
-                    "pass": "gmd:pass/*/text() or gmd:pass/*/@gco:nilReason"
+                    "pass": "gmd:pass/*/text() | gmd:pass/@gco:nilReason"
                 }
             }
         }
