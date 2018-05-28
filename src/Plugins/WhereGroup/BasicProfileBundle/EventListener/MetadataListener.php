@@ -125,65 +125,7 @@ class MetadataListener
         if ($p['_profile'] === 'metador_service_profile') {
             $p['levelDescription'] = isset($p['hierarchyLevelName']) ? $p['hierarchyLevelName'] : '';
         }
-
-//        if ($p['_profile'] !== 'metador_service_profile') {
-//            $tempDate = new \DateTime();
-//
-//            $result = $this->em->getRepository('MetadorCoreBundle:Metadata')
-//                ->createQueryBuilder('t')
-//                ->select('t.object')
-//                ->where('t.uuid = :uuid')
-//                ->setParameter('uuid', $p['_uuid'])
-//                ->getQuery()
-//                ->getArrayResult();
-//
-//            if (isset($result[0]['object'])) {
-//                $oldObject = json_decode($result[0]['object'], true);
-//
-//                if ($p['supplementalInformation'] !== $oldObject['supplementalInformation']) {
-//                    $data = $x1 = $y1 = [];
-//
-//                    ArrayParser::flatten($oldObject, $x1, true);
-//                    ArrayParser::flatten($p, $y1, true);
-//
-//                    foreach ($x1 as $key => $val) {
-//                        if (substr($key, 0, 1) === '_' || $val === '') {
-//                            continue;
-//                        }
-//                        $data[$key]['x'] = $val;
-//                    }
-//
-//                    foreach ($y1 as $key => $val) {
-//                        if (substr($key, 0, 1) === '_' || $val === '') {
-//                            continue;
-//                        }
-//
-//                        if (isset($data[$key]['x']) && $data[$key]['x'] == $val) {
-//                            unset($data[$key]);
-//                            continue;
-//                        }
-//
-//                        $data[$key]['y'] = $val;
-//                    }
-//
-//                    $debug['hasErrors']  = true;
-//                    $debug['messages'][] = [
-//                        'key'     => 'p_supplementalinformation',
-//                        'message' => 'Supplemental Information stimmt nicht überein.',
-//                        'data'    => $data
-//                    ];
-//                } else {
-//                    $p['supplementalInformation']
-//                        = $tempDate->format('Y-m-d') . 'T' . $tempDate->format('H:i:s') . 'Z';
-//                }
-//            } else {
-//                $p['supplementalInformation']
-//                    = $tempDate->format('Y-m-d') . 'T' . $tempDate->format('H:i:s') . 'Z';
-//            }
-//
-//            unset($tempDate);
-//        }
-
+        
         if (isset($p['bbox']) &&
             isset($p['bbox']['nLatitude']) &&
             isset($p['bbox']['eLongitude']) &&
