@@ -1,4 +1,5 @@
 <?php
+
 namespace Plugins\WhereGroup\BasicProfileBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
