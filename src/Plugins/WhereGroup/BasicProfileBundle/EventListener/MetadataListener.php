@@ -2,7 +2,6 @@
 namespace Plugins\WhereGroup\BasicProfileBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Plugins\LVermGeo\BasicProfileBundle\Component\Sync;
 use Plugins\WhereGroup\AddressBundle\Component\Address;
 use Ramsey\Uuid\Uuid;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
