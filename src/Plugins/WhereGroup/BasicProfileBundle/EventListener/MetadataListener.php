@@ -30,7 +30,7 @@ class MetadataListener
 
     private $em;
 
-    /** @var \Plugins\WhereGroup\BasicProfileBundle\Component\Metadata  */
+    /** @var \Plugins\WhereGroup\BasicProfileBundle\Component\Metadata */
     private $metadata;
 
     /** @var Address */
@@ -135,8 +135,7 @@ class MetadataListener
                 ->setBboxe((float)$p['bbox']['eLongitude'])
                 ->setBboxn((float)$p['bbox']['nLatitude'])
                 ->setBboxs((float)$p['bbox']['sLatitude'])
-                ->setBboxw((float)$p['bbox']['wLongitude'])
-            ;
+                ->setBboxw((float)$p['bbox']['wLongitude']);
         }
 
         $keywords = [];
@@ -155,7 +154,7 @@ class MetadataListener
         }
 
         if (isset($p['identifierCode']) && isset($p['identifierCodespace'])) {
-            $p['identifierString'] = $p['identifierCodespace'] .'/'. $p['identifierCode'];
+            $p['identifierString'] = $p['identifierCodespace'] . '/' . $p['identifierCode'];
         }
 
         if (isset($p['accessConstraints']) && is_array($p['accessConstraints'])) {
@@ -281,7 +280,7 @@ class MetadataListener
                 );
 
                 $p['temporalExtentBegin'] = '';
-                $p['temporalExtentEnd']   = '';
+                $p['temporalExtentEnd'] = '';
 
                 foreach ($entities as $entity) {
                     $childObject = $entity->getObject();
@@ -321,12 +320,12 @@ class MetadataListener
                     $parentObject = $parentEntity->getObject();
 
                     $parentObject['temporalExtentBegin'] = '';
-                    $parentObject['temporalExtentEnd']   = '';
+                    $parentObject['temporalExtentEnd'] = '';
 
                     foreach ($entities as $entity) {
                         $childObject = $entity->getObject();
 
-                        $parentObject['temporalExtentBegin']= $this->min(
+                        $parentObject['temporalExtentBegin'] = $this->min(
                             $parentObject['temporalExtentBegin'],
                             $this->getDateFromObject($childObject, 'min')
                         );
@@ -399,7 +398,7 @@ class MetadataListener
      */
     protected function prepareSearchField($p, $keywords)
     {
-        $searchfield  = '';
+        $searchfield = '';
         $searchfield .= isset($p['title']) ? ' ' . $p['title'] : '';
         $searchfield .= isset($p['alternateTitle']) ? ' ' . implode(' ', $p['alternateTitle']) : '';
         $searchfield .= isset($p['abstract']) ? ' ' . $p['abstract'] : '';
