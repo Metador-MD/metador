@@ -1,5 +1,4 @@
 <?php
-
 namespace Plugins\WhereGroup\BasicProfileBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -125,7 +124,7 @@ class MetadataListener
         if ($p['_profile'] === 'metador_service_profile') {
             $p['levelDescription'] = isset($p['hierarchyLevelName']) ? $p['hierarchyLevelName'] : '';
         }
-        
+
         if (isset($p['bbox']) &&
             isset($p['bbox']['nLatitude']) &&
             isset($p['bbox']['eLongitude']) &&
