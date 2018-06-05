@@ -68,6 +68,9 @@ class JsonFilterReader implements FilterReader
                 case 'eq':
                     $items[] = $expression->eq(key($value), $value[key($value)], $parameters);
                     break;
+                case 'neq':
+                    $items[] = $expression->neq(key($value), $value[key($value)], $parameters);
+                    break;
                 case 'like':
                     $items[] = $expression->like(key($value), $value[key($value)], $parameters, '\\', '_', '*');
                     break;
