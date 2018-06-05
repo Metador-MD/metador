@@ -45,7 +45,7 @@
                             <div class="filter-header">{% trans %}Hierarchy Level{% endtrans %}</div>
                             <div class="filter-content">
                                 {% for name in hierarchyLevel|sort %}
-                                    <div class="filter-content-row -js-checkbox -js-search-on-click">
+                                    <div class="filter-content-row -js-checkbox">
                                         <input type="hidden" name="hierarchyLevel[{{ name }}]" data-group="hierarchyLevel" data-value="true" value="true" class="-js-checkbox-input -js-search-filter" />
                                         <span class="icon-checkbox-checked -js-checkbox-icon"></span> {{ name|capitalize }}
                                     </div>
@@ -53,6 +53,42 @@
                             </div>
                         </div>
                         {% endif %}
+
+                        {%  set topicCategory = {
+                            'farming':'Landwirtschaft',
+                            'biota':'Biologie',
+                            'boundaries':'Grenzen',
+                            'climatology/meteorology':'Klima/Meteorlogie',
+                            'atmosphere':'Atmosphäre',
+                            'economy':'Wirtschaft',
+                            'elevation':'Höhenangaben',
+                            'environment':'Umwelt',
+                            'geoscientificInformation':'Geowissenschaften',
+                            'health':'Gesundheitswesen',
+                            'imageryBaseMapsEarthCover':'Oberflächenbeschreibung',
+                            'intelligenceMilitary':'Militär und Aufklärung',
+                            'inlandWaters':'Binnengewässer',
+                            'location':'Ortsangaben',
+                            'oceans':'Meere',
+                            'planningCadastre':'Planungsunterlagen, Kataster',
+                            'society':'Gesellschaft',
+                            'structure':'Bauwerke',
+                            'transportation':'Verkehrswesen',
+                            'utilitiesCommunication':'Ver- und Entsorgung, Kommunikation'
+                        } %}
+
+                        <div class="filter-wrapper" data-filter="hierarchyLevel">
+                            <div class="filter-header">{% trans %}Hierarchy Level{% endtrans %}</div>
+                            <div class="filter-content">
+                                {% for key, name in topicCategory|sort %}
+                                    <div class="filter-content-row -js-checkbox" title="{{ name|capitalize }}">
+                                        <input type="hidden" name="topicCategory[{{ key }}]" data-group="topicCategory" data-value="true" value="true" class="-js-checkbox-input -js-search-filter" />
+                                        <span class="icon-checkbox-checked -js-checkbox-icon"></span> {{ name|capitalize|teaser(20, 1) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
                         <div class="filter-wrapper" data-filter="sort">
                             <div class="filter-header">{% trans %}Sortierung{% endtrans %}</div>
                             <div class="filter-content">

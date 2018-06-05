@@ -51,11 +51,11 @@ class HomeController extends Controller
         }
 
         return $this->render("MetadorThemeBundle:Home:index.html.twig", array(
-            'isHome' => true,
-            'sourceConfig' => $sourceConfig,
+            'isHome'         => true,
+            'sourceConfig'   => $sourceConfig,
             'hierarchyLevel' => $this
                 ->get('metador_configuration')
-                ->get('hierarchy_levels', 'plugin', 'metador_core'),
+                ->get('hierarchy_levels', 'plugin', 'metador_core')
         ));
     }
 
@@ -107,7 +107,6 @@ class HomeController extends Controller
             ];
         }
 
-        //
         if (isset($params['hierarchyLevel'])
             && is_array($params['hierarchyLevel'])
             && !empty($params['hierarchyLevel'])) {
@@ -122,6 +121,25 @@ class HomeController extends Controller
 
             if (isset($subfilter['or'])) {
                 $filter['and'][] = $subfilter;
+            }
+
+            unset($subfilter);
+        }
+
+        if (isset($params['topicCategory'])
+            && is_array($params['topicCategory'])
+            && !empty($params['topicCategory'])) {
+            $subfilter = [];
+
+            foreach ($params['topicCategory'] as $key => $value) {
+                if (!empty($value)) {
+                    continue;
+                }
+                $subfilter[] = ['not' => ['eq' => ['topicCategory' => $key]]];
+            }
+
+            if (isset($subfilter['and'])) {
+                $filter['and'] = $subfilter;
             }
 
             unset($subfilter);
@@ -155,11 +173,7 @@ class HomeController extends Controller
                 );
         }
 
-        try {
-            $searchResponse = $search->find();
-        } catch (NoResultException $e) {
-            $searchResponse = [];
-        }
+        $searchResponse = $search->find();
 
         if (!is_null($download)) {
             return new CsvResponse(
@@ -174,7 +188,7 @@ class HomeController extends Controller
                 'rows'   => $searchResponse['rows'],
                 'paging' => $searchResponse['paging'],
             )),
-            'debug' => $params,
+            'debug' => $params
         ];
 
         $bboxParams = [];

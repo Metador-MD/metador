@@ -19,6 +19,7 @@ abstract class Search
             'profile'        => 'profile',
             'public'         => 'public',
             'hierarchylevel' => 'hierarchyLevel',
+            'topiccategory'  => 'topicCategory',
             'uuid'           => 'uuid',
             'groups'         => 'groups',
             'searchfield'    => 'searchfield',

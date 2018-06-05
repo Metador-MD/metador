@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
+use Throwable;
+
 /**
  * Class PropertyNameNotFoundException
  * @package WhereGroup\CoreBundle\Component\Search
