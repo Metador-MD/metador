@@ -302,6 +302,9 @@ class Metadata implements MetadataInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function generateUuid()
     {
         $uuid4 = Uuid::uuid4();
@@ -352,6 +355,10 @@ class Metadata implements MetadataInterface
 
         if (isset($p['parentIdentifier'])) {
             $metadata->setParent($p['parentIdentifier']);
+        }
+
+        if (isset($p['topicCategory'])) {
+            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
         }
 
         $metadata->setPublic($p['_public']);

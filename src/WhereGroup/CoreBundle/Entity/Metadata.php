@@ -159,6 +159,11 @@ class Metadata
      */
     private $keywords;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $topicCategory;
+
 
     /**
      * Metadata constructor.
@@ -680,6 +685,24 @@ class Metadata
     public function setInsertUsername($insertUsername)
     {
         $this->insertUsername = $insertUsername;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopicCategory()
+    {
+        return $this->topicCategory;
+    }
+
+    /**
+     * @param mixed $topicCategory
+     * @return Metadata
+     */
+    public function setTopicCategory($topicCategory)
+    {
+        $this->topicCategory = $topicCategory;
         return $this;
     }
 }

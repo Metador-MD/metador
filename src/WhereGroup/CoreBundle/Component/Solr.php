@@ -101,6 +101,7 @@ class Solr
         $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
         $doc->addField('hierarchyLevel', $metadata->getHierarchyLevel());
         $doc->addField('keywords', $metadata->getKeywords());
+        $doc->addField('topicCategory', $metadata->getTopicCategory());
         $doc->addField('object', json_encode($p));
         $doc->addField('parent', $metadata->getParent());
         $doc->addField('profile', $metadata->getProfile());
