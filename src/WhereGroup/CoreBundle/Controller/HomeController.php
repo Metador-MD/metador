@@ -129,20 +129,12 @@ class HomeController extends Controller
         if (isset($params['topicCategory'])
             && is_array($params['topicCategory'])
             && !empty($params['topicCategory'])) {
-            $subfilter = [];
-
             foreach ($params['topicCategory'] as $key => $value) {
                 if (!empty($value)) {
                     continue;
                 }
-                $subfilter[] = ['not' => ['eq' => ['topicCategory' => $key]]];
+                $filter['and'][] = ['neq' => ['topicCategory' => $key]];
             }
-
-            if (isset($subfilter['and'])) {
-                $filter['and'] = $subfilter;
-            }
-
-            unset($subfilter);
         }
 
         // Set spatial filter
