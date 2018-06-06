@@ -78,12 +78,12 @@
                         } %}
 
                         <div class="filter-wrapper" data-filter="hierarchyLevel">
-                            <div class="filter-header">{% trans %}Hierarchy Level{% endtrans %}</div>
+                            <div class="filter-header">{% trans %}Thema{% endtrans %}</div>
                             <div class="filter-content">
                                 {% for key, name in topicCategory|sort %}
-                                    <div class="filter-content-row -js-checkbox" title="{{ name|capitalize }}">
+                                    <div class="filter-content-row -js-checkbox" title="{{ name }}">
                                         <input type="hidden" name="topicCategory[{{ key }}]" data-group="topicCategory" data-value="true" value="true" class="-js-checkbox-input -js-search-filter" />
-                                        <span class="icon-checkbox-checked -js-checkbox-icon"></span> {{ name|capitalize|teaser(20, 1) }}
+                                        <span class="icon-checkbox-checked -js-checkbox-icon"></span> {{ name|teaser(20, 1) }}
                                     </div>
                                 {% endfor %}
                             </div>
