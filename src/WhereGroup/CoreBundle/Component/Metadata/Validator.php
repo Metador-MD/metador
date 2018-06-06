@@ -120,14 +120,22 @@ class Validator
     {
         if (is_array($val)) {
             foreach ($val as $string) {
-                $list = $this->conf->get($key, 'list-option', $profile);
+                if (empty($string)) {
+                    continue;
+                }
 
-                if (is_array($list) && !isset($list[$string])) {
-                    $debug['hasErrors'] = true;
-                    $debug['messages'][] = [
-                        'key'     => $key,
-                        'message' => "Der Wert '" . $string . "' ist in der Liste nicht enthalten."
-                    ];
+                $list = $this->conf->get($key, 'list-option', $profile);
+                $array = is_string($string) ? array($string) : $string;
+                unset($string);
+
+                foreach ($array as $string) {
+                    if (is_array($list) && !isset($list[$string])) {
+                        $debug['hasErrors'] = true;
+                        $debug['messages'][] = [
+                            'key'     => $key,
+                            'message' => "Der Wert '" . $string . "' ist in der Liste nicht enthalten."
+                        ];
+                    }
                 }
             }
             return;
