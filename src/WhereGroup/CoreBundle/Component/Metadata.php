@@ -546,6 +546,7 @@ class Metadata implements MetadataInterface
      * @param bool $dispatchEvent
      * @param bool $log
      * @return bool
+     * @throws \Exception
      */
     public function save($entity, $dispatchEvent = true, $log = true)
     {
@@ -584,6 +585,7 @@ class Metadata implements MetadataInterface
             $success = true;
         } catch (\Exception $e) {
             $this->em->rollBack();
+            throw new \Exception($e->getMessage());
         }
 
         if ($success) {
