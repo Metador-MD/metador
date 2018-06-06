@@ -69,5 +69,17 @@ $(document).on('mousedown', '.-js-date-time-picker', function() {
 $(document).ready(function() {
     $('.-js-show-tooltip').tooltip();
     $('.-js-checkbox').checkbox();
+
+    $('.-js-source').on('click', function () {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+        $('.-js-profile-menu').removeClass('active');
+        $('#source-' + $(this).attr('data-slug')).addClass('active');
+        $('#search-result').html('');
+
+        search.set('page', 1);
+        search.find();
+    });
+
 });
 

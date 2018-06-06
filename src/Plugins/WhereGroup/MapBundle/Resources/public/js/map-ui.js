@@ -16,17 +16,6 @@ $(document).on('click', '.-js-toggle-layertree', function () {
     $(this).closest('.-js-map-dialog').toggleClass('active');
 });
 
-$('.-js-source').on('click', function () {
-    $(this).siblings().removeClass('active');
-    $(this).addClass('active');
-    $('.-js-profile-menu').removeClass('active');
-    $('#source-' + $(this).attr('data-slug')).addClass('active');
-    $('#search-result').html('');
-
-    search.set('page', 1);
-    search.find();
-});
-
 $('.-js-crs-code').on('change', function () {
     MetadorOl4Bridge.changeCrs($(this).val());
 });

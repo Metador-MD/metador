@@ -211,12 +211,16 @@ class HomeController extends Controller
             }
         }
 
-        $this->get('metador_frontend_command')->runMethod(
-            'MetadorOl4Bridge',
-            'showResults',
-            $bboxParams,
-            $response
-        );
+        $activePlugins = $this->get('metador_plugin')->getActivePlugins();
+
+        if (isset($activePlugins['metador_map'])) {
+            $this->get('metador_frontend_command')->runMethod(
+                'MetadorOl4Bridge',
+                'showResults',
+                $bboxParams,
+                $response
+            );
+        }
 
         return new AjaxResponse($response);
     }
