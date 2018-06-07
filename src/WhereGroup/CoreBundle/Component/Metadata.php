@@ -302,6 +302,9 @@ class Metadata implements MetadataInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function generateUuid()
     {
         $uuid4 = Uuid::uuid4();
@@ -352,6 +355,10 @@ class Metadata implements MetadataInterface
 
         if (isset($p['parentIdentifier'])) {
             $metadata->setParent($p['parentIdentifier']);
+        }
+
+        if (isset($p['topicCategory'])) {
+            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
         }
 
         $metadata->setPublic($p['_public']);
@@ -539,6 +546,7 @@ class Metadata implements MetadataInterface
      * @param bool $dispatchEvent
      * @param bool $log
      * @return bool
+     * @throws \Exception
      */
     public function save($entity, $dispatchEvent = true, $log = true)
     {
@@ -577,6 +585,7 @@ class Metadata implements MetadataInterface
             $success = true;
         } catch (\Exception $e) {
             $this->em->rollBack();
+            throw new \Exception($e->getMessage());
         }
 
         if ($success) {

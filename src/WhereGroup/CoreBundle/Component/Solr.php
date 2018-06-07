@@ -101,6 +101,7 @@ class Solr
         $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
         $doc->addField('hierarchyLevel', $metadata->getHierarchyLevel());
         $doc->addField('keywords', $metadata->getKeywords());
+        $doc->addField('topicCategory', $metadata->getTopicCategory());
         $doc->addField('object', json_encode($p));
         $doc->addField('parent', $metadata->getParent());
         $doc->addField('profile', $metadata->getProfile());
@@ -112,10 +113,15 @@ class Solr
         $doc->addField('insertUsername', $p['_insert_user']);
         $doc->addField('insertTime', $p['_insert_time']);
         $doc->addField('group.role', isset($p['_group']) ? implode(' ', $p['_group']) : '');
-        $doc->addField('bboxn', $metadata->getBboxn());
-        $doc->addField('bboxe', $metadata->getBboxe());
-        $doc->addField('bboxs', $metadata->getBboxs());
-        $doc->addField('bboxw', $metadata->getBboxw());
+
+        if (!empty($metadata->getBboxn()) && !empty($metadata->getBboxe())
+            && !empty($metadata->getBboxs()) && !empty($metadata->getBboxw())
+        ) {
+            $doc->addField('bboxn', $metadata->getBboxn());
+            $doc->addField('bboxe', $metadata->getBboxe());
+            $doc->addField('bboxs', $metadata->getBboxs());
+            $doc->addField('bboxw', $metadata->getBboxw());
+        }
 
         $anyText = $p;
         if (isset($anyText['processStep2']['responsibleParty'])) {
