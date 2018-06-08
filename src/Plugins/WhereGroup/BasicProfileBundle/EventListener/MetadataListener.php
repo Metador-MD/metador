@@ -333,7 +333,6 @@ class MetadataListener
                     $this->em->getConnection()->commit();
                     $this->solr->updateMetadata($parentEntity);
                 }
-
             } catch (\Exception $e) {
                 $this->em->getConnection()->rollback();
                 $this->em->clear();
