@@ -8,5 +8,3 @@ metador_basic_profile:
     type: system
     tags:
         - profile
-    require:
-        - metador_address

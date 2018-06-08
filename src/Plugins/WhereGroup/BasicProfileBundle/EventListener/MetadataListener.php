@@ -3,16 +3,13 @@
 namespace Plugins\WhereGroup\BasicProfileBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Plugins\WhereGroup\AddressBundle\Component\Address;
 use Ramsey\Uuid\Uuid;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
-use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 use WhereGroup\CoreBundle\Component\Logger;
 use WhereGroup\CoreBundle\Component\Solr;
 use WhereGroup\CoreBundle\Component\Source;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 use WhereGroup\CoreBundle\Entity\Metadata;
-use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 
 /**
@@ -33,9 +30,6 @@ class MetadataListener
     /** @var \Plugins\WhereGroup\BasicProfileBundle\Component\Metadata */
     private $metadata;
 
-    /** @var Address */
-    private $address;
-
     /** @var Source */
     private $source;
 
@@ -49,7 +43,6 @@ class MetadataListener
      * MetadataListener constructor.
      * @param EntityManagerInterface $em
      * @param \WhereGroup\CoreBundle\Component\Metadata $metadata
-     * @param Address $address
      * @param Source $source
      * @param Logger $logger
      * @param Solr $solr
@@ -57,14 +50,12 @@ class MetadataListener
     public function __construct(
         EntityManagerInterface $em,
         \WhereGroup\CoreBundle\Component\Metadata $metadata,
-        Address $address,
         Source $source,
         Logger $logger,
         Solr $solr
     ) {
         $this->em = $em;
         $this->metadata = $metadata;
-        $this->address = $address;
         $this->source = $source;
         $this->logger = $logger;
         $this->solr = $solr;

@@ -26,7 +26,6 @@
             <tag name="kernel.event_listener" event="metadata.pre_delete" method="onPreDelete" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="metador_metadata" />
-            <argument type="service" id="metador_address" />
             <argument type="service" id="metador_source" />
             <argument type="service" id="metador_logger" />
             <argument type="service" id="metador_solr" />
