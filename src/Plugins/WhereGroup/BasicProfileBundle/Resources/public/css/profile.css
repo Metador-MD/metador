@@ -114,3 +114,17 @@
 .switch-row > .icon-toggle-on {
   color: #4dacfe;
   vertical-align: middle; }
+
+.profile-content {
+  padding: 20px 40px;
+  border: 1px solid #e1e1e1;
+  border-radius: 2px;
+  background-color: #fefefe;
+  overflow-y: scroll;
+  z-index: 1;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.03);
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 10px; }

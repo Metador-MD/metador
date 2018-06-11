@@ -1,4 +1,5 @@
 @import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/config';
+@import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/mixins';
 @import '../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/extensions';
 
 .switch-row {
@@ -21,4 +22,15 @@
         color: $info;
         vertical-align: middle;
     }
+}
+.profile-content {
+        padding: $padding $padding * 2;
+        border: 1px solid $border;
+        border-radius: $border-radius;
+        background-color: $content;
+        overflow-y: scroll;
+        z-index: 1;
+        box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.03);
+
+        @include pos($metadata-menu-height, 0, 10px, 0);
 }
