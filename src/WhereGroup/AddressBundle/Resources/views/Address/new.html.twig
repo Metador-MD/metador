@@ -1,0 +1,172 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% if form.vars.value.id is defined and form.vars.value.id is not empty %}
+    {% set title  = 'Adresse bearbeiten'|trans %}
+    {% set path   = 'metador_admin_address_edit' %}
+    {% set params = {id: form.vars.value.id} %}
+{% else %}
+    {% set title  = 'Adresse erstellen'|trans %}
+    {% set path   = 'metador_admin_address_new' %}
+    {% set params = {} %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{{ title }}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_address') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path(path, params), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <div class="grid space grid-space responsive">
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.uuid, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.uuid, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.organisationName, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.organisationName, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.individualName, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.individualName, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.positionName, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.positionName, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.deliveryPoint, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.deliveryPoint, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.postalCode, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.postalCode, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.country, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.country, { 'attr': {'class': 'select'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.administrativeArea, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.administrativeArea, { 'attr': {'class': 'select'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.city, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.city, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <div>{{ form_label(form.voice, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.voice, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.facsimile, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.facsimile, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.email, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.email, { 'attr': {'class': 'textarea', 'placeholder': 'Kommaseparierte Liste von E-mail Adressen'|trans }}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.url, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.url, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.urlDescription, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.urlDescription, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1">
+                <div>{{ form_label(form.hoursOfService, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.hoursOfService, { 'attr': {'class': 'textarea'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid space row-space responsive">
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                <button class="btn success medium">
+                    <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
+                </button>
+                {% if form.vars.value.id is not empty %}
+                    <a href="{{ path('metador_admin_address_confirm', params) }}" class="btn error medium">
+                        <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

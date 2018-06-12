@@ -10,5 +10,10 @@ wheregroup_plugin:
     resource: "@MetadorPluginBundle/Controller/"
     type:     annotation
 
+metador_address:
+    resource: "@MetadorAddressBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 _plugins:
     resource: "../../var/config/plugins_routing.yml"

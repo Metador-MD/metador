@@ -4,7 +4,6 @@ namespace WhereGroup\UserBundle\Entity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use WhereGroup\UserBundle\Entity\User;
 use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
@@ -44,7 +43,7 @@ class Group implements RoleInterface
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->users    = new ArrayCollection();
         $this->metadata = new ArrayCollection();
     }
 
