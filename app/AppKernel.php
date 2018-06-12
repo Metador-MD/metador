@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new WhereGroup\ThemeBundle\MetadorThemeBundle(),
             new WhereGroup\UserBundle\MetadorUserBundle(),
             new WhereGroup\PluginBundle\MetadorPluginBundle(),
+            new WhereGroup\AddressBundle\MetadorAddressBundle(),
         ];
 
         // Check file exists

@@ -1,0 +1,36 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{% trans %}Adressverwaltung{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_address_new') }}" class="btn info medium">
+                    <span class="icon-plus"></span> {% trans %}Neu{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <table class="table bordered">
+        <thead>
+        <tr>
+            <th>Name der Organisation</th>
+            <th>Zuständige Person</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addresses  %}
+            <tr>
+                <td><a href="{{ path('metador_admin_address_edit', {'id': address.id }) }}">{{ address.organisationName }}</a></td>
+                <td>{{ address.individualName }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+{% endblock %}

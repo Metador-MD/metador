@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- SERVICE -->
+        <parameter key="metador.address.class">WhereGroup\AddressBundle\Component\Address</parameter>
+
+        <!-- EVENTLISTENER -->
+        <parameter key="metador.address.app.listener.class">WhereGroup\AddressBundle\EventListener\ApplicationListener</parameter>
+    </parameters>
+
+    <services>
+        <!-- SERVICE -->
+        <service id="metador_address" class="%metador.address.class%" public="true">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <!-- EVENTLISTENER -->
+        <service id="metador_address_app_listener" class="%metador.address.app.listener.class%">
+            <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="metador_address" />
+        </service>
+    </services>
+</container>
