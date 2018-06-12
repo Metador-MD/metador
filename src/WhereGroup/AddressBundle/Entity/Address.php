@@ -2,7 +2,9 @@
 
 namespace WhereGroup\AddressBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
  * WhereGroup\AddressBundle\Entity\Address
@@ -99,6 +101,19 @@ class Address
      * @ORM\Column(type="text", nullable=true)
      */
     private $searchfield = null;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="WhereGroup\CoreBundle\Entity\Metadata", mappedBy="address")
+     */
+    protected $metadata;
+
+    /**
+     * Address constructor.
+     */
+    public function __construct()
+    {
+        $this->metadata = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -492,5 +507,32 @@ class Address
     public function getSearchfield()
     {
         return $this->searchfield;
+    }
+
+    /**
+     * @param Metadata $metadata
+     * @return $this
+     */
+    public function addMetadata(Metadata $metadata)
+    {
+        $this->metadata[] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * @param Metadata $metadata
+     */
+    public function removeMetadata(Metadata $metadata)
+    {
+        $this->metadata->removeElement($metadata);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 }

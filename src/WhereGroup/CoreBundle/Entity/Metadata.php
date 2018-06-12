@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use WhereGroup\AddressBundle\Entity\Address;
 use WhereGroup\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use WhereGroup\UserBundle\Entity\Group;
@@ -125,6 +126,12 @@ class Metadata
     private $groups;
 
     /**
+     * @ORM\ManyToMany(targetEntity="WhereGroup\AddressBundle\Entity\Address", inversedBy="metadata")
+     * @ORM\JoinTable(name="metadata_address")
+     */
+    private $address;
+
+    /**
      * @ORM\Column(type="date", nullable=true, name="`date`")
      */
     private $date;
@@ -170,7 +177,8 @@ class Metadata
      */
     public function __construct()
     {
-        $this->groups = new ArrayCollection();
+        $this->groups  = new ArrayCollection();
+        $this->address = new ArrayCollection();
     }
 
     /**
@@ -468,6 +476,33 @@ class Metadata
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @param Address $address
+     * @return $this
+     */
+    public function addAddress(Address $address)
+    {
+        $this->address[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * @param Address $address
+     */
+    public function removeAddress(Address $address)
+    {
+        $this->groups->removeElement($address);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**
