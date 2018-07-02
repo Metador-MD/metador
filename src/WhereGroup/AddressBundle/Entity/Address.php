@@ -515,17 +515,22 @@ class Address
      */
     public function addMetadata(Metadata $metadata)
     {
-        $this->metadata[] = $metadata;
+        if (!$this->metadata->contains($metadata)) {
+            $this->metadata[] = $metadata;
+        }
 
         return $this;
     }
 
     /**
      * @param Metadata $metadata
+     * @return Address
      */
     public function removeMetadata(Metadata $metadata)
     {
         $this->metadata->removeElement($metadata);
+
+        return $this;
     }
 
     /**

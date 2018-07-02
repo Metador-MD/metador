@@ -25,8 +25,28 @@ class Address
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $em;
 
     const ENTITY = "MetadorAddressBundle:Address";
+
+    protected $addressArray = [
+        'organisationName',
+        'individualName',
+        'country',
+        'administrativeArea',
+        'deliveryPoint',
+        'city',
+        'postalCode',
+        'voice',
+        'facsimile',
+        'url',
+        'urlDescription',
+        'hoursOfService',
+        'email',
+    ];
 
     /**
      * @param EntityManagerInterface $em
@@ -34,8 +54,17 @@ class Address
      */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher)
     {
+        $this->em = $em;
         $this->repo = $em->getRepository(self::ENTITY);
         $this->eventDispatcher = $eventDispatcher;
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getManager()
+    {
+        return $this->em;
     }
 
     public function __destruct()
@@ -45,7 +74,7 @@ class Address
 
     /**
      * @param $id
-     * @return
+     * @return \WhereGroup\AddressBundle\Entity\Address
      */
     public function get($id)
     {
@@ -53,7 +82,16 @@ class Address
     }
 
     /**
-     * @return array|\Plugins\WhereGroup\AddressBundle\Entity\Address[]
+     * @param $uuid
+     * @return mixed
+     */
+    public function getByUuid($uuid)
+    {
+        return $this->repo->findOneByUuid($uuid);
+    }
+
+    /**
+     * @return array|\WhereGroup\AddressBundle\Entity\Address[]
      */
     public function all()
     {
@@ -92,7 +130,7 @@ class Address
     }
 
     /**
-     * @param \Plugins\WhereGroup\AddressBundle\Entity\Address $entity
+     * @param \WhereGroup\AddressBundle\Entity\Address $entity
      * @return $this
      * @throws MetadorException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -141,31 +179,27 @@ class Address
     }
 
     /**
-     * @param \Plugins\WhereGroup\AddressBundle\Entity\Address $entity
+     * @param \WhereGroup\AddressBundle\Entity\Address $entity
      * @return mixed
      */
     public function generateUuid($entity)
     {
-        $string = preg_replace('/\W/', '', strtolower(
-            $entity->getIndividualName()
-            . $entity->getOrganisationName()
-            . $entity->getPositionName()
-            . $entity->getEmail()
-            . $entity->getCountry()
-            . $entity->getAdministrativeArea()
-            . $entity->getDeliveryPoint()
-            . $entity->getCity()
-            . $entity->getPostalCode()
-            . $entity->getVoice()
-            . $entity->getFacsimile()
-            . $entity->getUrl()
-            . $entity->getUrlDescription()
-            . $entity->getHoursOfService()
-        ));
-
-        $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $string);
-
-        return $uuid5->toString();
+        return $this->generateUuidFromArray([
+            'organisationName' => (!empty($entity->getOrganisationName()) ? $entity->getOrganisationName() : ''),
+            'individualName' => (!empty($entity->getIndividualName()) ? $entity->getIndividualName() : ''),
+            'positionName' => (!empty($entity->getPositionName()) ? $entity->getPositionName() : ''),
+            'country' => (!empty($entity->getCountry()) ? $entity->getCountry() : ''),
+            'administrativeArea' => (!empty($entity->getAdministrativeArea()) ? $entity->getAdministrativeArea() : ''),
+            'deliveryPoint' => (!empty($entity->getDeliveryPoint()) ? $entity->getDeliveryPoint() : ''),
+            'city' => (!empty($entity->getCity()) ? $entity->getCity() : ''),
+            'postalCode' => (!empty($entity->getPostalCode()) ? $entity->getPostalCode() : ''),
+            'voice' => (!empty($entity->getVoice()) ? $entity->getVoice() : ''),
+            'facsimile' => (!empty($entity->getFacsimile()) ? $entity->getFacsimile() : ''),
+            'url' => (!empty($entity->getUrl()) ? $entity->getUrl() : ''),
+            'urlDescription' => (!empty($entity->getUrlDescription()) ? $entity->getUrlDescription() : ''),
+            'hoursOfService' => (!empty($entity->getHoursOfService()) ? $entity->getHoursOfService() : ''),
+            'email' => (!empty($entity->getEmail()) ? explode(',', $entity->getEmail()) : '')
+        ]);
     }
 
     /**
@@ -174,22 +208,19 @@ class Address
      */
     public function generateUuidFromArray($array)
     {
-        $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, preg_replace('/\W/', '', strtolower(
-            (isset($array['organisationName']) ? $array['organisationName'] : '')
-            . (isset($array['individualName']) ? $array['individualName'] : '')
-            . (isset($array['positionName']) ? $array['positionName'] : '')
-            . (isset($array['country']) ? $array['country'] : '')
-            . (isset($array['administrativeArea']) ? $array['administrativeArea'] : '')
-            . (isset($array['deliveryPoint']) ? $array['deliveryPoint'] : '')
-            . (isset($array['city']) ? $array['city'] : '')
-            . (isset($array['postalCode']) ? $array['postalCode'] : '')
-            . (isset($array['voice']) ? $array['voice'] : '')
-            . (isset($array['facsimile']) ? $array['facsimile'] : '')
-            . (isset($array['url']) ? $array['url'] : '')
-            . (isset($array['urlDescription']) ? $array['urlDescription'] : '')
-            . (isset($array['hoursOfService']) ? $array['hoursOfService'] : '')
-            . (isset($array['email']) && is_array($array['email']) ? implode('', $array['email']) : '')
-        )));
+        $string = '';
+
+        foreach ($this->addressArray as $key) {
+            if (isset($array[$key]) && is_string($array[$key])) {
+                $string .= empty($array[$key]) ? '' : trim($array[$key]);
+            } elseif (isset($array[$key]) && is_array($array[$key])) {
+                foreach ($array[$key] as $arrValue) {
+                    $string .= trim($arrValue);
+                }
+            }
+        }
+
+        $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, preg_replace('/\W/', '', strtolower($string)));
 
         return $uuid5->toString();
     }
