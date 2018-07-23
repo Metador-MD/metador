@@ -27,7 +27,7 @@ class Source
      * @Assert\Regex(
      *     pattern="/^[a-z]+$/",
      *     match=true,
-     *     message="Der Slug darf nur aus Kleinbuchstaben bestehen und keine Sondernzeichen, Zahlen und Umlaute beinhalten."
+     *     message="Der Slug darf nur aus Kleinbuchstaben bestehen und keine Sonderzeichen, Zahlen und Umlaute beinhalten."
      * )
      */
     private $slug;
