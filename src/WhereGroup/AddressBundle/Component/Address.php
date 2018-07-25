@@ -44,7 +44,7 @@ class Address
         'facsimile',
         'url',
         'urlDescription',
-        'hoursOfService',
+//        'hoursOfService',
         'email',
     ];
 
