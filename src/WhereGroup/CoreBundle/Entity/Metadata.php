@@ -491,10 +491,23 @@ class Metadata
 
     /**
      * @param Address $address
+     * @return Metadata
      */
     public function removeAddress(Address $address)
     {
-        $this->groups->removeElement($address);
+        $this->address->removeElement($address);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearAddress()
+    {
+        $this->address->clear();
+
+        return $this;
     }
 
     /**

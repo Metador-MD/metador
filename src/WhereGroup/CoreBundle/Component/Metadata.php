@@ -345,7 +345,6 @@ class Metadata implements MetadataInterface
         }
 
         $date = new \DateTime($p['dateStamp']);
-
         $user = $this->user->getByUsername($p['_username']);
 
         if (!$metadata->getId()) {

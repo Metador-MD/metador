@@ -3,6 +3,7 @@
 namespace WhereGroup\AddressBundle\Controller;
 
 use WhereGroup\AddressBundle\Entity\Address;
+use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use WhereGroup\AddressBundle\Form\AddressType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,6 +32,7 @@ class AddressController extends Controller
     /**
      * @Route("/new/", name="metador_admin_address_new")
      * @Method({"GET", "POST"})
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function newAction()
     {
@@ -77,6 +79,7 @@ class AddressController extends Controller
      * @Method({"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editAction($id)
     {
@@ -91,7 +94,11 @@ class AddressController extends Controller
             $entity = $form->getData();
 
             try {
+                $event = new AddressChangeEvent($entity, array());
+                $this->get('event_dispatcher')->dispatch('address.pre_save', $event);
                 $this->get('metador_address')->save($entity);
+                $this->get('event_dispatcher')->dispatch('address.post_save', $event);
+
                 $this->setFlashSuccess(
                     'edit',
                     $id,
@@ -118,6 +125,9 @@ class AddressController extends Controller
     /**
      * @Route("/confirm/{id}", name="metador_admin_address_confirm")
      * @Method({"GET", "POST"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function confirmAction($id)
     {
@@ -134,7 +144,8 @@ class AddressController extends Controller
             $entity = $form->getData();
             $name   = $entity->getOrganisationName();
             $id     = $entity->getId();
-
+            $event  = new AddressChangeEvent($entity, array());
+            $this->get('event_dispatcher')->dispatch('address.pre_delete', $event);
             $this->get('metador_address')->remove($entity);
 
             $this->setFlashSuccess(

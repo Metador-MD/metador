@@ -142,6 +142,9 @@ class ProfileController extends Controller
             );
         } catch (MetadataException $e) {
             $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), array());
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
 
         $response = array_merge_recursive($response, array(
