@@ -2,7 +2,7 @@
 
 namespace WhereGroup\AddressBundle\Command;
 
-use Plugins\WhereGroup\AddressBundle\Component\Address;
+use WhereGroup\AddressBundle\Component\Address;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
-use \Plugins\WhereGroup\AddressBundle\Entity\Address as AddressEntity;
+use WhereGroup\AddressBundle\Entity\Address as AddressEntity;
 
 /**
  * Class ImportAddressCommand
