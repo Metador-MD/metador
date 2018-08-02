@@ -109,8 +109,18 @@ class ProfileController extends Controller
         $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
 
         if (!is_null($id)) {
-            $metadata = $this->get('metador_metadata')->getById($id);
-            $this->denyAccessUnlessGranted('edit', $metadata->getObject());
+            $metadata  = $this->get('metador_metadata')->getById($id);
+            $oldObject = $metadata->getObject();
+            $this->denyAccessUnlessGranted('edit', $oldObject);
+
+            // Keep groups if user is not owner.
+            if (!$this->isGranted('edit_group', $oldObject)) {
+                $p['_groups'] = isset($oldObject['_groups']) ? $oldObject['_groups'] : [];
+            }
+
+            // Keep owner
+            $p['_insert_user'] = $metadata->getinsertUser()->getUsername();
+            $p['_insert_time'] = date('Y-m-d', $metadata->getInsertTime());
         }
 
         if ($request->get('submit') === 'abort') {

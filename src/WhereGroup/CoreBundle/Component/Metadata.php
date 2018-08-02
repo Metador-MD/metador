@@ -250,10 +250,6 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
-        if (!isset($p['_groups']) || !is_array($p['_groups'])) {
-            $p['_groups'] = [];
-        }
-
         // DateStamp
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
@@ -274,7 +270,7 @@ class Metadata implements MetadataInterface
 
         $p['_update_user'] = $p['_username'];
         $p['_update_time'] = $p['dateStamp'];
-        $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
+        $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? [] : $p['_groups'];
 
         // UUID
         $uuid = $this->generateUuid();
@@ -385,6 +381,20 @@ class Metadata implements MetadataInterface
             $metadata->setBboxe($p['bbox'][0]['eLongitude']);
             $metadata->setBboxs($p['bbox'][0]['sLatitude']);
             $metadata->setBboxw($p['bbox'][0]['wLongitude']);
+        }
+
+        // Set groups
+        $metadata->clearGroups();
+
+        foreach ($p['_groups'] as $key => $name) {
+            $group = $this->user->getGroupByName($name);
+
+            if (!$group) {
+                unset($p['_groups'][$key]);
+                continue;
+            }
+
+            $metadata->addGroups($group);
         }
 
         $metadata->setObject($p);
