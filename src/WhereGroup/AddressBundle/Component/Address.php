@@ -44,7 +44,6 @@ class Address
         'facsimile',
         'url',
         'urlDescription',
-//        'hoursOfService',
         'email',
     ];
 
@@ -130,8 +129,41 @@ class Address
     }
 
     /**
+     * @param array $array
+     * @return \WhereGroup\AddressBundle\Entity\Address
+     * @throws MetadorException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveArray(array $array)
+    {
+        if (isset($array['email']) && is_array($array['email'])) {
+            $array['email'] = implode(',', $array['email']);
+        }
+
+        $address = new \WhereGroup\AddressBundle\Entity\Address();
+        $address
+            ->setOrganisationName(isset($array['organisationName']) ? $array['organisationName'] : '')
+            ->setIndividualName(isset($array['individualName']) ? $array['individualName'] : '')
+            ->setPositionName(isset($array['positionName']) ? $array['positionName'] : '')
+            ->setDeliveryPoint(isset($array['deliveryPoint']) ? $array['deliveryPoint'] : '')
+            ->setPostalCode(isset($array['postalCode']) ? $array['postalCode'] : '')
+            ->setCountry(isset($array['country']) ? $array['country'] : '')
+            ->setAdministrativeArea(isset($array['administrativeArea']) ? $array['administrativeArea'] : '')
+            ->setCity(isset($array['city']) ? $array['city'] : '')
+            ->setVoice(isset($array['voice']) ? $array['voice'] : '')
+            ->setFacsimile(isset($array['facsimile']) ? $array['facsimile'] : '')
+            ->setEmail(isset($array['email']) ? $array['email'] : '')
+            ->setUrl(isset($array['url']) ? $array['url'] : '')
+            ->setUrlDescription(isset($array['urlDescription']) ? $array['urlDescription'] : '')
+            ->setHoursOfService(isset($array['hoursOfService']) ? $array['hoursOfService'] : '')
+        ;
+
+        return $this->save($address);
+    }
+
+    /**
      * @param \WhereGroup\AddressBundle\Entity\Address $entity
-     * @return $this
+     * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -162,7 +194,7 @@ class Address
         $this->repo->save($entity);
         $this->eventDispatcher->dispatch('address.post_save', $event);
 
-        return $this;
+        return $entity;
     }
 
     /**
