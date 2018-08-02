@@ -113,6 +113,22 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @return array
+     */
+    public function getNonSystemRoles()
+    {
+        $roles = array();
+
+        foreach ($this->getRoles() as $name) {
+            if (strstr($name, 'ROLE_SYSTEM_') === false) {
+                $roles[] = $name;
+            }
+        }
+
+        return $roles;
+    }
+
+    /**
      * @inheritDoc
      */
     public function eraseCredentials()
