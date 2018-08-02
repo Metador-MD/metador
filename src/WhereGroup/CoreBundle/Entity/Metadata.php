@@ -457,7 +457,9 @@ class Metadata
      */
     public function addGroups(Group $group)
     {
-        $this->groups[] = $group;
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+        }
 
         return $this;
     }
@@ -493,7 +495,9 @@ class Metadata
      */
     public function addAddress(Address $address)
     {
-        $this->address[] = $address;
+        if (!$this->address->contains($address)) {
+            $this->address[] = $address;
+        }
 
         return $this;
     }
