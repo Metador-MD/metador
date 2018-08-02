@@ -477,6 +477,15 @@ class Metadata
     {
         return $this->groups;
     }
+    /**
+     * @return $this
+     */
+    public function clearGroups()
+    {
+        $this->groups->clear();
+
+        return $this;
+    }
 
     /**
      * @param Address $address
