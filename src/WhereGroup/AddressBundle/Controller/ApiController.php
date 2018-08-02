@@ -16,6 +16,8 @@ class ApiController extends Controller
      * @Route("/all", name="metador_admin_address_api_all")
      * @param Request $request
      * @return AjaxResponse
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function allAction(Request $request)
     {

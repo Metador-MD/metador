@@ -145,8 +145,9 @@ class Address
         ));
 
         $entity->setUuid($uuid);
+        $existingEntity = $this->repo->findOneByUuid($uuid);
 
-        if ($this->repo->findOneByUuid($uuid)) {
+        if ($existingEntity && $existingEntity->getId() != $entity->getId()) {
             throw new MetadorException('Adresse existiert bereits');
         }
 
@@ -154,9 +155,10 @@ class Address
             $entity->getIndividualName()
             . ' ' . $entity->getOrganisationName()
             . ' ' . $entity->getCountry()
+            . ' ' . $entity->getCity()
         ));
 
-        $this->eventDispatcher->dispatch('address.post_save', $event);
+        $this->eventDispatcher->dispatch('address.pre_save', $event);
         $this->repo->save($entity);
         $this->eventDispatcher->dispatch('address.post_save', $event);
 

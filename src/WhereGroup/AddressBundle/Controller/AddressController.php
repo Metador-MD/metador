@@ -94,10 +94,7 @@ class AddressController extends Controller
             $entity = $form->getData();
 
             try {
-                $event = new AddressChangeEvent($entity, array());
-                $this->get('event_dispatcher')->dispatch('address.pre_save', $event);
                 $this->get('metador_address')->save($entity);
-                $this->get('event_dispatcher')->dispatch('address.post_save', $event);
 
                 $this->setFlashSuccess(
                     'edit',
