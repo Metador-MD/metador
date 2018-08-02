@@ -102,7 +102,7 @@ class HomeController extends Controller
                 'or' => [
                     ['eq' => ['public'         => true]],
                     ['eq' => ['insertUsername' => $user->getUsername()]],
-                    ['in' => ['group.role'     => $user->getRoles()]]
+                    ['in' => ['group.role'     => $user->getNonSystemRoles()]]
                 ],
             ];
         }
