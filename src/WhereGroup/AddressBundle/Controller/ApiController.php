@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 
 /**
- * @Route("/admin/address/api")
+ * @Route("/address/api")
  */
 class ApiController extends Controller
 {
     /**
-     * @Route("/all", name="metador_admin_address_api_all")
+     * @Route("/all", name="metador_address_api_all")
      * @param Request $request
      * @return AjaxResponse
      * @throws \Doctrine\ORM\NoResultException
