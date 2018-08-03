@@ -43,7 +43,7 @@ class TaskManagerCommand extends ContainerAwareCommand
         $fs->touch($filePath);
 
         try {
-            $this->log('info', 'Aufgaben werden ausgeführt.');
+            // $this->log('info', 'Aufgaben werden ausgeführt.');
             $event = new TaskManagerEvent();
 
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
