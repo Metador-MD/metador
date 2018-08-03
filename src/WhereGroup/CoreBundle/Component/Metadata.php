@@ -554,10 +554,11 @@ class Metadata implements MetadataInterface
      * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
      * @param bool $dispatchEvent
      * @param bool $log
+     * @param bool $flush
      * @return bool
      * @throws \Exception
      */
-    public function save($entity, $dispatchEvent = true, $log = true)
+    public function save($entity, $dispatchEvent = true, $log = true, $flush = true)
     {
         $operation = 'create';
 
@@ -566,8 +567,6 @@ class Metadata implements MetadataInterface
         }
 
         // SAVE TO DATABASE
-        $this->em->beginTransaction();
-        $success = false;
         $event = new MetadataChangeEvent($entity, array());
 
         try {
@@ -586,18 +585,12 @@ class Metadata implements MetadataInterface
                 $p['_id'] = $entity->getId();
                 $entity->setObject($p);
                 $this->em->persist($entity);
-                $this->em->flush();
+
+                if ($flush) {
+                    $this->em->flush();
+                }
             }
 
-            $this->em->commit();
-
-            $success = true;
-        } catch (\Exception $e) {
-            $this->em->rollBack();
-            throw new \Exception($e->getMessage());
-        }
-
-        if ($success) {
             // EVENT POST SAVE
             if ($dispatchEvent) {
                 $this->eventDispatcher->dispatch('metadata.post_save', $event);
@@ -610,15 +603,15 @@ class Metadata implements MetadataInterface
             }
 
             return true;
-        }
+        } catch (\Exception $e) {
+            if ($log) {
+                $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
+                    '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+                ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+            }
 
-        if ($log) {
-            $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
-                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-            ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+            throw new \Exception($e->getMessage());
         }
-
-        return false;
     }
 
     /**

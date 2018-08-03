@@ -83,7 +83,11 @@
     <tbody>
     {% for address in rows %}
         <tr class="-js-address-resume -js-address-insert address-row" data-uuid="{{ address.uuid }}">
-            <td>{{ address.individualName }}</td>
+            <td>
+                <a href="{{ path('metador_admin_address_edit', {id: address.id }) }}">
+                    {{ address.individualName }}
+                </a>
+            </td>
             <td>{{ address.organisationName }}</td>
             <td>{{ address.deliveryPoint }}</td>
             <td>{{ address.city }}</td>

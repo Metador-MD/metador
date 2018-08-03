@@ -25,82 +25,82 @@ class Address
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $uuid = null;
+    private $uuid = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $individualName = null;
+    private $individualName = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $organisationName = null;
+    private $organisationName = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $positionName = null;
+    private $positionName = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $email = null;
+    private $email = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $country = null;
+    private $country = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $administrativeArea = null;
+    private $administrativeArea = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $deliveryPoint = null;
+    private $deliveryPoint = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $city = null;
+    private $city = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $postalCode = null;
+    private $postalCode = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $voice = null;
+    private $voice = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $facsimile = null;
+    private $facsimile = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $url = null;
+    private $url = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $urlDescription = null;
+    private $urlDescription = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $hoursOfService = null;
+    private $hoursOfService = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $searchfield = null;
+    private $searchfield = '';
 
     /**
      * @ORM\ManyToMany(targetEntity="WhereGroup\CoreBundle\Entity\Metadata", mappedBy="address")

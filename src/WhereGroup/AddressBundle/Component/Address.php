@@ -171,15 +171,12 @@ class Address
      * @param \WhereGroup\AddressBundle\Entity\Address $entity
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save($entity)
     {
         $uuid = $this->generateUuid($entity);
-
-        $event  = new AddressChangeEvent($entity, array(
-            'oldUuid' => $entity->getUuid(),
-            'newUuid' => $uuid
+        $event = new AddressChangeEvent($entity, array(
+            'oldUuid' => $entity->getUuid()
         ));
 
         $entity->setUuid($uuid);
@@ -212,7 +209,6 @@ class Address
     {
         $event  = new AddressChangeEvent($entity, array());
         $this->eventDispatcher->dispatch('address.pre_delete', $event);
-
         $this->repo->remove($entity);
 
         return $this;
