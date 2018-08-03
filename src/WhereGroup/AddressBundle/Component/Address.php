@@ -102,16 +102,22 @@ class Address
      * @param int $page
      * @param int $hits
      * @return array
-     * @throws NonUniqueResultException
      * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function search($terms, $page = 1, $hits = 10)
     {
-        $paging = new Paging($this->repo->search($terms, $page, $hits, true), $hits, $page);
+        $result = [];
+        $count  = $this->repo->search($terms, $page, $hits, true);
+        $paging = new Paging($count, $hits, $page);
+
+        if ($count > 0) {
+            $result = $this->repo->search($terms, $page, $hits);
+        }
 
         return [
             'paging' => $paging->calculate(),
-            'rows'   => $this->repo->search($terms, $page, $hits),
+            'rows'   => $result,
         ];
     }
 

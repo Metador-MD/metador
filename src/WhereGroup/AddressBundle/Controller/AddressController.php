@@ -2,6 +2,7 @@
 
 namespace WhereGroup\AddressBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WhereGroup\AddressBundle\Entity\Address;
 use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use WhereGroup\AddressBundle\Form\AddressType;
@@ -17,20 +18,28 @@ use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 class AddressController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_address")
+     * @Route("", name="metador_admin_address")
      * @Method("GET")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return $this->render('MetadorAddressBundle:Address:index.html.twig', array(
-            'addresses' => $this->get('metador_address')->all()
+        return $this->render('MetadorAddressBundle:Address:index.html.twig', $this->get('metador_address')->search(
+            $request->get('terms', ''),
+            $request->get('page', 1),
+            $this
+                ->get('metador_configuration')
+                ->get('popup_search_hits', 'plugin', 'metador_core', 5)
         ));
     }
 
     /**
-     * @Route("/new/", name="metador_admin_address_new")
+     * @Route("/new", name="metador_admin_address_new")
      * @Method({"GET", "POST"})
      * @throws \Doctrine\ORM\OptimisticLockException
      */

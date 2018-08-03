@@ -1,36 +1,95 @@
 {% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block content %}
-    <div class="grid content-title">
+<div class="grid content-title">
+    <div class="row r-2">
+        <div class="col c-1-2">
+            <h1 class="title dm">{% trans %}Adressverwaltung{% endtrans %}</h1>
+        </div>
+        <div class="col c-1-2 text-right">
+            <a href="{{ path('metador_admin_address_new') }}" class="btn info medium">
+                <span class="icon-plus"></span> {% trans %}Neu{% endtrans %}
+            </a>
+        </div>
+    </div>
+</div>
+
+<hr class="line-separator" />
+
+<form action="" method="get">
+
+    <div class="grid row-space padding responsive">
         <div class="row r-2">
-            <div class="col c-1-2">
-                <h1 class="title dm">{% trans %}Adressverwaltung{% endtrans %}</h1>
+            <div class="col c-3-4">
+                <div class="form-field-wrapper">
+                    <input type="text" name="terms" class="input" value="{{ app.request.get('terms', '') }}" />
+                </div>
             </div>
-            <div class="col c-1-2 text-right">
-                <a href="{{ path('metador_admin_address_new') }}" class="btn info medium">
-                    <span class="icon-plus"></span> {% trans %}Neu{% endtrans %}
-                </a>
+            <div class="col c-1-4">
+                <button type="submit" class="btn full">suchen</button>
             </div>
         </div>
     </div>
+</form>
 
-    <hr class="line-separator" />
+{% if paging.count is defined and paging.count > 0 %}
+    <div class="grid space padding paging">
+        <div class="row r-3">
+            <div class="col c-1-8">
+                {% if paging.prevPage is defined %}
+                    <a href="{{ path('metador_admin_address', { page: 1 }) }}">
+                        <span class="icon-step-backward change-page" data-change-page="1"></span>
+                    </a>
+                    <a href="{{ path('metador_admin_address', { page: paging.prevPage }) }}">
+                        <span class="icon-arrow-left change-page" data-change-page="{{ paging.prevPage }}"></span>
+                    </a>
+                {% else %}
+                    <span class="icon-step-backward disabled"></span>
+                    <span class="icon-arrow-left disabled"></span>
+                {% endif %}
+            </div>
+            <div class="col c-3-4 text-center">
+                {% if paging.count > 0 %}
+                    Seite {{ paging.currentPage }} von {{ paging.pages }}
+                {% endif %}
+            </div>
+            <div class="col c-1-8 text-right">
+                {% if paging.nextPage is defined %}
+                    <a href="{{ path('metador_admin_address', { page: paging.nextPage }) }}">
+                        <span class="icon-arrow-right change-page" data-change-page="{{ paging.nextPage }}"></span>
+                    </a>
+                    <a href="{{ path('metador_admin_address', { page: paging.pages }) }}">
+                        <span class="icon-step-forward change-page" data-change-page="{{ paging.pages }}"></span>
+                    </a>
+                {% else %}
+                    <span class="icon-arrow-right disabled"></span>
+                    <span class="icon-step-forward disabled"></span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}
 
-    <table class="table bordered">
-        <thead>
-        <tr>
-            <th>Name der Organisation</th>
-            <th>Zuständige Person</th>
+
+<table class="table bordered medium">
+    <thead>
+    <tr>
+        <th>{% trans %}Name{% endtrans %}</th>
+        <th>{% trans %}Organisation{% endtrans %}</th>
+        <th>{% trans %}Straße{% endtrans %}</th>
+        <th>{% trans %}Ort{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for address in rows %}
+        <tr class="-js-address-resume -js-address-insert address-row" data-uuid="{{ address.uuid }}">
+            <td>{{ address.individualName }}</td>
+            <td>{{ address.organisationName }}</td>
+            <td>{{ address.deliveryPoint }}</td>
+            <td>{{ address.city }}</td>
         </tr>
-        </thead>
-        <tbody>
-        {% for address in addresses  %}
-            <tr>
-                <td><a href="{{ path('metador_admin_address_edit', {'id': address.id }) }}">{{ address.organisationName }}</a></td>
-                <td>{{ address.individualName }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <br/>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
+
