@@ -2,8 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use WhereGroup\UserBundle\Component\UserInterface;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+use WhereGroup\CoreBundle\Entity\Metadata;
 
 /**
  * Interface MetadataInterface
@@ -12,9 +12,12 @@ use WhereGroup\UserBundle\Component\UserInterface;
 interface MetadataInterface
 {
     /**
+     * Use ID or UUID
      * @param $id
      * @param bool $dispatchEvent
-     * @return mixed
+     * @return Metadata
+     * @throws MetadataException
+     * @internal param $metadataId
      */
     public function getById($id, $dispatchEvent = true);
 
