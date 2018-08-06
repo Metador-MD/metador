@@ -3,12 +3,26 @@
     {% if app.user.username is defined %}
     <div class="profile-menu-btn">
         {% if source['profiles']|length == 1 %}
+        <div class="btn medium">
+            <a href="{{ path('metador_import_index', { source: slug, profile: source['profiles']|keys|first }) }}" class="">
+                {% trans %}Import{% endtrans %}
+            </a>
+        </div>
         <div class="btn info medium">
             <a href="{{ path('metadata_new', { source: slug, profile: source['profiles']|keys|first }) }}" class="">
                 {{ 'new_profile'|trans({'%profile%': source['profiles']|first}) }}
             </a>
         </div>
         {% elseif source['profiles']|length > 1 %}
+        <div class="btn info medium right -js-show-tooltip" data-tooltip-id="import-menu-dialog-{{ slug }}" data-tooltip-position="right">
+            {% trans %}Import{% endtrans %}
+            <span class="icon-sort-desc"></span>
+        </div>
+        <div class="profile-menu-dialog" id="import-menu-dialog-{{ slug }}">
+            {% for profileKey, profile in source['profiles'] %}
+                <a href="{{ path('metador_import_index', { source: slug, profile: profileKey }) }}" class="profile-menu-item">{{ profile|trans }}</a>
+            {% endfor %}
+        </div>
         <div class="btn info medium right -js-show-tooltip" data-tooltip-id="profile-menu-dialog-{{ slug }}" data-tooltip-position="right">
             {% trans %}new_profiles{% endtrans %}
             <span class="icon-sort-desc"></span>

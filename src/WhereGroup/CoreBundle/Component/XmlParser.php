@@ -176,10 +176,6 @@ class XmlParser
                         $tmp = $this->getValue($path.$val, $context);
                     }
 
-                    if ($key == 'spatialResolutionDistance') {
-                        $x = 3;
-                    }
-
                     if ($this->removeEmptyValues && (
                         $tmp === ""
                         || $tmp === array()
