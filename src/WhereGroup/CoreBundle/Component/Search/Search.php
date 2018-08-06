@@ -31,7 +31,7 @@ abstract class Search
             'identifier'     => 'uuid',
             'title'          => 'title',
             'language'       => 'language',
-            'anytext'        => 'searchfield',
+            'anytext'        => 'anyText',
             'subject'        => 'keywords',
         ],
         'group' => [

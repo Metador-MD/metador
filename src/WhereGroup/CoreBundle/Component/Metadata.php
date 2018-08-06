@@ -487,7 +487,7 @@ class Metadata implements MetadataInterface
             ->setLocked(true)
             ->setLockUser($this->user->getUserFromSession())
             ->setLockTime($this->getTimestamp());
-        
+
         $this->save($entity, false, false);
 
         $this->success($entity, 'lock', '%title% gesperrt.', array(

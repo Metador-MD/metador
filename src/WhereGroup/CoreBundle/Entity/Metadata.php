@@ -108,6 +108,10 @@ class Metadata
      */
     private $searchfield;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $anytext;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -320,6 +324,24 @@ class Metadata
     public function getSearchfield()
     {
         return $this->searchfield;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnytext()
+    {
+        return $this->anytext;
+    }
+
+    /**
+     * @param mixed $anytext
+     * @return Metadata
+     */
+    public function setAnytext($anytext)
+    {
+        $this->anytext = $anytext;
+        return $this;
     }
 
     /**

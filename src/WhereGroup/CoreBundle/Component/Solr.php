@@ -107,6 +107,7 @@ class Solr
         $doc->addField('profile', $metadata->getProfile());
         $doc->addField('public', $metadata->getPublic());
         $doc->addField('searchfield', $metadata->getSearchfield());
+        $doc->addField('anyText', $metadata->getAnytext());
         $doc->addField('source', $metadata->getSource());
         $doc->addField('title', $metadata->getTitle());
         $doc->addField('uuid', $metadata->getUuid());
@@ -122,14 +123,6 @@ class Solr
             $doc->addField('bboxs', $metadata->getBboxs());
             $doc->addField('bboxw', $metadata->getBboxw());
         }
-
-        $anyText = $p;
-        if (isset($anyText['processStep2']['responsibleParty'])) {
-            unset($anyText['processStep2']['responsibleParty']);
-        }
-
-        $doc->addField('anyText', json_encode($anyText));
-        unset($anyText);
 
         $updateResponse =  $this->client->addDocument($doc);
         $this->client->commit();
