@@ -96,7 +96,7 @@ class HomeController extends Controller
             $filter['and'][] = ['eq' => ['public' => true]];
 
         // Filter for logged in user.
-        } else {
+        } elseif ($user->getUsername() !== 'root') {
             $search->setGroups($user->getRoles());
             $filter['and'][] = [
                 'or' => [
