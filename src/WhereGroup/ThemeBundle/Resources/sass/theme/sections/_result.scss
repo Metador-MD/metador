@@ -1,0 +1,85 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+$image-size: 80px;
+
+
+.result {
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    background-color: $background;
+    margin-bottom: $padding;
+    @extend .clearfix;
+}
+
+.result-graphic {
+    float: left;
+    height: 60px;
+    width: 60px;
+    border: 1px solid $border;
+    border-radius: 4px;
+    margin: 10px;
+}
+
+.result-text {
+    font-weight: bold;
+    font-size: $font-small;
+    color: lighten($font, 30%);
+}
+
+.result-title {
+    font-weight: bold;
+    font-size: $font-large;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.result-abstract {
+    font-size: $font-medium;
+    min-height: 45px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.result-footer {
+    @include normal-item(true, false);
+    background-color: $white;
+    border-top: 1px solid $border;
+    border-radius: $border-radius;
+
+    & [class^="icon-"] {
+        vertical-align: middle;
+        color: lighten($font, 30%);
+
+        &.disabled {
+            color: lighten($font, 60%);
+        }
+    }
+
+    & > .left {
+        float: left;
+        margin-left: 10px;
+    }
+
+    & > .right {
+        float: right;
+        margin-right: 10px;
+
+        & > .link {
+            padding: 0 5px;
+            font-weight: bold;
+            font-size: $font-small;
+            color: lighten($font, 30%);
+
+            &:hover {
+                color: $primary;
+            }
+
+            &:not(:last-child) {
+                border-right: 1px solid $border;
+            }
+        }
+    }
+}
