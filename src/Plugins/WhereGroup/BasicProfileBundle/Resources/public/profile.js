@@ -110,6 +110,7 @@ $('form').ajaxForm({
 
         if (data && data.metadata && data.metadata.uuid) {
             $('[name="p[fileIdentifier]"]').val(data.metadata.uuid);
+            $('[name="p[_uuid]"]').val(data.metadata.uuid);
         }
 
         metador.parseResponse(data);
