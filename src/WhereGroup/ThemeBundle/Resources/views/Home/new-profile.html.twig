@@ -1,6 +1,6 @@
 {% for slug, source in sourceConfig  %}
 <div class="profile-menu -js-profile-menu {% if loop.first %}active{% endif %}" id="source-{{ slug }}">
-    {% if app.user.username is defined %}
+    {% if app.user.username is defined and not is_granted('ROLE_SYSTEM_GUEST') %}
     <div class="profile-menu-btn">
         {% if source['profiles']|length == 1 %}
         <div class="btn medium">
