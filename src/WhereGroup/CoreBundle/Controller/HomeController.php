@@ -98,13 +98,16 @@ class HomeController extends Controller
         // Filter for logged in user.
         } elseif ($user->getUsername() !== 'root') {
             $search->setGroups($user->getRoles());
-            $filter['and'][] = [
-                'or' => [
-                    ['eq' => ['public'         => true]],
-                    ['eq' => ['insertUsername' => $user->getUsername()]],
-                    ['in' => ['group.role'     => $user->getNonSystemRoles()]]
-                ],
+            $orx = [
+                ['eq' => ['public'         => true]],
+                ['eq' => ['insertUsername' => $user->getUsername()]],
             ];
+
+            if (!empty($user->getNonSystemRoles())) {
+                $orx[] = ['in' => ['group.role' => $user->getNonSystemRoles()]];
+            }
+
+            $filter['and'][] = ['or' => $orx];
         }
 
         if (isset($params['hierarchyLevel'])
