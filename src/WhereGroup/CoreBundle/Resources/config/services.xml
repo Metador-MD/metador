@@ -133,7 +133,7 @@
         <service id="metador.core.source.listener" class="WhereGroup\CoreBundle\EventListener\SourceListener">
             <tag name="kernel.event_listener" event="source.confirm_delete" method="onConfirm" />
             <tag name="kernel.event_listener" event="source.post_delete" method="onPostDelete" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="metador_metadata" />
         </service>
 
         <!-- TWIG EXTENSION -->
