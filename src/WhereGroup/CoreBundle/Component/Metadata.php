@@ -327,11 +327,11 @@ class Metadata implements MetadataInterface
      * @param bool $id
      * @param bool $dispatchEvent
      * @param bool $log
+     * @param bool $flush
      * @return EntityMetadata
      * @throws MetadataException
-     * @throws \Exception
      */
-    public function saveObject($p, $id = null, $dispatchEvent = true, $log = true)
+    public function saveObject($p, $id = null, $dispatchEvent = true, $log = true, $flush = true)
     {
         if (!is_null($id)) {
             $metadata = $this->getById($id);
@@ -399,7 +399,7 @@ class Metadata implements MetadataInterface
 
         $metadata->setObject($p);
 
-        $this->save($metadata, $dispatchEvent, $log);
+        $this->save($metadata, $dispatchEvent, $log, $flush);
 
         return $metadata;
     }
