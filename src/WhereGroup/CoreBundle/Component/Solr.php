@@ -113,7 +113,10 @@ class Solr
         $doc->addField('uuid', $metadata->getUuid());
         $doc->addField('insertUsername', $p['_insert_user']);
         $doc->addField('insertTime', $p['_insert_time']);
-        $doc->addField('group.role', isset($p['_group']) ? implode(' ', $p['_group']) : '');
+
+        if (isset($p['_groups']) && is_array($p['_groups'])) {
+            $doc->addField('group.role', implode(' ', $p['_groups']));
+        }
 
         if (!empty($metadata->getBboxn()) && !empty($metadata->getBboxe())
             && !empty($metadata->getBboxs()) && !empty($metadata->getBboxw())
