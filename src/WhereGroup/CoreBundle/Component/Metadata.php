@@ -347,8 +347,10 @@ class Metadata implements MetadataInterface
 
         // Username
         /** @var User $user */
-        $user = $this->getUser($username);
-        $p['_username'] = $user->getUsername();
+        if (!empty($username)) {
+            $user = $this->getUser($username);
+            $p['_username'] = $user->getUsername();
+        }
 
         if (!isset($p['_insert_user'])) {
             $p['_insert_user'] = $p['_username'];
