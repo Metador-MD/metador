@@ -106,8 +106,6 @@ class ProfileController extends Controller
         $metadata = null;
         $uuid     = null;
 
-        $this->get('metador_metadata')->updateObject($p, $source, $profile, null, null);
-
         $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
 
         // If id exists, get the metadata to check permission and keep some settings.
@@ -150,7 +148,11 @@ class ProfileController extends Controller
         $em->getConnection()->beginTransaction();
 
         try {
-            $metadata = $this->get('metador_metadata')->saveObject($p, $id);
+            $metadata = $this->get('metador_metadata')->saveObject($p, $id, [
+                'source'  => $source,
+                'profile' => $profile
+            ]);
+            
             $id = $metadata->getId();
             $uuid = $metadata->getUuid();
 

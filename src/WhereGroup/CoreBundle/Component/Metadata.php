@@ -216,6 +216,89 @@ class Metadata implements MetadataInterface
             $this->kernel->locateResource('@MetadorCoreBundle/Resources/config/import.json')
         ))->parse();
     }
+    
+    /**
+     * @param $p
+     * @param null $source
+     * @param null $profile
+     * @param null $username
+     * @param null $public
+     * @return EntityMetadata
+     * @throws MetadataException
+     */
+    public function prepareData(&$p, $source = null, $profile = null, $username = null, $public = null)
+    {
+        if (!empty($p['_id'])) {
+            $metadata = $this->getById($p['_id']);
+            $p['_id'] = $metadata->getId();
+        } else {
+            $metadata = new EntityMetadata();
+            unset($p['_id']);
+        }
+
+        $this->updateObjectInformation($p, $source, $profile, $username, $public);
+
+        $date = new \DateTime($p['dateStamp']);
+        $user = $this->user->getByUsername($p['_username']);
+
+        if (!$metadata->getId()) {
+            $metadata->setInsertUser($user);
+            $metadata->setInsertTime($date->getTimestamp());
+        }
+
+        if (isset($p['parentIdentifier'])) {
+            $metadata->setParent($p['parentIdentifier']);
+        }
+
+        if (isset($p['topicCategory'])) {
+            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
+        }
+
+        $metadata->setPublic($p['_public']);
+        $metadata->setLocked($p['_locked']);
+        $metadata->setUpdateUser($user);
+        $metadata->setUpdateTime($date->getTimestamp());
+        $metadata->setUuid($p['_uuid']);
+        $metadata->setTitle($p['title']);
+        $metadata->setAbstract($p['abstract']);
+        $metadata->setHierarchyLevel($p['hierarchyLevel']);
+        $metadata->setProfile($p['_profile']);
+        $metadata->setSearchfield($this->prepareSearchField($p));
+        $metadata->setSource($p['_source']);
+        $metadata->setDate(new \DateTime($this->findDate($p)));
+        $metadata->setDateStamp($date);
+        $metadata->setInsertUsername($p['_insert_user']);
+
+        if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
+            && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
+            $p['bbox'][0]['nLatitude']  = (float)$p['bbox'][0]['nLatitude'];
+            $p['bbox'][0]['eLongitude'] = (float)$p['bbox'][0]['eLongitude'];
+            $p['bbox'][0]['sLatitude']  = (float)$p['bbox'][0]['sLatitude'];
+            $p['bbox'][0]['wLongitude'] = (float)$p['bbox'][0]['wLongitude'];
+            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
+        }
+
+        // Set groups
+        $metadata->clearGroups();
+
+        foreach ($p['_groups'] as $key => $name) {
+            $group = $this->user->getGroupByName($name);
+
+            if (!$group) {
+                unset($p['_groups'][$key]);
+                continue;
+            }
+
+            $metadata->addGroups($group);
+        }
+
+        $metadata->setObject($p);
+
+        return $metadata;
+    }
 
     /**
      * @param $p
@@ -225,8 +308,9 @@ class Metadata implements MetadataInterface
      * @param null $public
      * @return $this|mixed
      * @throws MetadataException
+     * @throws \Exception
      */
-    public function updateObject(&$p, $source = null, $profile = null, $username = null, $public = null)
+    public function updateObjectInformation(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
         if (!is_null($profile)) {
             $p['_profile'] = $profile;
@@ -300,6 +384,7 @@ class Metadata implements MetadataInterface
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function generateUuid()
     {
@@ -325,81 +410,35 @@ class Metadata implements MetadataInterface
      * Use id or uuid
      * @param $p
      * @param bool $id
-     * @param bool $dispatchEvent
-     * @param bool $log
-     * @param bool $flush
+     * @param array $options
      * @return EntityMetadata
-     * @throws MetadataException
+     * @throws \Exception
      */
-    public function saveObject($p, $id = null, $dispatchEvent = true, $log = true, $flush = true)
+    public function saveObject(&$p, $id = null, $options = [])
     {
+        $options['source']        = $options['source']        ?? null;
+        $options['profile']       = $options['profile']       ?? null;
+        $options['username']      = $options['username']      ?? null;
+        $options['public']        = $options['public']        ?? null;
+
+        $options['dispatchEvent'] = $options['dispatchEvent'] ?? true;
+        $options['log']           = $options['log']           ?? true;
+        $options['flush']         = $options['flush']         ?? true;
+
         if (!is_null($id)) {
-            $metadata = $this->getById($id);
-        } else {
-            $metadata = new EntityMetadata();
-            unset($p['_id']);
+            $p['_id'] = $id;
         }
 
-        $date = new \DateTime($p['dateStamp']);
-        $user = $this->user->getByUsername($p['_username']);
+        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
+        $metadata = $this->prepareData(
+            $p,
+            $options['source'],
+            $options['profile'],
+            $options['username'],
+            $options['public']
+        );
 
-        if (!$metadata->getId()) {
-            $metadata->setInsertUser($user);
-            $metadata->setInsertTime($date->getTimestamp());
-        }
-
-        if (isset($p['parentIdentifier'])) {
-            $metadata->setParent($p['parentIdentifier']);
-        }
-
-        if (isset($p['topicCategory'])) {
-            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
-        }
-
-        $metadata->setPublic($p['_public']);
-        $metadata->setLocked($p['_locked']);
-        $metadata->setUpdateUser($user);
-        $metadata->setUpdateTime($date->getTimestamp());
-        $metadata->setUuid($p['_uuid']);
-        $metadata->setTitle($p['title']);
-        $metadata->setAbstract($p['abstract']);
-        $metadata->setHierarchyLevel($p['hierarchyLevel']);
-        $metadata->setProfile($p['_profile']);
-        $metadata->setSearchfield($this->prepareSearchField($p));
-        $metadata->setSource($p['_source']);
-        $metadata->setDate(new \DateTime($this->findDate($p)));
-        $metadata->setDateStamp($date);
-        $metadata->setInsertUsername($p['_insert_user']);
-
-        if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
-            && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
-            $p['bbox'][0]['nLatitude']  = (float)$p['bbox'][0]['nLatitude'];
-            $p['bbox'][0]['eLongitude'] = (float)$p['bbox'][0]['eLongitude'];
-            $p['bbox'][0]['sLatitude']  = (float)$p['bbox'][0]['sLatitude'];
-            $p['bbox'][0]['wLongitude'] = (float)$p['bbox'][0]['wLongitude'];
-            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
-        }
-
-        // Set groups
-        $metadata->clearGroups();
-
-        foreach ($p['_groups'] as $key => $name) {
-            $group = $this->user->getGroupByName($name);
-
-            if (!$group) {
-                unset($p['_groups'][$key]);
-                continue;
-            }
-
-            $metadata->addGroups($group);
-        }
-
-        $metadata->setObject($p);
-
-        $this->save($metadata, $dispatchEvent, $log, $flush);
+        $this->save($metadata, $options['dispatchEvent'], $options['log'], $options['flush']);
 
         return $metadata;
     }
