@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\CsvResponse;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
@@ -69,6 +70,7 @@ class HomeController extends Controller
         $request  = $this->get('request_stack')->getCurrentRequest();
         $download = $request->request->get('filter');
         $params   = $request->request->all();
+        $response = [];
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');
@@ -168,7 +170,12 @@ class HomeController extends Controller
                 );
         }
 
-        $searchResponse = $search->find();
+        try {
+            $searchResponse = $search->find();
+        } catch (MetadataException $e) {
+            $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
+            return new AjaxResponse($response);
+        }
 
         if (!is_null($download)) {
             return new CsvResponse(

@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+
 /**
  * Class Solr
  * @package Plugins\LVermGeo\BasicProfileBundle\Component
@@ -127,7 +129,11 @@ class Solr
             $doc->addField('bboxw', $metadata->getBboxw());
         }
 
-        $updateResponse =  $this->client->addDocument($doc);
-        $this->client->commit();
+        try {
+            $this->client->addDocument($doc);
+            $this->client->commit();
+        } catch (\SolrClientException $e) {
+            throw new MetadataException('Solr-Server nicht erreichbar.');
+        }
     }
 }

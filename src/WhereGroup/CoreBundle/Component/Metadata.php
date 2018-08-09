@@ -423,8 +423,8 @@ class Metadata implements MetadataInterface
             ->setCategory('metadata')
             ->setSubcategory('')
             ->setOperation($operation)
-            ->setSource($metadata->getSource())
-            ->setIdentifier($metadata->getUuid())
+            ->setSource(!is_null($metadata) ? $metadata->getSource() : '')
+            ->setIdentifier(!is_null($metadata) ? $metadata->getUuid() : '')
             ->setMessage($message, $messageParams)
             ->setUsername($this->user->getUsernameFromSession())
         ;
@@ -609,7 +609,7 @@ class Metadata implements MetadataInterface
                 ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
             }
 
-            throw new \Exception($e->getMessage());
+            throw $e;
         }
     }
 
