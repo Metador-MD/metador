@@ -236,12 +236,19 @@ class Metadata implements MetadataInterface
             unset($p['_id']);
         }
 
-        $username = $this->getUser($username);
+        $user = $this->getUser($username);
 
-        $this->updateObjectInformation($p, $source, $profile, $username, $public);
+        if (!$user) {
+            $user = $this->user->getByUsername($p['_username']);
+        }
+
+        if (!$user) {
+            throw new MetadataException("Benutzer nicht gefunden.");
+        }
+
+        $this->updateObjectInformation($p, $source, $profile, $user->getUsername(), $public);
 
         $date = new \DateTime($p['dateStamp']);
-        $user = $this->user->getByUsername($p['_username']);
 
         if (!$metadata->getId()) {
             $metadata->setInsertUser($user);
@@ -349,10 +356,8 @@ class Metadata implements MetadataInterface
 
         // Username
         /** @var User $user */
-        if (!empty($username)) {
-            $user = $this->getUser($username);
-            $p['_username'] = $user->getUsername();
-        }
+        $user = $this->getUser($username);
+        $p['_username'] = $user->getUsername();
 
         if (!isset($p['_insert_user'])) {
             $p['_insert_user'] = $p['_username'];
@@ -463,7 +468,7 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed|void
      */
-    public function log($type, $metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
+    public function log($type, $metadata, $operation, $message, $messageParams = [], $path = null, $params = [], $flash = false)
     {
         /** @var Log $log */
         $log = $this->logger->newLog();
@@ -477,6 +482,10 @@ class Metadata implements MetadataInterface
             ->setMessage($message, $messageParams)
             ->setUsername($this->user->getUsernameFromSession())
         ;
+
+        if ($flash) {
+            $log->setFlashMessage();
+        }
 
         if (!is_null($path)) {
             $log
@@ -510,9 +519,9 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed
      */
-    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
+    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array(), $flash = false)
     {
-        $this->log('error', $metadata, $operation, $message, $messageParams);
+        $this->log('error', $metadata, $operation, $message, $messageParams, $path, $params, $flash);
     }
 
     /**
@@ -644,7 +653,25 @@ class Metadata implements MetadataInterface
                 $this->eventDispatcher->dispatch('metadata.post_save', $event);
             }
 
-            if ($log) {
+            $errors = $event->getErrors();
+
+            if ($errors && $log) {
+                foreach ($errors as $error) {
+                    $this->error(
+                        $entity,
+                        $operation,
+                        $error['message'],
+                        $error['params'],
+                        'metadata_edit',
+                        ['profile' => $entity->getProfile(), 'id' => $entity->getId()],
+                        null,
+                        [],
+                        true
+                    );
+                }
+            }
+
+            if (!$errors && $log) {
                 $this->success($entity, $operation, '%title% gespeichert.', array(
                     '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
                 ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
