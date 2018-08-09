@@ -236,6 +236,8 @@ class Metadata implements MetadataInterface
             unset($p['_id']);
         }
 
+        $username = $this->getUser($username);
+
         $this->updateObjectInformation($p, $source, $profile, $username, $public);
 
         $date = new \DateTime($p['dateStamp']);
