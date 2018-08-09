@@ -216,7 +216,7 @@ class Metadata implements MetadataInterface
             $this->kernel->locateResource('@MetadorCoreBundle/Resources/config/import.json')
         ))->parse();
     }
-    
+
     /**
      * @param $p
      * @param null $source
@@ -338,6 +338,12 @@ class Metadata implements MetadataInterface
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
 
+        if (empty($p['_date'])) {
+            $date = $this->findDate($p);
+            if (is_null($date)) {
+                $p['_date'] = $p['dateStamp'];
+            }
+        }
 
         // Username
         /** @var User $user */
