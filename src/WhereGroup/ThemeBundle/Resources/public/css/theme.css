@@ -4196,13 +4196,14 @@ input.input-element, .md input.btn {
   padding: 0 5px;
   font-weight: bold;
   font-size: .8em;
-  color: #919191; }
+  color: #919191;
+  border-right: 1px solid #e1e1e1; }
+
+.result-footer > .right > .link.no-separator {
+  border: none; }
 
 .result-footer > .right > .link:hover {
   color: #008ec0; }
-
-.result-footer > .right > .link:not(:last-child) {
-  border-right: 1px solid #e1e1e1; }
 
 .app-info {
   border: 1px solid #e8ecf2;
