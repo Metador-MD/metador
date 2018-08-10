@@ -431,7 +431,7 @@ class Metadata implements MetadataInterface
      * @return EntityMetadata
      * @throws \Exception
      */
-    public function saveObject(&$p, $id = null, $options = [])
+    public function saveObject($p, $id = null, $options = [])
     {
         $options['source']        = $options['source']        ?? null;
         $options['profile']       = $options['profile']       ?? null;
