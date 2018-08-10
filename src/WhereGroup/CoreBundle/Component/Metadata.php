@@ -346,11 +346,13 @@ class Metadata implements MetadataInterface
         // DateStamp
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
+        $p['_date'] = $p['dateStamp'];
 
         if (empty($p['_date'])) {
             $date = $this->findDate($p);
-            if (is_null($date)) {
-                $p['_date'] = $p['dateStamp'];
+
+            if (!is_null($date)) {
+                $p['_date'] = $date;
             }
         }
 
