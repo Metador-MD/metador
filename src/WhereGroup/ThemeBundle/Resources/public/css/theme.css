@@ -4169,6 +4169,10 @@ input.input-element, .md input.btn {
   margin-right: 10px;
   margin-left: 10px; }
 
+.result-abstract .result-menu {
+  margin-top: 10px;
+  text-align: right; }
+
 .result-footer {
   font-size: 1em;
   height: 35px;
