@@ -111,7 +111,7 @@ class Metadata
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $anytext;
+    private $anyText;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -329,18 +329,18 @@ class Metadata
     /**
      * @return mixed
      */
-    public function getAnytext()
+    public function getAnyText()
     {
-        return $this->anytext;
+        return $this->anyText;
     }
 
     /**
      * @param mixed $anytext
      * @return Metadata
      */
-    public function setAnytext($anytext)
+    public function setAnyText($anytext)
     {
-        $this->anytext = $anytext;
+        $this->anyText = $anytext;
         return $this;
     }
 
