@@ -54,4 +54,3 @@ class MetadataValidationEvent extends Event
         return $this->rules;
     }
 }
-
