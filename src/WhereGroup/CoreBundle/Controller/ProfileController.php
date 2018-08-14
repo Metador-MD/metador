@@ -245,7 +245,7 @@ class ProfileController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
-            $this->log('succes', 'delete', $id, 'Erfolgreich gelöscht.');
+            $this->log('success', 'delete', $id, 'Erfolgreich gelöscht.');
         } else {
             $this->log('error', 'delete', $id, 'Eintrag konnte nicht gelöscht werden.');
         }
