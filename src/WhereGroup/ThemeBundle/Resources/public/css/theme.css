@@ -3365,6 +3365,10 @@ input.input-element, .md input.btn {
   background-color: #e5f3ff;
   margin-left: 10px; }
 
+.md .layer-tree-list > .draggable.disabled {
+  text-decoration: line-through;
+  color: #e1e1e1; }
+
 .md .map-source-opacity {
   float: right; }
 

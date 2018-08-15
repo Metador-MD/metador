@@ -170,9 +170,14 @@ $home-menu-height: 35px;
         -webkit-user-drag: element;
         cursor: move;
 
-        &.move{
+        &.move {
             background-color: lighten($info, 30%);
             margin-left: 10px;
+        }
+
+        &.disabled {
+            text-decoration: line-through;
+            color: $border;
         }
     }
 }
