@@ -63,7 +63,7 @@ class JsonFilterReader implements FilterReader
                     break;
                 case 'not':
                     $item = self::getExpression($value, $expression, $parameters);
-                    $items[] = $expression->not($item);
+                    $items[] = $expression->not($item[0]);
                     break;
                 case 'eq':
                     $items[] = $expression->eq(key($value), $value[key($value)], $parameters);
