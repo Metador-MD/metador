@@ -174,11 +174,11 @@ $home-menu-height: 35px;
             background-color: lighten($info, 30%);
             margin-left: 10px;
         }
+    }
 
-        &.disabled {
-            text-decoration: line-through;
-            color: $border;
-        }
+    & > .disabled {
+        text-decoration: line-through;
+        color: $border;
     }
 }
 

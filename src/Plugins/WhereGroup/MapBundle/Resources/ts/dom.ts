@@ -1,6 +1,7 @@
 export class EElement {
     private _element: HTMLElement;
-    constructor(element: HTMLElement){
+
+    constructor(element: HTMLElement) {
         this._element = element;
     }
 
@@ -13,10 +14,12 @@ export class EElement {
             this._element.setAttribute(key, attrs[key]);
         }
     }
+
     setAttr(key: string, value: string) {
         this._element.setAttribute(key, value);
         return this;
     }
+
     getAttr(key: string) {
         return this._element.getAttribute(key);
     }
@@ -40,7 +43,6 @@ export class dom {
         for (const key in attrs) {
             element.setAttribute(key, attrs[key]);
         }
-
         for (const name of classes) {
             element.classList.add(name);
         }
@@ -51,6 +53,16 @@ export class dom {
         //     element.dataset[key] = data[key];
         // }
 
+        return element;
+    }
+
+    static delete(element: HTMLElement, attrs: string[] = [], classes: string[] = [], text: boolean = false, data: any = {}): HTMLElement {
+        for (const key of attrs) {
+            element.removeAttribute(key);
+        }
+        for (const cl of classes) {
+            dom.removeClass(element, cl);
+        }
         return element;
     }
 
@@ -103,7 +115,7 @@ export class dom {
     static addClass(context: HTMLElement, name: string, selector: string = null): void {
         if (selector) {
             let list: NodeListOf<Element> = dom.find(selector, context);
-            for(let i = 0; i < list.length; i++) {
+            for (let i = 0; i < list.length; i++) {
                 list[i].classList.add(name);
             }
         } else {
@@ -120,14 +132,13 @@ export class dom {
     static removeClass(context: Element, name: string, selector: string = null): void {
         if (selector) {
             let list: NodeListOf<Element> = dom.find(selector, context);
-            for(let i = 0; i < list.length; i++) {
+            for (let i = 0; i < list.length; i++) {
                 list[i].classList.remove(name);
             }
         } else {
             context.classList.remove(name);
         }
     };
-
 
 
     /**
@@ -138,7 +149,7 @@ export class dom {
      */
     static remove(selector: string, context: any = document): NodeListOf<Element> | null {
         let list: NodeListOf<Element> = dom.find(selector, context);
-        for(let i = 0; i < list.length; i++) {
+        for (let i = 0; i < list.length; i++) {
             list[i].remove();
         }
         return list;
