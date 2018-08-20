@@ -37,6 +37,10 @@ export class LayerTree {
         return <HTMLElement>dom.findFirst('#' + layer.get(UUID));
     }
 
+    private findLayerLabel(layer: ol.layer.Base): HTMLElement {
+        return <HTMLElement>dom.findFirst('#' + layer.get(UUID) + ' > label');
+    }
+
     private findLayerVisible(layer: ol.layer.Base): HTMLFormElement {
         return <HTMLFormElement>dom.findFirst('#' + layer.get(UUID) + ' .-js-map-source-visible');
     }
@@ -63,14 +67,23 @@ export class LayerTree {
         let item = this.findLayerItem(layer);
         let checkboxVisible = this.findLayerVisible(layer);
         let selectOpacity = this.findLayerOpacity(layer);
+        let label = this.findLayerLabel(layer);
         if (disable) {
             dom.addClass(item, 'disabled');
             checkboxVisible.setAttribute('disabled', 'true');
-            selectOpacity.setAttribute('disabled', 'true')
+            selectOpacity.setAttribute('disabled', 'true');
+            dom.add(label, {'title': 'Der Dienst ist nicht erreichbar!'});
+            if (LayerTree.useSortable) {
+                this.removeDraggable(item);
+            }
         } else {
             dom.removeClass(item, 'disabled');
             checkboxVisible.removeAttribute('disabled');
             selectOpacity.removeAttribute('disabled');
+            dom.add(label, {'title': layer.get(TITLE)});
+            if (LayerTree.useSortable) {
+                this.addDraggable(item);
+            }
         }
     }
 
@@ -93,7 +106,7 @@ export class LayerTree {
     }
 
     add(layer: ol.layer.Base) {
-        let layerNode = dom.create('li', {'id': layer.get(UUID), 'draggable': "true"}, ['draggable', '-js-draggable']);
+        let layerNode = dom.create('li', {'id': layer.get(UUID)});
         if (LayerTree.useVisible) {
             this.addVisible(layerNode, layer);
         }
@@ -141,6 +154,7 @@ export class LayerTree {
     }
 
     private addDraggable(layer: HTMLElement, isDummy: boolean = false) {
+        dom.add(layer, {'draggable': 'true'}, ['draggable', '-js-draggable']);
         if (!isDummy) {
             layer.addEventListener('dragstart', this.dragStart.bind(this), false);
             layer.addEventListener('dragend', this.dragEnd.bind(this), false);
@@ -151,6 +165,7 @@ export class LayerTree {
     }
 
     private removeDraggable(layer: HTMLElement, isDummy: boolean = false) {
+        dom.delete(layer, ['draggable'], ['draggable', '-js-draggable']);
         if (!isDummy) {
             layer.removeEventListener('dragstart', this.dragStart.bind(this), false);
             layer.removeEventListener('dragend', this.dragEnd.bind(this), false);
