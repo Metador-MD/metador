@@ -268,7 +268,7 @@ class Metadata implements MetadataInterface
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($date->getTimestamp());
         $metadata->setUuid($p['_uuid']);
-        $metadata->setTitle($p['title']);
+        $metadata->setTitle($p['title'] !== '' ? $p['title'] : 'noname');
         $metadata->setAbstract($p['abstract']);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
         $metadata->setProfile($p['_profile']);
@@ -744,7 +744,9 @@ class Metadata implements MetadataInterface
             }
         }
 
-        return trim($searchfield);
+        $searchfield = trim($searchfield);
+
+        return !empty($searchfield) ? $searchfield : 'noname';
     }
 
     /**
