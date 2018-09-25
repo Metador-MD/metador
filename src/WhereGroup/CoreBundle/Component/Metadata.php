@@ -274,8 +274,8 @@ class Metadata implements MetadataInterface
         $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
-        $metadata->setDate(new \DateTime($this->findDate($p)));
-        $metadata->setDateStamp($date);
+        $metadata->setDate(is_null($p['_date']) ? null : new \DateTime($p['_date']));
+        $metadata->setDateStamp(is_null($p['dateStamp']) ? null : new \DateTime($p['dateStamp']));
         $metadata->setInsertUsername($p['_insert_user']);
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
@@ -346,14 +346,10 @@ class Metadata implements MetadataInterface
         // DateStamp
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
-        $p['_date'] = $p['dateStamp'];
+        $p['_date'] = null;
 
-        if (empty($p['_date'])) {
-            $date = $this->findDate($p);
-
-            if (!is_null($date)) {
-                $p['_date'] = $date;
-            }
+        if (!is_null($this->findDate($p))) {
+            $p['_date'] = $this->findDate($p);
         }
 
         // Username
