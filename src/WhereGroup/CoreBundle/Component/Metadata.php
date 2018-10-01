@@ -633,17 +633,17 @@ class Metadata implements MetadataInterface
             $hasId = $entity->getId();
 
             $this->em->persist($entity);
-            $this->em->flush();
 
-            if (!$hasId) {
+            if ($flush) {
+                $this->em->flush();
+            }
+
+            if (!$hasId && $flush) {
                 $p = $entity->getObject();
                 $p['_id'] = $entity->getId();
                 $entity->setObject($p);
                 $this->em->persist($entity);
-
-                if ($flush) {
-                    $this->em->flush();
-                }
+                $this->em->flush();
             }
 
             // EVENT POST SAVE
