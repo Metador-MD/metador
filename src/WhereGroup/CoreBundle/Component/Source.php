@@ -87,6 +87,7 @@ class Source implements SourceInterface
      * @param $entity
      * @return $this
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function save($entity)
     {
@@ -117,6 +118,7 @@ class Source implements SourceInterface
      * @param $entity
      * @return $this
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function remove($entity)
     {
