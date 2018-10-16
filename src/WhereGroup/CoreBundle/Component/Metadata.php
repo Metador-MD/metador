@@ -274,8 +274,8 @@ class Metadata implements MetadataInterface
         $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
-        $metadata->setDate(is_null($p['_date']) ? null : new \DateTime($p['_date']));
-        $metadata->setDateStamp(is_null($p['dateStamp']) ? null : new \DateTime($p['dateStamp']));
+        $metadata->setDate(is_null($p['_date']) || !is_string($p['_date']) ? null : new \DateTime($p['_date']));
+        $metadata->setDateStamp(is_null($p['dateStamp']) || !is_string($p['dateStamp']) ? null : new \DateTime($p['dateStamp']));
         $metadata->setInsertUsername($p['_insert_user']);
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
