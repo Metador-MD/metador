@@ -83,6 +83,7 @@ class Solr
 
     /**
      * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
+     * @throws MetadataException
      */
     public function updateMetadata($metadata)
     {
@@ -99,8 +100,15 @@ class Solr
 
         $doc->addField('id', $metadata->getId());
         $doc->addField('abstract', $metadata->getAbstract());
-        $doc->addField('date', $date->format('Y-m-d'));
-        $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
+
+        if ($date instanceof \DateTime) {
+            $doc->addField('date', $date->format('Y-m-d'));
+        }
+
+        if ($dateStamp instanceof \DateTime) {
+            $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
+        }
+
         $doc->addField('hierarchyLevel', $metadata->getHierarchyLevel());
         $doc->addField('keywords', $metadata->getKeywords());
         $doc->addField('topicCategory', $metadata->getTopicCategory());
