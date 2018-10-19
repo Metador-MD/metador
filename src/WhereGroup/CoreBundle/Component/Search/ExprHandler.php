@@ -60,12 +60,36 @@ abstract class ExprHandler
     }
 
     /**
+     * @return array
+     */
+    public function getPropertyMap()
+    {
+        return $this->propertyMap;
+    }
+
+    /**
      * @param array $propertyMap
      * @return mixed
      */
     public function setPropertyMap(array $propertyMap)
     {
         $this->propertyMap = $propertyMap;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAliasMap()
+    {
+        return $this->aliasMap;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultAlias()
+    {
+        return $this->defaultAlias;
     }
 
     /**
@@ -97,17 +121,20 @@ abstract class ExprHandler
      */
     protected function getName($name, $delimiter = '.')
     {
-        $splittedName = explode('.', $name);
 
-        /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
-        $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
-        $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
-
-        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
-            throw new PropertyNameNotFoundException($name);
-        }
-
-        return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
+        return $name;
+//
+//        $splittedName = explode('.', $name);
+//
+//        /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
+//        $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
+//        $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
+//
+//        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
+//            throw new PropertyNameNotFoundException($name);
+//        }
+//
+//        return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
     }
 
     /**
