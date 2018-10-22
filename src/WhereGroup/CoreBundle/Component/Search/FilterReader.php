@@ -24,5 +24,5 @@ interface FilterReader
      * @return null|Expression
      * @throws PropertyNameNotFoundException
      */
-    public static function readWithAlias($filter, ExprHandler $expression);
+    public static function readFromCsw($filter, ExprHandler $expression);
 }

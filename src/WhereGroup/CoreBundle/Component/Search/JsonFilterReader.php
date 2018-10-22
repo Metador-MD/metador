@@ -31,25 +31,36 @@ class JsonFilterReader implements FilterReader
     protected $useMapping;
 
     /**
-     * DatabaseExprHandler constructor.
-     * @param array $aliasMap
-     * @param string $defaultAlias
-     * @param array $propertyMap
+     * @var ExprHandler
      */
-    private function __construct(
-        $aliasMap = null,
-        $defaultAlias = null,
-        $propertyMap = null
-    ) {
+    protected $exprHandler;
 
-        if ($aliasMap && $propertyMap && $defaultAlias) {
-            $this->aliasMap = $aliasMap;
-            $this->defaultAlias = $defaultAlias;
-            $this->propertyMap = $propertyMap;
-            $this->useMapping = true;
-        } else {
-            $this->useMapping = false;
+    protected $isCsw;
+
+    /**
+     * JsonFilterReader constructor.
+     * @param ExprHandler $exprHandler
+     */
+    private function __construct(ExprHandler $exprHandler, $isCsw = false)
+    {
+        $this->exprHandler = $exprHandler;
+        $this->aliasMap = $exprHandler->getAliasMap();
+        $this->defaultAlias = $exprHandler->getDefaultAlias();
+        $this->propertyMap = $exprHandler->getPropertyMap();
+        $this->isCsw = $isCsw;
+    }
+
+    private function findMap($name, $delimiter = '.')
+    {
+        foreach ($this->aliasMap as $name => $alias) {
+            foreach ($this->propertyMap[$name] as $key => $propname) {
+                if ($key === $name) {
+                    return $alias.$delimiter.$propname;
+                }
+            }
         }
+
+        throw new PropertyNameNotFoundException($name);
     }
 
     /**
@@ -60,20 +71,47 @@ class JsonFilterReader implements FilterReader
      */
     private function getName($name, $delimiter = '.')
     {
-        if ($this->useMapping) {
-            $splittedName = explode('.', $name);
+        if ($this->exprHandler instanceof DatabaseExprHandler) {
+            if ($this->isCsw) {
+                $splittedName = explode('.', $name);
+                $name_ = count($splittedName) === 1 ? $splittedName[0] : $splittedName[1];
+                foreach ($this->aliasMap as $entityname => $alias) {
+                    foreach ($this->propertyMap[$entityname] as $key => $propname) {
+                        if (strtolower($key) === strtolower($name_)) {
+                            return $alias.$delimiter.$propname;
+                        }
+                    }
+                }
 
-            /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
-            $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
-            $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
-
-            if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
-                throw new PropertyNameNotFoundException($name);
+                return $name;
+            } else {
+                return $name;
             }
 
-            return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
+
+
+            $splittedName = explode('.', $name);
+            if (count($splittedName) === 1) {
+                return $this->findMap($name, $delimiter);
+            } else {
+                $alias = strtolower($splittedName[0]);
+                $propertyName =
+                    count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
+
+                if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
+                    throw new PropertyNameNotFoundException($name);
+                }
+
+                return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
+            }
         } else {
-            return $name;
+            if ($this->isCsw) {
+                $splittedName = explode('.', $name);
+
+                return $name;
+            } else {
+                return $name;
+            }
         }
     }
 
@@ -83,14 +121,10 @@ class JsonFilterReader implements FilterReader
      * @return null|Expression
      * @throws PropertyNameNotFoundException
      */
-    public static function readWithAlias($filter, ExprHandler $expression)
+    public static function readFromCsw($filter, ExprHandler $expression)
     {
         $parameters = array();
-        $reader = new JsonFilterReader(
-            $expression->getAliasMap(),
-            $expression->getDefaultAlias(),
-            $expression->getPropertyMap()
-        );
+        $reader = new JsonFilterReader($expression, true);
         $expression = $reader->getExpression($filter, $expression, $parameters);
 
         if (is_array($expression) && count($expression) !== 1) {
@@ -109,7 +143,7 @@ class JsonFilterReader implements FilterReader
     public static function read($filter, ExprHandler $expression)
     {
         $parameters = array();
-        $reader = new JsonFilterReader();
+        $reader = new JsonFilterReader($expression);
         $expression = $reader->getExpression($filter, $expression, $parameters);
 
         if (is_array($expression) && count($expression) !== 1) {
