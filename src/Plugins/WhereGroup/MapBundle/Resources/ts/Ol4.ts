@@ -240,7 +240,10 @@ export class Ol4Map {
             //     }
             // }
         ));
-        this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
+        let mapsize = this.olMap.getSize();
+        if(mapsize[0] !== 0 && mapsize[1]) {
+            this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
+        }
         let hgl = this.vecSource.createLayer(
             Ol4Map.getUuid('olay-'),
             {'style': Ol4Utils.getStyle(this.styles['highlight'])},
@@ -301,6 +304,7 @@ export class Ol4Map {
     }
 
     zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent) {
+        console.log(geometry, this.olMap.getSize());
         this.olMap.getView().fit(geometry, <olx.view.FitOptions>this.olMap.getSize());
     }
 
@@ -393,6 +397,7 @@ export class Ol4Map {
 
     updateMap(): void {
         this.olMap.updateSize();
+        this.zoomToExtent(this.startExtent.getPolygonForExtent(this.olMap.getView().getProjection()));
     }
 
     changeCrs(crs: string) { // TODO
