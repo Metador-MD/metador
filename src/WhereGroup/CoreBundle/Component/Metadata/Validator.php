@@ -2,10 +2,11 @@
 
 namespace WhereGroup\CoreBundle\Component\Metadata;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+use WhereGroup\CoreBundle\Event\MetadataValidationEvent;
 use WhereGroup\PluginBundle\Component\Plugin;
-use Symfony\Component\HttpKernel\KernelInterface;
 use WhereGroup\CoreBundle\Component\Configuration;
 
 /**
@@ -20,22 +21,28 @@ class Validator
     /** @var Configuration  */
     private $conf;
 
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
+
     /**
      * Validator constructor.
      * @param Plugin $plugin
      * @param Configuration $conf
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(Plugin $plugin, Configuration $conf)
+    public function __construct(Plugin $plugin, Configuration $conf, EventDispatcherInterface $eventDispatcher)
     {
         $this->plugin = $plugin;
         $this->conf   = $conf;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __destruct()
     {
         unset(
             $this->plugin,
-            $this->conf
+            $this->conf,
+            $this->eventDispatcher
         );
     }
 
@@ -46,7 +53,7 @@ class Validator
      * @throws MetadataException
      * @throws \Exception
      */
-    public function isValid(array $p, &$debug = null)
+    public function isValid(array $p, &$debug = [])
     {
         if (!isset($p['_public']) || (isset($p['_public']) && $p['_public'] === '0')) {
             return true;
@@ -62,7 +69,13 @@ class Validator
             throw new MetadataException("Can not decode validation.json");
         }
 
-        return $this->objectIsValid($p, $rules, $debug);
+        $event = new MetadataValidationEvent($p, $rules, $debug);
+
+        $this->eventDispatcher->dispatch('metadata.pre_validation', $event);
+        $this->objectIsValid($p, $rules, $debug);
+        $this->eventDispatcher->dispatch('metadata.post_validation', $event);
+
+        return !$debug['hasErrors'];
     }
 
     /**
@@ -87,9 +100,11 @@ class Validator
         if (!is_null($debug) && is_array($tempRules) && !empty($tempRules)) {
             foreach ($tempRules as $key => $rules) {
                 foreach ($rules as $index => $rule) {
-                    if (isset($rule['assert']) && !in_array($rule['assert'], [
-                        'notBlank', 'oneIsMandatory', 'onlyOne'
-                    ])) {
+                    // Continue if rule is not for the backend or one of the following assert types.
+                    if ((isset($rule['backend']) && $rule['backend'] === false)
+                        || (isset($rule['assert']) && !in_array($rule['assert'], [
+                            'notBlank', 'oneIsMandatory', 'onlyOne'
+                        ]))) {
                         continue;
                     }
 
@@ -107,7 +122,7 @@ class Validator
             }
         }
 
-        return !$debug['hasErrors'];
+        return !(boolean)$debug['hasErrors'];
     }
 
     /**
@@ -125,7 +140,7 @@ class Validator
                 }
 
                 $list = $this->conf->get($key, 'list-option', $profile);
-                $array = is_string($string) ? array($string) : $string;
+                $array = !is_array($string) ? array($string) : $string;
                 unset($string);
 
                 foreach ($array as $string) {

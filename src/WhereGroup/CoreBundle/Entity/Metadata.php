@@ -108,6 +108,10 @@ class Metadata
      */
     private $searchfield;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $anyText;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -323,6 +327,24 @@ class Metadata
     }
 
     /**
+     * @return mixed
+     */
+    public function getAnyText()
+    {
+        return $this->anyText;
+    }
+
+    /**
+     * @param mixed $anytext
+     * @return Metadata
+     */
+    public function setAnyText($anytext)
+    {
+        $this->anyText = $anytext;
+        return $this;
+    }
+
+    /**
      * @param User|null $insertUser
      * @return $this
      */
@@ -457,7 +479,9 @@ class Metadata
      */
     public function addGroups(Group $group)
     {
-        $this->groups[] = $group;
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+        }
 
         return $this;
     }
@@ -477,6 +501,15 @@ class Metadata
     {
         return $this->groups;
     }
+    /**
+     * @return $this
+     */
+    public function clearGroups()
+    {
+        $this->groups->clear();
+
+        return $this;
+    }
 
     /**
      * @param Address $address
@@ -484,17 +517,32 @@ class Metadata
      */
     public function addAddress(Address $address)
     {
-        $this->address[] = $address;
+        if (!$this->address->contains($address)) {
+            $this->address[] = $address;
+        }
 
         return $this;
     }
 
     /**
      * @param Address $address
+     * @return Metadata
      */
     public function removeAddress(Address $address)
     {
-        $this->groups->removeElement($address);
+        $this->address->removeElement($address);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearAddress()
+    {
+        $this->address->clear();
+
+        return $this;
     }
 
     /**

@@ -14,9 +14,10 @@
     <div class="home -js-home">
         <div class="source">
             <ul class="source-list">
-                {% for slug, source in sourceConfig %}
-                    <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}"
-                        data-slug="{{ slug }}">{{ source['name'] }}</li>
+                {% for slug, source in sourceConfig if slug != 'quarantine' or (slug == 'quarantine' and not is_granted('ROLE_SYSTEM_GUEST') and is_granted('ROLE_SYSTEM_USER')) %}
+                    <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}" data-slug="{{ slug }}">
+                        {{ source['name'] }}
+                    </li>
                 {% endfor %}
             </ul>
             {% include 'MetadorThemeBundle:Home:new-profile.html.twig' %}
@@ -120,7 +121,6 @@
                                 {% endfor %}
                             </div>
                         </div>
-
                     </div>
                     <div class="col c-3-4">
                         {% include 'MetadorThemeBundle:Theme:notify.html.twig' %}

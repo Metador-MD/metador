@@ -89,6 +89,7 @@ class Browser
      * @param $url
      * @return bool|\stdClass
      * @internal param array $header
+     * @throws MetadorException
      */
     public function get($url)
     {
@@ -100,6 +101,7 @@ class Browser
      * @param $data
      * @return bool|\stdClass
      * @internal param array $header
+     * @throws MetadorException
      */
     public function post($url, $data)
     {

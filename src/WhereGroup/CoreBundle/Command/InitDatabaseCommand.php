@@ -37,7 +37,8 @@ class InitDatabaseCommand extends ContainerAwareCommand
         // Create system groups
         $groups = array(
             'ROLE_SYSTEM_SUPERUSER',
-            'ROLE_SYSTEM_GEO_OFFICE'
+            'ROLE_SYSTEM_GEO_OFFICE',
+            'ROLE_SYSTEM_GUEST'
         );
 
         foreach ($groups as $name) {

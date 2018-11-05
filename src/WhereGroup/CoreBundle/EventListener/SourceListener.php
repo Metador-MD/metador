@@ -2,8 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
+use WhereGroup\CoreBundle\Component\Metadata;
 use WhereGroup\CoreBundle\Event\SourceEvent;
 
 /**
@@ -12,15 +11,15 @@ use WhereGroup\CoreBundle\Event\SourceEvent;
  */
 class SourceListener
 {
-    /** @var \Doctrine\Common\Persistence\ObjectRepository|null|\WhereGroup\CoreBundle\Entity\SourceRepository  */
-    protected $repo = null;
+    protected $metadata;
 
-    const ENTITY = "MetadorCoreBundle:Metadata";
-
-    /** @param EntityManagerInterface $em */
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * SourceListener constructor.
+     * @param Metadata $metadata
+     */
+    public function __construct(Metadata $metadata)
     {
-        $this->repo = $em->getRepository(self::ENTITY);
+        $this->metadata = $metadata;
     }
 
     public function __destruct()
@@ -30,11 +29,12 @@ class SourceListener
 
     /**
      * @param SourceEvent $event
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onConfirm(SourceEvent $event)
     {
-        $count = $this->repo->countBySource($event->getSlug());
+        $repo = $this->metadata->getRepository();
+        $count = $repo->countBySource($event->getSlug());
 
         if ($count > 0) {
             $event->addMessage("Es werden %count% Metadaten gelöscht.", ['%count%' => $count]);
@@ -43,9 +43,14 @@ class SourceListener
 
     /**
      * @param SourceEvent $event
+     * @throws \WhereGroup\CoreBundle\Component\Exceptions\MetadataException
      */
     public function onPostDelete(SourceEvent $event)
     {
-        $this->repo->deleteBySource($event->getSlug());
+        $repo = $this->metadata->getRepository();
+
+        foreach ($repo->findBy(['source' => $event->getSlug()]) as $entity) {
+            $this->metadata->deleteById($entity->getId());
+        }
     }
 }

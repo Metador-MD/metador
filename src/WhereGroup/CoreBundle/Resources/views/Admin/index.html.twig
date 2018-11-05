@@ -31,8 +31,13 @@
                         <div class="app-info-head">
                             <span class="app-info-icon {{ item.icon }}"></span> {{ item.label|trans|teaser(13, true) }}
                         </div>
-                        {% if item.count is defined %}<div class="app-info-count" title="{{ item.count }}">{{ item.count }}</div>{% endif %}
-                        {% if item.content is defined %}<div class="app-info-content">{{ item.content|raw }}</div>{% endif %}
+                        {% if item.count is defined %}
+                            <div class="app-info-count" title="{{ item.count }}">{{ item.count }}</div>
+                        {% elseif item.content is defined %}
+                            <div class="app-info-content">{{ item.content|raw }}</div>
+                        {% elseif item.path is defined %}
+                            {% include item.path %}
+                        {% endif %}
                     </div>
                 </div>
             {% if loop.index % 4 == 0 %}

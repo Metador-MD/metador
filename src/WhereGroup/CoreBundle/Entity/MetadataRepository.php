@@ -137,10 +137,19 @@ class MetadataRepository extends EntityRepository
     }
 
     /**
+     * @param null $source
      * @return mixed
      */
-    public function truncate()
+    public function truncate($source = null)
     {
+        if (!is_null($source)) {
+            return $this
+                ->getEntityManager('m')
+                ->createQuery('DELETE FROM ' . self::ENTITY . ' AS m WHERE m.source = :source')
+                ->setParameter('source', $source)
+                ->execute();
+        }
+
         return $this
             ->getEntityManager()
             ->createQuery('DELETE FROM ' . self::ENTITY)

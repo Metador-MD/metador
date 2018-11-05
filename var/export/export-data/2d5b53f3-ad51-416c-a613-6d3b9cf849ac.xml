@@ -1,0 +1,587 @@
+<gmd:MD_Metadata
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+
+        <gmd:fileIdentifier>
+        <gco:CharacterString>2d5b53f3-ad51-416c-a613-6d3b9cf849ac</gco:CharacterString>
+    </gmd:fileIdentifier>
+    
+        <gmd:language>
+        <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</gmd:LanguageCode>
+    </gmd:language>
+    
+        <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+    </gmd:characterSet>
+    
+    
+        <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="service">service</gmd:MD_ScopeCode>
+    </gmd:hierarchyLevel>
+    
+        <gmd:hierarchyLevelName>
+        <gco:CharacterString>Downloaddienst</gco:CharacterString>
+    </gmd:hierarchyLevelName>
+    
+                        <gmd:contact>
+        <gmd:CI_ResponsibleParty uuid="1f080a43-fdc3-579c-81c9-8520c9168a77">
+                        <gmd:individualName>
+                <gco:CharacterString>einheit</gco:CharacterString>
+            </gmd:individualName>
+                                    <gmd:organisationName>
+                <gco:CharacterString>orga</gco:CharacterString>
+            </gmd:organisationName>
+                                    <gmd:positionName>
+                <gco:CharacterString>Verantwortlich für die Erstellung der Metadaten</gco:CharacterString>
+            </gmd:positionName>
+                        <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:phone>
+                        <gmd:CI_Telephone>
+                                                        <gmd:voice>
+                                <gco:CharacterString>Telefonnummer</gco:CharacterString>
+                            </gmd:voice>
+                                                                                    <gmd:facsimile>
+                                <gco:CharacterString>Faxnummer</gco:CharacterString>
+                            </gmd:facsimile>
+                                                    </gmd:CI_Telephone>
+                    </gmd:phone>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                                                        <gmd:deliveryPoint>
+                                <gco:CharacterString>Straße und Hausnummer / Postfach:</gco:CharacterString>
+                            </gmd:deliveryPoint>
+                                                                                    <gmd:city>
+                                <gco:CharacterString>Stadt / Ort:</gco:CharacterString>
+                            </gmd:city>
+                                                                                    <gmd:administrativeArea>
+                                <gco:CharacterString>Sachsen-Anhalt</gco:CharacterString>
+                            </gmd:administrativeArea>
+                                                                                    <gmd:postalCode>
+                                <gco:CharacterString>PLZ:</gco:CharacterString>
+                            </gmd:postalCode>
+                                                                                    <gmd:country>
+                                <gco:CharacterString>DE</gco:CharacterString>
+                            </gmd:country>
+                                                                                                                                                                    <gmd:electronicMailAddress>
+                                            <gco:CharacterString>email 123</gco:CharacterString>
+                                        </gmd:electronicMailAddress>
+                                                                                                                                                <gmd:electronicMailAddress>
+                                            <gco:CharacterString>email 456</gco:CharacterString>
+                                        </gmd:electronicMailAddress>
+                                                                                                                                                <gmd:electronicMailAddress>
+                                            <gco:CharacterString>email 789</gco:CharacterString>
+                                        </gmd:electronicMailAddress>
+                                                                                                                        </gmd:CI_Address>
+                    </gmd:address>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                                                        <gmd:linkage>
+                                <gmd:URL>Internetadresse</gmd:URL>
+                            </gmd:linkage>
+                                                                                    <gmd:description>
+                                <gco:CharacterString>Beschreibung der Internetadresse:</gco:CharacterString>
+                            </gmd:description>
+                                                    </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+                            <gmd:role>
+                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+                </gmd:role>
+                    </gmd:CI_ResponsibleParty>
+        </gmd:contact>
+                        <gmd:dateStamp>
+        <gco:Date>2018-06-15</gco:Date>
+    </gmd:dateStamp>
+            <gmd:metadataStandardName>
+        <gco:CharacterString>ISO19115</gco:CharacterString>
+    </gmd:metadataStandardName>
+            <gmd:metadataStandardVersion>
+        <gco:CharacterString>2005/PDAM 1</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+                    <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier>
+                <gmd:RS_Identifier>
+                    <gmd:authority>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>DHDN UTM 32-N</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2008-11-18</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="dateType">publication</gmd:CI_DateTypeCode>
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                        </gmd:CI_Citation>
+                    </gmd:authority>
+                    <gmd:code>
+                        <gco:CharacterString>urn:ogc:def:crs:EPSG:25832</gco:CharacterString>
+                    </gmd:code>
+                                        <gmd:codeSpace>
+                        <gco:CharacterString>http://www.epsg-registry.org</gco:CharacterString>
+                    </gmd:codeSpace>
+                                                            <gmd:version>
+                        <gco:CharacterString>6.18.3</gco:CharacterString>
+                    </gmd:version>
+                                    </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
+            
+    <gmd:identificationInfo>
+        <srv:SV_ServiceIdentification id="servicecodespace2d5b53f3-ad51-416c-a613-6d3b9cf849ac">
+            <gmd:citation>
+                <gmd:CI_Citation>
+                                        <gmd:title>
+                        <gco:CharacterString>Title 12121</gco:CharacterString>
+                    </gmd:title>
+                                                                                                                            <gmd:alternateTitle>
+                                    <gco:CharacterString>Alternativtitel 1</gco:CharacterString>
+                                </gmd:alternateTitle>
+                                                                                                                <gmd:alternateTitle>
+                                    <gco:CharacterString>Alternativtitel 2</gco:CharacterString>
+                                </gmd:alternateTitle>
+                                                                                                                <gmd:alternateTitle>
+                                    <gco:CharacterString>Alternativtitel 3</gco:CharacterString>
+                                </gmd:alternateTitle>
+                                                                                                                    <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>2018-04-12</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                                                                <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>2018-04-19</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                            </gmd:CI_Date>
+                        </gmd:date>
+                                                                <gmd:date>
+                            <gmd:CI_Date>
+                                <gmd:date>
+                                    <gco:Date>2018-04-26</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                                </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                                                                <gmd:identifier>
+                            <gmd:MD_Identifier>
+                                <gmd:code>
+                                    <gco:CharacterString>servicecodespace2d5b53f3-ad51-416c-a613-6d3b9cf849ac</gco:CharacterString>
+                                </gmd:code>
+                            </gmd:MD_Identifier>
+                        </gmd:identifier>
+                                    </gmd:CI_Citation>
+            </gmd:citation>
+                        <gmd:abstract>
+                <gco:CharacterString>Das ist eine Kurzbeschreibung.</gco:CharacterString>
+            </gmd:abstract>
+	                                                    <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty uuid="7aa71f9c-5aa1-599a-a7a0-7e1f70246e50">
+                                            <gmd:individualName>
+                            <gco:CharacterString>jkljkljkljkljkl</gco:CharacterString>
+                        </gmd:individualName>
+                                                                <gmd:organisationName>
+                            <gco:CharacterString>qweqweqweqweq</gco:CharacterString>
+                        </gmd:organisationName>
+                                                                <gmd:positionName>
+                            <gco:CharacterString>Verantwortlich für die Erstellung des Dienstes</gco:CharacterString>
+                        </gmd:positionName>
+                                        <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:phone>
+                                <gmd:CI_Telephone>
+                                                                            <gmd:voice>
+                                            <gco:CharacterString>Telefonnummer</gco:CharacterString>
+                                        </gmd:voice>
+                                                                                                                <gmd:facsimile>
+                                            <gco:CharacterString>Faxnummer</gco:CharacterString>
+                                        </gmd:facsimile>
+                                                                    </gmd:CI_Telephone>
+                            </gmd:phone>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                                                            <gmd:deliveryPoint>
+                                            <gco:CharacterString>3534</gco:CharacterString>
+                                        </gmd:deliveryPoint>
+                                                                                                                <gmd:city>
+                                            <gco:CharacterString>Stadt / Ort</gco:CharacterString>
+                                        </gmd:city>
+                                                                                                                <gmd:administrativeArea>
+                                            <gco:CharacterString>Rheinland-Pfalz</gco:CharacterString>
+                                        </gmd:administrativeArea>
+                                                                                                                <gmd:postalCode>
+                                            <gco:CharacterString>PLZ</gco:CharacterString>
+                                        </gmd:postalCode>
+                                                                                                                <gmd:country>
+                                            <gco:CharacterString>DE</gco:CharacterString>
+                                        </gmd:country>
+                                                                                                                                                                                                            <gmd:electronicMailAddress>
+                                                    <gco:CharacterString>1 email</gco:CharacterString>
+                                                </gmd:electronicMailAddress>
+                                                                                                                                                                                <gmd:electronicMailAddress>
+                                                    <gco:CharacterString>2 email</gco:CharacterString>
+                                                </gmd:electronicMailAddress>
+                                                                                                                                                                                <gmd:electronicMailAddress>
+                                                    <gco:CharacterString>3 email</gco:CharacterString>
+                                                </gmd:electronicMailAddress>
+                                                                                                                                                        </gmd:CI_Address>
+                            </gmd:address>
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                                                        <gmd:linkage>
+                                        <gmd:URL>Internetadresse</gmd:URL>
+                                    </gmd:linkage>
+                                                                                                            <gmd:description>
+                                        <gco:CharacterString>Beschreibung der Internetadresse</gco:CharacterString>
+                                    </gmd:description>
+                                                                    </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                                            <gmd:role>
+                            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="principalInvestigator">principalInvestigator</gmd:CI_RoleCode>
+                        </gmd:role>
+                                    </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+                                    
+                                                                        <gmd:graphicOverview>
+                            <gmd:MD_BrowseGraphic>
+                                                                <gmd:fileName>
+                                    <gco:CharacterString>https://www.maps.com/media/catalog/product/cache/1/thumbnail/17f82f742ffe127f42dca9de82fb58b1/g/e/germany-map.jpg</gco:CharacterString>
+                                </gmd:fileName>
+                                                                                                <gmd:fileDescription>
+                                    <gco:CharacterString>Mapgermany</gco:CharacterString>
+                                </gmd:fileDescription>
+                                                                                                <gmd:fileType>
+                                    <gco:CharacterString>jpg</gco:CharacterString>
+                                </gmd:fileType>
+                                                            </gmd:MD_BrowseGraphic>
+                        </gmd:graphicOverview>
+                                                
+            
+                                                <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useLimitation>
+                                                                                                            <gco:CharacterString>Einschränkung der Eignung 1</gco:CharacterString>
+                                                                                                </gmd:useLimitation>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useLimitation>
+                                                                                                            <gco:CharacterString>Einschränkung der Eignung 2</gco:CharacterString>
+                                                                                                </gmd:useLimitation>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                            
+                                                                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                                                        <gmd:useConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                            </gmd:useConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Nutzungsbedingungen: </gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                                                                            <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                                                            <gmd:useConstraints>
+                                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="patent">patent</gmd:MD_RestrictionCode>
+                                </gmd:useConstraints>
+                                                        <gmd:useConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                            </gmd:useConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Nutzungsbedingungen: weitere Beschreibung der Einschränkung</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                                                
+                                                                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                                                        <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Zugriffsbeschränkungen: </gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                                                                            <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                                                            <gmd:accessConstraints>
+                                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="license">license</gmd:MD_RestrictionCode>
+                                </gmd:accessConstraints>
+                                                        <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RetrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Zugriffsbeschränkungen: Beschreibung der Zugriffs- bzw. Zugangseinschränkung</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                                                
+	                    <srv:serviceType>
+                <gco:LocalName>WMS</gco:LocalName>
+            </srv:serviceType>
+            
+	                                                                <srv:serviceTypeVersion>
+                        <gco:CharacterString>OGC:WMS:1.1.1</gco:CharacterString>
+                    </srv:serviceTypeVersion>
+                                                
+                            <srv:extent>
+                    <gmd:EX_Extent>
+                        <gmd:geographicElement>
+                            <gmd:EX_GeographicBoundingBox>
+                                <gmd:extentTypeCode>
+                                    <gco:Boolean>false</gco:Boolean>
+                                </gmd:extentTypeCode>
+                                <gmd:westBoundLongitude>
+                                    <gco:Decimal>4</gco:Decimal>
+                                </gmd:westBoundLongitude>
+                                <gmd:eastBoundLongitude>
+                                    <gco:Decimal>2</gco:Decimal>
+                                </gmd:eastBoundLongitude>
+                                <gmd:southBoundLatitude>
+                                    <gco:Decimal>3</gco:Decimal>
+                                </gmd:southBoundLatitude>
+                                <gmd:northBoundLatitude>
+                                    <gco:Decimal>1</gco:Decimal>
+                                </gmd:northBoundLatitude>
+                            </gmd:EX_GeographicBoundingBox>
+                        </gmd:geographicElement>
+                    </gmd:EX_Extent>
+                </srv:extent>
+            
+                        <srv:couplingType>
+                <srv:SV_CouplingType xmlns="http://www.isotc211.org/2005/srv" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#SV_CouplingType" codeListValue="mixed">mixed</srv:SV_CouplingType>
+            </srv:couplingType>
+            
+            <srv:containsOperations>
+                <srv:SV_OperationMetadata>
+	                                <srv:operationName>
+                        <gco:CharacterString>GetCapabilities</gco:CharacterString>
+                    </srv:operationName>
+		        	                                <srv:DCP>
+                        <srv:DCPList codeList="DCPList" codeListValue="XML">XML</srv:DCPList>
+                    </srv:DCP>
+		                                        <srv:connectPoint>
+                    <gmd:CI_OnlineResource>
+                                                <gmd:linkage>
+                            <gmd:URL> Adresse für den Online-Zugriff</gmd:URL>
+                        </gmd:linkage>
+                                                                        <gmd:description>
+                            <gco:CharacterString>Beschreibung der URL</gco:CharacterString>
+                        </gmd:description>
+                                            </gmd:CI_OnlineResource>
+                </srv:connectPoint>
+		                        </srv:SV_OperationMetadata>
+            </srv:containsOperations>
+                                                <srv:operatesOn xlink:href="%3Ccsw-url%3E9e16b521-a50d-4953-b891-766b2869c925#codespace9e16b521-a50d-4953-b891-766b2869c925" uuidref="codespace9e16b521-a50d-4953-b891-766b2869c925" />
+                                    </srv:SV_ServiceIdentification>
+    </gmd:identificationInfo>
+
+    <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+	                                                <gmd:distributionFormat>
+                    <gmd:MD_Format>
+                        <gmd:name>
+                            <gco:CharacterString>shape</gco:CharacterString>
+                        </gmd:name>
+                        <gmd:version>
+                            <gco:CharacterString>1.0</gco:CharacterString>
+                        </gmd:version>
+                        <gmd:specification>
+                            <gco:CharacterString>unknown</gco:CharacterString>
+                        </gmd:specification>
+                                                <gmd:fileDecompressionTechnique>
+                            <gco:CharacterString>zip</gco:CharacterString>
+                        </gmd:fileDecompressionTechnique>
+                                            </gmd:MD_Format>
+                </gmd:distributionFormat>
+                                    
+                <gmd:distributor>
+            <gmd:MD_Distributor>
+                                                            <gmd:distributorContact>
+                            <gmd:CI_ResponsibleParty uuid="589e4381-fd80-59ef-8ffa-b57cce0828f4">
+                                                                    <gmd:individualName>
+                                        <gco:CharacterString> Zuständige Person / Organisationseinheit</gco:CharacterString>
+                                    </gmd:individualName>
+                                                                                                    <gmd:organisationName>
+                                        <gco:CharacterString>Name der Organisation</gco:CharacterString>
+                                    </gmd:organisationName>
+                                                                                                    <gmd:positionName>
+                                        <gco:CharacterString>Verantwortlich für den Vertrieb des Dienstes</gco:CharacterString>
+                                    </gmd:positionName>
+                                                                <gmd:contactInfo>
+                                    <gmd:CI_Contact>
+                                        <gmd:phone>
+                                            <gmd:CI_Telephone>
+                                                                                                    <gmd:voice>
+                                                        <gco:CharacterString>Telefonnummer</gco:CharacterString>
+                                                    </gmd:voice>
+                                                                                                                                                    <gmd:facsimile>
+                                                        <gco:CharacterString>Faxnummer</gco:CharacterString>
+                                                    </gmd:facsimile>
+                                                                                            </gmd:CI_Telephone>
+                                        </gmd:phone>
+                                        <gmd:address>
+                                            <gmd:CI_Address>
+                                                                                                    <gmd:deliveryPoint>
+                                                        <gco:CharacterString>Straße und Hausnummer / Postfach</gco:CharacterString>
+                                                    </gmd:deliveryPoint>
+                                                                                                                                                    <gmd:city>
+                                                        <gco:CharacterString>Stadt / Ort</gco:CharacterString>
+                                                    </gmd:city>
+                                                                                                                                                    <gmd:administrativeArea>
+                                                        <gco:CharacterString>Mecklenburg-Vorpommern</gco:CharacterString>
+                                                    </gmd:administrativeArea>
+                                                                                                                                                    <gmd:postalCode>
+                                                        <gco:CharacterString>PLZ</gco:CharacterString>
+                                                    </gmd:postalCode>
+                                                                                                                                                    <gmd:country>
+                                                        <gco:CharacterString>DE</gco:CharacterString>
+                                                    </gmd:country>
+                                                                                                                                                                                                                                                                        <gmd:electronicMailAddress>
+                                                                <gco:CharacterString>email 1</gco:CharacterString>
+                                                            </gmd:electronicMailAddress>
+                                                                                                                                                                                                                                <gmd:electronicMailAddress>
+                                                                <gco:CharacterString>email 2</gco:CharacterString>
+                                                            </gmd:electronicMailAddress>
+                                                                                                                                                                                                        </gmd:CI_Address>
+                                        </gmd:address>
+                                        <gmd:onlineResource>
+                                            <gmd:CI_OnlineResource>
+                                                                                                    <gmd:linkage>
+                                                        <gmd:URL>Internetadresse</gmd:URL>
+                                                    </gmd:linkage>
+                                                                                                                                                    <gmd:description>
+                                                        <gco:CharacterString>Beschreibung der Internetadresse</gco:CharacterString>
+                                                    </gmd:description>
+                                                                                            </gmd:CI_OnlineResource>
+                                        </gmd:onlineResource>
+                                                                                    <gmd:hoursOfService>
+                                                <gco:CharacterString>Erreichbarkeit</gco:CharacterString>
+                                            </gmd:hoursOfService>
+                                                                            </gmd:CI_Contact>
+                                </gmd:contactInfo>
+                                                                    <gmd:role>
+                                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="user">user</gmd:CI_RoleCode>
+                                    </gmd:role>
+                                                            </gmd:CI_ResponsibleParty>
+                        </gmd:distributorContact>
+                                    
+                                                                                    <gmd:distributionOrderProcess>
+                            <gmd:MD_StandardOrderProcess>
+                                                                    <gmd:fees>
+                                        <gco:CharacterString>Gebühren- und Entgelte</gco:CharacterString>
+                                    </gmd:fees>
+                                                                                                    <gmd:orderingInstructions>
+                                        <gco:CharacterString>Bestellhinweise</gco:CharacterString>
+                                    </gmd:orderingInstructions>
+                                                                                                    <gmd:turnaround>
+                                        <gco:CharacterString>Bearbeitungs-/Lieferzeit</gco:CharacterString>
+                                    </gmd:turnaround>
+                                                            </gmd:MD_StandardOrderProcess>
+                        </gmd:distributionOrderProcess>
+                                                                        </gmd:MD_Distributor>
+        </gmd:distributor>
+        
+                    <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                                                            <gmd:linkage>
+                                    <gmd:URL> Adresse für den Online-Zugriff</gmd:URL>
+                                </gmd:linkage>
+                                                                                        <gmd:description>
+                                    <gco:CharacterString>Beschreibung der URL</gco:CharacterString>
+                                </gmd:description>
+                                                                                        <gmd:function>
+                                    <gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml" codeListValue="information">information</gmd:CI_OnLineFunctionCode>
+                                </gmd:function>
+                                                    </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+                </gmd:MD_Distribution>
+    </gmd:distributionInfo>
+
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:scope>
+                <gmd:DQ_Scope>
+                                        <gmd:level>
+                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="service">service</gmd:MD_ScopeCode>
+                    </gmd:level>
+                                                                <gmd:levelDescription>
+                            <gmd:MD_ScopeDescription>
+                                <gmd:other>
+                                    <gco:CharacterString>Downloaddienst</gco:CharacterString>
+                                </gmd:other>
+                            </gmd:MD_ScopeDescription>
+                        </gmd:levelDescription>
+                                    </gmd:DQ_Scope>
+            </gmd:scope>
+
+                                                <gmd:report>
+                <gmd:DQ_DomainConsistency xsi:type="gmd:DQ_DomainConsistency_Type">
+                    <gmd:result>
+                        <gmd:DQ_ConformanceResult xsi:type="gmd:DQ_ConformanceResult_Type">
+                            <gmd:specification>
+                                <gmd:CI_Citation>
+                                                                        <gmd:title>
+                                        <gco:CharacterString>VERORDNUNG (EG) Nr. 1089/2010 DER KOMMISSION vom 23. November 2010 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Interoperabilität von Geodatensätzen und -diensten</gco:CharacterString>
+                                    </gmd:title>
+                                                                                                                                                <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2010-12-08</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                                                                                                                                <gmd:edition>
+                                        <gco:CharacterString>1.0</gco:CharacterString>
+                                    </gmd:edition>
+                                                                    </gmd:CI_Citation>
+                            </gmd:specification>
+                                                        <gmd:explanation>
+                                <gco:CharacterString>See the referenced Specification</gco:CharacterString>
+                            </gmd:explanation>
+                                                                                        <gmd:pass>
+                                    <gco:Boolean>false</gco:Boolean>
+                                </gmd:pass>
+                                                    </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                </gmd:DQ_DomainConsistency>
+            </gmd:report>
+                                            </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

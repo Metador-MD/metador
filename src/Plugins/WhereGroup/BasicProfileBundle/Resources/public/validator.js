@@ -73,24 +73,31 @@ Validator.prototype = {
             }
         });
 
-        return (count === empty || empty === 0) ? true : false;
+        return (count === empty || empty === 0);
     },
 
     mandatoryIfSiblingsNotEmpty: function(value, items, item, rule) {
+        let self = this;
+        let siblingsEmpty = self.siblingsEmpty(item, rule.parent, rule.siblings);
+        let empty = self.isEmpty(value);
+
+        return (!(siblingsEmpty === false && empty === true));
+    },
+
+    siblingsEmpty: function(item, parent, siblings) {
         var self  = this;
         var siblingsEmpty = true;
-        var empty = self.isEmpty(value);
+        var parentItem = $(item).closest('.' + parent);
 
-        var parent = $(item).closest('.' + rule.parent);
+        jQuery.each(siblings, function(index, sibling) {
+            let item  = parentItem.find('.-js-user-input[data-obj-id="' + sibling + '"]');
 
-        jQuery.each(rule.siblings, function(index, sibling) {
-            var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
             if (self.isEmpty(item.val()) === false) {
                 siblingsEmpty = false;
             }
         });
 
-        return (siblingsEmpty === false && empty === true) ? false : true;
+        return siblingsEmpty;
     },
 
     onlyOne: function(value, items, item, rule) {
@@ -155,8 +162,23 @@ Validator.prototype = {
 
         // Check validation rules
         jQuery.each(validation[objKey], function(index, rule) {
-            if (rule.frontend === false) {
+            if (rule && rule.frontend && rule.frontend === false) {
                 return true;
+            }
+
+            // Check conditions
+            if (rule && rule.condition && rule.condition.assert) {
+                switch(rule.condition.assert) {
+                    case 'mandatoryIfSiblingNotEmpty':
+                        if (self.siblingsEmpty(item, rule.condition.parent, rule.condition.siblings)) {
+                            self.itemValid(items, rule);
+                            return true;
+                        }
+                        break;
+                    default:
+                        console.error(rule.condition.assert + " is not supportet jet!");
+                        return false;
+                }
             }
 
             if (rule.regex && !self.assertRegex(rule.regex, value)

@@ -5,8 +5,8 @@
     <tr>
         <th>{% trans %}Name{% endtrans %}</th>
         <th>{% trans %}Organisation{% endtrans %}</th>
-        <th>{% trans %}Ort{% endtrans %}</th>
         <th>{% trans %}Straße{% endtrans %}</th>
+        <th>{% trans %}Ort{% endtrans %}</th>
     </tr>
     </thead>
     <tbody>
@@ -14,8 +14,8 @@
         <tr class="-js-address-resume -js-address-insert address-row" data-uuid="{{ address.uuid }}">
             <td>{{ address.individualName }}</td>
             <td>{{ address.organisationName }}</td>
-            <td>{{ address.city }}</td>
             <td>{{ address.deliveryPoint }}</td>
+            <td>{{ address.city }}</td>
         </tr>
     {% endfor %}
     </tbody>

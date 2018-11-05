@@ -87,8 +87,10 @@ class AddressRepository extends EntityRepository
             );
         }
 
+        $qb->where($orx);
+
         if ($countOnly === false) {
-            return $qb->where($orx)->getQuery()->getArrayResult();
+            return $qb->getQuery()->getArrayResult();
         }
 
         return $qb->getQuery()->getSingleScalarResult();

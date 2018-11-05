@@ -138,7 +138,16 @@ var MetadorOl4Bridge = {
         }
         var operation = $('.-js-spatial-operator').val();
         var filter = {};
-        filter[operation] = {'geom': _geoFeature};
+        var oo;// = operation.split('|');
+        if (operation !== null && (oo = operation.split('|')).length === 2) {
+            // var n = oo[0];
+            // var o = oo[1];
+            var ff = {};
+            ff[oo[1]] = {'geom': _geoFeature};
+            filter[oo[0]] = ff;
+        } else if (operation !== null) {
+            filter[operation] = {'geom': _geoFeature};
+        }
 
         return filter;
     },

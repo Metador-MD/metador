@@ -223,10 +223,103 @@ class Metadata implements MetadataInterface
      * @param null $profile
      * @param null $username
      * @param null $public
-     * @return $this|mixed
+     * @return EntityMetadata
      * @throws MetadataException
      */
-    public function updateObject(&$p, $source = null, $profile = null, $username = null, $public = null)
+    public function prepareData(&$p, $source = null, $profile = null, $username = null, $public = null)
+    {
+        if (!empty($p['_id'])) {
+            $metadata = $this->getById($p['_id']);
+            $p['_id'] = $metadata->getId();
+        } else {
+            $metadata = new EntityMetadata();
+            unset($p['_id']);
+        }
+
+        $user = $this->getUser($username);
+
+        if (!$user) {
+            $user = $this->user->getByUsername($p['_username']);
+        }
+
+        if (!$user) {
+            throw new MetadataException("Benutzer nicht gefunden.");
+        }
+
+        $this->updateObjectInformation($p, $source, $profile, $user->getUsername(), $public);
+
+        $date = new \DateTime($p['dateStamp']);
+
+        if (!$metadata->getId()) {
+            $metadata->setInsertUser($user);
+            $metadata->setInsertTime($date->getTimestamp());
+        }
+
+        if (isset($p['parentIdentifier'])) {
+            $metadata->setParent($p['parentIdentifier']);
+        }
+
+        if (isset($p['topicCategory'])) {
+            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
+        }
+
+        $metadata->setPublic($p['_public']);
+        $metadata->setLocked($p['_locked']);
+        $metadata->setUpdateUser($user);
+        $metadata->setUpdateTime($date->getTimestamp());
+        $metadata->setUuid($p['_uuid']);
+        $metadata->setTitle($p['title'] !== '' ? $p['title'] : 'noname');
+        $metadata->setAbstract($p['abstract']);
+        $metadata->setHierarchyLevel($p['hierarchyLevel']);
+        $metadata->setProfile($p['_profile']);
+        $metadata->setSearchfield($this->prepareSearchField($p));
+        $metadata->setSource($p['_source']);
+        $metadata->setDate(is_null($p['_date']) || !is_string($p['_date']) ? null : new \DateTime($p['_date']));
+        $metadata->setDateStamp(is_null($p['dateStamp']) || !is_string($p['dateStamp']) ? null : new \DateTime($p['dateStamp']));
+        $metadata->setInsertUsername($p['_insert_user']);
+
+        if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
+            && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
+            $p['bbox'][0]['nLatitude']  = (float)$p['bbox'][0]['nLatitude'];
+            $p['bbox'][0]['eLongitude'] = (float)$p['bbox'][0]['eLongitude'];
+            $p['bbox'][0]['sLatitude']  = (float)$p['bbox'][0]['sLatitude'];
+            $p['bbox'][0]['wLongitude'] = (float)$p['bbox'][0]['wLongitude'];
+            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
+            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
+            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
+            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
+        }
+
+        // Set groups
+        $metadata->clearGroups();
+
+        foreach ($p['_groups'] as $key => $name) {
+            $group = $this->user->getGroupByName($name);
+
+            if (!$group) {
+                unset($p['_groups'][$key]);
+                continue;
+            }
+
+            $metadata->addGroups($group);
+        }
+
+        $metadata->setObject($p);
+
+        return $metadata;
+    }
+
+    /**
+     * @param $p
+     * @param null $source
+     * @param null $profile
+     * @param null $username
+     * @param null $public
+     * @return $this|mixed
+     * @throws MetadataException
+     * @throws \Exception
+     */
+    public function updateObjectInformation(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
         if (!is_null($profile)) {
             $p['_profile'] = $profile;
@@ -250,14 +343,14 @@ class Metadata implements MetadataInterface
             throw new MetadataException("Datenquelle nicht gefunden");
         }
 
-        if (!isset($p['_groups']) || !is_array($p['_groups'])) {
-            $p['_groups'] = [];
-        }
-
         // DateStamp
         $dateStamp = new \DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
+        $p['_date'] = null;
 
+        if (!is_null($this->findDate($p))) {
+            $p['_date'] = $this->findDate($p);
+        }
 
         // Username
         /** @var User $user */
@@ -274,7 +367,7 @@ class Metadata implements MetadataInterface
 
         $p['_update_user'] = $p['_username'];
         $p['_update_time'] = $p['dateStamp'];
-        $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? array() : $p['_groups'];
+        $p['_groups']      = !isset($p['_groups']) || !is_array($p['_groups']) ? [] : $p['_groups'];
 
         // UUID
         $uuid = $this->generateUuid();
@@ -304,6 +397,7 @@ class Metadata implements MetadataInterface
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function generateUuid()
     {
@@ -329,68 +423,35 @@ class Metadata implements MetadataInterface
      * Use id or uuid
      * @param $p
      * @param bool $id
-     * @param bool $dispatchEvent
-     * @param bool $log
+     * @param array $options
      * @return EntityMetadata
-     * @throws MetadataException
      * @throws \Exception
      */
-    public function saveObject($p, $id = null, $dispatchEvent = true, $log = true)
+    public function saveObject($p, $id = null, $options = [])
     {
+        $options['source']        = $options['source']        ?? null;
+        $options['profile']       = $options['profile']       ?? null;
+        $options['username']      = $options['username']      ?? null;
+        $options['public']        = $options['public']        ?? null;
+
+        $options['dispatchEvent'] = $options['dispatchEvent'] ?? true;
+        $options['log']           = $options['log']           ?? true;
+        $options['flush']         = $options['flush']         ?? true;
+
         if (!is_null($id)) {
-            $metadata = $this->getById($id);
-        } else {
-            $metadata = new EntityMetadata();
-            unset($p['_id']);
+            $p['_id'] = $id;
         }
 
-        $date = new \DateTime($p['dateStamp']);
+        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
+        $metadata = $this->prepareData(
+            $p,
+            $options['source'],
+            $options['profile'],
+            $options['username'],
+            $options['public']
+        );
 
-        $user = $this->user->getByUsername($p['_username']);
-
-        if (!$metadata->getId()) {
-            $metadata->setInsertUser($user);
-            $metadata->setInsertTime($date->getTimestamp());
-        }
-
-        if (isset($p['parentIdentifier'])) {
-            $metadata->setParent($p['parentIdentifier']);
-        }
-
-        if (isset($p['topicCategory'])) {
-            $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
-        }
-
-        $metadata->setPublic($p['_public']);
-        $metadata->setLocked($p['_locked']);
-        $metadata->setUpdateUser($user);
-        $metadata->setUpdateTime($date->getTimestamp());
-        $metadata->setUuid($p['_uuid']);
-        $metadata->setTitle($p['title']);
-        $metadata->setAbstract($p['abstract']);
-        $metadata->setHierarchyLevel($p['hierarchyLevel']);
-        $metadata->setProfile($p['_profile']);
-        $metadata->setSearchfield($this->prepareSearchField($p));
-        $metadata->setSource($p['_source']);
-        $metadata->setDate(new \DateTime($this->findDate($p)));
-        $metadata->setDateStamp($date);
-        $metadata->setInsertUsername($p['_insert_user']);
-
-        if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
-            && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
-            $p['bbox'][0]['nLatitude']  = (float)$p['bbox'][0]['nLatitude'];
-            $p['bbox'][0]['eLongitude'] = (float)$p['bbox'][0]['eLongitude'];
-            $p['bbox'][0]['sLatitude']  = (float)$p['bbox'][0]['sLatitude'];
-            $p['bbox'][0]['wLongitude'] = (float)$p['bbox'][0]['wLongitude'];
-            $metadata->setBboxn($p['bbox'][0]['nLatitude']);
-            $metadata->setBboxe($p['bbox'][0]['eLongitude']);
-            $metadata->setBboxs($p['bbox'][0]['sLatitude']);
-            $metadata->setBboxw($p['bbox'][0]['wLongitude']);
-        }
-
-        $metadata->setObject($p);
-
-        $this->save($metadata, $dispatchEvent, $log);
+        $this->save($metadata, $options['dispatchEvent'], $options['log'], $options['flush']);
 
         return $metadata;
     }
@@ -405,7 +466,7 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed|void
      */
-    public function log($type, $metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
+    public function log($type, $metadata, $operation, $message, $messageParams = [], $path = null, $params = [], $flash = false)
     {
         /** @var Log $log */
         $log = $this->logger->newLog();
@@ -414,11 +475,15 @@ class Metadata implements MetadataInterface
             ->setCategory('metadata')
             ->setSubcategory('')
             ->setOperation($operation)
-            ->setSource($metadata->getSource())
-            ->setIdentifier($metadata->getUuid())
+            ->setSource(!is_null($metadata) ? $metadata->getSource() : '')
+            ->setIdentifier(!is_null($metadata) ? $metadata->getUuid() : '')
             ->setMessage($message, $messageParams)
             ->setUsername($this->user->getUsernameFromSession())
         ;
+
+        if ($flash) {
+            $log->setFlashMessage();
+        }
 
         if (!is_null($path)) {
             $log
@@ -452,9 +517,9 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed
      */
-    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
+    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array(), $flash = false)
     {
-        $this->log('error', $metadata, $operation, $message, $messageParams);
+        $this->log('error', $metadata, $operation, $message, $messageParams, $path, $params, $flash);
     }
 
     /**
@@ -478,7 +543,6 @@ class Metadata implements MetadataInterface
             ->setLocked(true)
             ->setLockUser($this->user->getUserFromSession())
             ->setLockTime($this->getTimestamp());
-
 
         $this->save($entity, false, false);
 
@@ -545,10 +609,11 @@ class Metadata implements MetadataInterface
      * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
      * @param bool $dispatchEvent
      * @param bool $log
+     * @param bool $flush
      * @return bool
      * @throws \Exception
      */
-    public function save($entity, $dispatchEvent = true, $log = true)
+    public function save($entity, $dispatchEvent = true, $log = true, $flush = true)
     {
         $operation = 'create';
 
@@ -557,8 +622,6 @@ class Metadata implements MetadataInterface
         }
 
         // SAVE TO DATABASE
-        $this->em->beginTransaction();
-        $success = false;
         $event = new MetadataChangeEvent($entity, array());
 
         try {
@@ -570,9 +633,12 @@ class Metadata implements MetadataInterface
             $hasId = $entity->getId();
 
             $this->em->persist($entity);
-            $this->em->flush();
 
-            if (!$hasId) {
+            if ($flush) {
+                $this->em->flush();
+            }
+
+            if (!$hasId && $flush) {
                 $p = $entity->getObject();
                 $p['_id'] = $entity->getId();
                 $entity->setObject($p);
@@ -580,36 +646,45 @@ class Metadata implements MetadataInterface
                 $this->em->flush();
             }
 
-            $this->em->commit();
-
-            $success = true;
-        } catch (\Exception $e) {
-            $this->em->rollBack();
-            throw new \Exception($e->getMessage());
-        }
-
-        if ($success) {
             // EVENT POST SAVE
             if ($dispatchEvent) {
                 $this->eventDispatcher->dispatch('metadata.post_save', $event);
             }
 
-            if ($log) {
+            $errors = $event->getErrors();
+
+            if ($errors && $log) {
+                foreach ($errors as $error) {
+                    $this->error(
+                        $entity,
+                        $operation,
+                        $error['message'],
+                        $error['params'],
+                        'metadata_edit',
+                        ['profile' => $entity->getProfile(), 'id' => $entity->getId()],
+                        null,
+                        [],
+                        true
+                    );
+                }
+            }
+
+            if (!$errors && $log) {
                 $this->success($entity, $operation, '%title% gespeichert.', array(
                     '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
                 ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
             }
 
             return true;
-        }
+        } catch (\Exception $e) {
+            if ($log) {
+                $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
+                    '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+                ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+            }
 
-        if ($log) {
-            $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
-                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-            ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -665,7 +740,9 @@ class Metadata implements MetadataInterface
             }
         }
 
-        return trim($searchfield);
+        $searchfield = trim($searchfield);
+
+        return !empty($searchfield) ? $searchfield : 'noname';
     }
 
     /**

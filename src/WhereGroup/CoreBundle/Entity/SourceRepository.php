@@ -12,7 +12,6 @@ class SourceRepository extends EntityRepository
 {
     /**
      * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function countAll()
@@ -30,6 +29,7 @@ class SourceRepository extends EntityRepository
      * @param $entity
      * @return $this
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function save($entity)
     {
@@ -43,6 +43,7 @@ class SourceRepository extends EntityRepository
      * @param $entity
      * @return $this
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function remove($entity)
     {

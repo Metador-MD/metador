@@ -29,10 +29,7 @@
     {% if array_has_value(value) %}
     <tr>
         <td class="view-property-label view-header-three" style="width: 40%;">{{ label|trans }}</td>
-        <td class="view-property" style="width: 60%;">
-            {% for val in value %}
-                {{ val }}<br>
-            {% endfor %}
+        <td class="view-property" style="width: 60%;">{% for val in value %}{{ val }}<br>{% endfor %}
         </td>
     </tr>
     {% endif %}
@@ -42,12 +39,7 @@
     {% if array_has_value(value) %}
         <tr>
             <td class="view-property-label view-header-three" style="width: 40%;">{{ label|trans }}</td>
-            <td class="view-property" style="width: 60%;">
-                {% for val in value %}
-                    {% for v in val %}
-                        {{ v }}<br>
-                    {%  endfor %}
-                {% endfor %}
+            <td class="view-property" style="width: 60%;">{% for val in value %}{% for v in val %}{{ v }}<br>{%  endfor %}{% endfor %}
             </td>
         </tr>
     {% endif %}

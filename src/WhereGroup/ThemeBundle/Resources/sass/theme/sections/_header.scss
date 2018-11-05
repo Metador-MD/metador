@@ -20,6 +20,11 @@
     float: left;
     display: block;
     @extend .header-height;
+
+    .logo {
+        margin-top: 10px;
+        display: block;
+    }
 }
 
 .top-right {

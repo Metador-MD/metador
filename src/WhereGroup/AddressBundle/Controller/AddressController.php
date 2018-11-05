@@ -2,7 +2,9 @@
 
 namespace WhereGroup\AddressBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WhereGroup\AddressBundle\Entity\Address;
+use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use WhereGroup\AddressBundle\Form\AddressType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,21 +18,30 @@ use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 class AddressController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_address")
+     * @Route("", name="metador_admin_address")
      * @Method("GET")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return $this->render('MetadorAddressBundle:Address:index.html.twig', array(
-            'addresses' => $this->get('metador_address')->all()
+        return $this->render('MetadorAddressBundle:Address:index.html.twig', $this->get('metador_address')->search(
+            $request->get('terms', ''),
+            $request->get('page', 1),
+            $this
+                ->get('metador_configuration')
+                ->get('popup_search_hits', 'plugin', 'metador_core', 5)
         ));
     }
 
     /**
-     * @Route("/new/", name="metador_admin_address_new")
+     * @Route("/new", name="metador_admin_address_new")
      * @Method({"GET", "POST"})
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function newAction()
     {
@@ -77,6 +88,7 @@ class AddressController extends Controller
      * @Method({"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editAction($id)
     {
@@ -92,6 +104,7 @@ class AddressController extends Controller
 
             try {
                 $this->get('metador_address')->save($entity);
+
                 $this->setFlashSuccess(
                     'edit',
                     $id,
@@ -118,6 +131,9 @@ class AddressController extends Controller
     /**
      * @Route("/confirm/{id}", name="metador_admin_address_confirm")
      * @Method({"GET", "POST"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function confirmAction($id)
     {
@@ -134,7 +150,8 @@ class AddressController extends Controller
             $entity = $form->getData();
             $name   = $entity->getOrganisationName();
             $id     = $entity->getId();
-
+            $event  = new AddressChangeEvent($entity, array());
+            $this->get('event_dispatcher')->dispatch('address.pre_delete', $event);
             $this->get('metador_address')->remove($entity);
 
             $this->setFlashSuccess(

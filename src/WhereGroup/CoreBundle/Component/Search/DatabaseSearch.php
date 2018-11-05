@@ -148,6 +148,6 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler(['metadata' => 'm', 'group' => 'g'], 'metadata', self::MAP_QUERY2SOURCE);
+        return new DatabaseExprHandler(['metadata' => 'm', 'group' => 'g'], 'metadata', self::$MAP_QUERY2SOURCE);
     }
 }

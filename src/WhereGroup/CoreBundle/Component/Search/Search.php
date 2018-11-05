@@ -9,7 +9,7 @@ namespace WhereGroup\CoreBundle\Component\Search;
 abstract class Search
 {
     /* mapping: query property name to entity Metador property */
-    const MAP_QUERY2SOURCE = [
+    public static $MAP_QUERY2SOURCE = [
         'metadata' => [
             'id'             => 'id',
             'bboxn'          => 'bboxn',
@@ -31,7 +31,7 @@ abstract class Search
             'identifier'     => 'uuid',
             'title'          => 'title',
             'language'       => 'language',
-            'anytext'        => 'searchfield',
+            'anytext'        => 'anyText',
             'subject'        => 'keywords',
         ],
         'group' => [

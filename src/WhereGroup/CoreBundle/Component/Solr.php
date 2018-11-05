@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+
 /**
  * Class Solr
  * @package Plugins\LVermGeo\BasicProfileBundle\Component
@@ -81,6 +83,7 @@ class Solr
 
     /**
      * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
+     * @throws MetadataException
      */
     public function updateMetadata($metadata)
     {
@@ -97,8 +100,15 @@ class Solr
 
         $doc->addField('id', $metadata->getId());
         $doc->addField('abstract', $metadata->getAbstract());
-        $doc->addField('date', $date->format('Y-m-d'));
-        $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
+
+        if ($date instanceof \DateTime) {
+            $doc->addField('date', $date->format('Y-m-d'));
+        }
+
+        if ($dateStamp instanceof \DateTime) {
+            $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
+        }
+
         $doc->addField('hierarchyLevel', $metadata->getHierarchyLevel());
         $doc->addField('keywords', $metadata->getKeywords());
         $doc->addField('topicCategory', $metadata->getTopicCategory());
@@ -107,12 +117,16 @@ class Solr
         $doc->addField('profile', $metadata->getProfile());
         $doc->addField('public', $metadata->getPublic());
         $doc->addField('searchfield', $metadata->getSearchfield());
+        $doc->addField('anyText', $metadata->getAnytext());
         $doc->addField('source', $metadata->getSource());
         $doc->addField('title', $metadata->getTitle());
         $doc->addField('uuid', $metadata->getUuid());
         $doc->addField('insertUsername', $p['_insert_user']);
         $doc->addField('insertTime', $p['_insert_time']);
-        $doc->addField('group.role', isset($p['_group']) ? implode(' ', $p['_group']) : '');
+
+        if (isset($p['_groups']) && is_array($p['_groups'])) {
+            $doc->addField('group.role', implode(' ', $p['_groups']));
+        }
 
         if (!empty($metadata->getBboxn()) && !empty($metadata->getBboxe())
             && !empty($metadata->getBboxs()) && !empty($metadata->getBboxw())
@@ -123,15 +137,11 @@ class Solr
             $doc->addField('bboxw', $metadata->getBboxw());
         }
 
-        $anyText = $p;
-        if (isset($anyText['processStep2']['responsibleParty'])) {
-            unset($anyText['processStep2']['responsibleParty']);
+        try {
+            $this->client->addDocument($doc);
+            $this->client->commit();
+        } catch (\SolrClientException $e) {
+            throw new MetadataException('Solr-Server nicht erreichbar.');
         }
-
-        $doc->addField('anyText', json_encode($anyText));
-        unset($anyText);
-
-        $updateResponse =  $this->client->addDocument($doc);
-        $this->client->commit();
     }
 }

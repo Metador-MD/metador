@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -90,30 +91,43 @@ class ProfileController extends Controller
      * @Method("POST")
      * @param $source
      * @param $profile
+     * @param Request $request
      * @return AjaxResponse
      * @throws MetadataException
-     * @throws \Exception
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function saveAction($source, $profile)
+    public function saveAction($source, $profile, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
 
+        $p = $request->request->get('p');
+        $submitType = $request->request->get('submit');
         $response = array();
-        $uuid = false;
-        $request  = $this->get('request_stack')->getCurrentRequest()->request;
-
-        $p = $request->get('p');
-
-        $this->get('metador_metadata')->updateObject($p, $source, $profile, null, null);
+        $metadata = null;
+        $uuid     = null;
 
         $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
 
+        // If id exists, get the metadata to check permission and keep some settings.
         if (!is_null($id)) {
-            $metadata = $this->get('metador_metadata')->getById($id);
-            $this->denyAccessUnlessGranted('edit', $metadata->getObject());
+            // Check permission
+            $metadata  = $this->get('metador_metadata')->getById($id);
+            $oldObject = $metadata->getObject();
+            $this->denyAccessUnlessGranted('edit', $oldObject);
+
+            // Keep groups if user is not owner.
+            if (!$this->isGranted('edit_group', $oldObject)) {
+                $p['_groups'] = isset($oldObject['_groups']) ? $oldObject['_groups'] : [];
+            }
+
+            // Keep owner
+            $p['_insert_user'] = $metadata->getinsertUser()->getUsername();
+            $p['_insert_time'] = date('Y-m-d', $metadata->getInsertTime());
         }
 
-        if ($request->get('submit') === 'abort') {
+        // On abort unlock metadata and redirect to home
+        if ($submitType === 'abort') {
+            // Unlock if id exists
             if (!is_null($id)) {
                 $this->get('metador_metadata')->unlock($id);
             }
@@ -123,12 +137,22 @@ class ProfileController extends Controller
                 ->redirect($response, $this->generateUrl('metador_home'));
 
             return new AjaxResponse($response);
-        } elseif ($request->get('submit') === 'close') {
+
+        // On close unlock after saving metadata
+        } elseif ($submitType === 'close') {
             $p['_remove_lock'] = true;
         }
 
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
+
         try {
-            $metadata = $this->get('metador_metadata')->saveObject($p, $id);
+            $metadata = $this->get('metador_metadata')->saveObject($p, $id, [
+                'source'  => $source,
+                'profile' => $profile
+            ]);
+            
             $id = $metadata->getId();
             $uuid = $metadata->getUuid();
 
@@ -140,8 +164,17 @@ class ProfileController extends Controller
                     'id' => $id
                 ))
             );
+            $em->getConnection()->commit();
         } catch (MetadataException $e) {
+            $em->getConnection()->rollBack();
+            $em->clear();
             $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), array());
+            $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
+            $submitType = null;
+        } catch (\Exception $e) {
+            $em->getConnection()->rollBack();
+            $em->clear();
+            throw $e;
         }
 
         $response = array_merge_recursive($response, array(
@@ -152,7 +185,7 @@ class ProfileController extends Controller
         ));
 
         // Add redirect command to response
-        if ($request->get('submit') === 'close') {
+        if ($submitType === 'close') {
             $this
                 ->get('metador_frontend_command')
                 ->redirect($response, $this->generateUrl('metador_home'));
@@ -212,7 +245,7 @@ class ProfileController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('metador_metadata')->deleteById($id);
-            $this->log('succes', 'delete', $id, 'Erfolgreich gelöscht.');
+            $this->log('success', 'delete', $id, 'Erfolgreich gelöscht.');
         } else {
             $this->log('error', 'delete', $id, 'Eintrag konnte nicht gelöscht werden.');
         }

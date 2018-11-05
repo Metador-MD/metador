@@ -23,9 +23,9 @@ test_job:
         - vendor/bin/phpcpd src/
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
 
-deploy_job:
-    stage: deploy
-    only:
-        - master
-    script:
-        - app/Resources/scripts/build.sh
+#deploy_job:
+#    stage: deploy
+#    only:
+#        - master
+#    script:
+#        - app/Resources/scripts/build.sh
