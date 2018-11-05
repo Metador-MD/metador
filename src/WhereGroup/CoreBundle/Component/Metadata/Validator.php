@@ -100,9 +100,11 @@ class Validator
         if (!is_null($debug) && is_array($tempRules) && !empty($tempRules)) {
             foreach ($tempRules as $key => $rules) {
                 foreach ($rules as $index => $rule) {
-                    if (isset($rule['assert']) && !in_array($rule['assert'], [
-                        'notBlank', 'oneIsMandatory', 'onlyOne'
-                    ])) {
+                    // Continue if rule is not for the backend or one of the following assert types.
+                    if ((isset($rule['backend']) && $rule['backend'] === false)
+                        || (isset($rule['assert']) && !in_array($rule['assert'], [
+                            'notBlank', 'oneIsMandatory', 'onlyOne'
+                        ]))) {
                         continue;
                     }
 
