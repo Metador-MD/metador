@@ -304,3 +304,8 @@ Validator.prototype = {
 };
 
 var validator = new Validator();
+
+$(document).on('change', '.-js-user-input', function() {
+    metadata.enableSubmitButton();
+    validator.validate(this);
+});

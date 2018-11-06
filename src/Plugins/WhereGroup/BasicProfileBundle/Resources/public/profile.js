@@ -69,11 +69,6 @@ MetadataForm.prototype = {
 
 var metadata = new MetadataForm();
 
-$(document).on('change', '.-js-user-input', function() {
-    metadata.enableSubmitButton();
-    validator.validate(this);
-});
-
 window.onbeforeunload = function () {
     if (metadata.getUserinput() && session.windowUnload === true) {
         return 'Möchten Sie diese Seite wirklich verlassen? Nicht gespeicherte Daten gehen hierbei verloren!';
@@ -128,13 +123,13 @@ $(document).on('click', '[data-mdtab]', function() {
 });
 
 // Browser Graphic
-$(document).on('change', '.-js-update-preview-image', function() {
-    var preview = $('.-js-preview-image');
+// $(document).on('change', '.-js-update-preview-image', function() {
+//     var preview = $('.-js-preview-image');
 
-    preview
-        .on('error', function() { preview.attr('src', '/bundles/metadortheme/img/preview.png') })
-        .attr('src', $(this).val());
-});
+//     preview
+//         .on('error', function() { preview.attr('src', '/bundles/metadortheme/img/preview.png') })
+//         .attr('src', $(this).val());
+// });
 
 $(document).on('click', '.-js-toggle-extended-metadata-settings', function() {
     $('.-js-extended-metadata-settings').toggle();
@@ -196,4 +191,35 @@ $(document).on('change', '.-js-change-view', function() {
         }
     });
     target.addClass('active');
+});
+
+// Menu functions
+var enableMenuContent = function(menuContentId) {
+    $('[data-menu-content]').removeClass('act');
+    $('[data-menu-content="' + menuContentId + '"]').addClass('act');
+};
+
+var enableSubMenu = function(menuId, subMenuId) {
+    $('[data-submenu-parent]').removeClass('act');
+    $('[data-submenu-parent="' + menuId + '"]').addClass('act');
+
+    $('.-js-activate-submenu').removeClass('act');
+    $('.-js-activate-submenu[data-submenu="' + subMenuId + '"]').addClass('act');
+
+    enableMenuContent(subMenuId);
+};
+
+var enableMenu = function(menuId, subMenuId) {
+    $('.-js-activate-menu').removeClass('act');
+    $('.-js-activate-menu[data-menu="' + menuId + '"]').addClass('act');
+
+    enableSubMenu(menuId, subMenuId);
+};
+
+$(document).on('click', '.-js-activate-menu', function () {
+    enableMenu($(this).attr('data-menu'), $(this).attr('data-submenu'));
+});
+
+$(document).on('click', '.-js-activate-submenu', function () {
+    enableSubMenu($(this).closest('[data-submenu-parent]').attr('data-submenu-parent'), $(this).attr('data-submenu'));
 });
