@@ -16,13 +16,4 @@ interface FilterReader
      * @throws PropertyNameNotFoundException
      */
     public static function read($filter, ExprHandler $expression);
-
-
-    /**
-     * @param mixed $filter
-     * @param ExprHandler $expression
-     * @return null|Expression
-     * @throws PropertyNameNotFoundException
-     */
-    public static function readFromCsw($filter, ExprHandler $expression);
 }

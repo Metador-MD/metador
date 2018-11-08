@@ -29,8 +29,8 @@ interface ExprHandlerInterface
     public function orx(array $items);
 
     /**
+     * @param $item
      * @return mixed
-     * @throws PropertyNameNotFoundException
      */
     public function not($item);
 

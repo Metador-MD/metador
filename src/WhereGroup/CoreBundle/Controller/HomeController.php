@@ -106,7 +106,7 @@ class HomeController extends Controller
             ];
 
             if (!empty($user->getNonSystemRoles())) {
-                $orx[] = ['in' => ['group.role' => $user->getNonSystemRoles()]];
+                $orx[] = ['in' => ['role' => $user->getNonSystemRoles()]];
             }
 
             $filter['and'][] = ['or' => $orx];
@@ -156,9 +156,11 @@ class HomeController extends Controller
             $filter['and'][] = ['lte' => ['date' => $params['date']['to']]];
         }
 
+        $expression = JsonFilterReader::read($filter, $search->createExpression());
+
         $search
             ->setTerms(isset($params['terms']) ? $params['terms'] : '')
-            ->setExpression(JsonFilterReader::read($filter, $search->createExpression()));
+            ->setExpression($expression);
 
         if (is_null($download)) {
             $search
