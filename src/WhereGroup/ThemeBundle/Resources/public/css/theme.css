@@ -3350,8 +3350,9 @@ input.input-element, .md input.btn {
   bottom: 0; }
 
 .md .map-dialog .map-dialog-left-menu {
+  border-right: 1px solid #e1e1e1;
   z-index: 1;
-  width: 0;
+  width: 3px;
   background-color: #fff;
   position: absolute;
   top: 0;
@@ -3380,11 +3381,10 @@ input.input-element, .md input.btn {
   height: 30px;
   width: 30px;
   border: 1px solid #e1e1e1;
-  border-left-width: 0;
   position: absolute;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  left: -1px;
+  left: 2px;
   background: #fff;
   top: -webkit-calc(50% - 15px);
   top: -moz-calc(50% - 15px);

@@ -15,20 +15,14 @@ $home-menu-height: 35px;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.03);
     display: none;
 
-    //& > .map-menu {
-    //    border-bottom: 1px solid $border;
-    //    background-color: $dialog-head;
-    //    padding: 0 $padding;
-    //    @include large-item(false, false);
-    //}
-
     & > .map {
         @include pos(0, 0, 0, 0);
     }
 
     .map-dialog-left-menu {
+        border-right: 1px solid $border;
         z-index: 1;
-        width: 0;
+        width: 3px;
         background-color: $white;
 
         @include pos(0, '', 0, 0);
@@ -38,7 +32,6 @@ $home-menu-height: 35px;
             background-color: $white;
             border-right: 1px solid $border;
             display: none;
-            //padding: $padding / 3;
             @include pos(0, 0, 0, 0);
         }
 
@@ -50,11 +43,10 @@ $home-menu-height: 35px;
             height: 30px;
             width: 30px;
             border: 1px solid $border;
-            border-left-width: 0;
             position: absolute;
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
-            left: -1px;
+            left: 2px;
             background: $white;
             @include calc('top', '50% - 15px');
             @include transition-all(150ms);
