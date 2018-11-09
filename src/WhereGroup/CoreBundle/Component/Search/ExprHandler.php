@@ -24,71 +24,9 @@ abstract class ExprHandler
     protected $wildCard = '%';
 
     /**
-     * @var array
-     */
-    protected $aliasMap;
-
-    /**
-     * @var string
-     */
-    protected $defaultAlias;
-
-    /**
      * @var array|string
      */
     protected $spatialProperty = array('bboxw', 'bboxs', 'bboxe', 'bboxn');
-
-    /**
-     * @var array
-     */
-    protected $propertyMap;
-
-    /**
-     * ExprHandler constructor.
-     * @param array $aliasMap
-     * @param string $defaultAlias
-     * @param array $propertyMap
-     */
-    public function __construct(array $aliasMap, $defaultAlias, array $propertyMap) {
-        $this->aliasMap = $aliasMap;
-        $this->defaultAlias = $defaultAlias;
-        $this->setPropertyMap($propertyMap);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPropertyMap()
-    {
-        return $this->propertyMap;
-    }
-
-    /**
-     * @param array $propertyMap
-     * @return ExprHandler
-     */
-    public function setPropertyMap(array $propertyMap)
-    {
-        $this->propertyMap = $propertyMap;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAliasMap()
-    {
-        return $this->aliasMap;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultAlias()
-    {
-        return $this->defaultAlias;
-    }
 
     /**
      * @param $escapeChar

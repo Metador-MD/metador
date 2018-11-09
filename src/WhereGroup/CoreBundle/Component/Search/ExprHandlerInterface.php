@@ -9,12 +9,6 @@ namespace WhereGroup\CoreBundle\Component\Search;
 interface ExprHandlerInterface
 {
     /**
-     * @param array $propertyMap
-     * @return mixed
-     */
-    public function setPropertyMap(array $propertyMap);
-
-    /**
      * @param array $items
      * @return mixed
      * @throws PropertyNameNotFoundException
