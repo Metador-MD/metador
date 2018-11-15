@@ -8,6 +8,10 @@
   left: auto;
   top: 96px; }
 
+.md .map-dialog .map .ol-control.drag-zoom {
+  top: 128px;
+  right: 8px; }
+
 .md .map-dialog .map .ol-scale-line {
   left: auto;
   right: 8px; }

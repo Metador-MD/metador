@@ -1,5 +1,5 @@
 import * as ol4 from 'openlayers';// ???
-// import * as jquery from 'jquery'; //error in index.d.ts for @types/jquery
+
 import {LayerTree} from './LayerTree';
 import {DragZoom} from './DragZoom';
 import {Ol4Source, Ol4VectorSource, Ol4WmsSource} from "./Ol4Source"
