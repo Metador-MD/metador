@@ -4347,6 +4347,9 @@ input.input-element, .md input.btn {
 .result-footer > .right > .link:hover {
   color: #008ec0; }
 
+.marked {
+  background-color: #dedede; }
+
 .app-info {
   border: 1px solid #e8ecf2;
   background-color: #f7f7f7;
