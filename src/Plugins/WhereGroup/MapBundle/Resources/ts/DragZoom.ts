@@ -12,8 +12,8 @@ export class DragZoom {
                 return true;
             }
         });
-        this.button = <HTMLButtonElement>dom.create("button", {type: "button", title: "Ausschnitt aufziehen"}, []);
-        this.button.appendChild(dom.create("span", {}, ["icon-map"]));
+        this.button = <HTMLButtonElement>
+            dom.create("button", {type: "button", title: "Ausschnitt aufziehen"}, ["icon-map"]);
         this.button.addEventListener('click', this.buttonClick.bind(this), false);
         this.dragzoom.on('boxend', this.deactivate.bind(this));
         const wrapper = dom.create("div", {}, ["drag-zoom", "ol-unselectable", "ol-control"]);

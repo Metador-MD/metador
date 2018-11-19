@@ -6,12 +6,6 @@ $('.-js-toggle-map').on('click', function () {
     MetadorOl4Bridge.updateMap();
 });
 
-$('.-js-map-info').on('click', function () {
-    var $this = $(this);
-    $this.toggleClass("success");
-    MetadorOl4Bridge.activateFeatureInfo($this.hasClass("success"));
-});
-
 $(document).on('click', '.-js-toggle-layertree', function () {
     $(this).closest('.-js-map-dialog').toggleClass('active');
 });
@@ -114,21 +108,8 @@ var MetadorOl4Bridge = {
     },
 
     activateFeatureInfo: function (activate) {
-        var $tooltip = $('<div class="tooltip hidden" style="padding-right:20px;"></span></div>');
-        $tooltip.append('<span style="position:absolute;top:2px;right:0px;" class="icon-plus">');
         if (activate) {
-            this.getOl().activateFeatureInfo(
-                $tooltip.get(0),
-                function(uuid){
-                    search.markMetadata(uuid);
-                },
-                function(uuid){
-                    search.unmarkMetadata(uuid);
-                },
-                function(){
-                    search.clearMetadataMarks();
-                }
-            );
+            this.getOl().activateFeatureInfo();
         } else {
             this.getOl().deactivateFeatureInfo();
         }
