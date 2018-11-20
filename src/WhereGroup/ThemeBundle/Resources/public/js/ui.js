@@ -1,3 +1,13 @@
+$(document).on('click', '[data-tab-menu]', function() {
+    let parent = $(this).closest('.-js-tabs');
+
+    parent.find('[data-tab-menu]').removeClass('active');
+    $(this).addClass('active');
+
+    parent.find('[data-tab-content]').removeClass('active');
+    parent.find('[data-tab-content="' + $(this).attr('data-tab-menu') + '"]').addClass('active');
+});
+
 $(document).on('click', '.-js-toggle-user-menu', function() {
     $(this).closest('.-js-user').toggleClass('active');
 });

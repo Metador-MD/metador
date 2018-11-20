@@ -24,133 +24,24 @@ abstract class ExprHandler
     protected $wildCard = '%';
 
     /**
-     * @var array
-     */
-    protected $aliasMap;
-
-    /**
-     * @var string
-     */
-    protected $defaultAlias;
-
-    /**
      * @var array|string
      */
     protected $spatialProperty = array('bboxw', 'bboxs', 'bboxe', 'bboxn');
 
     /**
-     * @var array
-     */
-    protected $propertyMap;
-
-    /**
-     * DatabaseExprHandler constructor.
-     * @param array $aliasMap
-     * @param string $defaultAlias
-     * @param array $propertyMap
-     */
-    public function __construct(
-        array $aliasMap,
-        $defaultAlias,
-        array $propertyMap
-    ) {
-        $this->aliasMap = $aliasMap;
-        $this->defaultAlias = $defaultAlias;
-        $this->setPropertyMap($propertyMap);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPropertyMap()
-    {
-        return $this->propertyMap;
-    }
-
-    /**
-     * @param array $propertyMap
-     * @return mixed
-     */
-    public function setPropertyMap(array $propertyMap)
-    {
-        $this->propertyMap = $propertyMap;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAliasMap()
-    {
-        return $this->aliasMap;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultAlias()
-    {
-        return $this->defaultAlias;
-    }
-
-    /**
-     * @param $property
-     * @param $value
-     * @param $parameters
      * @param $escapeChar
      * @param $singleChar
      * @param $wildCard
+     * @param $value
      * @return null|string|string[]
      */
-    protected function valueForLike($property, $value, &$parameters, $escapeChar, $singleChar, $wildCard)
+    protected function valueForLike($escapeChar, $singleChar, $wildCard, $value)
     {
-        /* replace all $wildCards at $value with $this->wildCard */
-        $valueX = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
-        /* replace all $singleChar at $value with $this->singleChar */
-        $valueX = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $valueX);
-        /* replace all $escapeChar at $value with $this->escapeChar */
-        $valueX = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $valueX);
+        $value = preg_replace(self::getRegex($escapeChar, $wildCard), $this->wildCard, $value);
+        $value = preg_replace(self::getRegex($escapeChar, $singleChar), $this->singleChar, $value);
+        $value = preg_replace(self::getRegex($escapeChar, $escapeChar), $this->escapeChar, $value);
 
-        return $valueX;
-    }
-
-    /**
-     * @param $name
-     * @param string $delimiter
-     * @return string
-     * @throws PropertyNameNotFoundException
-     */
-    protected function getName($name, $delimiter = '.')
-    {
-
-        return $name;
-//
-//        $splittedName = explode('.', $name);
-//
-//        /* count($splittedName) === 1 -> property name is without alias -> use the default alias */
-//        $alias = count($splittedName) === 1 ? $this->defaultAlias : strtolower($splittedName[0]);
-//        $propertyName = count($splittedName) === 1 ? strtolower($splittedName[0]) : strtolower($splittedName[1]);
-//
-//        if (!isset($this->aliasMap[$alias]) || !isset($this->propertyMap[$alias][$propertyName])) {
-//            throw new PropertyNameNotFoundException($name);
-//        }
-//
-//        return $this->aliasMap[$alias].$delimiter.$this->propertyMap[$alias][$propertyName];
-    }
-
-    /**
-     * @param string $property
-     * @param mixed $value
-     * @param array $parameters
-     * @return string
-     * @throws PropertyNameNotFoundException
-     */
-    protected function addParameter($property, $value, &$parameters)
-    {
-        $hlp = $this->getName($property, '_');
-        $name = $hlp.count($parameters);
-        $parameters[$name] = $value;
-
-        return ':'.$name;
+        return $value;
     }
 
     /**
@@ -159,25 +50,46 @@ abstract class ExprHandler
      * @param string $character
      * @return string
      */
-    protected static function getRegex($escape, $character)
+    private static function getRegex($escape, $character)
     {
-        $first = self::addEscape($escape);
-        $second = self::addEscape($character);
-
-        return '/(?<!'.$first.')('.$second.')/';
+        return '/(?<!'.self::escape($escape).')('.self::escape($character).')/';
     }
 
     /**
      * @param $character
      * @return string
      */
-    protected static function addEscape($character)
+    private static function escape($character)
     {
         if (strpos('!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~', $character) !== false) {
             return '\\'.$character;
-        } else {
-            return $character;
         }
+
+        return $character;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    protected function getName($name)
+    {
+        return $name;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     * @param array $parameters
+     * @return string
+     */
+    protected function addParameter($property, $value, &$parameters)
+    {
+        $key = str_replace('.', '_', $property) . '_' . count($parameters);
+
+        $parameters[$key] = $value;
+
+        return ':' . $key;
     }
 
     /**
@@ -190,14 +102,14 @@ abstract class ExprHandler
     {
         if ($bbox === null) {
             return array($x, $y, $x, $y);
-        } else {
-            $bbox[0] = min($bbox[0], $x);
-            $bbox[1] = min($bbox[1], $y);
-            $bbox[2] = max($bbox[2], $x);
-            $bbox[3] = max($bbox[3], $y);
-
-            return $bbox;
         }
+
+        $bbox[0] = min($bbox[0], $x);
+        $bbox[1] = min($bbox[1], $y);
+        $bbox[2] = max($bbox[2], $x);
+        $bbox[3] = max($bbox[3], $y);
+
+        return $bbox;
     }
 
 
@@ -228,7 +140,9 @@ abstract class ExprHandler
 
         if (!is_array($coordinates[0])) {
             return self::addToBbox($coordinates[0], $coordinates[1]);
-        } elseif (!is_array($coordinates[0][0])) {
+        }
+
+        if (!is_array($coordinates[0][0])) {
             foreach ($coordinates as $coord) {
                 $bbox = self::addToBbox($coord[0], $coord[1], $bbox);
             }

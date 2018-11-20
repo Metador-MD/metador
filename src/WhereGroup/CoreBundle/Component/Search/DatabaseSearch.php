@@ -132,7 +132,6 @@ class DatabaseSearch extends Search implements SearchInterface
 
     /**
      * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getResultCount()
@@ -148,6 +147,6 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function createExpression()
     {
-        return new DatabaseExprHandler(['metadata' => 'm', 'group' => 'g'], 'metadata', self::$MAP_QUERY2SOURCE);
+        return new DatabaseExprHandler();
     }
 }

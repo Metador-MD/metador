@@ -119,7 +119,7 @@ Validator.prototype = {
             }
         });
 
-        return (count !== 1) ? false : true;
+        return (count === 1);
     },
 
     /**
@@ -162,7 +162,7 @@ Validator.prototype = {
 
         // Check validation rules
         jQuery.each(validation[objKey], function(index, rule) {
-            if (rule && rule.frontend && rule.frontend === false) {
+            if (rule && typeof rule.frontend !== 'undefined' && rule.frontend === false) {
                 return true;
             }
 
@@ -174,6 +174,17 @@ Validator.prototype = {
                             self.itemValid(items, rule);
                             return true;
                         }
+                        break;
+                    case 'selectValueIs':
+                        let select = $(item)
+                            .closest('.' + rule.condition.parent)
+                            .find('.' + rule.condition.select);
+
+                        if (select.val() !== rule.condition.value) {
+                            self.itemValid(items, rule);
+                            return true;
+                        }
+
                         break;
                     default:
                         console.error(rule.condition.assert + " is not supportet jet!");
@@ -304,3 +315,8 @@ Validator.prototype = {
 };
 
 var validator = new Validator();
+
+$(document).on('change', '.-js-user-input', function() {
+    metadata.enableSubmitButton();
+    validator.validate(this);
+});

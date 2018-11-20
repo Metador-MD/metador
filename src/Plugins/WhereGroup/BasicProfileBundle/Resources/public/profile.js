@@ -128,13 +128,13 @@ $(document).on('click', '[data-mdtab]', function() {
 });
 
 // Browser Graphic
-$(document).on('change', '.-js-update-preview-image', function() {
-    var preview = $('.-js-preview-image');
+// $(document).on('change', '.-js-update-preview-image', function() {
+//     var preview = $('.-js-preview-image');
 
-    preview
-        .on('error', function() { preview.attr('src', '/bundles/metadortheme/img/preview.png') })
-        .attr('src', $(this).val());
-});
+//     preview
+//         .on('error', function() { preview.attr('src', '/bundles/metadortheme/img/preview.png') })
+//         .attr('src', $(this).val());
+// });
 
 $(document).on('click', '.-js-toggle-extended-metadata-settings', function() {
     $('.-js-extended-metadata-settings').toggle();
@@ -198,6 +198,7 @@ $(document).on('change', '.-js-change-view', function() {
     target.addClass('active');
 });
 
+// Menu functions
 var enableMenuContent = function(menuContentId) {
     $('[data-menu-content]').removeClass('act');
     $('[data-menu-content="' + menuContentId + '"]').addClass('act');
