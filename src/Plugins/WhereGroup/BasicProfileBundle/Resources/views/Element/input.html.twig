@@ -19,15 +19,6 @@
 
     {% set showOptions = options is defined and options is not empty and not readonly ? true : false %}
 
-    {% if inherited is not defined %}
-        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
-            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
-    {% endif %}
-
-    {% if inherited %}
-        {% set readonly = true %}
-    {% endif %}
-
     {% set wizard = false %}
     {% if wizardClass is defined and wizardClass is not empty %}
         {% set wizard = true %}
@@ -47,16 +38,11 @@
     {% endif %}
 
     {% if label is defined and label is not empty %}
-        {% if inheritance is defined and inheritance == true %}
-            {% include '@MetadorBasicProfile/Element/inheritance.html.twig' %}
-        {% endif %}
         <label for="{{ id }}" class="form-label">{{ label }}:</label>
     {% endif %}
 
     <div class="form-field-wrapper i{{ iconCount }} -js-validation-wrapper {% if readonly is defined and readonly == true %}readonly{% endif %}">
-        {% if inherited  %}
-            <span class="form-icon-type rs left icon-tree"></span>
-        {% elseif type != null %}
+        {% if type != null %}
             <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
         {% endif %}
 

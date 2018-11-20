@@ -18,17 +18,8 @@
     {% set showHelp = help is not defined or help != false ? true : false %}
     {% set showListEdit = hasList and is_granted('ROLE_SYSTEM_GEO_OFFICE') ? true : false %}
 
-    {% if inherited is not defined %}
-        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
-            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
-    {% endif %}
-
     {% if readonly is not defined %}
         {% set readonly = false %}
-    {% endif %}
-
-    {% if inherited %}
-        {% set readonly = true %}
     {% endif %}
 
     {% set iconCount = 3 %}
@@ -56,17 +47,11 @@
     {% endif %}
 
     {% if label is defined and label is not empty %}
-        {% if inheritance is defined and inheritance == true %}
-            {% include '@MetadorBasicProfile/Element/inheritance.html.twig' %}
-        {% endif %}
-
         <label for="{{ id }}" class="form-label">{{ label }}:</label>
     {% endif %}
 
     <div class="form-field-wrapper i{{ iconCount }} -js-validation-wrapper {% if readonly is defined and readonly == true %}readonly{% endif %}">
-        {% if inherited  %}
-            <span class="form-icon-type rs left icon-tree"></span>
-        {% else %}
+        {% if type != null %}
             <span class="form-icon-type icon-{{ type }} rs left -js-validation-icon" data-validation-icon="icon-{{ type }}"></span>
         {% endif %}
 

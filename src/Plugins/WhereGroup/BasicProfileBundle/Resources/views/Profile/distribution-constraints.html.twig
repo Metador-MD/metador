@@ -3,9 +3,6 @@
 <h1 class="title">Rechtliches</h1>
 
 <h2 class="title">
-    {% if profile == 'lvermgeo_series_profile' %}
-        {{ form_element.inheritance({ 'name' : 'p[useLimitation]', 'p': p }) }}
-    {% endif %}
     Eignungsbeschränkungen
 </h2>
 
@@ -35,9 +32,6 @@
 {{ form_element.duplicatable_area_end() }}
 
 <h2 class="title">
-    {% if profile == 'lvermgeo_series_profile' %}
-        {{ form_element.inheritance({ 'name' : 'p[useConstraints]', 'p': p }) }}
-    {% endif %}
     Nutzungsbedingungen
 </h2>
 
@@ -88,9 +82,6 @@
 {{ form_element.duplicatable_area_end() }}
 
 <h2 class="title">
-    {% if profile == 'lvermgeo_series_profile' %}
-        {{ form_element.inheritance({ 'name' : 'p[accessConstraints]', 'p': p }) }}
-    {% endif %}
     Zugangsbeschränkungen
 </h2>
 

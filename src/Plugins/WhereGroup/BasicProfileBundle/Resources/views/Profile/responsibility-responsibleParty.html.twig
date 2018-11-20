@@ -2,16 +2,9 @@
 
 <h1 class="title">Verantwortlichkeit</h1>
 
-{% if profile == 'lvermgeo_service_profile' %}
-    <h2 class="title">Verantwortlichkeit für den Dienst</h2>
-{% else %}
-    <h2 class="title">
-        {% if profile == 'lvermgeo_series_profile' %}
-            {{ form_element.inheritance({ 'name' : 'p[responsibleParty]', 'p': p }) }}
-        {% endif %}
-        Verantwortlichkeit für den Datensatz
-    </h2>
-{% endif %}
+<h2 class="title">
+    Verantwortlichkeit für den Datensatz
+</h2>
 
 {% set id = 'p[responsibleParty]' %}
 {% if p['responsibleParty'] is not defined %}
@@ -19,12 +12,9 @@
 {% endif %}
 
 {% set readonly = false %}
-{% if p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['responsibleParty'] is defined %}
-    {% set readonly = true %}
-{% endif %}
 
 {{ form_element.duplicatable_area_start(p, id, 'organisationName', null, '-js-add-address', {
-    'url': path('metador_admin_address_api_all')
+    'url': path('metador_address_api_all')
 }) }}
     {% for responsibleParty in p['responsibleParty'] %}
         <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">
@@ -66,7 +56,7 @@
                         }}
                     </div>
 
-                    {% if profile == 'lvermgeo_service_profile' %}
+                    {% if profile == 'metador_service_profile' %}
                         <div class="col c-1-2">
                             {{ form_element.input({
                                 'name'            : 'p[responsibleParty][' ~ loop.index0 ~ '][positionName]',

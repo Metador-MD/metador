@@ -3,23 +3,10 @@
 {% if keyword is not empty %}
     {% set readonly = false %}
     {% set inherited = false %}
-    {% if p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['keywords' ~ keyword.identifier] is defined %}
-        {% set readonly = true %}
-        {% set inherited = true %}
-    {% endif %}
 
     <div class="fieldset2 -js-multi-fieldset" data-count="{{ array_length(p, 'keywords:' ~ keyword.identifier ~ ':keywords', [{}]) }}">
         <div class="head">
             <div class="left">
-                {% if p['_profile'] == 'lvermgeo_series_profile' and is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
-                    {% set inheritance_enabled = false %}
-                    {% if p['_inheritance']['keywords' ~ keyword.identifier] is defined and p['_inheritance']['keywords' ~ keyword.identifier] == 1 %}
-                        {% set inheritance_enabled = true %}
-                    {% endif %}
-
-                    <input type="checkbox" name="p[_inheritance][keywords{{ keyword.identifier }}]" value="1" {% if inheritance_enabled %}checked{% endif %} />
-                {% endif %}
-
                 {{ keyword.title }}:
             </div>
             <div class="right">

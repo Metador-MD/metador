@@ -6,14 +6,10 @@
         <input type="hidden" name="p[_uuid]" value="{{ array_get(p, '_uuid', '') }}" />
         <input type="hidden" name="p[_source]" value="{{ array_get(p, '_source', '') }}" />
         <input type="hidden" name="p[_profile]" value="{{ array_get(p, '_profile', '') }}" />
-
         <input type="hidden" name="p[characterSet]" value="utf8" />
         <input type="hidden" name="p[standardName]" value="ISO19115" />
         <input type="hidden" name="p[standardVersion]" value="2005/PDAM 1" />
 
-        {% if not array_is_empty(p, '_originSource') %}
-            <input type="hidden" name="p[_originSource]" value="{{ array_get(p, '_originSource') }}" />
-        {% endif %}d
         {% if profile == 'metador_dataset_profile' %}
             <input type="hidden" name="p[hierarchyLevel]" value="dataset" />
         {% elseif profile == 'metador_series_profile' %}
@@ -21,10 +17,6 @@
             <input type="hidden" name="p[hierarchyLevelName]" value="Produkt" />
         {% elseif profile == 'metador_service_profile' %}
             <input type="hidden" name="p[hierarchyLevel]" value="service" />
-        {% elseif profile == 'metador_tile_profile' %}
-            <input type="hidden" name="p[hierarchyLevel]" value="tile" />
-            <input type="hidden" name="p[hierarchyLevelName]" value="Datensatz zu einem Produkt" />
-            <input type="hidden" name="p[levelDescription]" value="Datensatz zu einem Produkt" />
         {% endif %}
         <div class="center menu">
             <div class="center-left">
@@ -38,7 +30,13 @@
                 </div>
             </div>
             <div class="center-right">
-                <div class="content-menu">
+                <div class="profile-content-title">
+                    {% if not array_is_empty(p, 'title') %}
+                        <span class="profile-content-title-level">{{ array_get(p, 'hierarchyLevel', '')|capitalize }}</span> &bull;
+                        <span class="profile-content-title-text" title="{{ array_get(p, 'title', '') }}">{{ array_get(p, 'title', '')|teaser(90, true) }}</span>
+                    {% endif %}
+                </div>
+                <div class="profile-content-menu">
                     {% block subMenu %}{% endblock %}
                 </div>
                 <div class="profile-content">
@@ -53,7 +51,6 @@
 {% block css %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/metadorbasicprofile/css/profile.css') }}">
-    {#<link rel="stylesheet" href="{{ asset('bundles/lvermgeobasicprofile/css/lvermgeo.css') }}">#}
 {% endblock %}
 
 {% block javascript %}
@@ -68,6 +65,4 @@
     <script src="{{ asset('bundles/metadorbasicprofile/help.js') }}"></script>
     <script src="{{ asset('bundles/metadorbasicprofile/operateson.js') }}"></script>
     <script src="{{ asset('bundles/metadorbasicprofile/profile.js') }}"></script>
-    {#<script src="{{ asset('bundles/lvermgeobasicprofile/aggregationinfo.js') }}"></script>#}
-    {#<script src="{{ asset('bundles/lvermgeobasicprofile/profile.js') }}"></script>#}
 {% endblock %}

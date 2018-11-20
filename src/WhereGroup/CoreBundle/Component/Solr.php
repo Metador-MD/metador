@@ -4,10 +4,6 @@ namespace WhereGroup\CoreBundle\Component;
 
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
-/**
- * Class Solr
- * @package Plugins\LVermGeo\BasicProfileBundle\Component
- */
 class Solr
 {
     public $client;

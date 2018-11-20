@@ -15,7 +15,7 @@
         <div class="source">
             <ul class="source-list">
                 {% for slug, source in sourceConfig if slug != 'quarantine' or (slug == 'quarantine' and not is_granted('ROLE_SYSTEM_GUEST') and is_granted('ROLE_SYSTEM_USER')) %}
-                    <li class="source-liste-item -js-source {% if loop.first %}active{% endif %}" data-slug="{{ slug }}">
+                    <li class="source-list-item -js-source {% if loop.first %}active{% endif %}" data-slug="{{ slug }}">
                         {{ source['name'] }}
                     </li>
                 {% endfor %}
