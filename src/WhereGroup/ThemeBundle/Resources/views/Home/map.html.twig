@@ -1,63 +1,79 @@
 {% if isHome is defined and plugin_is_active('metador_map') %}
-<div class="map-dialog -js-map-dialog">
-    {#<div class="map-menu">#}
+    <div class="map-dialog -js-map-dialog">
+        {#<div class="map-menu">#}
         {##}
-    {#</div>#}
-    <div class="map-dialog-left-menu -js-map-dialog">
-        <div class="map-dialog-left-content -js-map-menu">
-            <div class="tabs -js-tabs">
-                <ul class="tab-menu">
-                    <li data-tab-menu="1" class="active">Layer</li>
-                    <li data-tab-menu="2">Tools</li>
-                </ul>
-                <div class="tab-content active" data-tab-content="1">
-                    <div class="-js-map-layertree">
-                        <ul class="layer-tree-list">
-                            <li class="draggable -js-dummy-layer" draggable="true">&nbsp;</li>
-                        </ul>
+        {#</div>#}
+        <div class="map-dialog-left-menu -js-map-dialog">
+            <div class="map-dialog-left-content -js-map-menu">
+                <div class="tabs -js-tabs">
+                    <ul class="tab-menu">
+                        <li data-tab-menu="1" class="active">Layer</li>
+                        <li data-tab-menu="2">Tools</li>
+                    </ul>
+                    <div class="tab-content active" data-tab-content="1">
+                        <div class="-js-map-layertree">
+                            <ul class="layer-tree-list">
+                                <li class="draggable -js-dummy-layer" draggable="true">&nbsp;</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-content -js-tab-2" data-tab-content="2">
+                    <div class="tab-content -js-tab-2" data-tab-content="2">
+                        <h4 class="title">SRS Auswahl</h4>
 
-                    <select class="input-element medium -js-crs-code" title="CRS">
-                        <option value="EPSG:4326">EPSG:4326</option>
-                        <option value="EPSG:4258">EPSG:4258</option>
-                        <option value="EPSG:31466">EPSG:31466</option>
-                        <option value="EPSG:31467">EPSG:31467</option>
-                        <option value="EPSG:25832">EPSG:25832</option>
-                    </select>
+                        <select class="input-element medium -js-crs-code full" title="CRS">
+                            <option value="EPSG:4326">EPSG:4326</option>
+                            <option value="EPSG:4258">EPSG:4258</option>
+                            <option value="EPSG:31466">EPSG:31466</option>
+                            <option value="EPSG:31467">EPSG:31467</option>
+                            <option value="EPSG:25832">EPSG:25832</option>
+                        </select>
 
-                    <input id="map-menu-load-wms-input" type="text" class="input-element medium input"
-                           placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
-                           data-url="{{ url('metador_map_loadwms') }}"/>
+                        <h4 class="title">WMS hinzufügen</h4>
 
-                    <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
+                        <div class="grid space">
+                            <div class="row r-2">
+                                <div class="col c-3-4">
+                                    <input id="map-menu-load-wms-input" type="text" class="input-element medium input full"
+                                           placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
+                                           data-url="{{ url('metador_map_loadwms') }}"/>
+                                </div>
+                                <div class="col c-1-4">
+                                    <button id="map-menu-load-wms-button" class="btn success medium full"><span class="icon-download"></span></button>
+                                    <div style="display: none">
+                                        <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
+                                            <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <select class="input-element medium -js-geometry-type" title="Geometrie">
-                        <option value="NONE">keine</option>
-                        <option value="load">geladene</option>
-                        <option value="BOX">Box</option>
-                        <option value="POLYGON">Polygon</option>
-                    </select>
+                            <h4 class="title">Räumliche Filter</h4>
 
-                    <div style="display: none">
-                        <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
-                            <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
-                        </form>
+                            <div class="row r-2">
+                                <div class="col c-1-2">
+                                    <select class="input-element medium full -js-geometry-type" title="Geometrie">
+                                        <option value="NONE">keine</option>
+                                        <option value="load">geladene</option>
+                                        <option value="BOX">Box</option>
+                                        <option value="POLYGON">Polygon</option>
+                                    </select>
+                                </div>
+                                <div class="col c-1-2">
+                                    <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
+                                        <option value="intersects">Schneidet</option>
+                                        <option value="contains">Umfasst</option>
+                                        <option value="not|contains">Innerhalb</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
-                        <option value="intersects">Schneidet</option>
-                        <option value="contains">Umfasst</option>
-                        <option value="not|contains">Innerhalb</option>
-                    </select>
                 </div>
             </div>
+            <div class="map-dialog-left-menu-button -js-toggle-layertree">
+                +
+            </div>
         </div>
-        <div class="map-dialog-left-menu-button -js-toggle-layertree">
-            +
-        </div>
+        <div class="map -js-map" id="map"></div>
     </div>
-    <div class="map -js-map" id="map"></div>
-</div>
 {% endif %}
