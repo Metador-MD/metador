@@ -89,3 +89,7 @@ $image-size: 80px;
         }
     }
 }
+
+.marked {
+    background-color: darken($background, 10%);
+}

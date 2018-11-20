@@ -8,15 +8,39 @@ export class FeatureInfo {
     private tooltipCoord: ol.Coordinate;
     private tooltipElm: HTMLElement;
     private layer: ol.layer.Vector;
-    private callbackSelect: Function;
-    private callbackUnSelect: Function;
-    private callbackUnSelectAll: Function;
+    // private callbackSelect: Function;
+    // private callbackUnSelect: Function;
     private select: ol.interaction.Select;
+    private button: HTMLButtonElement;
 
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
         this.initSelect();
+        this.button = <HTMLButtonElement>dom.create("button", {type: "button", title: "FeatureInfo aktivieren"}, ["icon-info-circle"]);
+        this.button.addEventListener('click', this.buttonClick.bind(this), false);
+        const wrapper = dom.create("div", {}, ["feature-info", "ol-unselectable", "ol-control"]);
+        wrapper.appendChild(this.button);
+        this.olMap.addControl(
+            new ol.control.Control(
+                {
+                    element: wrapper
+                }
+            )
+        );
+    }
+
+    private buttonClick(e) {
+        console.log(e);
+        if (!dom.hasClass(e.target, 'success')) {
+            dom.addClass(e.target,"success");
+            // console.log("fi activated");
+            this.activate();
+        } else {
+            dom.removeClass(e.target,"success");
+            // console.log("fi deactivated");
+            this.deactivate();
+        }
     }
 
     private initSelect() {
@@ -53,9 +77,7 @@ export class FeatureInfo {
         if (this.tooltipElm) {
             dom.addClass(this.tooltipElm, 'hidden');
         }
-        if (this.callbackUnSelectAll) {
-            this.callbackUnSelectAll();
-        }
+        search.clearMetadataMarks();
     }
 
     selectFeatures(uuids: string[]) {
@@ -77,12 +99,12 @@ export class FeatureInfo {
         }
     }
 
-    activate(tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
-        this.callbackSelect = callbackSelect;
-        this.callbackUnSelect = callbackUnSelect;
-        this.callbackUnSelectAll = callbackUnSelectAll;
+    activate() {//tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
+        // this.callbackSelect = callbackSelect;
+        // this.callbackUnSelect = callbackUnSelect;
         this.olMap.on('click', this.setTooltipPosition, this);
-        this.tooltipElm = tooltipElm;
+        this.tooltipElm = dom.create("div", {}, ["tooltip", "hidden"]);
+        this.tooltipElm.appendChild(dom.create("span", {}, ["icon-cross"]));
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
@@ -99,10 +121,7 @@ export class FeatureInfo {
         this.select.getFeatures().clear();
         this.olMap.removeInteraction(this.select);
         // this.select = null;
-        this.callbackUnSelectAll();
-        this.callbackSelect = null;
-        this.callbackUnSelect = null;
-        this.callbackUnSelectAll = null;
+        search.clearMetadataMarks();
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();
         this.olMap.removeOverlay(this.tooltip);
@@ -170,16 +189,18 @@ export class FeatureInfo {
     }
 
     private selectDataset(selector: string) {
-        if (this.callbackSelect) {
-            this.callbackSelect(selector);
+        if (search.markMetadata) {
+            search.markMetadata(selector);
         }
     }
 
     private unSelectDataset(selector: string = null) {
-        if (selector !== null && this.callbackUnSelect) {
-            this.callbackUnSelect(selector);
-        } else if (selector === null && this.callbackUnSelectAll) {
-            this.callbackUnSelectAll();
+        if (selector !== null && search.unmarkMetadata) {
+            search.unmarkMetadata(selector);
+        } else if (selector === null && search.clearMetadataMarks) {
+            search.clearMetadataMarks();
         }
     }
 }
+
+declare var search: any;
