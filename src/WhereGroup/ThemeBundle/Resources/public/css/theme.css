@@ -3342,7 +3342,7 @@ input.input-element, .md input.btn {
   border-bottom: 1px solid #e1e1e1;
   background-color: #f3f5f6; }
 
-.md .source > .source-list > .source-liste-item {
+.md .source > .source-list > .source-list-item {
   display: block;
   float: left;
   border-width: 1px 1px 0 1px;
@@ -3363,7 +3363,7 @@ input.input-element, .md input.btn {
   -ms-user-select: none;
   user-select: none; }
 
-.md .source > .source-list > .source-liste-item.active {
+.md .source > .source-list > .source-list-item.active {
   border-color: #e1e1e1;
   background-color: #fefefe;
   position: relative;
@@ -4175,7 +4175,7 @@ input.input-element, .md input.btn {
   background-color: #c6421e;
   border: 1px solid #b03b1a; }
 
-.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .filter-wrapper > .filter-content > .filter-content-row {
+.md .no-user-select, .md .fieldset > .head > .status, .md .fieldset > .head > .title, .md .fieldset > .head > .info, .md .fieldset2 > .head > .left, .md .center > .center-right > .content-menu > .content-menu-list > .content-menu-list-item, .md .filter-wrapper > .filter-content > .filter-content-row {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

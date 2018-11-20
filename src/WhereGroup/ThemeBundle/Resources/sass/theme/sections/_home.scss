@@ -101,7 +101,7 @@ $home-menu-height: 35px;
         background-color: $dialog-head;
         @extend .clearfix;
 
-        & > .source-liste-item {
+        & > .source-list-item {
             display: block;
             float: left;
             border-width: 1px 1px 0 1px;

@@ -114,7 +114,7 @@ OperatesOnSearch.prototype = {
     $.extend( Plugin.prototype, {
         init: function() {
             var self = this;
-            self.search.url = Configuration.basedir + 'lvermgeo/metadata/operateson';
+            self.search.url = Configuration.basedir + 'profile/metadata/operateson';
 
             $(this.element).click(function() {
                 self.open();

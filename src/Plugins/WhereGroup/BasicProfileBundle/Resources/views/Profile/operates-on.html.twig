@@ -1,0 +1,26 @@
+{% include "@MetadorTheme/Template/paging.html.twig" %}
+
+{% if rows is defined and rows is not empty %}
+<table class="table bordered medium">
+    <thead>
+    <tr>
+        <th>Titel</th>
+        <th>Hierarchieebene</th>
+        <th>Datum</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+        {% set data      = row.object|json_decode(true) %}
+        {% set codespace = data['identifierCodespace'] is defined ? data['identifierCodespace'] : '' %}
+        {% set code      = data['identifierCode'] is defined ? data['identifierCode'] : '' %}
+
+        <tr class="-js-operateson-resume -js-operateson-insert address-row" data-uuidref="{{ codespace }}{{ code }}" data-href="{{ codespace }}{{ code }}">
+            <td>{% if data['title'] is defined %}{{ data['title'] }}{% endif %}</td>
+            <td>{% if data['hierarchyLevel'] is defined %}{{ data['hierarchyLevel'] }}{% endif %}</td>
+            <td>{% if data['_date'] is defined %}{{ data['_date'] }}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
