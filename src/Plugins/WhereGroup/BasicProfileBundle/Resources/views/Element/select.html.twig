@@ -18,11 +18,6 @@
     {% set showHelp = help is not defined or help != false ? true : false %}
     {% set showListEdit = hasList and is_granted('ROLE_SYSTEM_GEO_OFFICE') ? true : false %}
 
-    {% if inherited is not defined %}
-        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
-            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
-    {% endif %}
-
     {% if readonly is not defined %}
         {% set readonly = false %}
     {% endif %}

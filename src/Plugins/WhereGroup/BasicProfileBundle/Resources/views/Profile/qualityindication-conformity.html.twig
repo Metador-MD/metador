@@ -3,9 +3,6 @@
 <h1 class="title">Qualitätsangabe</h1>
 
 <h2 class="title">
-    {% if profile == 'lvermgeo_series_profile' %}
-        {{ form_element.inheritance({ 'name' : 'p[report]', 'p': p }) }}
-    {% endif %}
     Übereinstimmung
 </h2>
 
@@ -48,11 +45,10 @@
                                     'explanation': 'See the referenced Specification'
                                 }
                             },
-                            'readonly' : p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['report'] is defined ? true : false,
+                            'readonly' : false,
                             'value' : '',
                             'p'               : p
-                        })
-                        }}
+                        }) }}
                     </div>
                 </div>
                 <div class="row row-1">

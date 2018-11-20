@@ -2,9 +2,6 @@
 
 <h1 class="title">Verantwortlichkeit</h1>
 <h2 class="title">
-    {% if profile == 'lvermgeo_series_profile' %}
-        {{ form_element.inheritance({ 'name' : 'p[contact]', 'p': p }) }}
-    {% endif %}
     Für Metadaten verantwortliche Stelle
 </h2>
 
@@ -14,9 +11,6 @@
 {% endif %}
 
 {% set readonly = false %}
-{% if p['_profile'] == 'lvermgeo_tile_profile' and p['_inheritance']['contact'] is defined %}
-    {% set readonly = true %}
-{% endif %}
 
 {{ form_element.duplicatable_area_start(p, id, 'organisationName', null, '-js-add-address', {
     'url': path('metador_admin_address_api_all')

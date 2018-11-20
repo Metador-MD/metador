@@ -10,11 +10,6 @@
     {% set class = class is defined ? class : '' %}
     {% set validatorSources = validatorSources is defined ? validatorSources : '' %}
 
-    {% if inherited is not defined %}
-        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
-            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
-    {% endif %}
-
     {% if readonly is not defined %}
         {% set readonly = false %}
     {% endif %}

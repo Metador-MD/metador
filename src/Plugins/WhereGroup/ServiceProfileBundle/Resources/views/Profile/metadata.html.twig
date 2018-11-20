@@ -18,7 +18,7 @@
                         'type'    : null,
                         'readonly': true,
                         'p'       : p
-                    })}}
+                    }) }}
                 </div>
             {% endif %}
             {% if not array_is_empty(p, 'dateStamp') %}
@@ -29,7 +29,7 @@
                         'type'    : null,
                         'readonly': true,
                         'p'       : p
-                    })}}
+                    }) }}
                 </div>
             {% endif %}
         </div>
@@ -43,8 +43,7 @@
                     'label'   : 'Beschreibung der Hierarchieebene',
                     'readonly': true,
                     'p'       : p
-                })
-                }}
+                }) }}
             </div>
         </div>
     {% endif %}
@@ -57,8 +56,7 @@
                     'label'   : 'Parent-Identifikator',
                     'readonly': true,
                     'p'       : p
-                })
-                }}
+                }) }}
             </div>
         </div>
     {% endif %}
@@ -85,7 +83,7 @@
                     'Downloaddienst'    : 'Downloaddienst'
                 },
                 'p'       : p
-            })}}
+            }) }}
         </div>
         <div class="col c-1-2">
             {{ form_element.select({
@@ -99,10 +97,9 @@
                     'ger': 'Deutsch',
                     'eng': 'Englisch'
                 },
-                'inheritance': (profile == 'lvermgeo_series_profile') ? true : false,
+                'inheritance': false,
                 'p'       : p
-            })
-            }}
+            }) }}
         </div>
     </div>
 </div>

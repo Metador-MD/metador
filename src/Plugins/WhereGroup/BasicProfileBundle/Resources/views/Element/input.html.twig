@@ -19,11 +19,6 @@
 
     {% set showOptions = options is defined and options is not empty and not readonly ? true : false %}
 
-    {% if inherited is not defined %}
-        {% set inherited = p['_profile'] == 'lvermgeo_tile_profile'
-            and p['_inheritance'][name|md_first_key] is defined ? true : false %}
-    {% endif %}
-
     {% if inherited %}
         {% set readonly = true %}
     {% endif %}
