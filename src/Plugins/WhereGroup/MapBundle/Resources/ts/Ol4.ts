@@ -1,5 +1,5 @@
 import * as ol4 from 'openlayers';// ???
-// import * as jquery from 'jquery'; //error in index.d.ts for @types/jquery
+
 import {LayerTree} from './LayerTree';
 import {DragZoom} from './DragZoom';
 import {Ol4Source, Ol4VectorSource, Ol4WmsSource} from "./Ol4Source"
@@ -262,15 +262,11 @@ export class Ol4Map {
         this.drawer = new Ol4Drawer(vLayer);
         this.dragzoom = new DragZoom(this.olMap);
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
+        this.activateFeatureInfo();
     }
 
-    activateFeatureInfo(
-        tooltipElm: HTMLElement,
-        callbackSelect: Function,
-        callbackUnSelect: Function,
-        callbackUnSelectAll: Function
-    ): void {
-        this.featureInfo.activate(tooltipElm, callbackSelect, callbackUnSelect, callbackUnSelectAll);
+    activateFeatureInfo(): void {
+        this.featureInfo.activate();
     }
 
     deactivateFeatureInfo(): void {
