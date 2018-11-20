@@ -14,7 +14,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     /**
      * @param array $items
      * @return Expr\Andx
-     * @throws PropertyNameNotFoundException
      */
     public function andx(array $items)
     {
@@ -24,7 +23,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     /**
      * @param array $items
      * @return Expr\Orx
-     * @throws PropertyNameNotFoundException
      */
     public function orx(array $items)
     {
@@ -34,7 +32,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     /**
      * @param Expr $item
      * @return Expr\Func
-     * @throws PropertyNameNotFoundException
      */
     public function not($item)
     {
@@ -48,7 +45,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param array $items
      * @param array $parameters
      * @return Expr\Func
-     * @throws PropertyNameNotFoundException
      */
     public function in($property, array $items, &$parameters)
     {
@@ -62,7 +58,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function eq($property, $value, &$parameters)
     {
@@ -76,13 +71,21 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function neq($property, $value, &$parameters)
     {
         $expr = new Expr();
 
         return $expr->neq($this->getName($property), self::addParameter($property, $value, $parameters));
+    }
+
+    protected function getName($columnName)
+    {
+        if ($columnName === 'role') {
+            return 'g.role';
+        }
+
+        return 'm.' . $columnName;
     }
 
     /**
@@ -93,7 +96,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param string $singleChar
      * @param string $wildCard
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function like($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
@@ -101,9 +103,10 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
 
         return $expr->like(
             $this->getName($property),
+
             self::addParameter(
                 $property,
-                $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard),
+                $this->valueForLike($escapeChar, $singleChar, $wildCard, $value),
                 $parameters
             )
         );
@@ -117,7 +120,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param string $singleChar
      * @param string $wildCard
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function notLike($property, $value, &$parameters, $escapeChar = '\\', $singleChar = '_', $wildCard = '%')
     {
@@ -125,7 +127,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
 
         return $expr->notLike(
             $this->getName($property),
-            $this->valueForLike($property, $value, $parameters, $escapeChar, $singleChar, $wildCard)
+            $this->valueForLike($escapeChar, $singleChar, $wildCard, $value)
         );
     }
 
@@ -135,7 +137,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param $upper
      * @param $parameters
      * @return Expr\Func
-     * @throws PropertyNameNotFoundException
      */
     public function between($property, $lower, $upper, &$parameters)
     {
@@ -153,7 +154,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function gt($property, $value, &$parameters)
     {
@@ -167,7 +167,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function gte($property, $value, &$parameters)
     {
@@ -181,7 +180,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function lt($property, $value, &$parameters)
     {
@@ -195,7 +193,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
      * @param mixed $value
      * @param array $parameters
      * @return Expr\Comparison
-     * @throws PropertyNameNotFoundException
      */
     public function lte($property, $value, &$parameters)
     {
@@ -207,7 +204,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     /**
      * @param string $property
      * @return string
-     * @throws PropertyNameNotFoundException
      */
     public function isNull($property)
     {
@@ -219,7 +215,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     /**
      * @param string $property
      * @return string
-     * @throws PropertyNameNotFoundException
      */
     public function isNotNull($property)
     {
@@ -239,11 +234,12 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     {
         if (is_array($this->spatialProperty)) {
             // check if $geoFeature is an array(w,s,e,n) or GeoJSON "Feature" / GeoJSON "geometry"
+            $bbox = self::bboxForGeoJson($geoFeature);
+
             if (count($geoFeature) === 4 && !isset($geoFeature['geometry'])) {
                 $bbox = $geoFeature;
-            } else {
-                $bbox = self::bboxForGeoJson($geoFeature);
             }
+
             // no spatial column
             // "spatially intersect" - (share any portion of space)
             return new Expr\Andx(
@@ -254,9 +250,9 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
                     $this->gt($this->spatialProperty[3], floatval($bbox[1]), $parameters),
                 )
             );
-        } else {
-            throw new \Exception('Operation "bbox" for a spatial database is not yet implemented');
         }
+
+        throw new \Exception('Operation "bbox" for a spatial database is not yet implemented');
     }
 
     /**
@@ -300,10 +296,9 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
                     ),
                 )
             );
-        } else {
-            // TODO St_Contains(geometry A, geometry B) escape geometry as string (property name)
-            throw new \Exception('Operation "contains" for a spatial database is not yet implemented');
         }
+
+        throw new \Exception('Operation "contains" for a spatial database is not yet implemented');
     }
 
     /**
@@ -347,10 +342,9 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
                     ),
                 )
             );
-        } else {
-            // TODO St_Within($geometryA, $geometryB)
-            throw new \Exception('Operation "within" for a spatial database is not yet implemented');
         }
+
+        throw new \Exception('Operation "within" for a spatial database is not yet implemented');
     }
 
     /**
@@ -366,9 +360,8 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
         if (is_array($this->spatialProperty)) {
             // no spatial column -> bbox 4 values
             return $this->bbox($propertyName, self::bboxForGeoJson($geoFeature), $parameters);
-        } else {
-            // TODO St_Intersects($propertyName, $geoFeature)
-            throw new \Exception('Operation "intersects" for a spatial database is not yet implemented');
         }
+
+        throw new \Exception('Operation "intersects" for a spatial database is not yet implemented');
     }
 }

@@ -39,7 +39,7 @@
     {% if not array_is_empty(p, 'contact') %}
         {% for contact in array_get(p, 'contact') %}
             <gmd:contact>
-                <gmd:CI_ResponsibleParty uuid="{#{ contact['uuid']|e }#}">
+                <gmd:CI_ResponsibleParty>
                     {% if not array_is_empty(contact, 'individualName') %}
                         <gmd:individualName>
                             <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>
@@ -274,7 +274,7 @@
             {% if not array_is_empty(p, 'responsibleParty') %}
             {% for contact in array_get(p, 'responsibleParty', {}) %}
             <gmd:pointOfContact>
-                <gmd:CI_ResponsibleParty uuid="{ contact['uuid']|e }">
+                <gmd:CI_ResponsibleParty>
                     {% if not array_is_empty(contact, 'individualName') %}
                         <gmd:individualName>
                             <gco:CharacterString>{{ contact['individualName']|e }}</gco:CharacterString>

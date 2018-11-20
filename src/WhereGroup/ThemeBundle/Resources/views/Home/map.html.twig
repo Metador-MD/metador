@@ -1,53 +1,64 @@
 {% if isHome is defined and plugin_is_active('metador_map') %}
 <div class="map-dialog -js-map-dialog">
-    <div class="map-menu">
-        <span class="btn medium -js-zoom-box" title="Ausschnitt aufziehen">
-            <span class="icon-map"></span> Zoom
-        </span>
-        <span class="btn medium -js-map-info" title="FeatureInfo aktivieren">
-            <span class="icon-info-circle"></span> Info
-        </span>
-
-        <select class="input-element medium -js-crs-code" title="CRS">
-            <option value="EPSG:4326">EPSG:4326</option>
-            <option value="EPSG:4258">EPSG:4258</option>
-            <option value="EPSG:31466">EPSG:31466</option>
-            <option value="EPSG:31467">EPSG:31467</option>
-            <option value="EPSG:25832">EPSG:25832</option>
-        </select>
-
-        <input id="map-menu-load-wms-input" type="text" class="input-element medium input"
-               placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
-               data-url="{{ url('metador_map_loadwms') }}"/>
-
-        <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
-
-        <select class="input-element medium -js-geometry-type" title="Geometrie">
-            <option value="NONE">keine</option>
-            <option value="load">geladene</option>
-            <option value="BOX">Box</option>
-            <option value="POLYGON">Polygon</option>
-        </select>
-
-        <div style="display: none">
-            <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
-                <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
-            </form>
-        </div>
-
-        <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
-            <option value="intersects">Schneidet</option>
-            <option value="contains">Umfasst</option>
-            <option value="not|contains">Innerhalb</option>
-        </select>
-
-    </div>
-    <div class="map-dialog-left-menu -js-map-dialog active">
+    {#<div class="map-menu">#}
+        {##}
+    {#</div>#}
+    <div class="map-dialog-left-menu -js-map-dialog">
         <div class="map-dialog-left-content -js-map-menu">
-            <div class="-js-map-layertree">
-                <ul class="layer-tree-list">
-                    <li class="draggable -js-dummy-layer" draggable="true">&nbsp;</li>
+            <div class="tabs -js-tabs">
+                <ul class="tab-menu">
+                    <li data-tab-menu="1" class="active">Layer</li>
+                    <li data-tab-menu="2">Tools</li>
                 </ul>
+                <div class="tab-content active" data-tab-content="1">
+                    <div class="-js-map-layertree">
+                        <ul class="layer-tree-list">
+                            <li class="draggable -js-dummy-layer" draggable="true">&nbsp;</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content -js-tab-2" data-tab-content="2">
+                    <span class="btn medium -js-zoom-box" title="Ausschnitt aufziehen">
+                        <span class="icon-map"></span> Zoom
+                    </span>
+
+                    <span class="btn medium -js-map-info" title="FeatureInfo aktivieren">
+                        <span class="icon-info-circle"></span> Info
+                    </span>
+
+                    <select class="input-element medium -js-crs-code" title="CRS">
+                        <option value="EPSG:4326">EPSG:4326</option>
+                        <option value="EPSG:4258">EPSG:4258</option>
+                        <option value="EPSG:31466">EPSG:31466</option>
+                        <option value="EPSG:31467">EPSG:31467</option>
+                        <option value="EPSG:25832">EPSG:25832</option>
+                    </select>
+
+                    <input id="map-menu-load-wms-input" type="text" class="input-element medium input"
+                           placeholder="http://user:password@WmsCapabilitiesUrl?service=WMS&service=WMS&version=1.3.0"
+                           data-url="{{ url('metador_map_loadwms') }}"/>
+
+                    <button id="map-menu-load-wms-button" class="btn success medium"><span class="icon-donwload"></span>Laden</button>
+
+                    <select class="input-element medium -js-geometry-type" title="Geometrie">
+                        <option value="NONE">keine</option>
+                        <option value="load">geladene</option>
+                        <option value="BOX">Box</option>
+                        <option value="POLYGON">Polygon</option>
+                    </select>
+
+                    <div style="display: none">
+                        <form id="file-upload-form" action="{{ path('metador_map_uploadgeom') }}" method="post" enctype="multipart/form-data" style="display:inline-block;">
+                            <input name="file" class="upload -js-file-upload" type="file" size="0" accept=".zip,.gml,.xml">
+                        </form>
+                    </div>
+
+                    <select class="input-element medium -js-spatial-operator" title="räumliche Operation">
+                        <option value="intersects">Schneidet</option>
+                        <option value="contains">Umfasst</option>
+                        <option value="not|contains">Innerhalb</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="map-dialog-left-menu-button -js-toggle-layertree">

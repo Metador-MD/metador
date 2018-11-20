@@ -13,7 +13,7 @@
 {% set readonly = false %}
 
 {{ form_element.duplicatable_area_start(p, id, 'organisationName', null, '-js-add-address', {
-    'url': path('metador_admin_address_api_all')
+    'url': path('metador_address_api_all')
 }) }}
     {% for contact in p['contact'] %}
         <div data-tab-content="{{ loop.index0 }}" class="duplicatable-content-item {% if loop.index0 == 0 %}act{% endif %}">

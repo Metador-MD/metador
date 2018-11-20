@@ -1,0 +1,44 @@
+@import '../config';
+@import '../mixins';
+@import '../extensions';
+
+.tabs {
+    .tab-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid $border;
+        position: relative;
+        background-color: $background;
+        line-height: $normal-item-height;
+
+        & > li {
+            position: relative;
+            display: inline-block;
+            background-color: darken($background, 5%);
+            line-height: $medium-item-height;
+            padding: 0 $padding;
+            border: 1px solid $border;
+            bottom: -2px;
+            cursor: pointer;
+            margin: 0 0 0 5px;
+
+            &.active {
+                background-color: $white;
+                border-bottom: 0;
+                bottom: -3px;
+                cursor: default;
+            }
+        }
+    }
+
+    .tab-content {
+        display: none;
+        padding: $padding;
+        @include pos($normal-item-height + 2, 0, 0, 0);
+
+        &.active {
+            display: block;
+        }
+    }
+}

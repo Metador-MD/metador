@@ -114,7 +114,7 @@ OperatesOnSearch.prototype = {
     $.extend( Plugin.prototype, {
         init: function() {
             var self = this;
-            self.search.url = Configuration.basedir + 'profile/metadata/operateson';
+            self.search.url = Configuration.basedir + 'profile/operateson';
 
             $(this.element).click(function() {
                 self.open();

@@ -3,7 +3,6 @@
 namespace Plugins\WhereGroup\BasicProfileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
@@ -29,12 +28,10 @@ class ProfileController extends Controller
             ->setPage($request->get('page'))
             ->setHits($hits)
             ->setSource($request->get('source'))
-            ->setProfile(['lvermgeo_dataset_profile'])
+            ->setProfile(['metador_dataset_profile'])
             ->setTerms($request->get('terms'))
             ->find()
         ;
-
-        $response = array_merge($response, ['cswUrl'   => urlencode($this->getParameter('csw_url'))]);
 
         return new AjaxResponse([
             'data' => [],

@@ -121,7 +121,7 @@ class Solr
         $doc->addField('insertTime', $p['_insert_time']);
 
         if (isset($p['_groups']) && is_array($p['_groups'])) {
-            $doc->addField('group.role', implode(' ', $p['_groups']));
+            $doc->addField('role', implode(' ', $p['_groups']));
         }
 
         if (!empty($metadata->getBboxn()) && !empty($metadata->getBboxe())
