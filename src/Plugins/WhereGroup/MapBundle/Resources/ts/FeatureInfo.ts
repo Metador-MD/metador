@@ -31,7 +31,7 @@ export class FeatureInfo {
     }
 
     private buttonClick(e) {
-        console.log(e);
+        // console.log(e);
         if (!dom.hasClass(e.target, 'success')) {
             dom.addClass(e.target,"success");
             // console.log("fi activated");

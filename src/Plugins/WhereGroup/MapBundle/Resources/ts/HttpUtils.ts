@@ -18,11 +18,11 @@ export class SimpleProgress implements IUploadProgress { // TODO
 
     setProgress(total: number, done: number): void {
         let val = Math.floor(done / total * 1000) / 10; // in %
-        console.log(val);
+        // console.log(val);
     }
 
     complete(): void {
-        console.log('complete');
+        // console.log('complete');
     }
 }
 
