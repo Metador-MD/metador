@@ -228,7 +228,8 @@ export class Ol4Map {
         icon.className = "icon-earth";
         this.olMap.addControl(new ol.control.ZoomToExtent({
             extent: this.maxExtent.getExtent(proj),
-            label: icon
+            label: icon,
+            tipLabel: "Zoom auf gesamte Ausdehnung"
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
@@ -300,7 +301,7 @@ export class Ol4Map {
     }
 
     zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent) {
-        console.log(geometry, this.olMap.getSize());
+        // console.log(geometry, this.olMap.getSize());
         this.olMap.getView().fit(geometry, <olx.view.FitOptions>this.olMap.getSize());
     }
 

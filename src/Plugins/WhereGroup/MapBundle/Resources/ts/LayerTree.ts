@@ -138,7 +138,7 @@ export class LayerTree {
     }
 
     private addOpacity(layerNode: HTMLElement, layer: ol.layer.Base): void {
-        let select = dom.create('select', {},
+        let select = dom.create('select', {title: "Transparenz setzen"},
             ['input-element', 'medium', 'simple', 'map-source-opacity', '-js-map-source-opacity']);
 
         for (var i = 0; i <= 10; i++) {
