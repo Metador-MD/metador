@@ -8,16 +8,16 @@ export class FeatureInfo {
     private tooltipCoord: ol.Coordinate;
     private tooltipElm: HTMLElement;
     private layer: ol.layer.Vector;
-    // private callbackSelect: Function;
-    // private callbackUnSelect: Function;
     private select: ol.interaction.Select;
     private button: HTMLButtonElement;
 
     constructor(map: ol.Map, layer: ol.layer.Vector = null) {
         this.olMap = map;
         this.layer = layer;
-        this.initSelect();
-        this.button = <HTMLButtonElement>dom.create("button", {type: "button", title: "FeatureInfo aktivieren"}, ["icon-info-circle"]);
+        this.button = <HTMLButtonElement>dom.create("button", {
+            type: "button",
+            title: "FeatureInfo aktivieren"
+        }, ["icon-info-circle"]);
         this.button.addEventListener('click', this.buttonClick.bind(this), false);
         const wrapper = dom.create("div", {}, ["feature-info", "ol-unselectable", "ol-control"]);
         wrapper.appendChild(this.button);
@@ -31,43 +31,50 @@ export class FeatureInfo {
     }
 
     private buttonClick(e) {
-        // console.log(e);
         if (!dom.hasClass(e.target, 'success')) {
-            dom.addClass(e.target,"success");
-            // console.log("fi activated");
+            dom.addClass(e.target, "success");
             this.activate();
         } else {
-            dom.removeClass(e.target,"success");
-            // console.log("fi deactivated");
+            dom.removeClass(e.target, "success");
             this.deactivate();
         }
     }
 
-    private initSelect() {
-        const fi = this;
-        let timestamp: number = 0;
-        this.select = new ol.interaction.Select({
-            multi: true,
-            layers: [this.layer],
-            filter: function (feature: ol.Feature) {
-                timestamp = Date.now() + 5;
-                setTimeout(function () {
-                    if (Date.now() >= timestamp) {
-                        if (fi.tooltipElm) {
-                            fi.showTooltip();
+    private activateSelect() {
+        if (!this.select) {
+            const fi = this;
+            let timestamp: number = 0;
+            this.select = new ol.interaction.Select({
+                multi: true,
+                layers: [this.layer],
+                filter: function (feature: ol.Feature) {
+                    timestamp = Date.now() + 5;
+                    setTimeout(function () {
+                        if (Date.now() >= timestamp) {
+                            if (fi.tooltipElm) {
+                                fi.showTooltip();
+                            }
                         }
-                    }
-                }, 5);
-                return true;
-            }
-        });
-        this.select.on('select', function (e) {
-            if (e.target.getFeatures().getLength() === 0) {
-                if (fi.tooltipElm) {
-                    fi.showTooltip();
+                    }, 5);
+                    return true;
                 }
-            }
-        });
+            });
+            this.select.on('select', function (e) {
+                if (e.target.getFeatures().getLength() === 0) {
+                    if (fi.tooltipElm) {
+                        fi.showTooltip();
+                    }
+                }
+            });
+
+        }
+        this.select.getFeatures().clear();
+        this.olMap.addInteraction(this.select);
+    }
+
+    private deactivateSelect() {
+        this.select.getFeatures().clear();
+        this.olMap.removeInteraction(this.select);
     }
 
     reset() {
@@ -99,9 +106,7 @@ export class FeatureInfo {
         }
     }
 
-    activate() {//tooltipElm: HTMLElement, callbackSelect: Function, callbackUnSelect: Function, callbackUnSelectAll: Function) {
-        // this.callbackSelect = callbackSelect;
-        // this.callbackUnSelect = callbackUnSelect;
+    activate() {
         this.olMap.on('click', this.setTooltipPosition, this);
         this.tooltipElm = dom.create("div", {}, ["tooltip", "hidden"]);
         this.tooltipElm.appendChild(dom.create("span", {}, ["icon-cross"]));
@@ -112,15 +117,11 @@ export class FeatureInfo {
             positioning: 'bottom-center'
         });
         this.olMap.addOverlay(this.tooltip);
-
-        this.select.getFeatures().clear();
-        this.olMap.addInteraction(this.select);
+        this.activateSelect();
     }
 
     deactivate() {
-        this.select.getFeatures().clear();
-        this.olMap.removeInteraction(this.select);
-        // this.select = null;
+        this.deactivateSelect();
         search.clearMetadataMarks();
         this.tooltipElm.removeEventListener('click', this.itemClick.bind(this));
         this.tooltipElm.remove();

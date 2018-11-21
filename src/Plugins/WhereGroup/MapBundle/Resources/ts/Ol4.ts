@@ -263,7 +263,6 @@ export class Ol4Map {
         this.drawer = new Ol4Drawer(vLayer);
         this.dragzoom = new DragZoom(this.olMap);
         this.featureInfo = new FeatureInfo(this.olMap, this.hgLayer);
-        this.activateFeatureInfo();
     }
 
     activateFeatureInfo(): void {
