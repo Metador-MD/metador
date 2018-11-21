@@ -1,97 +1,78 @@
 {% if rows is defined and rows|length == 0 %}
     <div class="notify info text-center">
-        {% trans %}Es konnten leider keine Daten gefunden werden.{% endtrans %}
+        Es konnten leider keine Daten gefunden werden.
     </div>
 {% endif %}
 
 {% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}
 
 {% if rows is defined and rows is iterable %}
-{% for row in rows if is_granted('view', row.object|json_decode(true)) %}
-    {% set p = row.object|json_decode(true) %}
-    {% set editable = app.user and is_granted('edit', p) %}
-    {% set title = p.title is defined and p.title is not empty ? p.title|teaser(75, true) : 'noname' %}
+    {% for row in rows if is_granted('view', row.object|json_decode(true)) %}
+        {% set p = row.object|json_decode(true) %}
+        {% set editable = app.user and is_granted('edit', p) %}
+        {% set title = p.title is defined and p.title is not empty ? p.title : 'noname' %}
 
-    <div class="search-result" data-metadata-uuid="{{ p['_uuid'] }}">
-        <div class="result-header">
-            <div class="left">
-                {% if p['browserGraphic'] is defined and p['browserGraphic'] is not empty %}
-                    <img src="{{ p['browserGraphic'] }}" class="-js-preview-image browser-graphic" />
+        <div class="result" data-metadata-uuid="{{ p['_uuid'] }}">
+            {% if p['graphicOverview'][0]['fileName'] is defined and p['graphicOverview'][0]['fileName'] is not empty %}
+                <img src="{{ p['graphicOverview'][0]['fileName'] }}" class="-js-preview-image result-graphic" />
+            {% else %}
+                <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image result-graphic" />
+            {% endif %}
+
+            <div class="result-title">
+                {% if app.user %}
+                    <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_id'] }) }}">
+                        {{ title }}{% if p['_date'] is defined and p['_date'] is not empty %} | {{ p['_date'] }}{% endif %}
+                    </a>
                 {% else %}
-                    <img src="{{ asset('bundles/metadortheme/img/preview.png') }}" class="-js-preview-image browser-graphic" />
+                    <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}">
+                        {{ title }}{% if p['_date'] is defined and p['_date'] is not empty %} | {{ p['_date'] }}{% endif %}
+                    </a>
                 {% endif %}
             </div>
-            <div class="right">
-                <div class="md-result-title">
-                    {% if app.user %}
-                        <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
-                            {{ title|teaser(60, true) }}
-                        </a>
-                    {% else %}
-                        <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" {% if title|length > 60 %}title="{{ title }}"{% endif %}>
-                            {{ title|teaser(60, true) }}
-                        </a>
+
+            <div class="result-abstract">
+                {% if not array_is_empty(p, 'abstract') %}
+                    {{ p['abstract']|teaser(400) }}
+                {% endif %}
+            </div>
+
+            <div class="result-footer">
+                <div class="left">
+                    {% if not array_is_empty(p, '_public') %}
+                        <span class="icon-earth" title="Öffentlich"></span>
                     {% endif %}
 
-                    <div class="md-result-info">
-                        {% if not editable and not app.user %}
-                        <div class="result-icon" title="{% trans %}Um editieren zu können, müssen Sie angemeldet sein.{% endtrans %}">
-                            <span class="icon-eye"></span>
-                        </div>
-                        {% elseif not editable and p['_locked'] is defined and p['_locked'] %}
-                        <div class="result-icon" title="{% trans %}Datensatz ist derzeitig gesperrt.{% endtrans %}">
-                            <span class="icon-lock"></span>
-                        </div>
-                        {% elseif editable %}
-                        <div class="result-icon">
-                            <span class="icon-pencil"></span>
-                        </div>
-                        {% endif %}
+                    {% if not editable and p['_locked'] is defined and p['_locked'] %}
+                        <span class="icon-lock2" title="Datensatz ist derzeitig gesperrt."></span>
+                    {% endif %}
 
-                        <div class="result-icon">
-                            <span class="icon-user"></span>
-                        </div>
-                    </div>
+                    {% if p['dateStamp'] is defined %}
+                        <span class="icon-calendar" title="{{ p['dateStamp'] }}"></span>
+                    {% endif %}
                 </div>
-                {% if not array_is_empty(p, 'alternateTitle') and p['alternateTitle'] is not iterable %}
-                <div class="md-result-alternate-title" {% if p['alternateTitle']|length > 80 %}title="{{ p['alternateTitle'] }}"{% endif %}>
-                    {{ p['alternateTitle']|teaser(80, true) }}
-                </div>
-                {% endif %}
+                <div class="right">
+                    {% if app.environment == 'dev' %}
+                        <a href="{{ path('metadata_validate', { 'id' : p['_id'] }) }}" class="link" target="_blank">validate</a>
+                        <a href="{{ path('metadata_xpath', { 'id' : p['_id'] }) }}" class="link" target="_blank">xpath</a>
+                        <a href="{{ path('metadata_test', { 'id' : p['_id'] }) }}" class="link" target="_blank">test</a>
+                        <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link" target="_blank">object</a>
+                        <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link" target="_blank">json</a>
+                    {% endif %}
 
-                <hr class="line-separator">
+                    <a href="{{ path('metador_export_pdf', { 'id' : p['_id'] }) }}" class="link" target="_blank">pdf</a>
+                    <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" class="link" target="_blank">html</a>
+                    <a href="{{ path('metador_export_xml', { 'id' : p['_id'] }) }}" class="link" target="_blank">xml</a>
 
-                {% if not array_is_empty(p, 'abstract') %}
-                <div class="md-result-abstract" {% if p['abstract']|length > 400 %}title="{{ p['abstract'] }}"{% endif %}>
-                    {{ p['abstract']|teaser(400) }}
+                    {% if editable %}
+                        <a href="{{ path('metadata_confirm', { 'profile': p['_profile'], 'id': p['_id'] }) }}">
+                            <span class="icon-bin2" title="löschen"></span>
+                        </a>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
-        <div class="result-footer">
-            <div class="left">
-                {% if p['hierarchyLevel'] is defined %}
-                    {{ p['hierarchyLevel']|capitalize }}
-                {% endif %}
-                -
-                {% if p['dateStamp'] is defined %}
-                    {{ p['dateStamp'] }}
-                {% endif %}
-            </div>
-            <div class="right">
-                {% if app.environment == 'dev' %}
-                    <a href="{{ path('metadata_test', { 'id' : p['_id'] }) }}" class="link">test</a>
-                    <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link">object</a>
-                    <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link">json</a>
-                {% endif %}
-
-                <a href="{{ path('metador_export_pdf', { 'id' : p['_id'] }) }}" class="link">pdf</a>
-                <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" class="link">html</a>
-                <a href="{{ path('metador_export_xml', { 'id' : p['_id'] }) }}" class="link">xml</a>
-            </div>
-        </div>
-    </div>
-{% endfor %}
+    {% endfor %}
 {% endif %}
 
 {% include 'MetadorThemeBundle:Template:paging.html.twig' with { paging: paging } only %}
