@@ -24,6 +24,3 @@ parameters:
     solr_host: ~
     solr_port: ~
     solr_path: ~
-
-    result_template: 'MetadorTheme/Home/result.html.twig'
-

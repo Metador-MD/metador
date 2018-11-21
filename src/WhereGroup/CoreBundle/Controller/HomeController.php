@@ -24,41 +24,15 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $profileConfig = array();
-        $sourceConfig  = array();
-
-        foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
-            $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
-
-            $profileConfig[$key] = array(
-                'name'   => $profile['name'],
-                'source' => is_null($configuration) ? array() : $configuration,
-            );
-        }
-
-        foreach ($this->get('metador_source')->all() as $source) {
-            $sourceConfigProfiles = array();
-
-            foreach ($profileConfig as $key => $profile) {
-                if (is_array($profile['source']) && in_array($source->getSlug(), $profile['source'])) {
-                    $sourceConfigProfiles[$key] = $profile['name'];
-                }
-            }
-
-            $sourceConfig[$source->getSlug()] = array(
-                'name' => $source->getName(),
-                'profiles' => $sourceConfigProfiles,
-            );
-        }
-
         return $this->render("MetadorThemeBundle:Home:index.html.twig", array(
             'isHome'         => true,
-            'sourceConfig'   => $sourceConfig,
+            'sourceConfig'   => $this->getSourceConfiguration(),
             'hierarchyLevel' => $this
                 ->get('metador_configuration')
                 ->get('hierarchy_levels', 'plugin', 'metador_core')
         ));
     }
+
 
     /**
      * @Route("/public/search/", name="metador_search")
@@ -187,18 +161,34 @@ class HomeController extends Controller
             );
         }
 
-        $response = [
-            'html' => $this->get('templating')->render('@' . $this->getParameter('result_template'), array(
+        $response = [];
+
+        $this
+            ->renderTemplate($response, $searchResponse, $params)
+            ->addBboxFrontendCommand($response, $searchResponse['rows']);
+
+        return new AjaxResponse($response);
+    }
+
+    protected function renderTemplate(&$response, $searchResponse, $params)
+    {
+        $response = array_merge($response, [
+            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
                 'rows'   => $searchResponse['rows'],
                 'paging' => $searchResponse['paging'],
             )),
             'debug' => $params
-        ];
+        ]);
 
+        return $this;
+    }
+
+    protected function addBboxFrontendCommand(&$response, $rows)
+    {
         $bboxParams = [];
 
-        if (!empty($searchResponse['rows'])) {
-            foreach ($searchResponse['rows'] as $result) {
+        if (!empty($rows)) {
+            foreach ($rows as $result) {
                 if (!isset($result['object'])) {
                     continue;
                 }
@@ -240,7 +230,46 @@ class HomeController extends Controller
             );
         }
 
-        return new AjaxResponse($response);
+        return $this;
+    }
+
+    protected function getSourceConfiguration()
+    {
+        $profileConfig = $this->getPluginConfiguration();
+        $sourceConfig  = array();
+
+        foreach ($this->get('metador_source')->all() as $source) {
+            $sourceConfigProfiles = array();
+
+            foreach ($profileConfig as $key => $profile) {
+                if (is_array($profile['source']) && in_array($source->getSlug(), $profile['source'])) {
+                    $sourceConfigProfiles[$key] = $profile['name'];
+                }
+            }
+
+            $sourceConfig[$source->getSlug()] = array(
+                'name' => $source->getName(),
+                'profiles' => $sourceConfigProfiles,
+            );
+        }
+
+        return $sourceConfig;
+    }
+
+    protected function getPluginConfiguration()
+    {
+        $profileConfig = array();
+
+        foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
+            $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
+
+            $profileConfig[$key] = array(
+                'name'   => $profile['name'],
+                'source' => is_null($configuration) ? array() : $configuration,
+            );
+        }
+
+        return $profileConfig;
     }
 
     /**
