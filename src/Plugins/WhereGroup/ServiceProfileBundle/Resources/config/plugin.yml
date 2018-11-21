@@ -1,13 +1,13 @@
 metador_service_profile:
     origin: WhereGroup
     name: Dienst
-    description: Metadatensatz-Profil für Geodienste
+    description: Metadatenprofil für Geodienste
     class_path: Plugins\WhereGroup\ServiceProfileBundle
     class_name: MetadorServiceProfileBundle
     version: '1.0'
     type: profile
     require:
-        - metador_basic_profile
+        - metador_dataset_profile
     settings:
         source:
             type: multi

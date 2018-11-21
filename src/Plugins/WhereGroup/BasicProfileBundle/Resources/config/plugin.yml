@@ -6,5 +6,7 @@ metador_basic_profile:
     class_name: MetadorBasicProfileBundle
     version: '1.0'
     type: system
+    require:
+        - metador_map
     tags:
         - profile
