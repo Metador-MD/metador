@@ -24,15 +24,15 @@
 /vendor/
 /web/bundles/
 /web/assets/
-/var/cache/
-/var/logs/
+
+# /var/
+var/cache/
+var/logs/
 
 # Ignore or allow Plugins
 src/Plugins/*
-
 !src/Plugins/WhereGroup
 src/Plugins/WhereGroup/*
-
 !src/Plugins/WhereGroup/BasicProfileBundle
 !src/Plugins/WhereGroup/DatasetProfileBundle
 !src/Plugins/WhereGroup/ServiceProfileBundle
