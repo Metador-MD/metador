@@ -305,7 +305,7 @@ class MetadataListener
                 );
 
                 $parentEntity = $this->em->getRepository('MetadorCoreBundle:Metadata')
-                    ->findOneByUuid($p['parentIdentifier']);
+                    ->findOneById($p['parentIdentifier']);
 
                 if ($parentEntity) {
                     $parentObject = $parentEntity->getObject();
@@ -369,7 +369,7 @@ class MetadataListener
                 $em->remove($row);
 
                 if ($this->solr->isActive()) {
-                    $this->solr->client->deleteByQuery('uuid:' . $row->getUuid());
+                    $this->solr->client->deleteByQuery('uuid:' . $row->getId());
                 }
             }
 

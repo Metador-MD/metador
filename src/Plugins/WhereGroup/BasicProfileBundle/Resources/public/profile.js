@@ -105,7 +105,7 @@ $('form').ajaxForm({
     },
     success: function(data) {
         if (data && data.metadata && data.metadata.id) {
-            $('[name="p[_id]"]').val(data.metadata.id);
+            $('[name="p[_uuid]"]').val(data.metadata.id);
         }
 
         if (data && data.metadata && data.metadata.uuid) {

@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Index;
 use WhereGroup\AddressBundle\Entity\Address;
 use WhereGroup\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,9 @@ use WhereGroup\UserBundle\Entity\Group;
 /**
  * WhereGroup\CoreBundle\Entity\Metadata
  *
- * @ORM\Table(name="metadata")
+ * @ORM\Table(name="metadata", indexes={
+ *     @Index(name="metadata_idx", columns={"title", "date"})
+ * })
  * @ORM\Entity
  * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass="WhereGroup\CoreBundle\Entity\MetadataRepository")
@@ -19,9 +22,8 @@ use WhereGroup\UserBundle\Entity\Group;
 class Metadata
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="string", length=36, unique=true)
      */
     private $id;
 
@@ -72,11 +74,6 @@ class Metadata
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $source;
-
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $uuid;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
@@ -181,16 +178,8 @@ class Metadata
      */
     public function __construct()
     {
-        $this->groups  = new ArrayCollection();
+        $this->groups = new ArrayCollection();
         $this->address = new ArrayCollection();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -250,13 +239,9 @@ class Metadata
         return $this->lockTime;
     }
 
-    /**
-     * @param $uuid
-     * @return $this
-     */
-    public function setUuid($uuid)
+    public function setId($id)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
 
         return $this;
     }
@@ -264,9 +249,9 @@ class Metadata
     /**
      * @return mixed
      */
-    public function getUuid()
+    public function getId()
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     /**
@@ -501,6 +486,7 @@ class Metadata
     {
         return $this->groups;
     }
+
     /**
      * @return $this
      */

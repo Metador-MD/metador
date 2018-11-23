@@ -115,9 +115,7 @@ class Metadata implements MetadataInterface
     public function getById($id, $dispatchEvent = true)
     {
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
-        $metadata = (is_string($id) && strlen($id) === 36)
-            ? $this->repo->findOneByUuid($id)
-            : $this->repo->findOneById($id);
+        $metadata = $this->repo->findOneById($id);
 
         if (is_null($metadata)) {
             throw new MetadataException('Datensatz existiert nicht.');
@@ -228,12 +226,11 @@ class Metadata implements MetadataInterface
      */
     public function prepareData(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
-        if (!empty($p['_id'])) {
-            $metadata = $this->getById($p['_id']);
-            $p['_id'] = $metadata->getId();
+        if (!empty($p['_uuid'])) {
+            $metadata = $this->getById($p['_uuid']);
         } else {
             $metadata = new EntityMetadata();
-            unset($p['_id']);
+            unset($p['_uuid']);
         }
 
         $user = $this->getUser($username);
@@ -263,11 +260,11 @@ class Metadata implements MetadataInterface
             $metadata->setTopicCategory(implode(" ", $p['topicCategory']));
         }
 
+        $metadata->setId($p['_uuid']);
         $metadata->setPublic($p['_public']);
         $metadata->setLocked($p['_locked']);
         $metadata->setUpdateUser($user);
         $metadata->setUpdateTime($date->getTimestamp());
-        $metadata->setUuid($p['_uuid']);
         $metadata->setTitle($p['title'] !== '' ? $p['title'] : 'noname');
         $metadata->setAbstract($p['abstract']);
         $metadata->setHierarchyLevel($p['hierarchyLevel']);
@@ -433,13 +430,12 @@ class Metadata implements MetadataInterface
         $options['profile']       = $options['profile']       ?? null;
         $options['username']      = $options['username']      ?? null;
         $options['public']        = $options['public']        ?? null;
-
         $options['dispatchEvent'] = $options['dispatchEvent'] ?? true;
         $options['log']           = $options['log']           ?? true;
         $options['flush']         = $options['flush']         ?? true;
 
         if (!is_null($id)) {
-            $p['_id'] = $id;
+            $p['_uuid'] = $id;
         }
 
         /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
@@ -476,7 +472,7 @@ class Metadata implements MetadataInterface
             ->setSubcategory('')
             ->setOperation($operation)
             ->setSource(!is_null($metadata) ? $metadata->getSource() : '')
-            ->setIdentifier(!is_null($metadata) ? $metadata->getUuid() : '')
+            ->setIdentifier(!is_null($metadata) ? $metadata->getId() : '')
             ->setMessage($message, $messageParams)
             ->setUsername($this->user->getUsernameFromSession())
         ;
@@ -622,7 +618,10 @@ class Metadata implements MetadataInterface
         }
 
         // SAVE TO DATABASE
-        $event = new MetadataChangeEvent($entity, array());
+        $event = new MetadataChangeEvent($entity, [
+            'log'   => $log,
+            'flush' => $flush
+        ]);
 
         try {
             // EVENT PRE SAVE
@@ -630,19 +629,9 @@ class Metadata implements MetadataInterface
                 $this->eventDispatcher->dispatch('metadata.pre_save', $event);
             }
 
-            $hasId = $entity->getId();
-
             $this->em->persist($entity);
 
             if ($flush) {
-                $this->em->flush();
-            }
-
-            if (!$hasId && $flush) {
-                $p = $entity->getObject();
-                $p['_id'] = $entity->getId();
-                $entity->setObject($p);
-                $this->em->persist($entity);
                 $this->em->flush();
             }
 

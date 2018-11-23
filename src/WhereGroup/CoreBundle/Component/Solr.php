@@ -116,7 +116,7 @@ class Solr
         $doc->addField('anyText', $metadata->getAnytext());
         $doc->addField('source', $metadata->getSource());
         $doc->addField('title', $metadata->getTitle());
-        $doc->addField('uuid', $metadata->getUuid());
+        $doc->addField('uuid', $metadata->getId());
         $doc->addField('insertUsername', $p['_insert_user']);
         $doc->addField('insertTime', $p['_insert_time']);
 

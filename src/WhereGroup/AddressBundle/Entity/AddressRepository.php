@@ -15,6 +15,7 @@ class AddressRepository extends EntityRepository
     /**
      * @param $entity
      * @return $this
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save($entity)
@@ -28,6 +29,7 @@ class AddressRepository extends EntityRepository
     /**
      * @param $entity
      * @return $this
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($entity)
@@ -40,7 +42,6 @@ class AddressRepository extends EntityRepository
 
     /**
      * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function countAll()
@@ -60,7 +61,6 @@ class AddressRepository extends EntityRepository
      * @param int $hits
      * @param bool $countOnly
      * @return array
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function search($terms, $page = 1, $hits = 10, $countOnly = false)
@@ -94,5 +94,16 @@ class AddressRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function truncate()
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('DELETE FROM ' . self::ENTITY)
+            ->execute();
     }
 }

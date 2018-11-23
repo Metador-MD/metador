@@ -176,7 +176,7 @@ class Address
     {
         $uuid = $this->generateUuid($entity);
         $event = new AddressChangeEvent($entity, array(
-            'oldUuid' => $entity->getUuid()
+            'oldUuid' => $entity->getId()
         ));
 
         $entity->setUuid($uuid);

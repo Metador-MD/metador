@@ -21,11 +21,11 @@
 
             <div class="result-title">
                 {% if app.user %}
-                    <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_id'] }) }}">
+                    <a href="{{ path('metadata_edit', { 'profile' : p['_profile'], 'id' : p['_uuid'] }) }}">
                         {{ title }}{% if p['_date'] is defined and p['_date'] is not empty %} | {{ p['_date'] }}{% endif %}
                     </a>
                 {% else %}
-                    <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}">
+                    <a href="{{ path('metador_export_html', { 'id' : p['_uuid'] }) }}">
                         {{ title }}{% if p['_date'] is defined and p['_date'] is not empty %} | {{ p['_date'] }}{% endif %}
                     </a>
                 {% endif %}
@@ -53,19 +53,19 @@
                 </div>
                 <div class="right">
                     {% if app.environment == 'dev' %}
-                        <a href="{{ path('metadata_validate', { 'id' : p['_id'] }) }}" class="link" target="_blank">validate</a>
-                        <a href="{{ path('metadata_xpath', { 'id' : p['_id'] }) }}" class="link" target="_blank">xpath</a>
-                        <a href="{{ path('metadata_test', { 'id' : p['_id'] }) }}" class="link" target="_blank">test</a>
-                        <a href="{{ path('metador_export_obj', { 'id' : p['_id'] }) }}" class="link" target="_blank">object</a>
-                        <a href="{{ path('metador_export_json', { 'id' : p['_id'] }) }}" class="link" target="_blank">json</a>
+                        <a href="{{ path('metadata_validate', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">validate</a>
+                        <a href="{{ path('metadata_xpath', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">xpath</a>
+                        <a href="{{ path('metadata_test', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">test</a>
+                        <a href="{{ path('metador_export_obj', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">object</a>
+                        <a href="{{ path('metador_export_json', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">json</a>
                     {% endif %}
 
-                    <a href="{{ path('metador_export_pdf', { 'id' : p['_id'] }) }}" class="link" target="_blank">pdf</a>
-                    <a href="{{ path('metador_export_html', { 'id' : p['_id'] }) }}" class="link" target="_blank">html</a>
-                    <a href="{{ path('metador_export_xml', { 'id' : p['_id'] }) }}" class="link" target="_blank">xml</a>
+                    <a href="{{ path('metador_export_pdf', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">pdf</a>
+                    <a href="{{ path('metador_export_html', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">html</a>
+                    <a href="{{ path('metador_export_xml', { 'id' : p['_uuid'] }) }}" class="link" target="_blank">xml</a>
 
                     {% if editable %}
-                        <a href="{{ path('metadata_confirm', { 'profile': p['_profile'], 'id': p['_id'] }) }}">
+                        <a href="{{ path('metadata_confirm', { 'profile': p['_profile'], 'id': p['_uuid'] }) }}">
                             <span class="icon-bin2" title="löschen"></span>
                         </a>
                     {% endif %}

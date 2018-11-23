@@ -150,7 +150,7 @@ class ExportController extends Controller
             $p = json_decode($response['rows'][0]['object'], true);
         }
 
-        if (!is_array($p) || !isset($p['_id']) || $p['_id'] != $id) {
+        if (!is_array($p) || !isset($p['_uuid']) || $p['_uuid'] != $id) {
             throw new MetadataException("Metadata not found!");
         }
 

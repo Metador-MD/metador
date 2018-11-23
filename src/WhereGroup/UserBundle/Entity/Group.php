@@ -9,10 +9,10 @@ use WhereGroup\CoreBundle\Entity\Metadata;
 /**
  * WhereGroup\UserBundle\Entity\User
  * @ORM\Table(name="groups")
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Entity(repositoryClass="WhereGroup\UserBundle\Entity\GroupRepository")
  */
-class Group implements RoleInterface
+class Group
 {
     /**
      * @ORM\Column(name="id", type="integer")

@@ -43,16 +43,21 @@ class ProfileController extends Controller
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        return new Response($this->get('metador_core')->render($template, array(
+        $uuid = $this->get('metador_metadata')->generateUuid();
+
+        return $this->render($template, array(
             'p' => array(
-                '_source'  => $source,
-                '_profile' => $profile,
-                '_public'  => false,
-                '_groups'  => array()
+                '_source'   => $source,
+                '_profile'  => $profile,
+                '_public'   => false,
+                '_groups'   => array(),
+//                '_uuid'     => $uuid,
+//                'fileIdentifier' => $uuid,
+//                'dateStamp' => (new \DateTime)->format('Y-m-d')
             ),
             'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
-        )));
+        ));
     }
 
     /**
@@ -94,6 +99,7 @@ class ProfileController extends Controller
      * @param Request $request
      * @return AjaxResponse
      * @throws MetadataException
+     * @throws \Doctrine\Common\Persistence\Mapping\MappingException
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function saveAction($source, $profile, Request $request)
@@ -106,7 +112,7 @@ class ProfileController extends Controller
         $metadata = null;
         $uuid     = null;
 
-        $id = empty($p['_id']) || !is_numeric($p['_id']) ? null : (int)$p['_id'];
+        $id = empty($p['_uuid']) ? null : $p['_uuid'];
 
         // If id exists, get the metadata to check permission and keep some settings.
         if (!is_null($id)) {
@@ -152,9 +158,8 @@ class ProfileController extends Controller
                 'source'  => $source,
                 'profile' => $profile
             ]);
-            
+
             $id = $metadata->getId();
-            $uuid = $metadata->getUuid();
 
             $this->get('metador_frontend_command')->changeLocation(
                 $response,
@@ -179,8 +184,7 @@ class ProfileController extends Controller
 
         $response = array_merge_recursive($response, array(
             'metadata' => array(
-                'id'   => $id,
-                'uuid' => $uuid
+                'id'   => $id
             )
         ));
 
