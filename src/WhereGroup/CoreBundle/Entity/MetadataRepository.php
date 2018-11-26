@@ -107,7 +107,6 @@ class MetadataRepository extends EntityRepository
 
     /**
      * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function countAll()
