@@ -171,6 +171,12 @@ $home-menu-height: 35px;
         text-decoration: line-through;
         color: $border;
     }
+
+    > li[id] {
+        .form-label {
+            margin-left: 4px;
+        }
+    }
 }
 
 .md .map-source-opacity {
