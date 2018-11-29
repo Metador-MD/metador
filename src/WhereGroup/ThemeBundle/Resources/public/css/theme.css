@@ -3542,6 +3542,9 @@ input.input-element, .md input.btn {
   text-decoration: line-through;
   color: #e1e1e1; }
 
+.md .layer-tree-list > li[id] .form-label {
+  margin-left: 4px; }
+
 .md .map-source-opacity {
   float: right; }
 
