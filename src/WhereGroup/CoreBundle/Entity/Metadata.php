@@ -13,7 +13,7 @@ use WhereGroup\UserBundle\Entity\Group;
  * WhereGroup\CoreBundle\Entity\Metadata
  *
  * @ORM\Table(name="metadata", indexes={
- *     @Index(name="metadata_idx", columns={"title", "date"})
+ *     @Index(name="metadata_idx", columns={"title", "date", "parent", "source", "public", "profile", "hierarchy_level"})
  * })
  * @ORM\Entity
  * @ORM\MappedSuperclass
@@ -138,7 +138,7 @@ class Metadata
     private $date;
 
     /**
-     * @ORM\Column(type="date", nullable=true, name="`dateStamp`")
+     * @ORM\Column(type="date", nullable=true, name="`date_stamp`")
      */
     private $dateStamp;
 
