@@ -135,7 +135,6 @@ class Solr
 
         try {
             $this->client->addDocument($doc);
-            $this->client->commit();
         } catch (\SolrClientException $e) {
             throw new MetadataException('Solr-Server nicht erreichbar.');
         }
