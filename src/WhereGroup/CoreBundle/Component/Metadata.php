@@ -590,6 +590,10 @@ class Metadata implements MetadataInterface
             $metadata->removeGroups($group);
         }
 
+        foreach ($metadata->getAddress() as $address) {
+            $metadata->removeAddress($address);
+        }
+
         $this->success($metadata, 'delete', '%title% gelöscht.', array(
             '%title%' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
         ));
@@ -747,6 +751,7 @@ class Metadata implements MetadataInterface
 
     /**
      * @return int
+     * @throws \Exception
      */
     private function getTimestamp()
     {
