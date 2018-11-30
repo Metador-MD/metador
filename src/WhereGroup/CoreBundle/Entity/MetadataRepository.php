@@ -7,7 +7,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\ResultSetMapping;
 use WhereGroup\CoreBundle\Component\Finder;
+use WhereGroup\CoreBundle\Component\Utils\Debug;
 
 /**
  * Class MetadataRepository
@@ -141,17 +143,52 @@ class MetadataRepository extends EntityRepository
      */
     public function truncate($source = null)
     {
+        $rsm = new ResultSetMapping();
+
         if (!is_null($source)) {
-            return $this
+            $rows = $this
+                ->getEntityManager('m')
+                ->createQuery('SELECT m.id FROM ' . self::ENTITY . ' AS m WHERE m.source = :source')
+                ->setParameter('source', $source)
+                ->getResult();
+
+            foreach ($rows as $row) {
+                $this
+                    ->getEntityManager()
+                    ->createNativeQuery('DELETE FROM metadata_address WHERE metadata_id = :uuid', $rsm)
+                    ->setParameter('uuid', $row['id'])
+                    ->execute();
+                $this
+                    ->getEntityManager()
+                    ->createNativeQuery('DELETE FROM metadata_groups WHERE metadata_id = :uuid', $rsm)
+                    ->setParameter('uuid', $row['id'])
+                    ->execute();
+            }
+
+            $this
                 ->getEntityManager('m')
                 ->createQuery('DELETE FROM ' . self::ENTITY . ' AS m WHERE m.source = :source')
                 ->setParameter('source', $source)
                 ->execute();
+
+            return $this;
         }
 
-        return $this
+        $this
             ->getEntityManager()
             ->createQuery('DELETE FROM ' . self::ENTITY)
             ->execute();
+
+        $this
+            ->getEntityManager()
+            ->createNativeQuery('DELETE FROM metadata_address', $rsm)
+            ->execute();
+
+        $this
+            ->getEntityManager()
+            ->createNativeQuery('DELETE FROM metadata_groups', $rsm)
+            ->execute();
+
+        return $this;
     }
 }

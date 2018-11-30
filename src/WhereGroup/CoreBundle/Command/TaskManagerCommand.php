@@ -7,7 +7,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use WhereGroup\CoreBundle\Event\TaskManagerEvent;
 
 /**
@@ -43,13 +42,15 @@ class TaskManagerCommand extends ContainerAwareCommand
         $fs->touch($filePath);
 
         try {
-            // $this->log('info', 'Aufgaben werden ausgeführt.');
-            $event = new TaskManagerEvent();
+            $event = new TaskManagerEvent([
+                'input'  => $input,
+                'output' => $output
+            ]);
 
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
 
             foreach ($event->getMessages() as $message) {
-                $output->writeln($message);
+                $this->log('info', $message);
             }
         } catch (\Exception $e) {
             $this->log('error', $e->getMessage());
