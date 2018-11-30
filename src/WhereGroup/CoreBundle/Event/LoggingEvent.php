@@ -17,6 +17,7 @@ class LoggingEvent extends Event
     /**
      * LoggingEvent constructor.
      * @param $log
+     * @throws \Exception
      */
     public function __construct($log)
     {

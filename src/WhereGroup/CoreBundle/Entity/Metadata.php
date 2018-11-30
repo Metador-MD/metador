@@ -172,7 +172,6 @@ class Metadata
      */
     private $topicCategory;
 
-
     /**
      * Metadata constructor.
      */
