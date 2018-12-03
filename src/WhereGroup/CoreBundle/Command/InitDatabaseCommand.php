@@ -179,7 +179,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
      * @param int $length
      * @return string
      */
-    protected function generatePassword($length = 10)
+    protected function generatePassword($length = 20)
     {
         $password = "";
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
