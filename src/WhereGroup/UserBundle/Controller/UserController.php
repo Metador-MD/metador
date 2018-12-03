@@ -94,16 +94,14 @@ class UserController extends Controller
     {
         try {
             $user = $this->get('metador_user')->get($id);
-            $this->log('success', 'edit', $id, 'Benutzer %username% wurde erfolgreich bearbeitet.', [
-                '%username%' => $user->getUsername()
-            ]);
         } catch (MetadorException $e) {
             $this->log('error', 'edit', $id, 'Benutzer %username% konnte nicht bearbeitet werden.', [
                 '%username%' => $user->getUsername()
             ]);
-
             return $this->redirectToRoute('metador_admin_user');
         };
+
+
 
         return $this->render('@MetadorUser/User/new.html.twig', array(
             'form' => $this
@@ -151,7 +149,7 @@ class UserController extends Controller
 
                 $this->get('metador_user')->update($user);
 
-                $this->log('success', 'update', $id, 'Benutzer %username% wurde erstellt.', [
+                $this->log('success', 'update', $id, 'Benutzer %username% wurde erfolgreich bearbeitet.', [
                     '%username%' => $user->getUsername()
                 ]);
 
