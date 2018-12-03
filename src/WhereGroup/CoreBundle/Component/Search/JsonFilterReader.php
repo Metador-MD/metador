@@ -83,7 +83,10 @@ class JsonFilterReader implements FilterReader
                     break;
                 case 'between':
                     $items[] = $expression->between(
-                        key($value), $value[key($value)]['lower'], $value[key($value)]['upper'], $parameters
+                        key($value),
+                        $value[key($value)]['lower'],
+                        $value[key($value)]['upper'],
+                        $parameters
                     );
                     break;
                 case 'gt':

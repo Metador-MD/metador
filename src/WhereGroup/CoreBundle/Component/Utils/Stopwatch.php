@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arp
- * Date: 30.11.18
- * Time: 10:46
- */
 
 namespace WhereGroup\CoreBundle\Component\Utils;
-
 
 class Stopwatch
 {
@@ -82,6 +75,6 @@ class Stopwatch
      */
     protected function getMilliseconds($microtime)
     {
-        return sprintf("%06d",($microtime - floor($microtime)) * 1000000);
+        return sprintf("%06d", ($microtime - floor($microtime)) * 1000000);
     }
 }

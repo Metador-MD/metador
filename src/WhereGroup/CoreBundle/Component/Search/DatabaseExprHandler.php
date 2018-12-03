@@ -103,7 +103,6 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
 
         return $expr->like(
             $this->getName($property),
-
             self::addParameter(
                 $property,
                 $this->valueForLike($escapeChar, $singleChar, $wildCard, $value),
