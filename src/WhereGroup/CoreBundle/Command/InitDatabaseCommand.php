@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use WhereGroup\CoreBundle\Component\Utils\Password;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User;
 use Symfony\Component\Yaml\Yaml;
@@ -35,11 +36,11 @@ class InitDatabaseCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Create system groups
-        $groups = array(
+        $groups = [
             'ROLE_SYSTEM_SUPERUSER',
             'ROLE_SYSTEM_GEO_OFFICE',
             'ROLE_SYSTEM_GUEST'
-        );
+        ];
 
         foreach ($groups as $name) {
             if (!$this->getGroup($name)) {
@@ -57,7 +58,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
         if ($this->getUser($rootUser)) {
             $output->writeln($this->trans('command_init_db_user_exists', array('%user%' => $rootUser)));
         } else {
-            $password = $this->generatePassword();
+            $password = Password::generate();
             $user = new User();
             $user->setUsername($rootUser);
             $user->setPassword($this->encodePassword($user, $password));
@@ -173,22 +174,5 @@ class InitDatabaseCommand extends ContainerAwareCommand
             ->get('doctrine')
             ->getRepository('MetadorUserBundle:Group')
             ->findOneByRole($name);
-    }
-
-    /**
-     * @param int $length
-     * @return string
-     */
-    protected function generatePassword($length = 20)
-    {
-        $password = "";
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        srand((double)microtime()*1000000);
-
-        for ($i = 0; $i < $length; $i++) {
-            $password .= substr($chars, rand() % strlen($chars), 1);
-        }
-
-        return $password;
     }
 }
