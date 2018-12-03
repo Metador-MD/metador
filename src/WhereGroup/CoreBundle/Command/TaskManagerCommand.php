@@ -21,6 +21,7 @@ class TaskManagerCommand extends ContainerAwareCommand
             ->setDescription('Runs the Taskmanager')
             ->setName('metador:taskmanager:run')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Ignore lock!', null)
+            ->addOption('token', 't', InputOption::VALUE_OPTIONAL, 'Run task with same token.', null)
         ;
     }
 
@@ -42,10 +43,11 @@ class TaskManagerCommand extends ContainerAwareCommand
         $fs->touch($filePath);
 
         try {
-            $event = new TaskManagerEvent([
-                'input'  => $input,
-                'output' => $output
-            ]);
+            $event = new TaskManagerEvent($input, $output);
+
+            if (!is_null($input->getOption('token'))) {
+                $event->setToken($input->getOption('token'));
+            }
 
             $this->getContainer()->get('event_dispatcher')->dispatch('metador.taskmanager', $event);
 

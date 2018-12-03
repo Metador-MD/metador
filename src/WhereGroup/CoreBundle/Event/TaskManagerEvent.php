@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Event;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\Event;
-use WhereGroup\UserBundle\Component\UserInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,31 +13,38 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TaskManagerEvent extends Event
 {
-    /** @var  UserInterface $user */
-    private $messages;
+    private $messages = [];
+    private $token;
     public $input = null;
     public $output = null;
     public $io = null;
 
     /**
      * TaskManagerEvent constructor.
-     * @param array $conf
+     * @param InputInterface $input
+     * @param OutputInterface $output
      */
-    public function __construct(array $conf = [])
+    public function __construct(InputInterface $input, OutputInterface $output)
     {
-        $this->messages = array();
+        $this->input  = $input;
+        $this->output = $output;
+        $this->io     = new SymfonyStyle($this->input, $this->output);
+    }
 
-        if (isset($conf['input']) && $conf['input'] instanceof InputInterface) {
-            $this->input = $conf['input'];
-        }
+    /**
+     * @param $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
 
-        if (isset($conf['output']) && $conf['output'] instanceof OutputInterface) {
-            $this->output = $conf['output'];
-        }
-
-        if (!is_null($this->input) && !is_null($this->output)) {
-            $this->io = new SymfonyStyle($this->input, $this->output);
-        }
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 
     /**
