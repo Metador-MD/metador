@@ -49,7 +49,7 @@ class ResetCommand extends ContainerAwareCommand
             $plugin->assetsInstall();
             $plugin->clearCache();
 
-            $io->success($translator->trans('plugin_command_reset_succsess'));
+            $io->success($translator->trans('plugin_command_reset_success'));
         }
     }
 }

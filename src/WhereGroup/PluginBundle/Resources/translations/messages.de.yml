@@ -8,7 +8,7 @@ Plugins: Plugins
 zurück: zurück
 plugin_command_reset_title: "Plugin Konfiguration zurücksetzen"
 plugin_command_reset_confirm: "Plugin Konfiguration wirklich zurücksetzen?"
-plugin_command_reset_succsess: "Erfolgreich zurückgesetzt!"
+plugin_command_reset_success: "Erfolgreich zurückgesetzt!"
 plugin_command_disable_title: "Plugin deaktivieren"
 plugin_command_enable_title: "Plugin aktivieren"
 plugin_command_list_title: "Plugins"

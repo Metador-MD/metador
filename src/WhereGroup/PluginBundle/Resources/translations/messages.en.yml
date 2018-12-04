@@ -8,7 +8,7 @@ Plugins: Plugins
 zurück: back
 plugin_command_reset_title: "Reset plugin configuration"
 plugin_command_reset_confirm: "Reset plugin configuration?"
-plugin_command_reset_succsess: "Configuration successfully resetted!"
+plugin_command_reset_success: "Configuration successfully resetted!"
 plugin_command_disable_title: "Disable Plugin"
 plugin_command_enable_title: "Enable Plugin"
 plugin_command_list_title: "List Plugins"
