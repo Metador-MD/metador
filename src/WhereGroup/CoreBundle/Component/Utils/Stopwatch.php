@@ -2,11 +2,18 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils;
 
+/**
+ * Class Stopwatch
+ * @package WhereGroup\CoreBundle\Component\Utils
+ */
 class Stopwatch
 {
     protected $start;
     protected $stop;
 
+    /**
+     * Stopwatch constructor.
+     */
     public function __construct()
     {
         $this->start = microtime(true);
