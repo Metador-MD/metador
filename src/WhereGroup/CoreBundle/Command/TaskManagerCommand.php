@@ -45,7 +45,7 @@ class TaskManagerCommand extends ContainerAwareCommand
         try {
             $event = new TaskManagerEvent($input, $output);
 
-            if (!is_null($input->getOption('token'))) {
+            if (!empty($input->getOption('token'))) {
                 $event->setToken($input->getOption('token'));
             }
 
