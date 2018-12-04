@@ -54,12 +54,5 @@ $color-brown: #AB7967;
         text-align: center;
         color: $primary;
     }
-
-    & > .app-info-content {
-        border-top: 1px solid $app-info-border;
-        background-color: $app-info-dark;
-        padding: 10px;
-        font-size: 12px;
-    }
 }
 

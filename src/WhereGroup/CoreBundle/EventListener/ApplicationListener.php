@@ -70,8 +70,6 @@ class ApplicationListener
                 $stats = $this->cache->stats();
 
                 if (is_array($stats) && isset($stats[key($stats)]['limit_maxbytes']) && $stats[key($stats)]['bytes']) {
-                    // $usage = round($stats[key($stats)]['bytes'] * 100 / $stats[key($stats)]['limit_maxbytes']) . '%';
-
                     $app->add(
                         $app->get('AppInformation', 'cache-info')
                             ->content($this->templating->render('@MetadorCore/Admin/cacheTemplate.html.twig'))

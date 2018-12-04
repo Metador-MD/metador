@@ -33,8 +33,10 @@
                         </div>
                         {% if item.count is defined %}
                             <div class="app-info-count" title="{{ item.count }}">{{ item.count }}</div>
-                        {% elseif item.content is defined %}
-                            <div class="app-info-content">{{ item.content|raw }}</div>
+                        {% endif %}
+
+                        {% if item.content is defined %}
+                            {{ item.content|raw }}
                         {% elseif item.path is defined %}
                             {% include item.path %}
                         {% endif %}

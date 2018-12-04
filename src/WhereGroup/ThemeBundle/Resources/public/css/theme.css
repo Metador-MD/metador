@@ -4416,9 +4416,3 @@ input.input-element, .md input.btn {
   font-size: 25px;
   text-align: center;
   color: #008ec0; }
-
-.app-info > .app-info-content {
-  border-top: 1px solid #e8ecf2;
-  background-color: #f2f2f2;
-  padding: 10px;
-  font-size: 12px; }
