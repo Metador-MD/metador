@@ -2254,7 +2254,7 @@ input.input-element, .md input.btn {
 
 .md .tooltip > .tooltip-wrapper {
   z-index: 2;
-  display: none;
+  visibility: hidden;
   min-width: 300px;
   position: absolute;
   height: 40px; }
@@ -2278,7 +2278,7 @@ input.input-element, .md input.btn {
   right: 40px; }
 
 .md .tooltip:hover > .tooltip-wrapper {
-  display: block; }
+  visibility: visible; }
 
 .md .tooltip-dialog {
   position: absolute;

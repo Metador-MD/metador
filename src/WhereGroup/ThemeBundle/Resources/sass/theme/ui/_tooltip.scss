@@ -7,7 +7,7 @@
 
     & > .tooltip-wrapper {
         z-index: 2;
-        display: none;
+        visibility: hidden;
         min-width: 300px;
         position: absolute;
         height: 40px;
@@ -38,7 +38,7 @@
     }
 
     &:hover > .tooltip-wrapper {
-        display: block;
+        visibility: visible;
     }
 }
 
