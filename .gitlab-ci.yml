@@ -3,16 +3,13 @@ cache:
         - vendor/
 
 stages:
-    - setup
     - test
     - deploy
 
-setup:
-    stage: setup
-    script:
-        - composer update --no-progress
-        - bin/console --env=test doctrine:database:create
-        - bin/console --env=test doctrine:schema:create
+before_script:
+    - composer update --no-progress
+    - bin/console --env=test doctrine:database:create
+    - bin/console --env=test doctrine:schema:create
 
 test:
     stage: test
