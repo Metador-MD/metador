@@ -28,7 +28,6 @@ deploy:
     artifacts:
         paths:
             - ./
-        expire_in: 1 week
-        keep_latest: 1
+        expire_in: 1 day
     script:
         - ( find . -type d -name ) | xargs rm -rf
