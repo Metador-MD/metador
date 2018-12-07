@@ -22,9 +22,10 @@ deploy:
     stage: deploy
     only:
         - master
+    script:
+        - ( find . -type d -name ) | xargs rm -rf
     artifacts:
+        name: ${CI_PROJECT_NAME}
         paths:
             - ./
         expire_in: 1 day
-    script:
-        - ( find . -type d -name ) | xargs rm -rf
