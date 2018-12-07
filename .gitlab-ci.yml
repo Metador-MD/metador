@@ -22,7 +22,9 @@ deploy:
     script:
         - rm -rf var/cache/* var/logs/*
         - cp app/config/parameters.yml.dist app/config/parameters.yml
-        - composer update -o --no-dev --no-progress
+        - bin/console --env=prod doctrine:database:create
+        - bin/console --env=prod doctrine:schema:create
+        - composer install -o --no-dev
         - ( find . -type d -name ".git") | xargs rm -rf
         - mkdir dist
         - zip -r dist/${CI_PROJECT_NAME}.zip ./
