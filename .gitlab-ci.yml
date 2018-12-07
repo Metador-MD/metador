@@ -6,14 +6,12 @@ stages:
     - test
     - deploy
 
-before_script:
-    - composer update --no-progress
-    - bin/console --env=test doctrine:database:create
-    - bin/console --env=test doctrine:schema:create
-
 test:
     stage: test
     script:
+        - composer update --no-progress
+        - bin/console --env=test doctrine:database:create
+        - bin/console --env=test doctrine:schema:create
         - vendor/bin/phpunit -c ./
         - vendor/bin/phpcpd src/
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
@@ -22,11 +20,12 @@ deploy:
     only:
         - master
     script:
+        - rm -rf var/cache/* var/logs/*
         - cp app/config/parameters.yml.dist app/config/parameters.yml
-        - composer update -o --no-dev
+        - composer update -o --no-dev --no-progress
         - ( find . -type d -name ".git") | xargs rm -rf
-        - mkdir ${CI_PROJECT_DIR}/dist
-        - zip -r ${CI_PROJECT_DIR}/dist/${CI_PROJECT_NAME}.zip ${CI_PROJECT_DIR}
+        - mkdir dist
+        - zip -r dist/${CI_PROJECT_NAME}.zip ./
 
     artifacts:
         name: ${CI_PROJECT_NAME}
