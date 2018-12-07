@@ -17,15 +17,19 @@ test:
         - vendor/bin/phpunit -c ./
         - vendor/bin/phpcpd src/
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
-
 deploy:
     stage: deploy
     only:
         - master
     script:
+        - cp app/config/parameters.yml.dist app/config/parameters.yml
+        - composer update -o --no-dev
         - ( find . -type d -name ".git") | xargs rm -rf
+        - mkdir ${CI_PROJECT_DIR}/dist
+        - zip -r ${CI_PROJECT_DIR}/dist/${CI_PROJECT_NAME}.zip ${CI_PROJECT_DIR}
+
     artifacts:
         name: ${CI_PROJECT_NAME}
         paths:
-            - ./
+            - "${CI_PROJECT_DIR}/dist/*.zip"
         expire_in: 1 day
