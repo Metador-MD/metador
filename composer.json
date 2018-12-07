@@ -20,13 +20,13 @@
         ]
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "ext-json": "*",
         "ext-zip": "*",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "doctrine/doctrine-bundle": "^1.5",
+        "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "erusev/parsedown": "^1.6",
         "gasparesganga/php-shapefile": "^2.2",
