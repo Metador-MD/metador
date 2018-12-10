@@ -781,4 +781,17 @@ class Metadata implements MetadataInterface
 
         return null;
     }
+
+    /**
+     * @param array $source
+     * @param array $target
+     */
+    public function mergeSystemInformations(array $source, array &$target)
+    {
+        foreach ($source as $key => $value) {
+            if (substr($key, 0,1) === '_') {
+                $target[$key] = $value;
+            }
+        }
+    }
 }
