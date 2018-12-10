@@ -9,13 +9,13 @@ namespace WhereGroup\CoreBundle\Component\Utils;
 class ArrayParser
 {
     /**
-     * @param array $array
+     * @param array|object $array
      * @param $path
      * @param null $default
      * @param bool $reindex
      * @return array|null
      */
-    public static function get(array $array, $path, $default = null, $reindex = false)
+    public static function get($array, $path, $default = null, $reindex = false)
     {
         if (empty($path) || trim($path) === "") {
             return $array;
@@ -59,13 +59,13 @@ class ArrayParser
     }
 
     /**
-     * @param array $array
+     * @param array|object $array
      * @param $path
      * @param null $default
      * @param bool $reindex
      * @return array|int|null
      */
-    public static function length(array $array, $path, $default = null, $reindex = false)
+    public static function length($array, $path, $default = null, $reindex = false)
     {
         $item = self::get($array, $path, $default, $reindex);
 
@@ -85,7 +85,7 @@ class ArrayParser
     }
 
     /**
-     * @param $array
+     * @param array|object $array
      * @param $path
      * @param null $find
      * @param bool $reindex
@@ -150,15 +150,16 @@ class ArrayParser
     }
 
     /**
-     * @param $array
+     * @param array|object $array
      * @param $keys
      * @param null $default
      * @param bool $reindex
      * @return null
      */
-    private static function arrayGet(array $array, $keys, $default = null, $reindex = false)
+    private static function arrayGet($array, $keys, $default = null, $reindex = false)
     {
-        $key = array_shift($keys);
+        $array = self::castToArray($array);
+        $key   = array_shift($keys);
 
         if ($reindex && isset($array[$key]) && is_array($array[$key])) {
             self::reindexKeys($array[$key]);
@@ -300,5 +301,22 @@ class ArrayParser
     private static function explodePath($path)
     {
         return explode(':', trim($path, ':'));
+    }
+
+    /**
+     * @param $object
+     * @return mixed
+     */
+    private static function castToArray($object)
+    {
+        if (is_array($object)) {
+            return $object;
+        }
+
+        if (empty($object)) {
+            return [];
+        }
+
+        return json_decode(json_encode($object), true);
     }
 }
