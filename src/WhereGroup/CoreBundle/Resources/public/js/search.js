@@ -17,12 +17,6 @@ Search.prototype = {
         this.searchFieldElement  = $('#searchfield');
         this.searchResultElement = $('#search-result');
 
-        var source = self.get('source', null);
-
-        if (source !== null) {
-            $('.-js-source[data-slug="' + source + '"]').click();
-        }
-
         $(document).on('change', '.-js-search-filter', function() {
             self.set($(this).attr('name'), $(this).val());
             self.set('page', 1);
@@ -55,6 +49,12 @@ Search.prototype = {
 
     initFilters: function() {
         var self = this;
+        var source = self.get('source', null);
+
+        if (source !== null) {
+            console.log(source);
+            $('.-js-source[data-slug="' + source + '"]').click();
+        }
 
         self.set('page', 1);
         self.set('hits', 10);
