@@ -130,7 +130,7 @@ class Browser
     private function doRequest($method, $url, $data)
     {
         $init    = curl_init();
-        $urlInfo = parse_url($url);
+        $urlInfo = parse_url(trim($url));
 
         if (isset($urlInfo['scheme']) && $urlInfo['scheme'] !== 'http' && $urlInfo['scheme'] !== 'https') {
             throw new MetadorException('Only http and https supported');
