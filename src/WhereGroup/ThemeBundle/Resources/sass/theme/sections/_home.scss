@@ -20,9 +20,9 @@ $home-menu-height: 35px;
     }
 
     .map-dialog-left-menu {
-        border-right: 1px solid $border;
+        border-right: 1px solid $primary;
         z-index: 1;
-        width: 3px;
+        width: 0px;
         background-color: $white;
 
         @include pos(0, '', 0, 0);
@@ -30,7 +30,7 @@ $home-menu-height: 35px;
 
         .map-dialog-left-content {
             background-color: $white;
-            border-right: 1px solid $border;
+            border-right: 1px solid $primary;
             display: none;
             @include pos(0, 0, 0, 0);
         }
@@ -42,12 +42,14 @@ $home-menu-height: 35px;
             cursor: pointer;
             height: 30px;
             width: 30px;
-            border: 1px solid $border;
+            border: 1px solid $primary;
             position: absolute;
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
-            left: 2px;
-            background: $white;
+            left: 0px;
+            background: $primary;
+            color: $white;
+            font-weight: bold;
             @include calc('top', '50% - 15px');
             @include transition-all(150ms);
         }
@@ -151,15 +153,18 @@ $home-menu-height: 35px;
     margin: 0;
     padding: 0;
 
-     & > .draggable{
+     & > .draggable {
         -moz-user-select: none;
         -khtml-user-select: none;
         -webkit-user-select: none;
         user-select: none;
-        /* Required to make elements draggable in old WebKit */
         -khtml-user-drag: element;
         -webkit-user-drag: element;
         cursor: move;
+
+        &:not(.dummy) {
+            border-bottom: 1px dashed $primary;
+        }
 
         &.move {
             background-color: lighten($info, 30%);

@@ -3389,9 +3389,9 @@ input.input-element, .md input.btn {
   bottom: 0; }
 
 .md .map-dialog .map-dialog-left-menu {
-  border-right: 1px solid #e1e1e1;
+  border-right: 1px solid #008ec0;
   z-index: 1;
-  width: 3px;
+  width: 0px;
   background-color: #fff;
   position: absolute;
   top: 0;
@@ -3404,7 +3404,7 @@ input.input-element, .md input.btn {
 
 .md .map-dialog .map-dialog-left-menu .map-dialog-left-content {
   background-color: #fff;
-  border-right: 1px solid #e1e1e1;
+  border-right: 1px solid #008ec0;
   display: none;
   position: absolute;
   top: 0;
@@ -3419,12 +3419,14 @@ input.input-element, .md input.btn {
   cursor: pointer;
   height: 30px;
   width: 30px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #008ec0;
   position: absolute;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  left: 2px;
-  background: #fff;
+  left: 0px;
+  background: #008ec0;
+  color: #fff;
+  font-weight: bold;
   top: -webkit-calc(50% - 15px);
   top: -moz-calc(50% - 15px);
   top: calc(50% - 15px);
@@ -3533,6 +3535,9 @@ input.input-element, .md input.btn {
   -khtml-user-drag: element;
   -webkit-user-drag: element;
   cursor: move; }
+
+.md .layer-tree-list > .draggable:not(.dummy) {
+  border-bottom: 1px dashed #008ec0; }
 
 .md .layer-tree-list > .draggable.move {
   background-color: #e5f3ff;
