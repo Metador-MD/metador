@@ -17,12 +17,10 @@ class LoggingEvent extends Event
     /**
      * LoggingEvent constructor.
      * @param $log
-     * @throws \Exception
      */
     public function __construct($log)
     {
         $this->log = $log;
-        $this->log->setDateTime(new \DateTime());
     }
 
     public function __destruct()

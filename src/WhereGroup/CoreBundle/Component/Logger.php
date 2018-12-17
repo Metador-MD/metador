@@ -19,7 +19,7 @@ class Logger
     private $flashBag;
     private $eventDispatcher;
     private $userService;
-    private $translatorInterface;
+    private $translator;
 
     /**
      * Logger constructor.
@@ -40,13 +40,16 @@ class Logger
         $this->userService         = $userService;
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
         unset(
             $this->flashbag,
             $this->eventDispatcher,
             $this->userService,
-            $this->translatorInterface
+            $this->translator
         );
     }
 
@@ -74,6 +77,16 @@ class Logger
             $log->setUsername($user->getUsername());
         }
 
+        if (is_null($log->getDateTime())) {
+            try {
+                $dateTime = new \DateTime();
+            } catch (\Exception $e) {
+                $dateTime = null;
+            }
+
+            $log->setDateTime($dateTime);
+        }
+
         // Translate message
         $log->setMessage($this->translator->trans($log->getMessage(), $log->getMessageParameter()));
 
@@ -86,5 +99,24 @@ class Logger
         $this->eventDispatcher->dispatch('metador.log', new LoggingEvent($log));
 
         return $this;
+    }
+
+    /**
+     * @param $message
+     * @param array $param
+     */
+    public function error($message, $param = [])
+    {
+        $this->log($message, $param, 'error');
+    }
+
+    protected function log($message, $param = [], $type = 'error')
+    {
+        $log = $this->newLog();
+        $log
+            ->setMessage($message, $param)
+            ->setCategory('system')
+            ->setType($type);
+        $this->set($log);
     }
 }

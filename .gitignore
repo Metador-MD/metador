@@ -24,6 +24,7 @@
 /vendor/
 /web/bundles/
 /web/assets/
+/web/images/
 
 # /var/
 var/cache/
