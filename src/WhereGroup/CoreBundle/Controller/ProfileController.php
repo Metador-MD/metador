@@ -50,7 +50,7 @@ class ProfileController extends Controller
                 '_source'   => $source,
                 '_profile'  => $profile,
                 '_public'   => false,
-                '_groups'   => array(),
+                '_groups'   => [],
 //                '_uuid'     => $uuid,
 //                'fileIdentifier' => $uuid,
 //                'dateStamp' => (new \DateTime)->format('Y-m-d')
@@ -108,7 +108,7 @@ class ProfileController extends Controller
 
         $p = $request->request->get('p');
         $submitType = $request->request->get('submit');
-        $response = array();
+        $response = [];
         $metadata = null;
         $uuid     = null;
 
@@ -173,7 +173,7 @@ class ProfileController extends Controller
         } catch (MetadataException $e) {
             $em->getConnection()->rollBack();
             $em->clear();
-            $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), array());
+            $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), []);
             $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
             $submitType = null;
         } catch (\Exception $e) {
@@ -421,8 +421,8 @@ class ProfileController extends Controller
 
         $this->parseXpaths($schema, $xpath);
 
-        $arr1 = array();
-        $arr2 = array();
+        $arr1 = [];
+        $arr2 = [];
 
         ArrayParser::flatten($object1, $arr1, true);
         ArrayParser::flatten($object2, $arr2, true);
@@ -572,7 +572,7 @@ class ProfileController extends Controller
         $this->data['className'] = $this->get('metador_plugin')->getPluginClassName($profile);
         $this->data['user'] = $this->get('metador_user')->getUserFromSession();
         $this->data['template'] = $this->data['className'] . ':Profile:';
-        $this->data['p'] = $this->data['request']->request->get('p', array());
+        $this->data['p'] = $this->data['request']->request->get('p', []);
         $this->data['p']['dateStamp'] = date("Y-m-d");
     }
 
@@ -592,7 +592,7 @@ class ProfileController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function log($type, $operation, $id, $message, $parameter = array())
+    private function log($type, $operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 

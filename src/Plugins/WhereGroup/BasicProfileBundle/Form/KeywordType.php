@@ -101,7 +101,7 @@ class KeywordType extends AbstractType
         $builder->get('profiles')
             ->addModelTransformer(new CallbackTransformer(
                 function ($profiles) {
-                    return  $profiles ? json_decode($profiles, true) : array();
+                    return  $profiles ? json_decode($profiles, true) : [];
                 },
                 function ($profiles) {
                     return json_encode($profiles);

@@ -36,9 +36,9 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
         $root = $this->doc->documentElement;
         $wms->setVersion($this->getValue('./@version', $root));
         $this->parseService($wms, $this->getValue('./wms:Service', $root));
-        $wms->setFormats(array());
+        $wms->setFormats([]);
         $this->parseCapabilityRequest($wms, $this->getValue('./wms:Capability/wms:Request', $root));
-        $wms->setLayerList(array());
+        $wms->setLayerList([]);
         $this->parseLayer($wms, $this->getValue('./wms:Capability/wms:Layer', $root));
         // set default values: all available layers, a first founded format
         $wms->setLayers($wms->getLayerList());

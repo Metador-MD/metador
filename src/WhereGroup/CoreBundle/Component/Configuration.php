@@ -122,7 +122,7 @@ class Configuration implements ConfigurationInterface
         $config = $this->cache->get($cacheKey);
 
         if ($config === false) {
-            $config = array();
+            $config = [];
 
             foreach ($this->getAll($filterType, $filterValue) as $row) {
                 $config[$row['key']] = $row['value'];

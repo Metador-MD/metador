@@ -17,7 +17,7 @@ class JsonFilterReader implements FilterReader
      */
     public static function read($filter, ExprHandler $expressionHandler)
     {
-        $parameters = array();
+        $parameters = [];
 
         $expression = self::getExpression($filter, $expressionHandler, $parameters);
 
@@ -37,7 +37,7 @@ class JsonFilterReader implements FilterReader
      */
     private static function getExpression(array $filter, ExprHandler $expression, &$parameters)
     {
-        $items = array();
+        $items = [];
 
         foreach ($filter as $key => $value) {
             if (is_integer($key)) { // list

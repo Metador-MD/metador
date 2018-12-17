@@ -25,7 +25,7 @@ class FrontendCommandTest extends KernelTestCase
      * @param array $data
      * @param string $dataName
      */
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
@@ -38,7 +38,7 @@ class FrontendCommandTest extends KernelTestCase
     public function setUP()
     {
         $this->frontendCommand = new FrontendCommand($this->core);
-        $this->response = array();
+        $this->response = [];
     }
 
     /**

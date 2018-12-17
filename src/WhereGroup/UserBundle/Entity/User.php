@@ -97,7 +97,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function getRoles()
     {
-        $roles = array();
+        $roles = [];
 
         foreach ($this->groups->toArray() as $group) {
             $roles[] = $group->getRole();
@@ -117,7 +117,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function getNonSystemRoles()
     {
-        $roles = array();
+        $roles = [];
 
         foreach ($this->getRoles() as $name) {
             if (strstr($name, 'ROLE_SYSTEM_') === false) {

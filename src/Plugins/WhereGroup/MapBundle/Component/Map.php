@@ -50,7 +50,7 @@ class Map implements MapInterface
      */
     public function all()
     {
-        return $this->repo->findBy(array(), array('priority' => 'DESC'));
+        return $this->repo->findBy([], array('priority' => 'DESC'));
     }
 
     /**
@@ -118,7 +118,7 @@ class Map implements MapInterface
             $service = null;
             $request = null;
             $version = null;
-            $getParams = array();
+            $getParams = [];
             if (isset($urlArray['query'])) {
                 parse_str($urlArray['query'], $getParams);
                 foreach ($getParams as $key => $value) {

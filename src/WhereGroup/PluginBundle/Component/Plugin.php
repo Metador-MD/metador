@@ -24,9 +24,9 @@ class Plugin
     protected $env;
     protected $configurationFile;
     protected $routingFile;
-    protected $pluginPaths = array();
-    protected $plugins = array();
-    protected $routing = array();
+    protected $pluginPaths = [];
+    protected $plugins = [];
+    protected $routing = [];
     protected $configuration = null;
     protected $cache;
     protected $kernel;
@@ -130,7 +130,7 @@ class Plugin
     public function getPlugins($groupBy = null)
     {
         if ($groupBy === 'origin') {
-            $result = array();
+            $result = [];
 
             foreach ($this->plugins as $key => $plugin) {
                 $result[$plugin['origin']][$key] = $plugin;
@@ -147,7 +147,7 @@ class Plugin
      */
     public function getActivePlugins()
     {
-        $result = array();
+        $result = [];
         $plugins = $this->plugins;
         $core = Yaml::parse(file_get_contents(__DIR__ . '/../../CoreBundle/Resources/config/plugin.yml'));
 
@@ -184,7 +184,7 @@ class Plugin
      */
     public function getActiveProfiles()
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->plugins as $key => $plugin) {
             if (isset($plugin['type']) && strtolower($plugin['type']) === 'profile' &&
@@ -250,7 +250,7 @@ class Plugin
      */
     public function update($request)
     {
-        $plugins = empty($request['plugins']) ? array() : array_flip(explode(',', $request['plugins']));
+        $plugins = empty($request['plugins']) ? [] : array_flip(explode(',', $request['plugins']));
 
         foreach ($this->plugins as $key => $plugin) {
             if (isset($plugins[$key])) {
@@ -272,11 +272,11 @@ class Plugin
      */
     protected function sortPlugins()
     {
-        $plugins = array();
+        $plugins = [];
         $require = array(
-            'hasChildren' => array(),
-            'hasParent'   => array(),
-            'isSingle'    => array()
+            'hasChildren' => [],
+            'hasParent'   => [],
+            'isSingle'    => []
         );
 
         // get plugin informations
@@ -343,7 +343,7 @@ class Plugin
         $configuration = $this->readYaml($this->configurationFile);
 
         if (!isset($configuration['plugins'])) {
-            $configuration['plugins'] = array();
+            $configuration['plugins'] = [];
         }
 
         return $configuration;
@@ -355,7 +355,7 @@ class Plugin
     protected function getPluginRouting()
     {
         if (!file_exists($this->routingFile)) {
-            $this->writeYaml($this->routingFile, array());
+            $this->writeYaml($this->routingFile, []);
         }
 
         return $this->readYaml($this->routingFile);
@@ -366,7 +366,7 @@ class Plugin
      */
     public function findPlugins()
     {
-        $plugins = array();
+        $plugins = [];
         $finder = new Finder();
 
         $finder

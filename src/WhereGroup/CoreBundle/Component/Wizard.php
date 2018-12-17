@@ -15,11 +15,11 @@ class Wizard
      */
     public function getExamples($path)
     {
-        $examples = array();
+        $examples = [];
 
         foreach (scandir($path) as $file) {
             if ($file !== '.' && $file !== '..' && is_dir($path . $file)) {
-                $array = array();
+                $array = [];
 
                 foreach (scandir($path . $file) as $subFile) {
                     if (substr($subFile, -5) != ".json") {

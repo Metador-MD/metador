@@ -318,7 +318,7 @@ class User implements UserInterface
         /** @var User $user */
         $user = $this->getUserFromSession();
 
-        $roles = array();
+        $roles = [];
 
         foreach ($user->getRoles() as $role) {
             if (!strstr($role, 'ROLE_SYSTEM_')) {

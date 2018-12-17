@@ -65,7 +65,7 @@ class Source implements SourceInterface
      */
     public function allValues()
     {
-        $array = array();
+        $array = [];
 
         foreach ($this->all() as $source) {
             $array[$source->getName()] = $source->getSlug();

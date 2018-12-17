@@ -62,7 +62,7 @@ class AddressController extends Controller
                     'create',
                     '',
                     $e->getMessage(),
-                    array()
+                    []
                 );
 
                 return $this->redirectToRoute('metador_admin_address');
@@ -150,7 +150,7 @@ class AddressController extends Controller
             $entity = $form->getData();
             $name   = $entity->getOrganisationName();
             $id     = $entity->getId();
-            $event  = new AddressChangeEvent($entity, array());
+            $event  = new AddressChangeEvent($entity, []);
             $this->get('event_dispatcher')->dispatch('address.pre_delete', $event);
             $this->get('metador_address')->remove($entity);
 
@@ -175,7 +175,7 @@ class AddressController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    private function setFlashWarning($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 
@@ -200,7 +200,7 @@ class AddressController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    private function setFlashSuccess($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 

@@ -8,7 +8,7 @@ namespace WhereGroup\CoreBundle\Entity;
  */
 class HealthCheck
 {
-    protected $log = array();
+    protected $log = [];
 
     /**
      * HealthCheck constructor.
@@ -16,8 +16,8 @@ class HealthCheck
     public function __construct()
     {
         $this->log = array(
-            'warning' => array(),
-            'error'   => array()
+            'warning' => [],
+            'error'   => []
         );
     }
 

@@ -16,11 +16,11 @@ class Finder
     public $terms = null;
     public $profile = null;
     public $public = null;
-    public $groups = array();
+    public $groups = [];
     public $geoOffice = false;
     public $userId = null;
     public $force = null;
-    public $hierarchyLevel = array();
+    public $hierarchyLevel = [];
     public $title = null;
     public $userEntries = null;
 

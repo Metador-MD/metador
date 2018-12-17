@@ -11,7 +11,7 @@ use WhereGroup\PluginBundle\Component\ApplicationIntegration as Integration;
  */
 class Application
 {
-    private $data                 = array();
+    private $data                 = [];
     private $bundle               = null;
     private $controller           = null;
     private $action               = null;
@@ -187,15 +187,15 @@ class Application
         }
 
         $merged = array_merge_recursive(
-            isset($this->data[self::POSITION_PREPEND]) ? $this->data[self::POSITION_PREPEND] : array(),
-            isset($this->data[self::POSITION_NORMAL])  ? $this->data[self::POSITION_NORMAL]  : array(),
-            isset($this->data[self::POSITION_APPEND])  ? $this->data[self::POSITION_APPEND]  : array()
+            isset($this->data[self::POSITION_PREPEND]) ? $this->data[self::POSITION_PREPEND] : [],
+            isset($this->data[self::POSITION_NORMAL])  ? $this->data[self::POSITION_NORMAL]  : [],
+            isset($this->data[self::POSITION_APPEND])  ? $this->data[self::POSITION_APPEND]  : []
         );
 
         if (is_null($key)) {
             return isset($merged[$type])
                 ? $merged[$type]
-                : (is_null($default) ? array() : $default);
+                : (is_null($default) ? [] : $default);
         }
 
         return isset($merged[$type][$key])
@@ -289,7 +289,7 @@ class Application
      */
     private function parse($regex, $string)
     {
-        $matches = array();
+        $matches = [];
 
         preg_match($regex, $string, $matches);
 

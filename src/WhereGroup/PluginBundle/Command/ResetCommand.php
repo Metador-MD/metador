@@ -39,11 +39,11 @@ class ResetCommand extends ContainerAwareCommand
 
         if ($io->confirm($translator->trans('plugin_command_reset_confirm'), false)) {
             if (isset($config['configurationFile']) && file_exists($config['configurationFile'])) {
-                file_put_contents($config['configurationFile'], Yaml::dump(array(), 2));
+                file_put_contents($config['configurationFile'], Yaml::dump([], 2));
             }
 
             if (isset($config['routingFile']) && file_exists($config['routingFile'])) {
-                file_put_contents($config['routingFile'], Yaml::dump(array(), 2));
+                file_put_contents($config['routingFile'], Yaml::dump([], 2));
             }
 
             $plugin->assetsInstall();

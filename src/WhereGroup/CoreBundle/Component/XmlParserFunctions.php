@@ -51,7 +51,7 @@ class XmlParserFunctions
      */
     protected function _replaceKey($data, $args = null)
     {
-        $array = array();
+        $array = [];
 
         foreach ($data as $key => $val) {
             if ($key === '#KEY#') {

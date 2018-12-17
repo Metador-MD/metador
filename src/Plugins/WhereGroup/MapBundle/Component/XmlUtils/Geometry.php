@@ -50,7 +50,7 @@ class Geometry
         $this->dim = $dim;
         $this->type = $type;
         $this->srsName = $srsName;
-        $this->ordinates = array();
+        $this->ordinates = [];
     }
 
     /**
@@ -148,7 +148,7 @@ class Geometry
      */
     public function addOrdinatesSet(array $ordinates)
     {
-        $ordinatesHelp = array();
+        $ordinatesHelp = [];
         foreach ($ordinates as $ordinate) {
             $ordinatesHelp[] = floatval($ordinate);
         }

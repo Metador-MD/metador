@@ -52,7 +52,7 @@ class FrontendCommand
      * @param $parameters
      * @return $this
      */
-    public function displayInfo(&$response, $message, $parameters = array())
+    public function displayInfo(&$response, $message, $parameters = [])
     {
         $this->runMethod(
             'metador',
@@ -70,7 +70,7 @@ class FrontendCommand
      * @param $parameters
      * @return $this
      */
-    public function displaySuccess(&$response, $message, $parameters = array())
+    public function displaySuccess(&$response, $message, $parameters = [])
     {
         $this->runMethod(
             'metador',
@@ -88,7 +88,7 @@ class FrontendCommand
      * @param $parameters
      * @return $this
      */
-    public function displayWarning(&$response, $message, $parameters = array())
+    public function displayWarning(&$response, $message, $parameters = [])
     {
         $this->runMethod(
             'metador',
@@ -106,7 +106,7 @@ class FrontendCommand
      * @param $parameters
      * @return $this
      */
-    public function displayError(&$response, $message, $parameters = array())
+    public function displayError(&$response, $message, $parameters = [])
     {
         $this->runMethod(
             'metador',

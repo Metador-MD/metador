@@ -60,7 +60,7 @@ class Wms
      * @var array $formats a list of supported image formats
      * @ORM\Column(type="array", nullable=false)
      */
-    protected $formats = array();
+    protected $formats = [];
 
     /**
      * @var array $layers selected layers
@@ -72,7 +72,7 @@ class Wms
      * @var array $layerList all available layers
      * @ORM\Column(type="array", nullable=false)
      */
-    protected $layerList = array();
+    protected $layerList = [];
 
     /**
      * @var string $version a WMS version
@@ -100,9 +100,9 @@ class Wms
 
     public function __construct()
     {
-        $this->formats = array();
-        $this->layerList = array();
-        $this->layers = array();
+        $this->formats = [];
+        $this->layerList = [];
+        $this->layers = [];
         $this->visible = true;
         $this->opacity = 1.0;
         $this->priority = 0;

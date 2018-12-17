@@ -46,7 +46,7 @@ class PluginController extends Controller
         } catch (\Exception $e) {
             $this->log('error', 'create', $e->getMessage(), false, false);
 
-            $result = array();
+            $result = [];
 
             $this->get('metador_frontend_command')->displayError($result, $e->getMessage());
 
@@ -82,7 +82,7 @@ class PluginController extends Controller
                 $reader->addReader($map, new XmlAssocArrayReader($reader, new FeatureJsonWriter()));
                 $result['content'] = array(
                     "type" => "FeatureCollection",
-                    "features" => array(),
+                    "features" => [],
                 );
                 try {
                     while ($reader->readComponent()) {
@@ -143,7 +143,7 @@ class PluginController extends Controller
                                 "name" => $epsg,
                             ),
                         ),
-                        "features" => array(),
+                        "features" => [],
                     );
                     foreach ($shapeFile as $i => $record) {
                         if ($record['dbf']['_deleted']) {
@@ -159,7 +159,7 @@ class PluginController extends Controller
                                 "type" => $type,
                                 "coordinates" => $coords,
                             ),
-                            "properties" => array(),
+                            "properties" => [],
                         );
                         break; // only first geometry
                     }
@@ -204,7 +204,7 @@ class PluginController extends Controller
      */
     private function findFiles($dirPath, $fileRegex)
     {
-        $matchedfiles = array();
+        $matchedfiles = [];
         $all = opendir($dirPath);
         while ($file = readdir($all)) {
             if (is_file($dirPath.'/'.$file) && strpos(strtolower($file), strtolower($fileRegex)) !== false) {
@@ -293,16 +293,16 @@ class PluginController extends Controller
     {
         switch ($type) {
             case 'LineString':
-                $res = array();
+                $res = [];
                 foreach ($part['points'] as $point) {
                     $res[] = array($point['x'], $point['y']);
                 }
 
                 return $res;
             case 'Polygon':
-                $rings = array();
+                $rings = [];
                 foreach ($part['rings'] as $item) {
-                    $ring = array();
+                    $ring = [];
                     foreach ($item['points'] as $point) {
                         $ring[] = array($point['x'], $point['y']);
                     }

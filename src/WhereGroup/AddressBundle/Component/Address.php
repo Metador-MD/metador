@@ -207,7 +207,7 @@ class Address
      */
     public function remove($entity)
     {
-        $event  = new AddressChangeEvent($entity, array());
+        $event  = new AddressChangeEvent($entity, []);
         $this->eventDispatcher->dispatch('address.pre_delete', $event);
         $this->repo->remove($entity);
 

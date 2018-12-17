@@ -122,9 +122,9 @@ class XmlParser
      * @param array $commands
      * @return array|mixed
      */
-    private function parseRecursive($object, $name = "", $context = null, $path = "", $commands = array())
+    private function parseRecursive($object, $name = "", $context = null, $path = "", $commands = [])
     {
-        $result = array();
+        $result = [];
 
         $commands['_recursive'] = isset($commands['_recursive']) ? $commands['_recursive'] : false;
         $commands['_asArray']   = isset($commands['_asArray'])   ? $commands['_asArray']   : false;
@@ -178,7 +178,7 @@ class XmlParser
 
                     if ($this->removeEmptyValues && (
                         $tmp === ""
-                        || $tmp === array()
+                        || $tmp === []
                         || (is_array($val) && isset($val[1]) && $val[1] !== '_asArray')
                     )) {
                         continue;
@@ -202,10 +202,10 @@ class XmlParser
     private function parseData($data, $name, $path, $context, $commands)
     {
         if (!is_object($data)) {
-            return array();
+            return [];
         }
 
-        $tmp = array();
+        $tmp = [];
 
         if ($context == null) {
             $nodes = $this->xp->query($path);
@@ -215,7 +215,7 @@ class XmlParser
 
         if ($nodes) {
             foreach ($nodes as $node) {
-                $dataRecTmp = array();
+                $dataRecTmp = [];
 
                 if ($commands['_recursive']) {
                     $dataRecTmp = $this->parseData($data, $name, $path, $node, $commands);
@@ -242,7 +242,7 @@ class XmlParser
      */
     private function getValue($xpath, $context = null)
     {
-        $result = array();
+        $result = [];
 
         $nodes = $this->xp->query($xpath, $context);
 
@@ -287,7 +287,7 @@ class XmlParser
      */
     private function objectToArray($object)
     {
-        $array = array();
+        $array = [];
         $object = (array)$object;
 
         if (!empty($object)) {

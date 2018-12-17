@@ -16,7 +16,7 @@ class CsvResponse extends Response
      * @param int $status
      * @param array $headers
      */
-    public function __construct(array $data, $status = 200, $headers = array())
+    public function __construct(array $data, $status = 200, $headers = [])
     {
         parent::__construct('', $status, $headers);
 

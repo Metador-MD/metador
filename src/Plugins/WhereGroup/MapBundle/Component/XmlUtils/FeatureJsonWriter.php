@@ -51,7 +51,7 @@ class FeatureJsonWriter implements IContextWriter
 
     public function reset()
     {
-        $this->content = array();
+        $this->content = [];
         $this->gmlWriter->reset();
     }
 
@@ -78,7 +78,7 @@ class FeatureJsonWriter implements IContextWriter
     {
         $json = array(
             'type' => 'Feature',
-            'properties' => array(),
+            'properties' => [],
 
         );
         foreach ($feature as $item) {

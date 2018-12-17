@@ -20,7 +20,7 @@ class ListsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        $lists = array();
+        $lists = [];
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $profileKey => $profile) {
             $lists[$profileKey] = $this->get('metador_configuration')->getAll('list-option', $profileKey);
@@ -67,7 +67,7 @@ class ListsController extends Controller
         if ($request->getMethod() === 'POST'
             && !is_null($request->request->get('key', null))
             && !is_null($request->request->get('value', null))) {
-            $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+            $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, []);
 
             if ($request->request->get('prev_key') !== $request->request->get('key')
                 && $request->request->get('prev_key') !== null) {
@@ -107,7 +107,7 @@ class ListsController extends Controller
         $request = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->getMethod() === 'POST') {
-            $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+            $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, []);
 
             $pointer = 0;
 
@@ -147,7 +147,7 @@ class ListsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, array());
+        $value = $this->get('metador_configuration')->get($key, 'list-option', $profile, []);
 
         $pointer = 0;
 

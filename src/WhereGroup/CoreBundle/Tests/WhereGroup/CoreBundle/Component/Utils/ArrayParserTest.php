@@ -14,7 +14,7 @@ class ArrayParserTest extends TestCase
     private $array;
     private $types;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 

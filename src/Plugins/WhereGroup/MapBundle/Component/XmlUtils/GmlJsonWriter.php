@@ -54,13 +54,13 @@ class GmlJsonWriter implements IContextWriter
 
     public function reset()
     {
-        $this->content = array();
+        $this->content = [];
     }
 
     public function write(array $content)
     {
         $json = array(
-            'coordinates' => array(),
+            'coordinates' => [],
         );
         if ($this->srsName === null
             && isset($content[0][xaar::KEY_ATTRS])
@@ -81,7 +81,7 @@ class GmlJsonWriter implements IContextWriter
                     self::POINT
                 );
             case 'gml:MultiPoint': // gml:MultiPoint/gml:pointMember[?]/gml:Point/gml:pos
-                $coords = array();
+                $coords = [];
                 foreach ($c[xaar::KEY_CHILDREN] as $pm) {
                     $coords[] =
                         $this->coordsToGJ($this->findCoordsV3($pm[xaar::KEY_CHILDREN][0][xaar::KEY_CHILDREN][0]))[0];
@@ -94,7 +94,7 @@ class GmlJsonWriter implements IContextWriter
                     self::LINESTRING
                 );
             case 'gml:Polygon':
-                $coords = array();
+                $coords = [];
                 foreach ($c[xaar::KEY_CHILDREN] as $ring) {
                     $coords[] = $this->coordsToGJ($this->findCoordsV3($ring));
                 }
@@ -154,10 +154,10 @@ class GmlJsonWriter implements IContextWriter
      */
     public static function coordsToGJ($ordinates, $fromDim = 2, $toDim = 2)
     {
-        $result = array();
+        $result = [];
         $max = $toDim - $fromDim;
         for ($i = $fromDim - 1; $i < count($ordinates); $i += $fromDim) {
-            $pointOrdinates = array();
+            $pointOrdinates = [];
             for ($s = -$fromDim + 1; $s <= $max; $s++) {
                 $pointOrdinates[] = $s > 0 ? 0.0 : $ordinates[$i + $s];
             }

@@ -52,7 +52,7 @@ class SettingsExtension extends \Twig_Extension
      */
     public function getFrontendSettings()
     {
-        $config = array();
+        $config = [];
 
         foreach ($this->plugin->getActivePlugins() as $pluginKey => $plugin) {
             if (!isset($plugin['settings']) || empty($plugin['settings'])) {

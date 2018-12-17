@@ -25,7 +25,7 @@ class SettingsController extends Controller
         /** @var  Configuration $configurationManager */
         $configuration = $this->get('metador_configuration');
 
-        $pluginConfiguration = array();
+        $pluginConfiguration = [];
         $sources = $this->get('metador_source')->all();
 
         foreach ($this->getSettings() as $pluginKey => $pluginInfo) {
@@ -40,7 +40,7 @@ class SettingsController extends Controller
                 $pluginInfo['settings'][$settingKey]['description']
                     = isset($setting['description']) ? $setting['description'] : '';
                 $pluginInfo['settings'][$settingKey]['options']
-                    = isset($setting['options']) ? $setting['options'] : array();
+                    = isset($setting['options']) ? $setting['options'] : [];
 
                 // Set active profiles as options
                 if (isset($setting['optionSource']) && $setting['optionSource'] === 'source') {
@@ -98,7 +98,7 @@ class SettingsController extends Controller
      */
     private function getSettings()
     {
-        $result = array();
+        $result = [];
 
         $settings = $this->get('metador_plugin')->getPlugins();
 

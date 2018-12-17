@@ -123,7 +123,7 @@ class Metadata implements MetadataInterface
 
         // EVENT ON LOAD
         if ($dispatchEvent) {
-            $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, array()));
+            $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($metadata, []));
         }
 
         return $metadata;
@@ -499,7 +499,7 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed
      */
-    public function success($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array())
+    public function success($metadata, $operation, $message, $messageParams = [], $path = null, $params = [])
     {
         $this->log('success', $metadata, $operation, $message, $messageParams, $path, $params);
     }
@@ -513,7 +513,7 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed
      */
-    public function error($metadata, $operation, $message, $messageParams = array(), $path = null, $params = array(), $flash = false)
+    public function error($metadata, $operation, $message, $messageParams = [], $path = null, $params = [], $flash = false)
     {
         $this->log('error', $metadata, $operation, $message, $messageParams, $path, $params, $flash);
     }
@@ -583,7 +583,7 @@ class Metadata implements MetadataInterface
         $metadata = $this->getById($id);
 
         // EVENT PRE DELETE
-        $event = new MetadataChangeEvent($metadata, array());
+        $event = new MetadataChangeEvent($metadata, []);
         $this->eventDispatcher->dispatch('metadata.pre_delete', $event);
 
         foreach ($metadata->getGroups() as $group) {

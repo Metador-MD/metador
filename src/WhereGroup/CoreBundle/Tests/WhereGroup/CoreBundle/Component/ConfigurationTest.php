@@ -25,7 +25,7 @@ class ConfigurationTest extends KernelTestCase
      * @param array $data
      * @param string $dataName
      */
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
@@ -132,7 +132,7 @@ class ConfigurationTest extends KernelTestCase
             ->removeAll('plugin', 'test')
             ->getAll('plugin', 'test');
 
-        $this->assertEquals(array(), $actual);
+        $this->assertEquals([], $actual);
 
         $actual = $this->conf
             ->set('my_key_1', 23, 'plugin', 'plugin_a')
@@ -142,7 +142,7 @@ class ConfigurationTest extends KernelTestCase
             ->removeAll('plugin')
             ->getAll('plugin');
 
-        $this->assertEquals(array(), $actual);
+        $this->assertEquals([], $actual);
     }
 
     public function testObject()

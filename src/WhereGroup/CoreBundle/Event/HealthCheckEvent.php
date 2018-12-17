@@ -33,7 +33,7 @@ class HealthCheckEvent extends Event
      * @param $message
      * @param array $parameters
      */
-    public function addWarning($origin, $message, $parameters = array())
+    public function addWarning($origin, $message, $parameters = [])
     {
         $this->log->addWarning(
             $origin,

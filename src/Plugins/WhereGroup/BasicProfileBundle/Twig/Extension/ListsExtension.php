@@ -46,7 +46,7 @@ class ListsExtension extends \Twig_Extension
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function getListOptions($profile, $key, $default = array(), $sort = null, $direction = null)
+    public function getListOptions($profile, $key, $default = [], $sort = null, $direction = null)
     {
         $key = preg_replace('/(_[\d]+_?)/s', '', $key);
 

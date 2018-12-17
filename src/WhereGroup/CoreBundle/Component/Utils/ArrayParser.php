@@ -266,7 +266,7 @@ class ArrayParser
 
         if (count($keys) > 0) {
             if (!isset($array[$key])) {
-                $array[$key] = array();
+                $array[$key] = [];
             }
 
             self::arraySet($array[$key], $keys, $value);

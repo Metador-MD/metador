@@ -34,7 +34,7 @@ class XmlAssocArrayReader implements IContextReader
     {
         $this->xmlReader = $xmlReader;
         $this->writer = $writer;
-        $this->xmlAssocArray = array();
+        $this->xmlAssocArray = [];
     }
 
     /**
@@ -65,7 +65,7 @@ class XmlAssocArrayReader implements IContextReader
             $node[self::KEY_ATTRS] = $attrs;
         }
         if (!$this->path) {
-            $this->path = array();
+            $this->path = [];
             $this->xmlAssocArray = array($node);
             $this->path[] =& $this->xmlAssocArray[0];
         } else {
@@ -90,7 +90,7 @@ class XmlAssocArrayReader implements IContextReader
     public function getAttrs()
     {
         if ($this->xmlReader->hasAttributes) {
-            $attrs = array();
+            $attrs = [];
             $attributeCount = $this->xmlReader->attributeCount;
             for ($i = 0; $i < $attributeCount; $i++) {
                 $this->xmlReader->moveToAttributeNo($i);

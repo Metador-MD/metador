@@ -16,7 +16,7 @@ class AjaxResponse extends JsonResponse
      * @param int $status
      * @param array $headers
      */
-    public function __construct($data = null, $status = 200, $headers = array())
+    public function __construct($data = null, $status = 200, $headers = [])
     {
         parent::__construct('', $status, $headers);
 

@@ -41,10 +41,10 @@ class EXmlReader extends XMLReader
      * EXmlReader constructor.
      * @param array $readers
      */
-    public function __construct(array $readers = array())
+    public function __construct(array $readers = [])
     {
         $this->xpath = '';
-        $this->readers = count($readers) > 0 ? $readers : array();
+        $this->readers = count($readers) > 0 ? $readers : [];
         $this->contextReader = null;
         $this->toOutputReader = null;
     }
@@ -56,7 +56,7 @@ class EXmlReader extends XMLReader
      * @param null $readOptions
      * @return null|EXmlReader
      */
-    public static function create($uri, array $readers = array(), $encoding = null, $readOptions = null)
+    public static function create($uri, array $readers = [], $encoding = null, $readOptions = null)
     {
         if (!$uri) {
             return null;

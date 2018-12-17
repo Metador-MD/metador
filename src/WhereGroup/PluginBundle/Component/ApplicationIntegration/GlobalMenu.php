@@ -35,7 +35,7 @@ class GlobalMenu extends Base
      * @param array $params
      * @return $this
      */
-    public function path($path, $params = array())
+    public function path($path, $params = [])
     {
         $this->data[$this->prefix]['path'] = $path;
         $this->data[$this->prefix]['params'] = $params;

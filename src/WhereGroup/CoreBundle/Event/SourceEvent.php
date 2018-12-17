@@ -22,7 +22,7 @@ class SourceEvent extends Event
      */
     public function __construct($slug)
     {
-        $this->messages = array();
+        $this->messages = [];
         $this->setSlug($slug);
     }
 

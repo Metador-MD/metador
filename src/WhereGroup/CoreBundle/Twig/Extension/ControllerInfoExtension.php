@@ -56,7 +56,7 @@ class ControllerInfoExtension extends \Twig_Extension
         if (is_null($this->name)) {
             $controller = $this->requestStack->getCurrentRequest()->get('_controller');
 
-            $matches = array();
+            $matches = [];
 
             preg_match("/Controller\\\([\w]*)Controller/i", $controller, $matches);
             $this->name = isset($matches[1]) ? strtolower($matches[1]) : '';

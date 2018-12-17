@@ -187,7 +187,7 @@ class GroupController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function log($type, $operation, $id, $message, $parameter = array())
+    private function log($type, $operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 

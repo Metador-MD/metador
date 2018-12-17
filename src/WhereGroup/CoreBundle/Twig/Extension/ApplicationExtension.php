@@ -63,7 +63,7 @@ class ApplicationExtension extends \Twig_Extension
         if (empty($data)) {
             $request = $this->requestStack->getCurrentRequest();
             $this->application->update($request->get('_route'), $request->get('_controller'));
-            $this->eventDispatcher->dispatch('application.loading', new ApplicationEvent($this->application, array()));
+            $this->eventDispatcher->dispatch('application.loading', new ApplicationEvent($this->application, []));
         }
 
         return $this->application->getData($type, $key, $default);

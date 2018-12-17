@@ -15,7 +15,7 @@ class Log
     protected $source = '';
     protected $identifier = '';
     protected $message = '';
-    protected $messageParameter = array();
+    protected $messageParameter = [];
     protected $user = null;
     protected $username = null;
     protected $dateTime = null;

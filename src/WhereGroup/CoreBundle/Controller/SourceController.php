@@ -50,7 +50,7 @@ class SourceController extends Controller
                     'edit',
                     '',
                     'Datenquelle existiert bereits.',
-                    array()
+                    []
                 );
 
                 return $this->redirectToRoute('metador_admin_source');
@@ -160,7 +160,7 @@ class SourceController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    private function setFlashWarning($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 
@@ -185,7 +185,7 @@ class SourceController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    private function setFlashSuccess($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 

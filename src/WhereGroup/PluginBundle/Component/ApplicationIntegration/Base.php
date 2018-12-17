@@ -8,7 +8,7 @@ namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
  */
 abstract class Base
 {
-    protected $data   = array();
+    protected $data   = [];
     protected $role   = null;
     protected $prefix = null;
 
@@ -38,7 +38,7 @@ abstract class Base
      * @param null $prefix
      * @return $this
      */
-    public function template($template, $params = array(), $prefix = null)
+    public function template($template, $params = [], $prefix = null)
     {
         $prefix = $this->generatePrefix($prefix);
 

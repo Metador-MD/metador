@@ -133,7 +133,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
      * @param array $params
      * @return string
      */
-    protected function trans($string, $params = array())
+    protected function trans($string, $params = [])
     {
         return @$this
             ->getContainer()

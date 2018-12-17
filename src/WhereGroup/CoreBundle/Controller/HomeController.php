@@ -236,10 +236,10 @@ class HomeController extends Controller
     protected function getSourceConfiguration()
     {
         $profileConfig = $this->getPluginConfiguration();
-        $sourceConfig  = array();
+        $sourceConfig  = [];
 
         foreach ($this->get('metador_source')->all() as $source) {
-            $sourceConfigProfiles = array();
+            $sourceConfigProfiles = [];
 
             foreach ($profileConfig as $key => $profile) {
                 if (is_array($profile['source']) && in_array($source->getSlug(), $profile['source'])) {
@@ -258,14 +258,14 @@ class HomeController extends Controller
 
     protected function getPluginConfiguration()
     {
-        $profileConfig = array();
+        $profileConfig = [];
 
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
 
             $profileConfig[$key] = array(
                 'name'   => $profile['name'],
-                'source' => is_null($configuration) ? array() : $configuration,
+                'source' => is_null($configuration) ? [] : $configuration,
             );
         }
 
@@ -278,6 +278,6 @@ class HomeController extends Controller
      */
     public function heartbeatAction()
     {
-        return new AjaxResponse(array());
+        return new AjaxResponse([]);
     }
 }

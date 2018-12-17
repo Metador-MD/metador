@@ -137,7 +137,7 @@ class KeywordController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashWarning($operation, $id, $message, $parameter = array())
+    private function setFlashWarning($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 
@@ -162,7 +162,7 @@ class KeywordController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = array())
+    private function setFlashSuccess($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 

@@ -62,7 +62,7 @@ class Core
      * @param null $locale
      * @return string
      */
-    public function translate($id, array $parameters = array(), $domain = null, $locale = null)
+    public function translate($id, array $parameters = [], $domain = null, $locale = null)
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
     }
@@ -75,7 +75,7 @@ class Core
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function render($name, array $context = array())
+    public function render($name, array $context = [])
     {
         return $this->templating->render($name, $context);
     }

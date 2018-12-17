@@ -33,7 +33,7 @@ class ListCommand extends ContainerAwareCommand
         $io         = new SymfonyStyle($input, $output);
         $config     = $this->getContainer()->get('metador_plugin')->getConfig();
         $translator = $this->getContainer()->get('translator');
-        $plugins    = array();
+        $plugins    = [];
 
         $io->title($translator->trans('plugin_command_list_title'));
 
