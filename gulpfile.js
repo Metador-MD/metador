@@ -70,7 +70,7 @@ gulp.task('clean', () => {
 
 gulp.task('init', ['clean'], () => {
     composer({ "optimize-autoloader": true });
-    return bower();
+return bower();
 });
 
 gulp.task('ts', function() {
@@ -99,51 +99,51 @@ gulp.task('sass', function() {
 gulp.task('watch', () => {
     livereload.listen();
 
-    gulp.watch(conf.sass.files, ['sass']);
-    gulp.watch('src/**/ts/*.ts', ['ts']);
-    gulp.watch(conf.watch.files).on('change', function(file) {
-        livereload.changed(file.path);
-        browserSync.reload();
-    });
+gulp.watch(conf.sass.files, ['sass']);
+gulp.watch('src/**/ts/*.ts', ['ts']);
+gulp.watch(conf.watch.files).on('change', function(file) {
+    livereload.changed(file.path);
+    browserSync.reload();
+});
 });
 
 gulp.task('browser-sync', () => {
     connect.server({base: 'web'}, () => {
         browserSync({
-            proxy: '127.0.0.1:8000',
-            open: false
-        });
-    });
+                        proxy: '127.0.0.1:8000',
+                        open: false
+                    });
+});
 
-    gulp.watch(conf.watch.files).on('change', function(file) {
-        browserSync.reload();
-    });
+gulp.watch(conf.watch.files).on('change', function(file) {
+    browserSync.reload();
+});
 
-    open('http://localhost:3000/app_dev.php');
+open('http://localhost:3000/app_dev.php');
 });
 
 gulp.task('default', ['watch'], () => {
     connect.server({base: 'web'});
-    open('http://localhost:8000/app_dev.php');
+open('http://localhost:8000/app_dev.php');
 });
 
 gulp.task('transpile', ['sass'], () => {
     if (conf.assets.css.length > 0) {
-        gulp.src(conf.assets.css)
-            .pipe(minifyCSS())
-            .pipe(concat(conf.assets.filename + '.css'))
-            .pipe(gulp.dest(conf.assets.dest));
-    }
+    gulp.src(conf.assets.css)
+        .pipe(minifyCSS())
+        .pipe(concat(conf.assets.filename + '.css'))
+        .pipe(gulp.dest(conf.assets.dest));
+}
 
-    if (conf.assets.js.length > 0) {
-        gulp.src(conf.assets.js)
-            .pipe(uglify())
-            .pipe(concat(conf.assets.filename + '.js'))
-            .pipe(gulp.dest(conf.assets.dest));
-    }
+if (conf.assets.js.length > 0) {
+    gulp.src(conf.assets.js)
+        .pipe(uglify())
+        .pipe(concat(conf.assets.filename + '.js'))
+        .pipe(gulp.dest(conf.assets.dest));
+}
 
-    if (conf.assets.copy.length > 0) {
-        gulp.src(conf.assets.copy)
-            .pipe(gulp.dest(conf.assets.dest));
-    }
+if (conf.assets.copy.length > 0) {
+    gulp.src(conf.assets.copy)
+        .pipe(gulp.dest(conf.assets.dest));
+}
 });

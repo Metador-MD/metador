@@ -1,5 +1,5 @@
 import {dom} from './dom';
-import {Ol4Map, TITLE, UUID} from "./Ol4";
+import {Ol4Map, TITLE, UUID} from "./Ol4Map";
 
 // import * as $ from 'jquery';
 
