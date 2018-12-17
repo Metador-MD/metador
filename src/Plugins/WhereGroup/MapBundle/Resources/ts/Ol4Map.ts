@@ -1,137 +1,16 @@
-import * as ol4 from 'openlayers';// ???
+
+import * as ol from "openlayers";
+import {olx} from "openlayers";
 
 import {LayerTree} from './LayerTree';
 import {DragZoom} from './DragZoom';
-import {Ol4Source, Ol4VectorSource, Ol4WmsSource} from "./Ol4Source"
 import {FeatureInfo} from "./FeatureInfo";
-
-declare class proj4 {
-    static defs(name: string, def: string): void;
-}
-
-// declare function addSource(id: string, title: string, visibility: boolean, opacity: number): void;
-export class Ol4Utils {
-    /* 
-     * units: 'degrees'|'ft'|'m'|'us-ft'
-     */
-    public static resolutionScaleFactor(units: string): number {
-        let dpi = 25.4 / 0.28;
-        let mpu = ol.proj.METERS_PER_UNIT[units];
-        let inchesPerMeter = 39.37;
-        return mpu * inchesPerMeter * dpi;
-    }
-
-    public static resolutionForScale(scale: number, factor: number): number {
-        return scale / factor;
-    }
-
-    public static resolutionsForScales(scales: number[], units: string): number[] {
-        let resolutions = [];
-        let factor = Ol4Utils.resolutionScaleFactor(units);
-        for (let i = 0; i < scales.length; i++) {
-            resolutions.push(Ol4Utils.resolutionForScale(scales[i], factor));
-        }
-        return resolutions;
-    }
-
-    public static scaleForResolution(resolution: number, factor: number): number {
-        return resolution * factor;
-    }
-
-    public static scalesForResolutions(resolutions: number[], units: string): number[] {
-        let scales = [];
-        let factor = Ol4Utils.resolutionScaleFactor(units);
-        for (let i: number = 0; i < resolutions.length; i++) {
-            scales.push(Ol4Utils.scaleForResolution(resolutions[i], factor));
-        }
-        return scales;
-    }
-
-    public static initProj4Defs(proj4Defs: any): void {
-        for (const name in proj4Defs) {
-            proj4.defs(name, proj4Defs[name]);
-            let pr = ol.proj.get(name);
-        }
-    }
-
-    public static getProj(projCode: string): ol.proj.Projection {
-        return ol.proj.get(projCode);
-    }
-
-    public static getStyle(options: any, style: ol.style.Style = null): ol.style.Style {
-        let style_ = style ? style : new ol.style.Style();
-        style_.setFill(new ol.style.Fill(options['fill']));
-        style_.setStroke(new ol.style.Stroke(options['stroke']));
-        if (options['image'] && options['image']['circle']) {
-            style_.setImage(new ol.style.Circle({
-                    radius: options['image']['circle']['radius'],
-                    fill: new ol.style.Fill({
-                        color: options['image']['circle']['fill']['color']
-                    })
-                }
-            ));
-        }
-        return style_;
-        //
-        // return new ol.style_.Style({
-        //     fill: new ol.style_.Fill(options['fill']),
-        //     stroke: new ol.style_.Stroke(options['stroke'])//,
-        //     // image: new ol.style_.Circle({
-        //     //     radius: 7,
-        //     //     fill: new ol.style_.Fill(options['fill'])
-        //     // })
-        // });
-    }
-
-// fill
-// {
-//     color: rgba(255, 255, 255, 0.2)
-// }
-// stroke
-// {
-//     color: '#ffcc33',
-//     width: 2
-//     dash:
-// }
-// image
-}
-
-export class Ol4Geom {
-    protected geom: ol.geom.Geometry = null;
-    protected proj: ol.proj.Projection = null;
-
-    constructor(geom: ol.geom.Geometry, proj: ol.proj.Projection) {
-        this.geom = geom;
-        this.proj = proj;
-    }
-
-    getGeom(): ol.geom.Geometry {
-        return this.geom;
-    }
-
-    getProj(): ol.proj.Projection {
-        return this.proj;
-    }
-
-    getExtent(proj: ol.proj.Projection): ol.Extent {
-        if (this.proj !== proj) {
-            return (<ol.geom.Geometry>(<any> this.geom).clone()).transform(this.proj, proj).getExtent();
-        } else {
-            return (<ol.geom.Geometry>(<any> this.geom).clone()).getExtent();
-        }
-    }
-
-    public getPolygonForExtent(proj: ol.proj.Projection) {
-        return ol.geom.Polygon.fromExtent(this.getExtent(proj));
-    }
-}
-
-export class Ol4Extent extends Ol4Geom {
-    public static fromArray(ordinates: number[], proj: ol.proj.Projection): Ol4Extent {
-        let geom = new ol.geom.MultiPoint([[ordinates[0], ordinates[1]], [ordinates[2], ordinates[3]]]);
-        return new Ol4Extent(geom, proj);
-    }
-}
+import {Ol4Extent} from "./Ol4Extent";
+import {Ol4Drawer, SHAPES} from "./Ol4Drawer";
+import {Ol4WmsSource} from "./Ol4WmsSource";
+import {Ol4VectorSource} from "./Ol4VectorSource";
+import {Ol4Utils} from "./Ol4Utils";
+import {Ol4Geom} from "./Ol4Geom";
 
 export const UUID: string = 'uuid';
 export const LAYER_UUID: string = 'layeruuid';
@@ -145,7 +24,6 @@ export class Ol4Map {
     private static _instance: Ol4Map = null; // singleton
     private olMap: ol.Map = null;
     private scales: number[];
-    //    protected proj: ol.proj.Projection = null;
     private startExtent: Ol4Extent = null;  // xmin, ymin, xmax, ymax options['startExtent']
     private maxExtent: Ol4Extent = null;
     private drawer: Ol4Drawer;
@@ -154,7 +32,6 @@ export class Ol4Map {
     private layertree: LayerTree;
     private styles: Object;
     private hgLayer: ol.layer.Vector;
-    // protected dragzoom: ol.interaction.DragZoom;
     private dragzoom: DragZoom;
     private featureInfo: FeatureInfo;
 
@@ -223,13 +100,21 @@ export class Ol4Map {
             }
         }
         this.olMap.addControl(new ol.control.ScaleLine());
-
+        // // zoom to max extent
+        // icon.className = "icon-earth";
+        // this.olMap.addControl(new ol.control.ZoomToExtent({
+        //     extent: this.maxExtent.getExtent(proj),
+        //     label: icon,
+        //     tipLabel: "Zoom auf gesamte Ausdehnung"
+        // }));
+        // zoom to start extent
         let icon = document.createElement('span');
-        icon.className = "icon-earth";
+        icon = document.createElement('span');
+        icon.className = "icon-home";
         this.olMap.addControl(new ol.control.ZoomToExtent({
-            extent: this.maxExtent.getExtent(proj),
+            extent: this.startExtent.getExtent(proj),
             label: icon,
-            tipLabel: "Zoom auf gesamte Ausdehnung"
+            tipLabel: "Zoom auf die Start-Ausdehnung"
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
         this.olMap.addControl(new ol.control.MousePosition(
@@ -242,7 +127,7 @@ export class Ol4Map {
             // }
         ));
         let mapsize = this.olMap.getSize();
-        if(mapsize[0] !== 0 && mapsize[1]) {
+        if (mapsize[0] !== 0 && mapsize[1]) {
             this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
         }
         let hgl = this.vecSource.createLayer(
@@ -346,10 +231,10 @@ export class Ol4Map {
 
     addLayer(layer: ol.layer.Base, addToLayertree: boolean = false): ol.layer.Base {
         if (layer instanceof ol.layer.Image) {
-            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
+            let group: ol.layer.Group = <ol.layer.Group>this.findLayer(LAYER_IMAGE);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
         } else if (layer instanceof ol.layer.Vector) {
-            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_VECTOR);
+            let group: ol.layer.Group = <ol.layer.Group>this.findLayer(LAYER_VECTOR);
             group.getLayers().insertAt(group.getLayers().getLength(), layer);
         } else {
             return null;
@@ -367,7 +252,7 @@ export class Ol4Map {
     moveLayer(uuid: string, oldPos: number, newPos: number): void {
         let layer: ol.layer.Base = this.findLayer(uuid);
         if (layer instanceof ol.layer.Image) {
-            let group: ol.layer.Group = <ol.layer.Group> this.findLayer(LAYER_IMAGE);
+            let group: ol.layer.Group = <ol.layer.Group>this.findLayer(LAYER_IMAGE);
             let layerll = group.getLayers().remove(layer);
             group.getLayers().insertAt(newPos, layerll);
         }
@@ -458,7 +343,7 @@ export class Ol4Map {
 
     getFirstGeomForSearch(): object {
         let features = this.drawer.getLayer().getSource().getFeatures();
-        if(features.length === 0) {
+        if (features.length === 0) {
             return null;
         }
         let geojson = new ol.format.GeoJSON().writeFeatureObject(
@@ -478,7 +363,7 @@ export class Ol4Map {
         let olMap = this.olMap;
         this.vecSource.clearFeatures(this.drawer.getLayer());
         this.vecSource.showFeatures(this.drawer.getLayer(), geoJson);
-        let multiPoint: ol.geom.MultiPoint = <ol.geom.MultiPoint> Ol4Extent.fromArray(
+        let multiPoint: ol.geom.MultiPoint = <ol.geom.MultiPoint>Ol4Extent.fromArray(
             this.drawer.getLayer().getSource().getExtent(),
             this.olMap.getView().getProjection()
         ).getGeom();
@@ -499,7 +384,7 @@ export class Ol4Map {
         this.setDoubleClickZoom(false);
         let ol4map = this;
         let olMap = this.olMap;
-        const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string> shapeType] : shapeType;
+        const shape: SHAPES = typeof shapeType === 'string' ? SHAPES[<string>shapeType] : shapeType;
         if (this.drawer.getInteraction()) {
             this.olMap.removeInteraction(this.drawer.getInteraction());
         }
@@ -516,7 +401,7 @@ export class Ol4Map {
             );
             this.drawer.getInteraction().on(
                 'drawend',
-                function (e) {
+                function (e: any) { // TODO replace any with real class name
                     let geojson = new ol.format.GeoJSON().writeFeatureObject(
                         e.feature,
                         {
@@ -551,73 +436,5 @@ export class Ol4Map {
     }
 }
 
-export enum SHAPES {NONE, BOX, POLYGON}
-;
-
-export class Ol4Drawer {
-    // private static _instance: Ol4Drawer;
-    protected layer: ol.layer.Vector;
-    protected interaction: ol.interaction.Draw;
-
-    constructor(layer: ol.layer.Vector) {
-        this.layer = layer;
-    }
-
-    public getLayer(): ol.layer.Vector {
-        return this.layer;
-    }
-
-    public getInteraction() {
-        return this.interaction;
-    }
-
-    public setInteraction(type: SHAPES, drawStyle: ol.style.Style) {
-        switch (type) {
-            case SHAPES.BOX:
-                this.interaction = new ol.interaction.Draw({
-                    source: this.layer.getSource(),
-                    type: 'Circle',
-                    style: drawStyle,
-                    geometryFunction: createBox() // ol.d.ts has no function "ol.interaction.Draw.createBox()"
-                });
-                break;
-            case SHAPES.POLYGON:
-                this.interaction = new ol.interaction.Draw({
-                    source: this.layer.getSource(),
-                    type: 'Polygon',
-                    style: drawStyle
-                });
-                break;
-            default:
-                this.interaction = null;
-        }
-    }
-}
-
-/**
- * ol.d.ts has no function "ol.interaction.Draw.createBox()"
- * @returns {(coordinates:any, opt_geometry:any)=>any|ol.geom.Polygon}
- */
-export function createBox() {
-    return (
-        /**
-         * @param {ol.Coordinate|Array.<ol.Coordinate>|Array.<Array.<ol.Coordinate>>} coordinates
-         * @param {ol.geom.SimpleGeometry=} opt_geometry
-         * @return {ol.geom.SimpleGeometry}
-         */
-        function (coordinates, opt_geometry) {
-            var extent = ol.extent.boundingExtent(coordinates);
-            var geometry = opt_geometry || new ol.geom.Polygon(null);
-            geometry.setCoordinates([[
-                ol.extent.getBottomLeft(extent),
-                ol.extent.getBottomRight(extent),
-                ol.extent.getTopRight(extent),
-                ol.extent.getTopLeft(extent),
-                ol.extent.getBottomLeft(extent)
-            ]]);
-            return geometry;
-        }
-    );
-}
 
 declare var metador: any;

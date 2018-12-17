@@ -25,7 +25,7 @@
     "normalize-css": "^5.0.0",
     "zebra_datepicker": "https://github.com/stefangabos/Zebra_Datepicker.git#bca385a",
     "proj4js": "https://github.com/proj4js/proj4js/archive/2.4.3.zip",
-    "OpenLayers": "https://github.com/openlayers/openlayers/releases/download/v4.0.1/v4.0.1-dist.zip",
+    "OpenLayers": "https://github.com/openlayers/openlayers/releases/download/v4.6.1/v4.6.1-dist.zip",
     "jquery-form": "^4.2.1",
     "highlightjs": "^9.10.0",
     "jquery": "^2.2"

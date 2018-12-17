@@ -1,4 +1,6 @@
-import {dom} from './dom';
+
+import {dom} from "./dom";
+import * as ol from 'openlayers';
 
 export class DragZoom {
     private dragzoom: ol.interaction.DragZoom;

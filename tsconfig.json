@@ -6,23 +6,15 @@
         "sourceMap": true,
         "declaration": false,
         "noImplicitAny": false,
-        "removeComments": true,
-        "typeRoots": [
-            "./typings/"
-        ],
-        "types": [
-            "es6-shim",
-            "openlayers"
-        ]
+        "removeComments": true
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/ts/*.ts"
     ],
     "exclude": [
         "app",
         "bin",
         "node_modules",
-        "testdata",
         "var",
         "vendor",
         "web"

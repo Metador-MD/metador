@@ -1,4 +1,5 @@
-import * as metador from './Ol4';
+
+import * as metador from './Ol4Map';
 
 declare var Configuration: any;
 

@@ -1,5 +1,8 @@
-import {TITLE, UUID} from "./Ol4";
+
+
 import {dom} from './dom';
+import * as ol from 'openlayers';
+import {TITLE, UUID} from "./Ol4Map";
 
 export class FeatureInfo {
     private static itemTagName: string = 'span';
