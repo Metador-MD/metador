@@ -248,4 +248,9 @@ abstract class Search
      * @return ExprHandler
      */
     abstract public function createExpression();
+
+    /**
+     * @return array
+     */
+    abstract public function find();
 }
