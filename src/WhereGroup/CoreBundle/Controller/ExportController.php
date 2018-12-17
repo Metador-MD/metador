@@ -5,7 +5,7 @@ namespace WhereGroup\CoreBundle\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\PDFExport;

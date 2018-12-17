@@ -6,7 +6,7 @@ use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;

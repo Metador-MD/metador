@@ -3,7 +3,7 @@
 namespace WhereGroup\AddressBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 

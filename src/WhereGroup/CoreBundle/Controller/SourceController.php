@@ -4,7 +4,7 @@ namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Entity\Source;
 use WhereGroup\CoreBundle\Event\SourceEvent;

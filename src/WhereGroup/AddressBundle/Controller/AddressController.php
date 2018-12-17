@@ -7,7 +7,7 @@ use WhereGroup\AddressBundle\Entity\Address;
 use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use WhereGroup\AddressBundle\Form\AddressType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;

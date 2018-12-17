@@ -4,7 +4,7 @@ namespace Plugins\WhereGroup\BasicProfileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 
 /**

@@ -4,7 +4,7 @@ namespace WhereGroup\CoreBundle\Controller;
 
 use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\CsvResponse;

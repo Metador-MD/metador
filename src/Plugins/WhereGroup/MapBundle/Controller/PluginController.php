@@ -9,7 +9,7 @@ use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use ShapeFile\ShapeFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
