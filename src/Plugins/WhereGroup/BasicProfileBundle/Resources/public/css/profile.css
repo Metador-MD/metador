@@ -35,12 +35,12 @@
 
 .light-error {
   color: #444;
-  background-color: #fbece8;
-  border: 1px solid #f5c8bb; }
+  background-color: #f6cacc;
+  border: 1px solid #ef9ea3; }
 
 .light-error:hover {
-  background-color: #fbe8e3;
-  border: 1px solid #f4c4b7; }
+  background-color: #f6c5c8;
+  border: 1px solid #ef999f; }
 
 .dark-info > a, .dark-success > a, .dark-warning > a, .dark-error > a {
   color: #fff; }
@@ -83,12 +83,12 @@
 
 .dark-error {
   color: #fff;
-  background-color: #e15b36;
-  border: 1px solid #c6421e; }
+  background-color: #d2222d;
+  border: 1px solid #a61b24; }
 
 .dark-error:hover {
-  background-color: #c6421e;
-  border: 1px solid #b03b1a; }
+  background-color: #a61b24;
+  border: 1px solid #90171f; }
 
 .md .no-user-select, .md .switch-row .switch-label, .switch-row .md .switch-label, .md .center > .center-right > .profile-content-menu > .content-menu-list > .content-menu-list-item {
   -webkit-user-select: none;
@@ -160,7 +160,7 @@
   font-size: .9em; }
 
 .md .center > .center-right > .profile-content-menu > .content-menu-list > .content-menu-list-item.act.error, .md .center > .center-right > .profile-content-menu > .content-menu-list > .content-menu-list-item.error {
-  box-shadow: inset 0 2px 0 #e15b36; }
+  box-shadow: inset 0 2px 0 #d2222d; }
 
 .md .center > .center-right > .profile-content-menu > .content-menu-list > .content-menu-list-item.act {
   bottom: -1px;

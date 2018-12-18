@@ -12,9 +12,9 @@ parameters:
     external_database_password: ~
     external_database_charset: UTF8
 
-    metador_temp_dir: '%kernel.root_dir%/../var/temp/'
-    metador_plugin_dir: '%kernel.root_dir%/../src/Plugins/'
-    maintenance_file: '%kernel.root_dir%/../web/maintenance.php'
+    metador_temp_dir: '%kernel.project_dir%/var/temp/'
+    metador_plugin_dir: '%kernel.project_dir%/src/Plugins/'
+    maintenance_file: '%kernel.project_dir%/web/maintenance.php'
     operates_on_url: ''
 
     cache_host: 127.0.0.1

@@ -5,6 +5,7 @@ namespace WhereGroup\CoreBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Translation\TranslatorInterface;
 use WhereGroup\CoreBundle\Entity\HealthCheck;
+use WhereGroup\CoreBundle\Entity\Log;
 
 /**
  * Class HealthCheckEvent
@@ -12,32 +13,59 @@ use WhereGroup\CoreBundle\Entity\HealthCheck;
  */
 class HealthCheckEvent extends Event
 {
-    private $log        = null;
+    private $data = [];
     private $translator = null;
+    private $hasError = false;
+    private $errorCount = 0;
 
     /**
      * HealthCheckEvent constructor.
-     * @param HealthCheck $log
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        HealthCheck $log,
-        TranslatorInterface $translator
-    ) {
-        $this->log        = $log;
+    public function __construct(TranslatorInterface $translator)
+    {
         $this->translator = $translator;
     }
 
     /**
-     * @param $origin
-     * @param $message
-     * @param array $parameters
+     * @param HealthCheck $check
+     * @return $this
      */
-    public function addWarning($origin, $message, $parameters = [])
+    public function add(HealthCheck $check) : HealthCheckEvent
     {
-        $this->log->addWarning(
-            $origin,
-            $this->translator->trans($message, $parameters)
-        );
+        // Translate
+        $check->setMessage($this->translator->trans($check->getMessage(), $check->getParameters()));
+
+        if ($check->getResult() !== Log::SUCCESS && $check->getResult() !== Log::INFO) {
+            $this->hasError = true;
+            ++$this->errorCount;
+        }
+
+        $this->data[] = $check;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasError(): bool
+    {
+        return (bool)$this->hasError;
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCount() : int
+    {
+        return (int)$this->errorCount;
+    }
+
+    /**
+     * @return HealthCheck[]
+     */
+    public function getLogs() : array
+    {
+        return $this->data;
     }
 }

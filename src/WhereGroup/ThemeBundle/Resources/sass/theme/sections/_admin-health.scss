@@ -1,0 +1,7 @@
+@import '../config';
+
+.health-table {
+    & > tbody > tr > td > p {
+        margin: 0;
+    }
+}

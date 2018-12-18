@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\HealthCheckEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityManager;
@@ -10,7 +11,7 @@ use Doctrine\ORM\EntityManager;
  * Class HealthCheckListener
  * @package WhereGroup\CoreBundle\EventListener
  */
-class HealthCheckListener
+class HealthCheckListener extends BasicHealthcheckListener
 {
     protected $em       = null;
     protected $driver   = null;
@@ -55,12 +56,23 @@ class HealthCheckListener
     /**
      * @param HealthCheckEvent $healthCheck
      * @throws \Doctrine\ORM\ORMException
+     * @throws \Exception
      */
     public function onCheck(HealthCheckEvent $healthCheck)
     {
+        $this->healthCheck = $healthCheck;
+        $this->add($this->databaseConnection(), 'healthcheck_database_connection_error');
+    }
+
+    /**
+     * @return string
+     * @throws \Doctrine\ORM\ORMException
+     */
+    private function databaseConnection() : string
+    {
         /** @var EntityManagerInterface $manager */
         $manager = EntityManager::create(
-            array(
+            [
                 'driver'   => $this->driver,
                 'user'     => $this->user,
                 'host'     => $this->host,
@@ -68,15 +80,16 @@ class HealthCheckListener
                 'dbname'   => $this->name,
                 'path'     => $this->path,
                 'port'     => $this->port
-            ),
+            ],
             $this->em->getConfiguration(),
             $this->em->getEventManager()
         );
 
         try {
             $manager->getConnection()->connect();
+            return Log::SUCCESS;
         } catch (\Exception $e) {
-            $healthCheck->addWarning('Core', 'healthcheck_database_connection_error');
+            return Log::ERROR;
         }
     }
 }

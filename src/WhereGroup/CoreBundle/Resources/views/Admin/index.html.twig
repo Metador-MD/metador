@@ -1,26 +1,6 @@
 {% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
 {% block content %}
-    {% if log.warning is defined and log.warning is not empty %}
-        <div class="notify close warning">
-            <ul>
-                {% for log in log.warning %}
-                    <li>({{ log.origin }}) {{ log.message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
-    {% if log.error is defined and log.error is not empty %}
-        <div class="notify close error">
-            <ul>
-                {% for log in log.error %}
-                    <li>({{ log.origin }}) {{ log.message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
     <div class="grid padding responsive">
         {% for item in applicationGet('app-information') %}
             {% if loop.index0 % 4 == 0 %}

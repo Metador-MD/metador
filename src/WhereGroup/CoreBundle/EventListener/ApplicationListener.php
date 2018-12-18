@@ -52,6 +52,12 @@ class ApplicationListener
                     ->path('metador_admin_index')
                     ->setRole('ROLE_SYSTEM_GEO_OFFICE')
             )->add(
+                $app->get('AdminMenu', 'health')
+                    ->icon('icon-aid-kit')
+                    ->label('Selbsttest')
+                    ->path('metador_admin_health')
+                    ->setRole('ROLE_SYSTEM_SUPERUSER')
+            )->add(
                 $app->get('AdminMenu', 'settings')
                     ->icon('icon-wrench')
                     ->label('Einstellungen')

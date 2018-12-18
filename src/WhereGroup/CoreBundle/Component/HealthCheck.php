@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Component;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use WhereGroup\CoreBundle\Event\HealthCheckEvent;
-use WhereGroup\CoreBundle\Entity\HealthCheck as HealthCheckEntity;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -13,7 +12,10 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class HealthCheck
 {
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
+
+    /** @var TranslatorInterface */
     private $translatorInterface;
 
     /**
@@ -21,37 +23,29 @@ class HealthCheck
      * @param EventDispatcherInterface $eventDispatcher
      * @param TranslatorInterface $translatorInterface
      */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        TranslatorInterface $translatorInterface
-    ) {
+    public function __construct(EventDispatcherInterface $eventDispatcher, TranslatorInterface $translatorInterface)
+    {
         $this->eventDispatcher = $eventDispatcher;
         $this->translatorInterface = $translatorInterface;
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
-        unset(
-            $this->eventDispatcher,
-            $this->translatorInterface
-        );
+        unset($this->eventDispatcher, $this->translatorInterface);
     }
 
     /**
-     * @return mixed
+     * @return HealthCheckEvent
      */
-    public function check()
+    public function check() : HealthCheckEvent
     {
-        $healthCheckEntity = new HealthCheckEntity();
+        $event = new HealthCheckEvent($this->translatorInterface);
 
-        $this->eventDispatcher->dispatch(
-            'application.health-check',
-            new HealthCheckEvent(
-                $healthCheckEntity,
-                $this->translatorInterface
-            )
-        );
+        $this->eventDispatcher->dispatch('application.health-check', $event);
 
-        return $healthCheckEntity->getResult();
+        return $event;
     }
 }

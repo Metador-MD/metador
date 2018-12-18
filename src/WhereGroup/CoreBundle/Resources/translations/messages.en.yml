@@ -1,13 +1,15 @@
 Dashboard: Dashboard
 Administration: Administration
 Übersicht: Index
-healthcheck_success_message: "Everything seems file :)"
-healthcheck_error_message: "Some problems detected"
+healthcheck_success_message: "System ok."
+healthcheck_error_message: "Some problems detected."
 healthcheck_title: "Health-Check"
 healthcheck_table_origin: "Origin"
 healthcheck_table_message: "Message"
-healthcheck_folder_not_writeable: "Folder '%path%' not writeable!"
-healthcheck_database_connection_error: "Unable to connect to the database"
+healthcheck_folder_not_writeable: "Write access for **%path%**"
+healthcheck_folder_exists: "Folder **%path%** exists"
+healthcheck_reachability: "Reachability of **%service%**"
+healthcheck_database_connection_error: "Database connection"
 command_init_db_add_group: "Added group %group%"
 command_init_db_add_user: "Added user %user% with password %password%"
 command_init_db_add_group_to_user: "Added user %user% to group %group%"

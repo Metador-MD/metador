@@ -8,7 +8,12 @@ namespace WhereGroup\CoreBundle\Entity;
  */
 class Log
 {
-    protected $type = 'info';
+    const INFO = 'info';
+    const ERROR = 'error';
+    const WARNING = 'warning';
+    const SUCCESS = 'success';
+
+    protected $type = self::INFO;
     protected $category = 'system';
     protected $subcategory = '';
     protected $operation = '';

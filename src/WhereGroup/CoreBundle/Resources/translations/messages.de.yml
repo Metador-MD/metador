@@ -1,13 +1,15 @@
 Dashboard: Dashboard
 Administration: Administration
 Übersicht: Übersicht
-healthcheck_success_message: "Es scheint alles in Ordnung zu sein :)"
-healthcheck_error_message: "Es konnten einige Probleme festgestellt werden"
+healthcheck_success_message: "System in Ordnung."
+healthcheck_error_message: "Es wurde mindestens ein Problem gefunden."
 healthcheck_title: "Health-Check"
 healthcheck_table_origin: "Herkunft"
 healthcheck_table_message: "Meldung"
-healthcheck_folder_not_writeable: "Ordner '%path%' nicht beschreibbar!"
-healthcheck_database_connection_error: "Fehler bei der Verbindung zur Datenbank"
+healthcheck_folder_not_writeable: "Schreibrechte für **%path%**"
+healthcheck_folder_exists: "Ordner **%path%** vorhanden"
+healthcheck_reachability: "Erreichbarkeit: **%service%**"
+healthcheck_database_connection_error: "Erreichbarkeit der Datenbank"
 command_init_db_add_group: "Gruppe %group% erstellt"
 command_init_db_add_user: "Benutzer %user% mit Kennwort %password% erstellt"
 command_init_db_add_group_to_user: "Benutzer %user% zur Gruppe %group% hinzugefügt"

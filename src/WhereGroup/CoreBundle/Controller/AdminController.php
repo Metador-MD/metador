@@ -3,10 +3,8 @@
 namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use WhereGroup\CoreBundle\Component\AjaxResponse;
 
 /**
  * @Route("/admin")
@@ -14,16 +12,29 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_index")
-     * @Method("GET")
+     * @Route("/", name="metador_admin_index", methods={"GET"})
      */
     public function indexAction()
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return $this->render("@MetadorCore/Admin/index.html.twig", array(
-            'log' => $this->get('metador_healthcheck')->check()
-        ));
+        return $this->render("@MetadorCore/Admin/index.html.twig");
+    }
+
+    /**
+     * @Route("/health", name="metador_admin_health", methods={"GET"})
+     */
+    public function healthCheckAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
+        $event = $this->get('metador_healthcheck')->check();
+
+        return $this->render("@MetadorCore/Admin/health.html.twig", [
+            'hasError'   => $event->hasError(),
+            'errorCount' => $event->getErrorCount(),
+            'logs'       => $event->getLogs()
+        ]);
     }
 
     /**

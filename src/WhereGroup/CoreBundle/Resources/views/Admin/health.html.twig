@@ -1,0 +1,32 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block content %}
+    {% if not hasError %}
+        <p class="notify success">
+            <strong>{% trans %}healthcheck_success_message{% endtrans %}</strong>
+        </p>
+    {% else %}
+        <p class="notify error">
+            <strong>{% trans %}healthcheck_error_message{% endtrans %}</strong>
+        </p>
+    {% endif %}
+
+    <table class="table bordered health-table">
+    {% for log in logs  %}
+        <tr class="{% if log.result == 'info' %}info{% elseif log.result != 'success' %}error{% endif %}" title="{{ log.origin }}">
+            <td class="icon-column">
+                {% if log.result == 'info' %}
+                    <span class="icon-info1"></span>
+                {% elseif log.result == 'warning' %}
+                    <span class="icon-exclamation"></span>
+                {% elseif log.result == 'error' %}
+                    <span class="icon-cross"></span>
+                {% elseif log.result == 'success' %}
+                    <span class="icon-checkmark"></span>
+                {% endif %}
+            </td>
+            <td>{{ log.message|md2html }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

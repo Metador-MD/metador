@@ -55,15 +55,39 @@
                 }
             }
 
-            &:not(.no-bg):nth-child(1n) {
-                & > td {
-                    background-color: $background;
+            &:not(.no-bg):nth-child(1n) > td {
+                background-color: $background;
+            }
+
+            &:not(.no-bg):nth-child(2n) > td {
+                background-color: lighten($background, 2%);
+            }
+
+            &:not(.no-bg):nth-child(1n).error > td {
+                background-color: lighten($error, 40%);
+                &.icon-column {
+                    color: $error;
                 }
             }
 
-            &:not(.no-bg):nth-child(2n) {
-                & > td {
-                    background-color: lighten($background, 2%);
+            &:not(.no-bg):nth-child(2n).error > td {
+                background-color: lighten($error, 42%);
+                &.icon-column {
+                    color: $error;
+                }
+            }
+
+            &:not(.no-bg):nth-child(1n).info > td {
+                background-color: lighten($info, 40%);
+                &.icon-column {
+                    color: $info;
+                }
+            }
+
+            &:not(.no-bg):nth-child(2n).info > td {
+                background-color: lighten($info, 42%);
+                &.icon-column {
+                    color: $info;
                 }
             }
         }
