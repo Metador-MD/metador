@@ -2,6 +2,7 @@
 
 namespace WhereGroup\PluginBundle\EventListener;
 
+use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -10,6 +11,13 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     /**
      * @param ApplicationEvent $event
      * @throws \Exception
@@ -17,8 +25,13 @@ class ApplicationListener
     public function onLoading(ApplicationEvent $event)
     {
         $app = $event->getApplication();
+        $conf = $this->configuration->get('administration', 'plugin', 'metador_core', []);
 
-        if ($app->routeStartsWith('metador_admin')) {
+        if (!is_array($conf)) {
+            $conf = [];
+        }
+
+        if ($app->routeStartsWith('metador_admin') && in_array('plugin', $conf)) {
             $app->add(
                 $app->get('AdminMenu', 'plugin')
                     ->icon('icon-puzzle-piece')

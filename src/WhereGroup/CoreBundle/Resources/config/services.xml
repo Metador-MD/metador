@@ -118,6 +118,7 @@
             <argument type="service" id="metador_metadata" />
             <argument type="service" id="metador_cache" />
             <argument type="service" id="twig"/>
+            <argument type="service" id="metador_configuration" />
         </service>
         <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">
             <tag name="kernel.event_listener" event="application.health-check" method="onCheck" />

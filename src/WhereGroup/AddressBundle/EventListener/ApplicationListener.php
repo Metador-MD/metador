@@ -3,6 +3,7 @@
 namespace WhereGroup\AddressBundle\EventListener;
 
 use WhereGroup\AddressBundle\Component\Address;
+use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
 /**
@@ -12,14 +13,17 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
 class ApplicationListener
 {
     protected $address;
+    protected $configuration;
 
     /**
      * ApplicationListener constructor.
      * @param Address $address
+     * @param Configuration $configuration
      */
-    public function __construct(Address $address)
+    public function __construct(Address $address, Configuration $configuration)
     {
         $this->address = $address;
+        $this->configuration = $configuration;
     }
 
     public function __destruct()
@@ -34,8 +38,13 @@ class ApplicationListener
     public function onLoading(ApplicationEvent $event)
     {
         $app = $event->getApplication();
+        $conf = $this->configuration->get('administration', 'plugin', 'metador_core', []);
 
-        if ($app->routeStartsWith('metador_admin')) {
+        if (!is_array($conf)) {
+            $conf = [];
+        }
+
+        if ($app->routeStartsWith('metador_admin') && in_array('address', $conf)) {
             $app->add(
                 $app->get('AdminMenu', 'address')
                     ->icon('icon-address-book')

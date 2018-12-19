@@ -4,6 +4,16 @@ metador_core:
     name: Hauptanwendung
     active: true
     settings:
+        administration:
+            type: multi
+            label: Administrationsoberflächen
+            options:
+                health: Selbsttest
+                source: Datenquellen
+                plugin: Plugins
+                address: Adressen
+                lists: Auswahllisten
+                keywords: Schlüsselwörter
         date_format:
             type: string
             label: Datumsformat
@@ -31,6 +41,10 @@ metador_core:
         proxy_pass:
             type: string
             label: Proxy Password
+        proxy_ignore:
+            type: text
+            label: Proxy ignore Hosts
+            default: 'localhost, 127.0.0.1'
         search_hits:
             type: string
             label: Suchergebnisse pro Seite

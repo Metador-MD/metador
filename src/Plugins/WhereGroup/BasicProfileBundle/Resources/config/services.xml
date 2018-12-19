@@ -32,6 +32,7 @@
         </service>
         <service id="metador_lists_app_listener" class="%wheregroup.lists.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+            <argument type="service" id="metador_configuration" />
         </service>
 
         <!-- TWIG EXTENSION -->

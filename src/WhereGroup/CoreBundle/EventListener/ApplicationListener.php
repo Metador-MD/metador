@@ -4,6 +4,7 @@ namespace WhereGroup\CoreBundle\EventListener;
 
 use Twig_Environment;
 use WhereGroup\CoreBundle\Component\Cache;
+use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Component\MetadataInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
 
@@ -16,18 +17,25 @@ class ApplicationListener
     private $metadata;
     private $cache;
     private $templating;
+    private $configuration;
 
     /**
      * ApplicationListener constructor.
      * @param MetadataInterface $metadata
      * @param Cache $cache
      * @param Twig_Environment $templating
+     * @param Configuration $configuration
      */
-    public function __construct(MetadataInterface $metadata, Cache $cache, Twig_Environment $templating)
-    {
+    public function __construct(
+        MetadataInterface $metadata,
+        Cache $cache,
+        Twig_Environment $templating,
+        Configuration $configuration
+    ) {
         $this->metadata = $metadata;
         $this->cache = $cache;
         $this->templating = $templating;
+        $this->configuration = $configuration;
     }
 
     public function __destruct()
@@ -45,6 +53,11 @@ class ApplicationListener
 
         // ADMIN AREA
         if ($app->routeStartsWith('metador_admin')) {
+            $conf = $this->configuration->get('administration', 'plugin', 'metador_core', []);
+            if (!is_array($conf)) {
+                $conf = [];
+            }
+
             $app->add(
                 $app->get('AdminMenu', 'index')
                     ->icon('icon-eye')
@@ -52,25 +65,33 @@ class ApplicationListener
                     ->path('metador_admin_index')
                     ->setRole('ROLE_SYSTEM_GEO_OFFICE')
             )->add(
-                $app->get('AdminMenu', 'health')
-                    ->icon('icon-aid-kit')
-                    ->label('Selbsttest')
-                    ->path('metador_admin_health')
-                    ->setRole('ROLE_SYSTEM_SUPERUSER')
-            )->add(
                 $app->get('AdminMenu', 'settings')
                     ->icon('icon-wrench')
                     ->label('Einstellungen')
                     ->path('metador_admin_settings')
                     ->setRole('ROLE_SYSTEM_SUPERUSER')
-            )->add(
-                $app->get('AdminMenu', 'source')
-                    ->icon('icon-database')
-                    ->label('Datenquellen')
-                    ->path('metador_admin_source')
-                    ->active($app->routeStartsWith('metador_admin_source'))
-                    ->setRole('ROLE_SYSTEM_SUPERUSER')
             );
+
+            if (in_array('health', $conf)) {
+                $app->add(
+                    $app->get('AdminMenu', 'health')
+                        ->icon('icon-aid-kit')
+                        ->label('Selbsttest')
+                        ->path('metador_admin_health')
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
+                );
+            }
+
+            if (in_array('source', $conf)) {
+                $app->add(
+                    $app->get('AdminMenu', 'source')
+                        ->icon('icon-database')
+                        ->label('Datenquellen')
+                        ->path('metador_admin_source')
+                        ->active($app->routeStartsWith('metador_admin_source'))
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
+                );
+            }
 
             if ($app->isRoute('metador_admin_index')) {
                 $stats = $this->cache->stats();
