@@ -32,7 +32,8 @@ class Browser
             $conf->get('proxy_host', 'plugin', 'metador_core', ''),
             $conf->get('proxy_port', 'plugin', 'metador_core', ''),
             $conf->get('proxy_user', 'plugin', 'metador_core', ''),
-            $conf->get('proxy_pass', 'plugin', 'metador_core', '')
+            $conf->get('proxy_pass', 'plugin', 'metador_core', ''),
+            $conf->get('proxy_ignore', 'plugin', 'metador_core', '')
         );
     }
 
@@ -41,14 +42,21 @@ class Browser
      * @param $port
      * @param string $user
      * @param string $pass
+     * @param string $ignore
      * @return $this
      */
-    public function useProxy($host, $port, $user = '', $pass = '')
+    public function useProxy($host, $port, $user = '', $pass = '', $ignore = '')
     {
         $this->proxyHost = $host;
         $this->proxyPort = $port;
         $this->proxyUser = $user;
         $this->proxyPass = $pass;
+
+        if (!empty(trim($ignore))) {
+            foreach (explode(',', $ignore) as $host) {
+                $this->excludeHost($host);
+            };
+        }
 
         return $this;
     }
