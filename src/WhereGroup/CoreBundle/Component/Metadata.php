@@ -272,7 +272,11 @@ class Metadata implements MetadataInterface
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
         $metadata->setDate(is_null($p['_date']) || !is_string($p['_date']) ? null : new \DateTime($p['_date']));
-        $metadata->setDateStamp(is_null($p['dateStamp']) || !is_string($p['dateStamp']) ? null : new \DateTime($p['dateStamp']));
+        $metadata->setDateStamp(
+            is_null($p['dateStamp']) || !is_string($p['dateStamp'])
+                ? null
+                : new \DateTime($p['dateStamp'])
+        );
         $metadata->setInsertUsername($p['_insert_user']);
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
@@ -462,8 +466,16 @@ class Metadata implements MetadataInterface
      * @param array $params
      * @return mixed|void
      */
-    public function log($type, $metadata, $operation, $message, $messageParams = [], $path = null, $params = [], $flash = false)
-    {
+    public function log(
+        $type,
+        $metadata,
+        $operation,
+        $message,
+        $messageParams = [],
+        $path = null,
+        $params = [],
+        $flash = false
+    ) {
         /** @var Log $log */
         $log = $this->logger->newLog();
         $log
@@ -511,10 +523,18 @@ class Metadata implements MetadataInterface
      * @param array $messageParams
      * @param null $path
      * @param array $params
+     * @param bool $flash
      * @return mixed
      */
-    public function error($metadata, $operation, $message, $messageParams = [], $path = null, $params = [], $flash = false)
-    {
+    public function error(
+        $metadata,
+        $operation,
+        $message,
+        $messageParams = [],
+        $path = null,
+        $params = [],
+        $flash = false
+    ) {
         $this->log('error', $metadata, $operation, $message, $messageParams, $path, $params, $flash);
     }
 
@@ -789,7 +809,7 @@ class Metadata implements MetadataInterface
     public function mergeSystemInformations(array $source, array &$target)
     {
         foreach ($source as $key => $value) {
-            if (substr($key, 0,1) === '_') {
+            if (substr($key, 0, 1) === '_') {
                 $target[$key] = $value;
             }
         }

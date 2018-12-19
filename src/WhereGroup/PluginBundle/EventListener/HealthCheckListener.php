@@ -38,12 +38,16 @@ class HealthCheckListener extends BasicHealthcheckListener
         $this->healthCheck = $healthCheck;
 
         $this
-            ->add($this->testTempFolder(),
+            ->add(
+                $this->testTempFolder(),
                 'healthcheck_folder_not_writeable',
-                ['%path%' => str_replace($this->projectDir, "", $this->tempDir)])
-            ->add($this->testPluginFolder(),
+                ['%path%' => str_replace($this->projectDir, "", $this->tempDir)]
+            )
+            ->add(
+                $this->testPluginFolder(),
                 'healthcheck_folder_not_writeable',
-                ['%path%' => str_replace($this->projectDir, "", $this->pluginDir)])
+                ['%path%' => str_replace($this->projectDir, "", $this->pluginDir)]
+            )
         ;
     }
 
