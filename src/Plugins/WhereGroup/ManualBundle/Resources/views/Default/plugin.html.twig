@@ -1,0 +1,43 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block manual %}
+    # Plugins
+
+    Das Pluginkonzept erlaubt dem Administrator das dynamische Hinzuladen und Abschalten von Funktionen. Als Plugins wurden u.a. realisiert: die verschiedenen Metadatenprofile, das Oberflächenthema, die Logging-Funktionalität, die CSW- und Service-Schnittstellen. Plugins können voneinander abhängen, so dass beispielsweise das CSW-Plugin nicht ohne Metadatenprofile funktionieren kann.
+
+    Plugins werden in dem Plugin-Reiter in der Administration gelistet. Plugins können nach ihrer Herkunft aufgeteilt werden. Die Standard-Plugins stammen von der WhereGroup, projektspezifische Plugins können mit einer anderen Herkunft benannt sein. Die Herkunft ist in der Liste der Plugins in der rechten Spalte sichtbar.
+
+    ## Plugins aktivieren und deaktivieren
+
+    Plugins können zur Laufzeit aktiviert und deaktiviert werden. Dazu geht man in die <a href="{{ path('metador_admin_plugin') }}" target="_blank">Plugin-Verwaltung</a>, klickt auf den Haken in der ersten Spalte der Liste und bestätigt die Aktivierung mit Speichern.
+
+    Es werden verschiedene Prozesse (Konfiguration, Cache, Assets, Datenbank) angestoßen, deren Ergebnisse angezeigt werden können. Nachdem die Prozesse abgeschlossen sind erscheint die Schaltfläche „Seite neu laden“. Sobald Sie auf diese Schaltfläche klicken, ist das Plugin aktiviert worden und steht zur Verfügung.
+
+    Der gleiche Weg steht zum Deaktivieren eines Plugins zur Verfügung.
+
+    Da Metadatenprofile selbst über Plugins realisiert werden ist es auch möglich, diese im laufenden Betrieb zu deaktivieren. Danach ist es nicht mehr möglich, Metadaten zu diesem Profil aufzunehmen, zu bearbeiten oder aufzurufen. Dabei werden die Metadaten aber nicht aus der Datenbank gelöscht, so dass nach einem wiederholten Aktivieren des Plugins die Daten wieder sichtbar sind.
+
+    ## Terminal
+
+    Die Verwaltung vom Plugins ist auch über die Kommandozeile möglich. Folgende Befehle können dazu genutzt werden.
+
+    ```bash
+    # Auflisten
+    bin/console metador:list:plugins
+
+    # Aktivieren
+    bin/console metador:enable:plugin <key>
+
+    # Deaktivieren
+    bin/console metador:disable:plugin <key>
+
+    # Deaktivieren aller Plugins
+    bin/console metador:reset:plugins
+    ```
+
+    Der `key` wird beim Auflisten der Plugins, in der ersten Spalte angezeigt.
+{% endblock %}
+
+{% block devmanual %}
+
+{% endblock %}

@@ -1,0 +1,4 @@
+metador_documentation:
+    resource: "@MetadorManualBundle/Controller/"
+    type:     annotation
+    prefix:   /

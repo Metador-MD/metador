@@ -155,6 +155,8 @@ class Application
                 return new Integration\GlobalMenu($prefix);
             case 'adminmenu':
                 return new Integration\AdminMenu($prefix);
+            case 'manualmenu':
+                return new Integration\ManualMenu($prefix);
             case 'pagecenter':
                 return new Integration\PageCenter($prefix);
             case 'pluginmenu':

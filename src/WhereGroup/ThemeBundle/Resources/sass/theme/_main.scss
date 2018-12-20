@@ -75,3 +75,8 @@ body {
         display: block;
     }
 }
+
+code[class*="language-"],
+pre[class*="language-"] {
+    font-size: 13px;
+}

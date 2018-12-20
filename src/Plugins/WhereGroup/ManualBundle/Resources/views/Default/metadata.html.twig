@@ -1,0 +1,37 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block manual %}
+    # Hilfetexte
+
+    In den Formularen stehen dem Nutzer Hilfetexte zur Verfügung. Gepflegt werden diese vom Geooffice.
+
+    {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+
+    ## Anpassung der Hilfetexte
+
+    Ein Benutzer aus der Gruppe „GEOOFFICE“ kann die Hilfetexte bearbeiten. Dazu kann er jeden Hilfetext eines Eingabefeldes öffnen und direkt bearbeiten. Beim Schließen des Dialogs werden die Änderungen übernommen.
+
+    Der Hilfetext kann in einer einfachen Markdown Syntax geschrieben werden, so dass das Formatieren mit Überschriften, Absätze, Aufzählungen und Links sowie die Angabe von Bildern möglich sind.
+    {% endif %}
+
+    # Auswahllisten
+
+    Die Liste der Auswahlliste in den Einstellungen dient zur Übersicht. Die eigentliche Befüllung der Auswahllisten findet aus dem Formular statt. Die meisten Auswahllisten sind von Anfang mit Standardwerten gefüllt.
+
+    <img src="{{ asset('bundles/metadormanual/metadata/einstellungen_auswahllisten.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+
+    Innerhalb des Formulars kann der Administrator die Auswahllisten bearbeiten. Dort wohl Auswahllisten verwendet werden, dient die Zahnradschaltfläche zur Definition der Liste.
+
+    <img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_frontend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+
+    Es öffnet sich ein neuer Browsertab, in dem die Auswahllisten definiert werden können. Im obersten Feld gibt man den Wert und die Beschreibung ein und fügt den Listeneintrag mit der Schaltfläche „hinzufügen“ der Liste hinzu.
+
+    Über die Löschen Checkbox und das Betsätigen mit Speichern können Einträge wieder gelöscht werden.
+
+    Möchte man einen leeren Eintrag erlauben, fügt man einen leeren Eintrag der Liste hinzu.
+
+    <img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_backend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+
+    # Mehrteilige Auswahllisten
+{% endblock %}
+

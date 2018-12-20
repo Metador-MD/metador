@@ -1,0 +1,62 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block manual %}
+    # Benutzer und Gruppen
+
+    In dem Reiter „Benutzer“ werden die für Metador registrierten Benutzer angezeigt. Dort können vom Administrator neue Benutzer angelegt werden.
+
+    <img src="{{ asset('bundles/metadormanual/user/benutzer.png') }}" alt="Benutzer" width="100%">
+
+    Beim Anlegen neuer Benutzer ist der Benutzername, das Passwort und die E-Mail Adresse anzugeben. Ein Benutzer kann einer der vorhandenen Gruppen zugewiesen werden. Dabei ist es möglich, einen Nutzer mehrere Gruppen zuzuordnen. Mit der STRG-Taste und dem Mausklick ist es möglich, mehrere Einträge aus der Gruppenliste auszuwählen.
+
+    <a href="{{ path('metador_admin_user_new') }}" target="_blank">
+        **Benutzer anlegen:**
+        <img src="{{ asset('bundles/metadormanual/user/benutzer_bearbeiten.png') }}" alt="Benutzer erstellen" width="100%">
+    </a>
+
+    In dem Reiter „Gruppen“ werden die vorhandenen Gruppen angezeigt. Hier können neben den Standardgruppen
+
+    - ROLE_SYSTEM_SUPERUSER
+    - ROLE_SYSTEM_GEOOFFICE
+    - ROLE_SYSTEM_GUEST
+
+    auch weitere Gruppen angelegt werden, z.B. aufgeteilt nach einzelnen Fachbereichen. Die zusätzlichen Gruppen haben eine Auswirkung auf das Bearbeiten von Metadaten. Nur Benutzer in der jeweiligen Gruppe haben die Möglichkeit, Metadaten zu speichern, die von einem anderen Benutzer in der Gruppe angelegt worden sind.
+
+    <a href="{{ path('metador_admin_group_new') }}" target="_blank">
+        **Gruppe anlegen:**
+        <img src="{{ asset('bundles/metadormanual/user/gruppe_bearbeiten.png') }}" alt="Gruppe erstellen" width="100%">
+    </a>
+
+    # System-Gruppen
+
+    ## Superuser
+
+    Ein Benutzer in der Rolle SUPERUSER (ROLE_SYSTEM_SUPERUSER) ist der Administrator des Systems. Er hat Zugriff auf folgende Bereiche der Administration.
+
+    - Einstellungen
+    - Selbsttest
+    - Datenquellen
+    - Benutzer
+    - Gruppen
+    - Pluginverwaltung
+    - Catalogue Service _(Plugin)_
+    - Developer Tools _(Plugin)_
+    - Rest Client _(Plugin)_
+
+    ## Geooffice
+
+    Ein Benutzer in der Gruppe GEOOFFICE (ROLE_SYSTEM_GEOOFFICE) besitzt gegenüber dem Administrator eingeschränkte Rechte. Er hat Zugriff auf folgende Bereiche.
+
+    - Adressen
+    - Hintergrundkarte
+    - Auswahllisten
+    - Schlüsselwörter
+    - Logging _(Plugin)_
+    - Import/Export _(Plugin)_
+
+    ## Guest
+
+    Alle User, die keine Metadaten anlegen dürfen, werden der Gruppe ROLE_SYSTEM_GUEST zugewiesen. Durch die Anmeldung sehen sie eventuell mehr Metadateninformationen als der nicht-angemeldete Benutzer.
+
+{% endblock %}
+

@@ -159,6 +159,9 @@ html, body {
 .hidden.active {
   display: block; }
 
+code[class*="language-"], pre[class*="language-"] {
+  font-size: 13px; }
+
 .md .grid .row {
   display: block; }
 

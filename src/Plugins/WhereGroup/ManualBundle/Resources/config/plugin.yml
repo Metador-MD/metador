@@ -1,0 +1,8 @@
+metador_documentation:
+    origin: WhereGroup
+    type: manual
+    name: Benutzerhandbuch
+    description: Benutzerhandbuch und Entwickler-Dokumentation
+    class_path: Plugins\WhereGroup\ManualBundle
+    class_name: MetadorManualBundle
+    version: '1.0'
