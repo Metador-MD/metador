@@ -4,6 +4,6 @@
             <textarea id="helptext" class="textarea" style="min-height: 200px;">{{ html }}</textarea>
         </div>
     {% else %}
-        {{ html|md2html }}
+        {{ html|markdown }}
     {% endif %}
 </div>

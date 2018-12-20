@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use WhereGroup\CoreBundle\Component\Utils\Markdown;
+use WhereGroup\CoreBundle\Twig\TokenParser\MarkdownTokenParser;
 
 /**
  * Class MarkdownExtension
@@ -26,14 +27,25 @@ class MarkdownExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter(
-                'md2html',
-                array($this, 'markdownToHtml'),
-                array('is_safe' => array('html'), 'pre_escape' => 'html')
+                'markdown',
+                [$this, 'markdownToHtml'],
+                ['is_safe' => ['html'], 'pre_escape' => 'html']
             ),
-        );
+        ];
     }
+
+    /**
+     * @return array|\Twig_TokenParserInterface[]
+     */
+    public function getTokenParsers()
+    {
+        return [
+            new MarkdownTokenParser()
+        ];
+    }
+
 
     /**
      * @param $content
@@ -49,6 +61,6 @@ class MarkdownExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'markdown_extension';
+        return 'markdown';
     }
 }

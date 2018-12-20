@@ -8,7 +8,7 @@
         <div class="progressbar"><div class="progress -js-progress"></div></div>
         {% if systemMessage %}
             <div class="sys-msg-text -js-sys-msg">
-                <div class="sys-msg-text-content">{{ systemMessage|md2html }}</div>
+                <div class="sys-msg-text-content">{{ systemMessage|markdown }}</div>
                 <div class="progressbar"><div class="progress -js-progress"></div></div>
             </div>
         {% endif %}

@@ -25,7 +25,7 @@
                     <span class="icon-checkmark"></span>
                 {% endif %}
             </td>
-            <td>{{ log.message|md2html }}</td>
+            <td>{{ log.message|markdown }}</td>
         </tr>
     {% endfor %}
     </table>
