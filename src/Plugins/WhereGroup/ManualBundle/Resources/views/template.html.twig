@@ -31,11 +31,13 @@
         </div>
         <div class="center-right">
             <div class="content">
+                <h1>{% block manualTitle %}{% endblock %}</h1>
+                {% block manualMenu %}{% endblock %}
+                {% block content %}{% endblock %}
                 {% markdown %}{% block manual %}{% endblock %}{% endmarkdown %}
                 {% if app.environment == 'dev' %}
                 {% markdown %}{% block devmanual %}{% endblock %}{% endmarkdown %}
                 {% endif %}
-                {% block content %}{% endblock %}
             </div>
         </div>
     </div>
