@@ -19,8 +19,8 @@ class ConventionsCommand extends ContainerAwareCommand
     {
         $this
             ->setDescription('Check code for conventions')
-            ->setName('metador:conventions')
-            ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path to code', null)
+            ->setName('metador:test:conventions')
+            ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path to code', 'src/')
         ;
     }
 
@@ -34,7 +34,7 @@ class ConventionsCommand extends ContainerAwareCommand
     {
         $path = $input->getOption('path');
 
-        if (is_null($path)) {
+        if (empty($path)) {
             throw new \Exception("Path not found.");
         }
 

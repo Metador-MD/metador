@@ -15,6 +15,7 @@ test:
         - vendor/bin/phpunit -c ./
         - vendor/bin/phpcpd src/
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
+        - bin/console metador:test:conventions
 deploy:
     stage: deploy
     only:
