@@ -12,9 +12,13 @@ class Result
      * @var int
      */
     private $files = 0;
+
     public $data = [
         'files'  => [],
-        'errors' => []
+        'errors' => [],
+        'metadata' => [
+            'use' => []
+        ]
     ];
 
     /**

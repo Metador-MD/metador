@@ -2,12 +2,15 @@
 
 namespace WhereGroup\CoreBundle\Component\Conventions;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 /**
  * Class Rule
  * @package WhereGroup\CoreBundle\Component\Conventions
  */
 abstract class Rule implements RuleInterface
 {
+    protected $fileExtensions = ['php'];
     protected $message = '';
 
     /**
@@ -18,11 +21,24 @@ abstract class Rule implements RuleInterface
         return $this->message;
     }
 
-    public function scanMetadata(Result $result)
+    /**
+     * @param SplFileInfo $file
+     * @param Result $result
+     * @return mixed|void
+     */
+    public function scanMetadata(SplFileInfo $file, Result $result)
     {
     }
 
-    public function scanCode(Result $result, $lineString, $fileHash, $lineNumber)
+    /**
+     * @param SplFileInfo $file
+     * @param Result $result
+     * @param $lineString
+     * @param $fileHash
+     * @param $lineNumber
+     * @return mixed|void
+     */
+    public function scanCode(SplFileInfo $file, Result $result, $lineString, $fileHash, $lineNumber)
     {
     }
 }

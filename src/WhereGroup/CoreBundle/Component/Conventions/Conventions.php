@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Component\Conventions;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class Finder
@@ -16,36 +15,44 @@ class Conventions
     private $result;
     private $filePattern = '*.php';
     private $scanner = [];
+    private $exclude = [];
 
     /**
      * Finder constructor.
      * @param $path
-     * @param array $metadataScanner
-     * @param array $codeScanner
      */
-    public function __construct($path, $metadataScanner = [], $codeScanner = [])
+    public function __construct($path)
     {
         $this->path = $path;
         $this->result = new Result();
-        $this->scanner = [
-            'metadata' => $metadataScanner,
-            'code'     => $codeScanner
+        $this->exclude = [
+            'WhereGroup/CoreBundle/Component/Conventions'
         ];
 
-        // Load default scanner
-        foreach (['Metadata', 'Code'] as $scannerType) {
+        $this->loadDefaultScanner();
+    }
+
+    /**
+     * @param $path
+     */
+    public function excludePath($path)
+    {
+        if (!in_array($path, $this->exclude)) {
+            $this->exclude[] = $path;
+        }
+    }
+
+    public function loadDefaultScanner()
+    {
+        foreach (['Annotation', 'Code', 'Ns'] as $scannerType) {
             $finder = new SymfonyFinder();
             $finder->files()->name('*.php')->in(__DIR__ . '/Ruleset/' . $scannerType);
 
-            $scanner = [];
-
             foreach ($finder as $file) {
-                $scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\'
+                $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\'
                     . pathinfo($file->getFilename(), PATHINFO_FILENAME);
 
             }
-
-            $this->scanner[strtolower($scannerType)] = array_merge($this->scanner[strtolower($scannerType)], $scanner);
         }
     }
 
@@ -56,7 +63,7 @@ class Conventions
     {
         $fileCount = 0;
         $finder = new SymfonyFinder();
-        $finder->files()->name($this->filePattern)->in($this->path);
+        $finder->files()->name($this->filePattern)->in($this->path)->exclude($this->exclude);
 
         foreach ($finder as $file) {
             if (!$file->isFile()) {
@@ -65,49 +72,25 @@ class Conventions
 
             ++$fileCount;
 
-            $this->collectMetadata($file);
-        }
+            $hash = md5($file->getRelativePathname());
+            $this->result->data['files'][$hash] = [
+                'path'         => $file->getRealPath(),
+                'relativePath' => $file->getRelativePathname(),
+                'name'         => $file->getFilename(),
+                'extension'    => $file->getExtension()
+            ];
 
-        // Run metadata scanner
-        foreach ($this->scanner['metadata'] as $class) {
-            /** @var RuleInterface $scanner */
-            $scanner = new $class;
-            $scanner->scanMetadata($this->result);
-            unset($scanner);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param SplFileInfo $file
-     * @return Conventions
-     */
-    public function collectMetadata(SplFileInfo $file): Conventions
-    {
-        $hash = md5($file->getRelativePathname());
-        $this->result->data['files'][$hash] = [
-            'path'         => $file->getRealPath(),
-            'relativePath' => $file->getRelativePathname(),
-            'name'         => $file->getFilename(),
-            'extension'    => $file->getExtension()
-        ];
-
-        foreach (explode("\n", $file->getContents()) as $number => $line) {
-            $line = trim($line);
-
-            if (preg_match('/[ ]*use[ ]+.+;/', $line)) {
-                $this->result->data['use'][trim(substr($line, 4))][$hash] = $number;
-            }
-
-            // Run code scanner
-            foreach ($this->scanner['code'] as $class) {
-                /** @var RuleInterface $scanner */
-                $scanner = new $class;
-                $scanner->scanCode($this->result, $line, $hash, $number);
-                unset($scanner);
+            foreach (explode("\n", $file->getContents()) as $number => $line) {
+                // Run code scanner
+                foreach ($this->scanner as $class) {
+                    /** @var RuleInterface $scanner */
+                    $scanner = new $class;
+                    $scanner->scanCode($file, $this->result, trim($line), $hash, ++$number);
+                    unset($scanner);
+                }
             }
         }
+
         return $this;
     }
 

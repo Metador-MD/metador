@@ -1,18 +1,18 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Component\Conventions\Ruleset\Code;
+namespace WhereGroup\CoreBundle\Component\Conventions\Ruleset\Annotation;
 
 use Symfony\Component\Finder\SplFileInfo;
 use WhereGroup\CoreBundle\Component\Conventions\Result;
 use WhereGroup\CoreBundle\Component\Conventions\Rule;
 
 /**
- * Class DisallowLongArrayNotation
+ * Class DisallowMethodAnnotation
  * @package WhereGroup\CoreBundle\Component\Conventions\Rulesets
  */
-class DisallowLongArrayNotation extends Rule
+class DisallowMethodAnnotation extends Rule
 {
-    protected $message = 'Dont use array(), use [] instead!';
+    protected $message = 'Dont use @Method() Annotation, use @Route(methods={""}) instead!';
 
     /**
      * @param SplFileInfo $file
@@ -27,7 +27,7 @@ class DisallowLongArrayNotation extends Rule
             return;
         }
 
-        if (preg_match('/array\(/', $lineString)) {
+        if (preg_match('/@Method\(/', $lineString)) {
             $result->addError(self::class, $fileHash, $lineNumber);
         }
     }
