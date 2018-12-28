@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,15 +23,14 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render("MetadorThemeBundle:Home:index.html.twig", array(
+        return $this->render("MetadorThemeBundle:Home:index.html.twig", [
             'isHome'         => true,
             'sourceConfig'   => $this->getSourceConfiguration(),
             'hierarchyLevel' => $this
                 ->get('metador_configuration')
                 ->get('hierarchy_levels', 'plugin', 'metador_core')
-        ));
+        ]);
     }
-
 
     /**
      * @Route("/public/search/", name="metador_search")
@@ -170,6 +168,13 @@ class HomeController extends Controller
         return new AjaxResponse($response);
     }
 
+    /**
+     * @param $response
+     * @param $searchResponse
+     * @param $params
+     * @return $this
+     * @throws \Twig\Error\Error
+     */
     protected function renderTemplate(&$response, $searchResponse, $params)
     {
         $response = array_merge($response, [
@@ -183,6 +188,11 @@ class HomeController extends Controller
         return $this;
     }
 
+    /**
+     * @param $response
+     * @param $rows
+     * @return $this
+     */
     protected function addBboxFrontendCommand(&$response, $rows)
     {
         $bboxParams = [];
@@ -233,6 +243,9 @@ class HomeController extends Controller
         return $this;
     }
 
+    /**
+     * @return array
+     */
     protected function getSourceConfiguration()
     {
         $profileConfig = $this->getPluginConfiguration();
@@ -247,10 +260,10 @@ class HomeController extends Controller
                 }
             }
 
-            $sourceConfig[$source->getSlug()] = array(
+            $sourceConfig[$source->getSlug()] = [
                 'name' => $source->getName(),
                 'profiles' => $sourceConfigProfiles,
-            );
+            ];
         }
 
         return $sourceConfig;
@@ -263,18 +276,17 @@ class HomeController extends Controller
         foreach ($this->get('metador_plugin')->getActiveProfiles() as $key => $profile) {
             $configuration = $this->get('metador_configuration')->get('source', 'plugin', $key);
 
-            $profileConfig[$key] = array(
+            $profileConfig[$key] = [
                 'name'   => $profile['name'],
                 'source' => is_null($configuration) ? [] : $configuration,
-            );
+            ];
         }
 
         return $profileConfig;
     }
 
     /**
-     * @Route("/heartbeat/", name="metador_heartbeat")
-     * @Method("GET")
+     * @Route("/heartbeat", name="metador_heartbeat", methods={"GET"})
      */
     public function heartbeatAction()
     {
