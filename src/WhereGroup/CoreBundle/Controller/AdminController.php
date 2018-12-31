@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/admin")
@@ -38,8 +37,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/clear/cache", name="metador_admin_clear_cache")
-     * @Method("POST")
+     * @Route("/clear/cache", name="metador_admin_clear_cache", methods={"POST"})
      */
     public function clearCacheAction()
     {

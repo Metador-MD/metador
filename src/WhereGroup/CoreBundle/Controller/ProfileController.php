@@ -7,7 +7,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +27,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{source}/{profile}/new", name="metadata_new")
-     * @Method("GET")
+     * @Route("/{source}/{profile}/new", name="metadata_new", methods={"GET"})
      * @param $source
      * @param $profile
      * @return Response
@@ -61,13 +59,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{profile}/edit/{id}", name="metadata_edit")
-     * @Method("GET")
      * @param $profile
      * @param $id
      * @return Response
      * @throws MetadataException
      * @throws \Exception
+     * @Route("/{profile}/edit/{id}", name="metadata_edit", methods={"GET"})
      */
     public function editAction($profile, $id)
     {
@@ -92,8 +89,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{source}/{profile}/save", name="metadata_save")
-     * @Method("POST")
      * @param $source
      * @param $profile
      * @param Request $request
@@ -101,6 +96,7 @@ class ProfileController extends Controller
      * @throws MetadataException
      * @throws \Doctrine\Common\Persistence\Mapping\MappingException
      * @throws \Doctrine\DBAL\ConnectionException
+     * @Route("/{source}/{profile}/save", name="metadata_save", methods={"POST"})
      */
     public function saveAction($source, $profile, Request $request)
     {
@@ -199,13 +195,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/{profile}/confirm/{id}", name="metadata_confirm")
-     * @Method("GET")
      * @param $profile
      * @param $id
      * @return Response
      * @throws MetadataException
      * @throws \Exception
+     * @Route("/{profile}/confirm/{id}", name="metadata_confirm", methods={"GET"})
      */
     public function confirmAction($profile, $id)
     {
@@ -230,11 +225,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/delete/{id}", name="metadata_delete")
-     * @Method("POST")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws MetadataException
+     * @Route("/delete/{id}", name="metadata_delete", methods={"POST"})
      */
     public function deleteAction($id)
     {
@@ -258,10 +252,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/validate/{id}", name="metadata_validate")
      * @param $id
      * @return Response
      * @throws MetadataException
+     * @Route("/profile/validate/{id}", name="metadata_validate")
      */
     public function validateAction($id)
     {
@@ -286,10 +280,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/error/{id}", name="metadata_error")
      * @param $id
      * @return Response
      * @throws MetadataException
+     * @Route("/profile/error/{id}", name="metadata_error")
      */
     public function errorAction($id)
     {
@@ -303,7 +297,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/xpath/{id}", name="metadata_xpath")
      * @param $id
      * @param Request $request
      * @return Response
@@ -312,6 +305,7 @@ class ProfileController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @Route("/profile/xpath/{id}", name="metadata_xpath")
      */
     public function xpathAction($id, Request $request)
     {
@@ -396,7 +390,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/test/{id}", name="metadata_test")
      * @param $id
      * @return Response
      * @throws MetadataException
@@ -404,6 +397,7 @@ class ProfileController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @Route("/profile/test/{id}", name="metadata_test")
      */
     public function testAction($id)
     {
@@ -486,12 +480,12 @@ class ProfileController extends Controller
 
 
     /**
-     * @Route("/profile/help", name="metadata_help")
      * @param Request $request
      * @return AjaxResponse
      * @throws NonUniqueResultException
      * @throws OptimisticLockException
      * @throws \Twig\Error\Error
+     * @Route("/profile/help", name="metadata_help")
      */
     public function helpAction(Request $request)
     {

@@ -7,7 +7,6 @@ use Plugins\WhereGroup\BasicProfileBundle\Form\KeywordType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -16,8 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class KeywordController extends Controller
 {
     /**
-     * @Method("GET")
-     * @Route("/", name="metador_admin_keyword")
+     * @Route("/", name="metador_admin_keyword", methods={"GET"})
      */
     public function indexAction()
     {
@@ -30,8 +28,7 @@ class KeywordController extends Controller
     }
 
     /**
-     * @Route("/new/", name="metador_admin_keyword_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/", name="metador_admin_keyword_new", methods={"GET", "POST"})
      */
     public function newAction()
     {
@@ -60,8 +57,7 @@ class KeywordController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="metador_admin_keyword_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/edit/{id}", name="metador_admin_keyword_edit", methods={"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -96,8 +92,7 @@ class KeywordController extends Controller
     }
 
     /**
-     * @Route("/confirm/{id}", name="metador_admin_keyword_confirm")
-     * @Method({"GET", "POST"})
+     * @Route("/confirm/{id}", name="metador_admin_keyword_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)
     {

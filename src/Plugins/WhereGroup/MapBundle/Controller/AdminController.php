@@ -5,7 +5,6 @@ namespace Plugins\WhereGroup\MapBundle\Controller;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,8 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_map")
-     * @Method("GET")
+     * @Route("/", name="metador_admin_map", methods={"GET"})
      */
     public function indexAction()
     {
@@ -30,8 +28,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/new/", name="metador_admin_map_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/", name="metador_admin_map_new", methods={"GET", "POST"})
      */
     public function newAction()
     {
@@ -61,8 +58,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="metador_admin_map_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/edit/{id}", name="metador_admin_map_edit", methods={"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -86,8 +82,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/confirm/{id}", name="metador_admin_map_confirm")
-     * @Method({"GET", "POST"})
+     * @Route("/confirm/{id}", name="metador_admin_map_confirm", methods={"GET", "POST"})
      * @param $id a wms id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */

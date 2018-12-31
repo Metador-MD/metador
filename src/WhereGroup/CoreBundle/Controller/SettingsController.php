@@ -5,7 +5,6 @@ namespace WhereGroup\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Yaml\Yaml;
 use WhereGroup\CoreBundle\Entity\Source;
 
@@ -15,8 +14,7 @@ use WhereGroup\CoreBundle\Entity\Source;
 class SettingsController extends Controller
 {
     /**
-     * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings")
-     * @Method("GET")
+     * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings", methods={"GET"})
      */
     public function indexAction($fragment)
     {
@@ -66,8 +64,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * @Route("/settings/update", name="metador_admin_settings_update")
-     * @Method("POST")
+     * @Route("/settings/update", name="metador_admin_settings_update", methods={"POST"})
      */
     public function updateAction()
     {

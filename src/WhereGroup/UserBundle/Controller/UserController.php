@@ -5,7 +5,6 @@ namespace WhereGroup\UserBundle\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\PluginBundle\Component\ApplicationIntegration\Profile;
 use WhereGroup\UserBundle\Entity\User;
@@ -47,8 +46,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/admin/user/create", name="metador_admin_user_create")
-     * @Method("POST")
+     * @Route("/admin/user/create", name="metador_admin_user_create", methods={"POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -112,8 +110,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/admin/user/update/{id}", name="metador_admin_user_update")
-     * @Method("POST")
+     * @Route("/admin/user/update/{id}", name="metador_admin_user_update", methods={"POST"})
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -169,8 +166,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
-     * @Route("/admin/user/delete/{id}", name="metador_admin_user_confirm")
+     * @Route("/admin/user/delete/{id}", name="metador_admin_user_confirm", methods={"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws MetadorException
@@ -211,8 +207,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
-     * @Route("/user/profile/{id}", name="metador_user_profile")
+     * @Route("/user/profile/{id}", name="metador_user_profile", methods={"GET", "POST"})
      * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response

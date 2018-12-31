@@ -3,7 +3,6 @@
 namespace Plugins\WhereGroup\BasicProfileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 
@@ -13,8 +12,7 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/operateson", name="operateson_info")
-     * @Method("GET")
+     * @Route("/operateson", name="operateson_info", methods={"GET"})
      */
     public function operatesOnAction()
     {

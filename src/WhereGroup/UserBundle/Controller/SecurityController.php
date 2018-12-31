@@ -3,7 +3,6 @@
 namespace WhereGroup\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\CoreBundle\Entity\Log;
 
@@ -22,8 +21,7 @@ class SecurityController extends Controller
 
     /**
      *
-     * @Route("/login/failure", name="login_failure")
-     * @Method("GET")
+     * @Route("/login/failure", name="login_failure", methods={"GET"})
      */
     public function loginFailureAction()
     {

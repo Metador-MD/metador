@@ -8,7 +8,6 @@ use Plugins\WhereGroup\MapBundle\Component\XmlUtils\XmlAssocArrayReader;
 use Plugins\WhereGroup\MapBundle\Entity\Wms;
 use Plugins\WhereGroup\MapBundle\Form\WmsEditType;
 use Plugins\WhereGroup\MapBundle\Form\WmsNewType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use ShapeFile\ShapeFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,8 +31,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("/loadwms/", name="metador_map_loadwms")
-     * @Method({"GET"})
+     * @Route("/loadwms/", name="metador_map_loadwms", methods={"GET"})
      */
     public function loadWmsAction()
     {
@@ -56,8 +54,7 @@ class PluginController extends Controller
 
     /**
      * @return Response
-     * @Route("/uploadgeom/", name="metador_map_uploadgeom")
-     * @Method({"POST"})
+     * @Route("/uploadgeom/", name="metador_map_uploadgeom", methods={"POST"})
      */
     public function uploadGeomAction()
     {

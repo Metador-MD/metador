@@ -10,11 +10,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-
 use WhereGroup\PluginBundle\Entity\Plugin;
 
 /**
@@ -26,8 +24,7 @@ use WhereGroup\PluginBundle\Entity\Plugin;
 class PluginController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_plugin")
-     * @Method("GET")
+     * @Route("/", name="metador_admin_plugin", methods={"GET"})
      */
     public function indexAction()
     {
@@ -41,8 +38,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/update", name="metador_admin_plugin_update")
-     * @Method("POST")
+     * @Route("/update", name="metador_admin_plugin_update", methods={"POST"})
      */
     public function updateAction()
     {
@@ -65,8 +61,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/import", name="metador_admin_plugin_import")
-     * @Method("GET")
+     * @Route("/import", name="metador_admin_plugin_import", methods={"GET"})
      */
     public function importAction()
     {
@@ -87,8 +82,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/upload", name="metador_admin_plugin_upload")
-     * @Method("POST")
+     * @Route("/upload", name="metador_admin_plugin_upload", methods={"POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -180,8 +174,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm")
-     * @Method("GET")
+     * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm", methods={"GET"})
      * @param $plugin
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -193,8 +186,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/delete/{plugin}", name="metador_admin_plugin_delete")
-     * @Method("POST")
+     * @Route("/delete/{plugin}", name="metador_admin_plugin_delete", methods={"POST"})
      * @param $plugin
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -206,8 +198,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/view/{plugin}", name="metador_admin_plugin_view")
-     * @Method({"GET", "POST"})
+     * @Route("/view/{plugin}", name="metador_admin_plugin_view", methods={"GET", "POST"})
      * @param $plugin
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -226,8 +217,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/command/config", name="metador_admin_plugin_command_config")
-     * @Method("POST")
+     * @Route("/command/config", name="metador_admin_plugin_command_config", methods={"POST"})
      */
     public function configAction()
     {
@@ -239,8 +229,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/command/assets", name="metador_admin_plugin_command_assets")
-     * @Method("POST")
+     * @Route("/command/assets", name="metador_admin_plugin_command_assets", methods={"POST"})
      */
     public function assetsAction()
     {
@@ -250,8 +239,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/command/database", name="metador_admin_plugin_command_database")
-     * @Method("POST")
+     * @Route("/command/database", name="metador_admin_plugin_command_database", methods={"POST"})
      */
     public function databaseAction()
     {
@@ -261,8 +249,7 @@ class PluginController extends Controller
     }
 
     /**
-     * @Route("/command/cache", name="metador_admin_plugin_command_cache")
-     * @Method("POST")
+     * @Route("/command/cache", name="metador_admin_plugin_command_cache", methods={"POST"})
      */
     public function cacheAction()
     {

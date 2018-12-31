@@ -6,7 +6,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Form\GroupType;
@@ -34,8 +33,7 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/new/", name="metador_admin_group_new")
-     * @Method("GET")
+     * @Route("/new/", name="metador_admin_group_new", methods={"GET"})
      */
     public function newAction()
     {
@@ -50,8 +48,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/create", name="metador_admin_group_create")
-     * @Method("POST")
+     * @Route("/create", name="metador_admin_group_create", methods={"POST"})
      */
     public function createAction(Request $request)
     {
@@ -78,8 +75,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="metador_admin_group_edit")
-     * @Method("GET")
+     * @Route("/edit/{id}", name="metador_admin_group_edit", methods={"GET"})
      */
     public function editAction($id)
     {
@@ -94,8 +90,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="metador_admin_group_update")
-     * @Method("POST")
+     * @Route("/edit/{id}", name="metador_admin_group_update", methods={"POST"})
      */
     public function updateAction(Request $request, $id)
     {
@@ -115,8 +110,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
-     * @Route("/delete/{id}", name="metador_admin_group_confirm")
+     * @Route("/delete/{id}", name="metador_admin_group_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)
     {

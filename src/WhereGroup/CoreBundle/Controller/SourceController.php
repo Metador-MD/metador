@@ -5,7 +5,6 @@ namespace WhereGroup\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use WhereGroup\CoreBundle\Entity\Source;
 use WhereGroup\CoreBundle\Event\SourceEvent;
 use WhereGroup\CoreBundle\Form\SourceType;
@@ -16,8 +15,7 @@ use WhereGroup\CoreBundle\Form\SourceType;
 class SourceController extends Controller
 {
     /**
-     * @Route("/", name="metador_admin_source")
-     * @Method("GET")
+     * @Route("/", name="metador_admin_source", methods={"GET"})
      */
     public function indexAction()
     {
@@ -29,9 +27,8 @@ class SourceController extends Controller
     }
 
     /**
-     * @Route("/new/", name="metador_admin_source_new")
-     * @Method({"GET", "POST"})
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route("/new/", name="metador_admin_source_new", methods={"GET", "POST"})
      */
     public function newAction()
     {
@@ -74,11 +71,10 @@ class SourceController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="metador_admin_source_edit")
-     * @Method({"GET", "POST"})
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route("/edit/{id}", name="metador_admin_source_edit", methods={"GET", "POST"})
      */
     public function editAction($id)
     {
@@ -110,9 +106,8 @@ class SourceController extends Controller
     }
 
     /**
-     * @Route("/confirm/{id}", name="metador_admin_source_confirm")
-     * @Method({"GET", "POST"})
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route("/confirm/{id}", name="metador_admin_source_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)
     {

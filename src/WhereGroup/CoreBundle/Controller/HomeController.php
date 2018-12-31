@@ -2,7 +2,6 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
@@ -18,8 +17,7 @@ use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 class HomeController extends Controller
 {
     /**
-     * @Route("/", name="metador_home")
-     * @Method("GET")
+     * @Route("/", name="metador_home", methods={"GET"})
      */
     public function indexAction()
     {

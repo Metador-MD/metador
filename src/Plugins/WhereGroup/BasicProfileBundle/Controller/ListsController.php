@@ -4,7 +4,6 @@ namespace Plugins\WhereGroup\BasicProfileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,8 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListsController extends Controller
 {
     /**
-     * @Method("GET")
-     * @Route("/", name="metador_admin_lists")
+     * @Route("/", name="metador_admin_lists", methods={"GET"})
      */
     public function indexAction()
     {
@@ -32,8 +30,7 @@ class ListsController extends Controller
     }
 
     /**
-     * @Method("GET")
-     * @Route("/show/{profile}/{key}/", name="metador_admin_lists_show")
+     * @Route("/show/{profile}/{key}/", name="metador_admin_lists_show", methods={"GET"})
      * @param $profile
      * @param $key
      * @return \Symfony\Component\HttpFoundation\Response
@@ -50,8 +47,7 @@ class ListsController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
-     * @Route("/new/{profile}/{key}/", name="metador_admin_lists_new")
+     * @Route("/new/{profile}/{key}/", name="metador_admin_lists_new", methods={"GET", "POST"})
      * @param $profile
      * @param $key
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -89,10 +85,9 @@ class ListsController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
      * @Route("/confirm/element/{profile}/{key}/{elementKey}", name="metador_admin_lists_confirm_element", defaults={
      *     "elementKey"=""
-     * })
+     * }, methods={"GET", "POST"})
      * @param $profile
      * @param $key
      * @param $elementKey
@@ -134,10 +129,9 @@ class ListsController extends Controller
     }
 
     /**
-     * @Method("GET")
      * @Route("/edit/element/{profile}/{key}/{elementKey}", name="metador_admin_lists_edit_element", defaults={
      *     "elementKey"=""
-     * })
+     * }, methods={"GET"})
      * @param $profile
      * @param $key
      * @param $elementKey
@@ -169,8 +163,7 @@ class ListsController extends Controller
     }
 
     /**
-     * @Method({"GET", "POST"})
-     * @Route("/confirm/{profile}/{key}/", name="metador_admin_lists_confirm")
+     * @Route("/confirm/{profile}/{key}/", name="metador_admin_lists_confirm", methods={"GET", "POST"})
      * @param $profile
      * @param $key
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
