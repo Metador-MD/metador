@@ -51,7 +51,6 @@ class Conventions
             foreach ($finder as $file) {
                 $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\'
                     . pathinfo($file->getFilename(), PATHINFO_FILENAME);
-
             }
         }
     }

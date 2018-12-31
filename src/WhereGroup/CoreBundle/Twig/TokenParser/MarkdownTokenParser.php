@@ -83,5 +83,4 @@ class MarkdownTokenParser extends \Twig_TokenParser
     {
         return 'markdown';
     }
-
 }
