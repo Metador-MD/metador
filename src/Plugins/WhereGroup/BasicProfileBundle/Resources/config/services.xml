@@ -5,7 +5,7 @@
 
     <parameters>
         <!-- EVENTLISTENER -->
-        <parameter key="Metador.metadata.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\MetadataListener</parameter>
+        <parameter key="metador.metadata.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\MetadataListener</parameter>
         <parameter key="wheregroup.lists.app.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\ApplicationListener</parameter>
 
         <!-- TWIG EXTENSION -->

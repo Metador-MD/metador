@@ -18,7 +18,7 @@ security:
         secured_area:
             pattern: ^/
             anonymous: ~
-            #logout_on_user_change: true
+            logout_on_user_change: true
 
             form_login:
                 login_path: metador_home

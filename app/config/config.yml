@@ -8,7 +8,9 @@ imports:
 parameters:
     locale: de
     metador_version: 3.0.0
-
+sensio_framework_extra:
+    router:
+        annotations: false
 framework:
     #esi: ~
     translator: { fallbacks: ['%locale%'] }

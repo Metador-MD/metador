@@ -13,7 +13,7 @@ use WhereGroup\CoreBundle\Component\ConfigurationInterface;
  */
 class ConfigurationTest extends KernelTestCase
 {
-    /** @var  Container*/
+    /** @var Container $container */
     private $container;
 
     /** @var Configuration $conf */
@@ -24,6 +24,7 @@ class ConfigurationTest extends KernelTestCase
      * @param null $name
      * @param array $data
      * @param string $dataName
+     * @throws \Exception
      */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
@@ -35,6 +36,10 @@ class ConfigurationTest extends KernelTestCase
         $this->conf = $this->container->get('metador_configuration');
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testSimpleGetAndSet()
     {
         // Simple set and get with number
@@ -78,7 +83,7 @@ class ConfigurationTest extends KernelTestCase
 
         // Simple get nothing
         $actual = $this->conf->get('my_not_existing_key');
-        $this->assertEquals(null, $actual);
+        $this->assertNull($actual);
 
         // Simple get default
         $actual = $this->conf->get('my_not_existing_key', '', '', 'party');
@@ -103,12 +108,14 @@ class ConfigurationTest extends KernelTestCase
         ], $this->conf->getAll('plugin', 'plugin_a'));
 
         // Test getAll
+        $array = $this->conf->getAll('plugin');
+
         $this->assertEquals([
             ['key' => 'my_key_1', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
             ['key' => 'my_key_2', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
             ['key' => 'my_key_3', 'value' => [1, 2], 'filterType' => 'plugin', 'filterValue' => 'plugin_b'],
             ['key' => 'my_key_4', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_b'],
-        ], $this->conf->getAll('plugin'));
+        ], $array);
     }
 
     public function testTruncate()
