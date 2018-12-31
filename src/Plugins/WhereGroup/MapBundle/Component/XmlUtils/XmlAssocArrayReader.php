@@ -58,15 +58,15 @@ class XmlAssocArrayReader implements IContextReader
      */
     public function startElement()
     {
-        $node = array(
+        $node = [
             self::KEY_NAME => $this->xmlReader->name,
-        );
+        ];
         if (($attrs = $this->getAttrs())) {
             $node[self::KEY_ATTRS] = $attrs;
         }
         if (!$this->path) {
             $this->path = [];
-            $this->xmlAssocArray = array($node);
+            $this->xmlAssocArray = [$node];
             $this->path[] =& $this->xmlAssocArray[0];
         } else {
             $parentPos = count($this->path) - 1;

@@ -13,9 +13,9 @@ class JsonDecodeExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('json_decode', array($this, 'decode'))
-        );
+        return [
+            new \Twig_SimpleFilter('json_decode', [$this, 'decode'])
+        ];
     }
 
     /**

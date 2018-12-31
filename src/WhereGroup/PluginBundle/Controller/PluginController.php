@@ -32,9 +32,9 @@ class PluginController extends Controller
             throw new AccessDeniedException();
         }
 
-        return $this->render('MetadorPluginBundle:Plugin:index.html.twig', array(
+        return $this->render('MetadorPluginBundle:Plugin:index.html.twig', [
             'plugins' => $this->get('metador_plugin')->getPlugins('origin')
-        ));
+        ]);
     }
 
     /**
@@ -55,9 +55,9 @@ class PluginController extends Controller
             }
         }
 
-        return $this->render('MetadorPluginBundle:Plugin:update.html.twig', array(
+        return $this->render('MetadorPluginBundle:Plugin:update.html.twig', [
             'plugins' => implode(',', $plugins)
-        ));
+        ]);
     }
 
     /**
@@ -65,20 +65,19 @@ class PluginController extends Controller
      */
     public function importAction()
     {
-        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', [
             'form' => $this
                 ->createFormBuilder(new Plugin())
-                ->add('attachment', FileType::class, array('label' => 'Datei', 'label_attr' => array(
-                    'class' => 'plugin-label plugin-row'
-                ), 'attr' => array(
+                ->add('attachment', FileType::class, [
+                    'label' => 'Datei', 'label_attr' => ['class' => 'plugin-label plugin-row'],
+                    'attr' => ['class' => 'plugin-row']
+                ])
+                ->add('save', SubmitType::class, ['label' => 'Importieren', 'attr' => [
                     'class' => 'plugin-row'
-                )))
-                ->add('save', SubmitType::class, array('label' => 'Importieren', 'attr' => array(
-                    'class' => 'plugin-row'
-                )))
+                ]])
                 ->getForm()
                 ->createView()
-        ));
+        ]);
     }
 
     /**
@@ -94,14 +93,11 @@ class PluginController extends Controller
         $tempPath   = $kernelPath . '/../var/temp/';
 
         $form = $this->createFormBuilder(new Plugin())
-            ->add('attachment', FileType::class, array('label' => 'Datei', 'label_attr' => array(
-                'class' => 'plugin-label plugin-row'
-            ), 'attr' => array(
-                'class' => 'plugin-row'
-            )))
-            ->add('save', SubmitType::class, array('label' => 'Importieren', 'attr' => array(
-                'class' => 'plugin-row'
-            )))
+            ->add('attachment', FileType::class, [
+                'label' => 'Datei', 'label_attr' => ['class' => 'plugin-label plugin-row'],
+                'attr' => ['class' => 'plugin-row']
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Importieren', 'attr' => ['class' => 'plugin-row']])
             ->getForm();
 
         $form->handleRequest($request);
@@ -168,9 +164,9 @@ class PluginController extends Controller
             return $this->redirectToRoute('metador_admin_plugin');
         }
 
-        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', array(
+        return $this->render('MetadorPluginBundle:Plugin:import.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -180,9 +176,9 @@ class PluginController extends Controller
      */
     public function confirmAction($plugin)
     {
-        return $this->render('MetadorPluginBundle:Plugin:confirm.html.twig', array(
+        return $this->render('MetadorPluginBundle:Plugin:confirm.html.twig', [
             'pluginKey' => $plugin
-        ));
+        ]);
     }
 
     /**

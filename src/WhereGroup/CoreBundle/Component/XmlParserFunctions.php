@@ -98,7 +98,7 @@ class XmlParserFunctions
      */
     protected function _asArray($data, $args = null)
     {
-        return is_array($data) ? $data : array($data);
+        return is_array($data) ? $data : [$data];
     }
 
     /**

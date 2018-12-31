@@ -65,9 +65,9 @@ class Plugin
         $this->routing           = $this->getPluginRouting();
 
         if (is_null($this->pluginPaths)) {
-            $this->pluginPaths       = array(
+            $this->pluginPaths       = [
                 $this->rootDir . '../src/Plugins/'
-            );
+            ];
         }
 
         // load configuration
@@ -112,7 +112,7 @@ class Plugin
      */
     public function getConfig()
     {
-        return array(
+        return [
             'rootDir'           => $this->rootDir,
             'cacheDir'          => $this->cacheDir,
             'configurationFile' => $this->configurationFile,
@@ -120,7 +120,7 @@ class Plugin
             'pluginPaths'       => $this->pluginPaths,
             'plugins'           => $this->plugins,
             'routing'           => $this->routing,
-        );
+        ];
     }
 
     /**
@@ -262,9 +262,9 @@ class Plugin
 
         $this->saveConfiguration();
 
-        return array(
+        return [
             'output' => 'done'
-        );
+        ];
     }
 
     /**
@@ -273,11 +273,11 @@ class Plugin
     protected function sortPlugins()
     {
         $plugins = [];
-        $require = array(
+        $require = [
             'hasChildren' => [],
             'hasParent'   => [],
             'isSingle'    => []
-        );
+        ];
 
         // get plugin informations
         foreach ($this->plugins as $key => $value) {
@@ -331,7 +331,7 @@ class Plugin
      */
     public function saveConfiguration()
     {
-        $this->writeYaml($this->configurationFile, array('plugins' => $this->sortPlugins()));
+        $this->writeYaml($this->configurationFile, ['plugins' => $this->sortPlugins()]);
         $this->writeYaml($this->routingFile, $this->routing);
     }
 
@@ -459,9 +459,9 @@ class Plugin
         $routing = $this->locateResource($this->plugins[$key]['class_path'], 'config/routing.yml');
 
         if ($routing) {
-            $this->routing[trim(str_replace('-', '_', $key))] = array(
+            $this->routing[trim(str_replace('-', '_', $key))] = [
                 'resource' => '@' . $this->plugins[$key]['class_name'] . '/Resources/config/routing.yml'
-            );
+            ];
         }
 
         // Add default configuration to database
@@ -554,9 +554,9 @@ class Plugin
         $process = new Process($command);
         $process->run();
 
-        return array(
+        return [
             'output' => $process->getOutput()
-        );
+        ];
     }
 
     /**
@@ -569,9 +569,9 @@ class Plugin
         $process = new Process("$console doctrine:schema:update --force --no-debug");
         $process->run();
 
-        return array(
+        return [
             'output' => $process->getOutput()
-        );
+        ];
     }
 
     /**
@@ -582,8 +582,8 @@ class Plugin
         $fs  = new Filesystem();
         $fs->remove($this->cacheDir);
 
-        return array(
+        return [
             'output' => 'done'
-        );
+        ];
     }
 }

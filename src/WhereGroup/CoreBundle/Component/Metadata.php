@@ -173,9 +173,9 @@ class Metadata implements MetadataInterface
     {
         $class = $this->plugin->getPluginClassName($p['_profile']);
 
-        $xml = $this->templating->render($class .":Export:metadata.xml.twig", array(
+        $xml = $this->templating->render($class .":Export:metadata.xml.twig", [
             "p" => $p
-        ));
+        ]);
 
         return $xml;
     }
@@ -562,9 +562,9 @@ class Metadata implements MetadataInterface
 
         $this->save($entity, false, false);
 
-        $this->success($entity, 'lock', '%title% gesperrt.', array(
+        $this->success($entity, 'lock', '%title% gesperrt.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+        ], 'metadata_edit', ['profile' => $entity->getProfile(), 'id' => $entity->getId()]);
     }
 
     /**
@@ -587,9 +587,9 @@ class Metadata implements MetadataInterface
 
         $this->save($entity, false);
 
-        $this->success($entity, 'unlock', '%title% freigegeben.', array(
+        $this->success($entity, 'unlock', '%title% freigegeben.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+        ], 'metadata_edit', ['profile' => $entity->getProfile(), 'id' => $entity->getId()]);
     }
 
     /**
@@ -614,9 +614,9 @@ class Metadata implements MetadataInterface
             $metadata->removeAddress($address);
         }
 
-        $this->success($metadata, 'delete', '%title% gelöscht.', array(
+        $this->success($metadata, 'delete', '%title% gelöscht.', [
             '%title%' => $metadata->getTitle() !== '' ? $metadata->getTitle() : 'Datensatz'
-        ));
+        ]);
 
         // DELETE
         $this->em->persist($metadata);
@@ -683,17 +683,17 @@ class Metadata implements MetadataInterface
             }
 
             if (!$errors && $log) {
-                $this->success($entity, $operation, '%title% gespeichert.', array(
+                $this->success($entity, $operation, '%title% gespeichert.', [
                     '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-                ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+                ], 'metadata_edit', ['profile' => $entity->getProfile(), 'id' => $entity->getId()]);
             }
 
             return true;
         } catch (\Exception $e) {
             if ($log) {
-                $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', array(
+                $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', [
                     '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-                ), 'metadata_edit', array('profile' => $entity->getProfile(), 'id' => $entity->getId()));
+                ], 'metadata_edit', ['profile' => $entity->getProfile(), 'id' => $entity->getId()]);
             }
 
             throw $e;

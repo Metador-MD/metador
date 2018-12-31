@@ -43,11 +43,11 @@ class ApplicationExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('applicationGet', array($this, 'applicationGet')),
-            new \Twig_SimpleFunction('plugin_is_active', array($this, 'pluginIsActive')),
-            new \Twig_SimpleFunction('profile_is_active', array($this, 'profileIsActive')),
-        );
+        return [
+            new \Twig_SimpleFunction('applicationGet', [$this, 'applicationGet']),
+            new \Twig_SimpleFunction('plugin_is_active', [$this, 'pluginIsActive']),
+            new \Twig_SimpleFunction('profile_is_active', [$this, 'profileIsActive']),
+        ];
     }
 
     /**

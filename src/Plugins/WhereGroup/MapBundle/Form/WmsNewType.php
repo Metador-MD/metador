@@ -20,7 +20,7 @@ class WmsNewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', HiddenType::class, array('data' => 'Undefined'))
-            ->add('gcUrl', TextType::class, array('label' => 'Url'));
+            ->add('title', HiddenType::class, ['data' => 'Undefined'])
+            ->add('gcUrl', TextType::class, ['label' => 'Url']);
     }
 }

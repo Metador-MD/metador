@@ -18,12 +18,12 @@ use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
  */
 class MetadataListener
 {
-    private $profiles = array(
+    private $profiles = [
         'metador_series_profile',
         'metador_dataset_profile',
         'metador_service_profile',
         'metador_tile_profile'
-    );
+    ];
 
     private $em;
 

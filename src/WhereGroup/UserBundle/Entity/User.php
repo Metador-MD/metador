@@ -140,9 +140,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(array(
-            $this->id,
-        ));
+        return serialize([$this->id]);
     }
 
     /**

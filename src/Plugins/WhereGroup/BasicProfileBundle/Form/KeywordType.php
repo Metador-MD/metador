@@ -43,39 +43,39 @@ class KeywordType extends AbstractType
         $profiles = array_combine(array_keys($help), array_keys($help));
 
         $builder
-            ->add('identifier', TextType::class, array('label' => 'Identifier'))
-            ->add('title', TextType::class, array('label' => 'Titel'))
-            ->add('date', TextType::class, array('label' => 'Datum'))
-            ->add('dateType', ChoiceType::class, array(
+            ->add('identifier', TextType::class, ['label' => 'Identifier'])
+            ->add('title', TextType::class, ['label' => 'Titel'])
+            ->add('date', TextType::class, ['label' => 'Datum'])
+            ->add('dateType', ChoiceType::class, [
                 'label'   => 'Beschreibung',
-                'choices' => array(
+                'choices' => [
                     'Erstellungsdatum' => 'creation',
                     'Überarbeitung'    => 'revision',
                     'Veröffentlichung' => 'publication',
-                ),
-            ))
-            ->add('cardinality', ChoiceType::class, array(
+                ],
+            ])
+            ->add('cardinality', ChoiceType::class, [
                 'label'   => 'Kardinalität',
-                'choices' => array(
+                'choices' => [
                     'Optional'    => 'optional',
                     'Conditional' => 'conditional',
                     'Mandatory'   => 'mandatory',
-                ),
-            ))
-            ->add('keywords', TextareaType::class, array(
+                ],
+            ])
+            ->add('keywords', TextareaType::class, [
                 'label'    => 'Schlüsselwörter',
                 'required' => false,
-            ))
-            ->add('repository', CheckboxType::class, array(
+            ])
+            ->add('repository', CheckboxType::class, [
                 'label'    => 'Repository',
                 'required' => false,
-            ))
-            ->add('profiles', ChoiceType::class, array(
+            ])
+            ->add('profiles', ChoiceType::class, [
                 'required' => false,
                 'choices'  => $profiles,
                 'multiple' => true,
                 'expanded' => true,
-            ));
+            ]);
         $builder->get('keywords')
             ->addModelTransformer(new CallbackTransformer(
                 function ($keywords) {

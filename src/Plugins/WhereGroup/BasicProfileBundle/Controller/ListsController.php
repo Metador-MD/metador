@@ -24,9 +24,9 @@ class ListsController extends Controller
             $lists[$profileKey] = $this->get('metador_configuration')->getAll('list-option', $profileKey);
         }
 
-        return $this->render('@MetadorBasicProfile/Lists/index.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/index.html.twig', [
             'lists' => $lists
-        ));
+        ]);
     }
 
     /**
@@ -39,11 +39,11 @@ class ListsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return $this->render('@MetadorBasicProfile/Lists/show.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/show.html.twig', [
             'listProfile'  => $profile,
             'listKey'      => $key,
             'list'         => $this->get('metador_configuration')->get($key, 'list-option', $profile)
-        ));
+        ]);
     }
 
     /**
@@ -77,11 +77,11 @@ class ListsController extends Controller
             return $this->redirectToRoute('metador_admin_lists_show', ['profile' => $profile, 'key' => $key]);
         }
 
-        return $this->render('@MetadorBasicProfile/Lists/new.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/new.html.twig', [
             'listProfile'  => $profile,
             'listKey'      => $key,
             'listTemplate' => $this->get('metador_configuration')->get($key, 'list-option-template', $profile),
-        ));
+        ]);
     }
 
     /**
@@ -121,11 +121,11 @@ class ListsController extends Controller
             return $this->redirectToRoute('metador_admin_lists_show', ['profile' => $profile, 'key' => $key]);
         }
 
-        return $this->render('@MetadorBasicProfile/Lists/confirmElement.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/confirmElement.html.twig', [
             'listProfile'    => $profile,
             'listKey'        => $key,
             'listElementKey' => $elementKey
-        ));
+        ]);
     }
 
     /**
@@ -154,12 +154,12 @@ class ListsController extends Controller
             ++$pointer;
         }
 
-        return $this->render('@MetadorBasicProfile/Lists/editElement.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/editElement.html.twig', [
             'listProfile'    => $profile,
             'listKey'        => $key,
             'key'            => $elementKey,
             'value'          => $value[$elementKey]
-        ));
+        ]);
     }
 
     /**
@@ -180,9 +180,9 @@ class ListsController extends Controller
             return $this->redirectToRoute('metador_admin_lists');
         }
 
-        return $this->render('@MetadorBasicProfile/Lists/confirm.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Lists/confirm.html.twig', [
             'listProfile'    => $profile,
             'listKey'        => $key
-        ));
+        ]);
     }
 }

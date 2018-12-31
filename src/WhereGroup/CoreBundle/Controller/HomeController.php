@@ -176,10 +176,10 @@ class HomeController extends Controller
     protected function renderTemplate(&$response, $searchResponse, $params)
     {
         $response = array_merge($response, [
-            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', array(
+            'html' => $this->get('templating')->render('@MetadorTheme/Home/result.html.twig', [
                 'rows'   => $searchResponse['rows'],
                 'paging' => $searchResponse['paging'],
-            )),
+            ]),
             'debug' => $params
         ]);
 

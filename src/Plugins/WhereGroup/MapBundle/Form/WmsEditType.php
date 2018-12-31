@@ -23,33 +23,33 @@ class WmsEditType extends AbstractType
     {
         $wms = $options['data'];
         $builder
-            ->add('gcUrl', TextType::class, array(
-                'label' => 'GetCapabilities Url (schreibgeschützt)',
-                'attr' => array(
+            ->add('gcUrl', TextType::class, [
+                'label' => 'GetCapabilities Url (schreibgeschützt]',
+                'attr' => [
                     'readonly' => true,
-                ),
-            ))
-            ->add('title', TextType::class, array(
+                ],
+            ])
+            ->add('title', TextType::class, [
                 'label' => 'Title',
                 'invalid_message' => 'Der Titel darf nicht leer sein.',
-            ))
-            ->add('format', ChoiceType::class, array(
+            ])
+            ->add('format', ChoiceType::class, [
                 'label' => 'Format',
                 'choices' => array_combine($wms->getFormats(), $wms->getFormats()),
-            ))
-            ->add('layers', ChoiceType::class, array(
+            ])
+            ->add('layers', ChoiceType::class, [
                 'multiple' => true,
                 'label' => 'Layers',
                 'choices' => array_combine($wms->getLayerList(), $wms->getLayerList()),
-            ))
-            ->add('opacity', ChoiceType::class, array(
+            ])
+            ->add('opacity', ChoiceType::class, [
                 'label' => 'Opacity',
                 'choices' => array_combine(
                     range(0.0, 1.0, 0.1),
                     range(0.0, 1.0, 0.1)
                 ),
-            ))
-            ->add('priority', NumberType::class, array('label' => 'Priority'))
-            ->add('visible', CheckboxType::class, array('label' => 'Visible'));
+            ])
+            ->add('priority', NumberType::class, ['label' => 'Priority'])
+            ->add('visible', CheckboxType::class, ['label' => 'Visible']);
     }
 }

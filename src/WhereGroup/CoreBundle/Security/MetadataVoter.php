@@ -37,7 +37,7 @@ class MetadataVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::EDIT, self::VIEW, self::EDIT_GROUP))) {
+        if (!in_array($attribute, [self::EDIT, self::VIEW, self::EDIT_GROUP])) {
             return false;
         }
 
@@ -132,7 +132,7 @@ class MetadataVoter extends Voter
         }
 
         // can edit if user has the role geo office
-        if ($this->decisionManager->decide($token, array('ROLE_SYSTEM_GEO_OFFICE'))) {
+        if ($this->decisionManager->decide($token, ['ROLE_SYSTEM_GEO_OFFICE'])) {
             return true;
         }
 

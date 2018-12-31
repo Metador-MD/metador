@@ -15,13 +15,14 @@ class UuidExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('uuid', array($this, 'uuid')),
-        );
+        return [
+            new \Twig_SimpleFunction('uuid', [$this, 'uuid']),
+        ];
     }
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function uuid()
     {

@@ -23,21 +23,21 @@ class ArrayParserTest extends TestCase
         $object->b = 'b';
         $object->c = 'c';
 
-        $this->types = array(
-            'array'  => array(1,2,3),
+        $this->types = [
+            'array'  => [1,2,3],
             'object' => $object,
             'string' => 'Hello',
             'number' => 345
-        );
+        ];
 
-        $this->array = array(
+        $this->array = [
             'types' => $this->types,
-            'user'  => array(
-                array('name' => 'Max'),
-                array('name' => 'Thomas'),
-                array('name' => 'Jochen')
-            )
-        );
+            'user'  => [
+                ['name' => 'Max'],
+                ['name' => 'Thomas'],
+                ['name' => 'Jochen']
+            ]
+        ];
     }
 
     public function testGet()
@@ -56,7 +56,7 @@ class ArrayParserTest extends TestCase
         // Adds number 4 to array.
         // But normally you should use ArrayParser::append($array, 'types:array', 4); to do that.
         ArrayParser::set($array, 'types:array:3', 4);
-        $this->assertEquals(array(1,2,3,4), ArrayParser::get($array, 'types:array'));
+        $this->assertEquals([1,2,3,4], ArrayParser::get($array, 'types:array'));
 
         // Replaces the array with number 4.
         ArrayParser::set($array, 'types:array', 4);
@@ -94,7 +94,7 @@ class ArrayParserTest extends TestCase
         $array = $this->array;
 
         ArrayParser::append($array, 'types:array', 4);
-        $this->assertEquals(array(1,2,3,4), ArrayParser::get($array, 'types:array'));
+        $this->assertEquals([1,2,3,4], ArrayParser::get($array, 'types:array'));
     }
 
     public function testMerge()
@@ -103,12 +103,12 @@ class ArrayParserTest extends TestCase
         $array2 = ['X' => ['Y' => ['two' => '2']]];
 
         $this->assertEquals([
-            'X' => array(
-                'Y' => array(
+            'X' => [
+                'Y' => [
                     'one' => '1',
                     'two' => '2'
-                )
-            )
+                ]
+            ]
         ], ArrayParser::merge($array1, $array2));
     }
 }

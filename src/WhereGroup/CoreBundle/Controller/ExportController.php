@@ -77,9 +77,9 @@ class ExportController extends Controller
         $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
         $className = $this->get('metador_plugin')->getPluginClassName($p['_profile']);
-        $html = $this->render($className . ":Export:pdf.html.twig", array(
+        $html = $this->render($className . ":Export:pdf.html.twig", [
             "p" => $p
-        ));
+        ]);
 
         /**
          * Extract as Component PDFExporter
@@ -104,9 +104,9 @@ class ExportController extends Controller
         $p = $this->findObject($id);
         $this->get('metador_core')->denyAccessUnlessGranted('view', $p);
         $className = $this->get('metador_plugin')->getPluginClassName($p['_profile']);
-        return $this->render($className . ":Export:html.html.twig", array(
+        return $this->render($className . ":Export:html.html.twig", [
             "p" => $p
-        ));
+        ]);
     }
 
     /**

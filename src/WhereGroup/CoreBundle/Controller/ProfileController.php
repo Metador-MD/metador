@@ -41,21 +41,18 @@ class ProfileController extends Controller
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        $uuid = $this->get('metador_metadata')->generateUuid();
+        //$uuid = $this->get('metador_metadata')->generateUuid();
 
-        return $this->render($template, array(
-            'p' => array(
+        return $this->render($template, [
+            'p' => [
                 '_source'   => $source,
                 '_profile'  => $profile,
                 '_public'   => false,
                 '_groups'   => [],
-//                '_uuid'     => $uuid,
-//                'fileIdentifier' => $uuid,
-//                'dateStamp' => (new \DateTime)->format('Y-m-d')
-            ),
+            ],
             'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
-        ));
+        ]);
     }
 
     /**
@@ -81,11 +78,11 @@ class ProfileController extends Controller
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        return new Response($this->get('metador_core')->render($template, array(
+        return new Response($this->get('metador_core')->render($template, [
             'p' => $metadata->getObject(),
             'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
-        )));
+        ]));
     }
 
     /**
@@ -159,11 +156,11 @@ class ProfileController extends Controller
 
             $this->get('metador_frontend_command')->changeLocation(
                 $response,
-                $this->generateUrl('metadata_edit', array(
+                $this->generateUrl('metadata_edit', [
                     'source' => $source,
                     'profile' => $profile,
                     'id' => $id
-                ))
+                ])
             );
             $em->getConnection()->commit();
         } catch (MetadataException $e) {
@@ -178,11 +175,11 @@ class ProfileController extends Controller
             throw $e;
         }
 
-        $response = array_merge_recursive($response, array(
-            'metadata' => array(
+        $response = array_merge_recursive($response, [
+            'metadata' => [
                 'id'   => $id
-            )
-        ));
+            ]
+        ]);
 
         // Add redirect command to response
         if ($submitType === 'close') {
@@ -206,21 +203,21 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
         $this->init($profile);
 
         return $this->render(
             $this->getTemplate('confirm'),
-            array(
+            [
                 'id'      => $id,
                 'profile' => $profile,
                 'form'    => $this
                     ->createFormBuilder($metadata)
-                    ->add('delete', SubmitType::class, array('label' => 'ok'))
+                    ->add('delete', SubmitType::class, ['label' => 'ok'])
                     ->getForm()
                     ->createView(),
-            )
+            ]
         );
     }
 
@@ -234,10 +231,10 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
 
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
         $form = $this->createFormBuilder($metadata)
-            ->add('delete', SubmitType::class, array('label' => 'ok'))
+            ->add('delete', SubmitType::class, ['label' => 'ok'])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -262,7 +259,7 @@ class ProfileController extends Controller
         $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
 
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
         $message = "You can only validate public metadata.";
         $debug   = [];
@@ -272,11 +269,11 @@ class ProfileController extends Controller
             $message = "";
         }
 
-        return $this->render('@MetadorCore/Profile/validate.html.twig', array(
+        return $this->render('@MetadorCore/Profile/validate.html.twig', [
             'id'      => $id,
             'debug'   => $debug,
             'message' => $message
-        ));
+        ]);
     }
 
     /**
@@ -289,11 +286,11 @@ class ProfileController extends Controller
     {
         $metadata = $this->get('metador_metadata')->getById($id);
         $p = $metadata->getObject();
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $p);
+        $this->denyAccessUnlessGranted(['view', 'edit'], $p);
 
-        return $this->render('@MetadorCore/Profile/errors.html.twig', array(
+        return $this->render('@MetadorCore/Profile/errors.html.twig', [
             'p' => $p
-        ));
+        ]);
     }
 
     /**
@@ -310,7 +307,7 @@ class ProfileController extends Controller
     public function xpathAction($id, Request $request)
     {
         $metadata = $this->get('metador_metadata')->getById($id);
-        $this->denyAccessUnlessGranted(array('view', 'edit'), $metadata->getObject());
+        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
 
         if ($request->getMethod() == 'POST') {
@@ -351,10 +348,10 @@ class ProfileController extends Controller
             return new AjaxResponse(['html' => $html]);
         }
 
-        return $this->render('@MetadorCore/Profile/xpath.html.twig', array(
+        return $this->render('@MetadorCore/Profile/xpath.html.twig', [
             'id'    => $id,
             'xpath' => $request->get('xpath', '/*')
-        ));
+        ]);
     }
 
     /**
@@ -472,10 +469,10 @@ class ProfileController extends Controller
             $p2++;
         }
 
-        return $this->render('@MetadorCore/Profile/test.html.twig', array(
+        return $this->render('@MetadorCore/Profile/test.html.twig', [
             'result' => $result,
             'id'     => $id
-        ));
+        ]);
     }
 
 

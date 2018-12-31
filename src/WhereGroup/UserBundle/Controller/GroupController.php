@@ -3,7 +3,6 @@
 namespace WhereGroup\UserBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,9 +25,9 @@ class GroupController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return $this->render('@MetadorUser/Group/index.html.twig', array(
+        return $this->render('@MetadorUser/Group/index.html.twig', [
             'groups' => $this->getRepository()->findAllSorted()
-        ));
+        ]);
     }
 
     /**
@@ -37,18 +36,20 @@ class GroupController extends Controller
      */
     public function newAction()
     {
-        return $this->render('@MetadorUser/Group/new.html.twig', array(
+        return $this->render('@MetadorUser/Group/new.html.twig', [
             'form' => $this
                 ->createForm(GroupType::class, new Group())
                 ->createView(),
             'users' => $this
                 ->getRepository('MetadorUserBundle:User')
                 ->findAll()
-        ));
+        ]);
     }
 
     /**
      * @Route("/create", name="metador_admin_group_create", methods={"POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -60,7 +61,7 @@ class GroupController extends Controller
 
             $roleExists = $this
                 ->getRepository()
-                ->findOneBy(array('role' => $entity->getRole()));
+                ->findOneBy(['role' => $entity->getRole()]);
 
             if (!$roleExists) {
                 $em->persist($entity);
@@ -76,21 +77,26 @@ class GroupController extends Controller
 
     /**
      * @Route("/edit/{id}", name="metador_admin_group_edit", methods={"GET"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction($id)
     {
-        return $this->render('MetadorUserBundle:Group:new.html.twig', array(
+        return $this->render('MetadorUserBundle:Group:new.html.twig', [
             'form' => $this
                 ->createForm(GroupType::class, $this->getGroup($id))
                 ->createView(),
             'users' => $this
                 ->getRepository('MetadorUserBundle:User')
                 ->findAll()
-        ));
+        ]);
     }
 
     /**
      * @Route("/edit/{id}", name="metador_admin_group_update", methods={"POST"})
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function updateAction(Request $request, $id)
     {
@@ -106,20 +112,22 @@ class GroupController extends Controller
             return $this->redirectToRoute('metador_admin_group');
         }
 
-        return $this->render('MetadorUserBundle:Group:new.html.twig', array('form' => $form));
+        return $this->render('MetadorUserBundle:Group:new.html.twig', ['form' => $form]);
     }
 
     /**
      * @Route("/delete/{id}", name="metador_admin_group_confirm", methods={"GET", "POST"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function confirmAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->getRepository()->findOneById($id))
-            ->add('delete', SubmitType::class, array(
+            ->add('delete', SubmitType::class, [
                 'label' => 'löschen'
-            ))
+            ])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -137,15 +145,15 @@ class GroupController extends Controller
                 'delete',
                 $id,
                 'Gruppe %group% erfolgreich gelöscht.',
-                array('%group%' => $name)
+                ['%group%' => $name]
             );
 
             return $this->redirectToRoute('metador_admin_group');
         }
 
-        return $this->render('MetadorUserBundle:Group:confirm.html.twig', array(
+        return $this->render('MetadorUserBundle:Group:confirm.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -176,6 +184,7 @@ class GroupController extends Controller
     }
 
     /**
+     * @param $type
      * @param $operation
      * @param $id
      * @param $message

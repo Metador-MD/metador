@@ -50,7 +50,7 @@ class Map implements MapInterface
      */
     public function all()
     {
-        return $this->repo->findBy([], array('priority' => 'DESC'));
+        return $this->repo->findBy([], ['priority' => 'DESC']);
     }
 
     /**
@@ -162,17 +162,17 @@ class Map implements MapInterface
      */
     public function toOl4(WmsEntity $wms)
     {
-        return array(
+        return [
             'type' => $wms::$type,
             'url' => $wms->getGmUrl(),
             'title' => $wms->getTitle(),
             'visible' => $wms->getVisible(),
             'opacity' => $wms->getOpacity(),
-            'params' => array(
+            'params' => [
                 'LAYERS' => implode(',', $wms->getLayers()),
                 'VERSION' => $wms->getVersion(),
                 'FORMAT' => $wms->getFormat(),
-            ),
-        );
+            ],
+        ];
     }
 }

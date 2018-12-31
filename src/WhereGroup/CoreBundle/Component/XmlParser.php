@@ -225,7 +225,7 @@ class XmlParser
 
                 $tmp[] = empty($dataRecTmp) ? $dataTmp : array_merge(
                     $dataTmp,
-                    array($name => $dataRecTmp)
+                    [$name => $dataRecTmp]
                 );
             }
         }

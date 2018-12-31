@@ -57,9 +57,6 @@ class FeatureJsonWriter implements IContextWriter
 
     public function write(array $content)
     {
-//        $this->content = array(
-//            'type' => 'Feature',
-//        );
         $feature = $this->findFeature($content[0]);
         $json = $this->read($feature[xaar::KEY_CHILDREN]);
 
@@ -76,11 +73,11 @@ class FeatureJsonWriter implements IContextWriter
 
     private function read($feature)
     {
-        $json = array(
+        $json = [
             'type' => 'Feature',
             'properties' => [],
+        ];
 
-        );
         foreach ($feature as $item) {
             if (isset($item[xaar::KEY_VALUE])) { //
                 $json['properties'][$item[xaar::KEY_NAME]] = $item[xaar::KEY_VALUE];

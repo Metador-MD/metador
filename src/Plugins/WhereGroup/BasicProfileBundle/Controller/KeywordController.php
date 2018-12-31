@@ -19,12 +19,12 @@ class KeywordController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('@MetadorBasicProfile/Keyword/index.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Keyword/index.html.twig', [
             'keywords' => $this
                 ->getDoctrine()
                 ->getRepository('MetadorBasicProfileBundle:Keyword')
                 ->findAll(),
-        ));
+        ]);
     }
 
     /**
@@ -51,9 +51,9 @@ class KeywordController extends Controller
             return $this->redirectToRoute('metador_admin_keyword');
         }
 
-        return $this->render('@MetadorBasicProfile/Keyword/new.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Keyword/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -86,9 +86,9 @@ class KeywordController extends Controller
             return $this->redirectToRoute('metador_admin_keyword');
         }
 
-        return $this->render('@MetadorBasicProfile/Keyword/new.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Keyword/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -104,9 +104,9 @@ class KeywordController extends Controller
             ->findOneById($id);
 
         $form = $this->createFormBuilder($entity)
-            ->add('delete', SubmitType::class, array(
+            ->add('delete', SubmitType::class, [
                 'label' => 'löschen',
-            ))
+            ])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -121,9 +121,9 @@ class KeywordController extends Controller
             return $this->redirectToRoute('metador_admin_keyword');
         }
 
-        return $this->render('@MetadorBasicProfile/Keyword/confirm.html.twig', array(
+        return $this->render('@MetadorBasicProfile/Keyword/confirm.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**

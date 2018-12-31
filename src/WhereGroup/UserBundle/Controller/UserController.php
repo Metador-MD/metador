@@ -25,9 +25,9 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('@MetadorUser/User/index.html.twig', array(
+        return $this->render('@MetadorUser/User/index.html.twig', [
             'users' => $this->get('metador_user')->findAll(),
-        ));
+        ]);
     }
 
     /**
@@ -37,11 +37,11 @@ class UserController extends Controller
      */
     public function newAction()
     {
-        return $this->render('@MetadorUser/User/new.html.twig', array(
+        return $this->render('@MetadorUser/User/new.html.twig', [
             'form' => $this
                 ->createForm(UserType::class, new User())
                 ->createView()
-        ));
+        ]);
     }
 
     /**
@@ -79,33 +79,33 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return $this->render('@MetadorUser/User/new.html.twig', array(
+        return $this->render('@MetadorUser/User/new.html.twig', [
             'form'   => $form->createView(),
-        ));
+        ]);
     }
 
     /**
      *
      * @Route("/edit/{id}", name="metador_admin_user_edit")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction($id)
     {
         try {
             $user = $this->get('metador_user')->get($id);
         } catch (MetadorException $e) {
-            $this->log('error', 'edit', $id, 'Benutzer %username% konnte nicht bearbeitet werden.', [
-                '%username%' => $user->getUsername()
-            ]);
+            $this->log('error', 'edit', $id, 'Benutzer konnte nicht bearbeitet werden.');
             return $this->redirectToRoute('metador_admin_user');
         };
 
 
 
-        return $this->render('@MetadorUser/User/new.html.twig', array(
+        return $this->render('@MetadorUser/User/new.html.twig', [
             'form' => $this
                 ->createForm(UserType::class, $user)
                 ->createView()
-        ));
+        ]);
     }
 
     /**
@@ -160,9 +160,9 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return $this->render('@MetadorUser/User/new.html.twig', array(
+        return $this->render('@MetadorUser/User/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -176,9 +176,9 @@ class UserController extends Controller
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_user')->get($id))
-            ->add('delete', SubmitType::class, array(
+            ->add('delete', SubmitType::class, [
                 'label' => 'löschen'
-            ))
+            ])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -201,9 +201,9 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_admin_user');
         }
 
-        return $this->render('@MetadorUser/User/confirm.html.twig', array(
+        return $this->render('@MetadorUser/User/confirm.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -250,9 +250,9 @@ class UserController extends Controller
             return $this->redirectToRoute('metador_home');
         }
 
-        return $this->render('@MetadorUser/User/profile.html.twig', array(
+        return $this->render('@MetadorUser/User/profile.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**

@@ -27,10 +27,10 @@ class ControllerInfoExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('controller_name', array($this, 'getControllerName')),
-            new \Twig_SimpleFunction('controller_action', array($this, 'getControllerAction'))
-        );
+        return [
+            new \Twig_SimpleFunction('controller_name', [$this, 'getControllerName']),
+            new \Twig_SimpleFunction('controller_action', [$this, 'getControllerAction'])
+        ];
     }
 
     /**

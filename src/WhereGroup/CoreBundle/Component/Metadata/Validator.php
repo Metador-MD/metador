@@ -140,7 +140,7 @@ class Validator
                 }
 
                 $list = $this->conf->get($key, 'list-option', $profile);
-                $array = !is_array($string) ? array($string) : $string;
+                $array = !is_array($string) ? [$string] : $string;
                 unset($string);
 
                 foreach ($array as $string) {

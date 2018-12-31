@@ -143,7 +143,7 @@ interface ExprHandlerInterface
 
     /**
      * @param string $propertyName
-     * @param array $geoFeature GeoJSON or an array(w,s,e,n)
+     * @param array $geoFeature GeoJSON or an [w,s,e,n]
      * @param array $parameters
      * @return mixed
      * @throws PropertyNameNotFoundException

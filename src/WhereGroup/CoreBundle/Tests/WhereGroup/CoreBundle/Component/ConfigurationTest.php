@@ -60,10 +60,10 @@ class ConfigurationTest extends KernelTestCase
 
         // Simple set and get with array
         $actual = $this->conf
-            ->set('my_key', array('ABC', 'DEF'))
+            ->set('my_key', ['ABC', 'DEF'])
             ->get('my_key');
 
-        $this->assertEquals(array('ABC', 'DEF'), $actual);
+        $this->assertEquals(['ABC', 'DEF'], $actual);
 
         // Simple set and get with object
         $expected = new \stdClass();
@@ -74,7 +74,7 @@ class ConfigurationTest extends KernelTestCase
             ->set('my_key', $expected)
             ->get('my_key');
 
-        $this->assertEquals(array('name' => 'ABC', 'age' => 39), $actual);
+        $this->assertEquals(['name' => 'ABC', 'age' => 39], $actual);
 
         // Simple get nothing
         $actual = $this->conf->get('my_not_existing_key');
@@ -90,25 +90,25 @@ class ConfigurationTest extends KernelTestCase
         $this->conf
             ->set('my_key_1', 23, 'plugin', 'plugin_a')
             ->set('my_key_2', 23, 'plugin', 'plugin_a')
-            ->set('my_key_3', array(1, 2), 'plugin', 'plugin_b')
+            ->set('my_key_3', [1, 2], 'plugin', 'plugin_b')
             ->set('my_key_4', 23, 'plugin', 'plugin_b');
 
         // Test get
         $this->assertEquals(23, $this->conf->get('my_key_1', 'plugin', 'plugin_a'));
 
         // Test getAll
-        $this->assertEquals(array(
-            array('key' => 'my_key_1', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'),
-            array('key' => 'my_key_2', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'),
-        ), $this->conf->getAll('plugin', 'plugin_a'));
+        $this->assertEquals([
+            ['key' => 'my_key_1', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
+            ['key' => 'my_key_2', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
+        ], $this->conf->getAll('plugin', 'plugin_a'));
 
         // Test getAll
-        $this->assertEquals(array(
-            array('key' => 'my_key_1', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'),
-            array('key' => 'my_key_2', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'),
-            array('key' => 'my_key_3', 'value' => array(1, 2), 'filterType' => 'plugin', 'filterValue' => 'plugin_b'),
-            array('key' => 'my_key_4', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_b'),
-        ), $this->conf->getAll('plugin'));
+        $this->assertEquals([
+            ['key' => 'my_key_1', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
+            ['key' => 'my_key_2', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_a'],
+            ['key' => 'my_key_3', 'value' => [1, 2], 'filterType' => 'plugin', 'filterValue' => 'plugin_b'],
+            ['key' => 'my_key_4', 'value' => 23, 'filterType' => 'plugin', 'filterValue' => 'plugin_b'],
+        ], $this->conf->getAll('plugin'));
     }
 
     public function testTruncate()

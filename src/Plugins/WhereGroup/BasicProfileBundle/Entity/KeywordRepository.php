@@ -18,7 +18,7 @@ class KeywordRepository extends EntityRepository
             ->createQueryBuilder('k')
             ->select('k')
             ->where('k.profiles like :profile')
-            ->setParameters(array('profile' => '%"' . $profile . '"%'))
+            ->setParameters(['profile' => '%"' . $profile . '"%'])
             ->getQuery()
             ->getResult();
     }

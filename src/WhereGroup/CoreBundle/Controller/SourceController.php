@@ -21,12 +21,14 @@ class SourceController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return $this->render('MetadorCoreBundle:Source:index.html.twig', array(
+        return $this->render('MetadorCoreBundle:Source:index.html.twig', [
             'sources' => $this->get('metador_source')->all()
-        ));
+        ]);
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/new/", name="metador_admin_source_new", methods={"GET", "POST"})
      */
@@ -59,20 +61,21 @@ class SourceController extends Controller
                 'edit',
                 $entity->getId(),
                 'Datenquelle %source% erfolgreich erstellt.',
-                array('%source%' => $entity->getName())
+                ['%source%' => $entity->getName()]
             );
 
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        return $this->render('MetadorCoreBundle:Source:new.html.twig', array(
+        return $this->render('MetadorCoreBundle:Source:new.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/edit/{id}", name="metador_admin_source_edit", methods={"GET", "POST"})
      */
@@ -94,18 +97,21 @@ class SourceController extends Controller
                 'edit',
                 $id,
                 'Datenquelle %source% erfolgreich bearbeitet.',
-                array('%source%' => $entity->getName())
+                ['%source%' => $entity->getName()]
             );
 
             return $this->redirectToRoute('metador_admin_source');
         }
 
-        return $this->render('MetadorCoreBundle:Source:new.html.twig', array(
+        return $this->render('MetadorCoreBundle:Source:new.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/confirm/{id}", name="metador_admin_source_confirm", methods={"GET", "POST"})
      */
@@ -114,9 +120,9 @@ class SourceController extends Controller
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $form = $this->createFormBuilder($this->get('metador_source')->get($id))
-            ->add('delete', SubmitType::class, array(
+            ->add('delete', SubmitType::class, [
                 'label' => 'löschen'
-            ))
+            ])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -135,7 +141,7 @@ class SourceController extends Controller
                 'edit',
                 $id,
                 'Datenquelle %source% erfolgreich gelöscht.',
-                array('%source%' => $name)
+                ['%source%' => $name]
             );
 
             return $this->redirectToRoute('metador_admin_source');
@@ -143,10 +149,10 @@ class SourceController extends Controller
 
         $this->get('event_dispatcher')->dispatch('source.confirm_delete', $event);
 
-        return $this->render('MetadorCoreBundle:Source:confirm.html.twig', array(
+        return $this->render('MetadorCoreBundle:Source:confirm.html.twig', [
             'form'     => $form->createView(),
             'messages' => $event->getMessages()
-        ));
+        ]);
     }
 
     /**

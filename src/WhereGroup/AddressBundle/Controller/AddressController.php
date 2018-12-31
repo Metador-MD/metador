@@ -19,7 +19,6 @@ class AddressController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @Route("", name="metador_admin_address", methods={"GET"})
      */
@@ -37,6 +36,8 @@ class AddressController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/new", name="metador_admin_address_new", methods={"GET", "POST"})
      */
@@ -69,20 +70,21 @@ class AddressController extends Controller
                 'create',
                 $entity->getId(),
                 'Adresse %address% erfolgreich erstellt.',
-                array('%address%' => $entity->getOrganisationName())
+                ['%address%' => $entity->getOrganisationName()]
             );
 
             return $this->redirectToRoute('metador_admin_address');
         }
 
-        return $this->render('MetadorAddressBundle:Address:new.html.twig', array(
+        return $this->render('MetadorAddressBundle:Address:new.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/edit/{id}", name="metador_admin_address_edit", methods={"GET", "POST"})
      */
@@ -105,28 +107,29 @@ class AddressController extends Controller
                     'edit',
                     $id,
                     'Adresse %address% erfolgreich bearbeitet.',
-                    array('%address%' => $entity->getOrganisationName())
+                    ['%address%' => $entity->getOrganisationName()]
                 );
             } catch (MetadorException $e) {
                 $this->setFlashWarning(
                     'edit',
                     $id,
                     'Adresse %address% existiert bereits.',
-                    array('%address%' => $entity->getOrganisationName())
+                    ['%address%' => $entity->getOrganisationName()]
                 );
             }
 
             return $this->redirectToRoute('metador_admin_address');
         }
 
-        return $this->render('MetadorAddressBundle:Address:new.html.twig', array(
+        return $this->render('MetadorAddressBundle:Address:new.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @Route("/confirm/{id}", name="metador_admin_address_confirm", methods={"GET", "POST"})
      */
@@ -135,9 +138,9 @@ class AddressController extends Controller
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this->createFormBuilder($this->get('metador_address')->get($id))
-            ->add('delete', SubmitType::class, array(
+            ->add('delete', SubmitType::class, [
                 'label' => 'löschen'
-            ))
+            ])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -153,15 +156,15 @@ class AddressController extends Controller
                 'edit',
                 $id,
                 'Adresse %address% erfolgreich gelöscht.',
-                array('%address%' => $name)
+                ['%address%' => $name]
             );
 
             return $this->redirectToRoute('metador_admin_address');
         }
 
-        return $this->render('MetadorAddressBundle:Address:confirm.html.twig', array(
+        return $this->render('MetadorAddressBundle:Address:confirm.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**

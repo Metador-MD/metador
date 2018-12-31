@@ -36,7 +36,7 @@ class WmsCapabilitiesParser111 extends WmsCapabilitiesParser
         $wms->setFormat(
             $this->selectFormat(
                 $wms->getFormats(),
-                array('image/png', 'image/jpg', 'image/jpeg', 'image/gif')
+                ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
             )
         );
     }

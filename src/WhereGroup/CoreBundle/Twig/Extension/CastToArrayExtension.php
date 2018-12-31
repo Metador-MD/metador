@@ -13,9 +13,9 @@ class CastToArrayExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('cast_to_array', array($this, 'decode'), array('is_safe' => array('html')))
-        );
+        return [
+            new \Twig_SimpleFilter('cast_to_array', [$this, 'decode'], ['is_safe' => ['html']])
+        ];
     }
 
     /**

@@ -23,13 +23,13 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', RepeatedType::class, array(
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => false,
                 'invalid_message' => 'Passwörter stimmen nicht überein.',
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
         ;
     }
 
@@ -38,8 +38,8 @@ class ProfileType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'WhereGroup\UserBundle\Entity\User'
-        ));
+        ]);
     }
 }

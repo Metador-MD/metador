@@ -28,29 +28,30 @@ class UserType extends AbstractType
             ->add(
                 'password',
                 RepeatedType::class,
-                array(
+                [
                     'type' => PasswordType::class,
                     'invalid_message' => 'Die Passwörten stimmen nicht überein!',
                     'required' => false,
-                    'first_options'  => array('label' => 'Passwort'),
-                    'second_options' => array('label' => 'Password wiederholen'))
+                    'first_options'  => ['label' => 'Passwort'],
+                    'second_options' => ['label' => 'Password wiederholen']
+                ]
             )
-            ->add('email', null, array('required' => false))
+            ->add('email', null, ['required' => false])
             ->add(
                 'groups',
                 EntityType::class,
-                array(
+                [
                     'class'        =>  'MetadorUserBundle:Group',
                     'multiple'     => true,
                     'choice_label' => 'role',
                     'label'        => 'Gruppe',
                     'required'     => false
-                )
+                ]
             )
             ->add(
                 'picture',
                 FileType::class,
-                array(
+                [
                     'label'=>'Profile Picture',
                     'required' => false,
                     'data_class' => null,
@@ -60,10 +61,10 @@ class UserType extends AbstractType
                             'image/jpeg',
                             'image/png',
                         ]
-                    ]))
+                    ])
+                ]
             )
-            ->add('isActive')
-            ;
+            ->add('isActive');
     }
 
     /**
@@ -71,8 +72,8 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'WhereGroup\UserBundle\Entity\User'
-        ));
+        ]);
     }
 }

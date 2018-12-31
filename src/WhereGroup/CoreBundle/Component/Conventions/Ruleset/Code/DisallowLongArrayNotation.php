@@ -27,7 +27,7 @@ class DisallowLongArrayNotation extends Rule
             return;
         }
 
-        if (preg_match('/array\(/', $lineString)) {
+        if (preg_match('/[^_]array\(/', $lineString)) {
             $result->addError(self::class, $fileHash, $lineNumber);
         }
     }

@@ -13,10 +13,10 @@ class TeaserExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('teaser', array($this, 'teaser')),
-            new \Twig_SimpleFilter('groupname', array($this, 'groupName'))
-        );
+        return [
+            new \Twig_SimpleFilter('teaser', [$this, 'teaser']),
+            new \Twig_SimpleFilter('groupname', [$this, 'groupName'])
+        ];
     }
 
     /**

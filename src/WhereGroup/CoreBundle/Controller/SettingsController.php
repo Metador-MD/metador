@@ -57,10 +57,10 @@ class SettingsController extends Controller
             $pluginConfiguration[$pluginKey] = $pluginInfo;
         }
 
-        return $this->render('@MetadorCore/Settings/index.html.twig', array(
+        return $this->render('@MetadorCore/Settings/index.html.twig', [
             'fragment' => $fragment,
             'pluginConfiguration' => $pluginConfiguration
-        ));
+        ]);
     }
 
     /**

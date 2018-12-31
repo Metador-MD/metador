@@ -43,7 +43,7 @@ class WmsCapabilitiesParser130 extends WmsCapabilitiesParser
         // set default values: all available layers, a first founded format
         $wms->setLayers($wms->getLayerList());
         $wms->setFormat(
-            $this->selectFormat($wms->getFormats(), array('image/png', 'image/jpg', 'image/jpeg', 'image/gif'))
+            $this->selectFormat($wms->getFormats(), ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'])
         );
 
         return $wms;

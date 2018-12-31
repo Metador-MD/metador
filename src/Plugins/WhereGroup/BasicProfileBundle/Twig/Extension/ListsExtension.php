@@ -27,13 +27,9 @@ class ListsExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction(
-                'get_list_options',
-                array($this, 'getListOptions'),
-                array('is_safe' => array('html'))
-            )
-        );
+        return [
+            new \Twig_SimpleFunction('get_list_options', [$this, 'getListOptions'], ['is_safe' => ['html']])
+        ];
     }
 
     /**

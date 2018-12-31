@@ -23,11 +23,11 @@ use WhereGroup\CoreBundle\Component\AjaxResponse;
  */
 class PluginController extends Controller
 {
-    public static $shapeSupportedTypes = array(
+    public static $shapeSupportedTypes = [
         1 => 'Point',
         3 => 'LineString',//'PolyLine',
         5 => 'Polygon',
-    );
+    ];
 
     /**
      * @return Response
@@ -59,9 +59,9 @@ class PluginController extends Controller
     public function uploadGeomAction()
     {
         $request = $this->get('request_stack')->getMasterRequest();
-        $result = array(
+        $result = [
             'content' => null,
-        );
+        ];
         if ($request->files->count() === 0) {
             $this->get('metador_frontend_command')->displayError(
                 $result,
@@ -75,12 +75,12 @@ class PluginController extends Controller
             }
             if ($file->getClientOriginalExtension() === 'xml' || $file->getClientOriginalExtension() === 'gml') {
                 $reader = EXmlReader::create($file->getRealPath());
-                $map = array('wfs:member', 'gml:featureMember');
+                $map = ['wfs:member', 'gml:featureMember'];
                 $reader->addReader($map, new XmlAssocArrayReader($reader, new FeatureJsonWriter()));
-                $result['content'] = array(
+                $result['content'] = [
                     "type" => "FeatureCollection",
                     "features" => [],
-                );
+                ];
                 try {
                     while ($reader->readComponent()) {
                         $result['content']['features'][] = $reader->getContent();
@@ -132,16 +132,17 @@ class PluginController extends Controller
                         throw new \Exception('Der Geometrietyp ist nicht unterstützt:'.$shtype);
                     }
                     $type = self::$shapeSupportedTypes[$shtype];
-                    $result['content'] = array(
+                    $result['content'] = [
                         "type" => "FeatureCollection",
-                        "crs" => array(
+                        "crs" => [
                             "type" => "name",
-                            "properties" => array(
+                            "properties" => [
                                 "name" => $epsg,
-                            ),
-                        ),
+                            ],
+                        ],
                         "features" => [],
-                    );
+                    ];
+
                     foreach ($shapeFile as $i => $record) {
                         if ($record['dbf']['_deleted']) {
                             continue;
@@ -150,14 +151,14 @@ class PluginController extends Controller
                         if ($coords === null) {
                             throw new \Exception('Die Geometrie kann nicht ausgelesen werden.');
                         }
-                        $result['content']['features'][] = array(
+                        $result['content']['features'][] = [
                             "type" => "Feature",
-                            "geometry" => array(
+                            "geometry" => [
                                 "type" => $type,
                                 "coordinates" => $coords,
-                            ),
+                            ],
                             "properties" => [],
-                        );
+                        ];
                         break; // only first geometry
                     }
                 } catch (\Exception $e) {
@@ -273,7 +274,7 @@ class PluginController extends Controller
      */
     private function delTree($dir)
     {
-        $files = array_diff(scandir($dir), array('.', '..'));
+        $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
         }
@@ -292,7 +293,7 @@ class PluginController extends Controller
             case 'LineString':
                 $res = [];
                 foreach ($part['points'] as $point) {
-                    $res[] = array($point['x'], $point['y']);
+                    $res[] = [$point['x'], $point['y']];
                 }
 
                 return $res;
@@ -301,7 +302,7 @@ class PluginController extends Controller
                 foreach ($part['rings'] as $item) {
                     $ring = [];
                     foreach ($item['points'] as $point) {
-                        $ring[] = array($point['x'], $point['y']);
+                        $ring[] = [$point['x'], $point['y']];
                     }
                     $rings[] = $ring;
                 }

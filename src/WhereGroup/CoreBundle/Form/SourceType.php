@@ -22,15 +22,15 @@ class SourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('slug', TextType::class, array('label' => 'Slug'))
-            ->add('name', TextType::class, array('label' => 'Name'))
-            ->add('description', TextareaType::class, array(
+            ->add('slug', TextType::class, ['label' => 'Slug'])
+            ->add('name', TextType::class, ['label' => 'Name'])
+            ->add('description', TextareaType::class, [
                 'label'    => 'Beschreibung',
                 'required' => false
-            ))
-            ->add('system', CheckboxType::class, array(
+            ])
+            ->add('system', CheckboxType::class, [
                 'label'    => 'System',
                 'required' => false,
-            ));
+            ]);
     }
 }

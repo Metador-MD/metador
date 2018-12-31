@@ -29,9 +29,9 @@ class MetadataExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('metadata_is_locked', array($this, 'isLocked')),
-        );
+        return [
+            new \Twig_SimpleFunction('metadata_is_locked', [$this, 'isLocked']),
+        ];
     }
 
     /**

@@ -102,7 +102,6 @@ class Address
      * @param int $page
      * @param int $hits
      * @return array
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function search($terms, $page = 1, $hits = 10)
@@ -138,6 +137,7 @@ class Address
      * @param array $array
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveArray(array $array)
@@ -171,13 +171,15 @@ class Address
      * @param \WhereGroup\AddressBundle\Entity\Address $entity
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save($entity)
     {
         $uuid = $this->generateUuid($entity);
-        $event = new AddressChangeEvent($entity, array(
+        $event = new AddressChangeEvent($entity, [
             'oldUuid' => $entity->getId()
-        ));
+        ]);
 
         $entity->setUuid($uuid);
         $existingEntity = $this->repo->findOneByUuid($uuid);
@@ -203,6 +205,7 @@ class Address
     /**
      * @param $entity
      * @return $this
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($entity)

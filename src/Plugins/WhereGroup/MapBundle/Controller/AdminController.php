@@ -22,9 +22,9 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
-        return $this->render('@MetadorMap/Admin/index.html.twig', array(
+        return $this->render('@MetadorMap/Admin/index.html.twig', [
             'rows' => $this->get('metador_map')->all(),
-        ));
+        ]);
     }
 
     /**
@@ -52,9 +52,9 @@ class AdminController extends Controller
             }
         }
 
-        return $this->render('@MetadorMap/Admin/new.html.twig', array(
+        return $this->render('@MetadorMap/Admin/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -76,24 +76,24 @@ class AdminController extends Controller
             return $this->redirectToRoute('metador_admin_map');
         }
 
-        return $this->render('@MetadorMap/Admin/new.html.twig', array(
+        return $this->render('@MetadorMap/Admin/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
      * @Route("/confirm/{id}", name="metador_admin_map_confirm", methods={"GET", "POST"})
      * @param $id a wms id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function confirmAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
         $form = $this->createFormBuilder($this->get('metador_map')->get($id))
-            ->add('delete', SubmitType::class, array(
-                'label' => 'löschen',
-            ))
+            ->add('delete', SubmitType::class, ['label' => 'löschen'])
             ->getForm()
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
@@ -105,8 +105,8 @@ class AdminController extends Controller
             return $this->redirectToRoute('metador_admin_map');
         }
 
-        return $this->render('@MetadorMap/Admin/confirm.html.twig', array(
+        return $this->render('@MetadorMap/Admin/confirm.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

@@ -24,16 +24,18 @@ class CoupledResourceExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'generate_operates_on',
-                array($this, 'operatesOn'),
-                array('is_safe' => array('html'))
+                [$this, 'operatesOn'],
+                ['is_safe' => ['html']]
             )
-        );
+        ];
     }
 
     /**
+     * @param $uuid
+     * @param $coupledResource
      * @return string
      */
     public function operatesOn($uuid, $coupledResource)

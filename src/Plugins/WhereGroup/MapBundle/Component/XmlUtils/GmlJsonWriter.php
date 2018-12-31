@@ -59,9 +59,10 @@ class GmlJsonWriter implements IContextWriter
 
     public function write(array $content)
     {
-        $json = array(
+        $json = [
             'coordinates' => [],
-        );
+        ];
+
         if ($this->srsName === null
             && isset($content[0][xaar::KEY_ATTRS])
             && isset($content[0][xaar::KEY_ATTRS]['srsName'])) {
@@ -114,10 +115,10 @@ class GmlJsonWriter implements IContextWriter
 
     private function createJson($coords, $type)
     {
-        return array(
+        return [
             'type' => $type,
             'coordinates' => $coords,
-        );
+        ];
     }
 
     /**
@@ -128,14 +129,10 @@ class GmlJsonWriter implements IContextWriter
     private function findCoordsV3($item)
     {
         switch ($item[xaar::KEY_NAME]) {
-//            case 'gml:coordinates': # @decimal default ".", @cs default ",", ts" default "&#x20;"  GMLv2.X
-//                return array_map('floatval', preg_split('/[\s,]/', $item[xaar::KEY_VALUE]));
             case 'gml:pos':
                 return array_map('floatval', preg_split('/[\s,]/', $item[xaar::KEY_VALUE]));
             case 'gml:posList':
                 return array_map('floatval', preg_split('/[\s,]/', $item[xaar::KEY_VALUE]));
-//            case 'gml:coord':# 3d X Y Z
-//                break;
             default:
                 if (isset($item[xaar::KEY_CHILDREN])) {
                     return $this->findCoordsV3($item[xaar::KEY_CHILDREN][0]);
@@ -173,12 +170,12 @@ class GmlJsonWriter implements IContextWriter
      */
     public static function namedCrs($name)
     {
-        return array(
+        return [
             "type" => "name",
-            "properties" => array(
+            "properties" => [
                 "name" => $name,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -188,12 +185,12 @@ class GmlJsonWriter implements IContextWriter
      */
     public static function linkedCrs($href, $type)
     {
-        return array(
+        return [
             "type" => "link",
-            "properties" => array(
+            "properties" => [
                 "href" => $href,
                 "type" => $type,
-            ),
-        );
+            ],
+        ];
     }
 }

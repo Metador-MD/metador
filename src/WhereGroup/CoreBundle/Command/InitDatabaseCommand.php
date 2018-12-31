@@ -47,7 +47,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
                 $group = new Group();
                 $group->setRole($name);
                 $this->save($group);
-                $output->writeln($this->trans('command_init_db_add_group', array('%group%' => $name)));
+                $output->writeln($this->trans('command_init_db_add_group', ['%group%' => $name]));
             }
         }
 
@@ -56,7 +56,7 @@ class InitDatabaseCommand extends ContainerAwareCommand
 
         // Create superuser
         if ($this->getUser($rootUser)) {
-            $output->writeln($this->trans('command_init_db_user_exists', array('%user%' => $rootUser)));
+            $output->writeln($this->trans('command_init_db_user_exists', ['%user%' => $rootUser]));
         } else {
             $password = Password::generate();
             $user = new User();
@@ -65,15 +65,15 @@ class InitDatabaseCommand extends ContainerAwareCommand
             $user->addGroup($this->getGroup($rootGroup));
             $this->save($user);
 
-            $output->writeln($this->trans('command_init_db_add_user', array(
+            $output->writeln($this->trans('command_init_db_add_user', [
                 '%user%'     => $rootUser,
                 '%password%' => $password,
-            )));
+            ]));
 
-            $output->writeln($this->trans('command_init_db_add_group_to_user', array(
+            $output->writeln($this->trans('command_init_db_add_group_to_user', [
                 '%user%'  => $rootUser,
                 '%group%' => $rootGroup
-            )));
+            ]));
 
             $output->writeln('User     : <info>' . $rootUser . '</info>');
             $output->writeln('Password : <info>' . $password . '</info>');

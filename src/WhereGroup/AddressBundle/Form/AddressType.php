@@ -23,33 +23,28 @@ class AddressType extends AbstractType
     {
 
         $builder
-            ->add('uuid', TextType::class, array(
+            ->add('uuid', TextType::class, [
                 'label'     => 'ID',
                 'required'  => false,
-                'attr' => array(
-                    'readonly' => true,
-                ),
-            ))->add('individualName', TextType::class, array(
+                'attr' => ['readonly' => true,],
+            ])->add('individualName', TextType::class, [
                 'label'    => 'Zuständige Person',
                 'required' => false
-            ))->add('organisationName', TextType::class, array(
+            ])->add('organisationName', TextType::class, [
                 'label'    => 'Name der Organisation',
                 'required' => false
-            ))->add('positionName', TextType::class, array(
+            ])->add('positionName', TextType::class, [
                 'label'    => 'Funktion der Person',
                 'required' => false
-            ))->add('email', TextareaType::class, array(
+            ])->add('email', TextareaType::class, [
                 'label'    => 'E-Mail',
                 'required' => false
-            ))->add('country', ChoiceType::class, array(
-                'choices' => array(
-                    '' => '',
-                    'Deutschland' => 'DE'
-                ),
+            ])->add('country', ChoiceType::class, [
+                'choices' => ['' => '', 'Deutschland' => 'DE'],
                 'label'    => 'Land / Staat',
                 'required' => false
-            ))->add('administrativeArea', ChoiceType::class, array(
-                'choices' => array(
+            ])->add('administrativeArea', ChoiceType::class, [
+                'choices' => [
                     ''                       => '',
                     'Baden-Württemberg'      => 'Baden-Württemberg',
                     'Bayern'                 => 'Bayern',
@@ -66,33 +61,33 @@ class AddressType extends AbstractType
                     'Sachsen-Anhalt'         => 'Sachsen-Anhalt',
                     'Schleswig-Holstein'     => 'Schleswig-Holstein',
                     'Thüringen'              => 'Thüringen'
-                ),
+                ],
                 'label'    => 'Bundesland',
                 'required' => false
-            ))->add('deliveryPoint', TextType::class, array(
+            ])->add('deliveryPoint', TextType::class, [
                 'label'    => 'Straße und Hausnummer / Postfach',
                 'required' => false
-            ))->add('city', TextType::class, array(
+            ])->add('city', TextType::class, [
                 'label'    => 'Stadt / Ort',
                 'required' => false
-            ))->add('postalCode', TextType::class, array(
+            ])->add('postalCode', TextType::class, [
                 'label'    => 'PLZ',
                 'required' => false
-            ))->add('voice', TextType::class, array(
+            ])->add('voice', TextType::class, [
                 'label'    => 'Telefonnummer',
                 'required' => false
-            ))->add('facsimile', TextType::class, array(
+            ])->add('facsimile', TextType::class, [
                 'label'    => 'Faxnummer',
                 'required' => false
-            ))->add('url', TextType::class, array(
+            ])->add('url', TextType::class, [
                 'label'    => 'Internetadresse',
                 'required' => false
-            ))->add('urlDescription', TextareaType::class, array(
+            ])->add('urlDescription', TextareaType::class, [
                 'label'    => 'Beschreibung der Internetadresse',
                 'required' => false
-            ))->add('hoursOfService', TextareaType::class, array(
+            ])->add('hoursOfService', TextareaType::class, [
                 'label'    => 'Erreichbarkeit',
                 'required' => false
-            ));
+            ]);
     }
 }

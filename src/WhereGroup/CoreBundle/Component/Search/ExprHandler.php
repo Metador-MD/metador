@@ -26,7 +26,7 @@ abstract class ExprHandler
     /**
      * @var array|string
      */
-    protected $spatialProperty = array('bboxw', 'bboxs', 'bboxe', 'bboxn');
+    protected $spatialProperty = ['bboxw', 'bboxs', 'bboxe', 'bboxn'];
 
     /**
      * @param $escapeChar
@@ -101,7 +101,7 @@ abstract class ExprHandler
     protected static function addToBbox($x, $y, array $bbox = null)
     {
         if ($bbox === null) {
-            return array($x, $y, $x, $y);
+            return [$x, $y, $x, $y];
         }
 
         $bbox[0] = min($bbox[0], $x);

@@ -30,13 +30,13 @@ class ValidationExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'read_validation_rules',
-                array($this, 'readValidationRules'),
-                array('is_safe' => array('html'))
+                [$this, 'readValidationRules'],
+                ['is_safe' => ['html']]
             )
-        );
+        ];
     }
 
     /**

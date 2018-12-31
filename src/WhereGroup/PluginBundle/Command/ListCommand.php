@@ -38,17 +38,17 @@ class ListCommand extends ContainerAwareCommand
         $io->title($translator->trans('plugin_command_list_title'));
 
         foreach ($config['plugins'] as $key => $plugin) {
-            $plugins[] = array(
+            $plugins[] = [
                 $key,
                 $plugin['name'],
                 $plugin['active'] ? 'yes' : 'no',
                 $plugin['description']
-            );
+            ];
         }
 
         $table = new Table($output);
         $table
-            ->setHeaders(array('Key', 'Name', 'Enabled', 'Description'))
+            ->setHeaders(['Key', 'Name', 'Enabled', 'Description'])
             ->setRows($plugins)
         ;
         $table->render();

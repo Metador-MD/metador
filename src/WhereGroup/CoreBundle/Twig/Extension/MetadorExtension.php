@@ -12,9 +12,9 @@ class MetadorExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('md_select', array($this, 'isSelected')),
-        );
+        return [
+            new \Twig_SimpleFunction('md_select', [$this, 'isSelected']),
+        ];
     }
 
     /**
@@ -22,14 +22,14 @@ class MetadorExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('md_id', array($this, 'getId'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('md_obj_id', array($this, 'getObjectId'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('md_data_obj', array($this, 'getDataObject'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('md_boolean', array($this, 'booleanFilter')),
-            new \Twig_SimpleFilter('md_array_path', array($this, 'arrayPath')),
-            new \Twig_SimpleFilter('md_first_key', array($this, 'firstKey')),
-        );
+        return [
+            new \Twig_SimpleFilter('md_id', [$this, 'getId'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFilter('md_obj_id', [$this, 'getObjectId'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFilter('md_data_obj', [$this, 'getDataObject'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFilter('md_boolean', [$this, 'booleanFilter']),
+            new \Twig_SimpleFilter('md_array_path', [$this, 'arrayPath']),
+            new \Twig_SimpleFilter('md_first_key', [$this, 'firstKey']),
+        ];
     }
 
     /**
@@ -38,7 +38,7 @@ class MetadorExtension extends \Twig_Extension
      */
     public function getId($string)
     {
-        $string = str_replace(array('[', ']'), array('_','_'), strtolower($string));
+        $string = str_replace(['[', ']'], ['_','_'], strtolower($string));
         $string = str_replace("__", "_", $string);
         return ltrim(rtrim($string, "_"), "_");
     }
@@ -60,7 +60,7 @@ class MetadorExtension extends \Twig_Extension
     public function getObjectId($string)
     {
         $string = preg_replace("/\[[\d]{1,2}\]/", "", strtolower($string));
-        $string = str_replace(array('[', ']'), array('_','_'), $string);
+        $string = str_replace(['[', ']'], ['_','_'], $string);
         $string = str_replace("__", "_", $string);
         return trim($string, "\t\n\r_");
     }
@@ -99,7 +99,7 @@ class MetadorExtension extends \Twig_Extension
             return '';
         }
 
-        $string = str_replace(array(']['), ':', $match[1]);
+        $string = str_replace([']['], ':', $match[1]);
 
         return trim($string, ':');
     }

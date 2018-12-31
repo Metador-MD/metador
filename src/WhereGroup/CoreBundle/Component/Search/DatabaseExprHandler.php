@@ -224,7 +224,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
 
     /**
      * @param string $propertyName property name
-     * @param string|array $geoFeature property name or GeoJson or an array(w,s,e,n)
+     * @param string|array $geoFeature property name or GeoJson or an [w,s,e,n]
      * @param array $parameters
      * @return Expr\Andx
      * @throws \Exception
@@ -232,7 +232,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     public function bbox($propertyName, $geoFeature, &$parameters)
     {
         if (is_array($this->spatialProperty)) {
-            // check if $geoFeature is an array(w,s,e,n) or GeoJSON "Feature" / GeoJSON "geometry"
+            // check if $geoFeature is an [w,s,e,n] or GeoJSON "Feature" / GeoJSON "geometry"
             $bbox = self::bboxForGeoJson($geoFeature);
 
             if (count($geoFeature) === 4 && !isset($geoFeature['geometry'])) {
@@ -242,12 +242,12 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
             // no spatial column
             // "spatially intersect" - (share any portion of space)
             return new Expr\Andx(
-                array(
+                [
                     $this->lt($this->spatialProperty[0], floatval($bbox[2]), $parameters),
                     $this->gt($this->spatialProperty[2], floatval($bbox[0]), $parameters),
                     $this->lt($this->spatialProperty[1], floatval($bbox[3]), $parameters),
                     $this->gt($this->spatialProperty[3], floatval($bbox[1]), $parameters),
-                )
+                ]
             );
         }
 
@@ -272,7 +272,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
             $bbox = self::bboxForGeoJson($geoFeature);
 
             return new Expr\Andx(
-                array(
+                [
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '<=',
@@ -293,7 +293,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
                         '>=',
                         self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
                     ),
-                )
+                ]
             );
         }
 
@@ -318,7 +318,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
             $bbox = self::bboxForGeoJson($geoFeature);
 
             return new Expr\Andx(
-                array(
+                [
                     new Expr\Comparison(
                         $this->getName($this->spatialProperty[0]),
                         '>',
@@ -339,7 +339,7 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
                         '<',
                         self::addParameter($this->spatialProperty[3], floatval($bbox[3]), $parameters)
                     ),
-                )
+                ]
             );
         }
 

@@ -15,17 +15,17 @@ class ArrayExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('array_get', array($this, 'get')),
-            new \Twig_SimpleFunction('array_is_empty', array($this, 'isEmpty')),
-            new \Twig_SimpleFunction('array_to_string', array($this, 'toString')),
-            new \Twig_SimpleFunction('array_length', array($this, 'length')),
-            new \Twig_SimpleFunction('array_exists', array($this, 'exists')),
-            new \Twig_SimpleFunction('array_all_exists', array($this, 'allExists')),
-            new \Twig_SimpleFunction('array_one_exists', array($this, 'oneExists')),
-            new \Twig_SimpleFunction('array_has_value', array($this, 'arrayHasValue')),
-            new \Twig_SimpleFunction('array_to_string', array($this, 'arrayToString')),
-        );
+        return [
+            new \Twig_SimpleFunction('array_get', [$this, 'get']),
+            new \Twig_SimpleFunction('array_is_empty', [$this, 'isEmpty']),
+            new \Twig_SimpleFunction('array_to_string', [$this, 'toString']),
+            new \Twig_SimpleFunction('array_length', [$this, 'length']),
+            new \Twig_SimpleFunction('array_exists', [$this, 'exists']),
+            new \Twig_SimpleFunction('array_all_exists', [$this, 'allExists']),
+            new \Twig_SimpleFunction('array_one_exists', [$this, 'oneExists']),
+            new \Twig_SimpleFunction('array_has_value', [$this, 'arrayHasValue']),
+            new \Twig_SimpleFunction('array_to_string', [$this, 'arrayToString']),
+        ];
     }
 
     /**

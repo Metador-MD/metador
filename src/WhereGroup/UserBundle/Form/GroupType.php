@@ -22,21 +22,21 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('role', TextType::class, array('label' => 'Gruppe'))
-            ->add('description', TextareaType::class, array(
+            ->add('role', TextType::class, ['label' => 'Gruppe'])
+            ->add('description', TextareaType::class, [
                 'label'    => 'Beschreibung',
                 'required' => false
-            ))
+            ])
             ->add(
                 'users',
                 EntityType::class,
-                array(
+                [
                     'class'        =>  'MetadorUserBundle:User',
                     'multiple'     => true,
                     'choice_label' => 'username',
                     'label'        => 'Benutzer',
                     'required'     => false
-                )
+                ]
             );
     }
 
@@ -45,9 +45,9 @@ class GroupType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'WhereGroup\UserBundle\Entity\Group'
-        ));
+        ]);
     }
 
     /**

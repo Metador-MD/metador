@@ -15,9 +15,9 @@ class CronExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('cron_next_run_date', array($this, 'cronNextRunDate'))
-        );
+        return [
+            new \Twig_SimpleFilter('cron_next_run_date', [$this, 'cronNextRunDate'])
+        ];
     }
 
     /**

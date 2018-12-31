@@ -32,16 +32,21 @@ class ConventionsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+        $io->title("Conventions check");
+
         $path = $input->getOption('path');
 
         if (empty($path)) {
             throw new \Exception("Path not found.");
         }
 
-        $convention = (new Conventions($path))->scan()->showErrors(new SymfonyStyle($input, $output));
+        $convention = (new Conventions($path))->scan()->showErrors($io);
 
         if ($convention->hasError()) {
             exit(1);
         }
+
+        $io->success("No convention violations found :D");
     }
 }

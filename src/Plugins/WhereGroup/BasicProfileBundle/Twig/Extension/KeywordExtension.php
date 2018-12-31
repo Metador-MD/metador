@@ -29,10 +29,10 @@ class KeywordExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('get_keyword_repo', array($this, 'getKeywordRepo')),
-            new \Twig_SimpleFunction('get_keywords', array($this, 'getKeywordByProfile')),
-        );
+        return [
+            new \Twig_SimpleFunction('get_keyword_repo', [$this, 'getKeywordRepo']),
+            new \Twig_SimpleFunction('get_keywords', [$this, 'getKeywordByProfile']),
+        ];
     }
 
     /**

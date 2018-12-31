@@ -54,17 +54,17 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [
+                    [
                         'class'    => 'metador',
                         'method'   => 'redirect',
                         'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+                    ]
+                ]
+            ]
+        ], $this->response);
     }
 
     public function testChangeLocation()
@@ -74,17 +74,17 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [
+                    [
                         'class'    => 'metador',
                         'method'   => 'changeLocation',
                         'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+                    ]
+                ]
+            ]
+        ], $this->response);
     }
 
     public function testDisplayInfo()
@@ -94,17 +94,17 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [
+                    [
                         'class'    => 'metador',
                         'method'   => 'displayInfo',
                         'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+                    ]
+                ]
+            ]
+        ], $this->response);
     }
 
     public function testDisplaySuccess()
@@ -114,17 +114,15 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
-                        'class'    => 'metador',
-                        'method'   => 'displaySuccess',
-                        'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [[
+                    'class'    => 'metador',
+                    'method'   => 'displaySuccess',
+                    'argument' => $url
+                ]]
+            ]
+        ], $this->response);
     }
 
     public function testDisplayWarning()
@@ -134,17 +132,15 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
-                        'class'    => 'metador',
-                        'method'   => 'displayWarning',
-                        'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [[
+                    'class'    => 'metador',
+                    'method'   => 'displayWarning',
+                    'argument' => $url
+                ]]
+            ]
+        ], $this->response);
     }
 
     public function testDisplayError()
@@ -154,16 +150,16 @@ class FrontendCommandTest extends KernelTestCase
 
         $this->assertSame($this->frontendCommand, $frontendCommand);
 
-        $this->assertEquals(array(
-            'METADOR' => array(
-                'runMethod' => array(
-                    array(
+        $this->assertEquals([
+            'METADOR' => [
+                'runMethod' => [
+                    [
                         'class'    => 'metador',
                         'method'   => 'displayError',
                         'argument' => $url
-                    )
-                )
-            )
-        ), $this->response);
+                    ]
+                ]
+            ]
+        ], $this->response);
     }
 }
