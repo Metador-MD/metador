@@ -76,7 +76,6 @@ class Cache
         if (!$this->enabled) {
             return false;
         }
-
         $this->cache->flush();
         return $this;
     }

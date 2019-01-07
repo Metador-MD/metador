@@ -1,9 +1,10 @@
 <?php
 
-namespace WhereGroup\Tests\WhereGroup\CoreBundle\Component;
+namespace WhereGroup\CoreBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\Container;
+use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Component\ConfigurationInterface;
 
@@ -18,6 +19,9 @@ class ConfigurationTest extends KernelTestCase
 
     /** @var Configuration $conf */
     private $conf;
+
+    /** @var Cache $cache */
+    private $cache;
 
     /**
      * ConfigurationTest constructor.
@@ -34,10 +38,19 @@ class ConfigurationTest extends KernelTestCase
 
         $this->container = self::$kernel->getContainer();
         $this->conf = $this->container->get('metador_configuration');
+        $this->cache = $this->container->get('metador_cache');
+    }
+
+    public function setUp()
+    {
+        $this->cache->truncate();
+
+        parent::setUp();
     }
 
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function testSimpleGetAndSet()
@@ -90,6 +103,11 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals('party', $actual);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testExtendedGetAndSet()
     {
         $this->conf
@@ -118,6 +136,11 @@ class ConfigurationTest extends KernelTestCase
         ], $array);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testTruncate()
     {
         $actual = $this->conf
@@ -128,6 +151,11 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals(null, $actual);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testRemove()
     {
         $actual = $this->conf->set('my_key', 23)->remove('my_key')->get('my_key');
@@ -152,6 +180,9 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals([], $actual);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testObject()
     {
         $object = new Configuration(

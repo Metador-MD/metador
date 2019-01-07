@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Tests\WhereGroup\CoreBundle\Component;
+namespace WhereGroup\CoreBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use WhereGroup\CoreBundle\Component\FrontendCommand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\Tests\WhereGroup\CoreBundle\Component\Utils;
+namespace WhereGroup\CoreBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
@@ -63,15 +63,15 @@ class ArrayParserTest extends TestCase
         $this->assertEquals(4, ArrayParser::get($array, 'types:array'));
     }
 
-    public function testDelete()
-    {
-        ;
-    }
-
-    public function testIsEmpty()
-    {
-        ;
-    }
+//    public function testDelete()
+//    {
+//        ;
+//    }
+//
+//    public function testIsEmpty()
+//    {
+//        ;
+//    }
 
     public function testLength()
     {
@@ -85,7 +85,7 @@ class ArrayParserTest extends TestCase
     {
         $this->assertEquals(true, ArrayParser::exists($this->array, 'types:array'));
         $this->assertEquals(true, ArrayParser::exists($this->array, 'types:array', 2));
-//        $this->assertEquals(true, ArrayParser::exists($this->array, 'user:name', 'Thomas'));
+        $this->assertEquals(true, ArrayParser::exists($this->array, 'user:1:name', 'Thomas'));
         $this->assertEquals(false, ArrayParser::exists($this->array, 'i:dont:exist'));
     }
 

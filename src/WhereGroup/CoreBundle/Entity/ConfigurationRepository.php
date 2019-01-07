@@ -158,6 +158,7 @@ class ConfigurationRepository extends EntityRepository
      * @param string $filterType
      * @param string $filterValue
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')

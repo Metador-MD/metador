@@ -42,6 +42,7 @@ class Configuration implements ConfigurationInterface
      * @param string $filterValue
      * @return $this|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')
@@ -65,7 +66,9 @@ class Configuration implements ConfigurationInterface
 
         if ($value === false) {
             $value = $this->repo->getValue($key, $filterType, $filterValue, $default);
-            $this->cache->set($cacheKey, $value);
+            if (!is_null($value)) {
+                $this->cache->set($cacheKey, $value);
+            }
             return $value;
         }
 
@@ -93,8 +96,6 @@ class Configuration implements ConfigurationInterface
      * @param string $filterType
      * @param string $filterValue
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getAll($filterType = null, $filterValue = null)
     {
@@ -113,8 +114,6 @@ class Configuration implements ConfigurationInterface
      * @param null $filterType
      * @param null $filterValue
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getValues($filterType = null, $filterValue = null)
     {
