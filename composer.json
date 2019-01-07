@@ -44,8 +44,8 @@
         "twig/twig": "^1.0"
     },
     "require-dev": {
-        "phpunit/php-timer": "^2.0",
         "phpunit/phpunit": "^7",
+        "phpunit/php-timer": ">=2",
         "sebastian/phpcpd": "2.*",
         "sensio/generator-bundle": "^3.0",
         "squizlabs/php_codesniffer": "2.*",
@@ -66,9 +66,6 @@
         "post-update-cmd": [
             "@symfony-scripts"
         ]
-    },
-    "platform": {
-        "php": "7.0"
     },
     "config": {
         "sort-packages": true
