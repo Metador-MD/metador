@@ -52,7 +52,6 @@ Search.prototype = {
         var source = self.get('source', null);
 
         if (source !== null) {
-            console.log(source);
             $('.-js-source[data-slug="' + source + '"]').click();
         }
 

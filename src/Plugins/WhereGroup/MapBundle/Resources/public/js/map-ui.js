@@ -85,7 +85,6 @@ var MetadorOl4Bridge = {
         if (spatial) {
             var name;
             for (name in spatial) {
-                console.log(spatial);
                 $('.-js-spatial-operator').val(name);
                 var collection = this.createGeoCollection('EPSG:4326', [spatial[name]['geom']]);
                 $('.-js-geometry-type').val('load');
