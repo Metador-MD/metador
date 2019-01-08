@@ -1,0 +1,25 @@
+DisallowMethodAnnotation:
+    message: "Dont use @Method() Annotation, use @Route(methods={\"\"}) instead."
+    regexp: "/@Method\\(/"
+DisallowTemplateAnnotation:
+    message: "Dont use @Template() Annotation, use $this->render(); instead."
+    regexp: "/@Template\\(/"
+DeprecatedMethodNamespace:
+    message: "Namespace Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Method is deprecated,
+    use Symfony\\Component\\Routing\\Annotation\\Route instead."
+    regexp: "/Sensio\\\\Bundle\\\\FrameworkExtraBundle\\\\Configuration\\\\Method/"
+DeprecatedRouteNamespace:
+    message: "Namespace Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route is deprecated,
+    use Symfony\\Component\\Routing\\Annotation\\Route instead."
+    regexp: "/Sensio\\\\Bundle\\\\FrameworkExtraBundle\\\\Configuration\\\\Route/"
+DisallowDump:
+    message: "Please remove dump() or var_dump()."
+    regexp: "/[^:>](dump|var_dump)\\(/"
+DisallowConsoleLog:
+    message: "Remove console.log()."
+    regexp: "/console\\.log\\(/"
+    extensions: ["js"]
+#DisallowInlineStyle:
+#    message: "Dont use inline styling."
+#    regexp: "/style[ ]?=[ ]?['|\\\"]+/"
+#    extensions: ["twig"]
