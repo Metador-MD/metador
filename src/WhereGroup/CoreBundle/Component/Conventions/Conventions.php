@@ -5,6 +5,7 @@ namespace WhereGroup\CoreBundle\Component\Conventions;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Finder
@@ -14,7 +15,7 @@ class Conventions
 {
     private $path;
     private $result;
-    private $filePattern = '*.php';
+    private $filePattern = '/\.php|\.js|\.twig/';
     private $scanner = [];
     private $exclude = [];
     private $ignore = [];
@@ -31,7 +32,7 @@ class Conventions
         $this->result = new Result();
         $this->ignore = $ignore;
         $this->exclude = ['WhereGroup/CoreBundle/Component/Conventions'];
-        $this->file = __DIR__ . '/../../Resources/config/ruleset.json';
+        $this->file = __DIR__ . '/../../Resources/config/ruleset.yml';
         $this->loadDefaultScanner();
     }
 
@@ -74,7 +75,10 @@ class Conventions
         $rules = [];
         $fs = new Filesystem();
         if ($fs->exists($this->file) && is_readable($this->file)) {
-            $rules = json_decode(file_get_contents($this->file), true);
+            $rules = Yaml::parse(file_get_contents($this->file));
+            if (!is_array($rules)) {
+                $rules = [];
+            }
         };
 
         $fileCount = 0;
