@@ -42,7 +42,10 @@
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class DefaultController extends Controller
+    /**
+     * @Route("/public/manual")
+     */
+    class ManualController extends Controller
     {
         /**
          * @Route("/user", name="manual_user", methods={"GET"})
@@ -50,7 +53,7 @@
         public function userAction()
         {
             $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
-            return $this->render('@MetadorManual/Default/user.html.twig');
+            return $this->render('@MetadorManual/Manual/user.html.twig');
         }
     }
     ```

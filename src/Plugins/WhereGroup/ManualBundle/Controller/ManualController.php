@@ -15,7 +15,7 @@ class ManualController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('@MetadorManual/Default/index.html.twig');
+        return $this->render('@MetadorManual/Manual/index.html.twig');
     }
 
     /**
@@ -24,7 +24,7 @@ class ManualController extends Controller
     public function userAction()
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
-        return $this->render('@MetadorManual/Default/user.html.twig');
+        return $this->render('@MetadorManual/Manual/user.html.twig');
     }
 
     /**
@@ -33,7 +33,7 @@ class ManualController extends Controller
     public function metadataAction()
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
-        return $this->render('@MetadorManual/Default/metadata.html.twig');
+        return $this->render('@MetadorManual/Manual/metadata.html.twig');
     }
 
     /**
@@ -42,6 +42,6 @@ class ManualController extends Controller
     public function pluginAction()
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
-        return $this->render('@MetadorManual/Default/plugin.html.twig');
+        return $this->render('@MetadorManual/Manual/plugin.html.twig');
     }
 }

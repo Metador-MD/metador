@@ -17,6 +17,7 @@ test:
         - vendor/bin/phpcs -n --extensions=php --standard=PSR2 src/
         - bin/console metador:test:conventions
         # find ./src -name \*.php -exec php -l "{}" \; | grep Error
+
 deploy:
     stage: deploy
     only:
