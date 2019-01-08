@@ -36,6 +36,7 @@ class ApplicationListener
 
     /**
      * @param ApplicationEvent $event
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onLoading(ApplicationEvent $event)
     {
