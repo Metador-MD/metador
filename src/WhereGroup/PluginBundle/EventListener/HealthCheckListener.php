@@ -2,7 +2,7 @@
 
 namespace WhereGroup\PluginBundle\EventListener;
 
-use Plugins\WhereGroup\LoggingBundle\Entity\Log;
+use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\HealthCheckEvent;
 use WhereGroup\CoreBundle\EventListener\BasicHealthcheckListener;
 

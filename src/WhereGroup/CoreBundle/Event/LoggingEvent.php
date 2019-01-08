@@ -2,7 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Event;
 
-use Plugins\WhereGroup\LoggingBundle\Entity\Log;
+use WhereGroup\CoreBundle\Entity\Log;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
