@@ -9,7 +9,7 @@ stages:
 test:
     stage: test
     script:
-        - composer update --no-progress
+        - composer update -o --no-progress
         - bin/console --env=test doctrine:database:create
         - bin/console --env=test doctrine:schema:create
         - vendor/bin/phpunit -c ./
