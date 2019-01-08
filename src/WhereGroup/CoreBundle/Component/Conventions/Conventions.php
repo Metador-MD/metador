@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Component\Conventions;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
@@ -17,6 +18,7 @@ class Conventions
     private $scanner = [];
     private $exclude = [];
     private $ignore = [];
+    private $file;
 
     /**
      * Finder constructor.
@@ -28,10 +30,8 @@ class Conventions
         $this->path = $path;
         $this->result = new Result();
         $this->ignore = $ignore;
-        $this->exclude = [
-            'WhereGroup/CoreBundle/Component/Conventions'
-        ];
-
+        $this->exclude = ['WhereGroup/CoreBundle/Component/Conventions'];
+        $this->file = __DIR__ . '/../../Resources/config/ruleset.json';
         $this->loadDefaultScanner();
     }
 
@@ -47,9 +47,12 @@ class Conventions
 
     public function loadDefaultScanner()
     {
-        foreach (['Annotation', 'Code', 'Ns'] as $scannerType) {
+        $ruleset = new SymfonyFinder();
+        $ruleset->directories()->in(__DIR__ . '/Ruleset/');
+
+        foreach ($ruleset as $folder) {
             $finder = new SymfonyFinder();
-            $finder->files()->name('*.php')->in(__DIR__ . '/Ruleset/' . $scannerType);
+            $finder->files()->name('*.php')->in(__DIR__ . '/Ruleset/' . $folder->getFilename());
 
             foreach ($finder as $file) {
                 $filename = pathinfo($file->getFilename(), PATHINFO_FILENAME);
@@ -58,7 +61,7 @@ class Conventions
                     continue;
                 }
 
-                $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\' . $filename;
+                $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $folder->getFilename() . '\\' . $filename;
             }
         }
     }
@@ -68,6 +71,12 @@ class Conventions
      */
     public function scan() : Conventions
     {
+        $rules = [];
+        $fs = new Filesystem();
+        if ($fs->exists($this->file) && is_readable($this->file)) {
+            $rules = json_decode(file_get_contents($this->file), true);
+        };
+
         $fileCount = 0;
         $finder = new SymfonyFinder();
         $finder->files()->name($this->filePattern)->in($this->path)->exclude($this->exclude);
@@ -88,12 +97,33 @@ class Conventions
             ];
 
             foreach (explode("\n", $file->getContents()) as $number => $line) {
+                ++$number;
+
                 // Run code scanner
                 foreach ($this->scanner as $class) {
                     /** @var RuleInterface $scanner */
                     $scanner = new $class;
-                    $scanner->scanCode($file, $this->result, trim($line), $hash, ++$number);
+
+                    if ($scanner->scanCode($file, trim($line))) {
+                        $this->result->addError($class, $hash, $number);
+                    }
+
                     unset($scanner);
+                }
+
+                // Run regexp rules from ruleset.json
+                foreach ($rules as $key => $rule) {
+                    if (in_array($key, $this->ignore)) {
+                        continue;
+                    }
+
+                    if (!isset($rule['extensions']) || !is_array($rule['extensions'])) {
+                        $rule['extensions'] = ['php'];
+                    }
+
+                    if (in_array($file->getExtension(), $rule['extensions']) && preg_match($rule['regexp'], $line)) {
+                        $this->result->addError($key, $hash, $number, $rule['message']);
+                    }
                 }
             }
         }
@@ -110,10 +140,14 @@ class Conventions
         foreach ($this->result->getErrors() as $class => $result) {
             $rows = [];
 
-            /** @var RuleInterface $scanner */
-            $scanner = new $class;
-            $io->note($scanner->getMessage());
-            unset($scanner);
+            if (!isset($result['message']) || is_null($result['message'])) {
+                /** @var RuleInterface $scanner */
+                $scanner = new $class;
+                $io->note($scanner->getMessage());
+                unset($scanner);
+            } else {
+                $io->note($result['message']);
+            }
 
             foreach ($result['files'] as $hash => $line) {
                 $rows[] = [$this->result->getRelativePath($hash), $line];

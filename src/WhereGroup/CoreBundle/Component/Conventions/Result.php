@@ -51,12 +51,15 @@ class Result
      * @param $testClass
      * @param $hash
      * @param $line
+     * @param null $message
      */
-    public function addError($testClass, $hash, $line)
+    public function addError($testClass, $hash, $line, $message = null)
     {
+        $this->data['errors'][$testClass]['message'] = $message;
+
         if (!empty($this->data['errors'][$testClass]['files'][$hash])) {
             $this->data['errors'][$testClass]['files'][$hash]
-                = $this->data['errors'][$testClass]['files'][$hash] . ', ' . $line;
+                = $this->data['errors'][$testClass]['files'][$hash] . ',' . $line;
 
             return;
         }

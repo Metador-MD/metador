@@ -17,18 +17,14 @@ interface RuleInterface
 
     /**
      * @param SplFileInfo $file
-     * @param Result $result
-     * @return mixed
+     * @param string $lineString
+     * @return bool
      */
-    public function scanMetadata(SplFileInfo $file, Result $result);
+    public function scanCode(SplFileInfo $file, string $lineString) : bool;
 
     /**
      * @param SplFileInfo $file
-     * @param Result $result
-     * @param $lineString
-     * @param $fileHash
-     * @param $lineNumber
-     * @return mixed
+     * @return bool
      */
-    public function scanCode(SplFileInfo $file, Result $result, $lineString, $fileHash, $lineNumber);
+    public function checkExtension(SplFileInfo $file) : bool;
 }

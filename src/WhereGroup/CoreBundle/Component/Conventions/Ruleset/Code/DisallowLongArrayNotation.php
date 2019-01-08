@@ -3,7 +3,6 @@
 namespace WhereGroup\CoreBundle\Component\Conventions\Ruleset\Code;
 
 use Symfony\Component\Finder\SplFileInfo;
-use WhereGroup\CoreBundle\Component\Conventions\Result;
 use WhereGroup\CoreBundle\Component\Conventions\Rule;
 
 /**
@@ -16,19 +15,15 @@ class DisallowLongArrayNotation extends Rule
 
     /**
      * @param SplFileInfo $file
-     * @param Result $result
      * @param $lineString
-     * @param $fileHash
-     * @param $lineNumber
+     * @return bool
      */
-    public function scanCode(SplFileInfo $file, Result $result, $lineString, $fileHash, $lineNumber)
+    public function scanCode(SplFileInfo $file, string $lineString) : bool
     {
-        if (!in_array($file->getExtension(), $this->fileExtensions)) {
-            return;
+        if ($this->checkExtension($file) && preg_match('/[^_]array\(/', $lineString)) {
+            return true;
         }
 
-        if (preg_match('/[^_]array\(/', $lineString)) {
-            $result->addError(self::class, $fileHash, $lineNumber);
-        }
+        return false;
     }
 }

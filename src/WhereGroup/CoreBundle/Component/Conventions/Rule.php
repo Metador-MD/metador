@@ -8,7 +8,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * Class Rule
  * @package WhereGroup\CoreBundle\Component\Conventions
  */
-abstract class Rule implements RuleInterface
+class Rule implements RuleInterface
 {
     protected $fileExtensions = ['php'];
     protected $message = '';
@@ -23,22 +23,19 @@ abstract class Rule implements RuleInterface
 
     /**
      * @param SplFileInfo $file
-     * @param Result $result
+     * @param string $lineString
      * @return mixed|void
      */
-    public function scanMetadata(SplFileInfo $file, Result $result)
+    public function scanCode(SplFileInfo $file, string $lineString) : bool
     {
     }
 
     /**
      * @param SplFileInfo $file
-     * @param Result $result
-     * @param $lineString
-     * @param $fileHash
-     * @param $lineNumber
-     * @return mixed|void
+     * @return bool
      */
-    public function scanCode(SplFileInfo $file, Result $result, $lineString, $fileHash, $lineNumber)
+    public function checkExtension(SplFileInfo $file) : bool
     {
+        return in_array($file->getExtension(), $this->fileExtensions);
     }
 }
