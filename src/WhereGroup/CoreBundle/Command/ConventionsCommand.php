@@ -21,6 +21,7 @@ class ConventionsCommand extends ContainerAwareCommand
             ->setDescription('Check code for conventions')
             ->setName('metador:test:conventions')
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Path to code', 'src/')
+            ->addOption('ignore', 'i', InputOption::VALUE_OPTIONAL|InputOption::VALUE_IS_ARRAY, 'Ignore rules', [])
         ;
     }
 
@@ -36,12 +37,13 @@ class ConventionsCommand extends ContainerAwareCommand
         $io->title("Conventions check");
 
         $path = $input->getOption('path');
+        $ignore = $input->getOption('ignore');
 
         if (empty($path)) {
             throw new \Exception("Path not found.");
         }
 
-        $convention = (new Conventions($path))->scan()->showErrors($io);
+        $convention = (new Conventions($path, $ignore))->scan()->showErrors($io);
 
         if ($convention->hasError()) {
             exit(1);

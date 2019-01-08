@@ -16,15 +16,18 @@ class Conventions
     private $filePattern = '*.php';
     private $scanner = [];
     private $exclude = [];
+    private $ignore = [];
 
     /**
      * Finder constructor.
-     * @param $path
+     * @param string $path
+     * @param array $ignore
      */
-    public function __construct($path)
+    public function __construct(string $path, array $ignore = [])
     {
         $this->path = $path;
         $this->result = new Result();
+        $this->ignore = $ignore;
         $this->exclude = [
             'WhereGroup/CoreBundle/Component/Conventions'
         ];
@@ -49,8 +52,13 @@ class Conventions
             $finder->files()->name('*.php')->in(__DIR__ . '/Ruleset/' . $scannerType);
 
             foreach ($finder as $file) {
-                $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\'
-                    . pathinfo($file->getFilename(), PATHINFO_FILENAME);
+                $filename = pathinfo($file->getFilename(), PATHINFO_FILENAME);
+
+                if (in_array($filename, $this->ignore)) {
+                    continue;
+                }
+
+                $this->scanner[] = __NAMESPACE__ . '\\Ruleset\\' . $scannerType . '\\' . $filename;
             }
         }
     }
