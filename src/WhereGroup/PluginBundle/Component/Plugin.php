@@ -564,9 +564,7 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        $console = $this->rootDir . 'console';
-
-        $process = new Process("$console doctrine:schema:update --force --no-debug");
+        $process = new Process($this->rootDir . "console doctrine:schema:update --force --no-debug");
         $process->run();
 
         return [
@@ -579,10 +577,10 @@ class Plugin
      */
     public function clearCache()
     {
-        $console = $this->rootDir . 'console';
-
-        (new Process("$console cache:clear --env=prod"))->run();
-        (new Process("$console cache:warmup --env=prod"))->run();
+        foreach (['prod', 'dev'] as $env) {
+            (new Process($this->rootDir . "console cache:clear --env=" . $env))->run();
+            (new Process($this->rootDir . "console cache:warmup --env=" . $env))->run();
+        }
 
         return [
             'output' => 'done'
