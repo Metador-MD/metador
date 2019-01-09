@@ -21,7 +21,7 @@ class EnableCommand extends ContainerAwareCommand
         $this
             ->setDescription('Enable plugin')
             ->setName('metador:enable:plugin')
-            ->addArgument("key", InputArgument::REQUIRED, "Plugin key");
+            ->addArgument("keys", InputArgument::REQUIRED|InputArgument::IS_ARRAY, "One or more Plugin keys");
     }
 
     /**
@@ -34,16 +34,21 @@ class EnableCommand extends ContainerAwareCommand
         $io         = new SymfonyStyle($input, $output);
         $plugin     = $this->getContainer()->get('metador_plugin');
         $translator = $this->getContainer()->get('translator');
-        $key        = $input->getArgument("key");
+        $keys        = $input->getArgument("keys");
 
         $io->title($translator->trans('plugin_command_enable_title'));
 
-        if (is_null($plugin->getPlugin($key))) {
-            $io->error($translator->trans('plugin_not_found'));
-            return;
+        foreach ($keys as $key) {
+            if (is_null($plugin->getPlugin($key))) {
+                $io->error($translator->trans('plugin_not_found', ['%key%' => $key]));
+                return;
+            }
         }
 
-        $plugin->enable($key);
+        foreach ($keys as $key) {
+            $plugin->enable($key);
+        }
+
         $plugin->saveConfiguration();
         $plugin->assetsInstall();
         $plugin->doctrineUpdate();
