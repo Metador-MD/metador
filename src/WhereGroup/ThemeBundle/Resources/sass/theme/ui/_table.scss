@@ -19,6 +19,7 @@
 
         &.icon-column {
             width: $normal-item-height;
+            text-align: center;
         }
 
         &:not(:last-child) {
@@ -52,6 +53,7 @@
 
                 &.icon-column {
                     width: $normal-item-height;
+                    text-align: center;
                 }
             }
 

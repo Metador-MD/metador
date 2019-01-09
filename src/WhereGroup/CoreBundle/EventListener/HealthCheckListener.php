@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Event\HealthCheckEvent;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,14 +14,15 @@ use Doctrine\ORM\EntityManager;
  */
 class HealthCheckListener extends BasicHealthcheckListener
 {
-    protected $em       = null;
-    protected $driver   = null;
-    protected $host     = null;
-    protected $port     = null;
-    protected $name     = null;
-    protected $user     = null;
-    protected $password = null;
-    protected $path     = null;
+    private $em;
+    private $driver;
+    private $host;
+    private $port;
+    private $name;
+    private $user;
+    private $password;
+    private $path;
+    private $configuration;
 
     /**
      * HealthCheckListener constructor.
@@ -32,8 +34,10 @@ class HealthCheckListener extends BasicHealthcheckListener
      * @param null $user
      * @param null $password
      * @param null $path
+     * @param Configuration $configuration
      */
     public function __construct(
+        Configuration $configuration,
         EntityManagerInterface $em,
         $driver = null,
         $host = null,
@@ -43,6 +47,7 @@ class HealthCheckListener extends BasicHealthcheckListener
         $password = null,
         $path = null
     ) {
+        $this->configuration = $configuration;
         $this->em       = $em;
         $this->driver   = $driver;
         $this->host     = $host;
@@ -62,6 +67,17 @@ class HealthCheckListener extends BasicHealthcheckListener
     {
         $this->healthCheck = $healthCheck;
         $this->add($this->databaseConnection(), 'healthcheck_database_connection_error');
+
+
+        $hierarchyLevel = $this->configuration->get('hierarchy_levels', 'plugin', 'metador_core');
+
+        if (!empty($hierarchyLevel)) {
+            $this->add(Log::SUCCESS, 'healthcheck_hierarchy_level_support_success', [
+                '%hierarchyLevel%' => implode(', ', $hierarchyLevel)
+            ]);
+        } else {
+            $this->add(Log::INFO, 'healthcheck_hierarchy_level_support_error');
+        }
     }
 
     /**

@@ -122,6 +122,7 @@
         </service>
         <service id="metador.core.health.listener" class="%metador.core.health.listener.class%">
             <tag name="kernel.event_listener" event="application.health-check" method="onCheck" />
+            <argument type="service" id="metador_configuration" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument>%database_driver%</argument>
             <argument>%database_host%</argument>

@@ -1419,7 +1419,8 @@ input.input-element, .md input.btn {
   line-height: 35px; }
 
 .md .table > thead > tr > th.icon-column {
-  width: 35px; }
+  width: 35px;
+  text-align: center; }
 
 .md .table > thead > tr > th:not(:last-child) {
   border-right: 1px solid #e1e1e1; }
@@ -1444,7 +1445,8 @@ input.input-element, .md input.btn {
   border-right: 1px solid #e1e1e1; }
 
 .md .table > tbody > tr > td.icon-column {
-  width: 35px; }
+  width: 35px;
+  text-align: center; }
 
 .md .table > tbody > tr:not(.no-bg):nth-child(1n) > td {
   background-color: #f7f7f7; }
