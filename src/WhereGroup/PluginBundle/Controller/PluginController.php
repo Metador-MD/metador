@@ -28,9 +28,7 @@ class PluginController extends Controller
      */
     public function indexAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return $this->render('MetadorPluginBundle:Plugin:index.html.twig', [
             'plugins' => $this->get('metador_plugin')->getPlugins('origin')
@@ -42,9 +40,7 @@ class PluginController extends Controller
      */
     public function updateAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $plugins = [];
         $array   = $this->get('request_stack')->getCurrentRequest()->request->all();
@@ -65,6 +61,8 @@ class PluginController extends Controller
      */
     public function importAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return $this->render('MetadorPluginBundle:Plugin:import.html.twig', [
             'form' => $this
                 ->createFormBuilder(new Plugin())
@@ -87,6 +85,8 @@ class PluginController extends Controller
      */
     public function uploadAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         $kernelPath = $this->get('kernel')->getRootDir();
 
         $pluginPath = $kernelPath . '/../src/Plugins/';
@@ -176,6 +176,8 @@ class PluginController extends Controller
      */
     public function confirmAction($plugin)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return $this->render('MetadorPluginBundle:Plugin:confirm.html.twig', [
             'pluginKey' => $plugin
         ]);
@@ -188,6 +190,8 @@ class PluginController extends Controller
      */
     public function deleteAction($plugin)
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         $this->get('metador_plugin')->delete($plugin);
 
         return $this->redirectToRoute('metador_admin_plugin');
@@ -200,9 +204,7 @@ class PluginController extends Controller
      */
     public function viewAction($plugin)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SYSTEM_SUPERUSER')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         // Show template if exists
         if ($this->get('templating')->exists($plugin . ':Plugin:view.html.twig')) {
@@ -217,6 +219,8 @@ class PluginController extends Controller
      */
     public function configAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return new JsonResponse(
             $this->get('metador_plugin')->update(
                 $this->get('request_stack')->getCurrentRequest()->request->all()
@@ -229,6 +233,8 @@ class PluginController extends Controller
      */
     public function assetsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return new JsonResponse(
             $this->get('metador_plugin')->assetsInstall()
         );
@@ -239,6 +245,8 @@ class PluginController extends Controller
      */
     public function databaseAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return new JsonResponse(
             $this->get('metador_plugin')->doctrineUpdate()
         );
@@ -249,6 +257,8 @@ class PluginController extends Controller
      */
     public function cacheAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
         return new JsonResponse(
             $this->get('metador_plugin')->clearCache()
         );

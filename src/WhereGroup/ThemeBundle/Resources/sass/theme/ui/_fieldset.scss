@@ -27,7 +27,7 @@
             @include small-item();
         }
 
-        &> .content {
+        & > .content {
             padding: $small-item-padding;
             font-size: $font-small;
         }
@@ -154,4 +154,8 @@
         }
 
     }
+}
+
+.md .fieldset > .content.no-p {
+    padding: 0;
 }

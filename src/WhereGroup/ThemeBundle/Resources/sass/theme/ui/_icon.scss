@@ -25,3 +25,13 @@
         background-color: lighten($border, 1%);
     }
 }
+
+.md .icon-column > a {
+    text-decoration: none;
+}
+
+.md [class^="icon-"], [class*=" icon-"] {
+    &.disabled {
+        color: darken($background, 10%);
+    }
+}

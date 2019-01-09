@@ -20,17 +20,18 @@
 
 <form action="{{ path('metador_admin_plugin_update') }}" method="post">
     {% for origin, originPlugins in plugins %}
-    <div class="fieldset -js-fieldset minimize">
-        <div class="head -js-fieldset-toggle">
-            <div class="title">{{ origin }}</div>
-            <div class="status -js-fieldset-status icon-minimize"></div>
-            <div class="info">{{ originPlugins|length }}</div>
-        </div>
-        <div class="content">
+    <table class="table bordered margin-b">
+        <thead>
+            <tr>
+                <th colspan="3">{{ origin }}</th>
+                <th>{{ originPlugins|length }}</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for key, plugin in originPlugins %}
-            <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
-            <div class="plugin {% if plugin['active'] %}active{% endif %}">
-                <div class="plugin-header">
+            <tr title="v {{ plugin['version'] }} {% if plugin['type'] is defined %} - Type: {{ plugin['type'] }}{% endif %}{% if plugin['tags'] is defined %} - Tags: {% for tag in plugin['tags'] %}{{ tag }} {% endfor %}{% endif %}">
+                <td class="icon-column">
+                    <input type="hidden" id="{{ key }}" name="plugin[{{ key }}]" value="{% if plugin['active'] %}1{% else %}0{% endif %}" />
                     <div class="plugin-switch -js-toggle-plugin" data-id="{{ key }}">
                         {% if plugin['active'] %}
                             <span class="icon-toggle-on"></span>
@@ -38,33 +39,22 @@
                             <span class="icon-toggle-off"></span>
                         {% endif %}
                     </div>
-                    <div class="plugin-name">{{ plugin['name']|trans }}</div>
+                </td>
+                <td>{{ plugin['name']|trans }}</td>
+                <td>{{ plugin['description']|trans }}</td>
+                <td class="icon-column">
                     {% if plugin['settings'] is defined and plugin['active']%}
-                        <div class="plugin-settings">
-                            <a href="{{ path('metador_admin_settings', { fragment: key }) }}#{{ key }}">
-                                <span class="icon-cog"></span>
-                            </a>
-                        </div>
+                        <a href="{{ path('metador_admin_settings', { fragment: key }) }}#{{ key }}">
+                            <span class="icon-cog"></span>
+                        </a>
+                    {% else %}
+                        <span class="icon-cog disabled"></span>
                     {% endif %}
-                </div>
-                <div class="plugin-description">{{ plugin['description']|trans }}</div>
-                <div class="plugin-footer">
-                    {% if plugin['type'] is defined %}
-                        <div class="plugin-type">{{ plugin['type'] }}</div>
-                    {% endif %}
-                    <div class="plugin-tags">
-                        {% if plugin['tags'] is defined %}
-                            {% for tag in plugin['tags'] %}
-                                <span class="plugin-tag">{{ tag }}</span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="plugin-version">v {{ plugin['version'] }}</div>
-                </div>
-            </div>
+                </td>
+            </tr>
         {% endfor %}
-        </div>
-    </div>
+        </tbody>
+    </table>
     {% endfor %}
 
     <hr class="line-separator" />

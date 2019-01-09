@@ -1,3 +1,7 @@
+# Controller
+DisallowSecurityAutorizationCheckerService:
+    message: "Dont use the authorization_checker service. Use $this->denyAccessUnlessGranted() instead."
+    regexp: "/\\$this\\->get\\('security.authorization_checker'\\)\\->isGranted\\(/"
 DisallowMethodAnnotation:
     message: "Dont use @Method() Annotation, use @Route(methods={\"\"}) instead."
     regexp: "/@Method\\(/"
@@ -12,9 +16,11 @@ DeprecatedRouteNamespace:
     message: "Namespace Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route is deprecated,
     use Symfony\\Component\\Routing\\Annotation\\Route instead."
     regexp: "/Sensio\\\\Bundle\\\\FrameworkExtraBundle\\\\Configuration\\\\Route/"
+# Other
 DisallowDump:
     message: "Please remove dump() or var_dump()."
     regexp: "/[^:>](dump|var_dump)\\(/"
+# Javascript
 DisallowConsoleLog:
     message: "Remove console.log()."
     regexp: "/console\\.log\\(/"

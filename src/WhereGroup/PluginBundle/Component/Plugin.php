@@ -6,8 +6,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
 use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\ConfigurationInterface;
