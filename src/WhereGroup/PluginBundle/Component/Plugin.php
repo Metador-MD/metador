@@ -579,8 +579,10 @@ class Plugin
      */
     public function clearCache()
     {
-        $fs  = new Filesystem();
-        $fs->remove($this->cacheDir);
+        $console = $this->rootDir . 'console';
+
+        (new Process("$console cache:clear --env=prod"))->run();
+        (new Process("$console cache:warmup --env=prod"))->run();
 
         return [
             'output' => 'done'
