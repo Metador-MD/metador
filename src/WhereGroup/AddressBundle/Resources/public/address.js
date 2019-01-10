@@ -159,22 +159,26 @@ AddressSearch.prototype = {
             var self = this;
 
             $(self.search.getResponseData()).each(function(index, row) {
-                if (row.uuid === $(element).attr('data-uuid')) {
+                if (row && row.uuid === $(element).attr('data-uuid')) {
                     var parent = self.element.closest('.-js-duplicatable-area');
                     parent = $(parent).find('.duplicatable-content-item.act');
 
-                    var fieldset = new Fieldset();
-                    fieldset.setElement($(parent).find('.-js-multi-fieldset'));
-                    fieldset.clear();
+                    var mailFieldset = $(parent).find('.-js-multi-fieldset');
 
-                    if (row && row.email && row.email !== '') {
-                        $.each(row.email.split(','), function(i, mail) {
-                             fieldset.setValueByClass('-js-address-email', mail.trim());
-                        });
+                    if (mailFieldset.length === 1) {
+                        var fieldset = new Fieldset();
+                        fieldset.setElement(mailFieldset);
+                        fieldset.clear();
+
+                        if (row && row.email && row.email !== '') {
+                            $.each(row.email.split(','), function(i, mail) {
+                                fieldset.setValueByClass('-js-address-email', mail.trim());
+                            });
+                        }
                     }
 
                     $.each(row, function(key, value) {
-                        if (key !== 'email') {
+                        if (mailFieldset.length === 0 || key !== 'email') {
                             $(parent).find('.-js-address-' + key).val(value).change();
                         }
                     });
