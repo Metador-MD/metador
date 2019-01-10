@@ -40,6 +40,11 @@ class Address
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $department = '';
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $positionName = '';
 
     /**
@@ -101,6 +106,7 @@ class Address
      * @ORM\Column(type="text", nullable=true)
      */
     private $searchfield = '';
+
 
     /**
      * @ORM\ManyToMany(targetEntity="WhereGroup\CoreBundle\Entity\Metadata", mappedBy="address")
@@ -195,6 +201,24 @@ class Address
     public function getOrganisationName()
     {
         return $this->organisationName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * @param mixed $department
+     * @return Address
+     */
+    public function setDepartment($department)
+    {
+        $this->department = $department;
+        return $this;
     }
 
     /**

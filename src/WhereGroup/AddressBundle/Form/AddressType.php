@@ -33,6 +33,9 @@ class AddressType extends AbstractType
             ])->add('organisationName', TextType::class, [
                 'label'    => 'Name der Organisation',
                 'required' => false
+            ])->add('department', TextType::class, [
+                'label'    => 'Abteilung',
+                'required' => false
             ])->add('positionName', TextType::class, [
                 'label'    => 'Funktion der Person',
                 'required' => false

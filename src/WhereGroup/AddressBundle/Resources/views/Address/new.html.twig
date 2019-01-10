@@ -47,11 +47,17 @@
                 </div>
             </div>
         </div>
-        <div class="row r-1">
-            <div class="col c-1">
+        <div class="row r-2">
+            <div class="col c-1-2">
                 <div>{{ form_label(form.organisationName, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
                 <div class="form-field-wrapper">
                     {{ form_widget(form.organisationName, { 'attr': {'class': 'input'}}) }}
+                </div>
+            </div>
+            <div class="col c-1-2">
+                <div>{{ form_label(form.department, null, { 'label_attr': {'class': 'form-label'}}) }}</div>
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.department, { 'attr': {'class': 'input'}}) }}
                 </div>
             </div>
         </div>
