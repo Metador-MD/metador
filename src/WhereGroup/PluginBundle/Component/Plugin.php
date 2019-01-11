@@ -584,4 +584,17 @@ class Plugin
             'output' => 'done'
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function deleteCache()
+    {
+        $fs = new Filesystem();
+        $fs->remove($this->cacheDir);
+
+        return [
+            'output' => 'done'
+        ];
+    }
 }
