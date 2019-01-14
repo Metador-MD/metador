@@ -163,7 +163,7 @@ $home-menu-height: 35px;
         cursor: move;
 
         &:not(.dummy) {
-            border-bottom: 1px dashed $primary;
+            border-bottom: 1px solid $border;
         }
 
         &.move {

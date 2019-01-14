@@ -3576,7 +3576,7 @@ input.input-element, .md input.btn {
   cursor: move; }
 
 .md .layer-tree-list > .draggable:not(.dummy) {
-  border-bottom: 1px dashed #008ec0; }
+  border-bottom: 1px solid #e1e1e1; }
 
 .md .layer-tree-list > .draggable.move {
   background-color: #e5f3ff;
