@@ -17,15 +17,22 @@
                             {% for configKey, config in pluginData['settings'] %}
                                 <div class="row r-1">
                                     <div class="col c-1">
-                                        <div>
-                                            <label class="form-label" for="{{ config['id'] }}">{{ config['label'] }}:</label>
-                                        </div>
+                                        {% if config['type'] != 'boolean' %}
+                                            <div>
+                                                <label class="form-label" for="{{ config['id'] }}">{{ config['label'] }}:</label>
+                                            </div>
+                                        {% endif %}
                                         {% if config['type'] == 'multi' %}
                                             {% for key, option in config['options'] %}
                                                 <div>
                                                     <input type="checkbox" name="{{ config['name'] }}[]" value="{{ key }}" {% if key in config['value'] %}checked="checked"{% endif %}> {{ option }}
                                                 </div>
                                             {% endfor %}
+                                        {% elseif config['type'] == 'boolean' %}
+                                            <div>
+                                                <input class="" id="{{ config['id'] }}" type="checkbox" name="{{ config['name'] }}" value="1" {% if config['value'] == '1' %}checked{% endif %} />
+                                                <label class="form-label" for="{{ config['id'] }}">{{ config['label'] }}</label>
+                                            </div>
                                         {% else %}
                                             <div class="form-field-wrapper i1">
                                                 {% if config['type'] == 'choice' %}
