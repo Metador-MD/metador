@@ -25,6 +25,9 @@ DisallowConsoleLog:
     message: "Remove console.log()."
     regexp: "/console\\.log\\(/"
     extensions: ["js"]
+#DisallowServiceXml:
+#    message: "Dont use services.xml. Use services.yml instead."
+#    regexp: "/services\\.xml/"
 #DisallowInlineStyle:
 #    message: "Dont use inline styling."
 #    regexp: "/style[ ]?=[ ]?['|\\\"]+/"
