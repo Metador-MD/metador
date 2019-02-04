@@ -118,7 +118,9 @@ class DatabaseSearch extends Search implements SearchInterface
             }
         }
 
-        return $this->qb->getQuery()->getArrayResult();
+        $result = $this->qb->getQuery()->getArrayResult();
+
+        return is_array($result) ? $result : [];
     }
 
     /**
