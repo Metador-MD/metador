@@ -1,13 +1,11 @@
-// map menu
 $('.-js-toggle-map').on('click', function () {
     $(this).toggleClass('active');
-    $('.-js-map-dialog').show();
-    $('.-js-home').toggleClass('map-enabled');
+    $('.-js-map-dialog').toggleClass('active');
     MetadorOl4Bridge.updateMap();
 });
 
 $(document).on('click', '.-js-toggle-layertree', function () {
-    $(this).closest('.-js-map-dialog').toggleClass('active');
+    $(this).closest('.-js-map-dialog-menu').toggleClass('active');
 });
 
 $('.-js-crs-code').on('change', function () {
