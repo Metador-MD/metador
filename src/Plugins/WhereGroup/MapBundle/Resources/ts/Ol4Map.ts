@@ -117,15 +117,12 @@ export class Ol4Map {
             tipLabel: "Zoom auf die Start-Ausdehnung"
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
-        this.olMap.addControl(new ol.control.MousePosition(
-            // {
-            //     coordinateFormat: function (coordinates) {
-            //         var coord_x = coordinates[0].toFixed(3);
-            //         var coord_y = coordinates[1].toFixed(3);
-            //         return coord_x + ', ' + coord_y;
-            //     }
-            // }
-        ));
+        const mousePosOptions: any = {
+            coordinateFormat: (coordinates) => {
+                return coordinates[0].toFixed(4) + ', ' + coordinates[1].toFixed(4);
+            }
+        };
+        this.olMap.addControl(new ol.control.MousePosition(mousePosOptions));
         let mapsize = this.olMap.getSize();
         if (mapsize[0] !== 0 && mapsize[1]) {
             this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
