@@ -70,4 +70,7 @@ $ol-button-color: white;
         left: 50%;
         border-top-color: $ol-button-bgcolor;
     }
+    & .tooltip.hidden {
+        display: none;
+    }
 }
