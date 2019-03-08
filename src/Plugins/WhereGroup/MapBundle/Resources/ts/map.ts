@@ -17,7 +17,7 @@ export function init() {
             projection: Configuration.settings['map_crs'],//': '9,49,11,53',                                        '
             maxExtent: Configuration.settings['map_bbox_max'].split(/,\s?/),//[5.8, 47.0, 15.0, 55.0], // priority for scales or for maxExtent?
             startExtent: Configuration.settings['map_bbox_start'].split(/,\s?/),
-            scales: [5000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000, 1250000, 2500000, 3750000, 5000000, 6250000, 7500000, 8750000, 10000000]//, 20000000, 50000000]
+            scales: Configuration.settings['map_scales'].split(/,\s?/).map((numS) => { return parseFloat(numS);})
         },
         styles: {
             highlight: {

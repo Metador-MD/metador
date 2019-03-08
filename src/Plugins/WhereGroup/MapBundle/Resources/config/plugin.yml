@@ -30,3 +30,9 @@ metador_map:
             label: 'BBOX Maximale Ausdehnung'
             default: '6,47,14,56'
             description: 'Bounding Box Maximale Ausdehnung'
+        map_scales:
+            frontend: true
+            type: string
+            label: 'Scales'
+            default: '5000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000, 1250000, 2500000, 3750000, 5000000'
+            description: 'Komma separierte Liste von Scales'
