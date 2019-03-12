@@ -32,6 +32,15 @@
 
     <img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_backend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
 
-    # Mehrteilige Auswahllisten
+    # Löschen aller Metadaten
+
+    {% if is_granted('ROLE_SYSTEM_SUPERUSER') %}
+
+    Mit folgendem Befehl, können aus dem Terminal heraus, alle Metadaten gelöscht werden.
+
+    ```bash
+        bin/console metador:truncate:metadata
+    ```
+    {% endif %}
 {% endblock %}
 
