@@ -9,6 +9,7 @@ stages:
 test:
     stage: test
     script:
+        - rm -rf vendor
         - composer update -o --no-progress
         - bin/console --env=test doctrine:database:create
         - bin/console --env=test doctrine:schema:create
