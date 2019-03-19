@@ -1,6 +1,6 @@
 'use strict';
 
-var Validator = function() {};
+var Validator = function () {};
 
 Validator.prototype = {
     isValid: false,
@@ -10,7 +10,7 @@ Validator.prototype = {
      *
      * @returns {boolean}
      */
-    validateAll: function() {
+    validateAll: function () {
         var self = this;
         var isValid = true;
 
@@ -23,21 +23,20 @@ Validator.prototype = {
         return isValid;
     },
 
-    isEmpty: function(string) {
+    isEmpty: function (string) {
         return (string == '');
     },
 
-    isUrl: function(string) {
+    isUrl: function (string) {
         return this.assertRegex("^(https?|ftp):\\/\\/(((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|[\uE000-\uF8FF]|\\/|\\?)*)?(\\#((([a-z]|\\d|-|\\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\\da-f]{2})|[!\\$&'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$", string);
     },
 
-    allEmpty: function(value, items, item, rule)
-    {
+    allEmpty: function (value, items, item, rule) {
         var self   = this;
         var valid  = !self.isEmpty(value);
         var parent = $(item).closest('.' + rule.parent);
 
-        jQuery.each(rule.siblings, function(index, sibling) {
+        jQuery.each(rule.siblings, function (index, sibling) {
             var item    = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
             var value   = item.val();
             items.push(item);
@@ -50,8 +49,7 @@ Validator.prototype = {
         return !valid;
     },
 
-    allOrNothingEmpty: function(value, items, item, rule)
-    {
+    allOrNothingEmpty: function (value, items, item, rule) {
         var self  = this;
         var count = 1;
         var empty = 0;
@@ -62,7 +60,7 @@ Validator.prototype = {
 
         var parent = $(item).closest('.' + rule.parent);
 
-        jQuery.each(rule.siblings, function(index, sibling) {
+        jQuery.each(rule.siblings, function (index, sibling) {
             var item    = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
             var value   = item.val();
             items.push(item);
@@ -76,7 +74,7 @@ Validator.prototype = {
         return (count === empty || empty === 0);
     },
 
-    mandatoryIfSiblingsNotEmpty: function(value, items, item, rule) {
+    mandatoryIfSiblingsNotEmpty: function (value, items, item, rule) {
         let self = this;
         let siblingsEmpty = self.siblingsEmpty(item, rule.parent, rule.siblings);
         let empty = self.isEmpty(value);
@@ -84,12 +82,12 @@ Validator.prototype = {
         return (!(siblingsEmpty === false && empty === true));
     },
 
-    siblingsEmpty: function(item, parent, siblings) {
+    siblingsEmpty: function (item, parent, siblings) {
         var self  = this;
         var siblingsEmpty = true;
         var parentItem = $(item).closest('.' + parent);
 
-        jQuery.each(siblings, function(index, sibling) {
+        jQuery.each(siblings, function (index, sibling) {
             let item  = parentItem.find('.-js-user-input[data-obj-id="' + sibling + '"]');
 
             if (self.isEmpty(item.val()) === false) {
@@ -100,7 +98,7 @@ Validator.prototype = {
         return siblingsEmpty;
     },
 
-    onlyOne: function(value, items, item, rule) {
+    onlyOne: function (value, items, item, rule) {
         var self  = this;
         var count = 0;
 
@@ -110,7 +108,7 @@ Validator.prototype = {
 
         var parent = $(item).closest('.' + rule.parent);
 
-        jQuery.each(rule.siblings, function(index, sibling) {
+        jQuery.each(rule.siblings, function (index, sibling) {
             var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
             items.push(item);
 
@@ -127,7 +125,7 @@ Validator.prototype = {
      * @param regex
      * @param value
      */
-    assertRegex: function(regex, value) {
+    assertRegex: function (regex, value) {
         if (value === null) {
             return true;
         }
@@ -140,7 +138,7 @@ Validator.prototype = {
      * @param item
      * @returns {boolean}
      */
-    validate: function(item) {
+    validate: function (item) {
         var self       = this;
         var valid      = true;
         var value      = $(item).val();
@@ -161,14 +159,14 @@ Validator.prototype = {
         }
 
         // Check validation rules
-        jQuery.each(validation[objKey], function(index, rule) {
+        jQuery.each(validation[objKey], function (index, rule) {
             if (rule && typeof rule.frontend !== 'undefined' && rule.frontend === false) {
                 return true;
             }
 
             // Check conditions
             if (rule && rule.condition && rule.condition.assert) {
-                switch(rule.condition.assert) {
+                switch (rule.condition.assert) {
                     case 'mandatoryIfSiblingNotEmpty':
                         if (self.siblingsEmpty(item, rule.condition.parent, rule.condition.siblings)) {
                             self.itemValid(items, rule);
@@ -208,7 +206,7 @@ Validator.prototype = {
             if (rule.assert === 'testSiblings') {
                 var parent = $(item).closest('.' + rule.parent);
 
-                jQuery.each(rule.siblings, function(index, sibling) {
+                jQuery.each(rule.siblings, function (index, sibling) {
                     var item  = parent.find('.-js-user-input[data-obj-id="' + sibling + '"]');
                     self.validate(item);
                 });
@@ -217,12 +215,12 @@ Validator.prototype = {
             self.itemValid(items, rule);
         });
 
-        jQuery.each(sources, function(index, source) {
+        jQuery.each(sources, function (index, source) {
             if (typeof self.validation[source] === 'undefined') {
                 self.validation[source] = [];
             }
 
-            jQuery.each(items, function(index, item) {
+            jQuery.each(items, function (index, item) {
                 var key = item.attr('id');
                 self.validation[source][key] = true;
 
@@ -244,7 +242,7 @@ Validator.prototype = {
      * @param message
      * @returns {boolean}
      */
-    setItemStatus: function(item, valid, message) {
+    setItemStatus: function (item, valid, message) {
         var wrapper = $(item).closest('.-js-validation-wrapper');
         var statusIcon = wrapper.find('.-js-validation-icon');
         var defaultIcon = statusIcon.attr('data-validation-icon');
@@ -273,10 +271,10 @@ Validator.prototype = {
      * @param item
      * @param message
      */
-    itemValid: function(items, rule) {
+    itemValid: function (items, rule) {
         var self = this;
 
-        jQuery.each(items, function(index, item) {
+        jQuery.each(items, function (index, item) {
             self.setItemStatus(item, true, rule.message);
         });
     },
@@ -286,10 +284,10 @@ Validator.prototype = {
      * @param item
      * @param message
      */
-    itemInvalid: function(items, rule) {
+    itemInvalid: function (items, rule) {
         var self = this;
 
-        jQuery.each(items, function(index, item) {
+        jQuery.each(items, function (index, item) {
             self.setItemStatus(item, false, rule.message);
         });
     },
@@ -299,7 +297,7 @@ Validator.prototype = {
      * @param count
      * @param source
      */
-    setErrorCount: function(count, source) {
+    setErrorCount: function (count, source) {
         if (count > 0) {
             $('#' + source)
                 .addClass('error')
@@ -316,7 +314,7 @@ Validator.prototype = {
 
 var validator = new Validator();
 
-$(document).on('change', '.-js-user-input', function() {
+$(document).on('change', '.-js-user-input', function () {
     metadata.enableSubmitButton();
     validator.validate(this);
 });
