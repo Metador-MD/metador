@@ -39,6 +39,29 @@ class MetadataValidationEvent extends Event
     }
 
     /**
+     * @param bool $hasError
+     * @return MetadataValidationEvent
+     */
+    public function hasError($hasError = true)
+    {
+        $this->debug['hasErrors'] = $hasError;
+
+        return $this;
+    }
+
+    /**
+     * @param $key
+     * @param $message
+     * @return $this
+     */
+    public function addMessage($key, $message)
+    {
+        $this->debug['messages'][] = ['key' => $key, 'message' => $message];
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getObject()
