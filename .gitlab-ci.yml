@@ -23,7 +23,7 @@ deploy:
     only:
         - master
     script:
-        - rm -rf var/cache/* var/logs/*
+        - rm -rf var/cache/prod/* var/logs/*
         - cp app/config/parameters.yml.dist app/config/parameters.yml
         - bin/console --env=prod doctrine:database:create
         - bin/console --env=prod doctrine:schema:create
@@ -31,7 +31,6 @@ deploy:
         - ( find . -type d -name ".git") | xargs rm -rf
         - mkdir dist
         - zip -r dist/${CI_PROJECT_NAME}.zip ./
-
     artifacts:
         name: ${CI_PROJECT_NAME}
         paths:
