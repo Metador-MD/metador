@@ -15,7 +15,9 @@ Metador.prototype = {
                         window[params.class][params.method](params.argument);
                     }
                 });
-            } else if (data.METADOR.runFunction) {
+            }
+
+            if (data.METADOR.runFunction) {
                 $(data.METADOR.runFunction).each(function (index, params) {
                     if(typeof window[params.function] === 'function'){
                         window[params.function](params.argument);
