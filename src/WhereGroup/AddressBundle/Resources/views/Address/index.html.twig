@@ -78,6 +78,7 @@
         <th>{% trans %}Organisation{% endtrans %}</th>
         <th>{% trans %}Straße{% endtrans %}</th>
         <th>{% trans %}Ort{% endtrans %}</th>
+        <th class="icon-column"><span class="icon-pencil"></span></th>
     </tr>
     </thead>
     <tbody>
@@ -91,6 +92,11 @@
             <td>{{ address.organisationName }}</td>
             <td>{{ address.deliveryPoint }}</td>
             <td>{{ address.city }}</td>
+            <td class="icon-column">
+                <a href="{{ path('metador_admin_address_edit', {id: address.id }) }}">
+                    <span class="icon-pencil"></span>
+                </a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
