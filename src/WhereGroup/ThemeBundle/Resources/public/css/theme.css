@@ -3580,7 +3580,9 @@ input.input-element, .md input.btn {
   margin-left: 4px; }
 
 .md .map-source-opacity {
-  float: right; }
+  float: right;
+  padding: 0;
+  font-size: 0.7em; }
 
 .md .file-upload {
   position: relative;

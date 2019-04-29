@@ -142,7 +142,7 @@ export class LayerTree {
             ['input-element', 'medium', 'simple', 'map-source-opacity', '-js-map-source-opacity']);
 
         for (var i = 0; i <= 10; i++) {
-            select.appendChild(dom.create('option', {'value': i / 10}, [], (i * 10) + ' %'));
+            select.appendChild(dom.create('option', {'value': i / 10}, [], (i * 10) + '%'));
         }
         (<HTMLFormElement>select).value = layer.getOpacity().toString();
         select.addEventListener('change', this.changeOpacity.bind(this), false);
