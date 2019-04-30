@@ -2,13 +2,19 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use DateTime;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig_Environment;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Component\Metadata\Validator;
 use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
@@ -31,7 +37,7 @@ class Metadata implements MetadataInterface
     /** @var UserInterface  */
     protected $user;
 
-    /** @var \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository  */
+    /** @var ObjectRepository|MetadataRepository  */
     protected $repo;
 
     /** @var EntityManagerInterface */
@@ -114,7 +120,7 @@ class Metadata implements MetadataInterface
      */
     public function getById($id, $dispatchEvent = true)
     {
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
+        /** @var EntityMetadata $metadata */
         $metadata = $this->repo->findOneById($id);
 
         if (is_null($metadata)) {
@@ -164,10 +170,10 @@ class Metadata implements MetadataInterface
     /**
      * @param $p
      * @return string
-     * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
     public function objectToXml($p)
     {
@@ -184,7 +190,7 @@ class Metadata implements MetadataInterface
      * @param $xml
      * @param $profile
      * @return array|mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function xmlToObject($xml, $profile)
     {
@@ -245,7 +251,7 @@ class Metadata implements MetadataInterface
 
         $this->updateObjectInformation($p, $source, $profile, $user->getUsername(), $public);
 
-        $date = new \DateTime($p['dateStamp']);
+        $date = new DateTime($p['dateStamp']);
 
         if (!$metadata->getId()) {
             $metadata->setInsertUser($user);
@@ -271,11 +277,11 @@ class Metadata implements MetadataInterface
         $metadata->setProfile($p['_profile']);
         $metadata->setSearchfield($this->prepareSearchField($p));
         $metadata->setSource($p['_source']);
-        $metadata->setDate(is_null($p['_date']) || !is_string($p['_date']) ? null : new \DateTime($p['_date']));
+        $metadata->setDate(is_null($p['_date']) || !is_string($p['_date']) ? null : new DateTime($p['_date']));
         $metadata->setDateStamp(
             is_null($p['dateStamp']) || !is_string($p['dateStamp'])
                 ? null
-                : new \DateTime($p['dateStamp'])
+                : new DateTime($p['dateStamp'])
         );
         $metadata->setInsertUsername($p['_insert_user']);
 
@@ -318,7 +324,7 @@ class Metadata implements MetadataInterface
      * @param null $public
      * @return $this|mixed
      * @throws MetadataException
-     * @throws \Exception
+     * @throws Exception
      */
     public function updateObjectInformation(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
@@ -345,7 +351,7 @@ class Metadata implements MetadataInterface
         }
 
         // DateStamp
-        $dateStamp = new \DateTime();
+        $dateStamp = new DateTime();
         $p['dateStamp'] = $dateStamp->format('Y-m-d');
         $p['_date'] = null;
 
@@ -398,7 +404,7 @@ class Metadata implements MetadataInterface
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateUuid()
     {
@@ -426,7 +432,7 @@ class Metadata implements MetadataInterface
      * @param bool $id
      * @param array $options
      * @return EntityMetadata
-     * @throws \Exception
+     * @throws Exception
      */
     public function saveObject($p, $id = null, $options = [])
     {
@@ -442,7 +448,7 @@ class Metadata implements MetadataInterface
             $p['_uuid'] = $id;
         }
 
-        /** @var \WhereGroup\CoreBundle\Entity\Metadata $metadata */
+        /** @var EntityMetadata $metadata */
         $metadata = $this->prepareData(
             $p,
             $options['source'],
@@ -458,12 +464,13 @@ class Metadata implements MetadataInterface
 
     /**
      * @param $type
-     * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
+     * @param EntityMetadata $metadata
      * @param $operation
      * @param $message
      * @param array $messageParams
      * @param null $path
      * @param array $params
+     * @param bool $flash
      * @return mixed|void
      */
     public function log(
@@ -626,12 +633,12 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
+     * @param EntityMetadata $entity
      * @param bool $dispatchEvent
      * @param bool $log
      * @param bool $flush
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function save($entity, $dispatchEvent = true, $log = true, $flush = true)
     {
@@ -689,7 +696,7 @@ class Metadata implements MetadataInterface
             }
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($log) {
                 $this->error($entity, $operation, '%title% konnte nicht gespeichert werden.', [
                     '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
@@ -701,7 +708,7 @@ class Metadata implements MetadataInterface
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository
+     * @return ObjectRepository|MetadataRepository
      */
     public function getRepository()
     {
@@ -771,11 +778,11 @@ class Metadata implements MetadataInterface
 
     /**
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     private function getTimestamp()
     {
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         return $dateTime->getTimestamp();
     }
@@ -783,7 +790,7 @@ class Metadata implements MetadataInterface
     /**
      * @param $metadataObject
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     private function findDate($metadataObject)
     {
