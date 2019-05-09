@@ -2,14 +2,27 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\Common\Persistence\Mapping\MappingException;
+use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
+use DOMAttr;
+use DOMDocument;
+use DOMElement;
+use DOMText;
+use DOMXPath;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Error\Error;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
@@ -31,7 +44,7 @@ class ProfileController extends Controller
      * @param $source
      * @param $profile
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function newAction($source, $profile)
     {
@@ -40,8 +53,6 @@ class ProfileController extends Controller
         $template = $this
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
-
-        //$uuid = $this->get('metador_metadata')->generateUuid();
 
         return $this->render($template, [
             'p' => [
@@ -56,11 +67,59 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route("/{source}/{profile}/use/{uuid}", name="metadata_use", methods={"GET"})
+     * @param $source
+     * @param $profile
+     * @param $uuid
+     * @return Response
+     * @throws MetadataException
+     */
+    public function useAction($source, $profile, $uuid)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
+
+        $template = $this
+                ->get('metador_plugin')
+                ->getPluginClassName($profile) . ':Profile:form.html.twig';
+
+        $entity = $this->get('metador_metadata')->getById($uuid);
+        $p = $entity->getObject();
+
+        unset($entity);
+
+        unset(
+            $p['fileIdentifier'],
+            $p['_insert_time'],
+            $p['_insert_user'],
+            $p['_lock_time'],
+            $p['_lock_user'],
+            $p['_locked'],
+            $p['_remove_lock'],
+            $p['_update_time'],
+            $p['_update_user'],
+            $p['_username'],
+            $p['_uuid'],
+            $p['dateStamp']
+        );
+
+        $p['_source']  = $source;
+        $p['_profile'] = $profile;
+        $p['_public']  = false;
+        $p['_groups']  = [];
+
+        return $this->render($template, [
+            'p'          => $p,
+            'userGroups' => $this->get('metador_user')->getRoles(),
+            'profile'    => $profile
+        ]);
+    }
+
+    /**
      * @param $profile
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \Exception
+     * @throws Exception
      * @Route("/{profile}/edit/{id}", name="metadata_edit", methods={"GET"})
      */
     public function editAction($profile, $id)
@@ -91,8 +150,8 @@ class ProfileController extends Controller
      * @param Request $request
      * @return AjaxResponse
      * @throws MetadataException
-     * @throws \Doctrine\Common\Persistence\Mapping\MappingException
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws MappingException
+     * @throws ConnectionException
      * @Route("/{source}/{profile}/save", name="metadata_save", methods={"POST"})
      */
     public function saveAction($source, $profile, Request $request)
@@ -169,7 +228,7 @@ class ProfileController extends Controller
             $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), []);
             $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
             $submitType = null;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $em->getConnection()->rollBack();
             $em->clear();
             throw $e;
@@ -196,7 +255,7 @@ class ProfileController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \Exception
+     * @throws Exception
      * @Route("/{profile}/confirm/{id}", name="metadata_confirm", methods={"GET"})
      */
     public function confirmAction($profile, $id)
@@ -223,7 +282,7 @@ class ProfileController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @throws MetadataException
      * @Route("/delete/{id}", name="metadata_delete", methods={"POST"})
      */
@@ -298,10 +357,10 @@ class ProfileController extends Controller
      * @param Request $request
      * @return Response
      * @throws MetadataException
-     * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      * @Route("/profile/xpath/{id}", name="metadata_xpath")
      */
     public function xpathAction($id, Request $request)
@@ -315,29 +374,29 @@ class ProfileController extends Controller
             $xml   = $this->get('metador_metadata')->objectToXml($metadata->getObject());
             $xml   = preg_replace('/(>)([\t\n ^<]+)(<)/s', '${1}${3}', $xml);
 
-            $doc = new \DOMDocument();
+            $doc = new DOMDocument();
             $doc->loadXml($xml);
             $doc->preserveWhiteSpace = false;
             $doc->formatOutput = true;
 
-            $xpath   = new \DOMXPath($doc);
+            $xpath   = new DOMXPath($doc);
             $entries = @$xpath->query($query);
             $html    = '';
 
             if ($entries != false) {
                 foreach ($entries as $entry) {
-                    if ($entry instanceof \DOMElement) {
-                        /** @var \DOMElement $entry */
+                    if ($entry instanceof DOMElement) {
+                        /** @var DOMElement $entry */
                         $entry->ownerDocument->preserveWhiteSpace = false;
                         $entry->ownerDocument->formatOutput = true;
 
                         $html .= '<pre class="xml-code">'
                             . htmlentities($entry->ownerDocument->saveXML($entry)) . '</pre>';
-                    } elseif ($entry instanceof \DOMText) {
-                        /** @var \DOMText $entry */
+                    } elseif ($entry instanceof DOMText) {
+                        /** @var DOMText $entry */
                         $html .= '<pre class="xml-code">' . htmlentities($entry->wholeText) . '</pre>';
-                    } elseif ($entry instanceof \DOMAttr) {
-                        /** @var \DOMAttr $entry */
+                    } elseif ($entry instanceof DOMAttr) {
+                        /** @var DOMAttr $entry */
                         $html .= '<pre class="xml-code">' . htmlentities($entry->nodeValue) . '</pre>';
                     } else {
                         $html .= get_class($entry) . ' is not supported.';
@@ -390,10 +449,10 @@ class ProfileController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      * @Route("/profile/test/{id}", name="metadata_test")
      */
     public function testAction($id)
@@ -481,7 +540,7 @@ class ProfileController extends Controller
      * @return AjaxResponse
      * @throws NonUniqueResultException
      * @throws OptimisticLockException
-     * @throws \Twig\Error\Error
+     * @throws Error
      * @Route("/profile/help", name="metadata_help")
      */
     public function helpAction(Request $request)
@@ -553,7 +612,7 @@ class ProfileController extends Controller
 
     /**
      * @param $profile
-     * @throws \Exception
+     * @throws Exception
      */
     private function init($profile)
     {

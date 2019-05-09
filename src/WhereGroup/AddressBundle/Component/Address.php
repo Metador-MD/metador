@@ -2,9 +2,11 @@
 
 namespace WhereGroup\AddressBundle\Component;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -17,7 +19,7 @@ use WhereGroup\CoreBundle\Component\Search\Paging;
  */
 class Address
 {
-    /** @var \Doctrine\Common\Persistence\ObjectRepository
+    /** @var ObjectRepository
      * |null
      * |\Plugins\WhereGroup\AddressBundle\Entity\AddressRepository  */
     protected $repo = null;
@@ -126,19 +128,15 @@ class Address
      */
     public function count()
     {
-        try {
-            return $this->repo->countAll();
-        } catch (NoResultException $e) {
-            return 0;
-        }
+        return $this->repo->countAll();
     }
 
     /**
      * @param array $array
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveArray(array $array)
     {
@@ -171,8 +169,8 @@ class Address
      * @param \WhereGroup\AddressBundle\Entity\Address $entity
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save($entity)
     {
@@ -205,8 +203,8 @@ class Address
     /**
      * @param $entity
      * @return $this
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function remove($entity)
     {
