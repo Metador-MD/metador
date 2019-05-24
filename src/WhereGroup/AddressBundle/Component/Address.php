@@ -150,6 +150,7 @@ class Address
             ->setIndividualName(isset($array['individualName']) ? $array['individualName'] : '')
             ->setPositionName(isset($array['positionName']) ? $array['positionName'] : '')
             ->setDeliveryPoint(isset($array['deliveryPoint']) ? $array['deliveryPoint'] : '')
+            ->setDepartment(isset($array['department']) ? $array['department'] : '')
             ->setPostalCode(isset($array['postalCode']) ? $array['postalCode'] : '')
             ->setCountry(isset($array['country']) ? $array['country'] : '')
             ->setAdministrativeArea(isset($array['administrativeArea']) ? $array['administrativeArea'] : '')
