@@ -70,6 +70,10 @@ MetadataForm.prototype = {
 var metadata = new MetadataForm();
 
 $(document).on('change', '.-js-user-input', function() {
+    // trim string before validation
+    var string = $(this).val();
+    $(this).val(string.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''));
+
     metadata.enableSubmitButton();
     validator.validate(this);
 });
