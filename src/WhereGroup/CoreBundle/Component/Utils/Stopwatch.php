@@ -2,6 +2,9 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils;
 
+use DateTime;
+use Exception;
+
 /**
  * Class Stopwatch
  * @package WhereGroup\CoreBundle\Component\Utils
@@ -21,7 +24,7 @@ class Stopwatch
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function stop()
     {
@@ -32,9 +35,9 @@ class Stopwatch
     /**
      * @param string $format
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getStartTime($format = 'H:i:s.u')
+    public function getStartTime($format = 'H:i:s')
     {
         return ($this->createDateTime($this->start))->format($format);
     }
@@ -42,16 +45,16 @@ class Stopwatch
     /**
      * @param string $format
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getStopTime($format = 'H:i:s.u')
+    public function getStopTime($format = 'H:i:s')
     {
         return ($this->createDateTime($this->stop))->format($format);
     }
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getDuration()
     {
@@ -68,12 +71,12 @@ class Stopwatch
 
     /**
      * @param $microtime
-     * @return \DateTime
-     * @throws \Exception
+     * @return DateTime
+     * @throws Exception
      */
     protected function createDateTime($microtime)
     {
-        return new \DateTime(date('Y-m-d H:i:s.' . $this->getMilliseconds($microtime), $microtime));
+        return new DateTime(date('Y-m-d H:i:s.' . $this->getMilliseconds($microtime), $microtime));
     }
 
     /**

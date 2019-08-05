@@ -681,10 +681,7 @@ class Metadata implements MetadataInterface
                         $error['message'],
                         $error['params'],
                         'metadata_edit',
-                        ['profile' => $entity->getProfile(), 'id' => $entity->getId()],
-                        null,
-                        [],
-                        true
+                        ['profile' => $entity->getProfile(), 'id' => $entity->getId()]
                     );
                 }
             }

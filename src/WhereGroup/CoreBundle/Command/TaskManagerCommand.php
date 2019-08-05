@@ -43,6 +43,11 @@ class TaskManagerCommand extends ContainerAwareCommand
         $fs->touch($filePath);
 
         try {
+            $em = $this->getContainer()->get('doctrine')->getManager();
+            $em->clear();
+            $em->getConnection()->getConfiguration()->setSQLLogger(null);
+            gc_collect_cycles();
+
             $event = new TaskManagerEvent($input, $output);
 
             if (!empty($input->getOption('token'))) {
