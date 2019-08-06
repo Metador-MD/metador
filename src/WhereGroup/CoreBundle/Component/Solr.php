@@ -2,8 +2,17 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use DateTime;
+use SolrClient;
+use SolrClientException;
+use SolrInputDocument;
+use SolrQuery;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
+/**
+ * Class Solr
+ * @package WhereGroup\CoreBundle\Component
+ */
 class Solr
 {
     public $client;
@@ -25,13 +34,13 @@ class Solr
         $this->path = $path;
 
         if (!empty($host) && !empty($port) && !empty($path)) {
-            $this->client = new \SolrClient([
+            $this->client = new SolrClient([
                 'hostname' => $host,
                 'port'     => $port,
                 'path'     => $path
             ]);
 
-            $this->query = new \SolrQuery();
+            $this->query = new SolrQuery();
         }
     }
 
@@ -55,26 +64,26 @@ class Solr
         try {
             $this->client->ping();
             return true;
-        } catch (\SolrClientException $e) {
+        } catch (SolrClientException $e) {
         }
 
         return false;
     }
 
     /**
-     * @return \SolrQuery
+     * @return SolrQuery
      */
     public function newQuery()
     {
-        return new \SolrQuery();
+        return new SolrQuery();
     }
 
     /**
-     * @return \SolrInputDocument
+     * @return SolrInputDocument
      */
     public function newDocument()
     {
-        return new \SolrInputDocument();
+        return new SolrInputDocument();
     }
 
     /**
@@ -89,7 +98,7 @@ class Solr
 
         $p         = $metadata->getObject();
 
-        /** @var \SolrInputDocument $doc */
+        /** @var SolrInputDocument $doc */
         $doc       = $this->newDocument();
         $date      = $metadata->getDate();
         $dateStamp = $metadata->getDateStamp();
@@ -97,11 +106,11 @@ class Solr
         $doc->addField('id', $metadata->getId());
         $doc->addField('abstract', $metadata->getAbstract());
 
-        if ($date instanceof \DateTime) {
+        if ($date instanceof DateTime) {
             $doc->addField('date', $date->format('Y-m-d'));
         }
 
-        if ($dateStamp instanceof \DateTime) {
+        if ($dateStamp instanceof DateTime) {
             $doc->addField('dateStamp', $dateStamp->format('Y-m-d'));
         }
 
@@ -135,7 +144,7 @@ class Solr
 
         try {
             $this->client->addDocument($doc);
-        } catch (\SolrClientException $e) {
+        } catch (SolrClientException $e) {
             throw new MetadataException('Solr-Server nicht erreichbar.');
         }
     }
