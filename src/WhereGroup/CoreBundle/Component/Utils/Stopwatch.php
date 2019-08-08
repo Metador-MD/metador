@@ -19,7 +19,8 @@ class Stopwatch
      */
     public function __construct()
     {
-        $this->start = microtime(true);
+        list($usec, $sec) = explode(" ", microtime());
+        $this->start = ((float)$usec + (float)$sec);
     }
 
     /**
@@ -28,8 +29,18 @@ class Stopwatch
      */
     public function stop()
     {
-        $this->stop = microtime(true);
+        list($usec, $sec) = explode(" ", microtime());
+        $this->stop = ((float)$usec + (float)$sec);
+
         return $this->getDuration();
+    }
+
+    /**
+     * @return float
+     */
+    public function duration()
+    {
+        return (string)round($this->stop - $this->start, 3);
     }
 
     /**
@@ -68,6 +79,8 @@ class Stopwatch
             'u' => $this->getMilliseconds($this->stop - $this->start)
         ];
     }
+
+
 
     /**
      * @param $microtime
