@@ -2,8 +2,13 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
@@ -44,10 +49,10 @@ interface MetadataInterface
     /**
      * @param $p
      * @return string
-     * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
     public function objectToXml($p);
 
@@ -55,7 +60,7 @@ interface MetadataInterface
      * @param $xml
      * @param $profile
      * @return array|mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function xmlToObject($xml, $profile);
 
@@ -84,13 +89,13 @@ interface MetadataInterface
      * @param null $public
      * @return $this|mixed
      * @throws MetadataException
-     * @throws \Exception
+     * @throws Exception
      */
     public function updateObjectInformation(&$p, $source = null, $profile = null, $username = null, $public = null);
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateUuid();
 
@@ -107,13 +112,13 @@ interface MetadataInterface
      * @param bool $id
      * @param array $options
      * @return EntityMetadata
-     * @throws \Exception
+     * @throws Exception
      */
     public function saveObject($p, $id = null, $options = []);
 
     /**
      * @param $type
-     * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
+     * @param EntityMetadata $metadata
      * @param $operation
      * @param $message
      * @param array $messageParams
@@ -169,17 +174,17 @@ interface MetadataInterface
     public function deleteById($id);
 
     /**
-     * @param \WhereGroup\CoreBundle\Entity\Metadata $entity
+     * @param EntityMetadata $entity
      * @param bool $dispatchEvent
      * @param bool $log
      * @param bool $flush
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function save($entity, $dispatchEvent = true, $log = true, $flush = true);
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|MetadataRepository
+     * @return ObjectRepository|MetadataRepository
      */
     public function getRepository();
 

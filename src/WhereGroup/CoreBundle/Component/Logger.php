@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use DateTime;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -79,8 +81,8 @@ class Logger
 
         if (is_null($log->getDateTime())) {
             try {
-                $dateTime = new \DateTime();
-            } catch (\Exception $e) {
+                $dateTime = new DateTime();
+            } catch (Exception $e) {
                 $dateTime = null;
             }
 
