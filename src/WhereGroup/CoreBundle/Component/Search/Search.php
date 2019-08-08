@@ -64,7 +64,7 @@ abstract class Search
      */
     public function getTerms()
     {
-        return explode(' ', $this->terms);
+        return (array)explode(' ', $this->terms);
     }
 
 
