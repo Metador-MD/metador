@@ -9,9 +9,10 @@ namespace WhereGroup\CoreBundle\Entity;
 class Log
 {
     const INFO = 'info';
-    const ERROR = 'error';
-    const WARNING = 'warning';
     const SUCCESS = 'success';
+    const WARNING = 'warning';
+    const ERROR = 'error';
+    const DEBUG = 'debug';
 
     protected $type = self::INFO;
     protected $category = 'system';
