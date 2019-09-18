@@ -111,6 +111,9 @@
         <service id="metador_csv_export" class="WhereGroup\CoreBundle\Component\CsvExport" public="true">
             <argument type="service" id="security.authorization_checker" />
         </service>
+        <service id="metador_process" class="WhereGroup\CoreBundle\Component\Utils\Process" public="true">
+            <argument>%metador_temp_dir%</argument>
+        </service>
 
         <!-- EVENT LISTENER -->
         <service id="metador.app.listener" class="%metador.app.listener.class%">
