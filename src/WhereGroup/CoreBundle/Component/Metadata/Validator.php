@@ -24,6 +24,8 @@ class Validator
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
+    protected $excludeListFromTest = [];
+
     /**
      * Validator constructor.
      * @param Plugin $plugin
@@ -44,6 +46,16 @@ class Validator
             $this->conf,
             $this->eventDispatcher
         );
+    }
+
+    /**
+     * @param $key
+     * @return $this
+     */
+    public function excludeListFromTest($key)
+    {
+        $this->excludeListFromTest[] = $key;
+        return $this;
     }
 
     /**
@@ -133,6 +145,10 @@ class Validator
      */
     private function testListOption($profile, $key, $val, &$debug)
     {
+        if (in_array($key, $this->excludeListFromTest)) {
+            return;
+        }
+
         if (is_array($val)) {
             foreach ($val as $string) {
                 if (empty($string)) {
