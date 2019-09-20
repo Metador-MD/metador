@@ -4,10 +4,12 @@ namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Twig\Error\Error;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\CsvResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
+use WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException;
 use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 
@@ -32,8 +34,8 @@ class HomeController extends Controller
 
     /**
      * @Route("/public/search/", name="metador_search")
-     * @throws \Twig\Error\Error
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws Error
+     * @throws PropertyNameNotFoundException
      */
     public function searchAction()
     {
@@ -83,12 +85,11 @@ class HomeController extends Controller
         }
 
         if (isset($params['hierarchyLevel'])
-            && is_array($params['hierarchyLevel'])
-            && !empty($params['hierarchyLevel'])) {
+            && is_array($params['hierarchyLevel']) && !empty($params['hierarchyLevel'])) {
             $subfilter = [];
 
             foreach ($params['hierarchyLevel'] as $key => $value) {
-                if (empty($value)) {
+                if ($value !== 'true') {
                     continue;
                 }
                 $subfilter['or'][] = ['eq' => ['hierarchyLevel' => $key]];
@@ -101,9 +102,7 @@ class HomeController extends Controller
             unset($subfilter);
         }
 
-        if (isset($params['topicCategory'])
-            && is_array($params['topicCategory'])
-            && !empty($params['topicCategory'])) {
+        if (isset($params['topicCategory']) && is_array($params['topicCategory']) && !empty($params['topicCategory'])) {
             foreach ($params['topicCategory'] as $key => $value) {
                 if (!empty($value)) {
                     continue;
@@ -171,7 +170,7 @@ class HomeController extends Controller
      * @param $searchResponse
      * @param $params
      * @return $this
-     * @throws \Twig\Error\Error
+     * @throws Error
      */
     protected function renderTemplate(&$response, $searchResponse, $params)
     {
