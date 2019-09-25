@@ -266,6 +266,9 @@ class HomeController extends Controller
         return $sourceConfig;
     }
 
+    /**
+     * @return array
+     */
     protected function getPluginConfiguration()
     {
         $profileConfig = [];

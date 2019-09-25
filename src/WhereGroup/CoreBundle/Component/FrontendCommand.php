@@ -127,17 +127,15 @@ class FrontendCommand
      */
     public function runMethod($class, $method, $argument, &$response)
     {
-        $response = ArrayParser::merge($response, [
-            'METADOR' => [
-                'runMethod' => [
-                    [
-                        'class'    => $class,
-                        'method'   => $method,
-                        'argument' => $argument
-                    ]
-                ]
-            ]
-        ]);
+        if (!isset($response['METADOR']['runMethod'])) {
+            $response['METADOR']['runMethod'] = [];
+        }
+
+        $response['METADOR']['runMethod'][] = [
+            'class'    => $class,
+            'method'   => $method,
+            'argument' => $argument
+        ];
 
         return $this;
     }
@@ -150,16 +148,14 @@ class FrontendCommand
      */
     public function runFunction($function, $argument, &$response)
     {
-        $response =  array_merge_recursive($response, [
-            'METADOR' => [
-                'runFunction' => [
-                    [
-                        'function' => $function,
-                        'argument' => $argument
-                    ]
-                ]
-            ]
-        ]);
+        if (!isset($response['METADOR']['runFunction'])) {
+            $response['METADOR']['runFunction'] = [];
+        }
+
+        $response['METADOR']['runFunction'][] = [
+            'function' => $function,
+            'argument' => $argument
+        ];
 
         return $this;
     }

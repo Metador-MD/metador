@@ -88,6 +88,7 @@ class DatabaseSearch extends Search implements SearchInterface
         return [
             'paging' => $this->getResultPaging(),
             'rows'   => $this->getResult(),
+            'facet'  => []
         ];
     }
 
