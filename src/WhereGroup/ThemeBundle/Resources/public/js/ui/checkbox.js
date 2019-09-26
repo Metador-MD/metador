@@ -4,6 +4,7 @@
     // Create the defaults once
     var pluginName = "checkbox",
         defaults = {
+            enableAll: true
         };
 
     // The actual plugin constructor
@@ -50,7 +51,7 @@
                         }
                     });
 
-                    if (valuesEmpty) {
+                    if (valuesEmpty && this.settings.enableAll) {
                         groupMembers.val(defaultValue).change();
                     }
                 }
