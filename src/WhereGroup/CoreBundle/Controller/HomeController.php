@@ -46,6 +46,7 @@ class HomeController extends Controller
 
         /** @var Search $search */
         $search = $this->get('metador_metadata_search');
+        $search->setParmeters($params);
 
         if (!is_null($download)) {
             $params = json_decode(base64_decode($download), true);

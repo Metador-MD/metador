@@ -18,9 +18,28 @@ abstract class Search
     protected $public     = null;
     protected $keyword    = null;
     protected $sort       = null;
+    protected $parmeters  = null;
 
     /* @var Expression $expression */
     protected $expression = null;
+
+    /**
+     * @return null
+     */
+    public function getParmeters()
+    {
+        return $this->parmeters;
+    }
+
+    /**
+     * @param null $parmeters
+     * @return Search
+     */
+    public function setParmeters($parmeters)
+    {
+        $this->parmeters = $parmeters;
+        return $this;
+    }
 
     /**
      * @return null
