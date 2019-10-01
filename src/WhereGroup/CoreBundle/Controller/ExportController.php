@@ -2,13 +2,18 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\PDFExport;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
+use WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException;
 
 /**
  * @Route("/public/export")
@@ -19,10 +24,10 @@ class ExportController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
+     * @throws PropertyNameNotFoundException
      * @Route("/xml/{id}", name="metador_export_xml", methods={"GET"})
      */
     public function xmlAction($id)
@@ -38,7 +43,7 @@ class ExportController extends Controller
      * @param $id
      * @return JsonResponse
      * @throws MetadataException
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws PropertyNameNotFoundException
      * @Route("/json/{id}", name="metador_export_json", methods={"GET"})
      */
     public function jsonAction($id)
@@ -54,7 +59,7 @@ class ExportController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws PropertyNameNotFoundException
      * @Route("/obj/{id}", name="metador_export_obj", methods={"GET"})
      */
     public function objAction($id)
@@ -69,7 +74,7 @@ class ExportController extends Controller
     /**
      * @param $id
      * @throws MetadataException
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws PropertyNameNotFoundException
      * @Route("/pdf/{id}", name="metador_export_pdf", methods={"GET"})
      */
     public function pdfAction($id)
@@ -95,8 +100,8 @@ class ExportController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
-     * @throws \Exception
+     * @throws PropertyNameNotFoundException
+     * @throws Exception
      * @Route("/html/{id}", name="metador_export_html", methods={"GET"})
      */
     public function htmlAction($id)
@@ -125,7 +130,7 @@ class ExportController extends Controller
      * @param $id
      * @return mixed
      * @throws MetadataException
-     * @throws \WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException
+     * @throws PropertyNameNotFoundException
      */
     private function findObject($id)
     {

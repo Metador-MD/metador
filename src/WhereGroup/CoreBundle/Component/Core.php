@@ -2,10 +2,14 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig_Environment;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -71,9 +75,9 @@ class Core
      * @param $name
      * @param array $context
      * @return string
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function render($name, array $context = [])
     {
@@ -105,7 +109,7 @@ class Core
     /**
      * @param $name
      * @param $event
-     * @return \Symfony\Component\EventDispatcher\Event
+     * @return Event
      */
     public function dispatch($name, $event)
     {

@@ -54,6 +54,7 @@ class MetadataVoter extends Voter
      * @param array $subject
      * @param TokenInterface $token
      * @return bool
+     * @throws MetadorException
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
@@ -76,6 +77,7 @@ class MetadataVoter extends Voter
      * @param $user
      * @param $token
      * @return bool
+     * @throws MetadorException
      */
     private function canView($subject, $user, $token)
     {
