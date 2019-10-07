@@ -10,6 +10,7 @@ export class FeatureInfo {
     private tooltip: ol.Overlay;
     private tooltipCoord: ol.Coordinate;
     private tooltipElm: HTMLElement;
+    private tooltipContent: HTMLElement;
     private layer: ol.layer.Vector;
     private select: ol.interaction.Select;
     private button: HTMLButtonElement;
@@ -114,6 +115,8 @@ export class FeatureInfo {
         this.tooltipElm = dom.create("div", {}, ["tooltip", "hidden"]);
         this.tooltipElm.appendChild(dom.create("span", {}, ["icon-cross"]));
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
+        this.tooltipContent = dom.create("div", {}, ["content"]);
+        this.tooltipElm.appendChild(this.tooltipContent);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
             offset: [0, -6],
@@ -182,7 +185,7 @@ export class FeatureInfo {
                     "data-uuid": feature.get(UUID),
                     "data-id": feature.getId()
                 };
-                this.tooltipElm.appendChild(
+                this.tooltipContent.appendChild(
                     dom.create(FeatureInfo.itemTagName, attrs, ['-js-tooltip-item', 'selected'], feature.get(TITLE))
                 );
                 this.selectDataset(feature.get(UUID));
