@@ -28,6 +28,7 @@
         "ext-gd": "*",
         "ext-xml": "*",
         "ext-dom": "*",
+        "ext-solr": "*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "erusev/parsedown": "^1.6",

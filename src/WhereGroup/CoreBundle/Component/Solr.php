@@ -5,8 +5,10 @@ namespace WhereGroup\CoreBundle\Component;
 use DateTime;
 use SolrClient;
 use SolrClientException;
+use SolrIllegalArgumentException;
 use SolrInputDocument;
 use SolrQuery;
+use SolrServerException;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 
 /**
@@ -26,6 +28,7 @@ class Solr
      * @param $host
      * @param $port
      * @param $path
+     * @throws SolrIllegalArgumentException
      */
     public function __construct($host, $port, $path)
     {
@@ -58,6 +61,7 @@ class Solr
 
     /**
      * @return bool
+     * @throws SolrServerException
      */
     public function ping()
     {
@@ -87,8 +91,24 @@ class Solr
     }
 
     /**
+     * @return int
+     * @throws SolrClientException
+     * @throws SolrServerException
+     */
+    public function count()
+    {
+        $this->query
+            ->setQuery('*:*')
+            ->setStart(1)
+            ->setRows(0);
+
+        return ($this->client->query($this->query))->getResponse()->response->numFound;
+    }
+
+    /**
      * @param \WhereGroup\CoreBundle\Entity\Metadata $metadata
      * @throws MetadataException
+     * @throws SolrServerException
      */
     public function updateMetadata($metadata)
     {
