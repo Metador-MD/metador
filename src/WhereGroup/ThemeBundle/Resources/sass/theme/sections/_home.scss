@@ -254,6 +254,8 @@ $search-content-left-width: 250px;
 
             @extend .no-user-select;
             @include medium-item();
+            min-height: $medium-item-height;
+            height: auto;
 
             &:not(.no-hower):hover {
                 background-color: $background;

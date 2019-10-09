@@ -32,27 +32,6 @@
   white-space: nowrap;
   border: 1px solid white; }
 
-.md .map-dialog .map .tooltip .content {
-  max-width: 260px;
-  max-height: 120px;
-  overflow: auto;
-}
-
-.tooltip .content::-webkit-scrollbar {
-    width: 10px;
-    background-color: white;
-    border-radius: 3px;
-}
-
-/*.tooltip .content::-webkit-scrollbar-track {*/
-/*    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);*/
-/*}*/
-
-.tooltip .content::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 60, 136, 0.3);
-    border-radius: 3px;
-}
-
 .md .map-dialog .map .tooltip span {
   display: block;
   cursor: pointer;
