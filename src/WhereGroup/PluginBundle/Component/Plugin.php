@@ -63,11 +63,24 @@ class Plugin
         $this->routing           = $this->getPluginRouting();
 
         if (is_null($this->pluginPaths)) {
-            $this->pluginPaths       = [
+            $this->pluginPaths = [
                 $this->rootDir . '../src/Plugins/'
             ];
         }
 
+        // load configuration
+        $configuration = $this->getPluginConfiguration();
+        $this->plugins = $configuration['plugins'];
+        ksort($this->plugins);
+
+        unset($configuration);
+    }
+
+    /**
+     * @return $this
+     */
+    public function init()
+    {
         // load configuration
         $configuration = $this->getPluginConfiguration();
         $plugins       = $this->findPlugins();
@@ -86,11 +99,11 @@ class Plugin
                 $plugin['new'] = true;
                 $configuration['plugins'][$name] = $plugin;
 
-            // remove new tag
+                // remove new tag
             } elseif (isset($configuration['plugins'][$name]['new'])) {
                 unset($configuration['plugins'][$name]['new']);
 
-            // override old configuration
+                // override old configuration
             } else {
                 $configuration['plugins'][$name]
                     = array_merge($configuration['plugins'][$name], $plugin);
@@ -100,9 +113,11 @@ class Plugin
         $this->plugins = $configuration['plugins'];
         ksort($this->plugins);
 
-        //$this->saveConfiguration();
+        $this->saveConfiguration();
 
         unset($configuration, $plugins);
+
+        return $this;
     }
 
     /**
@@ -541,7 +556,7 @@ class Plugin
      */
     public function assetsInstall()
     {
-        $console = $this->rootDir . 'console';
+        $console = $this->rootDir . '../bin/console';
 
         if ($this->env === 'dev') {
             $command = "$console assets:install --symlink --no-debug --env=$this->env $this->rootDir../web/";
@@ -562,7 +577,7 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        $process = new Process($this->rootDir . "console doctrine:schema:update --force --no-debug");
+        $process = new Process($this->rootDir . "../bin/console doctrine:schema:update --force --no-debug");
         $process->run();
 
         return [
@@ -575,26 +590,24 @@ class Plugin
      */
     public function clearCache()
     {
-        foreach (['prod', 'dev'] as $env) {
-            (new Process($this->rootDir . "console cache:clear --env=" . $env))->run();
-            (new Process($this->rootDir . "console cache:warmup --env=" . $env))->run();
-        }
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
+        $process->run();
+
+        $this->warmupCache();
 
         return [
-            'output' => 'done'
+            'output' => $process->getOutput()
         ];
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function deleteCache()
+    public function warmupCache()
     {
-        $fs = new Filesystem();
-        $fs->remove($this->cacheDir);
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
+        $process->run();
 
-        return [
-            'output' => 'done'
-        ];
+        return $process->getOutput();
     }
 }

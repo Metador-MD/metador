@@ -6,6 +6,8 @@ use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use WhereGroup\PluginBundle\Entity\Plugin;
+use ZipArchive;
 
 /**
  * Class PluginController
@@ -31,19 +34,21 @@ class PluginController extends Controller
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         return $this->render('MetadorPluginBundle:Plugin:index.html.twig', [
-            'plugins' => $this->get('metador_plugin')->getPlugins('origin')
+            'plugins' => $this->get('metador_plugin')->init()->getPlugins('origin')
         ]);
     }
 
     /**
      * @Route("/update", name="metador_admin_plugin_update", methods={"POST"})
+     * @param Request $request
+     * @return Response
      */
-    public function updateAction()
+    public function updateAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
         $plugins = [];
-        $array   = $this->get('request_stack')->getCurrentRequest()->request->all();
+        $array   = $request->request->all();
 
         foreach ($array['plugin'] as $key => $value) {
             if ($value == 1) {
@@ -81,7 +86,7 @@ class PluginController extends Controller
     /**
      * @Route("/upload", name="metador_admin_plugin_upload", methods={"POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function uploadAction(Request $request)
     {
@@ -124,7 +129,7 @@ class PluginController extends Controller
             unset($file);
 
             // extract to temp folder
-            $zip = new \ZipArchive;
+            $zip = new ZipArchive;
 
             if ($zip->open($pluginFile->getRealPath()) !== true) {
                 $this->log('error', 'upload', '', 'Entpacken fehlgeschlagen.');
@@ -172,7 +177,7 @@ class PluginController extends Controller
     /**
      * @Route("/confirm/{plugin}", name="metador_admin_plugin_confirm", methods={"GET"})
      * @param $plugin
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function confirmAction($plugin)
     {
@@ -186,13 +191,13 @@ class PluginController extends Controller
     /**
      * @Route("/delete/{plugin}", name="metador_admin_plugin_delete", methods={"POST"})
      * @param $plugin
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteAction($plugin)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        $this->get('metador_plugin')->delete($plugin);
+        $this->get('metador_plugin')->init()->delete($plugin);
 
         return $this->redirectToRoute('metador_admin_plugin');
     }
@@ -200,7 +205,7 @@ class PluginController extends Controller
     /**
      * @Route("/view/{plugin}", name="metador_admin_plugin_view", methods={"GET", "POST"})
      * @param $plugin
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function viewAction($plugin)
     {
@@ -216,16 +221,14 @@ class PluginController extends Controller
 
     /**
      * @Route("/command/config", name="metador_admin_plugin_command_config", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function configAction()
+    public function configAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return new JsonResponse(
-            $this->get('metador_plugin')->update(
-                $this->get('request_stack')->getCurrentRequest()->request->all()
-            )
-        );
+        return new JsonResponse($this->get('metador_plugin')->init()->update($request->request->all()));
     }
 
     /**
@@ -235,9 +238,7 @@ class PluginController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return new JsonResponse(
-            $this->get('metador_plugin')->assetsInstall()
-        );
+        return new JsonResponse($this->get('metador_plugin')->assetsInstall());
     }
 
     /**
@@ -247,9 +248,7 @@ class PluginController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        return new JsonResponse(
-            $this->get('metador_plugin')->doctrineUpdate()
-        );
+        return new JsonResponse($this->get('metador_plugin')->doctrineUpdate());
     }
 
     /**
@@ -259,11 +258,7 @@ class PluginController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
 
-        $this->get('metador_plugin')->clearCache();
-
-        return new JsonResponse(
-            $this->get('metador_plugin')->deleteCache()
-        );
+        return new JsonResponse($this->get('metador_plugin')->clearCache());
     }
 
     /**
