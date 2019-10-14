@@ -100,7 +100,7 @@ class Plugin
         $this->plugins = $configuration['plugins'];
         ksort($this->plugins);
 
-        $this->saveConfiguration();
+        //$this->saveConfiguration();
 
         unset($configuration, $plugins);
     }
