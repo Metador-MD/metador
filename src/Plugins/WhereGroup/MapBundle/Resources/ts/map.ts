@@ -22,26 +22,26 @@ export function init() {
         styles: {
             highlight: {
                 fill: {
-                    color: 'rgba(60, 60, 255, 0.1)'
+                    color: Configuration.settings['highlight_fill'] ? Configuration.settings['highlight_fill'] : 'rgba(60, 60, 255, 0.1)'
                 },
                 stroke: {
-                    color: 'rgba(60, 60, 255, 1.0)',
+                    color: Configuration.settings['highlight_stroke'] ? Configuration.settings['highlight_stroke'] : 'rgba(60, 60, 255, 1.0)',
                     width: 2
                 }
             },
             search: {
                 fill: {
-                    color: 'rgba(255, 60, 60, 0.1)'
+                    color: Configuration.settings['search_fill'] ? Configuration.settings['search_fill'] : 'rgba(255, 60, 60, 0.1)'
                 },
                 stroke: {
-                    color: 'rgba(255, 60, 60, 1.0)',
+                    color: Configuration.settings['search_stroke'] ? Configuration.settings['search_stroke'] : 'rgba(255, 60, 60, 1.0)',
                     width: 2
                 },
                 image: {
                     circle: {
                         radius: 5,
                         fill: {
-                            color: 'rgba(255, 60, 60, 0.6)'
+                            color: Configuration.settings['search_stroke'] ? Configuration.settings['search_stroke'] : 'rgba(255, 60, 60, 0.6)'
                         }
                     }
                 }
