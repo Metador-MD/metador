@@ -28,6 +28,13 @@ abstract class ExprHandler
      */
     protected $spatialProperty = ['bboxw', 'bboxs', 'bboxe', 'bboxn'];
 
+    protected $idx;
+
+    public function __construct()
+    {
+        $this->idx = 0;
+    }
+
     /**
      * @param $escapeChar
      * @param $singleChar
@@ -85,7 +92,7 @@ abstract class ExprHandler
      */
     protected function addParameter($property, $value, &$parameters)
     {
-        $key = str_replace('.', '_', $property) . '_' . count($parameters);
+        $key = str_replace('.', '_', $property) . '_' . ($this->idx++);
 
         $parameters[$key] = $value;
 
