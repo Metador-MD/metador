@@ -30,7 +30,7 @@ export class Ol4Map {
     private wmsSource: Ol4WmsSource;
     private vecSource: Ol4VectorSource;
     private layertree: LayerTree;
-    private styles: Object;
+    private styles: {[key: string]: any};
     private hgLayer: ol.layer.Vector;
     private dragzoom: DragZoom;
     private featureInfo: FeatureInfo;
