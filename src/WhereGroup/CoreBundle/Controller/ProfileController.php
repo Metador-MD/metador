@@ -7,6 +7,7 @@ use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use DOMAttr;
 use DOMDocument;
 use DOMElement;
@@ -152,6 +153,7 @@ class ProfileController extends Controller
      * @throws MetadataException
      * @throws MappingException
      * @throws ConnectionException
+     * @throws Exception
      * @Route("/{source}/{profile}/save", name="metadata_save", methods={"POST"})
      */
     public function saveAction($source, $profile, Request $request)
@@ -538,9 +540,10 @@ class ProfileController extends Controller
     /**
      * @param Request $request
      * @return AjaxResponse
+     * @throws Error
      * @throws NonUniqueResultException
      * @throws OptimisticLockException
-     * @throws Error
+     * @throws ORMException
      * @Route("/profile/help", name="metadata_help")
      */
     public function helpAction(Request $request)
