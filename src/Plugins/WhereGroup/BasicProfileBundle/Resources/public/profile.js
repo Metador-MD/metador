@@ -160,7 +160,7 @@ $(document).on('click', '.-js-toggle-switch', function () {
     $(this).find('.-js-toggle-switch-icon').removeClass('icon-toggle-on').addClass('icon-toggle-off');
 });
 
-$(document).on('click', '.-js-set-fields', function () {
+$(document).on('change', '.-js-set-fields', function () {
     var fields = $(this).find(":selected").attr('data-fields');
     var parent = $(this).closest('.' + $(this).attr('data-parent'));
 
@@ -181,9 +181,11 @@ $(document).on('click', '.-js-set-fields', function () {
         if (node === 'SELECT' || node === 'INPUT') {
             item.val(value).change();
         } else if (node === 'TEXTAREA') {
-            item.text(value).change();
+            item.text(value).val(value).change();
         }
     });
+
+    $(this).val('');
 });
 
 $(document).on('change', '.-js-change-view', function() {

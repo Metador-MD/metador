@@ -108,11 +108,10 @@
 
                 var node = $(this).prop('nodeName');
 
-                // Todo: chane -js-address-uuid to something like -js-remove-readonly
                 if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA')
                     && $(this).val() !== ''
-                    && ($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid'))
                     && !$(this).hasClass('-js-keep-value')) {
+
                     $(this).val('');
                 }
             });
@@ -179,8 +178,7 @@
                 var id      = $(this).attr('id');
                 var obj_id  = $(this).attr('data-obj-id');
 
-                if (($(this).is(':not([readonly])') || $(this).hasClass('-js-address-uuid'))
-                    && (node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA')
+                if ((node === 'SELECT' || node === 'INPUT' || node === 'TEXTAREA')
                     && $(this).val() !== ''
                     && !$(this).hasClass('-js-keep-value')) {
                     $(this).val('');
