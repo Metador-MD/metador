@@ -229,6 +229,7 @@ class Metadata implements MetadataInterface
      * @param null $public
      * @return EntityMetadata
      * @throws MetadataException
+     * @throws Exception
      */
     public function prepareData(&$p, $source = null, $profile = null, $username = null, $public = null)
     {

@@ -195,7 +195,6 @@
     {% endif %}
 
     <gmd:identificationInfo>
-        {#<gmd:MD_DataIdentification {% if p['identifierString'] is defined and p['hierarchyLevel'] == 'dataset' %}id="{{ p['identifierString'] }}"{% endif %}>#}
         {% set element = p['_profile'] == "metador_service_profile"? "srv:SV_ServiceIdentification" : "gmd:MD_DataIdentification"%}
         <{{ element }}>
             <gmd:citation>
