@@ -1,7 +1,15 @@
-$ol-button-bgcolor: rgba(0, 60, 136, 0.5);
-$ol-button-color: white;
+@import "../../../../../WhereGroup/ThemeBundle/Resources/sass/theme/config";
 
 .md .map-dialog .map {
+    & .ol-control button{
+        background-color: $primary;
+    }
+
+    & .ol-scale-line{
+        background-color: $primary;
+        opacity: 0.6;
+    }
+
     & .ol-control.ol-zoom {
         right: 8px;
         left: auto;
@@ -25,7 +33,7 @@ $ol-button-color: white;
     }
 
     & .ol-control .success:before {
-        color: lighten($ol-button-bgcolor, 80%);
+        color: lighten($primary, 20%);
     }
 
     & .ol-scale-line {
@@ -35,9 +43,10 @@ $ol-button-color: white;
 
     & .tooltip {
         position: relative;
-        background: $ol-button-bgcolor;
+        background: $primary;
+        //.md .map-dialog .map-dialog-left-menu .
         border-radius: 4px;
-        color: $ol-button-color;
+        color: $white;
         padding: 4px 16px 4px 8px;
         white-space: nowrap;
         border: 1px solid white;
@@ -46,8 +55,9 @@ $ol-button-color: white;
             display: block;
             cursor: pointer;
             font-weight: normal;
+            color: lighten($primary, 20%);
             &.selected {
-                font-weight: bold;
+                color: $white;
             }
         }
 
@@ -56,6 +66,22 @@ $ol-button-color: white;
             top: 4px;
             right: 3px;
             font-size: 10px;
+            color: $white;
+        }
+        & > .content {
+            overflow: auto;
+            &::-webkit-scrollbar {
+                width: 0.5em;
+            }
+
+            &::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px $white;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $white;
+                outline: 1px solid $primary;
+            }
         }
     }
 
@@ -68,7 +94,7 @@ $ol-button-color: white;
         bottom: -6px;
         margin-left: -7px;
         left: 50%;
-        border-top-color: $ol-button-bgcolor;
+        border-top-color: $primary;
     }
     & .tooltip.hidden {
         display: none;

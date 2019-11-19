@@ -182,7 +182,6 @@ export class Ol4Map {
     }
 
     zoomToExtent(geometry: ol.geom.SimpleGeometry | ol.Extent) {
-        // console.log(geometry, this.olMap.getSize());
         this.olMap.getView().fit(geometry, <olx.view.FitOptions>this.olMap.getSize());
     }
 
