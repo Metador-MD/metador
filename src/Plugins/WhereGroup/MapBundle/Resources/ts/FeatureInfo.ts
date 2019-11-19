@@ -1,5 +1,3 @@
-
-
 import {dom} from './dom';
 import * as ol from 'openlayers';
 import {TITLE, UUID} from "./Ol4Map";
@@ -116,11 +114,16 @@ export class FeatureInfo {
         this.tooltipElm.appendChild(dom.create("span", {}, ["icon-cross"]));
         this.tooltipElm.addEventListener('click', this.itemClick.bind(this), false);
         this.tooltipContent = dom.create("div", {}, ["content"]);
+        const mapSize = this.olMap.getSize();
+        this.tooltipContent.style.maxHeight = Math.round(mapSize[1] * 0.6) + "px";
+        this.tooltipContent.style.maxWidth = Math.round(mapSize[0] * 0.6) + "px";
         this.tooltipElm.appendChild(this.tooltipContent);
         this.tooltip = new ol.Overlay({
             element: this.tooltipElm,
             offset: [0, -6],
-            positioning: 'bottom-center'
+            positioning: 'bottom-center',
+            autoPan: true,
+
         });
         this.olMap.addOverlay(this.tooltip);
         this.activateSelect();
