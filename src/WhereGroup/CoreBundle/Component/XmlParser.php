@@ -1,6 +1,11 @@
 <?php
 namespace WhereGroup\CoreBundle\Component;
 
+use DOMDocument;
+use DOMNode;
+use DOMXPath;
+use RuntimeException;
+
 /**
  * Class XmlParser
  * @package WhereGroup\CoreBundle\Component
@@ -9,12 +14,12 @@ namespace WhereGroup\CoreBundle\Component;
 class XmlParser
 {
     /**
-     * @var \DOMXPath
+     * @var DOMXPath
      */
     private $xp;
 
     /**
-     * @var \DOMDocument
+     * @var DOMDocument
      */
     private $doc;
 
@@ -46,10 +51,10 @@ class XmlParser
      */
     public function __construct($xml, XmlParserFunctions $functions)
     {
-        $this->doc = new \DOMDocument();
+        $this->doc = new DOMDocument();
 
-        if (!@$this->doc->loadXML($xml) || !@$this->xp = new \DOMXPath($this->doc)) {
-            throw new \RuntimeException('Error while loading the XML.');
+        if (!@$this->doc->loadXML($xml) || !@$this->xp = new DOMXPath($this->doc)) {
+            throw new RuntimeException('Error while loading the XML.');
         }
 
         $this->functions = $functions;
@@ -64,7 +69,7 @@ class XmlParser
         $array = $this->objectToArray(json_decode($json));
 
         if (!is_array($array) || empty($array)) {
-            throw new \RuntimeException('Empty or invalid schema.');
+            throw new RuntimeException('Empty or invalid schema.');
         }
 
         $this->schema = json_decode(json_encode(
@@ -239,7 +244,7 @@ class XmlParser
      * Returns value.
      *
      * @param string $xpath
-     * @param \DOMNode $context
+     * @param DOMNode $context
      * @return mixed
      */
     private function getValue($xpath, $context = null)

@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils;
 
+use stdClass;
 use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 
@@ -95,9 +96,9 @@ class Browser
 
     /**
      * @param $url
-     * @return bool|\stdClass
-     * @internal param array $header
+     * @return bool|stdClass
      * @throws MetadorException
+     *@internal param array $header
      */
     public function get($url)
     {
@@ -107,9 +108,9 @@ class Browser
     /**
      * @param $url
      * @param $data
-     * @return bool|\stdClass
-     * @internal param array $header
+     * @return bool|stdClass
      * @throws MetadorException
+     *@internal param array $header
      */
     public function post($url, $data)
     {
@@ -131,7 +132,7 @@ class Browser
      * @param $method
      * @param $url
      * @param $data
-     * @return \stdClass
+     * @return stdClass
      * @throws MetadorException
      * @internal param array $header
      */
@@ -194,7 +195,7 @@ class Browser
             }
         }
 
-        $response              = new \stdClass();
+        $response              = new stdClass();
         $response->content     = curl_exec($init);
         $response->header      = curl_getInfo($init, CURLINFO_HEADER_OUT);
         $response->status      = (int)curl_getInfo($init, CURLINFO_HTTP_CODE);
