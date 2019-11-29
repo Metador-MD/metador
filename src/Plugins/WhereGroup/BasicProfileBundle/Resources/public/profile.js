@@ -185,7 +185,9 @@ $(document).on('change', '.-js-set-fields', function () {
         }
     });
 
-    $(this).val('');
+    if ($(this).hasClass('-js-field-clear')) {
+        $(this).val('');
+    }
 });
 
 $(document).on('change', '.-js-change-view', function() {
