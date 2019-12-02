@@ -1,13 +1,14 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?ho1nn9');
-  src:  url('fonts/icomoon.eot?ho1nn9#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.woff2?ho1nn9') format('woff2'),
-    url('fonts/icomoon.ttf?ho1nn9') format('truetype'),
-    url('fonts/icomoon.woff?ho1nn9') format('woff'),
-    url('fonts/icomoon.svg?ho1nn9#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?qeq2gm');
+  src:  url('fonts/icomoon.eot?qeq2gm#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff2?qeq2gm') format('woff2'),
+    url('fonts/icomoon.ttf?qeq2gm') format('truetype'),
+    url('fonts/icomoon.woff?qeq2gm') format('woff'),
+    url('fonts/icomoon.svg?qeq2gm#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -234,6 +235,9 @@
 }
 .icon-cloud-download:before {
   content: "\f0ed";
+}
+.icon-cloud-upload:before {
+  content: "\f0ee";
 }
 .icon-bell:before {
   content: "\f0f3";
