@@ -7,6 +7,8 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use DOMDocument;
+use DOMXPath;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -461,6 +463,36 @@ class Metadata implements MetadataInterface
         $this->save($metadata, $options['dispatchEvent'], $options['log'], $options['flush']);
 
         return $metadata;
+    }
+
+    /**
+     * @param $xml
+     * @return string|null
+     */
+    public function getHierarchyLevelFromXml($xml)
+    {
+        $dom = new DOMDocument();
+        $dom->loadXml($xml);
+
+        $xpath = new DOMXPath($dom);
+        $xpath->registerNamespace('gmd', 'http://www.isotc211.org/2005/gmd');
+        $xpath->registerNamespace('gco', 'http://www.isotc211.org/2005/gco');
+        $xpath->registerNamespace('srv', 'http://www.isotc211.org/2005/srv');
+        $xpath->registerNamespace('gml', 'http://www.opengis.net/gml');
+        $xpath->registerNamespace('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+
+
+        $result = $xpath->query("/*/gmd:hierarchyLevel/gmd:MD_ScopeCode/text()");
+        if ($result->length === 1) {
+            return $result->item(0)->nodeValue;
+        }
+
+        $result = $xpath->query("/*/gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue");
+        if ($result->length === 1) {
+            return $result->item(0)->value;
+        }
+
+        return null;
     }
 
     /**
