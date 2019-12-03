@@ -10,26 +10,32 @@ use RuntimeException;
  */
 class ProcessContext
 {
-    private $totalItemCount;
-    private $command;
-    private $partitionSize = 10000;
-    private $range = 1;
-    private $linePointer;
+    protected $totalItemCount;
+    protected $command;
+    protected $partitionSize = 10000;
+    protected $range = 1;
 
+    /**
+     * ProcessContext constructor.
+     * @param $command
+     */
     public function __construct($command)
     {
         $this->command = $command;
     }
 
+    /**
+     * @return array
+     */
     public function getCommand()
     {
-        if ($this->totalItemCount === null || $this->linePointer === null) {
-            throw new RuntimeException("totalItemCount or linePointer can not be null.");
+        if ($this->totalItemCount === null) {
+            throw new RuntimeException("totalItemCount can not be null.");
         }
 
         // @codingStandardsIgnoreStart
         return [
-            'php', 'bin/console', $this->command, '--offset', (string)$this->linePointer[$this->range-1], '--limit', (string)$this->partitionSize
+            'php', 'bin/console', $this->command, '--offset', (string)$this->range, '--limit', (string)$this->partitionSize
         ];
         // @codingStandardsIgnoreEnd
     }
@@ -102,25 +108,6 @@ class ProcessContext
     public function next(): ProcessContext
     {
         $this->range += $this->partitionSize;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLinePointer()
-    {
-        return $this->linePointer;
-    }
-
-    /**
-     * @param mixed $linePointer
-     * @return ProcessContext
-     */
-    public function setLinePointer($linePointer)
-    {
-        $this->linePointer = $linePointer;
 
         return $this;
     }
