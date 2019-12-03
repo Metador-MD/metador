@@ -10,15 +10,18 @@ use Exception;
  */
 class Process
 {
-    private $folder;
+    private $tempFolder;
+    private $console;
 
     /**
      * Process constructor.
-     * @param $folder
+     * @param $tempFolder
+     * @param $rootDir
      */
-    public function __construct($folder)
+    public function __construct($tempFolder, $rootDir)
     {
-        $this->folder = $folder;
+        $this->tempFolder = $tempFolder;
+        $this->console = realpath($rootDir  . '/../bin') . '/console';
     }
 
     /**
@@ -26,16 +29,27 @@ class Process
      * @param null $handle
      * @return string
      */
-    public function run($command, $handle = null)
+    public function runInBackground($command, $handle = null)
     {
         if (is_null($handle)) {
             $handle = md5(microtime(true));
         }
-        $path = rtrim($this->folder, '/') . '/' . $handle;
+
+        $path = $this->getProcessFilename($handle);
 
         exec(sprintf("%s > %s 2>&1 & echo $! > %s", $command, $path . '_output', $path . '_pid'));
 
         return $handle;
+    }
+
+    /**
+     * @param $command
+     * @param null $handle
+     * @return string
+     */
+    public function runSymfonyCommandInBackground($command, $handle = null)
+    {
+        return $this->runInBackground($this->console . ' ' . $command, $handle);
     }
 
     /**
@@ -44,7 +58,7 @@ class Process
      */
     public function isRunning($handle)
     {
-        $path = rtrim($this->folder, '/') . '/' . $handle;
+        $path = $this->getProcessFilename($handle);
         try {
             $result = shell_exec(sprintf("ps %d", $path . '_pid'));
             if (count(preg_split("/\n/", $result)) > 2) {
@@ -53,6 +67,36 @@ class Process
         } catch (Exception $e) {
         }
 
+        $this->clean($handle);
+
         return false;
+    }
+
+    /**
+     * @param $handle
+     * @return Process
+     */
+    public function clean($handle)
+    {
+        $path = $this->getProcessFilename($handle);
+
+        if (file_exists($path . '_pid')) {
+            unlink($path . '_pid');
+        }
+
+        if (file_exists($path . '_output')) {
+            unlink($path . '_output');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $handle
+     * @return string
+     */
+    public function getProcessFilename($handle)
+    {
+        return rtrim($this->tempFolder, '/') . '/' . $handle;
     }
 }

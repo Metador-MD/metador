@@ -113,6 +113,7 @@
         </service>
         <service id="metador_process" class="WhereGroup\CoreBundle\Component\Utils\Process" public="true">
             <argument>%metador_temp_dir%</argument>
+            <argument>%kernel.root_dir%</argument>
         </service>
 
         <!-- EVENT LISTENER -->
