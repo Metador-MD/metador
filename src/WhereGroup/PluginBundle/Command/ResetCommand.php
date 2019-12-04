@@ -32,7 +32,7 @@ class ResetCommand extends ContainerAwareCommand
     {
         $io         = new SymfonyStyle($input, $output);
         $translator = $this->getContainer()->get('translator');
-        $plugin     = $this->getContainer()->get('metador_plugin');
+        $plugin     = $this->getContainer()->get('metador_plugin')->init();
         $config     = $plugin->getConfig();
 
         $io->title($translator->trans('plugin_command_reset_title'));

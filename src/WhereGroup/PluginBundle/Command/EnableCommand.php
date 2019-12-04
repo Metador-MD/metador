@@ -32,7 +32,7 @@ class EnableCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io         = new SymfonyStyle($input, $output);
-        $plugin     = $this->getContainer()->get('metador_plugin');
+        $plugin     = $this->getContainer()->get('metador_plugin')->init();
         $translator = $this->getContainer()->get('translator');
         $keys        = $input->getArgument("keys");
 
