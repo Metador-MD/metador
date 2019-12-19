@@ -12,6 +12,7 @@
 .sass-cache
 .idea
 .project
+.phpintel
 
 # PROJECT FOLDERS
 /app/Resources/
