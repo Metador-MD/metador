@@ -23,8 +23,23 @@ $('.-js-geometry-type').on('change', function () {
     var geometryType = $(this).val();
     if (geometryType === 'load') {
         $('.-js-file-upload').click();
+    }
+    // else {
+    //     MetadorOl4Bridge.drawShapeForSearch(geometryType);
+    // }
+});
+
+$('.-js-spatial-switcher').on('click', function () {
+    var $but = $(this);
+    if ($but.hasClass("success")) {
+        $but.removeClass("success");
+        MetadorOl4Bridge.drawShapeForSearch("NONE");
     } else {
-        MetadorOl4Bridge.drawShapeForSearch(geometryType);
+        $but.addClass("success");
+        var geometryType = $('.-js-geometry-type').val();
+        if (geometryType !== 'load') {
+            MetadorOl4Bridge.drawShapeForSearch(geometryType);
+        }
     }
 });
 
@@ -74,7 +89,7 @@ var MetadorOl4Bridge = {
         }
     },
 
-    getSearch: function() {
+    getSearch: function () {
         return search;
     },
 
@@ -146,6 +161,7 @@ var MetadorOl4Bridge = {
             function (geoFeature) {
                 self.setSpatialFilter(geoFeature);
                 self.getSearch().find();
+                self.resetSpatialOperation();
             }
         );
     },
@@ -157,9 +173,14 @@ var MetadorOl4Bridge = {
                 function (geoFeature) {
                     self.setSpatialFilter(geoFeature);
                     self.getSearch().find();
+                    self.resetSpatialOperation();
                 }
             );
         }
+    },
+    resetSpatialOperation: function () {
+        // $('.-js-spatial-switcher').click();
+        $('.-js-spatial-switcher').removeClass("success");
     },
     addLayerForOptions: function (data) {
         this.getOl().addLayerForOptions(data);
