@@ -354,7 +354,7 @@ export class Ol4Map {
         return geojson;
     }
 
-    drawGeometryForSearch(geoJson: Object, onDrawEnd: Function = null) {
+    drawGeometryForSearch(geoJson: Object, onDrawEnd: (geojson: any) => void) {
         let ol4map = this;
         let olMap = this.olMap;
         this.vecSource.clearFeatures(this.drawer.getLayer());
@@ -376,7 +376,7 @@ export class Ol4Map {
         }
     }
 
-    drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: Function = null) {
+    drawShapeForSearch(shapeType: SHAPES = null, onDrawEnd: (geojson: any) => void) {
         this.setDoubleClickZoom(false);
         let ol4map = this;
         let olMap = this.olMap;
@@ -407,13 +407,16 @@ export class Ol4Map {
                     );
                     geojson['bbox'] = new Ol4Geom(e.feature.getGeometry(), ol4map.getProjection())
                         .getExtent(ol.proj.get(METADOR_EPSG));
+                    window.console.log("end 1");
                     onDrawEnd(geojson);
+                    window.console.log("end 1");
                     olMap.removeInteraction(drawer.getInteraction());
                 }
             );
         } else {
             this.getDrawer().getLayer().getSource().clear();
             onDrawEnd(null);
+            window.console.log("end 2");
             this.setDoubleClickZoom(true);
         }
     }
