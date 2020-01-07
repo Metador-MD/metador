@@ -33,8 +33,8 @@ class StopCommand extends ContainerAwareCommand
 
         $serviceFile = $this->getContainer()->getParameter('maintenance_file');
         $rootDir = $this->getContainer()->get('kernel')->getRootDir() . '/../';
-        $tmpDir =  $rootDir . 'var/temp/';
-        $webDir = $rootDir . 'web/';
+        $tmpDir  = $rootDir . 'var/temp/';
+        $webDir  = $rootDir . 'web/';
 
         $fs = new Filesystem();
 

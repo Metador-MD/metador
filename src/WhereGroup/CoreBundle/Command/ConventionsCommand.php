@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -29,7 +30,7 @@ class ConventionsCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -40,7 +41,7 @@ class ConventionsCommand extends ContainerAwareCommand
         $ignore = $input->getOption('ignore');
 
         if (empty($path)) {
-            throw new \Exception("Path not found.");
+            throw new Exception("Path not found.");
         }
 
         $convention = (new Conventions($path, $ignore))->scan()->showErrors($io);

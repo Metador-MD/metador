@@ -2,14 +2,12 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use WhereGroup\CoreBundle\Component\Utils\Password;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\User;
@@ -32,6 +30,9 @@ class InitDatabaseCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -83,6 +84,10 @@ class InitDatabaseCommand extends ContainerAwareCommand
         $this->addSourceAndProfilesToDatabase();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
+     */
     private function addSourceAndProfilesToDatabase()
     {
         $sourceService = $this->getContainer()->get('metador_source');
@@ -92,6 +97,11 @@ class InitDatabaseCommand extends ContainerAwareCommand
         }
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     private function addSettingsToDatabase()
     {
         // Add default configuration to database

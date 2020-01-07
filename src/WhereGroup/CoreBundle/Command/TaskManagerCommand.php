@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
+use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -59,7 +60,7 @@ class TaskManagerCommand extends ContainerAwareCommand
             foreach ($event->getMessages() as $message) {
                 $this->log('info', $message);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->log('error', $e->getMessage());
         }
 

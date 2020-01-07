@@ -3,11 +3,8 @@
 namespace WhereGroup\CoreBundle\Command;
 
 use WhereGroup\UserBundle\Entity\User;
-use WhereGroup\UserBundle\Entity\Group;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**
