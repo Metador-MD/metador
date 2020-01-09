@@ -1,6 +1,6 @@
 <?php
 
-namespace WhereGroup\CoreBundle\Component\Utils;
+namespace WhereGroup\CoreBundle\Component\Utils\Import;
 
 use Symfony\Component\Process\Process;
 
