@@ -236,7 +236,11 @@ class Metadata implements MetadataInterface
     public function prepareData(&$p, $source = null, $profile = null, $username = null, $public = null)
     {
         if (!empty($p['_uuid'])) {
-            $metadata = $this->getById($p['_uuid']);
+            try {
+                $metadata = $this->getById($p['_uuid']);
+            } catch (MetadataException $e) {
+                $metadata = new EntityMetadata();
+            }
         } else {
             $metadata = new EntityMetadata();
             unset($p['_uuid']);
