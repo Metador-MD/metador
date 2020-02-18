@@ -1,0 +1,8 @@
+services:
+    WhereGroup\CoreBundle\Service\:
+        resource: '%kernel.project_dir%/src/WhereGroup/CoreBundle/Service'
+        public: true
+        autowire: true
+        autoconfigure: true
+    WhereGroup\UserBundle\Component\UserInterface: '@metador_user'
+    WhereGroup\PluginBundle\Component\Plugin: '@metador_plugin'

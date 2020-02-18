@@ -141,6 +141,10 @@
             <tag name="kernel.event_listener" event="source.post_delete" method="onPostDelete" />
             <argument type="service" id="metador_metadata" />
         </service>
+        <service id="metador_metadata_flush_listener" class="WhereGroup\CoreBundle\EventListener\MetadataFlushListener">
+            <tag name="kernel.event_listener" event="metadata.flush" method="onFlush" />
+            <argument type="service" id="WhereGroup\CoreBundle\Service\Database" />
+        </service>
 
         <!-- TWIG EXTENSION -->
         <service id="metador.twig.extension" class="%metador.twig.class%">

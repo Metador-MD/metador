@@ -80,8 +80,6 @@ class Stopwatch
         ];
     }
 
-
-
     /**
      * @param $microtime
      * @return DateTime
@@ -99,5 +97,20 @@ class Stopwatch
     protected function getMilliseconds($microtime)
     {
         return sprintf("%06d", ($microtime - floor($microtime)) * 1000000);
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function __toString()
+    {
+        $duration = $this->getDuration();
+
+        return '' . $this->getStartTime() . ' - ' . $this->getStopTime() . '. Dauer: '
+            . $duration['h'] . ' Stunden, '
+            . $duration['i'] . ' Minuten, '
+            . $duration['s'] . ' Sekunden, '
+            . $duration['u'] . ' Millisekunden.';
     }
 }

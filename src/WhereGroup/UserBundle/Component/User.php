@@ -2,15 +2,18 @@
 
 namespace WhereGroup\UserBundle\Component;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use WhereGroup\UserBundle\Entity\Group;
+use WhereGroup\UserBundle\Entity\GroupRepository;
 use WhereGroup\UserBundle\Entity\User as UserEntity;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadorException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use WhereGroup\UserBundle\Entity\UserRepository;
 
 /**
  * Class User
@@ -28,10 +31,10 @@ class User implements UserInterface
      */
     private $em;
 
-    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\UserRepository  */
+    /** @var ObjectRepository|UserRepository  */
     private $repo;
 
-    /** @var \Doctrine\Common\Persistence\ObjectRepository|\WhereGroup\UserBundle\Entity\GroupRepository  */
+    /** @var ObjectRepository|GroupRepository  */
     private $groupRepo;
 
     /**
@@ -106,7 +109,7 @@ class User implements UserInterface
 
     /**
      * @param $username
-     * @return \WhereGroup\UserBundle\Entity\User
+     * @return UserEntity
      */
     public function getByUsername($username)
     {

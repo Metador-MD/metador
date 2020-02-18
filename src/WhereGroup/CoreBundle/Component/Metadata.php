@@ -12,16 +12,17 @@ use DOMXPath;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig_Environment;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Component\Metadata\Validator;
 use WhereGroup\CoreBundle\Entity\Log;
 use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Entity\Metadata as EntityMetadata;
+use WhereGroup\CoreBundle\Event\MetadataFlushEvent;
 use WhereGroup\CoreBundle\Event\MetadataLoadFromXmlEvent;
 use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\UserBundle\Component\UserInterface;
@@ -172,10 +173,9 @@ class Metadata implements MetadataInterface
     /**
      * @param $p
      * @return string
-     * @throws Exception
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function objectToXml($p)
     {
@@ -463,6 +463,25 @@ class Metadata implements MetadataInterface
         $this->save($metadata, $options['dispatchEvent'], $options['log'], $options['flush']);
 
         return $metadata;
+    }
+
+    /**
+     * @return $this
+     */
+    public function dispatchFlush()
+    {
+        $this->eventDispatcher->dispatch('metadata.flush', new MetadataFlushEvent());
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function flush()
+    {
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
+        return $this;
     }
 
     /**

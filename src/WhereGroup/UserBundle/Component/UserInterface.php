@@ -51,7 +51,7 @@ interface UserInterface
 
     /**
      * @param $username
-     * @return \WhereGroup\UserBundle\Entity\User
+     * @return UserEntity
      */
     public function getByUsername($username);
 
