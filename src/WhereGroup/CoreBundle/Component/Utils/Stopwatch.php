@@ -110,7 +110,6 @@ class Stopwatch
         return '' . $this->getStartTime() . ' - ' . $this->getStopTime() . '. Dauer: '
             . $duration['h'] . ' Stunden, '
             . $duration['i'] . ' Minuten, '
-            . $duration['s'] . ' Sekunden, '
-            . $duration['u'] . ' Millisekunden.';
+            . $duration['s'] . ' Sekunden, ';
     }
 }

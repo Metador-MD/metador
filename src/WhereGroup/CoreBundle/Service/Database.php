@@ -1,10 +1,11 @@
 <?php
 
-
 namespace WhereGroup\CoreBundle\Service;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Event\MetadataFlushEvent;
 
 /**
@@ -46,6 +47,15 @@ class Database
     }
 
     /**
+     * @param string $repo
+     * @return ObjectRepository
+     */
+    public function getRepository($repo = 'MetadorCoreBundle:Metadata')
+    {
+        return $this->em->getRepository($repo);
+    }
+
+    /**
      * @return $this
      */
     public function clearSqlObjectManager()
@@ -78,6 +88,26 @@ class Database
     public function dispatchFlush()
     {
         $this->eventDispatcher->dispatch('metadata.flush', new MetadataFlushEvent());
+        return $this;
+    }
+
+    /**
+     * @param $event
+     * @return $this
+     */
+    public function dispatchPreSave($event)
+    {
+        $this->eventDispatcher->dispatch('metadata.pre_save', $event);
+        return $this;
+    }
+
+    /**
+     * @param MetadataChangeEvent $event
+     * @return $this
+     */
+    public function dispatchPostSave(MetadataChangeEvent $event)
+    {
+        $this->eventDispatcher->dispatch('metadata.post_save', $event);
         return $this;
     }
 }

@@ -5,6 +5,7 @@ namespace WhereGroup\CoreBundle\Component\Utils\Import\Reader;
 use Generator;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
+use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\CoreBundle\Component\Utils\Import\Context\Context;
 
 /**
@@ -53,7 +54,6 @@ class FolderReader implements Reader
             } elseif ($limit !== null && $count + 1 > $limit) {
                 break;
             }
-
             yield $count => $file->getContents();
             ++$count;
         }

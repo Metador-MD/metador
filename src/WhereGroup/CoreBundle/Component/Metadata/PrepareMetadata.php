@@ -34,10 +34,14 @@ class PrepareMetadata
 
         $object['_insert_user'] = $object['_username'];
         $object['_insert_time'] = $object['dateStamp'];
+        $object['_update_user'] = $object['_username'];
+        $object['_update_time'] = $object['dateStamp'];
 
         $metadata
             ->setInsertUser($user)
             ->setInsertTime($date->getTimestamp())
+            ->setUpdateUser($user)
+            ->setUpdateTime($date->getTimestamp())
             ->setDateStamp(new DateTime($object['dateStamp']))
             ->setObject($object)
         ;

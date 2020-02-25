@@ -35,8 +35,8 @@ class ProcessManager
 
             $process = new Process($this->processContext->getCommand());
             $process->start();
-            $this->processes[] = $process;
 
+            $this->processes[] = $process;
             $this->processContext->next();
         }
 

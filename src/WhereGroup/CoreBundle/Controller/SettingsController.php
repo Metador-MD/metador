@@ -4,6 +4,7 @@ namespace WhereGroup\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Yaml\Yaml;
 use WhereGroup\CoreBundle\Component\Configuration;
@@ -17,7 +18,7 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/{fragment}", defaults={"fragment" = ""}, name="metador_admin_settings", methods={"GET"})
      * @param $fragment
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($fragment)
     {

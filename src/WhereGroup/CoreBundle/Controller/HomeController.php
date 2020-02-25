@@ -293,4 +293,16 @@ class HomeController extends Controller
     {
         return new AjaxResponse([]);
     }
+
+    /**
+     * @Route("/process/{handle}", name="metador_process", methods={"GET"})
+     * @param $handle
+     * @return AjaxResponse
+     */
+    public function processAction($handle)
+    {
+        return new AjaxResponse([
+            'process' => $this->get('metador_process')->isRunning($handle)
+        ]);
+    }
 }

@@ -44,7 +44,7 @@ class MetadataXmlProcessor
      * @param $profile
      * @return array
      */
-    public function processByProfile($xml, $profile): array
+    public function xmlToObjectByProfile($xml, $profile): array
     {
         $parser = new XmlParser($xml, new XmlParserFunctions());
 
@@ -74,7 +74,7 @@ class MetadataXmlProcessor
      * @param $mapping
      * @return array
      */
-    public function processByMapping($xml, $mapping): array
+    public function xmlToObjectByMapping($xml, $mapping): array
     {
         $hierarchyLevel = $this->findHierarchyLevelFromXml($xml);
 
@@ -84,7 +84,7 @@ class MetadataXmlProcessor
             throw new RuntimeException("HierarchLevel not found in Mapping.");
         }
 
-        return $this->processByProfile($xml, $mapping[$hierarchyLevel]);
+        return $this->xmlToObjectByProfile($xml, $mapping[$hierarchyLevel]);
     }
 
     /**

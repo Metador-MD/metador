@@ -3,19 +3,15 @@
 namespace WhereGroup\CoreBundle\Service\Metadata;
 
 use Exception;
-use Plugins\WhereGroup\ImportBundle\Entity\ImportExport;
-use Ramsey\Uuid\Builder\DefaultUuidBuilder;
 use RuntimeException;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataExistsException;
+use WhereGroup\CoreBundle\Component\Logger;
 use WhereGroup\CoreBundle\Component\Metadata\PrepareMetadata;
-use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\CoreBundle\Entity\Metadata as MetadataEntity;
-use WhereGroup\CoreBundle\Entity\MetadataRepository;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Service\App;
+use WhereGroup\CoreBundle\Service\Database;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
 
@@ -28,56 +24,64 @@ class Metadata
     /** @var MetadataXmlProcessor */
     protected $processor;
 
-    /** @var ObjectRepository|MetadataRepository  */
-    protected $repo;
-
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
-
-    /** @var EntityManagerInterface */
-    protected $em;
 
     /** @var App */
     protected $app;
 
-    /** @var UserInterface  */
+    /** @var UserInterface */
     protected $user;
 
-    const ENTITY = 'MetadorCoreBundle:Metadata';
+    /** @var Logger */
+    protected $logger;
+
+    /** @var Database */
+    public $db;
 
     /**
      * Metadata constructor.
      * @param MetadataXmlProcessor $processor
-     * @param EntityManagerInterface $em
      * @param EventDispatcherInterface $eventDispatcher
      * @param App $app
      * @param UserInterface $user
+     * @param Logger $logger
+     * @param Database $db
      */
     public function __construct(
         MetadataXmlProcessor $processor,
-        EntityManagerInterface $em,
         EventDispatcherInterface $eventDispatcher,
         App $app,
-        UserInterface $user
+        UserInterface $user,
+        Logger $logger,
+        Database $db
     ) {
         $this->processor = $processor;
-        $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;
-        $this->repo = $em->getRepository(self::ENTITY);
         $this->app = $app;
         $this->user = $user;
+        $this->logger = $logger;
+        $this->db = $db;
     }
 
     public function __destruct()
     {
         unset(
             $this->processor,
-            $this->em,
             $this->eventDispatcher,
-            $this->repo,
             $this->app,
-            $this->user
+            $this->user,
+            $this->logger,
+            $this->db
         );
+    }
+
+    /**
+     * @return MetadataXmlProcessor
+     */
+    public function getProcessor()
+    {
+        return $this->processor;
     }
 
     /**
@@ -86,38 +90,7 @@ class Metadata
      */
     public function findById($id)
     {
-        return $this->repo->findOneById($id);
-    }
-
-    /**
-     * @param string $xml
-     * @param ImportExport $config
-     * @return MetadataEntity
-     * @throws Exception
-     */
-    public function processXml(string $xml, ImportExport $config)
-    {
-        $object  = $this->processor->processByMapping($xml, $config->getProfileMapping());
-        $options = [
-            'source'   => $config->getSource(),
-            'username' => $config->getUsername(),
-            'dispatchEvent' => false, // remove later
-            'public'   => true,
-            'flush'    => true, // change to false
-            'log'      => false
-        ];
-        $this->setDefaultOptionValues($options);
-
-        Debug::append(print_r($options, true));
-
-        try {
-            if ($this->findById($object['_uuid']) && $config->getRemoveDataOnDestination()) {
-                return $this->updateByObject($object, $options);
-            }
-            return $this->insertByObject($object, $options);
-        } catch (MetadataExistsException $e) {
-            Debug::append("Exception: " . $e->getMessage());
-        }
+        return $this->db->getRepository()->findOneById($id);
     }
 
     /**
@@ -178,7 +151,6 @@ class Metadata
         );
     }
 
-
     /**
      * @param array $object
      * @param array $options
@@ -235,18 +207,17 @@ class Metadata
                 'log'   => $options['log'],
                 'flush' => $options['flush']
             ]);
-            $this->eventDispatcher->dispatch('metadata.pre_save', $event);
+            $this->db->dispatchPreSave($event);
         }
 
-        $this->em->persist($metadata);
+        $this->db->persist($metadata);
 
         if (isset($options['flush']) && $options['flush'] === true) {
-            $this->em->flush();
-            $this->em->clear();
+            $this->db->dispatchFlush();
         }
 
         if ($options['dispatchEvent'] === true) {
-            $this->eventDispatcher->dispatch('metadata.post_save', $event);
+            $this->db->dispatchPostSave($event);
         }
 
         return $metadata;
@@ -254,7 +225,7 @@ class Metadata
 
     /**
      * @param $options
-     * @return array
+     * @return void
      */
     protected function setDefaultOptionValues(&$options)
     {
