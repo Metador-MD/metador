@@ -294,7 +294,7 @@ class Validator
             $value = trim($value);
         }
 
-        return empty($value);
+        return $value === '';
     }
 
     /**

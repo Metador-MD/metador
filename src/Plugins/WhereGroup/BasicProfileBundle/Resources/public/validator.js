@@ -24,7 +24,7 @@ Validator.prototype = {
     },
 
     isEmpty: function (string) {
-        return (string == '');
+        return (typeof string === 'undefined' || string === '');
     },
 
     isUrl: function (string) {
