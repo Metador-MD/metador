@@ -37,7 +37,10 @@ class Process
 
         $path = $this->getProcessFilename($handle);
 
-        exec(sprintf("%s > %s 2>&1 & echo $! > %s", $command, $path . '_output', $path . '_pid'));
+//        shell_exec(sprintf("nohup %s > %s 2>&1 & echo $! > %s &", $command, $path . '_output', $path . '_pid'));
+        $pid = shell_exec("nohup $command > /dev/null 2>&1 & echo $! &");
+
+        file_put_contents($path . '_pid', $pid);
 
         return $handle;
     }
