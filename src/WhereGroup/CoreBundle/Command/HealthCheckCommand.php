@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
+use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -25,7 +26,7 @@ class HealthCheckCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -37,7 +38,7 @@ class HealthCheckCommand extends ContainerAwareCommand
 
         if ($event->hasError()) {
             if ($input->getOption('quiet')) {
-                throw new \Exception($translator->trans("healthcheck_error_message"));
+                throw new Exception($translator->trans("healthcheck_error_message"));
             }
             $io->warning($translator->trans("healthcheck_error_message"));
         } else {
