@@ -7,6 +7,7 @@ use Exception;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataExistsException;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataNotFoundException;
 use WhereGroup\CoreBundle\Component\Logger;
 use WhereGroup\CoreBundle\Component\Metadata\PrepareMetadata;
 use WhereGroup\CoreBundle\Entity\Metadata as MetadataEntity;
@@ -136,6 +137,11 @@ class Metadata
         $this->setDefaultOptionValues($options);
 
         $metadata = $this->findById($object['_uuid']);
+
+        if (is_null($metadata)) {
+            throw new MetadataNotFoundException("Datensatz mit der UUID" . $object['_uuid'] . " nicht gefunden.");
+        }
+
         $oldObject = $metadata->getObject();
 
         $object['_insert_user'] = $oldObject['_username'];

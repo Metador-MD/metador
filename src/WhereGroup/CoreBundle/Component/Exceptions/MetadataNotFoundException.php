@@ -3,9 +3,9 @@
 namespace WhereGroup\CoreBundle\Component\Exceptions;
 
 /**
- * Class MetadataExistsException
+ * Class MetadataNotFoundException
  * @package WhereGroup\CoreBundle\Component\Exceptions
  */
-class MetadataExistsException extends MetadataException
+class MetadataNotFoundException extends MetadataException
 {
 }
