@@ -4358,3 +4358,16 @@ input.input-element, .md input.btn {
 
 .health-table > tbody > tr > td > p {
   margin: 0; }
+
+.process .icon-pause, .process .icon-play, .process .icon-stop {
+  display: block;
+  width: 35px; }
+
+.process .icon-pause {
+  color: #f5c44e; }
+
+.process .icon-play {
+  color: #77ca60; }
+
+.process .icon-stop {
+  color: #d2222d; }

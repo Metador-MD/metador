@@ -4,90 +4,79 @@ var BackgroundProcess = function() {};
 
 BackgroundProcess.prototype = {
     interval: 5000,
+    iconPlay: 'icon-play',
+    iconPause: 'icon-pause',
+    iconStop: 'icon-stop',
 
-    changeSpinnerIcon: function(form, add = true, handle = null) {
-        const iconElement = $(form).find('[data-bg-process-icon]');
+    activateOperation: function(form) {
+        $(form).find('[data-bg-process-icon]').removeClass(this.iconStop).removeClass(this.iconPause).addClass(this.iconPlay);
+        $(form).find( '[data-bg-process-button]').removeAttr('disabled');
+    },
 
-        if (add) {
-            $(form).attr('data-handle', handle);
-            iconElement
-                .removeClass(iconElement.attr('data-bg-process-icon'))
-                .addClass('icon-spinner');
-            return;
-        }
-
+    enableOperation: function(form) {
         $(form).removeAttr('data-handle');
-        iconElement
-            .removeClass('icon-spinner')
-            .addClass(iconElement.attr('data-bg-process-icon'));
+        $(form).find('[data-bg-process-icon]').removeClass(this.iconStop).removeClass(this.iconPause).addClass(this.iconPlay);
+        $(form).find( '[data-bg-process-button]').removeAttr('disabled');
     },
 
-    addSpinnerIcon: function(form, handle) {
-        this.changeSpinnerIcon(form, true, handle);
+    disableOperation: function(form, handle) {
+        $(form).attr('data-handle', handle);
+        $(form).find('[data-bg-process-icon]').removeClass(this.iconPlay).addClass(this.iconStop);
+        $(form).find( '[data-bg-process-button]').attr('disabled');
     },
 
-    removeSpinnerIcon: function(form) {
-        this.changeSpinnerIcon(form, false);
-    },
-
-    checkStatus: function() {
+    checkStatus: function(form, initial = false) {
         const self = this;
+        const handle = $(form).attr('data-bg-process');
 
-        $('form[data-bg-process]').each(function() {
-            const handle = $(this).attr('data-bg-process');
-
-            $.ajax({
-                'url': Configuration.basedir + 'process/' + handle,
-                'type': 'GET',
-                'dataType': 'json',
-                'success': function(data) {
-                    if (data && typeof data.process !== 'undefined' && data.process === true) {
-                        self.addSpinnerIcon(this, handle);
-                    }
+        $.ajax({
+            'url': Configuration.basedir + 'process/' + handle,
+            'type': 'GET',
+            'dataType': 'json',
+            'success': function(data) {
+                if (!data || typeof data.process === 'undefined') {
+                    return;
                 }
-            });
+
+                if (data.process === true) {
+                    self.disableOperation(form, handle);
+                    console.log("disable");
+                } else if (data.process === false && !initial) {
+                    self.enableOperation(form);
+
+                    console.log("enable");
+                } else if (data.process === false && initial) {
+                    self.activateOperation(form);
+                    console.log("activate");
+                }
+            }
         });
     },
 
     init: function()
     {
         const self = this;
+        const processForms = $('form[data-bg-process]');
 
-        $('form[data-bg-process]').ajaxForm({
+        processForms.ajaxForm({
             target: this,
             dataType: 'json',
             success: function(data, statusText, xhr, form) {
                 if (data && data.handle ) {
-                    self.addSpinnerIcon(form, data.handle);
+                    self.disableOperation(form, data.handle);
                 }
-                metador.parseResponse(data);
             }
+        });
+
+        processForms.each(function() {
+            self.checkStatus(this, true);
         });
 
         setInterval(function() {
             $('form[data-bg-process][data-handle]').each(function () {
-                const form = this;
-                const handle = $(form).data('handle');
-
-                if (handle === '') {
-                    return;
-                }
-
-                $.ajax({
-                    'url': Configuration.basedir + 'process/' + handle,
-                    'type': 'GET',
-                    'dataType': 'json',
-                    'success': function(data) {
-                        if (data && typeof data.process !== 'undefined' && !data.process) {
-                            self.removeSpinnerIcon(form);
-                        }
-                        metador.parseResponse(data);
-                    }
-                });
-            })
+                self.checkStatus(this);
+            });
         }, this.interval);
-
-        this.checkStatus();
     }
 };
 

@@ -1,0 +1,18 @@
+.process {
+    .icon-pause, .icon-play, .icon-stop {
+        display: block;
+        width: $normal-item-height;
+    }
+
+    & .icon-pause {
+        color: $warning;
+    }
+
+    & .icon-play {
+        color: $success;
+    }
+
+    & .icon-stop {
+        color: $error;
+    }
+}

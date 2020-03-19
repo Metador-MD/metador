@@ -6,6 +6,7 @@ use DateTime;
 use Exception;
 use RuntimeException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;
@@ -60,6 +61,7 @@ class PrepareMetadata
     public static function prepareUpdate(Metadata $metadata, User $user, array $options, $userService): Metadata
     {
         $date = new DateTime();
+        $object = $metadata->getObject();
 
         $object['dateStamp'] = $date->format('Y-m-d');
         $object['_username'] = $user->getUsername();
@@ -104,9 +106,11 @@ class PrepareMetadata
             $p['_date'] = $p['publicationDate'];
         } elseif (!empty($p['creationDate'])) {
             $p['_date'] = $p['creationDate'];
+        } else {
+            $p['_date'] = $p['dateStamp'];
         }
-        $metadata->setDate(new DateTime($p['_date']));
 
+        $metadata->setDate(new DateTime($p['_date']));
 
         // Remove lock
         if (isset($p['_locked'])) {
@@ -122,8 +126,9 @@ class PrepareMetadata
         }
 
         if (empty($p['_profile'])) {
-            throw new RuntimeException("Profil nicht gefunden.");
+            throw new RuntimeException("Profil in " . $p['_uuid'] . " nicht gefunden.");
         }
+
         $metadata->setProfile($p['_profile']);
 
         // Set source
@@ -132,7 +137,7 @@ class PrepareMetadata
         }
 
         if (empty($p['_source'])) {
-            throw new RuntimeException("Datenquelle nicht gefunden.");
+            throw new RuntimeException("Datenquelle in " . $p['_uuid'] . " nicht gefunden.");
         }
         $metadata->setSource($p['_source']);
 

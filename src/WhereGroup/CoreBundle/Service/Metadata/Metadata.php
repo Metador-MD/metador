@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Service\Metadata;
 
+use DateTime;
 use Exception;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -111,7 +112,7 @@ class Metadata
         }
 
         if ($this->findById($object['_uuid'])) {
-            throw new MetadataExistsException("Datensatz existiert bereits.");
+            throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
         }
 
         $metadata->setObject($object);
@@ -128,7 +129,6 @@ class Metadata
      * @param array $object
      * @param array $options
      * @return MetadataEntity
-     * @throws MetadataExistsException
      * @throws Exception
      */
     public function prepareObjectForUpdate(array $object, array $options = []): MetadataEntity
@@ -136,10 +136,17 @@ class Metadata
         $this->setDefaultOptionValues($options);
 
         $metadata = $this->findById($object['_uuid']);
+        $oldObject = $metadata->getObject();
 
-        if ($options['source'] !== $metadata->getSource()) {
-            throw new MetadataExistsException("Datensatz existiert bereits in einer anderen Datenquelle.");
-        }
+        $object['_insert_user'] = $oldObject['_username'];
+        $object['_insert_time'] = $oldObject['dateStamp'];
+
+        $date = new DateTime($object['_insert_time']);
+
+        $metadata
+            ->setInsertUser($this->app->getUser($object['_insert_user']))
+            ->setInsertTime($date->getTimestamp())
+        ;
 
         $metadata->setObject($object);
 
@@ -166,7 +173,7 @@ class Metadata
      * @param array $object
      * @param array $options
      * @return MetadataEntity
-     * @throws MetadataExistsException
+     * @throws Exception
      */
     public function updateByObject(array $object, array $options = []): MetadataEntity
     {

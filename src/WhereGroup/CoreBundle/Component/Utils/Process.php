@@ -36,11 +36,7 @@ class Process
         }
 
         $path = $this->getProcessFilename($handle);
-
-//        shell_exec(sprintf("nohup %s > %s 2>&1 & echo $! > %s &", $command, $path . '_output', $path . '_pid'));
-        $pid = shell_exec("nohup $command > /dev/null 2>&1 & echo $! &");
-
-        file_put_contents($path . '_pid', $pid);
+        shell_exec(sprintf("%s > %s 2>&1 & echo $! > %s &", $command, $path . '_output', $path . '_pid'));
 
         return $handle;
     }
@@ -63,7 +59,8 @@ class Process
     {
         $path = $this->getProcessFilename($handle);
         try {
-            $result = shell_exec(sprintf("ps %d", $path . '_pid'));
+            $result = shell_exec(sprintf("ps %d", file_get_contents($path . '_pid')));
+
             if (count(preg_split("/\n/", $result)) > 2) {
                 return true;
             }
@@ -101,5 +98,26 @@ class Process
     public function getProcessFilename($handle)
     {
         return rtrim($this->tempFolder, '/') . '/' . $handle;
+    }
+
+    /**
+     * @param $response
+     */
+    public function sendResponse($response)
+    {
+        ob_end_clean();
+        header("Connection: close\r\n");
+        header("Content-Encoding: none\r\n");
+        ignore_user_abort(true);
+        //fastcgi_finish_request();
+        ob_start();
+        echo $response;
+        header("Content-Length: " . ob_get_length());
+        ob_end_flush();
+        flush();
+
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
     }
 }
