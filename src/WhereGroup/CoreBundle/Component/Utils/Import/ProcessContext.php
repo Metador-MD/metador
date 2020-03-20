@@ -71,7 +71,7 @@ class ProcessContext
      * @param int $partitionSize
      * @return ProcessContext
      */
-    public function setPartitionSize(int $partitionSize): ProcessContext
+    public function setPartitionSize(int $partitionSize)
     {
         $this->partitionSize = $partitionSize;
 
@@ -90,7 +90,7 @@ class ProcessContext
      * @param int $range
      * @return ProcessContext
      */
-    public function setRange(int $range): ProcessContext
+    public function setRange(int $range)
     {
         $this->range = $range;
 
@@ -105,7 +105,7 @@ class ProcessContext
     /**
      * @return ProcessContext
      */
-    public function next(): ProcessContext
+    public function next()
     {
         $this->range += $this->partitionSize;
 

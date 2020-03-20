@@ -2,6 +2,8 @@
 
 namespace WhereGroup\PluginBundle\Component;
 
+use Exception;
+use RuntimeException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
@@ -177,7 +179,7 @@ class Plugin
      * @param $profile
      * @param $resource
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getResource($profile, $resource)
     {
@@ -186,7 +188,7 @@ class Plugin
         );
 
         if (!file_exists($filepath) || !is_readable($filepath)) {
-            throw new \Exception("File not found or not readable!");
+            throw new Exception("File not found or not readable!");
         }
 
         return file_get_contents($filepath);
@@ -236,12 +238,12 @@ class Plugin
      * @param $plugin
      * @param $parameter
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPluginParameter($plugin, $parameter)
     {
         if (!$this->hasPluginParameter($plugin, $parameter)) {
-            throw new \Exception("Unknown plugin or paramter");
+            throw new Exception("Unknown plugin or paramter");
         }
 
         return $this->plugins[$plugin][$parameter];
@@ -250,7 +252,7 @@ class Plugin
     /**
      * @param $plugin
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPluginClassName($plugin)
     {
@@ -461,7 +463,7 @@ class Plugin
         if (isset($this->plugins[$key]['require'])) {
             foreach ($this->plugins[$key]['require'] as $require) {
                 if (!isset($this->plugins[$require])) {
-                    throw new \RuntimeException("Plugin $require not found!");
+                    throw new RuntimeException("Plugin $require not found!");
                 }
 
                 $this->enable($require);

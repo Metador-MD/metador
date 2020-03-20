@@ -14,7 +14,7 @@ interface Writer
      * @param Context $context
      * @return Writer
      */
-    public function open(Context $context): Writer;
+    public function open($context);
 
     /**
      * @param iterable $items

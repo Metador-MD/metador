@@ -3,7 +3,6 @@
 namespace WhereGroup\CoreBundle\Component\Utils\Import\Reader;
 
 use Generator;
-use WhereGroup\CoreBundle\Component\Utils\Import\Context\Context;
 
 /**
  * Interface Reader
@@ -15,7 +14,7 @@ interface Reader
      * @param $context
      * @return Reader
      */
-    public function open(Context $context): Reader;
+    public function open($context);
 
     /**
      * @return Generator
