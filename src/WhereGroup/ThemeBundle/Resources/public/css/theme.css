@@ -4360,7 +4360,7 @@ input.input-element, .md input.btn {
   margin: 0; }
 
 .process .icon-pause, .process .icon-play, .process .icon-stop {
-  display: block;
+  display: inline-block;
   width: 35px; }
 
 .process .icon-pause {
