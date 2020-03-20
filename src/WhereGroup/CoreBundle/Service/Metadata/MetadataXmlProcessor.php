@@ -7,6 +7,8 @@ use DOMXPath;
 use Exception;
 use RuntimeException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig_Environment;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\XmlParser;
 use WhereGroup\CoreBundle\Component\XmlParserFunctions;
 use WhereGroup\PluginBundle\Component\Plugin;
@@ -23,20 +25,46 @@ class MetadataXmlProcessor
     /** @var KernelInterface */
     protected $kernel;
 
+    /** @var Twig_Environment */
+    protected $templating;
+
     /**
      * MetadataConverter constructor.
      * @param Plugin $plugin
      * @param KernelInterface $kernel
+     * @param Twig_Environment $templating
      */
-    public function __construct(Plugin $plugin, KernelInterface $kernel)
+    public function __construct(Plugin $plugin, KernelInterface $kernel, Twig_Environment $templating)
     {
         $this->plugin = $plugin;
         $this->kernel = $kernel;
+        $this->templating = $templating;
     }
 
     public function __destruct()
     {
-        unset($this->plugin, $this->kernel);
+        unset($this->plugin, $this->kernel, $this->templating);
+    }
+
+    /**
+     * @param $p
+     * @return string
+     * @throws MetadataException
+     */
+    public function objectToXml(array $p): string
+    {
+        if (!isset($p['_profile'])) {
+            throw new MetadataException('Profil in Datensatz ' . $p['_uuid'] . ' nicht angegeben!');
+        }
+
+        try {
+            $class = $this->plugin->getPluginClassName($p['_profile']);
+            return $this->templating->render($class . ":Export:metadata.xml.twig", [
+                "p" => $p
+            ]);
+        } catch (Exception $e) {
+            throw new MetadataException('Datensatz ' . $p['_uuid'] . ' konnte nicht in XML umgewandelt werden.');
+        }
     }
 
     /**
