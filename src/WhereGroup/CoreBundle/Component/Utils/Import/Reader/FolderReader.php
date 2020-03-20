@@ -5,7 +5,6 @@ namespace WhereGroup\CoreBundle\Component\Utils\Import\Reader;
 use Generator;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
-use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\CoreBundle\Component\Utils\Import\Context\Context;
 
 /**
@@ -21,7 +20,7 @@ class FolderReader implements Reader
      * @param Context $context
      * @return FolderReader
      */
-    public function open(Context $context): Reader
+    public function open($context)
     {
         $reader = clone $this;
         $reader->finder = new Finder();

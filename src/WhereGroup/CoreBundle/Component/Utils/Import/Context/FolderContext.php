@@ -11,6 +11,7 @@ class FolderContext implements Context
     private $service;
     private $folder;
     private $name;
+    private $overrideFile;
 
     /**
      * @return mixed
@@ -65,6 +66,25 @@ class FolderContext implements Context
     public function setService($service)
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOverrideFile()
+    {
+        return $this->overrideFile;
+    }
+
+    /**
+     * @param mixed $overrideFile
+     * @return FolderContext
+     */
+    public function setOverrideFile($overrideFile)
+    {
+        $this->overrideFile = $overrideFile;
 
         return $this;
     }
