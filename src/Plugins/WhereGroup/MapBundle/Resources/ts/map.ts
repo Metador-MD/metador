@@ -11,7 +11,10 @@ export function init() {
     var metadorMapConfig = {
         map: {
             target: 'map',
-            srs: ["EPSG:4326", "EPSG:31466", "EPSG:25832"]
+            srs: ["EPSG:4326", "EPSG:31466", "EPSG:25832"],
+            control: {
+                // mousePosition: {fractionDigit: 4}
+            }
         },
         view: {
             projection: Configuration.settings['map_crs'],//': '9,49,11,53',                                        '
@@ -67,14 +70,12 @@ export function init() {
         ]
     };
 
-    // console.log(Configuration);
     for (const key in Configuration.config.map_background) {
         let wms = Configuration.config.map_background[key];
         let layers = [];
         for (const l in wms.layers) {
             layers.push(wms.layers[l]);
         }
-        // console.log(wms);
         metadorMapConfig.source.push({
             'type': 'WMS',
             'url': wms.url,
@@ -88,7 +89,6 @@ export function init() {
             }
         });
     }
-    // console.log(metadorMapConfig);
     let metadorMap = metador.Ol4Map.create(metadorMapConfig);
     // metadorMap.initLayertree();
     context.spatial['map'] = metadorMap;

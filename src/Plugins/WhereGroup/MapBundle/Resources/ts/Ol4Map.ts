@@ -117,12 +117,16 @@ export class Ol4Map {
             tipLabel: "Zoom auf die Start-Ausdehnung"
         }));
         this.olMap.addInteraction(new ol.interaction.DragZoom());
-        const mousePosOptions: any = {
-            coordinateFormat: (coordinates) => {
-                return coordinates[0].toFixed(4) + ', ' + coordinates[1].toFixed(4);
-            }
-        };
-        this.olMap.addControl(new ol.control.MousePosition(mousePosOptions));
+        const control: any = options['map']['control'];
+        if (control && control.mousePosition) {
+            const posOptions = control.mousePosition;
+            const mousePosOptions: any = {
+                coordinateFormat: (coordinates) => {
+                    return coordinates[0].toFixed(posOptions.fractionDigit) + ', ' + coordinates[1].toFixed(posOptions.fractionDigit);
+                }
+            };
+            this.olMap.addControl(new ol.control.MousePosition(mousePosOptions));
+        }
         let mapsize = this.olMap.getSize();
         if (mapsize[0] !== 0 && mapsize[1]) {
             this.zoomToExtent(this.startExtent.getPolygonForExtent(proj));
@@ -407,16 +411,13 @@ export class Ol4Map {
                     );
                     geojson['bbox'] = new Ol4Geom(e.feature.getGeometry(), ol4map.getProjection())
                         .getExtent(ol.proj.get(METADOR_EPSG));
-                    window.console.log("end 1");
                     onDrawEnd(geojson);
-                    window.console.log("end 1");
                     olMap.removeInteraction(drawer.getInteraction());
                 }
             );
         } else {
             this.getDrawer().getLayer().getSource().clear();
             onDrawEnd(null);
-            window.console.log("end 2");
             this.setDoubleClickZoom(true);
         }
     }
