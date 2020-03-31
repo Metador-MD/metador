@@ -34,12 +34,12 @@ class EnableCommand extends ContainerAwareCommand
         $io         = new SymfonyStyle($input, $output);
         $plugin     = $this->getContainer()->get('metador_plugin');
         $translator = $this->getContainer()->get('translator');
-        $keys        = $input->getArgument("keys");
+        $keys       = $input->getArgument("keys");
 
         $io->title($translator->trans('plugin_command_enable_title'));
 
         foreach ($keys as $key) {
-            if (is_null($plugin->getPlugin($key))) {
+            if (is_null($plugin->init()->getPlugin($key))) {
                 $io->error($translator->trans('plugin_not_found', ['%key%' => $key]));
                 return;
             }

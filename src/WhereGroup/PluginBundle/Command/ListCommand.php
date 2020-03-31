@@ -31,7 +31,7 @@ class ListCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io         = new SymfonyStyle($input, $output);
-        $config     = $this->getContainer()->get('metador_plugin')->getConfig();
+        $config     = $this->getContainer()->get('metador_plugin')->init()->getConfig();
         $translator = $this->getContainer()->get('translator');
         $plugins    = [];
 

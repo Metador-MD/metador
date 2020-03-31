@@ -38,7 +38,7 @@ class DisableCommand extends ContainerAwareCommand
 
         $io->title($translator->trans('plugin_command_disable_title'));
 
-        if (is_null($plugin->getPlugin($key))) {
+        if (is_null($plugin->init()->getPlugin($key))) {
             $io->error($translator->trans('plugin_not_found'));
             return;
         }
