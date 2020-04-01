@@ -101,7 +101,7 @@ class SettingsController extends Controller
     {
         $result = [];
 
-        $settings = $this->get('metador_plugin')->getPlugins();
+        $settings = $this->get('metador_plugin')->init()->getPlugins();
 
         // Read system config
         $coreSettings = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/plugin.yml'));
