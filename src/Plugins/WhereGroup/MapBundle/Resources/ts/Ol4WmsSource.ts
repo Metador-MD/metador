@@ -98,21 +98,18 @@ export class Ol4WmsSource implements Ol4Source {
     }
 
     imageLoadStart(e: ol.source.ImageEvent) {
-        // console.log('start', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadStart((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
     }
 
     imageLoadEnd(e: ol.source.ImageEvent) {
-        // console.log('end', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadEnd((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
     }
 
     imageLoadError(e: ol.source.ImageEvent) {
-        // console.log('error', (<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         if (Ol4WmsSource.mapActivity) {
             Ol4WmsSource.mapActivity.loadError((<ol.source.ImageWMS>e.target).get(LAYER_UUID));
         }
