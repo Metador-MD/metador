@@ -2,10 +2,8 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
     <parameters>
         <!-- EVENTLISTENER -->
-        <parameter key="metador.metadata.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\MetadataListener</parameter>
         <parameter key="wheregroup.lists.app.listener.class">Plugins\WhereGroup\BasicProfileBundle\EventListener\ApplicationListener</parameter>
 
         <!-- TWIG EXTENSION -->
@@ -18,18 +16,6 @@
     </parameters>
 
     <services>
-        <!-- EVENTLISTENER -->
-        <service id="metador.metadata_listener" class="%metador.metadata.listener.class%">
-            <tag name="kernel.event_listener" event="metadata.on_load" method="onLoad" />
-            <tag name="kernel.event_listener" event="metadata.pre_save" method="onPreSave" />
-            <tag name="kernel.event_listener" event="metadata.post_save" method="onPostSave" />
-            <tag name="kernel.event_listener" event="metadata.pre_delete" method="onPreDelete" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="metador_metadata" />
-            <argument type="service" id="metador_source" />
-            <argument type="service" id="metador_logger" />
-            <argument type="service" id="metador_solr" />
-        </service>
         <service id="metador_lists_app_listener" class="%wheregroup.lists.app.listener.class%">
             <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
             <argument type="service" id="metador_configuration" />

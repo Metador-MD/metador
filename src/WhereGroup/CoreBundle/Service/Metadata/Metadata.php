@@ -92,6 +92,9 @@ class Metadata
      */
     public function findById($id)
     {
+        if (empty($id)) {
+            return null;
+        }
         return $this->db->getRepository()->findOneById($id);
     }
 
@@ -211,7 +214,7 @@ class Metadata
      * @param array $options
      * @return MetadataEntity
      */
-    protected function save(MetadataEntity $metadata, array $options): MetadataEntity
+    public function save(MetadataEntity $metadata, array $options): MetadataEntity
     {
         $this->setDefaultOptionValues($options);
 
@@ -249,5 +252,112 @@ class Metadata
         $options['dispatchEvent'] = $options['dispatchEvent'] ?? true;
         $options['log']           = $options['log']           ?? true;
         $options['flush']         = $options['flush']         ?? true;
+    }
+
+    /**
+     * @param MetadataEntity $entity
+     * @throws Exception
+     */
+    public function lock(MetadataEntity $entity)
+    {
+        $p = $entity->getObject();
+        $p['_locked'] = true;
+        $p['_lock_user'] = $this->user->getUsernameFromSession();
+        $p['_lock_time'] = (new DateTime())->getTimestamp();
+
+        $entity
+            ->setLocked(true)
+            ->setLockUser($this->user->getUserFromSession())
+            ->setLockTime((new DateTime())->getTimestamp())
+            ->setObject($p);
+
+        $this->save($entity, []);
+
+        $this->log('success', 'lock', $entity, '%title% gesperrt.', [
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ]);
+    }
+
+    /**
+     * Use ID or UUID to unlock Metadata.
+     * @param MetadataEntity $entity
+     * @return mixed|void
+     */
+    public function unlock(MetadataEntity $entity)
+    {
+        $p = $entity->getObject();
+        $p['_locked'] = false;
+
+        $entity
+            ->setLocked(false)
+            ->setObject($p)
+        ;
+
+        $this->save($entity, []);
+
+        $this->log('success', 'unlock', $entity, '%title% freigegeben.', [
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ]);
+    }
+
+    /**
+     * @param MetadataEntity $entity
+     */
+    public function delete(MetadataEntity $entity)
+    {
+        $this->db->dispatchPreDelete(new MetadataChangeEvent($entity, []));
+
+        foreach ($entity->getGroups() as $group) {
+            $entity->removeGroups($group);
+        }
+
+        foreach ($entity->getAddress() as $address) {
+            $entity->removeAddress($address);
+        }
+
+        $this->log('success', 'delete', $entity, '%title% gelöscht.', [
+            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+        ]);
+
+        $this->db->delete($entity);
+        $this->db->dispatchFlush();
+    }
+
+    /**
+     * @param array $source
+     * @param array $target
+     */
+    public function mergeSystemInformations(array $source, array &$target)
+    {
+        foreach ($source as $key => $value) {
+            if (substr($key, 0, 1) === '_') {
+                $target[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * @param $type
+     * @param $operation
+     * @param MetadataEntity $entity
+     * @param $message
+     * @param array $params
+     */
+    public function log($type, $operation, $entity, $message, $params = [])
+    {
+        $log = $this->logger->newLog();
+        $log
+            ->setType($type)
+            ->setCategory('metadata')
+            ->setSubcategory('')
+            ->setOperation($operation)
+            ->setSource(!is_null($entity) ? $entity->getSource() : '')
+            ->setIdentifier(!is_null($entity) ? $entity->getId() : '')
+            ->setMessage('%title% gesperrt.', [
+                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            ])
+            ->setUsername($this->user->getUsernameFromSession());
+
+        $this->logger->set($log);
     }
 }

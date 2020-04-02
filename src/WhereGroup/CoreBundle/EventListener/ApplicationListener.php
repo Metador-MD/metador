@@ -2,11 +2,12 @@
 
 namespace WhereGroup\CoreBundle\EventListener;
 
+use Exception;
 use Twig_Environment;
 use WhereGroup\CoreBundle\Component\Cache;
 use WhereGroup\CoreBundle\Component\Configuration;
-use WhereGroup\CoreBundle\Component\MetadataInterface;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
+use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
  * Class ApplicationListener
@@ -14,6 +15,9 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
+    /**
+     * @var Metadata
+     */
     private $metadata;
     private $cache;
     private $templating;
@@ -21,13 +25,13 @@ class ApplicationListener
 
     /**
      * ApplicationListener constructor.
-     * @param MetadataInterface $metadata
+     * @param Metadata $metadata
      * @param Cache $cache
      * @param Twig_Environment $templating
      * @param Configuration $configuration
      */
     public function __construct(
-        MetadataInterface $metadata,
+        Metadata $metadata,
         Cache $cache,
         Twig_Environment $templating,
         Configuration $configuration
@@ -45,7 +49,7 @@ class ApplicationListener
 
     /**
      * @param ApplicationEvent $event
-     * @throws \Exception
+     * @throws Exception
      */
     public function onLoading(ApplicationEvent $event)
     {
@@ -111,7 +115,7 @@ class ApplicationListener
                     $app->get('AppInformation', 'metadata-info')
                         ->icon('icon-database')
                         ->label('Metadaten')
-                        ->count($this->metadata->count())
+                        ->count($this->metadata->db->getRepository()->countAll())
                         ->setRole('ROLE_SYSTEM_GEO_OFFICE')
                 );
             }

@@ -7,13 +7,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\PDFExport;
 use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
 use WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException;
+use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
  * @Route("/public/export")
@@ -24,9 +22,6 @@ class ExportController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      * @throws PropertyNameNotFoundException
      * @Route("/xml/{id}", name="metador_export_xml", methods={"GET"})
      */
@@ -34,8 +29,9 @@ class ExportController extends Controller
     {
         $p = $this->findObject($id);
         $this->denyAccessUnlessGranted('view', $p);
+
         return $this->xmlResponse(
-            $this->get('metador_metadata')->objectToXml($p)
+            $this->get(Metadata::class)->getProcessor()->objectToXml($p)
         );
     }
 

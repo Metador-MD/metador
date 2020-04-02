@@ -6,7 +6,6 @@ use DateTime;
 use Exception;
 use RuntimeException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
-use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\CoreBundle\Entity\Metadata;
 use WhereGroup\UserBundle\Component\UserInterface;
 use WhereGroup\UserBundle\Entity\User;

@@ -108,8 +108,25 @@ class MetadataRepository extends EntityRepository
     }
 
     /**
+     * @param $offset
+     * @param $limit
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findAndReturnObjects($offset, $limit)
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->select('m.object')
+            ->orderBy('m.id')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return mixed
+     * @throws NonUniqueResultException
      */
     public function countAll()
     {

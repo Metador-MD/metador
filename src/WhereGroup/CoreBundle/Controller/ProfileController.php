@@ -2,9 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
-use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\DBAL\ConnectionException;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -21,12 +19,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Error\Error;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataNotFoundException;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
+use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
  * @Route("/metadata")
@@ -83,7 +83,12 @@ class ProfileController extends Controller
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        $entity = $this->get('metador_metadata')->getById($uuid);
+        $entity = $this->get(Metadata::class)->findById($uuid);
+
+        if (!$entity) {
+            throw new MetadataNotFoundException($uuid . " not found.");
+        }
+
         $p = $entity->getObject();
 
         unset($entity);
@@ -125,13 +130,17 @@ class ProfileController extends Controller
      */
     public function editAction($profile, $id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $p = $metadata->getObject();
+        $metadata = $this->get(Metadata::class)->findById($id);
 
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
+
+        $p = $metadata->getObject();
         $this->denyAccessUnlessGranted('view', $p);
 
         if ($this->get('metador_core')->isGranted('edit', $p)) {
-            $this->get('metador_metadata')->lock($id);
+            $this->get(Metadata::class)->lock($metadata);
         }
 
         $template = $this
@@ -150,10 +159,7 @@ class ProfileController extends Controller
      * @param $profile
      * @param Request $request
      * @return AjaxResponse
-     * @throws MetadataException
-     * @throws MappingException
      * @throws ConnectionException
-     * @throws Exception
      * @Route("/{source}/{profile}/save", name="metadata_save", methods={"POST"})
      */
     public function saveAction($source, $profile, Request $request)
@@ -163,15 +169,25 @@ class ProfileController extends Controller
         $p = $request->request->get('p');
         $submitType = $request->request->get('submit');
         $response = [];
-        $metadata = null;
         $uuid     = null;
 
         $id = empty($p['_uuid']) ? null : $p['_uuid'];
 
+
         // If id exists, get the metadata to check permission and keep some settings.
-        if (!is_null($id)) {
-            // Check permission
-            $metadata  = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if ($metadata) {
+            // On abort unlock metadata and redirect to home
+            if ($submitType === 'abort') {
+                $this->get(Metadata::class)->unlock($metadata);
+                $this
+                    ->get('metador_frontend_command')
+                    ->redirect($response, $this->generateUrl('metador_home'));
+
+                return new AjaxResponse($response);
+            }
+
             $oldObject = $metadata->getObject();
             $this->denyAccessUnlessGranted('edit', $oldObject);
 
@@ -183,58 +199,39 @@ class ProfileController extends Controller
             // Keep owner
             $p['_insert_user'] = $metadata->getinsertUser()->getUsername();
             $p['_insert_time'] = date('Y-m-d', $metadata->getInsertTime());
-        }
 
-        // On abort unlock metadata and redirect to home
-        if ($submitType === 'abort') {
-            // Unlock if id exists
-            if (!is_null($id)) {
-                $this->get('metador_metadata')->unlock($id);
+            if ($submitType === 'close') {
+                $p['_remove_lock'] = true;
             }
-
-            $this
-                ->get('metador_frontend_command')
-                ->redirect($response, $this->generateUrl('metador_home'));
-
-            return new AjaxResponse($response);
-
-        // On close unlock after saving metadata
-        } elseif ($submitType === 'close') {
-            $p['_remove_lock'] = true;
         }
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $em->getConnection()->beginTransaction();
-
+        $this->get(Metadata::class)->db->beginTransaction();
         try {
-            $metadata = $this->get('metador_metadata')->saveObject($p, $id, [
-                'source'  => $source,
-                'profile' => $profile
-            ]);
-
-            $id = $metadata->getId();
+            if ($metadata) {
+                $metadata = $this->get(Metadata::class)->updateByObject($p, [ 'source'  => $source, 'profile' => $profile ]);
+            } else {
+                $metadata = $this->get(Metadata::class)->insertByObject($p, ['source' => $source, 'profile' => $profile]);
+            }
 
             $this->get('metador_frontend_command')->changeLocation(
                 $response,
                 $this->generateUrl('metadata_edit', [
-                    'source' => $source,
-                    'profile' => $profile,
-                    'id' => $id
+                    'source'  => $metadata->getSource(),
+                    'profile' => $metadata->getProfile(),
+                    'id'      => $metadata->getId()
                 ])
             );
-            $em->getConnection()->commit();
-        } catch (MetadataException $e) {
-            $em->getConnection()->rollBack();
-            $em->clear();
-            $this->get('metador_metadata')->error($metadata, 'save', $e->getMessage(), []);
-            $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
-            $submitType = null;
+
+            $this->get(Metadata::class)->db->transactionCommit();
+            $this->get(Metadata::class)->db->dispatchFlush();
         } catch (Exception $e) {
-            $em->getConnection()->rollBack();
-            $em->clear();
-            throw $e;
+            $this->get(Metadata::class)->db->transactionRollBack();
+
+            if ($e instanceof MetadataException) {
+                $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
+            }
         }
+
 
         $response = array_merge_recursive($response, [
             'metadata' => [
@@ -262,7 +259,11 @@ class ProfileController extends Controller
      */
     public function confirmAction($profile, $id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
 
         $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
@@ -290,7 +291,11 @@ class ProfileController extends Controller
      */
     public function deleteAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
 
         $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
@@ -300,10 +305,7 @@ class ProfileController extends Controller
             ->handleRequest($this->get('request_stack')->getCurrentRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('metador_metadata')->deleteById($id);
-            $this->log('success', 'delete', $id, 'Erfolgreich gelöscht.');
-        } else {
-            $this->log('error', 'delete', $id, 'Eintrag konnte nicht gelöscht werden.');
+            $this->get(Metadata::class)->delete($metadata);
         }
 
         return $this->redirectToRoute('metador_home');
@@ -317,7 +319,12 @@ class ProfileController extends Controller
      */
     public function validateAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
+
         $p = $metadata->getObject();
 
         $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
@@ -345,7 +352,12 @@ class ProfileController extends Controller
      */
     public function errorAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
+
         $p = $metadata->getObject();
         $this->denyAccessUnlessGranted(['view', 'edit'], $p);
 
@@ -359,21 +371,25 @@ class ProfileController extends Controller
      * @param Request $request
      * @return Response
      * @throws MetadataException
-     * @throws Exception
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @Route("/profile/xpath/{id}", name="metadata_xpath")
      */
     public function xpathAction($id, Request $request)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
-        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
+        $metadata = $this->get(Metadata::class)->findById($id);
 
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
+
+        $this->denyAccessUnlessGranted(['view', 'edit'], $metadata->getObject());
 
         if ($request->getMethod() == 'POST') {
             $query = $request->request->get('xpath', '/*');
-            $xml   = $this->get('metador_metadata')->objectToXml($metadata->getObject());
+
+            $xml   = $this->get(Metadata::class)->getProcessor()->objectToXml($metadata->getObject());
             $xml   = preg_replace('/(>)([\t\n ^<]+)(<)/s', '${1}${3}', $xml);
 
             $doc = new DOMDocument();
@@ -451,18 +467,20 @@ class ProfileController extends Controller
      * @param $id
      * @return Response
      * @throws MetadataException
-     * @throws Exception
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
+     * @throws MetadataNotFoundException
      * @Route("/profile/test/{id}", name="metadata_test")
      */
     public function testAction($id)
     {
-        $metadata = $this->get('metador_metadata')->getById($id);
+        $metadata = $this->get(Metadata::class)->findById($id);
+
+        if (!$metadata) {
+            throw new MetadataNotFoundException($id . " not found.");
+        }
+
         $object1  = $metadata->getObject();
-        $object2  = $this->get('metador_metadata')->xmlToObject(
-            $this->get('metador_metadata')->objectToXml($object1),
+        $object2  = $this->get(Metadata::class)->getProcessor()->xmlToObjectByProfile(
+            $this->get(Metadata::class)->getProcessor()->objectToXml($object1),
             $object1['_profile']
         );
 
