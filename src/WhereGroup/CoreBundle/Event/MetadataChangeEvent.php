@@ -23,14 +23,15 @@ class MetadataChangeEvent extends Event
     {
         $this->dataset = $dataset;
         $this->config  = $config;
+
+        // Set default to true
+        $this->config['log']   = $this->config['log']   ?? true;
+        $this->config['flush'] = $this->config['flush'] ?? true;
     }
 
     public function __destruct()
     {
-        unset(
-            $this->dataset,
-            $this->config
-        );
+        unset($this->dataset, $this->config);
     }
 
     /**
