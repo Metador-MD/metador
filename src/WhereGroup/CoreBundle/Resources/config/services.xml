@@ -48,11 +48,6 @@
             <argument>%cache_port%</argument>
             <argument>%cache_enabled%</argument>
         </service>
-        <service id="metador_solr" class="WhereGroup\CoreBundle\Component\Solr" public="true">
-            <argument>%solr_host%</argument>
-            <argument>%solr_port%</argument>
-            <argument>%solr_path%</argument>
-        </service>
         <service id="metador_core" class="%metador.core.class%" public="true">
             <argument type="service" id="twig" />
             <argument type="service" id="event_dispatcher" />

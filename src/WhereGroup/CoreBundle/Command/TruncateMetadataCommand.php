@@ -39,14 +39,12 @@ class TruncateMetadataCommand extends ContainerAwareCommand
                 ->getRepository('MetadorCoreBundle:Metadata')
                 ->truncate();
 
-            $solr = $this
-                ->getContainer()
-                ->get('metador_solr');
-
-            if ($solr->isActive()) {
-                $solr->client->deleteByQuery('*:*');
-                $solr->client->commit();
-            }
+            // Todo: add truncate event dispatcher
+            //$solr = $this->getContainer()->get('lvermgeo_solr');
+//            if ($solr->isActive()) {
+//                $solr->client->deleteByQuery('*:*');
+//                $solr->client->commit();
+//            }
 
             $io->success("Alle Metadaten wurde erfolgreich gelöscht.");
         }
