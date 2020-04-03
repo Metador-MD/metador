@@ -139,7 +139,7 @@ class ProfileController extends Controller
         $p = $metadata->getObject();
         $this->denyAccessUnlessGranted('view', $p);
 
-        if ($this->get('metador_core')->isGranted('edit', $p)) {
+        if ($this->get('security.authorization_checker')->isGranted('edit', $p)) {
             $this->get(Metadata::class)->lock($metadata);
         }
 
@@ -147,11 +147,11 @@ class ProfileController extends Controller
                 ->get('metador_plugin')
                 ->getPluginClassName($profile) . ':Profile:form.html.twig';
 
-        return new Response($this->get('metador_core')->render($template, [
+        return $this->render($template, [
             'p' => $metadata->getObject(),
             'userGroups' => $this->get('metador_user')->getRoles(),
             'profile'    => $profile
-        ]));
+        ]);
     }
 
     /**
@@ -231,7 +231,6 @@ class ProfileController extends Controller
                 $this->get('metador_frontend_command')->displayError($response, $e->getMessage());
             }
         }
-
 
         $response = array_merge_recursive($response, [
             'metadata' => [
@@ -371,9 +370,7 @@ class ProfileController extends Controller
      * @param Request $request
      * @return Response
      * @throws MetadataException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws MetadataNotFoundException
      * @Route("/profile/xpath/{id}", name="metadata_xpath")
      */
     public function xpathAction($id, Request $request)
