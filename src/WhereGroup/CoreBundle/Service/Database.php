@@ -111,6 +111,16 @@ class Database
     }
 
     /**
+     * @param MetadataChangeEvent $event
+     * @return $this
+     */
+    public function dispatchPostTruncate(MetadataChangeEvent $event)
+    {
+        $this->eventDispatcher->dispatch('metadata.post_truncate', $event);
+        return $this;
+    }
+
+    /**
      * @param $event
      * @return $this
      */
