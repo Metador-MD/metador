@@ -88,14 +88,22 @@ class Metadata
 
     /**
      * @param $id
+     * @param bool $dispatchEvent
      * @return null|MetadataEntity
      */
-    public function findById($id)
+    public function findById($id, $dispatchEvent = true)
     {
         if (empty($id)) {
             return null;
         }
-        return $this->db->getRepository()->findOneById($id);
+
+        $entity = $this->db->getRepository()->findOneById($id);
+
+        if ($entity instanceof MetadataEntity && $dispatchEvent) {
+            $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($entity, []));
+        }
+
+        return $entity;
     }
 
     /**
@@ -146,7 +154,7 @@ class Metadata
         }
 
         $oldObject = $metadata->getObject();
-
+        // Todo: why oldObject?
         $object['_insert_user'] = $oldObject['_username'];
         $object['_insert_time'] = $oldObject['dateStamp'];
 
