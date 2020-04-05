@@ -10,11 +10,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class KeywordRepository extends EntityRepository
 {
+    /**
+     * @param $profile
+     * @return mixed
+     */
     public function getByProfile($profile)
     {
         return $this
-            ->getEntityManager()
-            ->getRepository("MetadorBasicProfileBundle:Keyword")
             ->createQueryBuilder('k')
             ->select('k')
             ->where('k.profiles like :profile')

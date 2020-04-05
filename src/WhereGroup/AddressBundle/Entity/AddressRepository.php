@@ -3,6 +3,9 @@
 namespace WhereGroup\AddressBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class AddressRepository
@@ -15,8 +18,8 @@ class AddressRepository extends EntityRepository
     /**
      * @param $entity
      * @return $this
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save($entity)
     {
@@ -29,8 +32,8 @@ class AddressRepository extends EntityRepository
     /**
      * @param $entity
      * @return $this
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function remove($entity)
     {
@@ -42,7 +45,7 @@ class AddressRepository extends EntityRepository
 
     /**
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function countAll()
     {
@@ -61,7 +64,7 @@ class AddressRepository extends EntityRepository
      * @param int $hits
      * @param bool $countOnly
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function search($terms, $page = 1, $hits = 10, $countOnly = false)
     {

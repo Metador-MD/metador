@@ -89,7 +89,7 @@ class Database
     public function flush()
     {
         $this->em->flush();
-        return $this->clearSqlObjectManager();
+        return $this;
     }
 
     /**

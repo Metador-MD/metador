@@ -2,9 +2,12 @@
 
 namespace WhereGroup\UserBundle\Controller;
 
+use Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\PluginBundle\Component\ApplicationIntegration\Profile;
 use WhereGroup\UserBundle\Entity\User;
@@ -48,7 +51,7 @@ class UserController extends Controller
      *
      * @Route("/admin/user/create", name="metador_admin_user_create", methods={"POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -88,7 +91,7 @@ class UserController extends Controller
      *
      * @Route("/edit/{id}", name="metador_admin_user_edit")
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function editAction($id)
     {
@@ -97,8 +100,7 @@ class UserController extends Controller
         } catch (MetadorException $e) {
             $this->log('error', 'edit', $id, 'Benutzer konnte nicht bearbeitet werden.');
             return $this->redirectToRoute('metador_admin_user');
-        };
-
+        }
 
 
         return $this->render('@MetadorUser/User/new.html.twig', [
@@ -113,7 +115,7 @@ class UserController extends Controller
      * @Route("/admin/user/update/{id}", name="metador_admin_user_update", methods={"POST"})
      * @param Request $request
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function updateAction(Request $request, $id)
     {
@@ -168,7 +170,7 @@ class UserController extends Controller
     /**
      * @Route("/admin/user/delete/{id}", name="metador_admin_user_confirm", methods={"GET", "POST"})
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      * @throws MetadorException
      */
     public function confirmAction($id)
@@ -192,7 +194,7 @@ class UserController extends Controller
                 $this->log('success', 'confirm', $id, 'Benutzer %username% erfolgreich gelöscht.', [
                     '%username%' => $name
                 ]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->log('error', 'confirm', $id, 'Benutzer %username% konnte nicht gelöscht werden.', [
                     '%username%' => $name
                 ]);
@@ -210,7 +212,7 @@ class UserController extends Controller
      * @Route("/user/profile/{id}", name="metador_user_profile", methods={"GET", "POST"})
      * @param $id
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function profileAction($id, Request $request)
     {

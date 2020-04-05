@@ -3,6 +3,9 @@
 namespace WhereGroup\CoreBundle\Component;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class Configuration
@@ -12,14 +15,14 @@ class Configuration implements ConfigurationInterface
 {
     protected $repo;
 
-    /** @var \WhereGroup\CoreBundle\Component\Cache  */
+    /** @var Cache */
     protected $cache;
 
     const ENTITY = "MetadorCoreBundle:Configuration";
 
     /**
      * @param EntityManagerInterface $em
-     * @param \WhereGroup\CoreBundle\Component\Cache $cache
+     * @param Cache $cache
      */
     public function __construct(EntityManagerInterface $em, Cache $cache)
     {
@@ -41,9 +44,9 @@ class Configuration implements ConfigurationInterface
      * @param string $filterType
      * @param string $filterValue
      * @return $this|mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')
     {

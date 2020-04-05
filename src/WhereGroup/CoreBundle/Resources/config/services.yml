@@ -8,3 +8,6 @@ services:
     WhereGroup\PluginBundle\Component\Plugin: '@metador_plugin'
     WhereGroup\CoreBundle\Component\Logger: '@metador_logger'
     WhereGroup\CoreBundle\Component\Utils\Process: '@metador_process'
+    WhereGroup\AddressBundle\Component\Address: '@metador_address'
+    WhereGroup\CoreBundle\Component\Metadata\Validator: '@metador_metadata_validator'
+    WhereGroup\CoreBundle\Component\Configuration: '@metador_configuration'

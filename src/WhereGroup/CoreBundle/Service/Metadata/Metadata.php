@@ -4,12 +4,17 @@ namespace WhereGroup\CoreBundle\Service\Metadata;
 
 use DateTime;
 use Exception;
+use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use WhereGroup\AddressBundle\Component\Address;
+use WhereGroup\CoreBundle\Component\Configuration;
+use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataExistsException;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataNotFoundException;
 use WhereGroup\CoreBundle\Component\Logger;
 use WhereGroup\CoreBundle\Component\Metadata\PrepareMetadata;
+use WhereGroup\CoreBundle\Component\Metadata\Validator;
 use WhereGroup\CoreBundle\Entity\Metadata as MetadataEntity;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Service\App;
@@ -23,14 +28,20 @@ use WhereGroup\UserBundle\Entity\User;
  */
 class Metadata
 {
+    /** @var Database */
+    public $db;
+
+    /** @var App */
+    protected $app;
+
+    /** @var Address */
+    protected $address;
+
     /** @var MetadataXmlProcessor */
     protected $processor;
 
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
-
-    /** @var App */
-    protected $app;
 
     /** @var UserInterface */
     protected $user;
@@ -38,8 +49,11 @@ class Metadata
     /** @var Logger */
     protected $logger;
 
-    /** @var Database */
-    public $db;
+    /** @var Validator */
+    public $validator;
+
+    /** @var Configuration */
+    public $configuration;
 
     /**
      * Metadata constructor.
@@ -49,6 +63,9 @@ class Metadata
      * @param UserInterface $user
      * @param Logger $logger
      * @param Database $db
+     * @param Address $address
+     * @param Validator $validator
+     * @param Configuration $configuration
      */
     public function __construct(
         MetadataXmlProcessor $processor,
@@ -56,7 +73,10 @@ class Metadata
         App $app,
         UserInterface $user,
         Logger $logger,
-        Database $db
+        Database $db,
+        Address $address,
+        Validator $validator,
+        Configuration $configuration
     ) {
         $this->processor = $processor;
         $this->eventDispatcher = $eventDispatcher;
@@ -64,6 +84,9 @@ class Metadata
         $this->user = $user;
         $this->logger = $logger;
         $this->db = $db;
+        $this->address = $address;
+        $this->validator = $validator;
+        $this->configuration = $configuration;
     }
 
     public function __destruct()
@@ -74,7 +97,10 @@ class Metadata
             $this->app,
             $this->user,
             $this->logger,
-            $this->db
+            $this->db,
+            $this->address,
+            $this->validator,
+            $this->configuration
         );
     }
 
@@ -224,6 +250,16 @@ class Metadata
      */
     public function save(MetadataEntity $metadata, array $options): MetadataEntity
     {
+        return $this->saveRaw($metadata, $options);
+    }
+
+    /**
+     * @param MetadataEntity $metadata
+     * @param array $options
+     * @return MetadataEntity
+     */
+    protected function saveRaw(MetadataEntity $metadata, array $options): MetadataEntity
+    {
         $this->setDefaultOptionValues($options);
 
         if ($options['dispatchEvent'] === true) {
@@ -264,6 +300,7 @@ class Metadata
 
     /**
      * @param MetadataEntity $entity
+     * @return Metadata
      * @throws Exception
      */
     public function lock(MetadataEntity $entity)
@@ -279,11 +316,13 @@ class Metadata
             ->setLockTime((new DateTime())->getTimestamp())
             ->setObject($p);
 
-        $this->save($entity, []);
+        $this->saveRaw($entity, []);
 
         $this->log('success', 'lock', $entity, '%title% gesperrt.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
         ]);
+
+        return $this;
     }
 
     /**
@@ -301,7 +340,7 @@ class Metadata
             ->setObject($p)
         ;
 
-        $this->save($entity, []);
+        $this->saveRaw($entity, []);
 
         $this->log('success', 'unlock', $entity, '%title% freigegeben.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
@@ -310,10 +349,15 @@ class Metadata
 
     /**
      * @param MetadataEntity $entity
+     * @param bool $dispatchEvent
+     * @param bool $flush
+     * @param bool $log
      */
-    public function delete(MetadataEntity $entity)
+    public function delete(MetadataEntity $entity, $dispatchEvent = true, $flush = true, $log = true)
     {
-        $this->db->dispatchPreDelete(new MetadataChangeEvent($entity, []));
+        if ($dispatchEvent) {
+            $this->db->dispatchPreDelete(new MetadataChangeEvent($entity, []));
+        }
 
         foreach ($entity->getGroups() as $group) {
             $entity->removeGroups($group);
@@ -323,12 +367,17 @@ class Metadata
             $entity->removeAddress($address);
         }
 
-        $this->log('success', 'delete', $entity, '%title% gelöscht.', [
-            '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-        ]);
+        if ($log) {
+            $this->log('success', 'delete', $entity, '%title% gelöscht.', [
+                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
+            ], $flush);
+        }
 
         $this->db->delete($entity);
-        $this->db->dispatchFlush();
+
+        if ($flush) {
+            $this->db->dispatchFlush();
+        }
     }
 
     /**
@@ -350,8 +399,9 @@ class Metadata
      * @param MetadataEntity $entity
      * @param $message
      * @param array $params
+     * @param $flush
      */
-    public function log($type, $operation, $entity, $message, $params = [])
+    public function log($type, $operation, $entity, $message, $params = [], $flush = true)
     {
         $log = $this->logger->newLog();
         $log
@@ -361,11 +411,34 @@ class Metadata
             ->setOperation($operation)
             ->setSource(!is_null($entity) ? $entity->getSource() : '')
             ->setIdentifier(!is_null($entity) ? $entity->getId() : '')
-            ->setMessage('%title% gesperrt.', [
-                '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
-            ])
-            ->setUsername($this->user->getUsernameFromSession());
+            ->setMessage($message, $params);
 
-        $this->logger->set($log);
+        $this->logger->set($log, $flush);
+    }
+
+
+    /**
+     * @return string
+     * @throws MetadataException
+     */
+    public function generateUuid()
+    {
+        try {
+            $uuid4 = Uuid::uuid4();
+            return $uuid4->toString();
+        } catch (Exception $e) {
+            $message = 'Beim erzeugen der UUID ist ein Fehler unterlaufen';
+            $log = $this->logger->newLog();
+            $log
+                ->setType('error')
+                ->setCategory('metadata')
+                ->setSubcategory('uuid')
+                ->setOperation('generate')
+                ->setMessage($message);
+
+            $this->logger->set($log);
+
+            throw new MetadataException($message);
+        }
     }
 }

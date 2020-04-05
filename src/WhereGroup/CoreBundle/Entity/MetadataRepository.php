@@ -2,14 +2,11 @@
 
 namespace WhereGroup\CoreBundle\Entity;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use WhereGroup\CoreBundle\Component\Finder;
-use WhereGroup\CoreBundle\Component\Utils\Debug;
 
 /**
  * Class MetadataRepository
@@ -62,8 +59,6 @@ class MetadataRepository extends EntityRepository
     {
         try {
             return $this
-                ->getEntityManager()
-                ->getRepository(self::ENTITY)
                 ->createQueryBuilder('u')
                 ->select('count(u.id)')
                 ->where('u.source = :source')
@@ -131,8 +126,6 @@ class MetadataRepository extends EntityRepository
     public function countAll()
     {
         return $this
-            ->getEntityManager()
-            ->getRepository(self::ENTITY)
             ->createQueryBuilder('u')
             ->select('count(u.id)')
             ->getQuery()
@@ -145,13 +138,20 @@ class MetadataRepository extends EntityRepository
     public function countAndGroupBySources()
     {
         return $this
-            ->getEntityManager()
-            ->getRepository(self::ENTITY)
             ->createQueryBuilder('u')
             ->select('u.source, count(u)')
             ->groupBy('u.source')
             ->getQuery()
             ->getArrayResult();
+    }
+
+    /**
+     * @param $parentUuid
+     * @return array|object[]
+     */
+    public function getChildren($parentUuid)
+    {
+        return $this->findBy([ 'parent' => $parentUuid ]);
     }
 
     /**

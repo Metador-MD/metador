@@ -65,9 +65,10 @@ class Logger
 
     /**
      * @param Log $log
+     * @param bool $flush
      * @return $this
      */
-    public function set(Log $log)
+    public function set(Log $log, $flush = true)
     {
         // Find user
         /** @var User $user */
@@ -98,7 +99,7 @@ class Logger
         }
 
         // Throw event
-        $this->eventDispatcher->dispatch('metador.log', new LoggingEvent($log));
+        $this->eventDispatcher->dispatch('metador.log', new LoggingEvent($log, $flush));
 
         return $this;
     }

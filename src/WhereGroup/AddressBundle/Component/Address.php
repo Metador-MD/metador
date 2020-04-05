@@ -133,12 +133,13 @@ class Address
 
     /**
      * @param array $array
+     * @param bool $flush
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function saveArray(array $array)
+    public function saveArray(array $array, $flush = true)
     {
         if (isset($array['email']) && is_array($array['email'])) {
             $array['email'] = implode(',', $array['email']);
@@ -163,17 +164,16 @@ class Address
             ->setHoursOfService(isset($array['hoursOfService']) ? $array['hoursOfService'] : '')
         ;
 
-        return $this->save($address);
+        return $this->save($address, $flush);
     }
 
     /**
      * @param \WhereGroup\AddressBundle\Entity\Address $entity
+     * @param bool $flush
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
-    public function save($entity)
+    public function save($entity, $flush = true)
     {
         $uuid = $this->generateUuid($entity);
         $event = new AddressChangeEvent($entity, [
@@ -195,7 +195,11 @@ class Address
         ));
 
         $this->eventDispatcher->dispatch('address.pre_save', $event);
-        $this->repo->save($entity);
+        $this->em->persist($entity);
+        if ($flush) {
+            $this->em->flush();
+        }
+
         $this->eventDispatcher->dispatch('address.post_save', $event);
 
         return $entity;

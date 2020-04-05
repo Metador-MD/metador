@@ -15,12 +15,19 @@ class LoggingEvent extends Event
     private $log;
 
     /**
+     * @var
+     */
+    private $flush;
+
+    /**
      * LoggingEvent constructor.
      * @param $log
+     * @param bool $flush
      */
-    public function __construct($log)
+    public function __construct($log, $flush = true)
     {
         $this->log = $log;
+        $this->flush = $flush;
     }
 
     public function __destruct()
@@ -34,5 +41,13 @@ class LoggingEvent extends Event
     public function getLog()
     {
         return $this->log;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFlush()
+    {
+        return $this->flush;
     }
 }

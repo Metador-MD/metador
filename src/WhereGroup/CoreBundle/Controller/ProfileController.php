@@ -19,9 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Error\Error;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use WhereGroup\CoreBundle\Component\AjaxResponse;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataException;
 use WhereGroup\CoreBundle\Component\Exceptions\MetadataNotFoundException;
@@ -223,7 +220,6 @@ class ProfileController extends Controller
             );
 
             $this->get(Metadata::class)->db->transactionCommit();
-            $this->get(Metadata::class)->db->dispatchFlush();
         } catch (Exception $e) {
             $this->get(Metadata::class)->db->transactionRollBack();
 
