@@ -205,9 +205,11 @@ class ProfileController extends Controller
         $this->get(Metadata::class)->db->beginTransaction();
         try {
             if ($metadata) {
-                $metadata = $this->get(Metadata::class)->updateByObject($p, [ 'source'  => $source, 'profile' => $profile ]);
+                $metadata = $this->get(Metadata::class)
+                    ->updateByObject($p, [ 'source'  => $source, 'profile' => $profile ]);
             } else {
-                $metadata = $this->get(Metadata::class)->insertByObject($p, ['source' => $source, 'profile' => $profile]);
+                $metadata = $this->get(Metadata::class)
+                    ->insertByObject($p, ['source' => $source, 'profile' => $profile]);
             }
 
             $this->get('metador_frontend_command')->changeLocation(
