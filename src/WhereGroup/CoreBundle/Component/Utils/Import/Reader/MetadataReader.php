@@ -2,11 +2,12 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils\Import\Reader;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Generator;
 use RuntimeException;
+use WhereGroup\CoreBundle\Component\Search\JsonFilterReader;
+use WhereGroup\CoreBundle\Component\Search\PropertyNameNotFoundException;
+use WhereGroup\CoreBundle\Component\Search\Search;
 use WhereGroup\CoreBundle\Component\Utils\Import\Context\DatabaseContext;
-use WhereGroup\CoreBundle\Entity\MetadataRepository;
 
 /**
  * Class MetadataReader
@@ -14,9 +15,10 @@ use WhereGroup\CoreBundle\Entity\MetadataRepository;
  */
 class MetadataReader implements Reader
 {
-    /** @var MetadataRepository */
-    public $repository;
+    /** @var Search */
+    public $search;
     public $source;
+    public $filter;
 
     /**
      * @param DatabaseContext $context
@@ -26,10 +28,9 @@ class MetadataReader implements Reader
     {
         $reader = clone $this;
 
-        /** @var Registry $doctrine */
-        $doctrine = $context->getService();
-        $reader->repository = $doctrine->getRepository($context->getEntityName());
+        $reader->search = $context->getService();
         $reader->source = $context->getSource();
+        $reader->filter = $context->getFilter();
 
         return $reader;
     }
@@ -38,28 +39,29 @@ class MetadataReader implements Reader
      * @param null $offset
      * @param null $limit
      * @return Generator
+     * @throws PropertyNameNotFoundException
      */
     public function read($offset = null, $limit = null): Generator
     {
-        if (!$this->repository) {
+        if (!$this->search) {
             throw new RuntimeException("Run open() method first.");
         }
 
-        $rows = $this->repository
-            ->createQueryBuilder('m')
-            ->select('m.object')
-            ->where('m.source = :source')
-            ->setParameter('source', $this->source)
-            ->orderBy('m.id')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery()
-            ->getArrayResult()
-        ;
+        $rows = $this->search
+            ->setHits($limit)
+            ->setOffset($offset)
+            ->setSource($this->source)
+            ->setSort('id')
+            ->setExpression(JsonFilterReader::read($this->filter, $this->search->createExpression()))
+            ->find();
+
+        if (!isset($rows['rows'])) {
+            $rows['rows'] = [];
+        }
 
         $count = 0;
 
-        foreach ($rows as $row) {
+        foreach ($rows['rows'] as $row) {
             yield $count => json_decode($row['object'], true);
             ++$count;
         }
@@ -67,6 +69,6 @@ class MetadataReader implements Reader
 
     public function close()
     {
-        unset($this->repository);
+        unset($this->search);
     }
 }

@@ -216,7 +216,8 @@ class ArrayParser
 
                 self::clearEmptyValues($array[$key], $reindex, $removeEmptyArrays);
 
-                if (empty($array[$key]) && $removeEmptyArrays === true) {
+                if ($array[$key] === '' || (is_array($array[$key]) && empty($array[$key]))
+                    && $removeEmptyArrays === true) {
                     unset($array[$key]);
                 }
 

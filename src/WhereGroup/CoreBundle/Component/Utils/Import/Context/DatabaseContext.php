@@ -11,6 +11,7 @@ class DatabaseContext implements Context
     private $service;
     private $source;
     private $entityName;
+    private $filter;
 
     /**
      * @return mixed
@@ -42,6 +43,25 @@ class DatabaseContext implements Context
     public function setSource($source)
     {
         $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @param mixed $filter
+     * @return DatabaseContext
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
 
         return $this;
     }

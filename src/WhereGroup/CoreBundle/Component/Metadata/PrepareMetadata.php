@@ -142,11 +142,11 @@ class PrepareMetadata
 
 
         // Set public
-        $p['_public'] = false;
+        $p['_public'] = !isset($p['_public']) ? 0 : (int)$p['_public'];
         if (!is_null($options['public'])) {
-            $p['_public'] = (boolean)$options['public'];
+            $p['_public'] = (int)$options['public'];
         }
-        $metadata->setPublic($p['_public']);
+        $metadata->setPublic((int)$p['_public']);
 
         // Set groups
         $p['_groups'] = !isset($p['_groups']) || !is_array($p['_groups']) ? [] : $p['_groups'];
