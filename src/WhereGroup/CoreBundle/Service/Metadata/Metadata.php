@@ -278,6 +278,9 @@ class Metadata
 
         if ($options['dispatchEvent'] === true) {
             $this->db->dispatchPostSave($event);
+            if (isset($options['flush']) && $options['flush'] === true) {
+                $this->db->dispatchFlush();
+            }
         }
 
         return $metadata;

@@ -67,7 +67,7 @@ class Validator
      */
     public function isValid(array $p, &$debug = [])
     {
-        if (!isset($p['_public']) || (isset($p['_public']) && $p['_public'] === '0')) {
+        if (!isset($p['_public']) || (isset($p['_public']) && empty($p['_public']))) {
             return true;
         }
 
