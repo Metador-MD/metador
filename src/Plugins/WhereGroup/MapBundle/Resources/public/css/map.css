@@ -33,11 +33,11 @@
 .md .map-dialog .map .tooltip {
   position: relative;
   background: #008ec0;
+  padding: 4px 0;
   border-radius: 4px;
   color: #fff;
-  padding: 4px 16px 4px 8px;
   white-space: nowrap;
-  border: 1px solid white; }
+  border: #00435a 1px solid; }
 
 .md .map-dialog .map .tooltip span {
   display: block;
@@ -50,23 +50,20 @@
 
 .md .map-dialog .map .tooltip > .icon-cross {
   position: absolute;
-  top: 4px;
-  right: 3px;
+  top: 1px;
+  right: 0px;
   font-size: 10px;
-  color: #fff; }
+  color: #fff;
+  background-color: #008ec0; }
 
 .md .map-dialog .map .tooltip > .content {
-  overflow: auto; }
-
-.md .map-dialog .map .tooltip > .content::-webkit-scrollbar {
-  width: 0.5em; }
-
-.md .map-dialog .map .tooltip > .content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px #fff; }
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 4px;
+  scrollbar-color: #fff #008ec0; }
 
 .md .map-dialog .map .tooltip > .content::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  outline: 1px solid #008ec0; }
+  background-color: #fff; }
 
 .md .map-dialog .map .tooltip:before {
   border-top: 6px solid rgba(0, 0, 0, 0.5);

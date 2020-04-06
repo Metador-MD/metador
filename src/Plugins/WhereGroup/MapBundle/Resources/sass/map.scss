@@ -44,12 +44,11 @@
     & .tooltip {
         position: relative;
         background: $primary;
-        //.md .map-dialog .map-dialog-left-menu .
+        padding: 4px 0;
         border-radius: 4px;
         color: $white;
-        padding: 4px 16px 4px 8px;
         white-space: nowrap;
-        border: 1px solid white;
+        border: darken($primary, 20%) 1px solid;
 
         & span {
             display: block;
@@ -63,24 +62,28 @@
 
         & > .icon-cross {
             position: absolute;
-            top: 4px;
-            right: 3px;
+            top: 1px;
+            right: 0px;
             font-size: 10px;
             color: $white;
+            background-color: $primary;
         }
         & > .content {
-            overflow: auto;
-            &::-webkit-scrollbar {
-                width: 0.5em;
-            }
-
-            &::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px $white;
-            }
-
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0 4px;
+            // pseudo selectors started with "-webkit" are not supported at ff although caniuse.com
+            //&::-webkit-scrollbar {
+            //    width: 0.5em;
+            //}
+            //&::-webkit-scrollbar-track {
+            //    -webkit-box-shadow: inset 0 0 6px $white;
+            //}
+            // only for firefox
+            scrollbar-color: $white $primary;
+            // only for chromium
             &::-webkit-scrollbar-thumb {
                 background-color: $white;
-                outline: 1px solid $primary;
             }
         }
     }
