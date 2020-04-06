@@ -2,10 +2,12 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
 use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
@@ -31,7 +33,9 @@ class TruncateMetadataCommand extends ContainerAwareCommand
 
         if ($io->confirm("Metadaten löschen?", false)) {
             $this->getContainer()->get(Metadata::class)->db->getRepository()->truncate();
-            $this->getContainer()->get(Metadata::class)->db->dispatchPostTruncate();
+            $this->getContainer()->get(Metadata::class)->db->dispatchPostTruncate(
+                new MetadataChangeEvent(new Entity(), [])
+            );
             $io->success("Alle Metadaten wurde erfolgreich gelöscht.");
         }
     }
