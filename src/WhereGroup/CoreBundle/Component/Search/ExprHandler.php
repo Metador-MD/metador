@@ -159,4 +159,13 @@ abstract class ExprHandler
 
         return self::createBbox($coordinates[0]);
     }
+
+    /**
+     * @param array $geoFeature
+     * @return false|string
+     */
+    protected static function geoJsonForQuery(array $geoFeature)
+    {
+        return  json_encode($geoFeature['geometry']);
+    }
 }
