@@ -47,13 +47,17 @@ class MetadataReader implements Reader
             throw new RuntimeException("Run open() method first.");
         }
 
-        $rows = $this->search
+        $this->search
             ->setHits($limit)
             ->setOffset($offset)
             ->setSource($this->source)
-            ->setSort('id')
-            ->setExpression(JsonFilterReader::read($this->filter, $this->search->createExpression()))
-            ->find();
+            ->setSort('id');
+
+        if (!empty($this->filter)) {
+            $this->search->setExpression(JsonFilterReader::read($this->filter, $this->search->createExpression()));
+        }
+
+        $rows = $this->search->find();
 
         if (!isset($rows['rows'])) {
             $rows['rows'] = [];

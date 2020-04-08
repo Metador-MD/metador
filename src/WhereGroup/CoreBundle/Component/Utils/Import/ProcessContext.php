@@ -14,6 +14,7 @@ class ProcessContext
     protected $command;
     protected $partitionSize = 10000;
     protected $range = 1;
+    protected $rootDir;
 
     /**
      * ProcessContext constructor.
@@ -35,7 +36,9 @@ class ProcessContext
 
         // @codingStandardsIgnoreStart
         return [
-            'php', 'bin/console', $this->command, '--offset', (string)$this->range, '--limit', (string)$this->partitionSize
+            'php', realpath($this->rootDir . '/../' . 'bin/console'), $this->command,
+            '--offset', (string)$this->range,
+            '--limit', (string)$this->partitionSize
         ];
         // @codingStandardsIgnoreEnd
     }
@@ -108,6 +111,26 @@ class ProcessContext
     public function next()
     {
         $this->range += $this->partitionSize;
+
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getRootDir()
+    {
+        return $this->rootDir;
+    }
+
+    /**
+     * @param mixed $rootDir
+     * @return ProcessContext
+     */
+    public function setRootDir($rootDir)
+    {
+        $this->rootDir = $rootDir;
 
         return $this;
     }
