@@ -191,12 +191,19 @@ var MetadorOl4Bridge = {
         this.getOl().clearFeatures();
     },
 
-    createBboxGeoFeature: function (west, south, east, north, properties) {
+    createPolygonGeoFeature: function (pointsStr, properties) {
+        var ring = [];
+        var coords = pointsStr.split(" ");
+        var i;
+        var length = coords.length;
+        for (i = 1; i < length; i+=2) {
+            ring.push([parseFloat(coords[i - 1]), parseFloat(coords[i])]);
+        }
         var feature = {
             'type': 'Feature',
             'geometry': {
                 'type': 'Polygon',
-                'coordinates': [[[west, south], [east, south], [east, north], [west, north], [west, south]]]
+                'coordinates': [ring]
             }
         };
         if (properties) {
@@ -228,7 +235,7 @@ var MetadorOl4Bridge = {
         for (i = 0; i < resultList.length; i++) {
             var item = resultList[i];
             var properties = {"uuid": item.uuid, "title": item.title};
-            var geoFeature = this.createBboxGeoFeature(item.west, item.south, item.east, item.north, properties);
+            var geoFeature = this.createPolygonGeoFeature(item.polygon, properties);
             featureCollection.push(geoFeature);
         }
         if (featureCollection.length > 0) {
@@ -240,8 +247,8 @@ var MetadorOl4Bridge = {
         this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', geoFeatures));
     },
 
-    showFeature: function (west, south, east, north, properties) {
-        var geoFeature = this.createBboxGeoFeature(west, south, east, north, properties);
+    showFeature: function (pointsStr, properties) {
+        var geoFeature = this.createPolygonGeoFeature(pointsStr, properties);
         this.getOl().showFeatures(this.createGeoCollection('EPSG:4326', [geoFeature]));
     },
     selectFeatures: function (uuids) {
