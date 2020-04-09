@@ -162,10 +162,60 @@ abstract class ExprHandler
 
     /**
      * @param array $geoFeature
-     * @return false|string
+     * @return string
+     * @throws \Exception
      */
-    protected static function geoJsonForQuery(array $geoFeature)
+    protected function jsonGeometryToWkt(array $geoFeature)
     {
-        return  json_encode($geoFeature['geometry']);
+        $geom = $geoFeature['geometry'];
+        switch ($geom["type"]) {
+            case "Point":
+                return "POINT(" . $geom["coordinates"][0] . " " . $geom["coordinates"][1] . ")";
+            case "MultiPoint":
+                $coords = $this->toStringCoords($geom["coordinates"]);
+                return "MULTIPOINT(" . implode(",", $coords) . ")";
+            case "LineString":
+                $coords = $this->toStringCoords($geom["coordinates"]);
+                return "LINESTRING(" . implode(",", $coords) . ")";
+            case "Polygon":
+                $rings = $this->toSetOfStringCoords($geom["coordinates"]);
+                return "POLYGON(" . implode(",", $rings) . ")";
+            case "MultiLineString":
+                $lines = $this->toSetOfStringCoords($geom["coordinates"]);
+                return "MULTILINESTRING(" . implode(",", $lines) . ")";
+            case "MultiPolygon":
+                $multi = [];
+                foreach ($geom["coordinates"] as $poly) {
+                    $rings = $this->toSetOfStringCoords($poly);
+                    $multi[] = "(" . implode(",", $rings) . ")";
+                }
+                return "MULTIPOLYGON(" . implode(",", $multi) . ")";
+        }
+        throw new \Exception("not supported geometry type.");
+    }
+
+    /**
+     * @param array $coordsArr
+     * @return array
+     */
+    private function toStringCoords(array $coordsArr)
+    {
+        return array_map(function ($val) {
+            return $val[0] . " " . $val[1];
+        }, $coordsArr);
+    }
+
+    /**
+     * @param $list
+     * @return array
+     */
+    private function toSetOfStringCoords($list)
+    {
+        $set = [];
+        foreach ($list as $item) {
+            $coords = $this->toStringCoords($item);
+            $set[] = "(" . implode(",", $coords) . ")";
+        }
+        return $set;
     }
 }
