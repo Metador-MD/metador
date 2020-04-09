@@ -12,8 +12,10 @@ use WhereGroup\CoreBundle\Component\Utils\Import\ProcessContext as BaseClass;
 class ProcessConfigContext extends BaseClass
 {
     private $id;
-    private $rootDir;
 
+    /**
+     * @return array
+     */
     public function getCommand()
     {
         if ($this->totalItemCount === null) {
@@ -45,25 +47,6 @@ class ProcessConfigContext extends BaseClass
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRootDir()
-    {
-        return $this->rootDir;
-    }
-
-    /**
-     * @param mixed $rootDir
-     * @return ProcessConfigContext
-     */
-    public function setRootDir($rootDir)
-    {
-        $this->rootDir = $rootDir;
 
         return $this;
     }
