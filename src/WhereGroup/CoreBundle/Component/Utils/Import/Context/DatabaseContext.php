@@ -11,7 +11,7 @@ class DatabaseContext implements Context
     private $service;
     private $source;
     private $entityName;
-    private $filter;
+    private $filter = [];
 
     /**
      * @return mixed
