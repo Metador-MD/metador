@@ -102,7 +102,7 @@ class ProcessContext
 
     public function valid(): bool
     {
-        return ($this->range < $this->totalItemCount);
+        return ($this->range <= $this->totalItemCount);
     }
 
     /**
