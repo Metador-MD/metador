@@ -53,7 +53,11 @@ class FolderReader implements Reader
             } elseif ($limit !== null && $count + 1 > $limit) {
                 break;
             }
-            yield $count => $file->getContents();
+            yield $count => [
+                'filename' => $file->getFilename(),
+                'filepath' => $file->getRealPath(),
+                'content'  => $file->getContents()
+            ];
             ++$count;
         }
     }
