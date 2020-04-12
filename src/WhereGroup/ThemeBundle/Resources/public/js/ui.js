@@ -81,6 +81,7 @@ $(document).ready(function() {
     $('.-js-checkbox').checkbox();
 
     $('.-js-source').on('click', function () {
+        $(this).trigger( "change-tab", $(this).attr('data-slug'));
         $(this).siblings().removeClass('active');
         $(this).addClass('active');
         $('.-js-profile-menu').removeClass('active');
@@ -90,6 +91,5 @@ $(document).ready(function() {
         search.set('page', 1);
         search.find();
     });
-
 });
 
