@@ -2,11 +2,14 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFunction;
+
 /**
  * Class SessionExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class SessionExtension extends \Twig_Extension
+class SessionExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -14,7 +17,7 @@ class SessionExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('session_maxlifetime', [$this, 'maxlifetime'])
+            new Twig_SimpleFunction('session_maxlifetime', [$this, 'maxlifetime'])
         ];
     }
 

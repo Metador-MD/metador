@@ -2,11 +2,14 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFilter;
+
 /**
  * Class CastToArrayExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class JsonDecodeExtension extends \Twig_Extension
+class JsonDecodeExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -14,7 +17,7 @@ class JsonDecodeExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('json_decode', [$this, 'decode'])
+            new Twig_SimpleFilter('json_decode', [$this, 'decode'])
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFunction;
 use WhereGroup\CoreBundle\Component\Configuration;
 use WhereGroup\PluginBundle\Component\Plugin;
 
@@ -9,7 +11,7 @@ use WhereGroup\PluginBundle\Component\Plugin;
  * Class ConfigurationExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class SettingsExtension extends \Twig_Extension
+class SettingsExtension extends Twig_Extension
 {
     /** @var Configuration $configuration */
     protected $configuration;
@@ -34,8 +36,8 @@ class SettingsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('get_frontend_settings', [$this, 'getFrontendSettings']),
-            new \Twig_SimpleFunction('get_setting', [$this, 'getSetting']),
+            new Twig_SimpleFunction('get_frontend_settings', [$this, 'getFrontendSettings']),
+            new Twig_SimpleFunction('get_setting', [$this, 'getSetting']),
         ];
     }
 

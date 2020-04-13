@@ -4,6 +4,8 @@ namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig_Extension;
+use Twig_SimpleFunction;
 use WhereGroup\CoreBundle\Component\Application;
 use WhereGroup\PluginBundle\Component\Plugin;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
@@ -12,7 +14,7 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  * Class ApplicationExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class ApplicationExtension extends \Twig_Extension
+class ApplicationExtension extends Twig_Extension
 {
     private $application;
     private $plugin;
@@ -44,9 +46,9 @@ class ApplicationExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('applicationGet', [$this, 'applicationGet']),
-            new \Twig_SimpleFunction('plugin_is_active', [$this, 'pluginIsActive']),
-            new \Twig_SimpleFunction('profile_is_active', [$this, 'profileIsActive']),
+            new Twig_SimpleFunction('applicationGet', [$this, 'applicationGet']),
+            new Twig_SimpleFunction('plugin_is_active', [$this, 'pluginIsActive']),
+            new Twig_SimpleFunction('profile_is_active', [$this, 'profileIsActive']),
         ];
     }
 

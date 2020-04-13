@@ -2,11 +2,14 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFunction;
+
 /**
  * Class CoupledResourceExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class CoupledResourceExtension extends \Twig_Extension
+class CoupledResourceExtension extends Twig_Extension
 {
     private $operatesOnUrl;
 
@@ -25,7 +28,7 @@ class CoupledResourceExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction(
+            new Twig_SimpleFunction(
                 'generate_operates_on',
                 [$this, 'operatesOn'],
                 ['is_safe' => ['html']]

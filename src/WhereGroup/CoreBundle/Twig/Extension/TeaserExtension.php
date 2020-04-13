@@ -2,11 +2,14 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFilter;
+
 /**
  * Class TeaserExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class TeaserExtension extends \Twig_Extension
+class TeaserExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -14,8 +17,8 @@ class TeaserExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('teaser', [$this, 'teaser']),
-            new \Twig_SimpleFilter('groupname', [$this, 'groupName'])
+            new Twig_SimpleFilter('teaser', [$this, 'teaser']),
+            new Twig_SimpleFilter('groupname', [$this, 'groupName'])
         ];
     }
 

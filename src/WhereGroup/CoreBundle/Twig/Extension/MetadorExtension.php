@@ -1,11 +1,15 @@
 <?php
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFilter;
+use Twig_SimpleFunction;
+
 /**
  * Class MetadorExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class MetadorExtension extends \Twig_Extension
+class MetadorExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -13,7 +17,7 @@ class MetadorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('md_select', [$this, 'isSelected']),
+            new Twig_SimpleFunction('md_select', [$this, 'isSelected']),
         ];
     }
 
@@ -23,12 +27,12 @@ class MetadorExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('md_id', [$this, 'getId'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFilter('md_obj_id', [$this, 'getObjectId'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFilter('md_data_obj', [$this, 'getDataObject'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFilter('md_boolean', [$this, 'booleanFilter']),
-            new \Twig_SimpleFilter('md_array_path', [$this, 'arrayPath']),
-            new \Twig_SimpleFilter('md_first_key', [$this, 'firstKey']),
+            new Twig_SimpleFilter('md_id', [$this, 'getId'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('md_obj_id', [$this, 'getObjectId'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('md_data_obj', [$this, 'getDataObject'], ['is_safe' => ['html']]),
+            new Twig_SimpleFilter('md_boolean', [$this, 'booleanFilter']),
+            new Twig_SimpleFilter('md_array_path', [$this, 'arrayPath']),
+            new Twig_SimpleFilter('md_first_key', [$this, 'firstKey']),
         ];
     }
 

@@ -2,13 +2,15 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Twig_Extension;
+use Twig_SimpleFunction;
 use WhereGroup\CoreBundle\Component\Utils\ArrayParser;
 
 /**
  * Class ArrayExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class ArrayExtension extends \Twig_Extension
+class ArrayExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -16,15 +18,15 @@ class ArrayExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('array_get', [$this, 'get']),
-            new \Twig_SimpleFunction('array_is_empty', [$this, 'isEmpty']),
-            new \Twig_SimpleFunction('array_to_string', [$this, 'toString']),
-            new \Twig_SimpleFunction('array_length', [$this, 'length']),
-            new \Twig_SimpleFunction('array_exists', [$this, 'exists']),
-            new \Twig_SimpleFunction('array_all_exists', [$this, 'allExists']),
-            new \Twig_SimpleFunction('array_one_exists', [$this, 'oneExists']),
-            new \Twig_SimpleFunction('array_has_value', [$this, 'arrayHasValue']),
-            new \Twig_SimpleFunction('array_to_string', [$this, 'arrayToString']),
+            new Twig_SimpleFunction('array_get', [$this, 'get']),
+            new Twig_SimpleFunction('array_is_empty', [$this, 'isEmpty']),
+            new Twig_SimpleFunction('array_to_string', [$this, 'toString']),
+            new Twig_SimpleFunction('array_length', [$this, 'length']),
+            new Twig_SimpleFunction('array_exists', [$this, 'exists']),
+            new Twig_SimpleFunction('array_all_exists', [$this, 'allExists']),
+            new Twig_SimpleFunction('array_one_exists', [$this, 'oneExists']),
+            new Twig_SimpleFunction('array_has_value', [$this, 'arrayHasValue']),
+            new Twig_SimpleFunction('array_to_string', [$this, 'arrayToString']),
         ];
     }
 

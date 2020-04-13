@@ -2,12 +2,14 @@
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig_Extension;
+use Twig_SimpleFunction;
 
 /**
  * Class ControllerInfoExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class ControllerInfoExtension extends \Twig_Extension
+class ControllerInfoExtension extends Twig_Extension
 {
     private $name         = null;
     private $action       = null;
@@ -28,8 +30,8 @@ class ControllerInfoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('controller_name', [$this, 'getControllerName']),
-            new \Twig_SimpleFunction('controller_action', [$this, 'getControllerAction'])
+            new Twig_SimpleFunction('controller_name', [$this, 'getControllerName']),
+            new Twig_SimpleFunction('controller_action', [$this, 'getControllerAction'])
         ];
     }
 

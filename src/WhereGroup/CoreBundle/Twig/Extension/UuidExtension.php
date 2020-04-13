@@ -2,13 +2,16 @@
 
 namespace WhereGroup\CoreBundle\Twig\Extension;
 
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Twig_Extension;
+use Twig_SimpleFunction;
 
 /**
  * Class UuidExtension
  * @package WhereGroup\CoreBundle\Twig\Extension
  */
-class UuidExtension extends \Twig_Extension
+class UuidExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -16,13 +19,13 @@ class UuidExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('uuid', [$this, 'uuid']),
+            new Twig_SimpleFunction('uuid', [$this, 'uuid']),
         ];
     }
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function uuid()
     {
