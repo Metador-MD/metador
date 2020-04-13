@@ -136,8 +136,6 @@ class Address
      * @param bool $flush
      * @return \WhereGroup\AddressBundle\Entity\Address
      * @throws MetadorException
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function saveArray(array $array, $flush = true)
     {
@@ -199,7 +197,6 @@ class Address
         if ($flush) {
             $this->em->flush();
         }
-
         $this->eventDispatcher->dispatch('address.post_save', $event);
 
         return $entity;
