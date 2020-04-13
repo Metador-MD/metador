@@ -46,4 +46,13 @@ class FolderWriter implements Writer
         }
         return false;
     }
+
+    /**
+     * @param $uuid
+     * @return bool
+     */
+    public function fileExists($uuid)
+    {
+        return file_exists($this->folder . $uuid . '.xml');
+    }
 }
