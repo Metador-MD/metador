@@ -2,7 +2,12 @@
 
 namespace WhereGroup\AddressBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use WhereGroup\AddressBundle\Entity\Address;
 use WhereGroup\AddressBundle\Event\AddressChangeEvent;
 use WhereGroup\AddressBundle\Form\AddressType;
@@ -18,8 +23,8 @@ class AddressController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Response
+     * @throws NonUniqueResultException
      * @Route("", name="metador_admin_address", methods={"GET"})
      */
     public function indexAction(Request $request)
@@ -36,9 +41,7 @@ class AddressController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
      * @Route("/new", name="metador_admin_address_new", methods={"GET", "POST"})
      */
     public function newAction()
@@ -83,9 +86,7 @@ class AddressController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
      * @Route("/edit/{id}", name="metador_admin_address_edit", methods={"GET", "POST"})
      */
     public function editAction($id)
@@ -128,9 +129,9 @@ class AddressController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @Route("/confirm/{id}", name="metador_admin_address_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)

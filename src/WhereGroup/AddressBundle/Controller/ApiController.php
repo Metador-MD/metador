@@ -2,6 +2,7 @@
 
 namespace WhereGroup\AddressBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +17,7 @@ class ApiController extends Controller
      * @Route("/all", name="metador_address_api_all")
      * @param Request $request
      * @return AjaxResponse
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function allAction(Request $request)
     {
