@@ -25,7 +25,6 @@ class Stopwatch
 
     /**
      * @return array
-     * @throws Exception
      */
     public function stop()
     {
@@ -46,7 +45,6 @@ class Stopwatch
     /**
      * @param string $format
      * @return string
-     * @throws Exception
      */
     public function getStartTime($format = 'H:i:s')
     {
@@ -56,7 +54,6 @@ class Stopwatch
     /**
      * @param string $format
      * @return string
-     * @throws Exception
      */
     public function getStopTime($format = 'H:i:s')
     {
@@ -65,7 +62,6 @@ class Stopwatch
 
     /**
      * @return array
-     * @throws Exception
      */
     public function getDuration()
     {
@@ -83,11 +79,14 @@ class Stopwatch
     /**
      * @param $microtime
      * @return DateTime
-     * @throws Exception
      */
     protected function createDateTime($microtime)
     {
-        return new DateTime(date('Y-m-d H:i:s.' . $this->getMilliseconds($microtime), $microtime));
+        try {
+            return new DateTime(date('Y-m-d H:i:s.' . $this->getMilliseconds($microtime), $microtime));
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -101,7 +100,6 @@ class Stopwatch
 
     /**
      * @return string
-     * @throws Exception
      */
     public function __toString()
     {
