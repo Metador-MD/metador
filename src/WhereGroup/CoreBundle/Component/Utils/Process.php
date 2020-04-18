@@ -120,4 +120,46 @@ class Process
             ob_end_clean();
         }
     }
+
+    /**
+     * @param $array
+     */
+    public function sendJsonResponse($array)
+    {
+        ob_end_clean();
+        header("Connection: close\r\n");
+        header("Content-Type: application/json\r\n");
+        header("Content-Encoding: none\r\n");
+        ignore_user_abort(true);
+        //fastcgi_finish_request();
+        ob_start();
+        echo json_encode($array);
+        header("Content-Length: " . ob_get_length());
+        ob_end_flush();
+        flush();
+
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
+    }
+
+    /**
+     * @param $url
+     */
+    public function redirectResponse($url)
+    {
+        ob_end_clean();
+        header("Connection: close\r\n");
+        header("Content-Encoding: none\r\n");
+        header("Location: " . $url . "\r\n");
+        ignore_user_abort(true);
+        ob_start();
+        header("Content-Length: " . ob_get_length());
+        ob_end_flush();
+        flush();
+
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
+    }
 }
