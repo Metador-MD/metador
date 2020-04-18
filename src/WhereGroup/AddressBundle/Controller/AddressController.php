@@ -174,7 +174,7 @@ class AddressController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashWarning($operation, $id, $message, $parameter = [])
+    protected function setFlashWarning($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 
@@ -199,7 +199,7 @@ class AddressController extends Controller
      * @param $message
      * @param array $parameter
      */
-    private function setFlashSuccess($operation, $id, $message, $parameter = [])
+    protected function setFlashSuccess($operation, $id, $message, $parameter = [])
     {
         $log = $this->get('metador_logger')->newLog();
 
