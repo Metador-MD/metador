@@ -40,14 +40,10 @@ BackgroundProcess.prototype = {
 
                 if (data.process === true) {
                     self.disableOperation(form, handle);
-                    console.log("disable");
                 } else if (data.process === false && !initial) {
                     self.enableOperation(form);
-
-                    console.log("enable");
                 } else if (data.process === false && initial) {
                     self.activateOperation(form);
-                    console.log("activate");
                 }
             }
         });

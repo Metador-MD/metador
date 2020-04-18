@@ -1,7 +1,7 @@
 # Controller
-DisallowSecurityAutorizationCheckerService:
-    message: "Dont use the authorization_checker service. Use $this->denyAccessUnlessGranted() instead."
-    regexp: "/\\$this\\->get\\('security.authorization_checker'\\)\\->isGranted\\(/"
+#DisallowSecurityAutorizationCheckerService:
+#    message: "Dont use the authorization_checker service. Use $this->denyAccessUnlessGranted() instead."
+#    regexp: "/\\$this\\->get\\('security.authorization_checker'\\)\\->isGranted\\(/"
 DisallowMethodAnnotation:
     message: "Dont use @Method() Annotation, use @Route(methods={\"\"}) instead."
     regexp: "/@Method\\(/"
