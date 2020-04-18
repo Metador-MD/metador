@@ -299,6 +299,7 @@ class Metadata
         $options['dispatchEvent'] = $options['dispatchEvent'] ?? true;
         $options['log']           = $options['log']           ?? true;
         $options['flush']         = $options['flush']         ?? true;
+        $options['raw']           = $options['raw']           ?? false;
     }
 
     /**
