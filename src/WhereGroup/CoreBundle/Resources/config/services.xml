@@ -60,16 +60,6 @@
             <argument>%kernel.environment%</argument>
         </service>
         <service id="metador_wizard" class="%metador.wizard.class%" public="true" />
-        <service id="metador_metadata" class="%metador.metadata.class%" public="true">
-            <argument type="service" id="metador_user" />
-            <argument type="service" id="metador_logger" />
-            <argument type="service" id="metador_plugin" />
-            <argument type="service" id="metador_metadata_validator" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="twig" />
-            <argument type="service" id="kernel" />
-        </service>
         <service id="metador_metadata_validator" class="WhereGroup\CoreBundle\Component\Metadata\Validator" public="true">
             <argument type="service" id="metador_plugin" />
             <argument type="service" id="metador_configuration" />
