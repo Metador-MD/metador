@@ -55,6 +55,17 @@ metador_core:
             label: Suchergebnisse pro Seite in Pop-Up's
             default: 5
             description: Legt die Anzahl der Suchergebnisse pro Seite fest.
+        background_process_limit:
+            type: choice
+            label: Limit Hintergrundprozesse
+            default: 5
+            description: Maximale Anzahl der im Hintergrund laufenden Prozesse.
+            options:
+                1: 1
+                2: 2
+                3: 3
+                4: 4
+                5: 5
         hierarchy_levels:
             type: multi
             label: Unterstützte Hierarchy Level

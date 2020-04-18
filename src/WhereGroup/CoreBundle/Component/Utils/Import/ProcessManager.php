@@ -23,6 +23,22 @@ class ProcessManager
     }
 
     /**
+     * @param int $limit
+     * @return ProcessManager
+     */
+    public function setProcessLimit($limit = 5)
+    {
+        if ((int)$limit < 1) {
+            $limit = 1;
+        } elseif ((int)$limit > 5) {
+            $limit = 5;
+        }
+
+        $this->processLimit = (int)$limit;
+        return $this;
+    }
+
+    /**
      * Run processes
      */
     public function run()
