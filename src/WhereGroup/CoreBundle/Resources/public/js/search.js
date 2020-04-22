@@ -42,7 +42,9 @@ Search.prototype = {
         });
 
         $(document).on('click', '.-js-reset-search', function() {
-            self.setObject('search-params', {});
+            self.setObject('search-params', {
+                'source': self.get('source')
+            });
             window.location.reload();
         });
     },
