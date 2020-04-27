@@ -176,7 +176,7 @@ class Metadata
         $metadata = $this->findById($object['_uuid']);
 
         if (is_null($metadata)) {
-            throw new MetadataNotFoundException("Datensatz mit der UUID" . $object['_uuid'] . " nicht gefunden.");
+            throw new MetadataNotFoundException("Datensatz mit der UUID " . $object['_uuid'] . " nicht gefunden.");
         }
 
         $oldObject = $metadata->getObject();
