@@ -235,7 +235,17 @@ var MetadorOl4Bridge = {
         for (i = 0; i < resultList.length; i++) {
             var item = resultList[i];
             var properties = {"uuid": item.uuid, "title": item.title};
-            var geoFeature = this.createPolygonGeoFeature(item.polygon, properties);
+            var toGeom = item.polygon;
+            if (!toGeom) {
+                toGeom = [
+                    item.west, item.south,
+                    item.east, item.south,
+                    item.east, item.north,
+                    item.west, item.north,
+                    item.west, item.south
+                ].join(" ");
+            }
+            var geoFeature = this.createPolygonGeoFeature(toGeom, properties);
             featureCollection.push(geoFeature);
         }
         if (featureCollection.length > 0) {
