@@ -1,12 +1,12 @@
 {% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
 
-{% block title %}Seite erstellen{% endblock %}
+{% block title %}Seite bearbeiten{% endblock %}
 
 {% block content %}
     <div class="grid content-title">
         <div class="row r-2">
             <div class="col c-1-2">
-                <h1 class="title dm">Seite erstellen</h1>
+                <h1 class="title dm">Seite bearbeiten</h1>
             </div>
             <div class="col c-1-2 text-right">
                 <a href="{{ path('metador_admin_page') }}" class="btn medium">
@@ -18,7 +18,7 @@
 
     <hr class="line-separator" />
 
-    {{ form_start(form, { 'action': path('metador_admin_page_new'), 'method': 'POST', 'attr': {
+    {{ form_start(form, { 'action': path('metador_admin_page_edit', { slug: form.vars.value.slug }), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
 
@@ -52,10 +52,12 @@
                 <button class="btn success medium">
                     <span class="icon-checkmark"></span> {% trans %}speichern{% endtrans %}
                 </button>
+                <a href="{{ path('metador_admin_page_delete', { slug: form.vars.value.slug }) }}" class="btn error medium">
+                    <span class="icon-bin2"></span> {% trans %}löschen{% endtrans %}
+                </a>
             </div>
         </div>
     </div>
 
     {{ form_end(form) }}
 {% endblock %}
-

@@ -1,0 +1,22 @@
+{% extends 'MetadorThemeBundle:Theme:template.html.twig' %}
+
+{% block center %}
+    <div class="center grow">
+        <div class="center-right">
+            <div class="content">
+                {% if page.slug is not empty %}
+                    {{ page.markdown|markdown }}
+                {% elseif page.slug is empty and is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+                    <div class="notify warning text-center">
+                        Klicken Sie <a href="{{ path('metador_admin_page_new', { slug: slug }) }}" class="btn medium">
+                            <span class="icon-external-link-square"></span>
+                            hier
+                        </a> um eine neue Seite anzulegen.
+                    </div>
+                {% else %}
+                    <div class="notify info text-center">Dieser Inhalt ist derzeit nicht verfügbar.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
