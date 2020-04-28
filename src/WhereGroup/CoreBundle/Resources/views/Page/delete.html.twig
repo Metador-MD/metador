@@ -1,0 +1,37 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{% trans %}Seite löschen{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_page') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {{ form_start(form, { 'action': path('metador_admin_page_delete', { slug: form.vars.value.slug }), 'method': 'POST', 'attr': {
+        novalidate: 'novalidate', autocomplete: 'off'
+    }}) }}
+
+    <div class="grid space row-space responsive notify error remove-last-space">
+        <div class="row r-1">
+            <div class="col c-1 text-center">
+                Sind Sie sicher das sie <strong>{{ form.vars.value.slug }}</strong> löschen möchten?
+            </div>
+        </div>
+        <div class="row r-1">
+            <div class="col c-1 text-right">
+                {{ form_widget(form.delete, { 'attr': {'class': 'btn error'}}) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

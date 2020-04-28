@@ -97,6 +97,15 @@ class ApplicationListener
                 );
             }
 
+            $app->add(
+                $app->get('AdminMenu', 'pages')
+                    ->icon('icon-anchor')
+                    ->label('Seiten')
+                    ->path('metador_admin_page')
+                    ->active($app->routeStartsWith('metador_admin_page'))
+                    ->setRole('ROLE_SYSTEM_GEO_OFFICE')
+            );
+
             if ($app->isRoute('metador_admin_index')) {
                 $stats = $this->cache->stats();
 

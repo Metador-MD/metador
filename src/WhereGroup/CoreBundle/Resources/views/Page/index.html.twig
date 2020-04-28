@@ -1,0 +1,34 @@
+{% extends 'MetadorThemeBundle:Admin:template.html.twig' %}
+
+{% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">{% trans %}Seiten{% endtrans %}</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_page_new') }}" class="btn info medium">
+                    <span class="icon-plus"></span> {% trans %}Neu{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    <table class="table bordered">
+        <thead>
+            <tr>
+                <th>Slug</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for page in pages  %}
+            <tr>
+                <td><a href="{{ path('metador_admin_page_edit', { 'slug': page.slug }) }}">{{ page.slug }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+{% endblock %}
