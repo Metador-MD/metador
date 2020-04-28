@@ -50,6 +50,18 @@
     .center-right {
         @include pos(0, 0, 0, 0);
     }
+
+    & .center.grow,
+    & .center.grow > .center-right,
+    & .center.grow > .center-right > .content {
+        position: relative;
+        bottom: unset;
+        top: unset;
+    }
+    & .center.grow > .center-right > .content {
+        min-height: 400px;
+    }
+
 }
 
 .md .center > .center-right {
@@ -191,6 +203,7 @@
 .md .footer {
     text-align: center;
     margin-top: $padding/2;
+    margin-bottom: $padding;
 }
 
 .md .footer-link {

@@ -2772,6 +2772,14 @@ input.input-element, .md input.btn {
   right: 0;
   bottom: 0; }
 
+.md .main .center.grow, .md .main .center.grow > .center-right, .md .main .center.grow > .center-right > .content {
+  position: relative;
+  bottom: unset;
+  top: unset; }
+
+.md .main .center.grow > .center-right > .content {
+  min-height: 400px; }
+
 .md .center > .center-right > .content-menu {
   height: 30px;
   line-height: 30px;
@@ -2903,7 +2911,8 @@ input.input-element, .md input.btn {
 
 .md .footer {
   text-align: center;
-  margin-top: 10px; }
+  margin-top: 10px;
+  margin-bottom: 20px; }
 
 .md .footer-link {
   padding: 0 10px;

@@ -15,9 +15,9 @@
         <div class="main">
             <div class="top">
                 <div class="top-left">
-                    <span class="logo">
+                    <a href="{{ path('metador_home') }}" class="logo">
                         <img src="{{ asset('bundles/metadortheme/img/logo-s.png') }}" />
-                    </span>
+                    </a>
                 </div>
                 <div class="top-right">
                     {% include 'MetadorThemeBundle:Home:search-field.html.twig' %}
@@ -28,6 +28,10 @@
                 </div>
             </div>
             {% block center %}{% endblock %}
+            <div class="footer">
+                <a href="{{ path('metador_page_show', { slug: 'impressum' }) }}" class="footer-link">Impressum</a> |
+                <a href="{{ path('metador_page_show', { slug: 'datenschutz' }) }}" class="footer-link">Datenschutzerklärung</a>
+            </div>
         </div>
         <div class="timeout-wrapper -js-timeout-wrapper">
             <div class="timeout-dialog -js-timeout-dialog" data-logout-path="{{ url('logout') }}" data-heartbeat-path="{{ url('metador_heartbeat') }}" >
