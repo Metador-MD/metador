@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\Persistence\ObjectRepository;
+use WhereGroup\CoreBundle\Entity\ConfigurationRepository;
 
 /**
  * Class Configuration
@@ -13,6 +15,7 @@ use Doctrine\ORM\ORMException;
  */
 class Configuration implements ConfigurationInterface
 {
+    /** @var ObjectRepository|ConfigurationRepository  */
     protected $repo;
 
     /** @var Cache */
