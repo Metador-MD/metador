@@ -2,8 +2,12 @@
 
 namespace WhereGroup\CoreBundle\Controller;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use WhereGroup\CoreBundle\Entity\Source;
 use WhereGroup\CoreBundle\Event\SourceEvent;
@@ -27,9 +31,9 @@ class SourceController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @Route("/new/", name="metador_admin_source_new", methods={"GET", "POST"})
      */
     public function newAction()
@@ -74,9 +78,9 @@ class SourceController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @Route("/edit/{id}", name="metador_admin_source_edit", methods={"GET", "POST"})
      */
     public function editAction($id)
@@ -110,9 +114,9 @@ class SourceController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @Route("/confirm/{id}", name="metador_admin_source_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)
