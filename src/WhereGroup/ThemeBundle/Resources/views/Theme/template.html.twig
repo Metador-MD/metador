@@ -28,10 +28,12 @@
                 </div>
             </div>
             {% block center %}{% endblock %}
+            {% if isHome is defined %}
             <div class="footer">
                 <a href="{{ path('metador_page_show', { slug: 'impressum' }) }}" class="footer-link">Impressum</a> |
                 <a href="{{ path('metador_page_show', { slug: 'datenschutz' }) }}" class="footer-link">Datenschutzerklärung</a>
             </div>
+            {% endif %}
         </div>
         <div class="timeout-wrapper -js-timeout-wrapper">
             <div class="timeout-dialog -js-timeout-dialog" data-logout-path="{{ url('logout') }}" data-heartbeat-path="{{ url('metador_heartbeat') }}" >
@@ -59,6 +61,33 @@
             <div class="modal-background"></div>
         </div>
     </div>
+    {% if isHome is defined %}
+    <div class="md pop-up">
+        <div class="pop-up-window">
+            <div class="pop-up-window-body">
+                {% set popupContent = get_setting('popup', 'pages') %}
+
+                {% if popupContent is not null %}
+                    {% set page = popupContent|json_decode %}
+                    {{ page.markdown|markdown }}
+                {% elseif popupContent is null and is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+                    <div class="notify warning text-center">
+                        Klicken Sie <a href="{{ path('metador_admin_page_new', { slug:  'popup'}) }}" onclick="closePopup()" class="btn medium">
+                            <span class="icon-external-link-square"></span>
+                            hier
+                        </a> um eine neue Seite anzulegen.
+                    </div>
+                {% else %}
+                    <div class="notify info text-center">Dieser Inhalt ist derzeit nicht verfügbar.</div>
+                {% endif %}
+            </div>
+            <div class="pop-up-window-footer">
+                <button class="btn no-style" onclick="dontShowAgain()">nicht erneut anzeigen</button>
+                <button class="btn info" onclick="closePopup()">schließen</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}
 
 {% block css %}
@@ -105,4 +134,25 @@
     {% for plugin, src in applicationGet('app-javascript') %}
         <script src="{{ asset(src) }}"></script>
     {% endfor %}
+
+    {% if isHome is defined %}
+    <script>
+        const sessionValue = window.sessionStorage.getItem('metador-popup');
+        const localValue   = window.localStorage.getItem('metador-popup');
+
+        if (sessionValue !== 'false' && localValue !== 'false') {
+            $('.pop-up').addClass('active');
+        }
+
+        function closePopup() {
+            window.sessionStorage.setItem('metador-popup', 'false');
+            $('.pop-up').removeClass('active');
+        }
+
+        function dontShowAgain() {
+            window.localStorage.setItem('metador-popup', 'false');
+            closePopup();
+        }
+    </script>
+    {% endif %}
 {% endblock %}

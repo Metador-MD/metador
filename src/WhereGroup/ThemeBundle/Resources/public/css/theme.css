@@ -1086,8 +1086,7 @@ input.input-element, .md input.btn {
 .md .btn.no-style {
   border: none;
   background-color: transparent;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 
 .md .btn.no-style:hover {
   border: none; }
@@ -2917,6 +2916,48 @@ input.input-element, .md input.btn {
 .md .footer-link {
   padding: 0 10px;
   color: #6a6a6a; }
+
+.pop-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.pop-up.active {
+  display: block; }
+
+.pop-up-window {
+  margin: 5rem auto;
+  width: 40rem;
+  height: 80%;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid #e1e1e1;
+  border-radius: 2px; }
+
+.pop-up-window-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 55px;
+  overflow-y: scroll;
+  padding: 20px; }
+
+.pop-up-window-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 55px;
+  text-align: right;
+  padding: 10px;
+  border-top: 1px solid #e1e1e1;
+  background-color: #f7f7f7; }
 
 .light-normal, .md .notify {
   color: #444;

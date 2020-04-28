@@ -210,3 +210,38 @@
     padding: 0 $padding/2;
     color: lighten($font, 15%);
 }
+
+.pop-up {
+    @include pos(0, 0, 0, 0);
+    display: none;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.2);
+    &.active {
+        display: block;
+    }
+}
+
+.pop-up-window {
+    margin: 5rem auto;
+    width: 40rem;
+    height: 80%;
+    background-color: $white;
+    position: relative;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+}
+
+.pop-up-window-body {
+    @include pos(0, 0, $normal-item-height + $padding, 0);
+    overflow-y: scroll;
+    padding: $padding;
+}
+
+.pop-up-window-footer {
+    @include pos('', 0, 0, 0);
+    height: $normal-item-height + $padding;
+    text-align: right;
+    padding: $padding/2;
+    border-top: 1px solid $border;
+    background-color: $background;
+}
