@@ -34,7 +34,7 @@
         "erusev/parsedown": "^1.6",
         "gasparesganga/php-shapefile": "^2.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "mtdowling/cron-expression": "^1.2",
+        "dragonmantank/cron-expression": "^2.3",
         "ramsey/uuid": "^3.8",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
