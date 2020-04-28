@@ -3,7 +3,10 @@
 namespace WhereGroup\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class ConfigurationRepository
@@ -69,7 +72,7 @@ class ConfigurationRepository extends EntityRepository
      * @param $filterValue
      * @param null $default
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function get($key, $filterType = null, $filterValue = null, $default = null)
     {
@@ -157,9 +160,9 @@ class ConfigurationRepository extends EntityRepository
      * @param $value
      * @param string $filterType
      * @param string $filterValue
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function set($key, $value, $filterType = '', $filterValue = '')
     {
