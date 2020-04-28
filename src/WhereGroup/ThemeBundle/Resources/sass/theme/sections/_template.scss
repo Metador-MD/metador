@@ -187,3 +187,13 @@
         from { } to { width: 100% }
     }
 }
+
+.md .footer {
+    text-align: center;
+    margin-top: $padding/2;
+}
+
+.md .footer-link {
+    padding: 0 $padding/2;
+    color: lighten($font, 15%);
+}

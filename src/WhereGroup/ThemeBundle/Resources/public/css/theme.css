@@ -2901,6 +2901,14 @@ input.input-element, .md input.btn {
   to {
     width: 100%; } }
 
+.md .footer {
+  text-align: center;
+  margin-top: 10px; }
+
+.md .footer-link {
+  padding: 0 10px;
+  color: #6a6a6a; }
+
 .light-normal, .md .notify {
   color: #444;
   background-color: #f7f7f7;
