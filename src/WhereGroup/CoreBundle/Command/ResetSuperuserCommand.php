@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Command;
 
+use Symfony\Component\Console\Input\InputOption;
 use WhereGroup\UserBundle\Entity\User;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,7 +18,11 @@ class ResetSuperuserCommand extends ContainerAwareCommand
     {
         $this
             ->setDescription('Create new password for root user')
-            ->setName('metador:reset:superuser');
+            ->setName('metador:reset:superuser')
+            ->setDefinition([
+                new InputOption('password', 'p', InputOption::VALUE_OPTIONAL, 'Default password'),
+            ])
+        ;
     }
 
     /**
@@ -29,7 +34,11 @@ class ResetSuperuserCommand extends ContainerAwareCommand
     {
         $rootUser  = 'root';
         $rootGroup = 'ROLE_SYSTEM_SUPERUSER';
-        $password  = $this->getContainer()->get('metador_user')->generatePassword();
+        $password  = $input->getOption('password');
+
+        if (is_null($password)) {
+            $password  = $this->getContainer()->get('metador_user')->generatePassword();
+        }
 
         $user = $this->getContainer()->get('metador_user')->getByUsername($rootUser);
 

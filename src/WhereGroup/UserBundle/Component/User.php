@@ -239,7 +239,7 @@ class User implements UserInterface
      */
     public function encodePassword($user, $password)
     {
-        return $this->encoder->encodePassword($user, $password);
+        return $this->encoder->encodePassword($user, trim($password));
     }
 
     /**
@@ -301,7 +301,7 @@ class User implements UserInterface
      * @param int $length
      * @return string
      */
-    public function generatePassword($length = 10)
+    public function generatePassword($length = 40)
     {
         $password = "";
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
