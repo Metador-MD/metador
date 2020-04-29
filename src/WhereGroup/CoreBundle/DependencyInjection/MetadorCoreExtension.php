@@ -26,7 +26,6 @@ class MetadorCoreExtension extends Extension
         $loader->load('services.xml');
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('parameters.yml');
         $loader->load('services.yml');
     }
 }
