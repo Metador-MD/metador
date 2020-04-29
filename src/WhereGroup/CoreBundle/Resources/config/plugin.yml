@@ -14,6 +14,7 @@ metador_core:
                 address: Adressen
                 lists: Auswahllisten
                 keywords: Schlüsselwörter
+            default: [health, source, plugin, address, lists, keywords]
         date_format:
             type: string
             label: Datumsformat
@@ -74,3 +75,4 @@ metador_core:
                 series: Datensatzreihe
                 dataset: Datensatz
                 tile: Tile
+            default: [service, dataset]

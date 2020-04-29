@@ -12,5 +12,6 @@ metador_service_profile:
         source:
             type: multi
             label: Verfügbar in Datenquelle
-            description: bla bloub
+            description: Einstellen in welcher Datenquelle der Datensatz erstellt werden kann.
             optionSource: source
+            default: default
