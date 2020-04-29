@@ -139,8 +139,9 @@
     <script>
         const sessionValue = window.sessionStorage.getItem('metador-popup');
         const localValue   = window.localStorage.getItem('metador-popup');
+        const systemValue  = '{{ _popup }}';
 
-        if (sessionValue !== 'false' && localValue !== 'false') {
+        if (sessionValue !== 'false' && localValue !== 'false' && systemValue !== '') {
             $('.pop-up').addClass('active');
         }
 

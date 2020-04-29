@@ -20,6 +20,7 @@ parameters:
     cache_host: 127.0.0.1
     cache_port: 11211
     cache_enabled: false
+    show_popup: false
 
     solr_host: ~
     solr_port: ~
