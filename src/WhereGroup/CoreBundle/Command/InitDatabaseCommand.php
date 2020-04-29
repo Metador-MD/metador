@@ -84,10 +84,6 @@ class InitDatabaseCommand extends ContainerAwareCommand
         $this->addSourceAndProfilesToDatabase();
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws OptimisticLockException
-     */
     private function addSourceAndProfilesToDatabase()
     {
         $sourceService = $this->getContainer()->get('metador_source');
@@ -97,11 +93,6 @@ class InitDatabaseCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
     private function addSettingsToDatabase()
     {
         // Add default configuration to database
