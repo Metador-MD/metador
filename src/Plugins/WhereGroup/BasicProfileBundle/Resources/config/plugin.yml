@@ -1,7 +1,7 @@
 metador_basic_profile:
     origin: WhereGroup
     name: Basisprofil
-    description: -
+    description: Basic profile
     class_path: Plugins\WhereGroup\BasicProfileBundle
     class_name: MetadorBasicProfileBundle
     version: '1.0'

@@ -14,4 +14,4 @@ metador_dataset_profile:
             label: Verfügbar in Datenquelle
             description: Einstellen in welcher Datenquelle der Datensatz erstellt werden kann.
             optionSource: source
-            default: default
+            default: [default]
