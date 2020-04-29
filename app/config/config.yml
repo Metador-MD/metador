@@ -31,7 +31,7 @@ framework:
         gc_probability: null
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
-        name: METADOR2
+        name: METADOR
     fragments: ~
     http_method_override: true
     assets: ~
@@ -43,7 +43,8 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        version: "%metador_version%"
+        _version: "%metador_version%"
+        _popup: "%show_popup%"
 
 # Doctrine Configuration
 doctrine:
