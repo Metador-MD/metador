@@ -32,7 +32,7 @@ class Configuration
     private $key;
 
     /**
-     * @ORM\Column(type="text", nullable=false, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $value;
 
