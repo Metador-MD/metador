@@ -196,14 +196,25 @@ var MetadorOl4Bridge = {
         var coords = pointsStr.split(" ");
         var i;
         var length = coords.length;
+        var t0, t1;
         for (i = 1; i < length; i+=2) {
-            ring.push([parseFloat(coords[i - 1]), parseFloat(coords[i])]);
+            t0 = parseFloat(coords[i - 1]);
+            t1 = parseFloat(coords[i]);
+            if (t0 < t1) { // x/y
+                ring.push([t0, t1]);
+            } else { // y/x
+                ring.push([t1, t0]);
+            }
         }
+        return this.getPolygonGeoFeature([ring]);
+    },
+
+    getPolygonGeoFeature: function (polyCoords, properties) {
         var feature = {
             'type': 'Feature',
             'geometry': {
                 'type': 'Polygon',
-                'coordinates': [ring]
+                'coordinates': polyCoords
             }
         };
         if (properties) {
