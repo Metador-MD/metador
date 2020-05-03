@@ -49,6 +49,20 @@ Search.prototype = {
         });
     },
 
+    updateFilters: function() {
+        var self = this;
+
+        $('.-js-search-filter').each(function () {
+            const name         = $(this).attr('name');
+            const defaultValue = $(this).attr('data-value');
+            const value        = self.get(name);
+
+            if (typeof value === 'undefined') {
+                $('.-js-search-filter[name="' + name + '"]').val(defaultValue);
+            }
+        });
+    },
+
     initFilters: function() {
         var self = this;
         var source = self.get('source', null);
