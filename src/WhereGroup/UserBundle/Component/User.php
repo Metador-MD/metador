@@ -6,7 +6,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use WhereGroup\CoreBundle\Component\Utils\Debug;
 use WhereGroup\UserBundle\Entity\Group;
 use WhereGroup\UserBundle\Entity\GroupRepository;
 use WhereGroup\UserBundle\Entity\User as UserEntity;
