@@ -130,8 +130,6 @@ class AddressController extends Controller
     /**
      * @param $id
      * @return RedirectResponse|Response
-     * @throws ORMException
-     * @throws OptimisticLockException
      * @Route("/confirm/{id}", name="metador_admin_address_confirm", methods={"GET", "POST"})
      */
     public function confirmAction($id)

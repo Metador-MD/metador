@@ -205,8 +205,6 @@ class Address
     /**
      * @param $entity
      * @return $this
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function remove($entity)
     {
