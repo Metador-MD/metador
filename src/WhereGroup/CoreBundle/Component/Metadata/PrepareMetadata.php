@@ -39,6 +39,7 @@ class PrepareMetadata
 
         $metadata
             ->setInsertUser($user)
+            ->setInsertUsername($user->getUsername())
             ->setInsertTime($date->getTimestamp())
             ->setUpdateUser($user)
             ->setUpdateTime($date->getTimestamp())
