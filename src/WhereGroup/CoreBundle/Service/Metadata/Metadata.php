@@ -320,7 +320,7 @@ class Metadata
             ->setLockTime((new DateTime())->getTimestamp())
             ->setObject($p);
 
-        $this->saveRaw($entity, [ 'dispatchEvent' => false ]);
+        $this->saveRaw($entity, [ 'raw' => true ]);
 
         $this->log('success', 'lock', $entity, '%title% gesperrt.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
@@ -344,7 +344,7 @@ class Metadata
             ->setObject($p)
         ;
 
-        $this->saveRaw($entity, [ 'dispatchEvent' => false ]);
+        $this->saveRaw($entity, [ 'raw' => true ]);
 
         $this->log('success', 'unlock', $entity, '%title% freigegeben.', [
             '%title%' => $entity->getTitle() !== '' ? $entity->getTitle() : 'Datensatz'
