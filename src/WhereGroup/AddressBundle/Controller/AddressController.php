@@ -91,8 +91,15 @@ class AddressController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_GEO_OFFICE');
 
+        $entity = $this->get('metador_address')->get($id);
+
+        if (!$entity) {
+            $this->setFlashWarning('edit', $id, 'Adresse nicht gefunden.', []);
+            return $this->redirectToRoute('metador_admin_address');
+        }
+
         $form = $this
-            ->createForm(AddressType::class, $this->get('metador_address')->get($id))
+            ->createForm(AddressType::class, $entity)
             ->handleRequest($this->get('request_stack')->getCurrentRequest())
         ;
 
