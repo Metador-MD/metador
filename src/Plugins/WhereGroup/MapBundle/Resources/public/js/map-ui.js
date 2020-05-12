@@ -206,7 +206,7 @@ var MetadorOl4Bridge = {
                 ring.push([t1, t0]);
             }
         }
-        return this.getPolygonGeoFeature([ring]);
+        return this.getPolygonGeoFeature([ring], properties);
     },
 
     getPolygonGeoFeature: function (polyCoords, properties) {
