@@ -83,7 +83,8 @@ abstract class Search
      */
     public function getTerms()
     {
-        return (array)explode(' ', $this->terms);
+        // Multiple space charakters in a search term provide multiple blank search terms
+        return (array)preg_split('/\s+/', trim($this->terms));
     }
 
 
