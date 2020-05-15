@@ -541,24 +541,6 @@ class Metadata
     /**
      * @return mixed
      */
-    public function getReadonly()
-    {
-        return $this->readonly;
-    }
-
-    /**
-     * @param $readonly
-     * @return $this
-     */
-    public function setReadonly($readonly)
-    {
-        $this->readonly = (boolean)$readonly;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getDate()
     {
         return $this->date;
