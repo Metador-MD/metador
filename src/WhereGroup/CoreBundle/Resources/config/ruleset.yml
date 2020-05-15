@@ -16,9 +16,12 @@ DeprecatedRouteNamespace:
     message: "Namespace Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route is deprecated,
     use Symfony\\Component\\Routing\\Annotation\\Route instead."
     regexp: "/Sensio\\\\Bundle\\\\FrameworkExtraBundle\\\\Configuration\\\\Route/"
+DissallowDebug:
+    message: "Remove Debug class"
+    regexp: "/WhereGroup\\\\CoreBundle\\\\Component\\\\Utils\\\\Debug/"
 # Other
 DisallowDump:
-    message: "Please remove dump() or var_dump()."
+    message: "Remove dump() or var_dump()."
     regexp: "/[^:>](dump|var_dump)\\(/"
 # Javascript
 DisallowConsoleLog:
