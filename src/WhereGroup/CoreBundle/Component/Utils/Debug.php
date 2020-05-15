@@ -13,14 +13,15 @@ class Debug
     /**
      * @param $message
      * @param string $prepend
+     * @param string $append
      */
-    public static function append($message, $prepend = "\n")
+    public static function append($message, $prepend = "\n", $append = "")
     {
         if (is_array($message) || is_object($message)) {
             $message = print_r($message, 1);
         }
 
-        file_put_contents(self::$filename, $prepend . $message, FILE_APPEND);
+        file_put_contents(self::$filename, $prepend . $message . $append, FILE_APPEND);
     }
 
     /**
