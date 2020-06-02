@@ -12,6 +12,8 @@ class Page implements Serializable
 {
     protected $slug;
 
+    protected $link;
+
     protected $markdown;
 
     /**
@@ -51,13 +53,33 @@ class Page implements Serializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     * @return Page
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
      * @return false|string
      */
     public function serialize()
     {
         return json_encode([
             'slug' => $this->slug,
-            'markdown' => $this->markdown
+            'markdown' => $this->markdown,
+            'link' => $this->link
         ]);
     }
 
@@ -70,6 +92,7 @@ class Page implements Serializable
         $array = json_decode($serialized, true);
         $this->slug = $array['slug'];
         $this->markdown = $array['markdown'];
+        $this->link = isset($array['link']) ? $array['link'] : null;
         return $this;
     }
 }

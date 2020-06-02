@@ -136,6 +136,9 @@ class PageController extends Controller
     {
         try {
             $page = $this->getEntity($slug);
+            if (!empty($page->getLink())) {
+                return $this->redirect($page->getLink());
+            }
         } catch (Exception $e) {
             $page = new Page();
         }

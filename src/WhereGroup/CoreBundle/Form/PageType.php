@@ -29,9 +29,11 @@ class PageType extends AbstractType
                     new Regex(['pattern' => '/^[a-z]+$/', 'message' => 'Slug darf nur aus Kleinbuchstaben bestehen.']),
                 ]
             ])
+            ->add('link', TextType::class, [
+                'label' => 'Link',
+            ])
             ->add('markdown', TextareaType::class, [
-                'label'    => 'Seiteninhalt',
-                'constraints' => [new NotBlank(['message' => 'Seiteninhalt darf nicht leer sein.'])]
+                'label' => 'Seiteninhalt',
             ])
         ;
     }
