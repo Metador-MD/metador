@@ -3,10 +3,47 @@
 {% block title %}{% trans %}Plugin importieren{% endtrans %}{% endblock %}
 
 {% block content %}
+    <div class="grid content-title">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                <h1 class="title dm">Plugin Hochladen</h1>
+            </div>
+            <div class="col c-1-2 text-right">
+                <a href="{{ path('metador_admin_plugin') }}" class="btn medium">
+                    <span class="icon-sign-out"></span> {% trans %}Übersicht{% endtrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line-separator" />
+
+    {% if not form.vars.valid %}
+        <div class="notify error">
+            {{ form_errors(form) }}
+            {{ form_errors(form.slug) }}
+            {{ form_errors(form.name) }}
+        </div>
+    {% endif %}
+
     {{ form_start(form, { 'action': path('metador_admin_plugin_upload'), 'method': 'POST', 'attr': {
         novalidate: 'novalidate', autocomplete: 'off'
     }}) }}
 
-    {{ form_widget(form, {'attr': {'class': 'plugin-import'}}) }}
+    <div class="grid space responsive">
+        <div class="row r-2">
+            <div class="col c-1-2">
+                {# <div>{{ form_label(form.attachment, null, { 'label_attr': {'class': 'form-label'}}) }}</div> #}
+                <div class="form-field-wrapper">
+                    {{ form_widget(form.attachment, { 'attr': { 'class': 'fileupload' }}) }}
+                </div>
+            </div>
+            <div class="col c-1-2 text-right">
+                {{ form_widget(form.save, { 'attr': {'class': 'btn'}}) }}
+            </div>
+        </div>
+    </div>
+
+    {# {{ form_widget(form, {'attr': {'class': ''}}) }} #}
     {{ form_end(form) }}
 {% endblock %}
