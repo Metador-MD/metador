@@ -2,7 +2,9 @@
 
 namespace Plugins\WhereGroup\ManualBundle\Controller;
 
+use Plugins\WhereGroup\ManualBundle\Event\ManualEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -11,37 +13,38 @@ use Symfony\Component\Routing\Annotation\Route;
 class ManualController extends Controller
 {
     /**
-     * @Route("/", name="manual", methods={"GET"})
+     * @Route("/{manual}", name="manual_index", methods={"GET"})
+     * @param string $manual
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction($manual = 'Anwenderhandbuch')
     {
-        return $this->render('@MetadorManual/Manual/index.html.twig');
+        $event = new ManualEvent();
+        $event
+            ->setEnvironment($this->get('kernel')->getEnvironment())
+            ->setAuthorizationChecker($this->get('security.authorization_checker'))
+            ->setManualType($manual)
+        ;
+
+        $this->get('event_dispatcher')->dispatch('manual.loading', $event);
+
+        return $this->render('@MetadorManual/Manual/index.html.twig', [
+            'manual' => $manual,
+            'index'  => $event->getIndex($manual)
+        ]);
     }
 
     /**
-     * @Route("/user", name="manual_user", methods={"GET"})
+     * @Route("/{manual}/{plugin}/{page}", name="manual_page", methods={"GET"})
+     * @param $manual
+     * @param $plugin
+     * @param $page
+     * @return Response
      */
-    public function userAction()
+    public function pageAction($manual, $plugin, $page)
     {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
-        return $this->render('@MetadorManual/Manual/user.html.twig');
-    }
-
-    /**
-     * @Route("/metadata", name="manual_metadata", methods={"GET"})
-     */
-    public function metadataAction()
-    {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_USER');
-        return $this->render('@MetadorManual/Manual/metadata.html.twig');
-    }
-
-    /**
-     * @Route("/plugin", name="manual_plugin", methods={"GET"})
-     */
-    public function pluginAction()
-    {
-        $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
-        return $this->render('@MetadorManual/Manual/plugin.html.twig');
+        return $this->render('@' . $plugin . '/Manual/' . $page . '.html.twig', [
+            'manual' => $manual
+        ]);
     }
 }

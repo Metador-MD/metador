@@ -2,7 +2,9 @@
 
 namespace Plugins\WhereGroup\ManualBundle\EventListener;
 
+use Exception;
 use WhereGroup\CoreBundle\Event\ApplicationEvent;
+use WhereGroup\PluginBundle\Component\ApplicationIntegration\ManualMenu;
 
 /**
  * Class ApplicationListener
@@ -10,11 +12,13 @@ use WhereGroup\CoreBundle\Event\ApplicationEvent;
  */
 class ApplicationListener
 {
+    protected $app;
+
     /**
      * @param ApplicationEvent $event
-     * @throws \Exception
+     * @throws Exception
      */
-    public function onLoading(ApplicationEvent $event)
+    public function onApplicationLoading(ApplicationEvent $event)
     {
         $app = $event->getApplication();
 
@@ -23,40 +27,35 @@ class ApplicationListener
                 ->icon('icon-book')
                 ->label('')
                 ->title('Handbuch')
-                ->path('manual')
+                ->path('manual_index')
                 ->active($app->routeStartsWith('manual'))
         );
 
         if ($app->routeStartsWith('manual')) {
-            $app
-                ->prepend(
-                    $app->get('ManualMenu', 'index')
-                        ->icon('icon-home')
-                        ->label('Benutzerhandbuch')
-                        ->path('manual')
-                )
-                ->prepend(
-                    $app->get('ManualMenu', 'user')
-                        ->icon('icon-user')
-                        ->label('Benutzer/Gruppen')
-                        ->path('manual_user')
-                        ->setRole('ROLE_SYSTEM_SUPERUSER')
-                )
-                ->prepend(
-                    $app->get('ManualMenu', 'metadata')
-                        ->icon('icon-file-text')
-                        ->label('Metadaten')
-                        ->path('manual_metadata')
-                        ->setRole('ROLE_SYSTEM_USER')
-                )
-                ->prepend(
-                    $app->get('ManualMenu', 'plugin')
+            $app->append(
+                $app->getIntegrationClass(ManualMenu::class, 'user_manual')
+                    ->icon('icon-book')
+                    ->label('Anwenderhandbuch')
+                    ->path('manual_index')
+                    ->active(false)
+            )->append(
+                $app->getIntegrationClass(ManualMenu::class, 'admin_manual')
+                    ->icon('icon-wrench')
+                    ->label('Administration')
+                    ->path('manual_index', ['manual' => 'Administration'])
+                    ->setRole('ROLE_SYSTEM_SUPERUSER')
+                    ->active(false)
+            );
+
+            if ($app->isEnv('dev')) {
+                $app->append(
+                    $app->getIntegrationClass(ManualMenu::class, 'dev_manual')
                         ->icon('icon-puzzle-piece')
-                        ->label('Plugins')
-                        ->path('manual_plugin')
-                        ->setRole('ROLE_SYSTEM_SUPERUSER')
-                )
-            ;
+                        ->label('Entwicklung')
+                        ->path('manual_index', ['manual' => 'Entwicklung'])
+                        ->active(false)
+                );
+            }
         }
     }
 }

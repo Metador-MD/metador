@@ -1,0 +1,82 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index', { manual: manual }) }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+    ## Handbucheintrag Erstellen
+
+    Um das Menü zu erweitern, wird als erstes ein Controller benötigt.
+    ```php
+    <?php
+    namespace Plugins\WhereGroup\ManualBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    /**
+     * @Route("/public/manual")
+     */
+    class ManualController extends Controller
+    {
+        /**
+         * @Route("/user", name="manual_user", methods={"GET"})
+         */
+        public function userAction()
+        {
+            $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+            return $this->render('@MetadorManual/Manual/user.html.twig');
+        }
+    }
+    ```
+    Das Template sieht wie folgt aus.
+    ```twig
+    {% verbatim %}{% extends 'MetadorManualBundle::template.html.twig' %}
+
+    {% block manual %}
+        # Überschrift
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+    {% endblock %}
+
+    {% block devmanual %}
+        # Entwicklung
+
+        {# Codebeispiele #}
+    {% endblock %}{% endverbatim %}
+    ```
+    Um einen Menüpunkt zu erstellen muss folgender ApplicationListener erstellt werden. Dieser wird benachrichtigt sobald das Benutzerhandbuch-Menü aufgebaut wird und hängt sich rein.
+    ```php
+    <?php
+
+    namespace Plugins\WhereGroup\ManualBundle\EventListener;
+
+    use WhereGroup\CoreBundle\Event\ApplicationEvent;
+
+    class ApplicationListener
+    {
+        public function onLoading(ApplicationEvent $event)
+        {
+            $app = $event->getApplication();
+
+            if ($app->routeStartsWith('manual')) {
+                $app->add(
+                    $app->get('ManualMenu', 'user')
+                        ->icon('icon-user')
+                        ->label('Benutzer')
+                        ->path('manual_user')
+                        ->setRole('ROLE_SYSTEM_SUPERUSER')
+                    );
+                }
+            }
+    }
+    ```
+    Damit der ApplicationListener aufgerufen wird, muss vorher noch die **services.xml** im Bundle erweitert werden.
+    ```xml
+    <service id="metador.manual.app.listener" class="Plugins\WhereGroup\ManualBundle\EventListener\ApplicationListener">
+        <tag name="kernel.event_listener" event="application.loading" method="onLoading"/>
+    </service>
+    ```
+{% endblock %}

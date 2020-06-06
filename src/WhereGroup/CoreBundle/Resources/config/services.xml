@@ -55,7 +55,7 @@
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="kernel" />
         </service>
-        <service id="metador.application" class="%metador.application.class%" public="true">
+        <service id="metador_application" class="%metador.application.class%" public="true">
             <argument type="service" id="security.authorization_checker" />
             <argument>%kernel.environment%</argument>
         </service>
@@ -147,7 +147,7 @@
             <tag name="twig.extension" />
         </service>
         <service id="metador.twig.application" class="%metador.twig.application.class%">
-            <argument type="service" id="metador.application" />
+            <argument type="service" id="metador_application" />
             <argument type="service" id="metador_plugin" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="request_stack" />

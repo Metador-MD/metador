@@ -2,8 +2,10 @@
 
 namespace WhereGroup\CoreBundle\Component;
 
+use Exception;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use WhereGroup\PluginBundle\Component\ApplicationIntegration as Integration;
+use WhereGroup\PluginBundle\Component\ApplicationIntegration\ApplicationIntegration;
 
 /**
  * Class Application
@@ -83,11 +85,11 @@ class Application
             if (!is_null($role) && false === $this->authorizationChecker->isGranted($role)) {
                 return $this;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this;
         }
 
-        if (isset($data['path']) && $data['path'] === $this->route) {
+        if (!isset($data['active']) && isset($data['path']) && $data['path'] === $this->route) {
             $data['active'] = true;
         }
 
@@ -138,7 +140,7 @@ class Application
      * @param $class
      * @param null $prefix
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function get($class, $prefix = null)
     {
@@ -172,8 +174,25 @@ class Application
             case 'configuration':
                 return new Integration\Configuration($prefix);
             default:
-                throw new \Exception("Class not found");
+                throw new Exception("Class not found");
         }
+    }
+
+    /**
+     * @param $class
+     * @param null $prefix
+     * @return mixed
+     * @throws Exception
+     */
+    public function getIntegrationClass($class, $prefix = null)
+    {
+        $object = new $class($prefix);
+
+        if (!$object instanceof ApplicationIntegration) {
+            throw new Exception("Integration class not found.");
+        }
+
+        return $object;
     }
 
     /**

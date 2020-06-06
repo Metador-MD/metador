@@ -8,7 +8,7 @@ namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
  */
 class GlobalMenu extends Base
 {
-    protected $type   = 'app-global-menu';
+    protected $type = 'app-global-menu';
 
     /**
      * @param $icon
@@ -48,7 +48,7 @@ class GlobalMenu extends Base
      */
     public function active($active)
     {
-        $this->data[$this->prefix]['active'] = $active;
+        $this->data[$this->prefix]['active'] = (boolean)$active;
         return $this;
     }
 

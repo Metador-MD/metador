@@ -113,11 +113,12 @@ class ArrayParser
      * @param $path
      * @param $value
      * @param bool $reindex
+     * @param array $default
      * @return mixed
      */
-    public static function append(array &$array, $path, $value, $reindex = false)
+    public static function append(array &$array, $path, $value, $reindex = false, $default = null)
     {
-        $item = self::get($array, $path, null, $reindex);
+        $item = self::get($array, $path, $default, $reindex);
 
         if ($item === null) {
             $item = $value;

@@ -1,0 +1,7 @@
+services:
+    Plugins\WhereGroup\ManualBundle\EventListener\ManualListener:
+        tags:
+            - { name: kernel.event_listener, event: manual.loading }
+    Plugins\WhereGroup\ManualBundle\EventListener\ApplicationListener:
+        tags:
+            - { name: kernel.event_listener, event: application.loading }

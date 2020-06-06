@@ -6,7 +6,7 @@ namespace WhereGroup\PluginBundle\Component\ApplicationIntegration;
  * Class Base
  * @package WhereGroup\PluginBundle\Component\ApplicationIntegration
  */
-abstract class Base
+abstract class Base implements ApplicationIntegration
 {
     protected $data   = [];
     protected $role   = null;
