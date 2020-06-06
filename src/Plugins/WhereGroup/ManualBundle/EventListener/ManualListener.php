@@ -17,7 +17,8 @@ class ManualListener
     {
         $event
             // @codingStandardsIgnoreStart
-            ->add('Anwenderhandbuch', 'Allgemeines', 'MetadorManual', 'general', null)
+            ->add('Anwenderhandbuch', 'Allgemein', 'MetadorManual', 'general', null)
+            ->add('Anwenderhandbuch', 'Arbeiten mit der Karte', 'MetadorManual', 'map', null)
             ->add('Anwenderhandbuch', 'Metadaten', 'MetadorManual', 'metadata', 'ROLE_SYSTEM_USER')
             ->add('Administration', 'Benutzer/Gruppen', 'MetadorManual', 'user', 'ROLE_SYSTEM_SUPERUSER')
             ->add('Administration', 'Plugins', 'MetadorManual', 'plugin', 'ROLE_SYSTEM_SUPERUSER')

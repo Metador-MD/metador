@@ -1,0 +1,129 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+    # Arbeiten mit der Karte
+
+    Auf der Startseite ist eine Kartenkomponente hinterlegt, die sowohl für die Suche als auch für die Ergebnisdarstellung genutzt werden kann. Die Karte öffnet sich, indem man das Kartensymbol neben der Sucheingabe klickt.
+
+    ## Grundnavigation der Karte
+
+    Die Grundnavigation der Karte ist einfach zu bedienen.
+
+    - Zoomen und Bewegen: Hauptwerkzeug zum Zoomen und Bewegen ist die Maus. Wenn man die linke Maustaste gedrückt hält, kann die Karte bewegt werden. Mit dem Mausrad kann in die Karte rein- oder rausgezoomt werden.
+    - Zoomen mit Maus und der Shift-Taste: Mit dem Drücken der STRG- und der Shift-Taste kann über die Maus ein Zoom-Rechteck aufgebaut werden, in das dann hinein gezoomt wird.
+    - Zoomschaltfläche: Mit der Zoomschaltfläche kann ebenfalls ein Rechteck in der Karte geöffnet werden, in welches dann hinein gezoomt wird.
+
+    ## Auswahl des Koordinatensystems
+
+    Die Box zur Auswahl des Koordinatensystems ändert dieses in dem Kartenbild. Per Voreinstellung und zur Kompatiblität mit den Metadaten ist dieses zu Beginn auf EPSG:4326 (WGS84 - World Geodetic System 1984).
+
+    Weitere unterstützte Koordinatensysteme sind:
+
+    - EPSG:4258 (ETRS89)
+    - EPSG:31466 (DHDN / 3-degree Gauss-Kruger zone 2)
+    - EPSG:31467 (DHDN / 3-degree Gauss-Kruger zone 3)
+    - EPSG:25832 (ETRS89 / UTM zone 32N)
+
+    Die Karte wechselt automatisch in das gewählte Koordinatensystem.
+
+    Der jeweilige Kartendienst, auch die selbst eingeladenen Dienste, müssen das Koordinatensystem unterstützen. Ist dies nicht der Fall, wird der Dienst als „deaktiviert“ angezeigt (ausgegraute und deaktivierte Checkbox) und aktiviert sich wieder automatisch, wenn ein Koordinatensystem ausgewählt wird, welches der Dienst unterstützt.
+
+    ## Einladen eigener Kartendienste
+
+    Mithilfe des Textfeldes unter `WMS hinzufügen` und der Schaltfläche daneben, können zusätzliche WMS Dienste in die Karte eingeladen werden. Dazu wird einfach die Capabilities-URL in das Textfeld eingetragen.
+
+    Für die Dauer des Einladens wird die Aktivitätsanzeige oberhalb des Browserfensters angezeigt. Nach dem Einladen befindet sich der Dienst in der Layerliste und kann dort an- und ausgeschaltet werden, verschoben oder in seiner Transparenzdarstellung verändert werden.
+
+    ## Diensteliste, Inhalt des Kartenfensters
+
+    In der linken Leiste des Kartenfensters werden die einzelnen Dienste angezeigt. Sie können in der Reihenfolge verändert werden, indem man mit der Maus einen Diensteeintrag einfach nach oben oder unten verschiebt. Die Reihenfolge hat Auswirkung auf die Darstellung der Karte. Dienste, die in der Diensteliste weiter oben gelistet werden, werden in der Karte auch über den anderen Diensten gezeichnet.
+
+    Des weiteren ist es möglich, mit dem Auswahlfeld die Transparenz des Dienstes zu verändern, so dass die darunter gezeichneten Inhalte stärker hervortreten.
+
+    _Anmerkung_: Eingezeichnete Geometrien oder hochgeladenen Shape-Dateien bzw. GML Dateien finden sich nicht in dieser Liste. Sie dienen nur der Auswahl der räumlichen Einschränkung und sind daher nur kurzzeitig vorhanden.
+
+    ## Räumliche Einschränkung
+
+    ### Räumliche Einschränkung durch das Einzeichnen einer Geometrie
+
+    Mithilfe der Polygon/Rechteck Auswahl kann eine Geometrie in das Kartenfenster eingezeichnet werden, die zur räumlichen Einschränkung der Suche verwendet wird.
+
+    Folgende Geometrien können ausgewählt werden:
+
+    - Box: Einzeichnen eines Rechtecks
+    - Polygon: Einzeichnen eines Polygons.
+
+    Der Eintrag „None“ dient dazu, dass die Karte nicht auf ein Einzeichnen reagiert.
+
+    Eine Box wird folgendermaßen eingezeichnet:
+
+    - Wählen Sie Box aus der Liste.
+    - Klicken Sie in die Karte
+    - Ziehen Sie das Rechteck auf.
+    - Klicken Sie nochmals in die Karte, um das Rechteck abzuschließen.
+
+    Ein Polygon wird folgendermaßen gezeichnet:
+
+    - Wählen Sie Polygon aus der Liste.
+    - Klicken Sie in die Karte
+    - Ziehen Sie die erste Kante des Polygons auf.
+    - Klicken Sie in die Karte um einen Stützpunkt zu setzen.
+    - Wiederholen sie das Aufziehen einer Kante und das Setzen eines Stützpunktes.
+    - Klicken Sie nochmals in die Karte, um das Polygon abzuschließen.
+    - _Anmerkung_: Die Auswahl einer Box oder eines Polygons löscht die vorherige Zeichnung sofort aus der Karte.
+
+    ### Räumliche Einschränkung durch das Einladen eigener Shapefiles oder GML Dateien
+
+    Über die den Eintrag `geladene` können eigene lokale Dateien der Karte hinzugefügt werden. Diese dienen dann der Suche und der Eingrenzung des Suchgebiets. Es werden dabei Shape-Dateien und GML Version 3.1 Dateien unterstützt.
+
+    Shape-Dateien: Da Shape-Dateien aus mehreren Dateien bestehen, müssen diese als ZIP-Datei hochgeladen werden. Dabei muss der Name der ZIP-Datei dem Namen der Shape-Datei entsprechen.
+
+    _Beispiel_: Gegeben sei die Shape-Datei `beispiel1.shp`. Diese besteht mindestens noch aus der Datei `beispiel1.dbf` und `beispiel1.shx`. In diesem Fall sind noch weitere Dateien zu dem Shape zugeordnet. Diese müssen in eine ZIP-Datei gepackt werden, die auch den Namen der Shape-Datei hat, also `beispiel1.zip`. Der folgende Screenshot zeigt den Inhalt der ZIP-Datei.
+
+    Im Dateiauswahldialog wird die ZIP-Datei ausgewählt. Nach dem Bestätigen der OK Taste wird immer nur die erste Geometrie der Shape-Datei ausgewählt und im Kartenfenster angezeigt. Diese Geometrie dient dann zur räumlichen Eingrenzung der Suche.
+
+    Analog dazu funktioniert das Einladen von GML Dateien. Diese haben die Dateiendung XML und müssen im GML 3.1 Format vorliegen. Nach der Auswahl der Datei wird die erste Geometrie im Kartenfenster angezeigt und kann für die räumliche Sucheinschränkung verwendet werden.
+
+    Räumliche Filterkriterien
+    Sobald Sie eine Geometrie (BBOX, Polygon) eingezeichnet oder eine Geometrie (Shape, GML) hochgeladen haben, wirkt ein räumlicher Filter auf die Suche.
+
+    ### Dabei können verschiedene räumliche Filter verwendet werden.
+
+    Schneidet: Die BoundingBox des Metadatensatzes (blaue Fläche) schneidet das eingezeichnete Gebiet (rote Fläche), d.h. irgendein Punkt der BoundingBox ist Teil des Gebietes. Metadatensätze, deren BoundingBoxen komplett außerhalb des Gebietes liegen, werden nicht gefunden.
+
+    _Innerhalb_: Man sucht Metadatensätze, die innerhalb des eingezeichneten Gebiets liegen. Die BoundingBox des Metadatensatzes (blaue Fläche) ist also kleiner als das eingezeichnete Gebiet (rote Fläche).
+
+    _Umfasst_: Man möchte Datensätze finden, die das eingezeichnete Gebiet umfassen oder diesem gleich sind. Die BoundingBox des Metadatensatzes (blaue Fläche) ist also größer als das eingezeichnete Gebiet (rote Fläche). Ist ein Datensatz innerhalb des eingezeichneten Gebietes, wird er nicht gefunden. Schneidet ein Datensatz das eingezeichnete Gebiet, wird er auch nicht gefunden.
+
+    ### Info Schaltfläche
+
+    Die Info Schaltfläche dient dazu, aus der Karte, die einzelnen Metadatensätze herauszufinden, die auf der momentane Suchergebnisseite angezeigt werden.
+
+    Im folgenden Beispiel haben drei Metadatensätze die gleiche BoundingBox (blaue Fläche). Mit einem Klick auf die Fläche werden die jeweiligen Datensätze angezeigt.
+
+    Mit einem Klick auf einen Eintrag wird der entsprechende Metadatensatz in der Resultatliste markiert.
+
+    ### Mögliche Fehlermeldungen beim Arbeiten mit externen Diensten und Daten in der Karte
+
+    Beim Arbeiten mit externen WMS Diensten, die zur Karte hinzugeladen werden können verschiedene Fehler auftreten, die mit den entsprechenden Diensten zusammenhängen.
+
+    - Die URL liefert keine Daten: Der WMS Dienst liefert keine Antwort bzw. existiert nicht. Dies kann auftreten, wenn der Dienst nicht auf die GetCapabilities Anfrage antwortet. Als Gegentest kann man hierzu die eingegebene GetCapabilities URL in einem extra Browserfenster aufrufen und testen.
+    - Die URL liefert kein XML Dokument: Die vom WMS zurückgegebene Antwort auf die GetCapabilities Anfrage Response ist keine XML-Datei. Dies kann passieren, wenn der WMS Dienst stattdessen einen Webserver Fehler zurückgibt. Als Gegentest kann man hierzu die eingegebene GetCapabilities URL in einem extra Browserfenster aufrufen und auf das XML Format überprüfen.
+    - Die URL liefert kein WMS GetCapabilities Dokument: Die vom WMS auf die GetCapabilities Anfrage gelieferte Antwort ist kein gültiges GetCapabilities Dokument. Das bedeutet, dass der WMS zwar ein XML zurückgibt, dieses aber falsch konfiguriert ist und nicht den OGC-WMS Spezifikationen entspricht. In der Regel heisst das Wurzel-Element dann nicht „WMS_Capabilities“ bzw. „WMT_MS_Capabilities“. Als Test kann man die eingegebene GetCapabilities URL in einem extra Browserfenster aufrufen und im XML Dokument schauen, ob das Wurzelelement einen dieser Namen besitzt.
+    - Die WMS GetCapabilites Version „$version“ ist nicht unterstützt: Der Kartenklient unterstützt die WMS Versionen 1.1.1 und 1.3.0. Bei dieser Fehlermeldung gibt der WMS in seinem Capabilities-Dokument eine falsche WMS Version zurück, beispielsweise die veraltetete 1.0.0 Version oder eine völlig andere Version. Dies kann man mit dem GetCapabilities Anfrage beeiflussen, indem man die Versionsnummer mitgibt, beispielsweise: http://localhost/WMS?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities
+
+    Beim Arbeiten mit eigenen Geometrien, die man in die Karte hochlädt, können folgende Fehlermeldungen auftreten:
+
+    - Die Hochgeladene Datei kann nicht gefunden werden: Diese Meldung tritt auf, wenn die hochgeladene Datei zu groß ist, also mehrere MB übersteigt. Wie groß die Dateien sein dürfen hängt von den Systemeinstellungen ab. Der Administrator kann darüber Auskunft geben. Da die Datei zuerst auf dem Server zwischengespeichert werden muss, kann sie aus technischen Gründen dann „nicht gefunden werden.“ Es können weitere Fälle auftreten, die diese Meldung verursagen und an der Konfiguration des Servers liegen.
+    - Keine Shape Datei „XXXXX.shp“ vorhanden: Die ZIP-Datei muss genau den gleichen Namen wie die Shape-Datei enthalten, ansonsten weiß das System nicht, welche Shape-Datei verwendet werden soll. Sind die Namen unterschiedlich, wird keine .shp Datei gefunden und die Fehlermeldung ausgeworfen.
+    - Die Shape Datei „XXXXX.shp“ ist nicht vorhanden: Die ZIP-Datei muss die zu einem Shape gehörenden Dateien *.shp, *.shx, *.dbf und *.prj beinhalten. Falls eine der Dateien fehlt, wird die Fehlermeldung ausgegeben.
+    Die Shape Datei kann nicht ausgelesen werden: [Meldung vom Shapereader]: Falls es einen allgemeinen Lesefehler der Shapedatei gibt, die von der eingesetzten Bibliothek verursacht wird, wird dessen Fehler-Meldung mit dieser Nachricht ausgegeben.
+    - Die Datei kann nicht entzippt werden: Shapedateien müssen als ZIP hochgeladen werden. Der Fehler tritt auf, wenn die Dateiendung .zip ist, aber keine ZIP-Datei ist und daher nicht geöffnet oder entpackt werden kann.
+    - Der Geometrietyp ist nicht unterstützt: $type: Die erste Geometrie innerhalb der Shape-Datei ist kein ‚Point‘ bzw. kein ‚LineString‘ bzw. kein ‚Polygon‘ (Punkt, Linie, Fläche) und beinhaltet damit einen nicht unterstützten Geometrietyp. Die Fehlermeldung kann auch beim Hochladen von GML Dateien auftreten, wenn die erste Geometrie nicht vom Typ von ‚gml:Point‘,‘gml:MultiPoint‘,‘gml:LineString‘ oder ‚gml:Polygon‘ ist.
+    - Die Geometrie kann nicht ausgelesen werden: Beim Hochladen einer GML Datei kann die Koordinate nicht ausgelesen werden. Dies kann durch ein fehlformatiertes GML hervorgerufen werden.
+    - GML v3.x: Koordinaten können nicht ausgelesen werden: Die Koordinaten konnten nicht ausgelesen werden. Sie wurden zwar an der richtigen Stelle gefunden, sind aber nicht lesbar, da beispielsweise die Formatierung nicht korrekt ist.
+{% endblock %}
