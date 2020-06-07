@@ -209,10 +209,30 @@ $icon-color: darken($border, 20%);
     }
 
     & > .textarea {
-        line-height: normal;
+        line-height: $normal-item-height;
         padding: $padding/2 $padding;
         resize: vertical;
         min-height: 70px;
+    }
+
+    &.file-upload-wrapper {
+        @extend .btn.info;
+
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        padding: 0 $padding;
+
+        @include normal-item(true, false);
+
+        & > .file-upload {
+            cursor: pointer;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
     }
 
     &.error {

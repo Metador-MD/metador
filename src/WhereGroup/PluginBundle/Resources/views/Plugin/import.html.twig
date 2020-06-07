@@ -34,8 +34,9 @@
         <div class="row r-2">
             <div class="col c-1-2">
                 {# <div>{{ form_label(form.attachment, null, { 'label_attr': {'class': 'form-label'}}) }}</div> #}
-                <div class="form-field-wrapper">
-                    {{ form_widget(form.attachment, { 'attr': { 'class': 'fileupload' }}) }}
+                <div class="form-field-wrapper file-upload-wrapper">
+                    Datei auswählen
+                    {{ form_widget(form.attachment, { 'attr': { 'class': 'file-upload' }}) }}
                 </div>
             </div>
             <div class="col c-1-2 text-right">

@@ -42,7 +42,7 @@
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -54,12 +54,12 @@
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -611,7 +611,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -623,12 +623,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -848,10 +848,27 @@ input.input-element, .md input.btn {
   text-shadow: 0 0 0 #000; }
 
 .md .form-field-wrapper > .textarea {
-  line-height: normal;
+  line-height: 35px;
   padding: 10px 20px;
   resize: vertical;
   min-height: 70px; }
+
+.md .form-field-wrapper.file-upload-wrapper {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  padding: 0 20px;
+  font-size: 1em;
+  height: 35px;
+  line-height: 35px; }
+
+.md .form-field-wrapper.file-upload-wrapper > .file-upload {
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0; }
 
 .md .form-field-wrapper.error > .input:hover, .md .form-field-wrapper.error > .select:hover, .md .form-field-wrapper.error > .textarea:hover, .md .form-field-wrapper.error > .advanced-select:hover {
   background-color: #f3b4b8; }
@@ -1023,7 +1040,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1035,12 +1052,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -1158,7 +1175,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1170,12 +1187,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -1347,7 +1364,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1359,12 +1376,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -1609,7 +1626,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1621,12 +1638,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -1725,7 +1742,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1737,12 +1754,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -1931,7 +1948,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -1943,12 +1960,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -2088,7 +2105,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -2100,12 +2117,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -2387,7 +2404,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -2399,12 +2416,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -2520,7 +2537,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -2532,12 +2549,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -2659,7 +2676,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -2671,12 +2688,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -3003,7 +3020,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3015,12 +3032,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -3232,7 +3249,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3244,12 +3261,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -3412,7 +3429,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3424,12 +3441,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -3814,7 +3831,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3826,12 +3843,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -3928,7 +3945,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -3940,12 +3957,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -4055,7 +4072,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -4067,12 +4084,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
@@ -4252,7 +4269,7 @@ input.input-element, .md input.btn {
   background-color: #f6c5c8;
   border: 1px solid #ef999f; }
 
-.dark-info > a, .input-element.info > a, .md .info.btn > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
+.dark-info > a, .input-element.info > a, .md .info.btn > a, .md .form-field-wrapper.file-upload-wrapper > a, .dark-success > a, .input-element.success > a, .md .success.btn > a, .dark-warning > a, .input-element.warning > a, .md .warning.btn > a, .dark-error > a, .input-element.error > a, .md .error.btn > a {
   color: #fff; }
 
 .dark-normal, .input-element, .md .btn {
@@ -4264,12 +4281,12 @@ input.input-element, .md input.btn {
   background-color: #eaeaea;
   border: 1px solid #d4d4d4; }
 
-.dark-info, .input-element.info, .md .info.btn {
+.dark-info, .input-element.info, .md .info.btn, .md .form-field-wrapper.file-upload-wrapper {
   color: #fff;
   background-color: #4dacfe;
   border: 1px solid #1a94fe; }
 
-.dark-info:hover, .input-element.info:hover, .md .info.btn:hover {
+.dark-info:hover, .input-element.info:hover, .md .info.btn:hover, .md .form-field-wrapper.file-upload-wrapper:hover {
   background-color: #1a94fe;
   border: 1px solid #0188fd; }
 
