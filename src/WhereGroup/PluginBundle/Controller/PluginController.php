@@ -227,8 +227,11 @@ class PluginController extends Controller
     public function configAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SYSTEM_SUPERUSER');
+
+        $this->get('metador_plugin')->init();
         $this->get('metador_plugin')->clearCache();
-        return new JsonResponse($this->get('metador_plugin')->init()->update($request->request->all()));
+
+        return new JsonResponse($this->get('metador_plugin')->update($request->request->all()));
     }
 
     /**
