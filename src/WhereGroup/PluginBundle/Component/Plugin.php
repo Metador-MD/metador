@@ -581,7 +581,7 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        sleep(2);
+        sleep(4);
 
         $process = new Process($this->rootDir . "../bin/console doctrine:schema:update --force --no-debug");
         $process->run();
@@ -613,7 +613,7 @@ class Plugin
      */
     public function warmupCache()
     {
-        sleep(2);
+        sleep(3);
 
         $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
         $process->run();
