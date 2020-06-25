@@ -22,6 +22,7 @@ class Process
     {
         $this->tempFolder = $tempFolder;
         $this->console = realpath($rootDir  . '/../bin') . '/console';
+        // Todo: add env to command
     }
 
     /**
