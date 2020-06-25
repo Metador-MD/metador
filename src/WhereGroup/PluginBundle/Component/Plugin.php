@@ -598,7 +598,8 @@ class Plugin
     {
         sleep(2);
 
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
+        $process = new Process(['rm', '-rf', $this->rootDir . '../var/cache/*']);
+        // $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
         $process->run();
 
         $this->warmupCache();
