@@ -558,8 +558,6 @@ class Plugin
      */
     public function assetsInstall()
     {
-        sleep(2);
-
         $console = $this->rootDir . '../bin/console';
 
         if ($this->env === 'dev') {
@@ -581,8 +579,6 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        sleep(4);
-
         $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=' . $this->env]);
         $process->run();
 
@@ -596,7 +592,6 @@ class Plugin
      */
     public function clearCache()
     {
-        sleep(2);
         $prodPath = realpath($this->rootDir . '../var/cache/prod');
         $envPath  = realpath($this->rootDir . '../var/cache/env');
 
@@ -610,15 +605,10 @@ class Plugin
             $fs->remove($envPath);
         }
 
-        // $process = new Process(['rm', '-rf', $this->rootDir . '../var/cache/*']);
-        // // $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
-        // $process->run();
-
         $this->warmupCache();
 
         return [
             'output' => 'done'
-            // 'output' => $process->getOutput()
         ];
     }
 
@@ -627,11 +617,8 @@ class Plugin
      */
     public function warmupCache()
     {
-        sleep(3);
-
         $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
         $process->run();
-
 
         return $process->getOutput();
     }
