@@ -583,7 +583,7 @@ class Plugin
     {
         sleep(4);
 
-        $process = new Process($this->rootDir . "../bin/console doctrine:schema:update --force --no-debug");
+        $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=' . $this->env]);
         $process->run();
 
         return [
