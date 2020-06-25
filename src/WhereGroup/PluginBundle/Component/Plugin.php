@@ -597,15 +597,28 @@ class Plugin
     public function clearCache()
     {
         sleep(2);
+        $prodPath = realpath($this->rootDir . '../var/cache/prod');
+        $envPath  = realpath($this->rootDir . '../var/cache/env');
 
-        $process = new Process(['rm', '-rf', $this->rootDir . '../var/cache/*']);
-        // $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
-        $process->run();
+        $fs = new Filesystem();
+
+        if ($fs->exists($prodPath)) {
+            $fs->remove($prodPath);
+        }
+
+        if ($fs->exists($envPath)) {
+            $fs->remove($envPath);
+        }
+
+        // $process = new Process(['rm', '-rf', $this->rootDir . '../var/cache/*']);
+        // // $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
+        // $process->run();
 
         $this->warmupCache();
 
         return [
-            'output' => $process->getOutput()
+            'output' => 'done'
+            // 'output' => $process->getOutput()
         ];
     }
 
