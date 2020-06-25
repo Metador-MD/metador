@@ -603,12 +603,12 @@ class Plugin
     }
 
     /**
-     * 
+     *
      */
     public function emptyCache()
     {
         $prodPath = realpath($this->rootDir . '../var/cache/prod');
-        $envPath  = realpath($this->rootDir . '../var/cache/env');
+        $envPath  = realpath($this->rootDir . '../var/cache/dev');
 
         $fs = new Filesystem();
 
