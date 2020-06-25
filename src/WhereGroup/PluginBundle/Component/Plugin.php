@@ -610,7 +610,7 @@ class Plugin
         $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
         $process->run();
 
-        sleep(3);
+        sleep(5);
 
         return $process->getOutput();
     }
