@@ -582,6 +582,8 @@ class Plugin
         $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=' . $this->env]);
         $process->run();
 
+        $this->emptyCache();
+
         return [
             'output' => $process->getOutput()
         ];
@@ -591,6 +593,19 @@ class Plugin
      * @return array
      */
     public function clearCache()
+    {
+        $this->emptyCache();
+        $this->warmupCache();
+
+        return [
+            'output' => 'done'
+        ];
+    }
+
+    /**
+     * 
+     */
+    public function emptyCache()
     {
         $prodPath = realpath($this->rootDir . '../var/cache/prod');
         $envPath  = realpath($this->rootDir . '../var/cache/env');
@@ -604,12 +619,6 @@ class Plugin
         if ($fs->exists($envPath)) {
             $fs->remove($envPath);
         }
-
-        $this->warmupCache();
-
-        return [
-            'output' => 'done'
-        ];
     }
 
     /**
