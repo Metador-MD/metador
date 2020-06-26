@@ -583,6 +583,7 @@ class Plugin
         $process->run();
 
         $this->emptyCache();
+        $this->warmupCache();
 
         return [
             'output' => $process->getOutput()
