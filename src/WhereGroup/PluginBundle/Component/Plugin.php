@@ -627,7 +627,10 @@ class Plugin
      */
     public function warmupCache()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=dev']);
+        $process->run();
+
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=prod']);
         $process->run();
 
         return $process->getOutput();
