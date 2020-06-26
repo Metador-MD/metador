@@ -558,6 +558,8 @@ class Plugin
      */
     public function assetsInstall()
     {
+        sleep(2);
+
         $console = $this->rootDir . '../bin/console';
 
         if ($this->env === 'dev') {
@@ -579,7 +581,9 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=dev']);
+        sleep(4);
+
+        $process = new Process($this->rootDir . "../bin/console doctrine:schema:update --force --no-debug");
         $process->run();
 
         return [
@@ -592,10 +596,9 @@ class Plugin
      */
     public function clearCache()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=dev']);
-        $process->run();
+        sleep(2);
 
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=prod']);
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=' . $this->env]);
         $process->run();
 
         $this->warmupCache();
@@ -610,9 +613,9 @@ class Plugin
      */
     public function warmupCache()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=dev' ]);
-        $process->run();
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=prod' ]);
+        sleep(3);
+
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=' . $this->env]);
         $process->run();
 
 
