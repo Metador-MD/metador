@@ -579,11 +579,8 @@ class Plugin
      */
     public function doctrineUpdate()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=' . $this->env]);
+        $process = new Process([$this->rootDir . '../bin/console', 'doctrine:schema:update', '--force', '--no-debug', '--env=dev']);
         $process->run();
-
-        $this->emptyCache();
-        $this->warmupCache();
 
         return [
             'output' => $process->getOutput()
@@ -595,31 +592,17 @@ class Plugin
      */
     public function clearCache()
     {
-        $this->emptyCache();
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=dev']);
+        $process->run();
+
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:clear', '--env=prod']);
+        $process->run();
+
         $this->warmupCache();
 
         return [
-            'output' => 'done'
+            'output' => $process->getOutput()
         ];
-    }
-
-    /**
-     *
-     */
-    public function emptyCache()
-    {
-        $prodPath = realpath($this->rootDir . '../var/cache/prod');
-        $envPath  = realpath($this->rootDir . '../var/cache/dev');
-
-        $fs = new Filesystem();
-
-        if ($fs->exists($prodPath)) {
-            $fs->remove($prodPath);
-        }
-
-        if ($fs->exists($envPath)) {
-            $fs->remove($envPath);
-        }
     }
 
     /**
@@ -627,11 +610,11 @@ class Plugin
      */
     public function warmupCache()
     {
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=dev']);
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=dev' ]);
+        $process->run();
+        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=prod' ]);
         $process->run();
 
-        $process = new Process([$this->rootDir . '../bin/console', 'cache:warmup', '--env=prod']);
-        $process->run();
 
         return $process->getOutput();
     }
