@@ -1,0 +1,42 @@
+version: '3'
+services:
+    postgis:
+        build:
+            context: ./docker/postgis
+            args:
+                var_uid: ${CURRENT_UID}
+                var_gid: ${CURRENT_GID}
+        environment:
+            POSTGRES_USER: ${PGSQL_USER}
+            POSTGRES_PASSWORD: ${PGSQL_PASSWORD}
+        volumes:
+            - ./docker/postgis/data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+    php-fpm:
+        build:
+            context: ./docker/php-fpm
+            args:
+                var_uid: ${CURRENT_UID}
+                var_gid: ${CURRENT_GID}
+                var_remove_host: ${IP_ADDRESS}
+        environment:
+            - APP_ENV=${APP_ENV}
+            - XDEBUG_REMOTE_HOST=${IP_ADDRESS}
+        volumes:
+            - ./:/var/www
+    nginx:
+        build:
+            context: ./docker/nginx
+            args:
+                var_uid: ${CURRENT_UID}
+                var_gid: ${CURRENT_GID}
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/nginx/sites/:/etc/nginx/sites-available
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+        ports:
+            - "8000:8000"
+        depends_on:
+            - php-fpm

@@ -40,3 +40,7 @@ src/Plugins/WhereGroup/*
 !src/Plugins/WhereGroup/ServiceProfileBundle
 !src/Plugins/WhereGroup/MapBundle
 !src/Plugins/WhereGroup/ManualBundle
+
+# Docker
+docker/postgis/data
+CONTAINER_INSTALLED
