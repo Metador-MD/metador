@@ -22,7 +22,7 @@ RUN apk --update --no-cache add autoconf build-base shadow git openssh-client un
     freetype-dev libjpeg-turbo-dev libpng-dev icu-libs icu-dev \
     libgit2-dev libxml2-dev oniguruma-dev libzip-dev bzip2-dev \
     sqlite-dev openldap-dev postgresql-dev openssl nodejs npm python yarn \
-    && docker-php-ext-install curl gd intl mbstring zip bz2 xml pdo pdo_sqlite \
+    && docker-php-ext-install curl gd intl mbstring zip bz2 xml pdo pdo_sqlite pdo_pgsql \
     && pecl install xdebug && docker-php-ext-enable xdebug \
     && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
