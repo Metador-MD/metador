@@ -8,11 +8,29 @@ cd /var/www || exit;
 # INSTALL
 # shellcheck disable=SC2039
 if [[ ! -f ${CONTAINER_ALREADY_STARTED} ]]; then
-  rm -rf var/cache/* \
+  echo "parameters:
+    database_driver: pdo_pgsql
+    database_host: postgis
+    database_port: null
+    database_name: metador
+    database_user: ${PGSQL_USER}
+    database_password: ${PGSQL_PASSWORD}
+    database_path: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ${APP_SECRET}
+    locale: de
+    api_access_ips: {  }
+    csw_access_ips: {  }
+    cache_enabled: false" > /var/www/app/config/parameters.yml \
+  && rm -rf var/cache/* \
   && rm -rf var/logs/* \
   && php -d memory_limit=-1 /usr/bin/composer update -o \
   && bin/console doctrine:database:create \
   && bin/console doctrine:schema:create \
+  && bin/console metador:init:db \
   && bin/console assets:install --symlink
   touch ${CONTAINER_ALREADY_STARTED}
 # UPDATE

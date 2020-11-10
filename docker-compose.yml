@@ -12,7 +12,7 @@ services:
         volumes:
             - ./docker/postgis/data:/var/lib/postgresql/data
         ports:
-            - "5432:5432"
+            - "5433:5432"
     php-fpm:
         build:
             context: ./docker/php-fpm
@@ -22,9 +22,19 @@ services:
                 var_remove_host: ${IP_ADDRESS}
         environment:
             - APP_ENV=${APP_ENV}
+            - APP_SECRET=${APP_SECRET}
+            - PGSQL_USER=${PGSQL_USER}
+            - PGSQL_PASSWORD=${PGSQL_PASSWORD}
             - XDEBUG_REMOTE_HOST=${IP_ADDRESS}
+            - WAIT_HOSTS=postgis:5432
+            - WAIT_HOSTS_TIMEOUT=300
+            - WAIT_SLEEP_INTERVAL=30
+            - WAIT_HOST_CONNECT_TIMEOUT=30
         volumes:
             - ./:/var/www
+        depends_on:
+            - postgis
+        command: sh -c "/bin/wait && php-fpm"
     nginx:
         build:
             context: ./docker/nginx
