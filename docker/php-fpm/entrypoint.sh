@@ -11,15 +11,15 @@ if [[ ! -f ${CONTAINER_ALREADY_STARTED} ]]; then
   rm -rf var/cache/* \
   && rm -rf var/logs/* \
   && php -d memory_limit=-1 /usr/bin/composer update -o \
-  && bin/console docktrine:database:create \
-  && bin/console docktrine:schema:create \
+  && bin/console doctrine:database:create \
+  && bin/console doctrine:schema:create \
   && bin/console assets:install --symlink
   touch ${CONTAINER_ALREADY_STARTED}
 # UPDATE
 else
     rm -rf var/cache/*
     rm -rf var/logs/*
-    bin/console docktrine:schema:update --force
+    bin/console doctrine:schema:update --force
     bin/console assets:install --symlink
 fi
 
