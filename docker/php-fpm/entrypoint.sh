@@ -30,7 +30,7 @@ if [[ ! -f ${CONTAINER_ALREADY_STARTED} ]]; then
   && php -d memory_limit=-1 /usr/bin/composer update -o \
   && bin/console doctrine:database:create \
   && bin/console doctrine:schema:create \
-  && bin/console metador:init:db \
+  && bin/console metador:init:database \
   && bin/console assets:install --symlink
   touch ${CONTAINER_ALREADY_STARTED}
 # UPDATE
