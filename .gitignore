@@ -24,7 +24,6 @@
 /build/
 /vendor/
 /web/bundles/
-/web/assets/
 /web/images/
 
 # /var/
