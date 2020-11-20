@@ -25,7 +25,6 @@
     "gulp-clean": "^0.3.2",
     "gulp-composer": "^0.4.0",
     "gulp-concat": "^2.6.0",
-    "gulp-connect-php": "0.0.7",
     "gulp-copy": "0.0.2",
     "gulp-livereload": "^4.0.1",
     "gulp-minify-css": "^1.2.4",

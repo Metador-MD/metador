@@ -10,7 +10,6 @@ const gulp      = require('gulp'),
     livereload  = require('gulp-livereload'),
     composer    = require('gulp-composer'),
     bower       = require('gulp-bower'),
-    connect     = require('gulp-connect-php'),
     concat      = require('gulp-concat'),
     sass        = require('gulp-sass'),
     minifyCSS   = require('gulp-minify-css'),
@@ -108,13 +107,6 @@ gulp.task('watch', () => {
 });
 
 gulp.task('browser-sync', () => {
-    connect.server({base: 'web'}, () => {
-        browserSync({
-            proxy: '127.0.0.1:8000',
-            open: false
-        });
-    });
-
     gulp.watch(conf.watch.files).on('change', function(file) {
         browserSync.reload();
     });
@@ -123,8 +115,7 @@ gulp.task('browser-sync', () => {
 });
 
 gulp.task('default', ['watch'], () => {
-    connect.server({base: 'web'});
-    open('http://localhost:8000/app_dev.php');
+    open('http://localhost:8000/');
 });
 
 gulp.task('transpile', ['sass'], () => {
