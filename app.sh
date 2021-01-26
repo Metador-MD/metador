@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+STACK_NAME=metador
+
 SCRIPT=$(readlink -f "$0")
 ROOT_PATH=$(dirname "$SCRIPT")
 ENV_FILE_PATH="${ROOT_PATH}/.env"
@@ -7,8 +9,6 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 if [ "$#" -eq 1 ] && [[ "${1}" =~ ^(up|down)$ ]]; then
-  STACK_NAME=metador
-
   # Create .env if not exists
   if [ ! -f "${ENV_FILE_PATH}" ]; then
     cd "${ROOT_PATH}" || exit
