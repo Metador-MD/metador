@@ -126,7 +126,7 @@ class Log
      */
     public function getMessageParameter()
     {
-        return $this->messageParameter;
+        return is_array($this->messageParameter) ? $this->messageParameter : [];
     }
 
     /**
