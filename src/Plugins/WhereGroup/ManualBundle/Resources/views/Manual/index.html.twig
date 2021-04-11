@@ -1,7 +1,7 @@
 {% extends 'MetadorManualBundle::template.html.twig' %}
 
 {% macro drawIndex(index) %}
-    <ul>
+    <ul style="list-style: decimal;">
         {% for name, value in index %}
             {% if value['class'] is defined  %}
                 <li>

@@ -56,7 +56,13 @@ class ManualEvent extends Event
             return $this->index;
         }
 
-        return !empty($this->index[$manual]) ? $this->index[$manual] : [];
+        if (empty($this->index[$manual])) {
+            return [];
+        }
+
+        ksort($this->index[$manual]);
+
+        return $this->index[$manual];
     }
 
     /**

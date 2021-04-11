@@ -1,0 +1,9 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index', { manual: manual }) }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+    {% include "@MetadorManual/Manual/dev-plugin.md" %}
+{% endblock %}

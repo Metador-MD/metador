@@ -22,7 +22,8 @@ class ManualListener
             ->add('Anwenderhandbuch', 'Metadaten', 'MetadorManual', 'metadata', 'ROLE_SYSTEM_USER')
             ->add('Administration', 'Benutzer/Gruppen', 'MetadorManual', 'user', 'ROLE_SYSTEM_SUPERUSER')
             ->add('Administration', 'Plugins', 'MetadorManual', 'plugin', 'ROLE_SYSTEM_SUPERUSER')
-            ->add('Entwicklung', 'Handbucheintrag', 'MetadorManual', 'manual', null, 'dev')
+            ->add('Entwicklung', 'Handbucheintrag', 'MetadorManual', 'dev-manual', null, 'dev')
+            ->add('Entwicklung', 'Pluginentwicklung', 'MetadorManual', 'dev-plugin', null, 'dev')
             // @codingStandardsIgnoreEnd
         ;
     }

@@ -5,7 +5,7 @@
         <div class="center-left">
             <div class="left-menu-content">
                 <ul class="left-menu">
-                    {% for item in applicationGet('app-manual-menu') %}
+                    {% for item in applicationGet('app-manual-menu', null, null, true) %}
                         {% set active = app.request.get('manual') == item.label ? true : false %}
                         <li class="menu-item {% if active %}act{% endif %}">
                             <a href="{{ path(item.path, item.params) }}"{% if item.target is defined and item.target %} target="{{ item.target }}"{% endif %}>
