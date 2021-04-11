@@ -56,9 +56,10 @@ class ApplicationExtension extends Twig_Extension
      * @param $type
      * @param null $key
      * @param null $default
-     * @return mixed
+     * @param bool $sort
+     * @return array|string|null
      */
-    public function applicationGet($type, $key = null, $default = null)
+    public function applicationGet($type, $key = null, $default = null, $sort = false)
     {
         $data = $this->application->getData();
 
@@ -68,7 +69,26 @@ class ApplicationExtension extends Twig_Extension
             $this->eventDispatcher->dispatch('application.loading', new ApplicationEvent($this->application, []));
         }
 
-        return $this->application->getData($type, $key, $default);
+        $data = $this->application->getData($type, $key, $default);
+
+        if ($sort) {
+            usort($data,"self::cmp");
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $a
+     * @param $b
+     * @return int
+     */
+    public function cmp($a, $b)
+    {
+        if ($a["label"] == $b["label"]) {
+            return 0;
+        }
+        return ($a["label"] < $b["label"]) ? -1 : 1;
     }
 
     /**
