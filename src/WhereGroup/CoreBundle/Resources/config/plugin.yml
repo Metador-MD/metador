@@ -71,8 +71,11 @@ metador_core:
             type: multi
             label: Unterstützte Hierarchy Level
             options:
+                application: Anwendung
                 service: Dienst
                 series: Datensatzreihe
                 dataset: Datensatz
+                nonGeographicDataset: nichtgeografischer Datenbestand
+                software: Software
                 tile: Tile
             default: [service, dataset]
