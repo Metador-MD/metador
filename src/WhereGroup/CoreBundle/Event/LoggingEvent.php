@@ -24,7 +24,7 @@ class LoggingEvent extends Event
      * @param $log
      * @param bool $flush
      */
-    public function __construct($log, $flush = true)
+    public function __construct($log, bool $flush = true)
     {
         $this->log = $log;
         $this->flush = $flush;

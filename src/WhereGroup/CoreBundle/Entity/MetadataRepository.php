@@ -87,19 +87,6 @@ class MetadataRepository extends EntityRepository
     }
 
     /**
-     * @param array $criteria
-     * @return int|mixed|string
-     * @throws NonUniqueResultException
-     */
-    public function count(array $criteria)
-    {
-        $qb = $this->createQueryBuilder('m');
-        return $qb->select($qb->expr()->count('m'))
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /**
      * @param Finder $finder
      * @return array
      */

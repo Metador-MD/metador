@@ -68,7 +68,7 @@ class Logger
      * @param bool $flush
      * @return $this
      */
-    public function set(Log $log, $flush = true)
+    public function set(Log $log, bool $flush = true)
     {
         // Find user
         /** @var User $user */
