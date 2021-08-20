@@ -97,12 +97,6 @@ class Database
      */
     public function disableSqlLogger()
     {
-        $conn = $this->em->getConnection();
-        $conn
-            ->getWrappedConnection()
-            ->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-        $conn->getConfiguration()->setSQLLogger(null);
-
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
         return $this;
     }
