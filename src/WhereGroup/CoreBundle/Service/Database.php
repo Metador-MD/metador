@@ -7,7 +7,6 @@ use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use WhereGroup\CoreBundle\Event\MetadataChangeEvent;
-use WhereGroup\CoreBundle\Event\MetadataFlushEvent;
 
 /**
  * Class Database
@@ -106,7 +105,7 @@ class Database
      */
     public function dispatchFlush()
     {
-        $this->eventDispatcher->dispatch('metadata.flush', new MetadataFlushEvent());
+        $this->eventDispatcher->dispatch('metadata.flush', new MetadataFlexiushEvent());
         return $this;
     }
 
