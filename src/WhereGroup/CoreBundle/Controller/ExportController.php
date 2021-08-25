@@ -114,7 +114,7 @@ class ExportController extends Controller
      * @param $xml
      * @return Response
      */
-    private function xmlResponse($xml)
+    protected function xmlResponse($xml)
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
@@ -128,7 +128,7 @@ class ExportController extends Controller
      * @throws MetadataException
      * @throws PropertyNameNotFoundException
      */
-    private function findObject($id)
+    protected function findObject($id)
     {
         $search = $this->get('metador_metadata_search');
         $response = $search
