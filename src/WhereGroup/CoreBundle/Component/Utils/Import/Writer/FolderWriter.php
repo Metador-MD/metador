@@ -2,6 +2,7 @@
 
 namespace WhereGroup\CoreBundle\Component\Utils\Import\Writer;
 
+use Exception;
 use WhereGroup\CoreBundle\Component\Utils\Import\Context\FolderContext;
 
 /**
@@ -21,6 +22,11 @@ class FolderWriter implements Writer
     {
         $writer = clone $this;
         $writer->folder = rtrim($context->getFolder(), '/') . '/';
+
+        if (!is_writable($writer->folder)) {
+            throw new Exception("Order " . $writer->folder . " hat nicht die nötigen Schreibrechte.");
+        }
+
         $writer->overrideFile = $context->getOverrideFile();
         return $writer;
     }
