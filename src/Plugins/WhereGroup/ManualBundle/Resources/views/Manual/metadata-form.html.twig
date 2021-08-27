@@ -1,0 +1,71 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+# Verpflichtende und optionale Felder im Metadatensatz
+
+Die einzelnen Formularfelder sind mit einem farbigen Punkt gekennzeichnet, der darauf hinweist, ob es sich um ein verpflichtendes oder optional auszufüllendes Feld handelt.
+
+- roter ausgefüllter Kreis: Dieses Feld muss ausgefüllt werden (hier: E-Mail).
+- gelber halb-ausgefüllter Kreis: Dieses Symbol deutet an, dass dieses Feld oder ein alternatives Feld ausgefüllt sein sollte. Dies ist z.B. beim Zeitbezug, wo von drei möglichen Zeitangaben mindestens eine verpflichtend ist.
+- grüner, nicht ausgefüllter Kreis: Die Angabe dieses Wertes ist optional.
+
+Des weiteren gibt es kleine Symbole hinter jedem Eingabefeld.
+
+- „?“ Schaltfläche: Der Benutzer kann sich einen Hilfetext zum Feld anzeigen lassen. Die Hilfetexte können von Nutzern einer bestimmten Gruppe geschrieben werden.
+
+Für einige Eingabebereiche, wie den Kontaktangaben (wenn manuell gefüllt) gibt es die Möglichkeit, mehrere Eingaben einzutragen.
+
+- „+“ Schaltfläche: Mit dieser Schaltfläche können Sie eine weitere Adresse anlegen.
+- Auswahl und Papierkorb-Schaltfläche: Die einzelnen Einträge können über das Dropdown-Feld ausgewählt werden. Mit dem Papierkorb symbol können dementsprechend Einträge wieder entfernt werden.
+
+# Listen mit optionalen Feldern
+
+Eine Besonderheit stellen Listen dar, die aus optionalen Feldern bestehen. Weitere Werte können mit dem Plus-Symbol hinzugefügt werden. Über das Papierkorb-Symbol kann man sie wieder löschen.
+
+Möchte man alle Alternativtitel entfernen, löscht man alle bis auf den ersten mit dem Papierkorb-Symbol, während man im obersten einfach den Eintrag entfernt.
+
+Für ein weiteres Editieren kann dann einfach ein Wert wieder eingetragen werden, ohne dass man einen besonderen Klick auf das Plus-Symbol durchführen muss.
+
+# Datumseingabe
+
+Datumsfelder werden über einen sogenannten Date-Picker (Datumsauswahl) eingegeben. Dieser hilft bei dem Auswahl des Datums und der Eingabe des richtigen Formats.
+
+Generell öffnet sich die Datumsauswahl bei einem Klick auf ein Feld, welches ein Datum erwartet.
+
+Innerhalb dieser Datumsauswahl kann über einfachen Klick auf einen Tag im aktuellen Monat das -Datum ausgewählt werden. Der Eintrag wird dann sofort in das Textfeld eingetragen.
+
+Bei der Eingabe eines Datums kann man zu dem jeweilgen Jahr springen, indem man auf die Titelzeile klickt. Der Dialog wechselt zu einer Auswahl der Monate in dem aktuellen Jahr. Bei einem Klick auf den Monat würde wieder die Tagesansicht erscheinen. Mit einem Klick auf die Vorwärts- und Rückwärtssymbole in der Titelleiste kann das Jahr gewechselt werden. Ein Klick auf die Titelzeile wechselt auf einen Sprung des Jahres. Mit den Vorwärts- und Rückwärtssymbolen in der Titelleiste kann auf eine andere Jahresspanne gewechselt werden. Mit dem Link „Today“ wechselt man wieder auf das heutige Datum. Mit dem Link „Clear date“ wird das Datum für das Eingabefeld wieder gelöscht.
+
+
+# Listenelemente
+
+An vielen Stellen im Formular gibt es Listen, die vom Bearbeiter ausgewählt werden und die in besonderen Fällen sogar mehrere Felder ausfüllen. Ein Beispiel sind die Übereinstimmungen in den Qualitätsangaben.
+
+Eine Verordnung kann über das Zahnrad-Symbol ausgewählt werden. Diese Auswahl füllt auch die weiteren Felder wie „Name der Richtlinie…“, „Version, Edition“ und das zugehörige Datum (entweder Erstellung, Veröffentlichung oder Überarbeitung).
+
+Die Werte dieser Felder werden vom Administrator des Metador vorgegeben.
+
+# Nicht ausfüllbare Felder, vererbte Felder
+
+Es gibt mehrere Felder, die nicht von Ihnen ausgefüllt werden können.
+
+- Entweder weil sie automatisch gesetzt werden
+oder weil sie von einem übergeordneten Datensatz vererbt werden und ihre Informationen daraus ziehen.
+- Automatisch gesetzte Felder ist beispielsweise die File-Identifikator und die letzte Änderung.
+
+Beide Felder sind beim Anlegen eines Datensatzes nicht zu sehen und können gar nicht ausgefüllt werden. Sobald ein Datensatz gespeichert worden ist, sind die Felder sichtbar, aber nicht mehr änderbar.
+
+Felder, die durch einen übergeordneten Datensatz vererbt werden, sind durch ein bestimmtes Symbol gekennzeichnet. Sobald Felder mit diesem Symbol gekennzeichnet sind, werden die Inhalte von dem übergeordneten Metadatensatz gefüllt.
+
+# Adressen
+
+Über die integrierte Adressverwaltung werden Kontaktdaten für die Formulare verwaltet. Diese können in den Verantwortlichkeiten für Vertrieb, Datensatz und Metadaten verwendet werden. In den Herstellungsinformationen (Lineage) werden die Adressen der Adressverwaltung nicht verwendet, hier werden die Adressen per Hand gepflegt.
+
+Beispiel: Die Veantwortlichkeiten sind nicht ausgefüllt. Eine Editierung an der Oberfläche ist nicht möglich. Vielmehr muss man eine Adresse aus der zentralen Adressverwaltung auswählen, indem man auf das Such-Symbol klickt.
+
+Es öffnet sich ein Dialog, der alle Adressen der Adressverwaltung listet. Hier kann man über die Suchmaske nach einem Namen bzw. einer Organisation suchen. Es werden bei der Suche alle passenden Treffer gelistet. Eine Auswahl einer Adresse übernimmt diese in das Formular.
+{% endblock %}

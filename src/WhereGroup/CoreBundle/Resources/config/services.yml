@@ -13,3 +13,6 @@ services:
     WhereGroup\CoreBundle\Component\Metadata\Validator: '@metador_metadata_validator'
     WhereGroup\CoreBundle\Component\Configuration: '@metador_configuration'
     WhereGroup\CoreBundle\Component\Source: '@metador_source'
+    WhereGroup\CoreBundle\EventListener\ManualListener:
+        tags:
+            - { name: kernel.event_listener, event: manual.loading }

@@ -5,28 +5,27 @@
 {% endblock %}
 
 {% block manual %}
-    # Allgemein
+# Allgemein
 
-    ## Anwenderhandbuch
+## Anwenderhandbuch
 
-    Das folgende Handbuch erläutert die Bedienung und die Funktionen der Metadatenlösung. Die eingesetzte Software nennt sich Metador. Metador ist eine einfach zu bedienende Web-Anwendung zum Erstellen und Bearbeiten von Metadaten entsprechend den ISO und INSPIRE konformen Metadatenschemata für unterschiedliche Profile: Datensätze, Datensatzserien, Tiles, Dienste.
+Das folgende Handbuch erläutert die Bedienung und die Funktionen der Metadatenlösung. Die eingesetzte Software nennt sich Metador. Metador ist eine einfach zu bedienende Web-Anwendung zum Erstellen und Bearbeiten von Metadaten entsprechend den ISO und INSPIRE konformen Metadatenschemata für unterschiedliche Profile: Datensätze, Datensatzserien, Tiles, Dienste.
 
-    ## Aufruf und Login
+## Aufruf und Login
 
-    Der Aufruf von Metador geschieht in der Regel über folgende URL.
+Der Aufruf von Metador geschieht in der Regel über folgende URL.
 
-    - {{ url('metador_home') }}
+- {{ url('metador_home') }}
 
-    Es erscheint die Startseite von Metador, auf welcher die aktuell öffentlichen Metadaten gelistet werden, in der eine Suchmaske eingeblendet ist und an der man sich mit dem Benutzernamen und Passwort anmelden kann.
+Es erscheint die Startseite von Metador, auf welcher die aktuell öffentlichen Metadaten gelistet werden, in der eine Suchmaske eingeblendet ist und an der man sich mit dem Benutzernamen und Passwort anmelden kann.
 
-    {% if app.user %}
+{% if app.user %}
+## Passwort ändern
 
-        ## Passwort ändern
+Das eigene Passwort kann <a href="{{ path('metador_user_profile', { id: app.user.id }) }}" target="_blank">oben rechts</a> über den Benutzernamen geändert werden. Dies ist natürlich erst nach der Anmeldung möglich.
+{% endif %}
 
-        Das eigene Passwort kann <a href="{{ path('metador_user_profile', { id: app.user.id }) }}" target="_blank">oben rechts</a> über den Benutzernamen geändert werden. Dies ist natürlich erst nach der Anmeldung möglich.
-    {% endif %}
+## Registration
 
-    ## Registration
-
-    Um Logindaten zu erhalten, wenden Sie sich bitte an den Betreiber der Seite.
+Um Logindaten zu erhalten, wenden Sie sich bitte an den Betreiber der Seite.
 {% endblock %}

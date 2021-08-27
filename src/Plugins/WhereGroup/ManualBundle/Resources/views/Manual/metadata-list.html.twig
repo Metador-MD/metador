@@ -1,0 +1,25 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+# Auswahllisten
+
+Die Liste der Auswahlliste in den Einstellungen dient zur Übersicht. Die eigentliche Befüllung der Auswahllisten findet aus dem Formular statt. Die meisten Auswahllisten sind von Anfang mit Standardwerten gefüllt.
+
+<img src="{{ asset('bundles/metadormanual/metadata/einstellungen_auswahllisten.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+
+Innerhalb des Formulars kann der Administrator die Auswahllisten bearbeiten. Dort wohl Auswahllisten verwendet werden, dient die Zahnradschaltfläche zur Definition der Liste.
+
+<img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_frontend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+
+Es öffnet sich ein neuer Browsertab, in dem die Auswahllisten definiert werden können. Im obersten Feld gibt man den Wert und die Beschreibung ein und fügt den Listeneintrag mit der Schaltfläche „hinzufügen“ der Liste hinzu.
+
+Über die Löschen Checkbox und das Betsätigen mit Speichern können Einträge wieder gelöscht werden.
+
+Möchte man einen leeren Eintrag erlauben, fügt man einen leeren Eintrag der Liste hinzu.
+
+<img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_backend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+{% endblock %}

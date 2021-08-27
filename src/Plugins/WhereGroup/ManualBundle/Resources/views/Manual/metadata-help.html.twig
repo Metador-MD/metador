@@ -1,0 +1,20 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+# Hilfetexte
+
+In den Formularen stehen dem Nutzer Hilfetexte zur Verfügung. Gepflegt werden diese vom GeoOffice.
+
+{% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+
+## Anpassung der Hilfetexte
+
+Ein Benutzer aus der Gruppe „GEOOFFICE“ kann die Hilfetexte bearbeiten. Dazu kann er jeden Hilfetext eines Eingabefeldes öffnen und direkt bearbeiten. Beim Schließen des Dialogs werden die Änderungen übernommen.
+
+Der Hilfetext kann in einer einfachen Markdown Syntax geschrieben werden, so dass das Formatieren mit Überschriften, Absätze, Aufzählungen und Links sowie die Angabe von Bildern möglich sind.
+{% endif %}
+{% endblock %}

@@ -1,46 +1,85 @@
 {% extends 'MetadorManualBundle::template.html.twig' %}
 
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
 {% block manual %}
-    # Hilfetexte
+# Übersicht Metadaten
 
-    In den Formularen stehen dem Nutzer Hilfetexte zur Verfügung. Gepflegt werden diese vom Geooffice.
+In dieser Übersicht werden die jeweiligen Metadatensätze mit ihren Eigenschaften dargestellt:
 
-    {% if is_granted('ROLE_SYSTEM_GEO_OFFICE') %}
+- dem Titel,
+- der Kurzbeschreibung
+- dem Thumbnail (falls vorhanden)
 
-    ## Anpassung der Hilfetexte
+Die Statusleiste zeigt:
 
-    Ein Benutzer aus der Gruppe „GEOOFFICE“ kann die Hilfetexte bearbeiten. Dazu kann er jeden Hilfetext eines Eingabefeldes öffnen und direkt bearbeiten. Beim Schließen des Dialogs werden die Änderungen übernommen.
+- Das Erdkugel-Symbol ist nur dann sichtbar, wenn der Datensatz öffentlich ist.
+- Das Ausrufezeichen sagt, dass der Datensatz nicht valide ist.
+- Das Kalender-Symbol zeigt, sobald man sich darüber mit der Maus bewegt, das Datum der letzten Änderung.
+- Falls der Datensatz sich in der Quarantäne befindet, wird die jeweilge Instanz aus der er stammt angezeigt (hier: Intern)
+- Die Art des Metadatensatzes (hier: Service)
 
-    Der Hilfetext kann in einer einfachen Markdown Syntax geschrieben werden, so dass das Formatieren mit Überschriften, Absätze, Aufzählungen und Links sowie die Angabe von Bildern möglich sind.
-    {% endif %}
+Die Aktionen, die auf dem Metadatensatz ausgeführt werden können, sind:
 
-    # Auswahllisten
+- Mit einem Klick auf den Titel kann der jeweilige Metadatensatz editiert werden.
+- Mit einem Klick auf den PDF Link kann der jeweilige Metadatensatz als PDF angezeigt werden.
+- Mit einem Klick auf den XML Link kann der jeweilige Metadatensatz als XML angezeigt werden.
+- Mit einem Klick auf den HTML Link kann der jeweilige Metadatensatz als HTML angezeigt werden.
 
-    Die Liste der Auswahlliste in den Einstellungen dient zur Übersicht. Die eigentliche Befüllung der Auswahllisten findet aus dem Formular statt. Die meisten Auswahllisten sind von Anfang mit Standardwerten gefüllt.
+# Einen neuen Datensatz anlegen
 
-    <img src="{{ asset('bundles/metadormanual/metadata/einstellungen_auswahllisten.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+Auf der Startseite kann per Klick auf `erstellen` das Profil ausgewählt werden welches angelegt werden soll. Werden keine Profile angezeigt, so müssen diese in der Administration unter `Einstellungen` erst für die jeweilige Datenquelle aktiviert werden.
 
-    Innerhalb des Formulars kann der Administrator die Auswahllisten bearbeiten. Dort wohl Auswahllisten verwendet werden, dient die Zahnradschaltfläche zur Definition der Liste.
+# Speichern / Beenden der Editiersitzung
 
-    <img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_frontend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+Wenn Sie Ihre Editiersitzung beenden möchten, haben Sie mehrere Möglichkeiten dies zu tun.
 
-    Es öffnet sich ein neuer Browsertab, in dem die Auswahllisten definiert werden können. Im obersten Feld gibt man den Wert und die Beschreibung ein und fügt den Listeneintrag mit der Schaltfläche „hinzufügen“ der Liste hinzu.
+In dem linken Bereich sind die Operationen aufgelistet, die auf den Datensatz angewandt werden können. Die Möglichkeiten beim Speichern sind in einem Dropdown-Feld hinterlegt. Folgende Möglichkeiten stehen zur Verfügung.
 
-    Über die Löschen Checkbox und das Betsätigen mit Speichern können Einträge wieder gelöscht werden.
+- Speichern und beenden: Speichert den Datensatz, schließt die Editiersession und kehrt zum Ausgangsbildschirm zurück.
+- Zwischenstand speichern: Speichert den Datensatz und verbleibt im Editor. Eine Validierung nach den auzufüllenden Feldern wird nicht durchgeführt.
+- Abbrechen: Verwirft die gemachten Änderungen und kehrt zum Ausgangsbildschirm zurück.
+- Löschen: Löscht den Datensatz und alle verbundenen Datensätze.
 
-    Möchte man einen leeren Eintrag erlauben, fügt man einen leeren Eintrag der Liste hinzu.
+> Beachten Sie bitte, dass der Datensatz für die Dauer der aktuellen Session gesperrt sein wird (5 bis 10 Minuten), wenn Sie den Browser einfach beenden oder sich ausloggen, während der Datensatz noch geöffnet ist. Das System kann nicht erkennen, ob Sie nicht noch weiter editieren wollten oder nicht. Beenden Sie Ihre Editiersitzung also immer mit den oben gelisteten Speichern/Abbrechen Befehlen und kehren Sie zur Ergebnisliste zurück.
 
-    <img src="{{ asset('bundles/metadormanual/metadata/auswahllisten_sprache_backend.png') }}" alt="Auswahllisten Einstellungen" width="100%">
+# Freigabe und Validierung
 
-    # Löschen aller Metadaten
+In der linken Leiste, neben dem Thumbnail-Icon, können die Freigabe und Validierungsoptionen der aktuellen Editiersitzung angegeben werden.
 
-    {% if is_granted('ROLE_SYSTEM_SUPERUSER') %}
+- Freigabe: Ist dieser Schalter aktiviert, wird der Datensatz für die Suche freigegeben. Der Benutzer signalisiert damit, dass er mit seiner Editierung fertig.
+- Validierung: Validiert den Datensatz nach festgelegten Regeln hinsichtlich verpflichtender und optionaler Felder und der Art und Weise, wie sie ausgefüllt werden müssen
 
-    Mit folgendem Befehl, können aus dem Terminal heraus, alle Metadaten gelöscht werden.
+# Verfügbarkeit in Gruppen
 
-    ```bash
-        bin/console metador:truncate:metadata
-    ```
-    {% endif %}
+Unterhalb der Freigabe und Validierungsschalter befinden sich die allgemeinen Angaben zu dem Metadatensatz, die automatisch vergeben werden und an denen der Benutzer die Verfügbarkeit einstellen kann.
+
+# Weitere Informationen
+
+- HierarchyLevel: Zeigt das HierarchyLevel des aktuellen Metadatendokuments an. Dieses wird automatisch vergeben/erkannt.
+- UUID: Eindeutiger Identifikator des Metadatensatzes. (`gmd:fileIdentifier`). Der fileIdentifier wird u.a. bei einer CSW-GetRecordByID Abfrage verwendet.
+- Verfügbar in Gruppen: Der angemeldete Benutzer ist Mitglied einer oder mehrerer Gruppen. Der Datensatz kann für diese Gruppen verfügbar geschaltet werden, so dass andere Mitglieder dieser Gruppen den Datensatz ebenfalls editieren können.
+- Metadaten:: Informationen, wer den Datensatz erstellt und zuletzt bearbeitet hat.
+
+# Gesperrte Datensätze
+
+Benutzer, die in einer Gruppe sind dürfen die Metadatensätze ihrer Gruppe editieren. Datensätze, die aber durch einen anderen Benutzer der gleichen Gruppe geöffnet sind, können nicht gleichzeitig editiert werden. Der editierende Benutzer muss den Datensatz zuerst schließen, entweder durch „Abbrechen“ oder durch „Speichern und Beenden“.
+
+Ist der Datensatz gerade in einer Editiersitzung eines anderen Nutzers geöffnet, wird dies in der Oberfläche angezeigt. In der Ergebnisliste ist das durch das Schloß-Symbol gekennzeichnet. Der Datensatz ist dezeitig durch eine Editiersitzung gesperrt.
+
+
+
+# Löschen aller Metadaten
+
+{% if is_granted('ROLE_SYSTEM_SUPERUSER') %}
+
+Mit folgendem Befehl, können aus dem Terminal heraus, alle Metadaten gelöscht werden.
+
+```bash
+    bin/console metador:truncate:metadata
+```
+{% endif %}
 {% endblock %}
 

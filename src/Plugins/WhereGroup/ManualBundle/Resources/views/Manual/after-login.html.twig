@@ -1,0 +1,14 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+
+{% block content %}
+    <div class="text-right"><a href="{{ path('manual_index') }}" class="btn">zurück</a></div>
+{% endblock %}
+
+{% block manual %}
+# Nach der Anmeldung
+
+Nach der Anmeldung gelangt man in die Metador Übersichtsseite. Diese ähnelt der Startseite vor der Anmeldung, bietet aber - je nach angemeldetem Benutzer - mehrere Möglichkeiten:
+
+- Administration: Je nach Benutzerrolle können administrative Tätigkeiten ausgeführt werden.
+- „root“: Anzeigename des aktuellen Benutzers. Hier kann man sich aus dem System ausloggen, um es als anonymer Nutzer weiter zu nutzen.
+{% endblock %}
