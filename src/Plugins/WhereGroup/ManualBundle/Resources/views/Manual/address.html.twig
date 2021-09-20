@@ -1,0 +1,17 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+{% set manual = 'Administration' %}
+
+{% block manual %}
+# Adressen
+
+Über die integrierte Adressverwaltung werden Kontaktdaten für die Formulare verwaltet. Diese können in den Verantwortlichkeiten für Vertrieb, Datensatz und Metadaten verwendet werden. Addressen können in der <a href="{{ path('metador_admin_address') }}" target="_blank">Administration</a> vom GeoOffice angelegt werden.
+
+Volgende Operationen stehen zu Verfügung:
+
+- <span class="icon-plus"></span> Erstellen einer neuen Adresse
+- <span class="icon-bin2"></span> Löschen einer Adresse (im Bearbeitungsmodus)
+- <span class="icon-pencil"></span> Bearbeiten einer Adresse
+- <span class="icon-play"></span> Aktuallisieren der Adressen in allen Metadaten
+
+Die ID in der Adresse wird automatisch vergeben und wird dazu genutzt, eine Adresse zu identifizieren und mit Metadaten zu verknüpfen.
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+{% block manual %}
+# Suche
+
+Über die Texteingabe mit dem Platzhalter „Suchbegriff eingeben“ eingeben, kann die Suche nach Metadaten gestartet werden.
+
+Die Suche beginnt nach der Eingabe der ersten Zeichen und aktualisiert automatisch die Ergebnisliste. Im folgenden Beispiel werden durch die Suche nach „Präsidentschaft“ Ergebnisse angezeigt, die dieses Wort allesamt im Abstract-Text des Metadatensatzes haben.
+
+## Filter
+
+Auf der linken Seite der Oberfläche befinden sich die Filterkriterien, mit denen sich die Suchergebnisse weiter filtern lassen.
+
+### Hierarchy Level
+
+Über diesen Filter können die einzelnen HierarchyLevel der Metadaten gefiltert werden. Der Filter geht über alle Instanzen. Hat man das letzte angehakte Hierarchy Level abgeschaltet, so werden automatisch alle wieder angehakt.
+
+### Datum
+
+Über diesen Filter kann nach dem Datum des Metadatensatzes gefiltert werden. Dabei gilt folgende Reihenfolge, nach denen nach einem gültigen Datum gefiltert wird.
+
+-  revisionDate
+-  publicationDate
+-  creationDate
+-  DateStamp
+
+Falls eines aus dieser Liste nicht im Metadatensatz gefunden wird, wird das nächste Datum gesucht und für die Anzeige verwendet.
+
+## Sortierung
+
+Die Sortierung der Ergebnisliste kann nach den folgenden Kriterien eingestellt werden:
+
+-  Titel
+-  Datum
+-  Zeitstempel
+-  Hierarchieebene
+
+Es wird automatisch aufsteigend sortiert. Auf die letzten Elemente, ähnlich einer umgekehrten Sortierung, kann man über die Schaltfläche der letzten/ersten Seite in der Ergebnisliste springen.
+{% endblock %}

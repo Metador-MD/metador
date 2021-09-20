@@ -1,0 +1,30 @@
+{% extends 'MetadorManualBundle::template.html.twig' %}
+{% set manual = 'Administration' %}
+
+{% block manual %}
+# Administration allgemein
+
+Über den Reiter „Administration“ gelangt man die Administrationsoberfläche, in der Benutzer und Gruppen angelegt und Plugins ein- und ausgeschaltet werden können und vieles mehr. Die Administration ist nur für Benutzer mit der Rolle GEO_OFFICE und SUPERUSER möglich.
+
+In der Übersichtsseite der Administration werden - die Anzahl der Metadaten im System, - der registrierten Benutzer, - der angelegten Gruppen - und der angelegten Adressen im Adresseditor angezeigt.
+
+## Einstellungen
+
+Über den Reiter "Einstellungen" können allgemeine Einstellungen zu Metador vorgenommen werden. Über Administrationsoberfläche kann beispielsweise konfiguriert werden ob und welche Kategorie in der Administration angezeigt werden soll. Werden z.B. keine Adressen und Plugins verwaltet, können diese hier ausgeschaltet werden und werden nicht mehr angezeigt.
+
+### Unterstützte Hierarchy Level
+
+Bevor Metador verwendet werden kann müssen hier die im System möglichen "Hierarchy Level" ausgewählt werden. Anschließend muss in den Einstellungen der einzelnen Profile ausgewählt werden welche Profile in welchen Datenquellen erstellt werden dürfen.
+
+# Selbsttest
+
+Der Selbsttest zeigt an ob Metador richtig konfiguriert ist. Dies kann einmal im Browser mit den Rechten des Webservers überprüft werden. Anschließend können im Terminal per `bin/console metador:health-check` die Rechte des Systemnutzers überprüft werden.
+
+# Datenquellen
+
+Über den Reiter "Datenquellen" können Datenquellen erstellt, bearbeitet und gelöscht werden. Dieser werden auf der Startseite als Reiter angezeigt und trennen die Metadaten von einander. Beim löschen einer Datenquelle wird angezeigt was alles mit dieser Datenquelle verbunden ist. Beispielsweise CSW-Schnittstellen, Metadaten und so weiter. Diese werden beim löschen einer Datenquelle ebenfalls gelöscht.
+
+# Seiten
+
+Über den Reiter "Seiten" können HTML-Seiten erstellt werden. Hierzu kann die Markdown-Schreibweise verwendet werden. Diese Seiten können dann in den Templates verlinkt werden. So lassen sich einfach Seiten wie Impressum und Datenschutz oder aber auch Hilfeseiten erstellen.
+{% endblock %}
