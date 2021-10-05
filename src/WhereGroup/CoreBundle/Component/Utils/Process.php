@@ -106,7 +106,7 @@ class Process
      */
     public function sendResponse($response)
     {
-        ob_end_clean();
+        @ob_end_clean();
         header("Connection: close\r\n");
         header("Content-Encoding: none\r\n");
         ignore_user_abort(true);
@@ -117,8 +117,8 @@ class Process
         ob_end_flush();
         flush();
 
-        if (ob_get_contents()) {
-            ob_end_clean();
+        if (@ob_get_contents()) {
+            @ob_end_clean();
         }
     }
 
@@ -127,7 +127,7 @@ class Process
      */
     public function sendJsonResponse($array)
     {
-        ob_end_clean();
+        @ob_end_clean();
         header("Connection: close\r\n");
         header("Content-Type: application/json\r\n");
         header("Content-Encoding: none\r\n");
@@ -140,7 +140,7 @@ class Process
         flush();
 
         if (ob_get_contents()) {
-            ob_end_clean();
+            @ob_end_clean();
         }
     }
 
@@ -149,7 +149,7 @@ class Process
      */
     public function redirectResponse($url)
     {
-        ob_end_clean();
+        @ob_end_clean();
         header("Connection: close\r\n");
         header("Content-Encoding: none\r\n");
         header("Location: " . $url . "\r\n");
@@ -160,7 +160,7 @@ class Process
         flush();
 
         if (ob_get_contents()) {
-            ob_end_clean();
+            @ob_end_clean();
         }
     }
 }

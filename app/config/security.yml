@@ -42,7 +42,7 @@ security:
         - { path: ^/csw, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: "%csw_access_ips%" }
         - { path: ^/csw, roles: ROLE_NO_ACCESS }
         - { path: ^/admin, roles: ROLE_SYSTEM_GEO_OFFICE }
-        - { path: ^/, roles: ROLE_SYSTEM_USER }
+#        - { path: ^/, roles: ROLE_SYSTEM_USER }
 
     role_hierarchy:
         ROLE_SYSTEM_SUPERUSER: [ROLE_SYSTEM_GEO_OFFICE, ROLE_ALLOWED_TO_SWITCH]
