@@ -1,6 +1,7 @@
 'use strict';
 
 var Session = function() {};
+var isAnonymus = (Configuration.maxlifetime|0) <= 0;
 
 Session.prototype = {
     timeOut: 0,
@@ -19,7 +20,7 @@ Session.prototype = {
         $('.-js-timeout-wrapper').hide();
         this.timeOut = parseInt(timeout);
 
-        if (this.timeOut <= 0) return;
+        if (isAnonymus || this.timeOut <= 0) return;
 
         self.interval = setInterval(function () {
             if (self.timeOut <= 0) {
