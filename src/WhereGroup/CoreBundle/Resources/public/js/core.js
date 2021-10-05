@@ -11,16 +11,24 @@ Metador.prototype = {
         if (data && data.METADOR) {
             if (data.METADOR.runMethod) {
                 $(data.METADOR.runMethod).each(function (index, params) {
-                    if(typeof window[params.class][params.method] === 'function'){
-                        window[params.class][params.method](params.argument);
+                    try {
+                        if(typeof window[params.class][params.method] === 'function'){
+                            window[params.class][params.method](params.argument);
+                        }
+                    } catch (e) {
+                        console.warn(e)
                     }
                 });
             }
 
             if (data.METADOR.runFunction) {
                 $(data.METADOR.runFunction).each(function (index, params) {
-                    if(typeof window[params.function] === 'function'){
-                        window[params.function](params.argument);
+                    try {
+                        if(typeof window[params.function] === 'function'){
+                            window[params.function](params.argument);
+                        }
+                    } catch (e) {
+                        console.warn(e)
                     }
                 });
             }
