@@ -38,6 +38,11 @@ class Browser
         );
     }
 
+    public function getProxyHost()
+    {
+        return $this->proxyHost;
+    }
+
     /**
      * @param $host
      * @param $port
