@@ -18,6 +18,9 @@ class DatabaseSearch extends Search implements SearchInterface
     /** @var \Doctrine\ORM\QueryBuilder|null */
     protected $qb = null;
 
+    /* @var DatabaseExprHandler $spatial */
+    protected $spatial;
+
     /** @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em)
     {
@@ -25,6 +28,14 @@ class DatabaseSearch extends Search implements SearchInterface
         $this->qb = $em
             ->getRepository(self::ENTITY)
             ->createQueryBuilder('m');
+    }
+
+    /**
+     * @param Expression $spatial
+     */
+    public function setSpatialExpression(Expression $spatial)
+    {
+        $this->spatial = $spatial;
     }
 
     /**
@@ -36,21 +47,49 @@ class DatabaseSearch extends Search implements SearchInterface
             $this->qb->leftJoin('m.groups', 'g');
         }
 
-        if ($this->expression) {
-            $this->qb
-                ->add('where', $this->expression->getExpression())
-                ->setParameters($this->expression->getParameters());
+        // Searchterms
+        if (trim($this->terms) !== "") {
+            $termsStr = trim(preg_replace('/[\-\|\(\)]/', ' ', strtolower($this->terms)));
+            $terms = (array)preg_split('/\s+/', trim($termsStr));
+            if (count($terms) > 0) {
+                $index = 0;
+                foreach ($this->getTerms() as $term) {
+                    if ($term === "") {
+                        continue;
+                    }
+                    $this->qb
+                        ->andWhere('m.searchfield LIKE :termX'.$index)
+                        ->setParameter('termX'.$index, "%".$term."%");
+                    $index++;
+                }
+                unset($index);
+            }
         }
 
-        // Searchterms
-        if (is_array($this->getTerms())) {
-            $index = 0;
-            foreach ($this->getTerms() as $term) {
-                $this->qb
-                    ->andWhere('LOWER(m.searchfield) LIKE :termX'.$index)
-                    ->setParameter('termX'.$index, "%".strtolower($term)."%");
+        if ($this->spatial) {
+            if ($this->spatial->getExpression() instanceof Andx) {
+                foreach ($this->spatial->getExpression()->getParts() as $part) {
+                    $this->qb->andWhere($part);
+                }
+            } else {
+                $this->qb->andWhere($this->spatial->getExpression());
             }
-            unset($index);
+            foreach ($this->spatial->getParameters() as $key => $val) {
+                $this->qb->setParameter($key, $val);
+            }
+        }
+
+        if ($this->expression) {
+            if ($this->expression->getExpression() instanceof Andx) {
+                foreach ($this->expression->getExpression()->getParts() as $part) {
+                    $this->qb->andWhere($part);
+                }
+            } else {
+                $this->qb->andWhere($this->expression->getExpression());
+            }
+            foreach ($this->expression->getParameters() as $key => $val) {
+                $this->qb->setParameter($key, $val);
+            }
         }
 
         if (!empty($this->getSource())) {
