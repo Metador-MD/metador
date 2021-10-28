@@ -162,7 +162,7 @@ class PrepareMetadata
         }
 
         $metadata->setId($p['_uuid']);
-        $metadata->setSearchfield(self::prepareSearchField($p));
+        $metadata->setSearchfield(strtolower(self::prepareSearchField($p)));
 
         if (!empty($p['bbox'][0]['nLatitude']) && !empty($p['bbox'][0]['eLongitude'])
             && !empty($p['bbox'][0]['sLatitude']) && !empty($p['bbox'][0]['wLongitude'])) {
