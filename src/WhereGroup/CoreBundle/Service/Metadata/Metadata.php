@@ -134,6 +134,16 @@ class Metadata
 
     /**
      * @param array $object
+     * @return array
+     */
+    public function prepareObject(array $object)
+    {
+        return $object;
+    }
+
+
+    /**
+     * @param array $object
      * @param array $options
      * @return MetadataEntity
      * @throws MetadataExistsException
