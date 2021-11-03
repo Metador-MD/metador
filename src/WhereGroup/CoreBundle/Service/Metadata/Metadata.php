@@ -132,15 +132,6 @@ class Metadata
         return $entity;
     }
 
-    /**
-     * @param array $object
-     * @return array
-     */
-    public function prepareObject(array $object)
-    {
-        return $object;
-    }
-
 
     /**
      * @param array $object

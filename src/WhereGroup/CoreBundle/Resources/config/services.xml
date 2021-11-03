@@ -88,6 +88,7 @@
         <service id="metador_markdown" class="%metador.markdown.class%" public="true" />
         <service id="metador_metadata_search" class="%metador.database.search.class%" public="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="WhereGroup\CoreBundle\Service\Metadata\Metadata" />
         </service>
         <service id="metador_browser" class="%metador.browser.class%" public="true">
             <argument type="service" id="metador_configuration" />

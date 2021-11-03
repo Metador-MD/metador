@@ -2,6 +2,9 @@
 
 namespace WhereGroup\CoreBundle\Component\Search;
 
+
+use WhereGroup\CoreBundle\Service\Metadata\Metadata;
+
 /**
  * Class Search
  * @package WhereGroup\CoreBundle\Component\Search
@@ -22,6 +25,19 @@ abstract class Search
 
     /* @var Expression $expression */
     protected $expression = null;
+
+    /**
+     * @var Metadata
+     */
+    protected $metadata;
+
+    /**
+     * @param Metadata $metadata
+     */
+    public function __construct(Metadata $metadata)
+    {
+        $this->metadata = $metadata;
+    }
 
     /**
      * @return null

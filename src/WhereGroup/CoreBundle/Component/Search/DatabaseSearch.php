@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component\Search;
 
 use Doctrine\ORM\EntityManagerInterface;
+use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
  * Class DatabaseSearch
@@ -22,8 +23,9 @@ class DatabaseSearch extends Search implements SearchInterface
     protected $spatial;
 
     /** @param EntityManagerInterface $em */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Metadata $metadata)
     {
+        parent::__construct($metadata);
         $this->em = $em;
         $this->qb = $em
             ->getRepository(self::ENTITY)
