@@ -40,6 +40,11 @@ abstract class Search
     }
 
     /**
+     * @return void
+     */
+    protected abstract function resetQuery();
+
+    /**
      * @return null
      */
     public function getParmeters()

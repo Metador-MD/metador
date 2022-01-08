@@ -3,6 +3,7 @@
 namespace WhereGroup\CoreBundle\Component\Search;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Andx;
 use WhereGroup\CoreBundle\Service\Metadata\Metadata;
 
 /**
@@ -22,12 +23,22 @@ class DatabaseSearch extends Search implements SearchInterface
     /* @var DatabaseExprHandler $spatial */
     protected $spatial;
 
-    /** @param EntityManagerInterface $em */
+    /* @param EntityManagerInterface $em */
     public function __construct(EntityManagerInterface $em, Metadata $metadata)
     {
         parent::__construct($metadata);
         $this->em = $em;
         $this->qb = $em
+            ->getRepository(self::ENTITY)
+            ->createQueryBuilder('m');
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetQuery()
+    {
+        $this->qb = $this->em
             ->getRepository(self::ENTITY)
             ->createQueryBuilder('m');
     }
@@ -45,6 +56,18 @@ class DatabaseSearch extends Search implements SearchInterface
      */
     public function find()
     {
+        $this->prepareQuery();
+        return [
+            'paging' => $this->getResultPaging(),
+            'rows'   => $this->getResult(),
+            'facet'  => []
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareQuery() {
         if ($this->getGroups()) {
             $this->qb->leftJoin('m.groups', 'g');
         }
@@ -55,7 +78,7 @@ class DatabaseSearch extends Search implements SearchInterface
             $terms = (array)preg_split('/\s+/', trim($termsStr));
             if (count($terms) > 0) {
                 $index = 0;
-                foreach ($this->getTerms() as $term) {
+                foreach ($terms as $term) {
                     if ($term === "") {
                         continue;
                     }
@@ -125,12 +148,6 @@ class DatabaseSearch extends Search implements SearchInterface
                     ->setParameter('keywordX', '%' . strtolower($this->getKeyword()) . '%');
             }
         }
-
-        return [
-            'paging' => $this->getResultPaging(),
-            'rows'   => $this->getResult(),
-            'facet'  => []
-        ];
     }
 
     /**
@@ -169,7 +186,7 @@ class DatabaseSearch extends Search implements SearchInterface
      * @param $table
      * @return null
      */
-    private function tableExists($table)
+    protected function tableExists($table)
     {
         return in_array($table, ['title', 'date', 'hierarchyLevel', 'dateStamp']) ? true : false;
     }

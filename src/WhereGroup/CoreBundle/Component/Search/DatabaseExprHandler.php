@@ -49,8 +49,12 @@ class DatabaseExprHandler extends ExprHandler implements ExprHandlerInterface
     public function in($property, array $items, &$parameters)
     {
         $expr = new Expr();
+        $placeHolders = [];
+        foreach ($items as $item) {
+            $placeHolders[] = self::addParameter($property, $item, $parameters);
+        }
 
-        return $expr->in($this->getName($property), self::addParameter($property, $items, $parameters));
+        return $expr->in($this->getName($property), implode(",", $placeHolders));
     }
 
     /**
