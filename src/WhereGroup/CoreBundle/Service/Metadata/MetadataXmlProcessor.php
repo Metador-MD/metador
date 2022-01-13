@@ -94,6 +94,10 @@ class MetadataXmlProcessor
             throw new RuntimeException("HierarchyLevel not found.");
         }
 
+        if (!empty($result["p"]["identificationId"])) {
+            $result["p"]["identificationId"] = preg_replace('/([^"_]+_)+/', "", $result["p"]["identificationId"]);
+        }
+
         return $result['p'];
     }
 
