@@ -20,6 +20,13 @@
             <div class="grid space responsive">
                 <div class="row r-1">
                     <div class="col c-1">
+                        {{ form_element.hidden({
+                            'name'            : 'p[contact][' ~ loop.index0 ~ '][id]',
+                            'validatorSources': tabId ~ ',' ~ id|md_id,
+                            'readonly'        : true,
+                            'class'           : '-js-address-id -js-keep-value',
+                            'p'               : p
+                        }) }}
                         {{ form_element.input({
                             'name'            : 'p[contact][' ~ loop.index0 ~ '][uuid]',
                             'label'           : 'UUID',

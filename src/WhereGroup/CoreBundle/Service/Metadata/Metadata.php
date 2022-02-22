@@ -4,6 +4,7 @@ namespace WhereGroup\CoreBundle\Service\Metadata;
 
 use DateTime;
 use Exception;
+use Plugins\LVermGeo\BasicProfileBundle\Component\MetadataProcessor;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -124,7 +125,7 @@ class Metadata
         }
 
         $entity = $this->db->getRepository()->findOneById($id);
-
+        MetadataProcessor::refreshAddresses($this->address, $entity);
         if ($entity instanceof MetadataEntity && $dispatchEvent) {
             $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($entity, []));
         }

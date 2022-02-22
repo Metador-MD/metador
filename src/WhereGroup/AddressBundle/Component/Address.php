@@ -109,7 +109,7 @@ class Address
     public function search($terms, $page = 1, $hits = 10)
     {
         $result = [];
-        $count  = $this->repo->search($terms, $page, $hits, true);
+        $count = $this->repo->search($terms, $page, $hits, true);
         $paging = new Paging($count, $hits, $page);
 
         if ($count > 0) {
@@ -118,7 +118,7 @@ class Address
 
         return [
             'paging' => $paging->calculate(),
-            'rows'   => $result,
+            'rows' => $result,
         ];
     }
 
@@ -159,8 +159,7 @@ class Address
             ->setEmail(isset($array['email']) ? $array['email'] : '')
             ->setUrl(isset($array['url']) ? $array['url'] : '')
             ->setUrlDescription(isset($array['urlDescription']) ? $array['urlDescription'] : '')
-            ->setHoursOfService(isset($array['hoursOfService']) ? $array['hoursOfService'] : '')
-        ;
+            ->setHoursOfService(isset($array['hoursOfService']) ? $array['hoursOfService'] : '');
 
         return $this->save($address, $flush);
     }
@@ -210,7 +209,7 @@ class Address
      */
     public function remove($entity)
     {
-        $event  = new AddressChangeEvent($entity, []);
+        $event = new AddressChangeEvent($entity, []);
         $this->eventDispatcher->dispatch('address.pre_delete', $event);
         $this->repo->remove($entity);
 
@@ -262,5 +261,46 @@ class Address
         $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, preg_replace('/\W/', '', strtolower($string)));
 
         return $uuid5->toString();
+    }
+
+    /**
+     * @param \WhereGroup\AddressBundle\Entity\Address $entity
+     * @return array
+     */
+    public function refreshArray($entity, array $address)
+    {
+        $this->setAttribute($address, 'id', $entity->getId());
+        $this->setAttribute($address, 'uuid', $entity->getUuid());
+        $this->setAttribute($address, 'organisationName', $entity->getOrganisationName());
+        $this->setAttribute($address, 'individualName', $entity->getIndividualName());
+        $this->setAttribute($address, 'positionName', $entity->getPositionName());
+        $this->setAttribute($address, 'country', $entity->getCountry());
+        $this->setAttribute($address, 'administrativeArea', $entity->getAdministrativeArea());
+        $this->setAttribute($address, 'deliveryPoint', $entity->getDeliveryPoint());
+        $this->setAttribute($address, 'city', $entity->getCity());
+        $this->setAttribute($address, 'postalCode', $entity->getPostalCode());
+        $this->setAttribute($address, 'voice', $entity->getVoice());
+        $this->setAttribute($address, 'facsimile', $entity->getFacsimile());
+        $this->setAttribute($address, 'url', $entity->getUrl());
+        $this->setAttribute($address, 'urlDescription', $entity->getUrlDescription());
+        $this->setAttribute($address, 'hoursOfService', $entity->getHoursOfService());
+        $this->setAttribute($address, 'email', (!empty($entity->getEmail()) ? explode(',', $entity->getEmail()) : []));
+        return $address;
+    }
+
+    /**
+     * @param array $address
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    private function setAttribute(array &$address, $key, $value)
+    {
+        if ($value !== null) {
+            $address[$key] = $value;
+        }
+        if ($value === null && isset($address[$key])) {
+            unset($address[$key]);
+        }
     }
 }
