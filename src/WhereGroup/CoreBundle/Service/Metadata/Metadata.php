@@ -125,6 +125,9 @@ class Metadata
         }
 
         $entity = $this->db->getRepository()->findOneById($id);
+        if ($entity === null) {
+            throw new MetadataNotFoundException();
+        }
         MetadataProcessor::refreshAddresses($this->address, $entity);
         if ($entity instanceof MetadataEntity && $dispatchEvent) {
             $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($entity, []));
@@ -150,9 +153,12 @@ class Metadata
         if (empty($object['_uuid'])) {
             $object['_uuid'] = $object['fileIdentifier'] = $this->app->generateUuid();
         }
-
-        if ($this->findById($object['_uuid'])) {
-            throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
+        try {
+            if ($this->findById($object['_uuid'])) {
+                throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
+            }
+        } catch (MetadataNotFoundException $e) {
+            //
         }
 
         $metadata->setObject($object);
