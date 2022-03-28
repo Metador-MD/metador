@@ -158,7 +158,7 @@ class Metadata
                 throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
             }
         } catch (MetadataNotFoundException $e) {
-            //
+            $e;//
         }
 
         $metadata->setObject($object);
