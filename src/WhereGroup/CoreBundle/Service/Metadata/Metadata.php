@@ -115,8 +115,9 @@ class Metadata
 
     /**
      * @param $id
-     * @param bool $dispatchEvent
-     * @return null|MetadataEntity
+     * @param $dispatchEvent
+     * @return mixed|MetadataEntity|null
+     * @throws MetadataNotFoundException
      */
     public function findById($id, $dispatchEvent = true)
     {
@@ -158,7 +159,7 @@ class Metadata
                 throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
             }
         } catch (MetadataNotFoundException $e) {
-            $e;//
+            //
         }
 
         $metadata->setObject($object);
