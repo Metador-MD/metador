@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Service\Metadata;
 
 use DateTime;
 use Exception;
-use Plugins\LVermGeo\BasicProfileBundle\Component\MetadataProcessor;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -129,7 +128,7 @@ class Metadata
         if ($entity === null) {
             throw new MetadataNotFoundException();
         }
-        MetadataProcessor::refreshAddresses($this->address, $entity);
+        self::refreshAddresses($this->address, $entity);
         if ($entity instanceof MetadataEntity && $dispatchEvent) {
             $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($entity, []));
         }
@@ -453,5 +452,39 @@ class Metadata
 
             throw new MetadataException($message);
         }
+    }
+
+    /**
+     * @param Address $address
+     * @param MetadataEntity $entity
+     * @return void
+     */
+    public static function refreshAddresses(Address $address, MetadataEntity &$entity)
+    {
+        $p = $entity->getObject();
+        $new = [];
+        /* @var \WhereGroup\AddressBundle\Entity\Address $addrEntity */
+        foreach ($entity->getAddress() as $addrEntity) {
+            foreach (['distributionContact', 'responsibleParty', 'contact'] as $addressKey) {
+                if (isset($p[$addressKey]) && is_array($p[$addressKey])) {
+                    foreach ($p[$addressKey] as $key => $val) {
+                        if (isset($p[$addressKey][$key]) && isset($p[$addressKey][$key]['id']) && $p[$addressKey][$key]['id'] === $addrEntity->getId()) {
+                            if (!isset($new[$addressKey])) {
+                                $new[$addressKey] = [];
+                            }
+                            $new[$addressKey][$key] = $address->refreshArray($addrEntity, $p[$addressKey][$key]);
+                        }
+                    }
+                }
+            }
+        }
+        foreach (['distributionContact', 'responsibleParty', 'contact'] as $addressKey) {
+            if (isset($p[$addressKey]) && isset($new[$addressKey])) {
+                $p[$addressKey] = $new[$addressKey];
+            } elseif (isset($p[$addressKey])) {
+                $p[$addressKey] = [];
+            }
+        }
+        $entity->setObject($p);
     }
 }
