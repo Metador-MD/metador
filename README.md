@@ -14,6 +14,11 @@ sudo apt install php-gd php-curl php-cli php-xml php-apcu php-intl openssl php-z
 wget https://github.com/Metador-MD/metador/archive/refs/heads/develop.zip -O /var/www/metador-develop.zip
 mv $(ls -d /var/www/*/ | grep metador) /var/www/metador/
 cd /var/www/metador/
+
+Oder
+cd /var/www
+git clone https://github.com/Metador-MD/metador.git metador
+cd /var/www/metador/
 ```
 ### Abhängigkeiten mit Composer installieren und Metador-Parameter setzen
 
