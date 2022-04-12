@@ -4,7 +4,6 @@ namespace WhereGroup\CoreBundle\Service\Metadata;
 
 use DateTime;
 use Exception;
-use Plugins\LVermGeo\BasicProfileBundle\Component\MetadataProcessor;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -115,8 +114,9 @@ class Metadata
 
     /**
      * @param $id
-     * @param bool $dispatchEvent
-     * @return null|MetadataEntity
+     * @param $dispatchEvent
+     * @return mixed|MetadataEntity|null
+     * @throws MetadataNotFoundException
      */
     public function findById($id, $dispatchEvent = true)
     {
@@ -125,7 +125,10 @@ class Metadata
         }
 
         $entity = $this->db->getRepository()->findOneById($id);
-        MetadataProcessor::refreshAddresses($this->address, $entity);
+        if ($entity === null) {
+            throw new MetadataNotFoundException();
+        }
+        self::refreshAddresses($this->address, $entity);
         if ($entity instanceof MetadataEntity && $dispatchEvent) {
             $this->eventDispatcher->dispatch('metadata.on_load', new MetadataChangeEvent($entity, []));
         }
@@ -150,9 +153,12 @@ class Metadata
         if (empty($object['_uuid'])) {
             $object['_uuid'] = $object['fileIdentifier'] = $this->app->generateUuid();
         }
-
-        if ($this->findById($object['_uuid'])) {
-            throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
+        try {
+            if ($this->findById($object['_uuid'])) {
+                throw new MetadataExistsException("Datensatz " . $object['_uuid'] . " existiert bereits.");
+            }
+        } catch (MetadataNotFoundException $e) {
+            //
         }
 
         $metadata->setObject($object);
@@ -446,5 +452,39 @@ class Metadata
 
             throw new MetadataException($message);
         }
+    }
+
+    /**
+     * @param Address $address
+     * @param MetadataEntity $entity
+     * @return void
+     */
+    public static function refreshAddresses(Address $address, MetadataEntity &$entity)
+    {
+        $p = $entity->getObject();
+        $new = [];
+        /* @var \WhereGroup\AddressBundle\Entity\Address $addrEntity */
+        foreach ($entity->getAddress() as $addrEntity) {
+            foreach (['distributionContact', 'responsibleParty', 'contact'] as $addressKey) {
+                if (isset($p[$addressKey]) && is_array($p[$addressKey])) {
+                    foreach ($p[$addressKey] as $key => $val) {
+                        if (isset($p[$addressKey][$key]) && isset($p[$addressKey][$key]['id']) && $p[$addressKey][$key]['id'] === $addrEntity->getId()) {
+                            if (!isset($new[$addressKey])) {
+                                $new[$addressKey] = [];
+                            }
+                            $new[$addressKey][$key] = $address->refreshArray($addrEntity, $p[$addressKey][$key]);
+                        }
+                    }
+                }
+            }
+        }
+        foreach (['distributionContact', 'responsibleParty', 'contact'] as $addressKey) {
+            if (isset($p[$addressKey]) && isset($new[$addressKey])) {
+                $p[$addressKey] = $new[$addressKey];
+            } elseif (isset($p[$addressKey])) {
+                $p[$addressKey] = [];
+            }
+        }
+        $entity->setObject($p);
     }
 }
