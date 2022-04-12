@@ -92,11 +92,11 @@ a2ensite metador.conf
 service apache2 reload
 ```
 
-###Metador aufrufen:
+### Metador aufrufen:
 ```
 http://[hostname]/metador/
 ```
-###Plugins aktivieren:
+### Plugins aktivieren:
 Metador aufrufen:
 ```
 http://[hostname]/metador/
